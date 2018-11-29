@@ -1,41 +1,60 @@
+> The purpose of this  API spec is to  describe a new API or
+set of related APIs that make up a new feature in WinUI.
+
+> There are two audiences for the spec. The first are people
+that want to evaluate and give feedback on the API, as part of
+the submission process.  When it's complete
+it will be incorporated into the public documentation at
+[docs.microsoft.com](http://docs.microsoft.com/uwp/toolkits/winui/).
+Hopefully we'll be able to copy it mostly verbatim.
+So the second audience is everyone that reads there to learn how
+and why to use this API.
 
 # Background
 > Use this section to provide background context for the new API(s) in this spec.
- This is the only section of this spec that likely won't be posted to the final
- documentation at docs.microsoft.com.
 
-> For example, this is a place to explain why you're adding this API rather than
+> This section and the appendix are the only sections that likely
+do not get copied to docs.microsoft.com; they're just an aid to reading this spec.
+
+> For example, this section is a place to explain why you're adding this API rather than
 modifying an existing API.
 
-> For example, this is a place to provide a brief explanation of some related
-area that's just enough to understand this new API, rather than telling
-the reader "go read 100 pages of background information posted ...".
+> For example, this is a place to provide a brief explanation of some dependent
+area,  just explanation enough to understand this new API, rather than telling
+the reader "go read 100 pages of background information posted at ...".
 
 
-# Overview and How To
+# Overview and How Tos
 > Use this section to provide an overview, descriptions, and example
 code.  The majority of your content should be here.
 
 > Recommended format:
 >* Description
 >* Why use this API?
->* Basic/typical usage
+>* Basic/typical usage example
 >* Interesting features
->       (description/example, description/example, ...)
->* Advanced by relevant scenarios 
+>       (description/example, description/examexple, ...)
+>* Advanced but relevant scenarios 
 (description/example, description/example, ...)
 
+> Note that if you're just adding members to an existing class,
+you probably don't need this section; it's easier to just
+put it into the API Reference section below.
 
-# API notes
+> For an example, see the 
+[PasswordBox control](http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box).
 
-## Class 1
-> *One-two line description that will show up in Intellisense*
+# API Reference
 
-> Remarks about this class.  When this is incorporated into
+## Foo Class
+> *One or two line description that will show up in Intellisense*
+
+> Add additional remarks about this type, if necessary, here.  
+When this is incorporated into
 docs.microsoft.com, the basic/typical usage example from the
-How To section may be copied here as well.
+'How To' section may be copied here as well.
 
-### Member 1.1
+### Member Foo.A
 > *One or two line description that will show up in Intellisense*
 
 > Remarks about this member
@@ -43,28 +62,27 @@ How To section may be copied here as well.
 > Descriptions (with examples) for this member that were too
 advanced to put into the How To section.
 
-### Member 1.2
+### Member A.B
 > *One-two line description that will show up in Intellisense*
+...
 
 ### Additional member notes
 > For members that are pretty obvious from the name,
 but for which you'd like to at least give the 1-line Intellisense
-description, create a table here of membe/type/description.
+description, create a table here of name/type/description here.
 
 >...
 
-## Class 2
+## Bar Class
 
-### Member 2.1
-### Member 2.2
+### Member Bar.A
+### Member Bar.B
 >...
 
 
-# API
+# API Details
 
->The exact API, in IDL format.  This will not be copied to
-docs.microsoft.com, as the API details sections are generated
-automatically from the built metadata.
+>The exact API, in IDL format.
 
 # Appendix
 > Anything else that you want to write down for posterity, but 
