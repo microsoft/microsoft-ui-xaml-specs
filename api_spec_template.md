@@ -1,4 +1,4 @@
-> The purpose of this  API spec is to  describe a new API or
+> The purpose of this API spec is to describe a new API or
 set of related APIs that make up a new feature in WinUI.
 
 > There are two audiences for the spec. The first are people
@@ -20,7 +20,7 @@ do not get copied to docs.microsoft.com; they're just an aid to reading this spe
 modifying an existing API.
 
 > For example, this is a place to provide a brief explanation of some dependent
-area,  just explanation enough to understand this new API, rather than telling
+area, just explanation enough to understand this new API, rather than telling
 the reader "go read 100 pages of background information posted at ...".
 
 
@@ -32,14 +32,15 @@ code.  The majority of your content should be here.
 >* Description
 >* Why use this API?
 >* Basic/typical usage example
->* Interesting features
->       (description/example, description/examexple, ...)
+>* Key features
+>       (description/example, description/example, ...)
 >* Advanced but relevant scenarios 
 (description/example, description/example, ...)
 
 > Note that if you're just adding members to an existing class,
 you probably don't need this section; it's easier to just
-put it into the API Reference section below.
+put it into the API Reference section below.  But provide a link here to the
+existing pages.
 
 > For an example, see the 
 [PasswordBox control](http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box).
@@ -69,7 +70,7 @@ advanced to put into the How To section.
 ### Additional member notes
 > For members that are pretty obvious from the name,
 but for which you'd like to at least give the 1-line Intellisense
-description, create a table here of name/type/description here.
+description, create a table of name/type/description here.
 
 >...
 
