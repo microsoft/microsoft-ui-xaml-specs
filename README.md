@@ -1,19 +1,22 @@
+# Windows UI Library (WinUI) API Specs
 
-# Contributing
+This repository contains archived and in-progress spec documents for current and proposed APIs in the Windows UI Library (WinUI):  
+https://github.com/Microsoft/microsoft-ui-xaml
 
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.microsoft.com.
+Documents in this repo are used as part of the WinUI API review process and are not intended to be up-to-date developer documentation.
 
-When you submit a pull request, a CLA-bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
+For up-to-date developer documentation on WinUI and related APIs please see:  
+https://docs.microsoft.com
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+## Contributing
 
-# Legal Notices
+This repo is maintained by the WinUI team.
+
+To propose a new API or contribute an API spec, follow the WinUI contribution process [described here](https://github.com/Microsoft/microsoft-ui-xaml/blob/master/docs/feature_proposal_process.md).
+
+As part of that process you can use the [API spec template](api_spec_template.md) in this repo to create a new API spec if needed.
+
+## Legal Notices
 
 Microsoft and any contributors grant you a license to the Microsoft documentation and other content
 in this repository under the [Creative Commons Attribution 4.0 International Public License](https://creativecommons.org/licenses/by/4.0/legalcode),
