@@ -42,7 +42,9 @@ as a "How to" page. -->
 # Examples
 <!-- Use this section to explain the features of the API, showing
 example code with each description. The general format is a 
-feature explanation, an example, and explanation, an example, etc.-->
+  feature explanation, an example, 
+  feature explanation, an example, 
+  etc.-->
 
 <!-- As an example of this section, see the Examples section for the PasswordBox control 
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
