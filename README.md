@@ -33,23 +33,29 @@ For WinUI team members, the workflow to author specs is:
 
 1. Ensure your proposal is approved and in plan.
 
-2. Create a new branch: ```/user/<username>/<feature>```
+2. Create a new working branch: ```/user/<username>/<feature>```
 
 3. Create a new folder for your spec under the ```active``` folder: ```/active/<feature>```
 
 4. Author your spec using the [spec template](/spec_template.md).  
 Please use relative links for images or other assets in the folder.
 
-5. When your spec is ready for review, open a new pull request to merge your spec to the ```master``` branch.  
-Update your proposal issue with a link to the spec PR
+5. When your spec is ready for review:
+   * Open a new pull request to merge your spec to the ```master``` branch
+   * Update your proposal issue with a link to the spec PR
 
-6. When your spec is complete and signed off, merge the PR.
+6. Review spec in checkpoint meetings to close open issues.
 
-7. Use your completed spec as the basis for [Microsoft Docs](https://github.com/MicrosoftDocs) articles and [Controls Gallery](https://github.com/Microsoft/Xaml-Controls-Gallery) samples.
+7. When your spec is complete and signed off, merge the PR.
 
-8. Once the feature is documented, add the following header to your spec and move the spec from ```/active``` to ```/archive/<release>```:
-   > This spec is archived and may not be up to date.  
+8. Use your completed spec as the basis for [Microsoft Docs](https://github.com/MicrosoftDocs) articles and [Controls Gallery](https://github.com/Microsoft/Xaml-Controls-Gallery) samples.
+
+9. Once the feature is documented:
+   * Close the proposal issue
+   * Add the following header to your spec:
+     > This spec is archived and may not be up to date.  
 For up-to-date developer documentation please see: ```<insert link>```
+   * Move your spec from ```/active``` to ```/archive/<release>```
 
 ## Legal Notices
 
