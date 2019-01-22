@@ -6,7 +6,7 @@ https://github.com/Microsoft/microsoft-ui-xaml
 Documents in this repo are used as part of Microsoft's WinUI spec review process for features in development and are not intended to be up-to-date developer documentation.
 
 For up-to-date developer documentation on WinUI and related APIs please see:  
-https://docs.microsoft.com
+https://docs.microsoft.com/windows/uwp
 
 For product issues, bugs, and feature requests please use the main WinUI repo:  
 https://github.com/Microsoft/microsoft-ui-xaml
@@ -22,10 +22,10 @@ This repo is maintained by the Microsoft WinUI team.
 
 ### Please DO NOT:
 
-* provide feedback on spec documents in the ```archive``` folder since those features have already been released. Please contribute feedback or suggested changes to docs.microsoft.com instead.
-* send use unsolicited PRs that add new specs. To propose a new feature, please follow the WinUI contribution process [described here](https://github.com/Microsoft/microsoft-ui-xaml/blob/master/docs/feature_proposal_process.md) which starts with opening an issue in the WinUI repo:  
+* provide feedback on spec documents in the ```archive``` folder since those features have already been released. Please contribute feedback or suggested changes to [docs.microsoft.com](https://docs.microsoft.com/windows/uwp) instead.
+* send us unsolicited PRs that add new specs. To propose a new feature, please follow the WinUI contribution process [described here](https://github.com/Microsoft/microsoft-ui-xaml/blob/master/docs/feature_proposal_process.md) which starts with opening an issue in the WinUI repo:  
 https://github.com/Microsoft/microsoft-ui-xaml
-* rely on this repo for final developer documentation. Please see docs.microsoft.com.
+* rely on this repo for final developer documentation. Please see [docs.microsoft.com](https://docs.microsoft.com/windows/uwp).
 
 ### Spec workflow
 
@@ -45,7 +45,7 @@ Update your proposal issue with a link to the spec PR
 
 6. When your spec is complete and signed off, merge the PR.
 
-7. Use your completed spec as the basis for docs.microsoft.com articles and [Controls Gallery](https://github.com/Microsoft/Xaml-Controls-Gallery) samples.
+7. Use your completed spec as the basis for [Microsoft Docs](https://github.com/MicrosoftDocs) articles and [Controls Gallery](https://github.com/Microsoft/Xaml-Controls-Gallery) samples.
 
 8. Once the feature is documented, add the following header to your spec and move the spec from ```/active``` to ```/archive/<release>```:
    > This spec is archived and may not be up to date.  
@@ -63,7 +63,7 @@ may be either trademarks or registered trademarks of Microsoft in the United Sta
 The licenses for this project do not grant you rights to use any Microsoft names, logos, or trademarks.
 Microsoft's general trademark guidelines can be found at http://go.microsoft.com/fwlink/?LinkID=254653.
 
-Privacy information can be found at https://privacy.microsoft.com/en-us/
+Privacy information can be found at https://privacy.microsoft.com.
 
 Microsoft and any contributors reserve all others rights, whether under their respective copyrights, patents,
 or trademarks, whether by implication, estoppel or otherwise.
