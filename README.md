@@ -1,6 +1,6 @@
 # Windows UI Library (WinUI) Specs
 
-This repository contains archived and in-progress spec documents for current and proposed APIs in the Windows UI Library (WinUI):  
+This repository contains archived and in-progress spec documents for APIs in the Windows UI Library (WinUI):  
 https://github.com/Microsoft/microsoft-ui-xaml
 
 Documents in this repo are used as part of Microsoft's WinUI spec review process for features in development and are not intended to be up-to-date developer documentation.
