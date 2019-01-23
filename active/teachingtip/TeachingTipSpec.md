@@ -18,7 +18,7 @@ Because a teaching tip is impermanent, it would not be the recommended control f
 <!-- Explain why TT is not recommended for notifications --> 
 
 
-##Examples
+## Examples
 
 The teaching tip has several states, including these notable ones.
 
@@ -183,7 +183,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 ### Bleeding content
 
-Edge to edge content can be added to a teaching tip by setting the BleedingContent proprerty. The location of bleeding content can be set to the top or bottom of a teaching tip by setting the BleedingContentPlacement property.
+Edge to edge content can be added to a teaching tip by setting the BleedingImageContent property. The location of bleeding content can be set to the top or bottom of a teaching tip by setting the BleedingContentPlacement property.
 
 XAML
 ```XAML
@@ -342,7 +342,7 @@ public void OnTipClosing(object sender, TeachingTipClosingEventArgs args)
 {
     if (args.Reason == TeachingTipCloseReason.CloseButton)
     {
-        using (tipDeferral=args.GetDeferral)
+        using(args.GetDeferral())
         {
             bool success = await UpdateUserPrivacySettings(User thisUsersID);
             if(!success)
@@ -502,7 +502,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 
 | Name | Description |
 |:-:|:--|
-| ShouldConstrainToRootBounds | Gets or sets a value that indicates whether the teaching tip will contrains to the bounds of its root. |
+| ShouldConstrainToRootBounds | Gets or sets a value that indicates whether the teaching tip will constrain to the bounds of its root. |
 | PreferredPlacement  | Gets or sets the default placement to be used for the teaching tip, in relation to its placement target if targeted. |
 | CloseButtonKind | Gets or sets a value that specifies where the close button, if any, is located.  Defaults to Auto.  |
 
