@@ -336,7 +336,6 @@ The close event of a teaching tip can be deffered to allow time for an action or
 ```
 
 ```C#
-Deferral tipDeferral;
 
 public void OnTipClosing(object sender, TeachingTipClosingEventArgs args)
 {
