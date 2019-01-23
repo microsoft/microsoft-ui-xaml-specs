@@ -24,7 +24,7 @@ The teaching tip has several states, including these notable ones.
 
 A teaching tip can point to a specific UI element to enhance contextual clarity of the information it is presenting. 
 
-<a href="url"><img src="TeachingTipSampleApp.jpg" height="400"></a>
+<a href="url"><img src="TeachingTipSampleApp.jpg" height="600"></a>
 
 A teaching tip can be used without a tail when the information that it is presenting is not specific to a UI element. 
 
