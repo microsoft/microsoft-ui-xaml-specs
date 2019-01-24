@@ -24,11 +24,11 @@ The teaching tip has several states, including these notable ones.
 
 A teaching tip can point to a specific UI element to enhance contextual clarity of the information it is presenting. 
 
-<a href="url"><img src="TeachingTipSampleApp.jpg" height="600"></a>
+<a href="url"><img src="TeachingTipPointerSample.jpg" height="600"></a>
 
 A teaching tip can be used without a tail when the information that it is presenting is not specific to a UI element. 
 
-<a href="url"><img src="TeachingTipPointerSample.jpg" height="600"></a>
+<a href="url"><img src="TeachingTipSampleApp.jpg" height="600"></a>
 
 A teaching tip can require manual acknowledgement before dismissing or a teaching tip may also be light-dismiss enabled so that it will dismiss when a user scrolls or interacts with other elements of the application.
 
