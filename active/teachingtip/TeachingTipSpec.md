@@ -131,8 +131,10 @@ XAML
             Title="Saving automatically"
             Subtitle="We save your changes as you go - so you never have to."
             Margin="15">
-                <CheckBox Content="Don't show tips at start up" Checked="HandleChecked" Unchecked="HandleUnchecked" />
-                <p>You can change your tip preferences in <a href="app:/item/SettingsPage">Settings</a> if you change your mind.</p>
+                <StackPanel>
+                    <CheckBox Content="Don't show tips at start up" Checked="HandleChecked" Unchecked="HandleUnchecked" />
+                    <TextBlock>You can change your tip preferences in <a href="app:/item/SettingsPage">Settings</a> if you change your mind.</TextBlock>
+                </StackPanel>
         </muxc:TeachingTip>
     </muxc:TeachingTip.Attach>
 </Button>
