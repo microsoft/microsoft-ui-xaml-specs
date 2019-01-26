@@ -133,7 +133,7 @@ XAML
             Margin="15">
                 <StackPanel>
                     <CheckBox Content="Don't show tips at start up" Checked="HandleChecked" Unchecked="HandleUnchecked" />
-                    <TextBlock>You can change your tip preferences in <a href="app:/item/SettingsPage">Settings</a> if you change your mind.</TextBlock>
+                    <TextBlock>You can change your tip preferences in <Hyperlink NavigateUri="app:/item/SettingsPage">Settings</Hyperlink> if you change your mind.</TextBlock>
                 </StackPanel>
         </muxc:TeachingTip>
     </muxc:TeachingTip.Attach>
