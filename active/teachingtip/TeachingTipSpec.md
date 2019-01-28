@@ -194,7 +194,9 @@ XAML
         <muxc:TeachingTip x:Name="AutoSaveTip"
             Title="Saving automatically"
             Subtitle="We save your changes as you go - so you never have to."
-            BleedingContent="Assets/Giraffe.png"
+            <muxc:TeachingTip.BleedingContent>
+                <Image Source="Assets/Giraffe.png" />
+            </muxc:TeachingTip.BleedingContent>
             Margin="15">
         </muxc:TeachingTip>
     </muxc:TeachingTip.Attach>
