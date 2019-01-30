@@ -577,4 +577,16 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 * Should TeachingTip.Attach be changed to TeachingTip.AttachedTeachingTip?
 * Should Title, Subtitle, and buttons be content properties instead? 
 
-
+Proposal for .Target property:
+ ```XAML
+<Button x:Name="MyButton" Content="Tip Example">
+    <Button.Resources> 
+        <muxc:TeachingTip x:Name="EnableNewSettingsTip"
+            Target="{x:Bind MyButton}"
+            Title="Title string"
+            Subtitle="Body text in a minimum height tip."
+            Closing="OnTipClosing">
+        </muxc:TeachingTip>
+    </Button.Resources>
+</Button>
+```
