@@ -277,13 +277,16 @@ Preferred placement of a teaching tip can be set using the TeachingTipPlacementM
 
 XAML
 ```XAML
-<Button Content="Tip Example" Click="OnFirstSaveButtonClick"></Button>
-<muxc:TeachingTip x:Name="AutoSaveTip"
-    Title="Saving automatically"
-    Subtitle="We save your changes as you go - so you never have to."
-    PreferredPlacement="TopEdgeAlignedLeft"
-    Margin="20,50,0,0">
-</muxc:TeachingTip>
+<Button Content="Tip Example" Click="OnFirstSaveButtonClick">
+    <muxc:TeachingTip.Attach> 
+        <muxc:TeachingTip x:Name="AutoSaveTip"
+            Title="Saving automatically"
+            Subtitle="We save your changes as you go - so you never have to."
+            PreferredPlacement="TopEdgeAlignedLeft"
+            Margin="20,50,0,0"/>
+        </muxc:TeachingTip>
+    </muxc:TeachingTip.Attach>
+</Button>
 ```
 
 C#
