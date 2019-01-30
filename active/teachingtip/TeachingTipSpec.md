@@ -45,13 +45,14 @@ When the user clicks the button, a teaching tip will appear and display a messag
 
 XAML
 ```XAML
-<Button Content="Save" Click="OnFirstSaveButtonClick"></Button>
-<muxc:TeachingTip> 
-    <muxc:TeachingTip x:Name="AutoSaveTip"
-        Title="Saving automatically"
-        Subtitle="We save your changes as you go - so you never have to.">
-    </muxc:TeachingTip>
-</muxc:TeachingTip.Attach>
+<Button Content="Save" Click="OnFirstSaveButtonClick">
+    <muxc:TeachingTip.Attach> 
+        <muxc:TeachingTip x:Name="AutoSaveTip"
+            Title="Saving automatically"
+            Subtitle="We save your changes as you go - so you never have to.">
+        </muxc:TeachingTip>
+    </muxc:TeachingTip.Attach>
+</Button>
 ```
 
 C#
@@ -72,7 +73,7 @@ A teaching tip can have a margin added by setting the Margin property. When a te
 
 XAML
 ```XAML
-<Button Content="Save" Click="OnFirstSaveButtonClick"></Button>
+<Button Content="Save" Click="OnFirstSaveButtonClick">
 <muxc:TeachingTip> 
     <muxc:TeachingTip x:Name="AutoSaveTip"
         Title="Saving automatically"
