@@ -13,7 +13,7 @@ A teaching tip may also be light-dismiss enabled or used without a tail indicati
 
 Use a **TeachingTip** control to inform users about new and important updates and features, focus users on a component to advise them about its options or state, remind users of nonessential options that would improve their experience, or teach users how a task should be completed. 
 
-Because a teaching tip is impermanent, it would not be the recommended control for notifying users about important errors and statuses, prompting users for event handling, nor displaying a list of items or events that have been handled. 
+Because a teaching tip is transient, it would not be the recommended control for notifying users about important errors and statuses, prompting users for event handling, nor displaying a list of items or events that have been handled. 
 
 <!-- Explain why TT is not recommended for notifications --> 
 
