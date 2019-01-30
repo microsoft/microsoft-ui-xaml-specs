@@ -330,7 +330,7 @@ The close event of a teaching tip can be deffered to allow time for an action or
 ```XAML
 <Button Content="Tip Example">
     <muxc:TeachingTip.Attach> 
-        <muxc:TeachingTip x:Name="EnableNewPrivacySettingsTip"
+        <muxc:TeachingTip x:Name="EnableNewSettingsTip"
             Title="Title string"
             Subtitle="Body text in a minimum height tip."
             Closing="OnTipClosing">
