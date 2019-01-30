@@ -347,7 +347,7 @@ public void OnTipClosing(object sender, TeachingTipClosingEventArgs args)
     {
         using(args.GetDeferral())
         {
-            bool success = await UpdateUserPrivacySettings(User thisUsersID);
+            bool success = await UpdateUserSettings(User thisUsersID);
             if(!success)
             {
                 //We were not able to update the settings! Don't close the tip and display the reason why.
