@@ -75,12 +75,13 @@ XAML
 ```XAML
 <Button Content="Save" Click="OnFirstSaveButtonClick">
     <muxc:TeachingTip> 
-    <muxc:TeachingTip x:Name="AutoSaveTip"
-        Title="Saving automatically"
-        Subtitle="We save your changes as you go - so you never have to."
-        Margin="80">
-    </muxc:TeachingTip>
-</muxc:TeachingTip.Attach>
+        <muxc:TeachingTip x:Name="AutoSaveTip"
+            Title="Saving automatically"
+            Subtitle="We save your changes as you go - so you never have to."
+            Margin="80">
+        </muxc:TeachingTip>
+    </muxc:TeachingTip.Attach
+</Button>
 ```
 
 C#
