@@ -103,7 +103,7 @@ XAML
         <muxc:TeachingTip x:Name="AutoSaveTip"
             Title="Saving automatically"
             Subtitle="We save your changes as you go - so you never have to."
-            Margin="15">
+            Margin="15"/>
         </muxc:TeachingTip>
     </muxc:TeachingTip.Attach>
 </Button>
