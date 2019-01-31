@@ -63,7 +63,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 }
 ```
 
-Here's the result when this code runs and the clicks the button.
+Here's the result when this code runs and the user clicks the button.
 
 <a href="url"><img src="TeachingTipSampleApp.jpg" height="600"></a>
 
