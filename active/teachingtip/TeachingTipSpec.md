@@ -105,7 +105,7 @@ XAML
         <muxc:TeachingTip x:Name="AutoSaveTip"
             Title="Saving automatically"
             Subtitle="We save your changes as you go - so you never have to."
-            Margin="15"/>
+            Margin="12"/>
         </muxc:TeachingTip>
     </muxc:TeachingTip.Attach>
 </Button>
@@ -132,7 +132,7 @@ XAML
         <muxc:TeachingTip x:Name="AutoSaveTip"
             Title="Saving automatically"
             Subtitle="We save your changes as you go - so you never have to."
-            Margin="15">
+            Margin="12">
                 <StackPanel>
                     <CheckBox Content="Don't show tips at start up" Checked="HandleChecked" Unchecked="HandleUnchecked" />
                     <TextBlock>You can change your tip preferences in <Hyperlink NavigateUri="app:/item/SettingsPage">Settings</Hyperlink> if you change your mind.</TextBlock>
@@ -167,7 +167,7 @@ XAML
             ActionButtonCommand="DisableAutoSave"
             CloseButtonKind="Footer"
             CloseButtonText="Got it!"
-            Margin="15">
+            Margin="12">
                 <CheckBox Content="Don't show tips at start up" Checked="HandleChecked" Unchecked="HandleUnchecked" />
                 <p>You can change your tip preferences in <a href="app:/item/SettingsPage">Settings</a> if you change your mind.</p>
         </muxc:TeachingTip>
@@ -199,7 +199,7 @@ XAML
             <muxc:TeachingTip.HeroContent>
                 <Image Source="Assets/Giraffe.png" />
             </muxc:TeachingTip.HeroContent>
-            Margin="15">
+            Margin="12">
         </muxc:TeachingTip>
     </muxc:TeachingTip.Attach>
 </Button>
@@ -227,7 +227,7 @@ XAML
             Title="Saving automatically"
             Subtitle="We save your changes as you go - so you never have to."
             IconSource="SaveIcon.png"
-            Margin="15">
+            Margin="12">
         </muxc:TeachingTip>
     </muxc:TeachingTip.Attach>
 </Button>
@@ -255,7 +255,7 @@ XAML
             Title="Saving automatically"
             Subtitle="We save your changes as you go - so you never have to."
             IsLightDismissEnabled="True"
-            Margin="15">
+            Margin="12">
         </muxc:TeachingTip>
     </muxc:TeachingTip.Attach>
 </Button>
