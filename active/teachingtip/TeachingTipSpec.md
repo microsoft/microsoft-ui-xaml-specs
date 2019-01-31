@@ -59,7 +59,7 @@ C#
 ```C#
 public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 {
-    TeachingTipExample.IsOpen=true;
+   AutoSaveTip.IsOpen = true;
 }
 ```
 
@@ -88,7 +88,7 @@ C#
 ```C#
 public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 {
-    TeachingTipExample.IsOpen=true;
+   AutoSaveTip.IsOpen = true;
 }
 ```
 
@@ -115,7 +115,7 @@ C#
 ```C#
 public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 {
-    TeachingTipExample.IsOpen=true;
+   AutoSaveTip.IsOpen = true;
 }
 ```
 
@@ -146,7 +146,7 @@ C#
 ```C#
 public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 {
-    TeachingTipExample.IsOpen=true;
+   AutoSaveTip.IsOpen = true;
 }
 ```
 
