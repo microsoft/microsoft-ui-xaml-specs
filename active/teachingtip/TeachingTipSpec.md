@@ -2,11 +2,11 @@
 
 ## Description
 
-A teaching tip is a content-rich nonmodal flyout that provides contextual information. A teaching tip looks like a flyout, except that it may target a UI element with a tail or be persistent and require the user to manually dismiss it. A teaching tip is often used for informing, reminding, and teaching users about important and new features that may enhance their experience. 
+A teaching tip is a content-rich nonmodal flyout that provides contextual information. A teaching tip looks like a flyout, except that it may target a UI element with a pointer or be persistent and require the user to manually dismiss it. A teaching tip is often used for informing, reminding, and teaching users about important and new features that may enhance their experience. 
 
 **Important APIs:** [TeachingTip class]() [Link TODO]
 
-A teaching tip may also be light-dismiss enabled or used without a tail indicating reference to any specific UI element. 
+A teaching tip may also be light-dismiss enabled or used without a pointer indicating reference to any specific UI element. 
 
 
 ### Is this the right control? 
@@ -26,7 +26,7 @@ A teaching tip can point to a specific UI element to enhance contextual clarity 
 
 <a href="url"><img src="TeachingTipPointerSample.jpg" height="600"></a>
 
-A teaching tip can be used without a tail when the information that it is presenting is not specific to a UI element. 
+A teaching tip can be used without a pointer when the information that it is presenting is not specific to a UI element. 
 
 <a href="url"><img src="TeachingTipSampleApp.jpg" height="600"></a>
 
@@ -185,9 +185,9 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 <a href="url"><img src="TeachingTipButtonsSample.jpg" height="600"></a>
 
-### Bleeding content
+### Hero content
 
-Edge to edge content can be added to a teaching tip by setting the BleedingImageContent property. The location of bleeding content can be set to the top or bottom of a teaching tip by setting the BleedingContentPlacement property.
+Edge to edge content can be added to a teaching tip by setting the HeroContent property. The location of hero content can be set to the top or bottom of a teaching tip by setting the HeroContentPlacement property.
 
 XAML
 ```XAML
@@ -196,9 +196,9 @@ XAML
         <muxc:TeachingTip x:Name="AutoSaveTip"
             Title="Saving automatically"
             Subtitle="We save your changes as you go - so you never have to."
-            <muxc:TeachingTip.BleedingContent>
+            <muxc:TeachingTip.HeroContent>
                 <Image Source="Assets/Giraffe.png" />
-            </muxc:TeachingTip.BleedingContent>
+            </muxc:TeachingTip.HeroContent>
             Margin="15">
         </muxc:TeachingTip>
     </muxc:TeachingTip.Attach>
@@ -213,7 +213,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 }
 ```
 
-<a href="url"><img src="TeachingTipBleedingContentSample.jpg" height="600"></a>
+<a href="url"><img src="TeachingTipHeroContentSample.jpg" height="600"></a>
 
 ### Add an icon
 
@@ -407,7 +407,7 @@ enum TeachingTipPlacementMode
     RightEdgeAlignedBottom,
 };
 
-enum TeachingTipBleedingImagePlacementMode
+enum TeachingTipHeroPlacementMode
 {
     Top,
     Bottom,
@@ -460,9 +460,9 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
     Windows.UI.Xaml.Thickness TargetOffset;
     Boolean IsLightDismissEnabled;
     TeachingTipPlacementMode Placement;
-    TeachingTipBleedingImagePlacementMode BleedingImagePlacement;
+    TeachingTipHeroPlacementMode HeroPlacement;
 
-    Windows.UI.Xaml.UIElement BleedingImageContent;
+    Windows.UI.Xaml.UIElement HeroContent;
     IconSource IconSource;
 
     TeachingTipTemplateSettings TemplateSettings{ get; };
@@ -495,9 +495,9 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
     static Windows.UI.Xaml.DependencyProperty TargetOffsetProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty IsLightDismissEnabledProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty PlacementProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty BleedingImagePlacementProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty HeroPlacementProperty{ get; };
 
-    static Windows.UI.Xaml.DependencyProperty BleedingImageContentProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty HeroContentProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty IconSourceProperty{ get; };
 
     static Windows.UI.Xaml.DependencyProperty TemplateSettingsProperty{ get; };
@@ -538,7 +538,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 
  | Component |  Notes |
 |:---:|:---|
-| Container | * The container is the body of the tip and encapsulates all the tip components. <br> * Nonmodal. <br> * If content height exceeds max height or width, vertical scrolling will be enabled. See Scroll. <br> * For visibility concerns, the container has a border around the outer edge, which adheres to the tail if present. See Tail. <br> * For visibility concerns, the top edge of the container has a 1px highlight which also adheres to the tail if present. See Tail. <br><br> <a href="url"><img src="Container.PNG" width="400"></a> |
+| Container | * The container is the body of the tip and encapsulates all the tip components. <br> * Nonmodal. <br> * If content height exceeds max height or width, vertical scrolling will be enabled. See Scroll. <br> * For visibility concerns, the container has a border around the outer edge, which adheres to the pointer if present. See Pointer. <br> * For visibility concerns, the top edge of the container has a 1px highlight which also adheres to the pointer if present. See Pointer. <br><br> <a href="url"><img src="Container.PNG" width="400"></a> |
 | Title| * Semi-bolded. <br> * Text wraps at Close (X) Button and Container border. <br><br> <a href="url"><img src="Title.PNG" width="400"></a> |
 | Subtitle | * Text wraps at Close (X) Button and Container border. <br><br> <a href="url"><img src="Subtitle.PNG" width="400"></a> |
 | Content | * Can be customized to include text, images, videos, animation, checkboxes, hyperlinks, and any other XAML content. <br> * Will scroll if there is more content to show than tip height allows. See Scroll Bar. <br> * Placed below Subtitle and above Close/Action Button. <br><br> <a href="url"><img src="Content.PNG" width="400"></a> |
@@ -546,7 +546,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 | Action Button | * Allows the user to invoke a custom event. <br> * This is the only non-Close button provided out of the box. Other buttons may be implemented in the Content Area. <br><br> <a href="url"><img src="ActionButton.PNG" width="400"></a> |
 | Pointer | * Triangular extension of the tip body used to indicate that the tip is referring to on-screen UI element. <br> * Appears only when using a targeted tip. <br> * Prefers to center on target. <br> * Maintains a 12px margin from edges of the tip. <br> * Not animated. <br> * Will not have a shadow as shadows cannot yet be added to nonrectangular surfaces. <br><br> <a href="url"><img src="Pointer.PNG" width="400"></a> |
 | Icon | * Added to the left of the Title and Subtitle by default and automatically moved to the right for RTL languages. <br><br> <a href="url"><img src="Icon.PNG" width="400"></a> |
-| Bleeding Content | * Bleeding Content is media that stretches to the edges of a tip. <br> * Can be placed at the top or bottom of a tip. <br><br> <a href="url"><img src="BleedingContent.PNG" width="400"></a> |
+| Hero Content | * Hero Content is media that stretches to the edges of a tip. <br> * Can be placed at the top or bottom of a tip. <br><br> <a href="url"><img src="HeroContent.PNG" width="400"></a> |
 | Scroll Bar | * If the tip's contents are large enough to require scrolling, a scrollbar which will not intersect the Close (X) Button will be added to the content area. <br><br> <a href="url"><img src="ScrollBar.PNG" width="400"></a> |
 
 #### Behavioral Components
@@ -555,11 +555,11 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 |:---:|:---|
 | Opening | * A tip is shown by setting its IsOpen property to true. <br> * Tips will animate on opening. <br> * When a tip does not have enough available window space to fully show in any location [see Placement], it will not open and will instead overwrite IsOpen to false. |
 | Closing | * There are three ways to close a tip: set the IsOpen property to false, the user invokes a close button, or the tip is closed via light dismiss. These will return the method used in TeachingTipCloseReason.  <br> * Closing can be deferred by taking a handle to the deferral object in the closing event args. |
-| Placement | * Placement modes for targeted tips will follow the precedent of Flyout. Full placement mode will be replaced by Center which positions Tail at the center of the element. <br> * Placement modes for untargeted tips will include each side, corner, and center of the application window. <br> * The following properties are not preferred in tip placement: <br> &nbsp;&nbsp;&nbsp;&nbsp; * There is not enough space for the tip to show without clipping. <br> &nbsp;&nbsp;&nbsp;&nbsp; * The target is not large enough to maintain the tip's alignment and the Tail's 12px margin from the edge of the tip. <br> &nbsp;&nbsp;&nbsp;&nbsp; * The target element is too large to maintain edge alignment while keeping the Tail centered on the target. |
+| Placement | * Placement modes for targeted tips will follow the precedent of Flyout. Full placement mode will be replaced by Center which positions Pointer at the center of the element. <br> * Placement modes for untargeted tips will include each side, corner, and center of the application window. <br> * The following properties are not preferred in tip placement: <br> &nbsp;&nbsp;&nbsp;&nbsp; * There is not enough space for the tip to show without clipping. <br> &nbsp;&nbsp;&nbsp;&nbsp; * The target is not large enough to maintain the tip's alignment and the Pointer's 12px margin from the edge of the tip. <br> &nbsp;&nbsp;&nbsp;&nbsp; * The target element is too large to maintain edge alignment while keeping the Pointer centered on the target. |
 | Light-dismiss | * Allows a tip to be dismissed when the user scrolls or clicks elsewhere within the application. <br> * **TODO:** Work with Accessibility and Design to create a timed fade-out that would allow users to recover a dismissing tip via click or cursor hover. |
 | Persistent Tip Location | * Once a tip is open, it will not move even if its target does. The exception to this is when the window is resized. |
 | Motion | * Tips have built in open and close animations that can be customizable using Storyboards.|
-| Tail/Bleeding Content Avoidance | * To avoid the visual oddity of the Tail emerging from Bleeding Content, the Tail and Bleeding Content will attempt to avoid intersecting using the following rules: <br> &nbsp;&nbsp;&nbsp;&nbsp; * Move the bleeding content to Top or Bottom (Disabled when BleedingContentPlacement is not auto). <br> &nbsp;&nbsp;&nbsp;&nbsp; * Shift the beak along the edge of the tip (Disabled when the placement of the tip is edge aligned). <br> &nbsp;&nbsp;&nbsp;&nbsp; * Change the placement of the tip (Disabled when the tip placement is not auto).  |
+| Pointer/Hero Content Avoidance | * To avoid the visual oddity of the Pointer emerging from Hero Content, the Pointer and Hero Content will attempt to avoid intersecting using the following rules: <br> &nbsp;&nbsp;&nbsp;&nbsp; * Move the hero content to Top or Bottom (Disabled when HeroContentPlacement is not auto). <br> &nbsp;&nbsp;&nbsp;&nbsp; * Shift the beak along the edge of the tip (Disabled when the placement of the tip is edge aligned). <br> &nbsp;&nbsp;&nbsp;&nbsp; * Change the placement of the tip (Disabled when the tip placement is not auto).  |
 | Out of Window Bounds | * Tips can escape window bounds on newer OS versions via the ShouldConstrainToRootBounds property.  When this property is set to false, the tip uses screen boundaries instead of window boundaries during its placement algorithm. |
 
 #### Accessibility
@@ -573,7 +573,6 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 
 ## Open Questions
 
-* Should BleedingContent be renamed?
 * Should TeachingTip.Attach be changed to TeachingTip.AttachedTeachingTip?
 * Should Title, Subtitle, and buttons be content properties instead? 
 
