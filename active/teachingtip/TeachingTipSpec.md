@@ -573,7 +573,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 
 ## Open Questions
 
-* Should TeachingTip.Attach be changed to TeachingTip.AttachedTeachingTip?
+* What is the right approach for attaching TeachingTip to UI Elements? 
 * Should Title, Subtitle, and buttons be content properties instead? 
 
 Proposal for .Target property:
