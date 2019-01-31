@@ -80,7 +80,7 @@ XAML
             Subtitle="We save your changes as you go - so you never have to."
             Margin="80">
         </muxc:TeachingTip>
-    </muxc:TeachingTip.Attach
+    </muxc:TeachingTip.Attach>
 </Button>
 ```
 
