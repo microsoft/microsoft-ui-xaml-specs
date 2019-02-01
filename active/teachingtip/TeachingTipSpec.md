@@ -13,7 +13,7 @@ A teaching tip may also be light-dismiss enabled or used without a pointer indic
 
 Use a **TeachingTip** control to focus a user's attention on new or important updates and features, remind a user of nonessential options that would improve their experience, or teach a user how a task should be completed. 
 
-Because a teaching tip is transient, it would not be the recommended control for notifying users about important errors and statuses, prompting users for event handling, nor displaying a list of items or events that have been handled. 
+Because teaching tip is transient, it would not be the recommended control for prompting users about errors or important status changes.
 
 <!-- Explain why TT is not recommended for notifications --> 
 
