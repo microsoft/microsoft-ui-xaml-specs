@@ -247,7 +247,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 ### Enable light-dismiss
 
-A teaching tip may be light-dismiss enabled so that it will dismiss when a user scrolls or interacts with other elements of the application.
+A teaching tip may be light-dismiss enabled so that it will dismiss when a user scrolls or interacts with other elements of the application. The close button will be automatically removed from a light-dismiss teaching tip to indentify its light-dismiss behavior to users. 
 
 XAML
 ```XAML
