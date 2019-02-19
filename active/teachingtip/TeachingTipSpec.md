@@ -576,7 +576,6 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 ## Open Questions
 
 * What is the right approach for attaching TeachingTip to UI Elements? 
-* Should Title, Subtitle, and buttons be content properties instead? 
 
 Proposal for .Target property:
  ```XAML
@@ -591,3 +590,5 @@ Proposal for .Target property:
     </Button.Resources>
 </Button>
 ```
+
+* "None" was originally included as a CloseButtonKind so that developers could style a custom close button in the content area. Now that the close button can be more fully customized, is it necessary to have a "None" mode for CloseButtonKind? If "None" can be removed, can the API be further simplified by removing CloseButtonKind and using (CloseButtonText != null) to show button in footer and else in the header?
