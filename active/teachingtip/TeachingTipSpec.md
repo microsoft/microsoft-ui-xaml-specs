@@ -275,7 +275,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 ### Preferred placement
 
-Preferred placement of a teaching tip can be set using the TeachingTipPlacementMode property. If the preferred placement would not leave enough room for the teaching tip to show, another placement mode will automatically be chosen.
+Teaching tip replicates all of Flyout's FlyoutPlacementMode placement behavior with the TeachingTipPlacementMode property. As with Flyout, if the preferred placement mode would not leave room for the teaching tip to show, another placement mode will be automatically chosen. 
 
 XAML
 ```XAML
