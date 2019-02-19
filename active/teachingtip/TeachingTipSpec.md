@@ -154,7 +154,9 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 ### Add buttons
 
-A close button is automatically added to the top of a teaching tip. However, a close button with custom text that is placed at the button of a teaching tip can be used instead by setting the TeachingTipCloseButtonKind property. A custom action button can also be added by setting ActionButtonText, ActionButtonCommand and the ActionButtonCommandParameter properties. 
+A standard "X" close button is automatically added to the top of a teaching tip. However, a custom close button can be added to the bottom of a teaching tip by setting the TeachingTipCloseButtonKind property to "Footer" and setting the CloseButtonText property to contain an appropriate message. When the TeachingTipCloseButtonKind property is set to "Auto", the header close button will be preferred unless CloseButtonText is set. A default close button can also be removed from teaching tips by setting the TeachingTipCloseButtonKind property to "None" which allows for custom close solutions to be implemented in the content area. 
+
+A custom action button can be added by setting ActionButtonText, ActionButtonCommand and the ActionButtonCommandParameter properties. 
 
 XAML
 ```XAML
