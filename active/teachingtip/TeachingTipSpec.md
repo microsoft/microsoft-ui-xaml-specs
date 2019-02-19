@@ -461,7 +461,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 
     Windows.UI.Xaml.Thickness TargetOffset;
     Boolean IsLightDismissEnabled;
-    TeachingTipPlacementMode Placement;
+    TeachingTipPlacementMode PreferredPlacement;
     TeachingTipHeroPlacementMode HeroPlacement;
 
     Windows.UI.Xaml.UIElement HeroContent;
@@ -496,7 +496,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 
     static Windows.UI.Xaml.DependencyProperty TargetOffsetProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty IsLightDismissEnabledProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty PlacementProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty PreferredPlacementProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty HeroPlacementProperty{ get; };
 
     static Windows.UI.Xaml.DependencyProperty HeroContentProperty{ get; };
