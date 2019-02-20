@@ -2,7 +2,7 @@
 
 ## Description
 
-A teaching tip is a content-rich nonmodal flyout that provides contextual information. A teaching tip looks like a flyout, except that it may target a UI element with a pointer or be persistent and require the user to manually dismiss it. A teaching tip is often used for informing, reminding, and teaching users about important and new features that may enhance their experience. 
+A teaching tip is a semi-persistent and content-rich flyout that provides contextual information. It is often used for informing, reminding, and teaching users about important and new features that may enhance their experience.
 
 **Important APIs:** [TeachingTip class]() [Link TODO]
 
