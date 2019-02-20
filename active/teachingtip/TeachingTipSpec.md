@@ -134,7 +134,7 @@ XAML
             Subtitle="We save your changes as you go - so you never have to."
             Margin="12">
                 <StackPanel>
-                    <CheckBox Content="Don't show tips at start up" Checked="HandleChecked" Unchecked="HandleUnchecked" />
+                    <CheckBox x:Name="HideTipsCheckBox" Content="Don't show tips at start up" Click="HideTipsCheckBox_Click" />
                     <TextBlock>You can change your tip preferences in <Hyperlink NavigateUri="app:/item/SettingsPage">Settings</Hyperlink> if you change your mind.</TextBlock>
                 </StackPanel>
         </muxc:TeachingTip>
@@ -146,7 +146,15 @@ C#
 ```C#
 public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 {
-   AutoSaveTip.IsOpen = true;
+    if (!TipsHidden)
+    {
+        AutoSaveTip.IsOpen = true;
+    }
+}
+
+private void HideTipsCheckBox_Click(object sender, RoutedEventArgs e)
+{
+    TipsHidden = !TipsHidden;
 }
 ```
 
