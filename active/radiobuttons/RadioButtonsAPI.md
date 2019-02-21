@@ -32,7 +32,7 @@ An example of simple data binding of the ItemsSource with RadioButtons.
 ```C#
 public sealed partial class MainPage : Page
 {
-    public class RadioButtonItems
+    public class OptionDataModel
     {
         public string label;
         public override string ToString()
@@ -41,17 +41,16 @@ public sealed partial class MainPage : Page
         }
     }
 
-    List<RadioButtonItems> radioButtonItems;
+    List<OptionDataModel> radioButtonItems;
 
     public MainPage()
     {
         this.InitializeComponent();
 
-        radioButtonItems = new List<RadioButtonItems>();
-        radioButtonItems.Add(new RadioButtonItems() { label = "Item 1" });
-        radioButtonItems.Add(new RadioButtonItems() { label = "Item 2" });
-        radioButtonItems.Add(new RadioButtonItems() { label = "Item 3" });
-
+        radioButtonItems = new List<OptionDataModel>();
+        radioButtonItems.Add(new OptionDataModel() { label = "Item 1" });
+        radioButtonItems.Add(new OptionDataModel() { label = "Item 2" });
+        radioButtonItems.Add(new OptionDataModel() { label = "Item 3" });
     }
 }
 ```
@@ -62,12 +61,15 @@ Some groups of RadioButtons may want a multi-column layout. This is an example o
 ```xaml
 <preview:RadioButtons x:Name="RadioButtonGroup" Header="App Mode" MaximumColumns="3">
     <x:String>Column 1</x:String>
-    <x:String>Column 1</x:String>
     <x:String>Column 2</x:String>
+    <x:String>Column 3</x:String>
+    <x:String>Column 1</x:String>
     <x:String>Column 2</x:String>
     <x:String>Column 3</x:String>
 </preview:RadioButtons>
 ```
+
+![alt text](multicolumns.png)
 
 # API Details
 
