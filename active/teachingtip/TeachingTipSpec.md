@@ -227,7 +227,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 ### Add an icon
 
-An icon can be added to the side of the title and subtitle using the IconSource property.
+An icon can be added beside the title and subtitle using the IconSource property. Recommended icon sizes include 16px, 24px, and 32px. 
 
 XAML
 ```XAML
