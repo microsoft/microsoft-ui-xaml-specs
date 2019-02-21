@@ -23,7 +23,73 @@ The following example demonstrates how to create a small collective list of Radi
 ```
 
 # API Details
-<!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
+
+### RadioButtons
+
+```
+[WUXC_VERSION_PREVIEW]
+[webhosthidden]
+[contentproperty("Items")]
+[MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
+unsealed runtimeclass RadioButtons : Windows.UI.Xaml.Controls.Control
+{
+    RadioButtons();
+
+    Object ItemsSource;
+    Windows.Foundation.Collections.IVector<Object> Items{ get; };
+    Windows.UI.Xaml.DataTemplate ItemTemplate;
+
+    Windows.UI.Xaml.DependencyObject ContainerFromItem(Object item);
+    Windows.UI.Xaml.DependencyObject ContainerFromIndex(Int32 index);
+
+    [MUX_DEFAULT_VALUE("-1")]
+    Int32 SelectedIndex;
+    Object SelectedItem;
+    event Windows.UI.Xaml.Controls.SelectionChangedEventHandler SelectionChanged;
+
+    [MUX_DEFAULT_VALUE("1")]
+    Int32 MaximumColumns;
+    Object Header;
+
+    static Windows.UI.Xaml.DependencyProperty ItemsSourceProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty ItemsProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty ItemTemplateProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty SelectedIndexProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty SelectedItemProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty MaximumColumnsProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty HeaderProperty{ get; };
+}
+```
+
+### RadioButtons Automation Pier
+
+```
+[WUXC_VERSION_PREVIEW]
+[webhosthidden]
+unsealed runtimeclass RadioButtonsListViewItemAutomationPeer : Windows.UI.Xaml.Automation.Peers.ListViewItemAutomationPeer
+{
+    RadioButtonsListViewItemAutomationPeer(MU_XCP_NAMESPACE.RadioButtonsListViewItem owner);
+}
+```
+
+### RadioButtons Primitives
+
+```
+[WUXC_VERSION_PREVIEW]
+[webhosthidden]
+unsealed runtimeclass RadioButtonsListView : Windows.UI.Xaml.Controls.ListView
+{
+    RadioButtonsListView();
+}
+
+[WUXC_VERSION_PREVIEW]
+[webhosthidden]
+[default_interface]
+unsealed runtimeclass RadioButtonsListViewItem : Windows.UI.Xaml.Controls.ListViewItem
+{
+    RadioButtonsListViewItem();
+}
+```
 
 # API Notes
 
