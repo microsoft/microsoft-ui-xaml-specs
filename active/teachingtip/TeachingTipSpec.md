@@ -96,11 +96,11 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 ### Point to a UI element
 
-You can change the teaching tip to point to a specific UI element by setting the TeachingTipPlacementMode property. For a targeted teaching tip, this placement will be relative to the UI element target. For a non-targeted teaching tip, this placement will relative to app window.  
+You can add a pointer to the teaching tip by setting the PointerMode property. When PointerMode is set to auto, the pointer will automaticaly appear when SetAttach is used to make the teaching tip to appear near a specific UI element.
 
 XAML
 ```XAML
-<Button Content="Tip Example" Click="OnFirstSaveButtonClick">
+<Button x:Name="SaveButton" Content="Save" Click="OnFirstSaveButtonClick">
     <muxc:TeachingTip.Attach> 
         <muxc:TeachingTip x:Name="AutoSaveTip"
             Title="Saving automatically"
@@ -115,6 +115,7 @@ C#
 ```C#
 public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 {
+   TeachingTip.SetAttach(SaveButton, AutoSaveTip);
    AutoSaveTip.IsOpen = true;
 }
 ```
@@ -424,6 +425,13 @@ enum TeachingTipHeroPlacementMode
     Auto,
 };
 
+enum TeachingTipHeroPointerMode
+{
+    Auto,
+    On,
+    Off,
+};
+
 runtimeclass TeachingTipClosedEventArgs
 {
     TeachingTipCloseReason Reason{ get; };
@@ -471,6 +479,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
     Boolean IsLightDismissEnabled;
     TeachingTipPlacementMode PreferredPlacement;
     TeachingTipHeroPlacementMode HeroPlacement;
+    TeachingTipHeroPointerMode PointerMode;
 
     Windows.UI.Xaml.UIElement HeroContent;
     IconSource IconSource;
@@ -506,6 +515,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
     static Windows.UI.Xaml.DependencyProperty IsLightDismissEnabledProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty PreferredPlacementProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty HeroPlacementProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty PointerModeProperty{ get; };
 
     static Windows.UI.Xaml.DependencyProperty HeroContentProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty IconSourceProperty{ get; };
@@ -554,7 +564,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 | Content | * Can be customized to include text, images, videos, animation, checkboxes, hyperlinks, and any other XAML content. <br> * Will scroll if there is more content to show than tip height allows. See Scroll Bar. <br> * Placed below Subtitle and above Close/Action Button. <br><br> <a href="url"><img src="Content.PNG" width="400"></a> |
 | Close Button | * Will appear as an X Button in the top right corner by default and in the top left corner automatically for RTL languages. The close button may also be set to appear in the bottom right corner of the tip as a traditional button or be set to not show at all so that a custom close option may be implemented in the Content Area. <br> * If a tip is set to light-dismiss, no close button will appear at all. <br><br> <a href="url"><img src="HeaderClose.PNG" width="400"></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="url"><img src="FooterClose.PNG" width="400"></a> |
 | Action Button | * Allows the user to invoke a custom event. <br> * This is the only non-Close button provided out of the box. Other buttons may be implemented in the Content Area. <br><br> <a href="url"><img src="ActionButton.PNG" width="400"></a> |
-| Pointer | * Triangular extension of the tip body used to indicate that the tip is referring to on-screen UI element. <br> * Appears only when using a targeted tip. <br> * Prefers to center on target. <br> * Maintains a 12px margin from edges of the tip. <br> * Not animated. <br> * Will not have a shadow as shadows cannot yet be added to nonrectangular surfaces. <br><br> <a href="url"><img src="Pointer.PNG" width="400"></a> |
+| Pointer | * Triangular extension of the tip body that can be used to indicate that the tip is referring to on-screen UI element. <br> * When PointerMode is set to auto, the pointer will automatically appear on tips that are attached to a target and off for tips that are not attached to a target. <br> * Prefers to center on target. <br> * Maintains a 12px margin from edges of the tip. <br> * Not animated. <br> * Will not have a shadow as shadows cannot yet be added to nonrectangular surfaces. <br><br> <a href="url"><img src="Pointer.PNG" width="400"></a> |
 | Icon | * Added to the left of the Title and Subtitle by default and automatically moved to the right for RTL languages. <br><br> <a href="url"><img src="Icon.PNG" width="400"></a> |
 | Hero Content | * Hero Content is media that stretches to the edges of a tip. <br> * Can be placed at the top or bottom of a tip. <br><br> <a href="url"><img src="HeroContent.PNG" width="400"></a> |
 | Scroll Bar | * If the tip's contents are large enough to require scrolling, a scrollbar which will not intersect the Close (X) Button will be added to the content area. <br><br> <a href="url"><img src="ScrollBar.PNG" width="400"></a> |
