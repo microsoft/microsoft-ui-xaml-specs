@@ -8,7 +8,7 @@ However, using that method still left gaps in the narrator experience and StackP
 
 # Description
 
-RadioButtons is a class extension of ListView that enables you to create related lists of RadioButtons easily, while also fully supporting keyboarding and narrator functionality.
+RadioButtons is a new control that enables you to create related lists of RadioButtons easily, while also fully supporting keyboarding and narrator functionality.
 
 # Examples
 
@@ -20,6 +20,53 @@ The following example demonstrates how to create a small collective list of Radi
     <x:String>Light</x:String>
     <x:String>Windows Default</x:String>         
 </RadioButtons>
+```
+
+### DataBinding with RadioButtons
+An example of simple data binding of the ItemsSource with RadioButtons.
+
+```xaml
+<preview:RadioButtons x:Name="RadioButtonGroup" Header="App Mode" ItemsSource="{x:Bind radioButtonItems}" />
+```
+
+```C#
+public sealed partial class MainPage : Page
+{
+    public class RadioButtonItems
+    {
+        public string label;
+        public override string ToString()
+        {
+            return label;
+        }
+    }
+
+    List<RadioButtonItems> radioButtonItems;
+
+    public MainPage()
+    {
+        this.InitializeComponent();
+
+        radioButtonItems = new List<RadioButtonItems>();
+        radioButtonItems.Add(new RadioButtonItems() { label = "Item 1" });
+        radioButtonItems.Add(new RadioButtonItems() { label = "Item 2" });
+        radioButtonItems.Add(new RadioButtonItems() { label = "Item 3" });
+
+    }
+}
+```
+
+### Multiple Columns
+Some groups of RadioButtons may want a multi-column layout. This is an example on how to set that up.
+
+```xaml
+<preview:RadioButtons x:Name="RadioButtonGroup" Header="App Mode" MaximumColumns="3">
+    <x:String>Column 1</x:String>
+    <x:String>Column 1</x:String>
+    <x:String>Column 2</x:String>
+    <x:String>Column 2</x:String>
+    <x:String>Column 3</x:String>
+</preview:RadioButtons>
 ```
 
 # API Details
@@ -93,11 +140,12 @@ unsealed runtimeclass RadioButtonsListViewItem : Windows.UI.Xaml.Controls.ListVi
 
 # API Notes
 
-### Notable Properties
-The following properties similarly to how items do in ListView, however there are some behavioral differences due to the fact that these items function as grouped RadioButtons.
-
 | Name | Description |
 |:-:|:--|
 | Header | Places a text label above the list of RadioButtons and is read out by the narrator on focus. |
-| SelectedIndex | Gets or sets the index of the selected item. Selection is denoted by that item's RadioButton icon being checked. |
+| HeaderTemplate | Identifies the Header dependency property. |
+| SelectedItem | Gets or sets the index of the selected item. Selection is denoted by that item's RadioButton icon being checked. |
+| SelectedIndex | Gets or sets the selected item.|
 | Items | Gets or sets an object source used to generate the content of the ItemsControl. All items placed within the RadioButtons will get a RadioButton icon inline with the item. |
+| ItemsSource | Gets or sets an object source used to generate the content of the ItemsControl. |
+| MaximumColumns | Defines the number of columns to divide the RadioButton group items into. |
