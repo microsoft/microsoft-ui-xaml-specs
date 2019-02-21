@@ -74,10 +74,10 @@ Some groups of RadioButtons may want a multi-column layout. This is an example o
 ### RadioButtons
 
 ```
-[WUXC_VERSION_PREVIEW]
+namespace Microsoft.UI.Xaml.Controls
+{
 [webhosthidden]
 [contentproperty("Items")]
-[MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
 unsealed runtimeclass RadioButtons : Windows.UI.Xaml.Controls.Control
 {
     RadioButtons();
@@ -89,12 +89,10 @@ unsealed runtimeclass RadioButtons : Windows.UI.Xaml.Controls.Control
     Windows.UI.Xaml.DependencyObject ContainerFromItem(Object item);
     Windows.UI.Xaml.DependencyObject ContainerFromIndex(Int32 index);
 
-    [MUX_DEFAULT_VALUE("-1")]
     Int32 SelectedIndex;
     Object SelectedItem;
     event Windows.UI.Xaml.Controls.SelectionChangedEventHandler SelectionChanged;
 
-    [MUX_DEFAULT_VALUE("1")]
     Int32 MaximumColumns;
     Object Header;
 
@@ -106,35 +104,39 @@ unsealed runtimeclass RadioButtons : Windows.UI.Xaml.Controls.Control
     static Windows.UI.Xaml.DependencyProperty MaximumColumnsProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty HeaderProperty{ get; };
 }
+}
 ```
 
 ### RadioButtons Automation Pier
 
 ```
-[WUXC_VERSION_PREVIEW]
+namespace Microsoft.UI.Xaml.Automation.Peers
+{
 [webhosthidden]
 unsealed runtimeclass RadioButtonsListViewItemAutomationPeer : Windows.UI.Xaml.Automation.Peers.ListViewItemAutomationPeer
 {
-    RadioButtonsListViewItemAutomationPeer(MU_XCP_NAMESPACE.RadioButtonsListViewItem owner);
+    RadioButtonsListViewItemAutomationPeer(RadioButtonsListViewItem owner);
+}
 }
 ```
 
 ### RadioButtons Primitives
 
 ```
-[WUXC_VERSION_PREVIEW]
+namespace Microsoft.UI.Xaml.Controls.Primitives
+{
 [webhosthidden]
 unsealed runtimeclass RadioButtonsListView : Windows.UI.Xaml.Controls.ListView
 {
     RadioButtonsListView();
 }
 
-[WUXC_VERSION_PREVIEW]
 [webhosthidden]
 [default_interface]
 unsealed runtimeclass RadioButtonsListViewItem : Windows.UI.Xaml.Controls.ListViewItem
 {
     RadioButtonsListViewItem();
+}
 }
 ```
 
