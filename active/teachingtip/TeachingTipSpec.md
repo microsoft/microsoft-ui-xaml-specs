@@ -163,7 +163,9 @@ private void HideTipsCheckBox_Click(object sender, RoutedEventArgs e)
 
 ### Add buttons
 
-A standard "X" close button is automatically added to the top of a teaching tip. However, a custom close button can be added to the bottom of a teaching tip by setting the TeachingTipCloseButtonKind property to "Footer" and setting the CloseButtonText property to contain an appropriate message. When the TeachingTipCloseButtonKind property is set to "Auto", the header close button will be preferred unless CloseButtonText is set. A default close button can also be removed from teaching tips by setting the TeachingTipCloseButtonKind property to "None" which allows for custom close solutions to be implemented in the content area. 
+A standard "X" close button is automatically added next to the title of a teaching tip. However, a custom close button can be added to the bottom of a teaching tip by setting the CloseButtonText property. 
+
+**Note: no close button will appear on light-dismiss enabled tips**
 
 A custom action button can be added by setting ActionButtonText, ActionButtonCommand and the ActionButtonCommandParameter properties. 
 
@@ -176,7 +178,6 @@ XAML
             Subtitle="We save your changes as you go - so you never have to."
             ActionButtonText="Disable"
             ActionButtonCommand="DisableAutoSave"
-            CloseButtonKind="Footer"
             CloseButtonText="Got it!"
             Margin="12">
                 <CheckBox Content="Don't show tips at start up" Checked="HandleChecked" Unchecked="HandleUnchecked" />
@@ -387,13 +388,6 @@ public void OnTipClosing(object sender, TeachingTipClosingEventArgs args)
 ## API Details 
 
 ```c++ 
-enum TeachingTipCloseButtonKind
-{
-    Auto,
-    Header,
-    Footer,
-};
-
 enum TeachingTipCloseReason
 {
     CloseButton,
@@ -469,7 +463,6 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
     Windows.UI.Xaml.Input.ICommand ActionButtonCommand;
     Object ActionButtonCommandParameter;
 
-    TeachingTipCloseButtonKind CloseButtonKind;
     String CloseButtonText;
     Windows.UI.Xaml.Style CloseButtonStyle;
     Windows.UI.Xaml.Input.ICommand CloseButtonCommand;
@@ -505,7 +498,6 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
     static Windows.UI.Xaml.DependencyProperty ActionButtonCommandProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty ActionButtonCommandParameterProperty{ get; };
 
-    static Windows.UI.Xaml.DependencyProperty CloseButtonKindProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty CloseButtonTextProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty CloseButtonStyleProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty CloseButtonCommandProperty{ get; };
@@ -532,7 +524,6 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 |:-:|:--|
 | ShouldConstrainToRootBounds | Gets or sets a value that indicates whether the teaching tip will constrain to the bounds of its root. |
 | PreferredPlacement  | Gets or sets the default placement to be used for the teaching tip, in relation to its placement target if targeted. |
-| CloseButtonKind | Gets or sets a value that specifies where the close button, if any, is located.  Defaults to Auto.  |
 
 ### Methods   
 
@@ -608,5 +599,3 @@ Proposal for .Target property:
     </Button.Resources>
 </Button>
 ```
-
-* "None" was originally included as a CloseButtonKind so that developers could style a custom close button in the content area. Now that the close button can be more fully customized, is it necessary to have a "None" mode for CloseButtonKind? If "None" can be removed, can the API be further simplified by removing CloseButtonKind and using (CloseButtonText != null) to show button in footer and else in the header?
