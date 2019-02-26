@@ -1,6 +1,6 @@
 # Background
 
-The RadioButtons control is our answer to enabling better keyboarding and narrator support for RadioButtons that need to be presented in a related list.
+The RadioButtons control is our answer to enabling better keyboarding and narrator support for RadioButton elements that need to be presented in a related list.
 
 Currently, the only way to group single RadioButton elements today is through using a StackPanel and individually labeling each RadioButton through its GroupName property in order for narrator to read out the options somewhat understandably.
 
