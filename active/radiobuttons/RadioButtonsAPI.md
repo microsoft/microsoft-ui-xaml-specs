@@ -8,11 +8,11 @@ However, using that method still leaves gaps in the narrator experience and Stac
 
 # Description
 
-RadioButtons is a new control that enables you to create groups of RadioButton objects easily, while also correctly supporting keyboarding and narrator functionality.
+RadioButtons is a new control that enables you to create groups of RadioButton elements easily, while also correctly supporting keyboarding and narrator functionality.
 
 # Examples
 
-The following example demonstrates how to create a small collective group of RadioButton objects using the RadioButtons control.
+The following example demonstrates how to create a small collective group of RadioButton elements using the RadioButtons control.
 
 ```xaml
 <RadioButtons Header="App Mode" SelectedIndex="2">
@@ -56,7 +56,7 @@ public sealed partial class MainPage : Page
 ```
 
 ### Multiple Columns
-Some groups of RadioButton objects may want a multi-column layout. This is an example on how to set that up.
+Some groups of RadioButton elements may want a multi-column layout. This is an example on how to set that up.
 
 ```xaml
 <preview:RadioButtons x:Name="RadioButtonGroup" Header="App Mode" MaximumColumns="3">
@@ -146,7 +146,7 @@ unsealed runtimeclass RadioButtonsListViewItem : Windows.UI.Xaml.Controls.ListVi
 
 | Name | Description |
 |:-:|:--|
-| Header | Places a text label above the group of RadioButton objects and is read out by the narrator on focus. |
+| Header | Places a text label above the group of RadioButton elements and is read out by the narrator on focus. |
 | HeaderTemplate | Identifies the Header dependency property. |
 | SelectedItem | Gets or sets the index of the selected item. Selection is denoted by that item's RadioButton icon being checked. |
 | SelectedIndex | Gets or sets the selected item.|
