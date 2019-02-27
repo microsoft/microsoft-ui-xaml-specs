@@ -17,8 +17,6 @@ Provides calculated values that can be referenced as TemplatedParent sources whe
 
 # API Details
 
-### PersonPicture
-
 ```
 namespace Microsoft.UI.Xaml.Controls
 {
@@ -44,7 +42,13 @@ namespace Microsoft.UI.Xaml.Controls
 
 # API Notes
 
-| Name | Description |
+## Class: PersonPicture
+| Member Name | Description |
+|:- |:--|
+| TemplateSettings | Provides calculated values that can be referenced as TemplatedParent sources when defining templates for a PersonPicture control. Not intended for general use. |
+
+## Class: PersonPictureTemplateSettings 
+| Member Name | Description |
 |:- |:--|
 | EffectiveInitials | The initials that should be displayed in the control. Will be empty when image is specified or in group mode. |
 | EffectiveImageBrush | The calculated image brush populated with the specified ImageSource. |
