@@ -1,24 +1,25 @@
 # Background
 
-The RadioButtons control is our answer to enabling better keyboarding and narrator support for RadioButton elements that need to be presented in a related list.
+The RadioButtons control is our answer to enabling better keyboarding and narrator support for
+RadioButton elements that need to be presented in a grouped layout.
 
-Currently, the only way to group single RadioButton elements today is through using a StackPanel and
-individually labeling each RadioButton through its GroupName property in order for narrator to read out the
-options somewhat understandably.
+Currently, the only way to group single RadioButton elements today is through using a StackPanel
+and individually labeling each RadioButton through its GroupName property in order for narrator to
+read out the options somewhat understandably.
 
-However, using that method still leaves gaps in the narrator experience and StackPanel does not behave the
-way users expect when navigating the list via keyboard - RadioButtons was introduced to help solve those
-issues.
+However, using that method still leaves gaps in the narrator experience and StackPanel does not
+behave the way users expect when navigating the list via keyboard - RadioButtons was introduced to
+help solve those issues.
 
 # Description
 
-RadioButtons is a new control that enables you to create groups of RadioButton elements easily, while also
-correctly supporting keyboarding and narrator functionality.
+RadioButtons is a new control that enables you to create groups of RadioButton elements easily,
+while also correctly supporting keyboarding and narrator functionality.
 
 # Examples
 
-The following example demonstrates how to create a small collective group of RadioButton elements using the
-RadioButtons control.
+The following example demonstrates how to create a small collective group of RadioButton elements
+using the RadioButtons control.
 
 ```xaml
 <muxc:RadioButtons Header="App Mode" SelectedIndex="2">
@@ -64,7 +65,8 @@ public sealed partial class MainPage : Page
 ```
 
 ## Multiple Columns
-Some groups of RadioButton elements may want a multi-column layout. This is an example on how to set that up.
+Some groups of RadioButton elements may want a multi-column layout. This is an example on how to
+set that up.
 
 ```xaml
 <muxc:RadioButtons Header="App Mode" MaxColumns="3">
@@ -176,4 +178,5 @@ For example, in this scenario:
 </preview:RadioButtons>
 ```
 
-The **GroupName** property set on the RadioButton elements above will be ignored by the narrator/screen reader.
+The **GroupName** property set on the RadioButton elements above will be ignored by the narrator/
+screen reader.
