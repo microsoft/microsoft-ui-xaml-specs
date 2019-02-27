@@ -581,21 +581,3 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 | Tip is first focused on by tabbing through to the tip | Targeted Tip: <br> Tip is injected to tab stop right after its target element. User tabs to reach tip and put it into focus. <br><br> Untargeted Tip: <br> Tip is injected to tab stop as the last item to be created. User tabs to reach tip and put it into focus. <br><br> Light-dismiss: <br> Automatically take focus. | Default Tab Stop, Title, and Subtitle. <br><br> Ex: “X Button, Tip Title, Tip Subtitle.” |
 | Tip is tabbed through | Tab Button: <br> Will go through all actionable items regardless of group in order. When tab is pressed on the last element in the teaching tip, focus will cycle to the first element in the teaching tip.  <br> <br> Arrow keys: <br> Will be able to explore groups in the specified directions. <br> <br> Enter and Escape: <br> Will result in closing the tip. <br> <br> Spacebar: <br> Will select the component focused on. <br> <br> Home and End: <br> Do not have use unless within a XAML component that supports their functionality | Name of XAML or visual component. Ex:<br><br> “X Button” <br><br> “Save Button” <br><br> “Learn More Hyperlink” | 
 | Tip is dismissed | 1. X Button is pressed. <br> 2. Close Button is pressed. <br> 3. Action Button is pressed. <br> Tab focus goes back to where it should be, the predecessor. | Nothing | 
-
-## Open Questions
-
-* What is the right approach for attaching TeachingTip to UI Elements? 
-
-Proposal for .Target property:
- ```XAML
-<Button x:Name="MyButton" Content="Tip Example">
-    <Button.Resources> 
-        <muxc:TeachingTip x:Name="EnableNewSettingsTip"
-            Target="{x:Bind MyButton}"
-            Title="Title string"
-            Subtitle="Body text in a minimum height tip."
-            Closing="OnTipClosing">
-        </muxc:TeachingTip>
-    </Button.Resources>
-</Button>
-```
