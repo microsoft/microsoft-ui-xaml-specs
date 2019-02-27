@@ -171,11 +171,11 @@ Properties set on a RadioButton that is placed in a RadioButtons control are ign
 For example, in this scenario:
 
 ```xaml
-<preview:RadioButtons Header="App Mode">
+<muxc:RadioButtons Header="App Mode">
     <RadioButton GroupName="group test">test 1</RadioButton>
     <RadioButton GroupName="group test">test 2</RadioButton>
     <RadioButton GroupName="group test">test 3</RadioButton>
-</preview:RadioButtons>
+</muxc:RadioButtons>
 ```
 
 The **GroupName** property set on the RadioButton elements above will be ignored by the narrator/
