@@ -40,6 +40,32 @@ namespace Microsoft.UI.Xaml.Controls
 }
 ```
 
+# Examples
+
+This is intended for use in the style of the `PersonPicture` control. Sample usage:
+
+```xaml
+    <Style TargetType="local:PersonPicture">
+        ...
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:PersonPicture">
+                    <Grid x:Name="RootGrid">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <!-- Visual State when a Photo is available for display -->
+                                <VisualState x:Name="Photo">
+                                    <VisualState.Setters>
+                                        <Setter Target="PersonPictureEllipse.Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.EffectiveImageBrush}"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                    ...
+                        <TextBlock
+                            ...
+                            Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.EffectiveInitials}" />
+                        
+```
+
 # API Notes
 
 ## Class: PersonPicture
