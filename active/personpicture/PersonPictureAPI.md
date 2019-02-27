@@ -1,15 +1,10 @@
 # Background
 
-The best practice for controls is that the XAML file includes all UI related colors, sizes and visual states.
-XAML markup has expressiveness limitations that require the controls to do some calculations or value conversions
-in code-behind and expose those results to the XAML to bind from. The pattern we have established for that is 
-having a TemplateSettings property on the control of type <I>Foo</I>Control, where <I>Foo</I> is the name of 
-the control. See [this doc page](https://docs.microsoft.com/en-us/windows/uwp/xaml-platform/template-settings-classes)
-for more details. 
+Xaml controls are typically implemented using an element tree that’s defined in a template.  For example the template for a ComboBox control has a TextBlock in it to display the selected value.
 
-PersonPicture.TemplateSettings and the new type PersonPictureTemplateSettings are needed to help move some
-visual state management logic out of the PersonPicture code implementation into the XAML file.
+Several controls have properties that are only expected to be useful to these templates, and so there’s a common pattern for the control to expose them in a TemplateSettings property.  For example [ComboBox.TemplateSettings](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.ComboBox.TemplateSettings) is used by the ComboBox’s template.  See [this doc page](https://docs.microsoft.com/en-us/windows/uwp/xaml-platform/template-settings-classes) for more details. 
 
+This API update introduces this pattern to the PersonPicture control: a new TemplateSettings property and associated PersonPictureTemplateSettings class.
 
 # Description
 
