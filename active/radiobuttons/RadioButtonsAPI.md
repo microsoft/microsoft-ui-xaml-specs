@@ -166,7 +166,7 @@ unsealed runtimeclass RadioButtonsListViewItem : Windows.UI.Xaml.Controls.ListVi
 | MaxColumns | Defines the number of columns used to determine the control's layout |
 
 ## RadioButton Elements in the RadioButtons controls
-Properties set on a RadioButton that is placed in a RadioButtons control are ignored by the narrator.
+Properties set on a RadioButton that is placed in a RadioButtons control are ignored by Narrator.
 
 For example, in this scenario:
 
