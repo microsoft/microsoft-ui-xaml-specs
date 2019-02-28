@@ -35,7 +35,7 @@ using the RadioButtons control.
 An example of simple data binding of the ItemsSource with RadioButtons.
 
 ```xaml
-<preview:RadioButtons Header="App Mode" ItemsSource="{x:Bind radioButtonItems}" />
+<muxc:RadioButtons Header="App Mode" ItemsSource="{x:Bind radioButtonItems}" />
 ```
 
 ```C#
