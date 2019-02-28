@@ -23,9 +23,9 @@ using the RadioButtons control.
 
 ```xaml
 <muxc:RadioButtons Header="App Mode" SelectedIndex="2">
-    <x:String>Dark</x:String>
-    <x:String>Light</x:String>
-    <x:String>Windows Default</x:String>         
+    <x:String>Item 1</x:String>
+    <x:String>Item 2</x:String>
+    <x:String>Item 3</x:String>         
 </muxc:RadioButtons>
 ```
 
@@ -158,8 +158,8 @@ unsealed runtimeclass RadioButtonsListViewItem : Windows.UI.Xaml.Controls.ListVi
 |:-:|:--|
 | Header | Places a text label above the group of RadioButton elements and is exposed to the UIA tree via the DataContext property on the RadioButtons control's ContentPresenter. |
 | HeaderTemplate | The template that specifies the visualization of the header object |
-| SelectedItem | Gets or sets the index of the selected item. Selection is denoted by that item's RadioButton icon being checked. |
-| SelectedIndex | Gets or sets the selected item.|
+| SelectedItem | Gets or sets the selected item. Selection is denoted by that item's RadioButton icon being checked. |
+| SelectedIndex | Gets or sets the selected index. Selection is denoted by that item's RadioButton icon being checked.|
 | Items | Gets or sets an object source used to generate the content of the ItemsControl. All items placed within the RadioButtons control will get the content of a generated RadioButton. |
 | ItemsSource | Gets or sets an object source used to generate the content of the ItemsControl. |
 | ItemTemplate | The template set on any generated RadioButton elements within the RadioButtons control. If the root of the ItemTemplate is a RadioButton it will be used as the generated container. |
