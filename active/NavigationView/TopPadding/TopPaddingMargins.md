@@ -32,9 +32,10 @@ To further adjust the position of NavigationView's header area, override the *Na
 
 
 # API Notes
-
-NavigationView.IsTitleBarPaddingEnabled - Specifies whether to automatically push NavigationView's interactive content down by the height of the title bar when the NavigationView is a root element of an app that extends into the title bar. 
-The default value is True.
+## Class: NavigationView
+| Member Name | Description |
+|:- |:--|
+| IsTitleBarPaddingEnabled | Specifies whether to automatically push NavigationView's interactive content down by the height of the title bar when the NavigationView is a root element of an app that extends into the title bar. The default value is True. |
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
