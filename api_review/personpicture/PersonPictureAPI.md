@@ -1,13 +1,12 @@
 # Background
 
-Xaml controls are typically implemented using an element tree that’s defined in a template.  
+Xaml controls are typically implemented using an element tree that’s defined in a template. 
 For example the template for a ComboBox control has a TextBlock in it to display the selected value.
 
 Several controls have properties that are only expected to be useful to these templates, 
-and so there’s a common pattern for the control to expose them in a TemplateSettings property.  
+and so there’s a common pattern for the control to expose them in a TemplateSettings property. 
 For example [ComboBox.TemplateSettings](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.ComboBox.TemplateSettings) 
-is used by the ComboBox’s template.  
-See [this doc page](https://docs.microsoft.com/en-us/windows/uwp/xaml-platform/template-settings-classes) for more details. 
+is used by the ComboBox’s template. See [this doc page](https://docs.microsoft.com/en-us/windows/uwp/xaml-platform/template-settings-classes) for more details. 
 
 This API update introduces this pattern to the PersonPicture control: 
 a new TemplateSettings property and associated PersonPictureTemplateSettings class.
@@ -79,4 +78,4 @@ This is intended for use in the style of the `PersonPicture` control. Sample usa
 | Member Name | Description |
 |:- |:--|
 | EffectiveInitials | The initials that should be displayed in the control. Will be empty when image is specified or in group mode. |
-| EffectiveImageBrush | The calculated image brush populated with the specified ImageSource. |
+| EffectiveImageBrush | The calculated image brush populated with the appropriate picture for the person. |
