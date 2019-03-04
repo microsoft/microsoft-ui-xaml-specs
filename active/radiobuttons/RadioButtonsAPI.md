@@ -164,19 +164,3 @@ unsealed runtimeclass RadioButtonsListViewItem : Windows.UI.Xaml.Controls.ListVi
 | ItemsSource | Gets or sets an object source used to generate the content of the ItemsControl. |
 | ItemTemplate | The template set on any generated RadioButton elements within the RadioButtons control. If the root of the ItemTemplate is a RadioButton it will be used as the generated container. |
 | MaxColumns | Defines the number of columns used to determine the control's layout |
-
-## RadioButton Elements in the RadioButtons controls
-Properties set on a RadioButton that is placed in a RadioButtons control are ignored by Narrator.
-
-For example, in this scenario:
-
-```xaml
-<muxc:RadioButtons Header="App Mode">
-    <RadioButton GroupName="group test">test 1</RadioButton>
-    <RadioButton GroupName="group test">test 2</RadioButton>
-    <RadioButton GroupName="group test">test 3</RadioButton>
-</muxc:RadioButtons>
-```
-
-The **GroupName** property set on the RadioButton elements above will be ignored by the narrator/
-screen reader.
