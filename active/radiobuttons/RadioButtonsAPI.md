@@ -1,15 +1,14 @@
 # Background
+Radio buttons are used for mutually exclusive options in an app. When the users selects
+one of a group, the previously-checked button is unchecked. Consequently, radio buttons
+must be grouped, which is done with the Xaml [RadioButton](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.RadioButton)
+control by setting the GroupName property on each button to the same value.
 
-The RadioButtons control is our answer to enabling better keyboarding and narrator support for
-RadioButton elements that need to be presented in a grouped layout.
+That mechanism is awkward, and doesn't by default give the right keyboarding or
+accessibility behavior.
 
-Currently, the only way to group single RadioButton elements today is through using a StackPanel
-and individually labeling each RadioButton through its GroupName property in order for narrator to
-read out the options somewhat understandably.
-
-However, using that method still leaves gaps in the narrator experience and StackPanel does not
-behave the way users expect when navigating the list via keyboard - RadioButtons was introduced to
-help solve those issues.
+The RadioButtons control in this spec is introduced to help solve those issues.
+It's like a ListView control, but the items in the list are RadioButton controls.
 
 # Description
 
