@@ -135,7 +135,7 @@ XAML
             Subtitle="We save your changes as you go - so you never have to."
             Margin="12">
                 <StackPanel>
-                    <CheckBox x:Name="HideTipsCheckBox" Content="Don't show tips at start up" Click="HideTipsCheckBox_Click" />
+                    <CheckBox x:Name="HideTipsCheckBox" Content="Don't show tips at start up" IsChecked="{x:Bind HidingTips}" />
                     <TextBlock>You can change your tip preferences in <Hyperlink NavigateUri="app:/item/SettingsPage">Settings</Hyperlink> if you change your mind.</TextBlock>
                 </StackPanel>
         </muxc:TeachingTip>
@@ -147,15 +147,10 @@ C#
 ```C#
 public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 {
-    if (!TipsHidden)
+    if (!HidingTips)
     {
         AutoSaveTip.IsOpen = true;
     }
-}
-
-private void HideTipsCheckBox_Click(object sender, RoutedEventArgs e)
-{
-    TipsHidden = !TipsHidden;
 }
 ```
 
@@ -180,7 +175,7 @@ XAML
             ActionButtonCommand="DisableAutoSave"
             CloseButtonText="Got it!"
             Margin="12">
-                <CheckBox Content="Don't show tips at start up" Checked="HandleChecked" Unchecked="HandleUnchecked" />
+                <CheckBox Content="Don't show tips at start up" IsChecked="{x:Bind HidingTips}" />
                 <p>You can change your tip preferences in <a href="app:/item/SettingsPage">Settings</a> if you change your mind.</p>
         </muxc:TeachingTip>
     </muxc:TeachingTip.Attach>
@@ -191,7 +186,10 @@ C#
 ```C#
 public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 {
-    TeachingTipExample.IsOpen=true;
+    if (!HidingTips)
+    {
+        AutoSaveTip.IsOpen = true;
+    }
 }
 ```
 
