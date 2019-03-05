@@ -342,6 +342,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 The close event of a teaching tip can be deffered to allow time for an action or custom animation to occur. 
 
+XAML
 ```XAML
 <Button Content="Tip Example">
     <muxc:TeachingTip.Attach> 
@@ -354,8 +355,8 @@ The close event of a teaching tip can be deffered to allow time for an action or
 </Button>
 ```
 
+C#
 ```C#
-
 public void OnTipClosing(object sender, TeachingTipClosingEventArgs args)
 {
     if (args.Reason == TeachingTipCloseReason.CloseButton)
