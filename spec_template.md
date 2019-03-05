@@ -51,19 +51,13 @@ example code with each description. The general format is:
 
 # Remarks
 <!-- Explanation and guidance that doesn't fit into the Examples
-section.  For example, see the Remarks for the MediaPlayerElement 
-(https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.MediaPlayerElement#remarks). -->
-
-
-# API Notes
-<!-- Give a one or two line description of each API (type
-and member), or at least the ones that aren't obvious
-from their name.  These descriptions are what show up
-in IntelliSense. -->
-
+section. -->
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
+<!-- For types and members whose functionality isn't clear from the name,
+add a "/// One or two line description" comment above the definition.  This will
+become the IntelliSense text. -->
 
 # Appendix
 <!-- Anything else that you want to write down for posterity, but 
