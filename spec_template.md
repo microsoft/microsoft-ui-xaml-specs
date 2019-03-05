@@ -50,14 +50,14 @@ example code with each description. The general format is:
 
 
 # Remarks
-<!-- Explanation and guidance that doesn't fit into the Examples
-section. -->
+<!-- Explanation and guidance that doesn't fit into the Examples section. -->
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 <!-- For types and members whose functionality isn't clear from the name,
-add a "/// One or two line description" comment above the definition.  This will
-become the IntelliSense text. -->
+add a "/// One or two line description" comment above the definition.
+By practice (not by automation) this will be copied to docs.microsoft.com to the member page
+and IntelliSense text. -->
 
 # Appendix
 <!-- Anything else that you want to write down for posterity, but 
