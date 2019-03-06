@@ -5,7 +5,7 @@ This control contol allows apps to present users with menus containing multiple 
 
 # Examples
 
-Add two or more `RadioMenuFlyoutItem`s to the content of *MenuBarItem*, *MenuFlyout*, or *MenuFlyoutSubItem*.
+Add two or more *RadioMenuFlyoutItems* to the content of *MenuBarItem*, *MenuFlyout*, or *MenuFlyoutSubItem*.
 
 ![Three radio menu flyout items in a View goup that allow a user to select the size of icons](RadioMenuFlyoutItems.png)
 
@@ -16,7 +16,8 @@ Add two or more `RadioMenuFlyoutItem`s to the content of *MenuBarItem*, *MenuFly
     <muxc:RadioMenuFlyoutItem Text="Large icons"/>
 </MenuFlyoutSubItem>
 ````
-<br/>
+
+
 For multiple groupings of radio buttons within a single menu, be sure to specify the `GroupName` property of each set.
 
 ![Two groups of radio menu flyout items within a View menu bar item](RadioMenuFlyoutItems2.png)
