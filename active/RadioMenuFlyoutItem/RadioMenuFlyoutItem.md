@@ -8,7 +8,7 @@ The new RadioMenuFlyoutItem in this spec is a MenuFlyoutItem that displays and b
 
 # Description
 A radio button menu flyout item is a menu item that is mutually exclusive with other menu items in its group. 
-This contol allows apps to present users with menus containing multiple options, where a user would choose only of these options at a given time.
+This control allows apps to present users with menus containing multiple options, where a user would choose only of these options at a given time.
 
 
 # Examples
