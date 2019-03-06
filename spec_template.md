@@ -54,10 +54,12 @@ example code with each description. The general format is:
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
+
 <!-- For types and members whose functionality isn't clear from the name,
 add a "/// One or two line description" comment above the definition.
-By practice (not by automation) this will be copied to docs.microsoft.com to the member page
-and IntelliSense text. -->
+In practice (not by automation) this will be copied to docs.microsoft.com to the member page
+and IntelliSense text. For properties, specify the default value of the property if it
+isn't the type's default (for example an int-typed property that doesn't default to zero). -->
 
 # Appendix
 <!-- Anything else that you want to write down for posterity, but 
