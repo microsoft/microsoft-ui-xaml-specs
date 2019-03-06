@@ -22,15 +22,15 @@ The teaching tip has several states, including these notable ones.
 
 A teaching tip can point to a specific UI element to enhance contextual clarity of the information it is presenting. 
 
-<a href="url"><img src="TeachingTipPointerSample.jpg" height="600"></a>
+![A sample app with a teaching tip pointing at the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipPointerSample.jpg)
 
 A teaching tip can be used without a pointer when the information that it is presenting is not specific to a UI element. 
 
-<a href="url"><img src="TeachingTipSampleApp.jpg" height="600"></a>
+![A sample app with a teaching tip in the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipSampleApp.jpg)
 
 A teaching tip can require manual acknowledgement before dismissing or a teaching tip may also be light-dismiss enabled so that it will dismiss when a user scrolls or interacts with other elements of the application.
 
-<a href="url"><img src="TeachingTipLightDismissSample.jpg" height="600"></a>
+![A sample app with a light-dismiss teaching tip in the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to."](TeachingTipLightDismissSample.jpg)
 
 
 ### Create a teaching tip
@@ -63,7 +63,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 Here's the result when this code runs and the user clicks the button.
 
-<a href="url"><img src="TeachingTipSampleApp.jpg" height="600"></a>
+![A sample app with a teaching tip in the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipSampleApp.jpg)
 
 ### Add a margin 
 
@@ -90,7 +90,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 }
 ```
 
-<a href="url"><img src="TeachingTipMarginSample.jpg" height="600"></a>
+![A sample app with a teaching tip positioned toward, but not fully against, the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipMarginSample.jpg)
 
 ### Point to a UI element
 
@@ -118,7 +118,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 }
 ```
 
-<a href="url"><img src="TeachingTipPointerSample.jpg" height="600"></a>
+![A sample app with a teaching tip pointing at the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipPointerSample.jpg)
 
 ### Add content
 
@@ -152,7 +152,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 }
 ```
 
-<a href="url"><img src="TeachingTipContentSample.jpg" height="600"></a>
+![A sample app with a teaching tip pointing at the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." In the content area of the teaching tip is a CheckBox labeled "Don't show tips at startup" and underneath is text that reads "You can change your tip preferences in Settings if you change your mind" where "Settings" is a link to the app's settings page. There is a close button on the top right corner of the teaching tip.](TeachingTipContentSample.jpg)
 
 ### Add buttons
 
@@ -191,7 +191,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 }
 ```
 
-<a href="url"><img src="TeachingTipButtonsSample.jpg" height="600"></a>
+![A sample app with a teaching tip pointing at the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." In the content area of the teaching tip is a CheckBox labeled "Don't show tips at startup" and underneath is text that reads "You can change your tip preferences in Settings if you change your mind" where "Settings" is a link to the app's settings page. At the bottom of the teaching are two buttons, a gray one on the left that reads "Disable" and a blue one on the right that reads "Got it!"](TeachingTipButtonsSample.jpg)
 
 ### Hero content
 
@@ -221,7 +221,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 }
 ```
 
-<a href="url"><img src="TeachingTipHeroContentSample.jpg" height="600"></a>
+![A sample app with a teaching tip pointing at the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." At the bottom of the teaching tip is a border-to-border picture of a giraffe. There is a close button on the top right corner of the teaching tip.](TeachingTipHeroContentSample.jpg)
 
 ### Add an icon
 
@@ -249,7 +249,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 }
 ```
 
-<a href="url"><img src="TeachingTipIconSample.jpg" height="600"></a>
+![A sample app with a teaching tip pointing at the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." To the left of the title and subtitle is a floppy disk icon. There is a close button on the top right corner of the teaching tip.](TeachingTipIconSample.jpg)
 
 ### Enable light-dismiss
 
@@ -277,7 +277,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 }
 ```
 
-<a href="url"><img src="TeachingTipLightDismissSample.jpg" height="600"></a>
+![A sample app with a light-dismiss teaching tip in the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to."](TeachingTipLightDismissSample.jpg)
 
 ### Preferred placement
 
@@ -305,7 +305,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 }
 ```
 
-<a href="url"><img src="TeachingTipPreferredPlacementSample.jpg" height="600"></a>
+![A sample app with a teaching tip in the top left corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipPreferredPlacementSample.jpg)
 
 ### Escaping window bounds
 
@@ -334,7 +334,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 }
 ```
 
-<a href="url"><img src="TeachingTipOutOfWindowBoundsSample.jpg" height="600"></a>
+![A sample app with a teaching tip outside of the app's bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipOutOfWindowBoundsSample.jpg)
 
 ### Deferred close
 
@@ -546,16 +546,16 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 
  | Component |  Notes |
 |:---:|:---|
-| Container | * The container is the body of the tip and encapsulates all the tip components. <br> * Nonmodal. <br> * If content height exceeds max height or width, vertical scrolling will be enabled. See Scroll. <br> * For visibility concerns, the container has a border around the outer edge, which adheres to the pointer if present. See Pointer. <br> * For visibility concerns, the top edge of the container has a 1px highlight which also adheres to the pointer if present. See Pointer. <br><br> <a href="url"><img src="Container.PNG" width="400"></a> |
-| Title| * Semi-bolded. <br> * Text wraps at Close (X) Button and Container border. <br><br> <a href="url"><img src="Title.PNG" width="400"></a> |
-| Subtitle | * Text wraps at Close (X) Button and Container border. <br><br> <a href="url"><img src="Subtitle.PNG" width="400"></a> |
-| Content | * Can be customized to include text, images, videos, animation, checkboxes, hyperlinks, and any other XAML content. <br> * Will scroll if there is more content to show than tip height allows. See Scroll Bar. <br> * Placed below Subtitle and above Close/Action Button. <br><br> <a href="url"><img src="Content.PNG" width="400"></a> |
-| Close Button | * Will appear as an X Button in the top right corner by default and in the top left corner automatically for RTL languages. The close button may also be set to appear in the bottom right corner of the tip as a traditional button or be set to not show at all so that a custom close option may be implemented in the Content Area. <br> * If a tip is set to light-dismiss, no close button will appear at all. <br><br> <a href="url"><img src="HeaderClose.PNG" width="400"></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="url"><img src="FooterClose.PNG" width="400"></a> |
-| Action Button | * Allows the user to invoke a custom event. <br> * This is the only non-Close button provided out of the box. Other buttons may be implemented in the Content Area. <br><br> <a href="url"><img src="ActionButton.PNG" width="400"></a> |
-| Pointer | * Triangular extension of the tip body that can be used to indicate that the tip is referring to on-screen UI element. <br> * When PointerMode is set to auto, the pointer will automatically appear on tips that are attached to a target and off for tips that are not attached to a target. <br> * Prefers to center on target. <br> * Maintains a 12px margin from edges of the tip. <br> * Not animated. <br> * Will not have a shadow as shadows cannot yet be added to nonrectangular surfaces. <br><br> <a href="url"><img src="Pointer.PNG" width="400"></a> |
-| Icon | * Added to the left of the Title and Subtitle by default and automatically moved to the right for RTL languages. <br><br> <a href="url"><img src="Icon.PNG" width="400"></a> |
-| Hero Content | * Hero Content is media that stretches to the edges of a tip. <br> * Can be placed at the top or bottom of a tip. <br><br> <a href="url"><img src="HeroContent.PNG" width="400"></a> |
-| Scroll Bar | * If the tip's contents are large enough to require scrolling, a scrollbar which will not intersect the Close (X) Button will be added to the content area. <br><br> <a href="url"><img src="ScrollBar.PNG" width="400"></a> |
+| Container | * The container is the body of the tip and encapsulates all the tip components. <br> * Nonmodal. <br> * If content height exceeds max height or width, vertical scrolling will be enabled. See Scroll. <br> * For visibility concerns, the container has a border around the outer edge, which adheres to the pointer if present. See Pointer. <br> * For visibility concerns, the top edge of the container has a 1px highlight which also adheres to the pointer if present. See Pointer. <br><br> ![An empty teaching tip.](Container.PNG) |
+| Title| * Semi-bolded. <br> * Text wraps at Close (X) Button and Container border. <br><br> ![A teaching tip with a title and subtitle populated with sample text.](Title.PNG) |
+| Subtitle | * Text wraps at Close (X) Button and Container border. <br><br> ![A teaching tip with a subtitle that reads "Body text in a minimum height tip.](Subtitle.PNG) |
+| Content | * Can be customized to include text, images, videos, animation, checkboxes, hyperlinks, and any other XAML content. <br> * Will scroll if there is more content to show than tip height allows. See Scroll Bar. <br> * Placed below Subtitle and above Close/Action Button. <br><br> ![A teaching tip with a sample title and subtitle. The teaching tip has a picture of a mountain in the content area.](Content.PNG) |
+| Close Button | * Will appear as an X Button in the top right corner by default and in the top left corner automatically for RTL languages. The close button may also be set to appear in the bottom right corner of the tip as a traditional button or be set to not show at all so that a custom close option may be implemented in the Content Area. <br> * If a tip is set to light-dismiss, no close button will appear at all. <br><br> ![A teaching tip with a sample title and subtitle. There is a close button in the top right corner.](HeaderClose.PNG) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![A teaching tip with a sample title and subtitle. In the teaching tip's content area is a CheckBox labeled "Don't show tips at startup. At the bottom of the teaching tip is a button that reads "Got it".](FooterClose.PNG) |
+| Action Button | * Allows the user to invoke a custom event. <br> * This is the only non-Close button provided out of the box. Other buttons may be implemented in the Content Area. <br><br> ![A teaching tip with a sample title and subtitle. At the bottom of the tip are two buttons, a blue button on the left that reads "Default" and a gray button on the right that reads "Secondary".](ActionButton.PNG) |
+| Pointer | * Triangular extension of the tip body that can be used to indicate that the tip is referring to on-screen UI element. <br> * When PointerMode is set to auto, the pointer will automatically appear on tips that are attached to a target and off for tips that are not attached to a target. <br> * Prefers to center on target. <br> * Maintains a 12px margin from edges of the tip. <br> * Not animated. <br> * Will not have a shadow as shadows cannot yet be added to nonrectangular surfaces. ![An empty teaching tip with a triangular pointer centered outward on its bottom edge.](Pointer.PNG) |
+| Icon | * Added to the left of the Title and Subtitle by default and automatically moved to the right for RTL languages. <br><br> ![A teaching tip with a sample title and subtitle. To the left of the title is a sample icon showing a graph of connected dots.](Icon.PNG) |
+| Hero Content | * Hero Content is media that stretches to the edges of a tip. <br> * Can be placed at the top or bottom of a tip. <br><br> ![A teaching tip with a sample title and subtitle. Above the title and subtitle is a large border-to-border picture of a giraffe.](HeroContent.PNG) |
+| Scroll Bar | * If the tip's contents are large enough to require scrolling, a scrollbar which will not intersect the Close (X) Button will be added to the content area. <br><br> ![A tall teaching tip with a scrollbar on the right a long string of "Lorem ipsum" text in the body.](ScrollBar.PNG) |
 
 ### Behavioral Components
 
