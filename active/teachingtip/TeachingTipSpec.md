@@ -1,6 +1,4 @@
-# Teaching tip
-
-## Description
+# Description
 
 A teaching tip is a semi-persistent and content-rich flyout that provides contextual information. It is often used for informing, reminding, and teaching users about important and new features that may enhance their experience.
 
@@ -18,7 +16,7 @@ Because teaching tip is transient, it would not be the recommended control for p
 <!-- Explain why TT is not recommended for notifications --> 
 
 
-## Examples
+# Examples
 
 The teaching tip has several states, including these notable ones.
 
@@ -35,7 +33,7 @@ A teaching tip can require manual acknowledgement before dismissing or a teachin
 <a href="url"><img src="TeachingTipLightDismissSample.jpg" height="600"></a>
 
 
-## Create a teaching tip
+### Create a teaching tip
 
 <!-- Use the Password property to get or set the contents of the PasswordBox. You can do this in the handler for the PasswordChanged event to perform validation while the user enters the password. Or, you can use another event, like a button Click, to perform validation after the user completes the text entry. -->
 
@@ -375,16 +373,43 @@ public void OnTipClosing(object sender, TeachingTipClosingEventArgs args)
 }
 ```
 
+# Remarks
+
 ### Related articles 
 
 * [Dialogs and flyouts](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/index)
 
-## Recommendations
+### Recommendations
 * Tips are impermanent and should not contain information or options that are critical to the experience of an application. 
 * Try to avoid showing teaching tips too often. Teaching tips are most likely to each recieve individual attention when they are staggered throughout long sessions or across multiple sessions.    
 * Keep tips succint and their topic clear. Research shows users, on average, only read 3-5 words and only comprehend 2-3 words before deciding whether to interact with a tip. 
 
-## API Details 
+# API Notes
+
+### Notable Properties  
+
+| Name | Description |
+|:-:|:--|
+| ShouldConstrainToRootBounds | Gets or sets a value that indicates whether the teaching tip will constrain to the bounds of its root. |
+| PreferredPlacement  | Gets or sets the default placement to be used for the teaching tip, in relation to its placement target if targeted. |
+
+### Methods   
+
+| Name | Description |
+|:-:|:--|
+| SetAttach | Associates the specified teaching tip with the specified UIElement. |
+| GetAttach | Gets the teaching tip associated with the specified element. |
+
+### Events    
+
+| Name | Description |
+|:-:|:--|
+| ActionButtonClick | Occurs after the action button has been tapped. |
+| Closing |Occurs just before the tip begins to close. |
+| Closed | Occurs after the tip is closed. |
+| CloseButtonClick | Occurs after the close button has been tapped. |
+
+# API Details 
 
 ```c++ 
 enum TeachingTipCloseReason
@@ -515,36 +540,9 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 }
 ```
 
-## API Notes
+# Appendix
 
-### Notable Properties  
-
-| Name | Description |
-|:-:|:--|
-| ShouldConstrainToRootBounds | Gets or sets a value that indicates whether the teaching tip will constrain to the bounds of its root. |
-| PreferredPlacement  | Gets or sets the default placement to be used for the teaching tip, in relation to its placement target if targeted. |
-
-### Methods   
-
-| Name | Description |
-|:-:|:--|
-| SetAttach | Associates the specified teaching tip with the specified UIElement. |
-| GetAttach | Gets the teaching tip associated with the specified element. |
-
-### Events    
-
-| Name | Description |
-|:-:|:--|
-| ActionButtonClick | Occurs after the action button has been tapped. |
-| Closing |Occurs just before the tip begins to close. |
-| Closed | Occurs after the tip is closed. |
-| CloseButtonClick | Occurs after the close button has been tapped. |
-
-## Appendix
-
-### Design Notes
-
-#### Visual Components
+### Visual Components
 
  | Component |  Notes |
 |:---:|:---|
@@ -559,7 +557,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 | Hero Content | * Hero Content is media that stretches to the edges of a tip. <br> * Can be placed at the top or bottom of a tip. <br><br> <a href="url"><img src="HeroContent.PNG" width="400"></a> |
 | Scroll Bar | * If the tip's contents are large enough to require scrolling, a scrollbar which will not intersect the Close (X) Button will be added to the content area. <br><br> <a href="url"><img src="ScrollBar.PNG" width="400"></a> |
 
-#### Behavioral Components
+### Behavioral Components
 
  | Property | Notes |
 |:---:|:---|
@@ -572,7 +570,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 | Pointer/Hero Content Avoidance | * To avoid the visual oddity of the Pointer emerging from Hero Content, the Pointer and Hero Content will attempt to avoid intersecting using the following rules: <br> &nbsp;&nbsp;&nbsp;&nbsp; * Move the hero content to Top or Bottom (Disabled when HeroContentPlacement is not auto). <br> &nbsp;&nbsp;&nbsp;&nbsp; * Shift the beak along the edge of the tip (Disabled when the placement of the tip is edge aligned). <br> &nbsp;&nbsp;&nbsp;&nbsp; * Change the placement of the tip (Disabled when the tip placement is not auto).  |
 | Out of Window Bounds | * Tips can escape window bounds on newer OS versions via the ShouldConstrainToRootBounds property.  When this property is set to false, the tip uses screen boundaries instead of window boundaries during its placement algorithm. |
 
-#### Accessibility
+### Accessibility
 
 | State | Action | Narrator |
 |:---|:---|:---|
@@ -582,7 +580,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 | Tip is dismissed | 1. X Button is pressed. <br> 2. Close Button is pressed. <br> 3. Action Button is pressed. <br> Tab focus goes back to where it should be, the predecessor. | Nothing | 
 
 
-#### Data and Intelligence Metrics
+### Data and Intelligence Metrics
 
 ##### P0: Feature Key Performance Indicators
 
