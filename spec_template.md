@@ -44,6 +44,8 @@ example code with each description. The general format is:
   feature explanation,
   example code
   etc.-->
+  
+<!-- Code samples should be in C# and/or C++/WinRT -->
 
 <!-- As an example of this section, see the Examples section for the PasswordBox control 
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
@@ -51,6 +53,11 @@ example code with each description. The general format is:
 
 # Remarks
 <!-- Explanation and guidance that doesn't fit into the Examples section. -->
+
+<!-- APIs should only throw exceptions in exceptional conditions; basically,
+only when there's a bug in the caller, such as argument exception.  But if for some
+reason it's necessary for a caller to catch an exception from an API, call that
+out with an explanation either here or in the Examples -->
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
