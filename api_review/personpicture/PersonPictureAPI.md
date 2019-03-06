@@ -34,8 +34,8 @@ namespace Microsoft.UI.Xaml.Controls
     [webhosthidden]
     runtimeclass PersonPictureTemplateSettings : Windows.UI.Xaml.DependencyObject
     {
-        String EffectiveInitials { get; };
-        Windows.UI.Xaml.Media.ImageBrush EffectiveImageBrush { get; };
+        String ActualInitials { get; };
+        Windows.UI.Xaml.Media.ImageBrush ActualImageBrush { get; };
     }
 
 }
@@ -57,13 +57,13 @@ This is intended for use in the style of the `PersonPicture` control. Sample usa
                                 <!-- Visual State when a Photo is available for display -->
                                 <VisualState x:Name="Photo">
                                     <VisualState.Setters>
-                                        <Setter Target="PersonPictureEllipse.Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.EffectiveImageBrush}"/>
+                                        <Setter Target="PersonPictureEllipse.Fill" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.ActualImageBrush}"/>
                                     </VisualState.Setters>
                                 </VisualState>
                     ...
                         <TextBlock
                             ...
-                            Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.EffectiveInitials}" />
+                            Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.ActualInitials}" />
                         
 ```
 
@@ -77,5 +77,5 @@ This is intended for use in the style of the `PersonPicture` control. Sample usa
 ## Class: PersonPictureTemplateSettings 
 | Member Name | Description |
 |:- |:--|
-| EffectiveInitials | The initials that should be displayed in the control. Will be empty when image is specified or in group mode. |
-| EffectiveImageBrush | The calculated image brush populated with the appropriate picture for the person. |
+| ActualInitials | Empty when an image is specified or when the PersonPicture control represents a group. |
+| ActualImageBrush | The image brush to use in the control. The PersonPicture control determines which image to use based on how it was configured. This property will be null when no image should be displayed. |
