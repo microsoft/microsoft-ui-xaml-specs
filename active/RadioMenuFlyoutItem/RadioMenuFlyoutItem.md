@@ -19,11 +19,13 @@ This control contol allows you to present users with menus containing multiple o
 ![Three radio menu flyout items in a View goup that allow a user to select the size of icons](RadioMenuFlyoutItems.png)
 
 ````Xaml
-<MenuFlyoutSubItem Text="View">
-    <muxc:RadioMenuFlyoutItem Text="Small icons"/>
-    <muxc:RadioMenuFlyoutItem Text="Medium icons" IsChecked="True"/>
-    <muxc:RadioMenuFlyoutItem Text="Large icons"/>
-</MenuFlyoutSubItem>
+<MenuFlyout>
+    <MenuFlyoutSubItem Text="View">
+        <muxc:RadioMenuFlyoutItem Text="Small icons"/>
+        <muxc:RadioMenuFlyoutItem Text="Medium icons" IsChecked="True"/>
+        <muxc:RadioMenuFlyoutItem Text="Large icons"/>
+    </MenuFlyoutSubItem>
+</MenuFlyout>
 ````
 
 ## Group RadioMenuFlyoutItem into multiple sets
@@ -32,12 +34,12 @@ Radio menu flyout items work in groups, and users can only select one item in a 
 ![Two groups of radio menu flyout items within a View menu bar item](RadioMenuFlyoutItems2.png)
 
 ````Xaml
-<muxc:MenuBar Margin="24">
+<muxc:MenuBar>
     <muxc:MenuBarItem Title="View">
         <MenuFlyoutItem Text="Open"/>
         <MenuFlyoutSeparator/>
         <muxc:RadioMenuFlyoutItem Text="Landscape" GroupName="OrientationGroup"/>
-        <muxc:RadioMenuFlyoutItem Text="Portrait" GroupName="OrientationGroup"/>
+        <muxc:RadioMenuFlyoutItem Text="Portrait" GroupName="OrientationGroup" IsChecked="True"/>
         <MenuFlyoutSeparator/>
         <muxc:RadioMenuFlyoutItem Text="Small icons" GroupName="SizeGroup"/>
         <muxc:RadioMenuFlyoutItem Text="Medium icons" IsChecked="True" GroupName="SizeGroup"/>
