@@ -1,11 +1,12 @@
 # Description
-A radio button menu flyout item is a menu item that is mutually exclusive with other menu items in its group. 
+A radio button menu flyout item is a menu item that is mutually exclusive with other radio button menu items in its group. 
 This control contol allows apps to present users with menus containing multiple options, where a user would choose only of these options at a given time.
 
 
 # Examples
 
-Add two or more *RadioMenuFlyoutItems* to the content of *MenuBarItem*, *MenuFlyout*, or *MenuFlyoutSubItem*.
+## Create RadioMenuFlyoutItems
+*RadioMenuFlyoutItem* can be added into a *MenuBarItem*, *MenuFlyout*, or *MenuFlyoutSubItem*. The following example shows three radio menu flyout items as the content of a cascading menu flyout.
 
 ![Three radio menu flyout items in a View goup that allow a user to select the size of icons](RadioMenuFlyoutItems.png)
 
@@ -17,8 +18,8 @@ Add two or more *RadioMenuFlyoutItems* to the content of *MenuBarItem*, *MenuFly
 </MenuFlyoutSubItem>
 ````
 
-
-For multiple groupings of radio buttons within a single menu, be sure to specify the `GroupName` property of each set.
+## Group RadioMenuFlyoutItem into multiple sets
+Radio menu flyout items work in groups, and users can only select one item in a radio menu flyout item group. To create multiple groups of radio buttons within a single menu, be sure to specify the `GroupName` property of each set.
 
 ![Two groups of radio menu flyout items within a View menu bar item](RadioMenuFlyoutItems2.png)
 
