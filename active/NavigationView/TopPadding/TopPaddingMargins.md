@@ -30,17 +30,16 @@ If your app specifies the draggable region by calling the [Window.SetTitleBar](/
 
 To further adjust the position of NavigationView's header area, override the *NavigationViewMinimalHeaderContentMargin* or *NavigationViewMinimalWithBackButtonHeaderContentMargin* XAML theme resources.  
 
-
-# API Notes
-## Class: NavigationView
-| Member Name | Description |
-|:- |:--|
-| IsTitleBarPaddingEnabled | Specifies whether to automatically push NavigationView's interactive content down by the height of the title bar when the NavigationView is a root element of an app that extends into the title bar. The default value is True. |
-
 # API Details
-<!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 
-# Appendix
-<!-- Anything else that you want to write down for posterity, but 
-that isn't necessary to understand the purpose and usage of the API.
-For example, implementation details. -->
+```c++
+unsealed runtimeclass NavigationView : Windows.UI.Xaml.Controls.ContentControl
+{
+    ...
+
+    // Specifies whether to automatically push NavigationView's interactive content down by the 
+    // height of the title bar when the NavigationView is a root element of an app that extends 
+    // into the title bar. The default value is True.
+    Boolean IsTitleBarAutoPaddingEnabled { get; set; };
+}
+```
