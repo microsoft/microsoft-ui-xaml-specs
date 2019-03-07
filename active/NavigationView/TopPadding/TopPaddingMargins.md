@@ -22,25 +22,21 @@ App developers have greater control over [customizing](https://docs.microsoft.co
 Some apps choose to [customize their window's title bar](https://docs.microsoft.com/en-us/windows/uwp/design/shell/title-bar), potentially extending their app content into the title bar area. 
 When NavigationView is the root element in apps that extend into the title bar, the control automatically adjusts the position of its interactive elements to prevent overlap with [the draggable region](https://docs.microsoft.com/en-us/windows/uwp/design/shell/title-bar#draggable-regions). 
 ![An app extending into the title bar](NavigationView_WithTitleBarPadding.png)
-If your app specifies the draggable region by calling the [Window.SetTitleBar](/uwp/api/windows.ui.xaml.window.settitlebar.md) method and you would prefer to have the back and menu buttons draw closer to the top of your app window, set `IsTitleBarPaddingEnabled` to False.
+If your app specifies the draggable region by calling the [Window.SetTitleBar](/uwp/api/windows.ui.xaml.window.settitlebar.md) method and you would prefer to have the back and menu buttons draw closer to the top of your app window, set `IsTitleBarAutoPaddingEnabled` to False.
 
 ````Xaml
-<muxc:NavigationView x:Name="NavView" IsTitleBarPaddingEnabled="False">
+<muxc:NavigationView x:Name="NavView" IsTitleBarAutoPaddingEnabled="False">
 ````
 
-To further adjust the position of NavigationView's header area, override the *NavigationViewMinimalHeaderContentMargin* or *NavigationViewMinimalWithBackButtonHeaderContentMargin* XAML theme resources.  
+To further adjust the position of NavigationView's header area, override the *NavigationViewHeaderMargin* XAML theme resource.  
 
 
 # API Notes
 ## Class: NavigationView
 | Member Name | Description |
 |:- |:--|
-| IsTitleBarPaddingEnabled | Specifies whether to automatically push NavigationView's interactive content down by the height of the title bar when the NavigationView is a root element of an app that extends into the title bar. The default value is True. |
+| IsTitleBarAutoPaddingEnabled | Specifies whether to automatically push NavigationView's interactive content down by the height of the title bar when the NavigationView is a root element of an app that extends into the title bar. The default value is True. |
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 
-# Appendix
-<!-- Anything else that you want to write down for posterity, but 
-that isn't necessary to understand the purpose and usage of the API.
-For example, implementation details. -->
