@@ -438,7 +438,7 @@ enum TeachingTipHeroPlacementMode
     Auto,
 };
 
-enum TeachingTipHeroPointerMode
+enum TeachingTipPointerMode
 {
     Auto,
     On,
@@ -491,7 +491,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
     Boolean IsLightDismissEnabled;
     TeachingTipPlacementMode PreferredPlacement;
     TeachingTipHeroPlacementMode HeroPlacement;
-    TeachingTipHeroPointerMode PointerMode;
+    TeachingTipPointerMode PointerMode;
 
     Windows.UI.Xaml.UIElement HeroContent;
     IconSource IconSource;
