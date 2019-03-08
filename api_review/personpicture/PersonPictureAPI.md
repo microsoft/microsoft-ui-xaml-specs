@@ -77,5 +77,5 @@ This is intended for use in the style of the `PersonPicture` control. Sample usa
 ## Class: PersonPictureTemplateSettings 
 | Member Name | Description |
 |:- |:--|
-| ActualInitials | Empty when an image is specified or when the PersonPicture control represents a group. |
+| ActualInitials | The initials that should be displayed in the control. Empty when an image is specified or when the PersonPicture control represents a group. |
 | ActualImageBrush | The image brush to use in the control. The PersonPicture control determines which image to use based on how it was configured. This property will be null when no image should be displayed. |
