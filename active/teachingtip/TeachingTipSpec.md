@@ -43,14 +43,12 @@ When the user clicks the button, a teaching tip will appear and display a messag
 
 XAML
 ```XAML
-<Button Content="Save" Click="OnFirstSaveButtonClick">
-    <muxc:TeachingTip.Attach> 
-        <muxc:TeachingTip x:Name="AutoSaveTip"
-            Title="Saving automatically"
-            Subtitle="We save your changes as you go - so you never have to.">
-        </muxc:TeachingTip>
-    </muxc:TeachingTip.Attach>
-</Button>
+<Button Content="Save" Click="OnFirstSaveButtonClick" />
+
+<muxc:TeachingTip x:Name="AutoSaveTip"
+    Title="Saving automatically"
+    Subtitle="We save your changes as you go - so you never have to.">
+</muxc:TeachingTip>
 ```
 
 C#
@@ -71,15 +69,13 @@ A teaching tip can have a margin added by setting the Margin property. When a te
 
 XAML
 ```XAML
-<Button Content="Save" Click="OnFirstSaveButtonClick">
-    <muxc:TeachingTip> 
-        <muxc:TeachingTip x:Name="AutoSaveTip"
-            Title="Saving automatically"
-            Subtitle="We save your changes as you go - so you never have to."
-            Margin="80">
-        </muxc:TeachingTip>
-    </muxc:TeachingTip.Attach>
-</Button>
+<Button Content="Save" Click="OnFirstSaveButtonClick" />
+
+<muxc:TeachingTip x:Name="AutoSaveTip"
+    Title="Saving automatically"
+    Subtitle="We save your changes as you go - so you never have to."
+    Margin="80">
+</muxc:TeachingTip>
 ```
 
 C#
@@ -94,18 +90,19 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 ### Point to a UI element
 
-You can add a pointer to the teaching tip by setting the PointerMode property. When PointerMode is set to auto, the pointer will automaticaly appear when SetAttach is used to make the teaching tip to appear near a specific UI element.
+You can also make a teaching tip point to a UI element. This is accomplished by adding the teaching tip to the UI element's resource dictionary and binding the teaching tip's target to that UI element. PointerMode can be used to remove the teaching tip's pointer while keeping its position relative to the targeted UI element.
 
 XAML
 ```XAML
 <Button x:Name="SaveButton" Content="Save" Click="OnFirstSaveButtonClick">
-    <muxc:TeachingTip.Attach> 
+    <Button.Resources>
         <muxc:TeachingTip x:Name="AutoSaveTip"
+            Target="{x:Bind SaveButton}"
             Title="Saving automatically"
             Subtitle="We save your changes as you go - so you never have to."
             Margin="12"/>
         </muxc:TeachingTip>
-    </muxc:TeachingTip.Attach>
+    </Button.Resources>
 </Button>
 ```
 
@@ -127,8 +124,9 @@ Content can be added to a teaching tip using the Content property. If there is m
 XAML
 ```XAML
 <Button Content="Tip Example" Click="OnFirstSaveButtonClick">
-    <muxc:TeachingTip.Attach> 
+    <Button.Resources>
         <muxc:TeachingTip x:Name="AutoSaveTip"
+            Target="{x:Bind SaveButton}"
             Title="Saving automatically"
             Subtitle="We save your changes as you go - so you never have to."
             Margin="12">
@@ -137,7 +135,7 @@ XAML
                     <TextBlock>You can change your tip preferences in <Hyperlink NavigateUri="app:/item/SettingsPage">Settings</Hyperlink> if you change your mind.</TextBlock>
                 </StackPanel>
         </muxc:TeachingTip>
-    </muxc:TeachingTip.Attach>
+    </Button.Resources>
 </Button>
 ```
 
@@ -165,8 +163,9 @@ A custom action button can be added by setting ActionButtonText, ActionButtonCom
 XAML
 ```XAML
 <Button Content="Tip Example" Click="OnFirstSaveButtonClick">
-    <muxc:TeachingTip.Attach> 
+    <Button.Resources> 
         <muxc:TeachingTip x:Name="AutoSaveTip"
+            Target="{x:Bind SaveButton}"
             Title="Saving automatically"
             Subtitle="We save your changes as you go - so you never have to."
             ActionButtonText="Disable"
@@ -176,7 +175,7 @@ XAML
                 <CheckBox Content="Don't show tips at start up" IsChecked="{x:Bind HidingTips, Mode=TwoWay}" />
                 <p>You can change your tip preferences in <a href="app:/item/SettingsPage">Settings</a> if you change your mind.</p>
         </muxc:TeachingTip>
-    </muxc:TeachingTip.Attach>
+    </Button.Resources>
 </Button>
 ```
 
@@ -200,8 +199,9 @@ Edge to edge content can be added to a teaching tip by setting the HeroContent p
 XAML
 ```XAML
 <Button Content="Tip Example" Click="OnFirstSaveButtonClick">
-    <muxc:TeachingTip.Attach> 
+    <Button.Resources> 
         <muxc:TeachingTip x:Name="AutoSaveTip"
+            Target="{x:Bind SaveButton}"
             Title="Saving automatically"
             Subtitle="We save your changes as you go - so you never have to."
             <muxc:TeachingTip.HeroContent>
@@ -209,7 +209,7 @@ XAML
             </muxc:TeachingTip.HeroContent>
             Margin="12">
         </muxc:TeachingTip>
-    </muxc:TeachingTip.Attach>
+    </Button.Resources>
 </Button>
 ```
 
@@ -230,14 +230,15 @@ An icon can be added beside the title and subtitle using the IconSource property
 XAML
 ```XAML
 <Button Content="Tip Example" Click="OnFirstSaveButtonClick">
-    <muxc:TeachingTip.Attach> 
+    <Button.Resources>
         <muxc:TeachingTip x:Name="AutoSaveTip"
+            Target="{x:Bind SaveButton}"
             Title="Saving automatically"
             Subtitle="We save your changes as you go - so you never have to."
             IconSource="SaveIcon.png"
             Margin="12">
         </muxc:TeachingTip>
-    </muxc:TeachingTip.Attach>
+    </Button.Resources>
 </Button>
 ```
 
@@ -257,16 +258,14 @@ A teaching tip may be light-dismiss enabled so that it will dismiss when a user 
 
 XAML
 ```XAML
-<Button Content="Tip Example" Click="OnFirstSaveButtonClick">
-    <muxc:TeachingTip.Attach> 
-        <muxc:TeachingTip x:Name="AutoSaveTip"
-            Title="Saving automatically"
-            Subtitle="We save your changes as you go - so you never have to."
-            IsLightDismissEnabled="True"
-            Margin="12">
-        </muxc:TeachingTip>
-    </muxc:TeachingTip.Attach>
-</Button>
+<Button Content="Tip Example" Click="OnFirstSaveButtonClick" />
+
+<muxc:TeachingTip x:Name="AutoSaveTip"
+    Title="Saving automatically"
+    Subtitle="We save your changes as you go - so you never have to."
+    IsLightDismissEnabled="True"
+    Margin="12">
+</muxc:TeachingTip>
 ```
 
 C#
@@ -285,16 +284,14 @@ Teaching tip replicates all of Flyout's FlyoutPlacementMode placement behavior w
 
 XAML
 ```XAML
-<Button Content="Tip Example" Click="OnFirstSaveButtonClick">
-    <muxc:TeachingTip.Attach> 
-        <muxc:TeachingTip x:Name="AutoSaveTip"
-            Title="Saving automatically"
-            Subtitle="We save your changes as you go - so you never have to."
-            PreferredPlacement="TopEdgeAlignedLeft"
-            Margin="20,50,0,0"/>
-        </muxc:TeachingTip>
-    </muxc:TeachingTip.Attach>
-</Button>
+<Button Content="Tip Example" Click="OnFirstSaveButtonClick" />
+
+<muxc:TeachingTip x:Name="AutoSaveTip"
+    Title="Saving automatically"
+    Subtitle="We save your changes as you go - so you never have to."
+    PreferredPlacement="TopEdgeAlignedLeft"
+    Margin="20,50,0,0"/>
+</muxc:TeachingTip>
 ```
 
 C#
@@ -314,16 +311,14 @@ On Windows 19H1 and above, a teaching tip can escape window bounds by setting th
 XAML
 ```XAML
 <Button Content="Tip Example" Click="OnFirstSaveButtonClick">
-    <muxc:TeachingTip.Attach> 
-        <muxc:TeachingTip x:Name="AutoSaveTip"
-            Title="Saving automatically"
-            Subtitle="We save your changes as you go - so you never have to."
-            PreferredPlacement="BottomEdgeAlignedRight"
-            Margin="-80,-50,0,0"
-            ShouldConstrainToRootBounds="False">
-        </muxc:TeachingTip>
-    </muxc:TeachingTip.Attach>
-</Button>
+
+<muxc:TeachingTip x:Name="AutoSaveTip"
+    Title="Saving automatically"
+    Subtitle="We save your changes as you go - so you never have to."
+    PreferredPlacement="BottomEdgeAlignedRight"
+    Margin="-80,-50,0,0"
+    ShouldConstrainToRootBounds="False">
+</muxc:TeachingTip>
 ```
 
 C#
