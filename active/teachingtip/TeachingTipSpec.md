@@ -16,6 +16,9 @@ Because teaching tip is transient, it would not be the recommended control for p
 
 # Examples
 
+### Some APIs shown in the following examples are not yet available in the prerelease version of this control. Please see the [Teaching Tip Sample in the XAML Sample Gallery](https://github.com/Microsoft/Xaml-Controls-Gallery/blob/w/saschule/TeachingTipSample/XamlControlsGallery/ControlPages/TeachingTipPage.xaml) for implementation examples that are accurate with the version of this control currently available through prerelease. 
+
+
 The teaching tip has several states, including these notable ones.
 
 A teaching tip can point to a specific UI element to enhance contextual clarity of the information it is presenting. 
