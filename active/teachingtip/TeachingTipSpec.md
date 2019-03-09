@@ -13,8 +13,6 @@ Use a **TeachingTip** control to focus a user's attention on new or important up
 
 Because teaching tip is transient, it would not be the recommended control for prompting users about errors or important status changes.
 
-<!-- Explain why TT is not recommended for notifications --> 
-
 
 # Examples
 
@@ -30,16 +28,49 @@ A teaching tip can be used without a pointer when the information that it is pre
 
 A teaching tip can require manual acknowledgement before dismissing or a teaching tip may also be light-dismiss enabled so that it will dismiss when a user scrolls or interacts with other elements of the application.
 
+A teaching tip can require the user to dismiss it via an "X" button in a top corner or a "Close" button at the bottom. A teaching tip may also be light-dismiss enabled in which case there is no dismiss button and the teaching tip will instead dismiss when a user scrolls or interacts with other elements of the application. Because of this behavior, light-dismiss tips are the best solution when a tip needs to be placed in a scrollable area. 
+
 ![A sample app with a light-dismiss teaching tip in the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to."](TeachingTipLightDismissSample.jpg)
 
 
 ### Create a teaching tip
 
-<!-- Use the Password property to get or set the contents of the PasswordBox. You can do this in the handler for the PasswordChanged event to perform validation while the user enters the password. Or, you can use another event, like a button Click, to perform validation after the user completes the text entry. -->
-
-Here's the XAML for a teaching tip control that demonstrates the default look of the TeachingTip with a title and subtitle. 
+Here's the XAML for a pointing teaching tip control that demonstrates the default look of the TeachingTip with a title and subtitle.
 
 When the user clicks the button, a teaching tip will appear and display a message to the user. 
+
+XAML
+```XAML
+<Button x:Name="SaveButton" Content="Save" Click="OnFirstSaveButtonClick">
+    <Button.Resources>
+        <muxc:TeachingTip x:Name="AutoSaveTip"
+            Target="{x:Bind SaveButton}"
+            Title="Saving automatically"
+            Subtitle="We save your changes as you go - so you never have to."
+            Margin="12"/>
+        </muxc:TeachingTip>
+    </Button.Resources>
+</Button>
+```
+
+C#
+```C#
+public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
+{
+   TeachingTip.SetAttach(SaveButton, AutoSaveTip);
+   AutoSaveTip.IsOpen = true;
+}
+```
+
+Here's the result when this code runs and the user clicks the button.
+
+![A sample app with a teaching tip pointing at the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipPointerSample.jpg)
+
+### Non-pointing tips
+
+Not all tips relate to an element onscreen. For these scenarios, do not set the Target property and the teaching tip will instead display relative to the edges of the app window. However, a teaching tip can have the pointer removed while retaining placement relative to a UI element by setting the PointerMode property to "Off". 
+
+Unlike pointing teaching tips which can only be added to a resource dictionary, non-pointing teaching tips can also be added to the visual tree, as shown below.
 
 XAML
 ```XAML
@@ -58,8 +89,6 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
    AutoSaveTip.IsOpen = true;
 }
 ```
-
-Here's the result when this code runs and the user clicks the button.
 
 ![A sample app with a teaching tip in the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipSampleApp.jpg)
 
@@ -88,34 +117,6 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 ![A sample app with a teaching tip positioned toward, but not fully against, the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipMarginSample.jpg)
 
-### Point to a UI element
-
-You can also make a teaching tip point to a UI element. This is accomplished by adding the teaching tip to the UI element's resource dictionary and binding the teaching tip's target to that UI element. PointerMode can be used to remove the teaching tip's pointer while keeping its position relative to the targeted UI element.
-
-XAML
-```XAML
-<Button x:Name="SaveButton" Content="Save" Click="OnFirstSaveButtonClick">
-    <Button.Resources>
-        <muxc:TeachingTip x:Name="AutoSaveTip"
-            Target="{x:Bind SaveButton}"
-            Title="Saving automatically"
-            Subtitle="We save your changes as you go - so you never have to."
-            Margin="12"/>
-        </muxc:TeachingTip>
-    </Button.Resources>
-</Button>
-```
-
-C#
-```C#
-public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
-{
-   TeachingTip.SetAttach(SaveButton, AutoSaveTip);
-   AutoSaveTip.IsOpen = true;
-}
-```
-
-![A sample app with a teaching tip pointing at the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipPointerSample.jpg)
 
 ### Add content
 
@@ -254,7 +255,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 ### Enable light-dismiss
 
-A teaching tip may be light-dismiss enabled so that it will dismiss when a user scrolls or interacts with other elements of the application. The close button will be automatically removed from a light-dismiss teaching tip to indentify its light-dismiss behavior to users. 
+A teaching tip may be light-dismiss enabled so that it will dismiss when a user scrolls or interacts with other elements of the application. Because of this behavior, light-dismiss tips are the best solution when a tip needs to be placed in a scrollable area. The close button will be automatically removed from a light-dismiss teaching tip to indentify its light-dismiss behavior to users. 
 
 XAML
 ```XAML
