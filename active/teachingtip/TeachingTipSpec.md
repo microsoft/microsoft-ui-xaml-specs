@@ -398,15 +398,11 @@ The Closing event can be used to cancel and/or defer the close of a teaching tip
 
 XAML
 ```XAML
-<Button Content="Tip Example">
-    <muxc:TeachingTip.Attach> 
-        <muxc:TeachingTip x:Name="EnableNewSettingsTip"
-            Title="Title string"
-            Subtitle="Body text in a minimum height tip."
-            Closing="OnTipClosing">
-        </muxc:TeachingTip>
-    </muxc:TeachingTip.Attach>
-</Button>
+<muxc:TeachingTip x:Name="EnableNewSettingsTip"
+    Title="New ways to protect your privacy!"
+    Subtitle="Please close this tip and review our updated privacy policy and privacy settings."
+    Closing="OnTipClosing">
+</muxc:TeachingTip>
 ```
 
 C#
@@ -449,13 +445,6 @@ public void OnTipClosing(object sender, TeachingTipClosingEventArgs args)
 | PointerMode | Gets or sets a value that indicates whether to show the pointer for a teaching tip. |
 | PreferredPlacement  | Gets or sets the default placement to be used for the teaching tip. |
 | ShouldConstrainToRootBounds | Gets or sets a value that indicates whether the teaching tip will constrain to the bounds of its root. |
-
-### Methods   
-
-| Name | Description |
-|:-:|:--|
-| GetAttach | Gets the teaching tip associated with the specified element. |
-| SetAttach | Associates the specified teaching tip with the specified UIElement. |
 
 ### Events    
 
@@ -568,10 +557,6 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
     event Windows.Foundation.TypedEventHandler<TeachingTip, TeachingTipClosedEventArgs> Closed;
 
     static Windows.UI.Xaml.DependencyProperty IsOpenProperty{ get; };
-
-    static Windows.UI.Xaml.DependencyProperty AttachProperty{ get; };
-    static void SetAttach(Windows.UI.Xaml.UIElement element, TeachingTip teachingTip);
-    static TeachingTip GetAttach(Windows.UI.Xaml.UIElement element);
 
     static Windows.UI.Xaml.DependencyProperty TitleProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty SubtextProperty{ get; };
