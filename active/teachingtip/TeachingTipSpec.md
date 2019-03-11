@@ -74,7 +74,7 @@ Unlike pointing teaching tips which can only be added to a resource dictionary, 
 
 XAML
 ```XAML
-<Button Content="Save" Click="OnFirstSaveButtonClick" />
+<Button x:Name="SaveButton" Content="Save" Click="OnFirstSaveButtonClick">
 
 <muxc:TeachingTip x:Name="AutoSaveTip"
     Title="Saving automatically"
@@ -100,7 +100,7 @@ The following example shows a non-pointing tip with the TargetOffset’s Left/To
 
 XAML
 ```XAML
-<Button Content="Save" Click="OnFirstSaveButtonClick" />
+<Button x:Name="SaveButton" Content="Save" Click="OnFirstSaveButtonClick">
 
 <muxc:TeachingTip x:Name="AutoSaveTip"
     Title="Saving automatically"
@@ -126,7 +126,7 @@ Content can be added to a teaching tip using the Content property. If there is m
 
 XAML
 ```XAML
-<Button Content="Tip Example" Click="OnFirstSaveButtonClick">
+<Button x:Name="SaveButton" Content="Save" Click="OnFirstSaveButtonClick">
     <Button.Resources>
         <muxc:TeachingTip x:Name="AutoSaveTip"
             Target="{x:Bind SaveButton}"
@@ -164,7 +164,7 @@ A custom action button can be added by setting ActionButtonText, ActionButtonCom
 
 XAML
 ```XAML
-<Button Content="Tip Example" Click="OnFirstSaveButtonClick">
+<Button x:Name="SaveButton" Content="Save" Click="OnFirstSaveButtonClick">
     <Button.Resources> 
         <muxc:TeachingTip x:Name="AutoSaveTip"
             Target="{x:Bind SaveButton}"
@@ -199,7 +199,7 @@ Edge to edge content can be added to a teaching tip by setting the HeroContent p
 
 XAML
 ```XAML
-<Button Content="Tip Example" Click="OnFirstSaveButtonClick">
+<Button x:Name="SaveButton" Content="Save" Click="OnFirstSaveButtonClick">
     <Button.Resources> 
         <muxc:TeachingTip x:Name="AutoSaveTip"
             Target="{x:Bind SaveButton}"
@@ -229,7 +229,7 @@ An icon can be added beside the title and subtitle using the IconSource property
 
 XAML
 ```XAML
-<Button Content="Tip Example" Click="OnFirstSaveButtonClick">
+<Button x:Name="SaveButton" Content="Save" Click="OnFirstSaveButtonClick">
     <Button.Resources>
         <muxc:TeachingTip x:Name="AutoSaveTip"
             Target="{x:Bind SaveButton}"
@@ -259,7 +259,7 @@ The close button will be automatically removed from a light-dismiss enabled teac
 
 XAML
 ```XAML
-<Button Content="Tip Example" Click="OnFirstSaveButtonClick" />
+<Button x:Name="SaveButton" Content="Save" Click="OnFirstSaveButtonClick">
 
 <muxc:TeachingTip x:Name="AutoSaveTip"
     Title="Saving automatically"
@@ -286,7 +286,7 @@ A pointing teaching tip with its PreferredPlacement set to "BottomEdgeAlignedLef
 
 XAML
 ```XAML
-<Button Content="Tip Example" Click="OnFirstSaveButtonClick" 
+<Button x:Name="SaveButton" Content="Save" Click="OnFirstSaveButtonClick">
     <Button.Resources>
         <muxc:TeachingTip x:Name="AutoSaveTip"
             Target="{x:Bind SaveButton}"
@@ -313,7 +313,7 @@ A non-pointing teaching tip with its PreferredPlacement set to "BottomEdgeAligne
 
 XAML
 ```XAML
-<Button Content="Tip Example" Click="OnFirstSaveButtonClick" />
+<Button x:Name="SaveButton" Content="Save" Click="OnFirstSaveButtonClick">
 
 <muxc:TeachingTip x:Name="AutoSaveTip"
     Title="Saving automatically"
@@ -338,7 +338,7 @@ On Windows version 19H1 and above, a teaching tip can escape window bounds by se
 
 XAML
 ```XAML
-<Button Content="Tip Example" Click="OnFirstSaveButtonClick">
+<Button x:Name="SaveButton" Content="Save" Click="OnFirstSaveButtonClick">
 
 <muxc:TeachingTip x:Name="AutoSaveTip"
     Title="Saving automatically"
