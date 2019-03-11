@@ -92,11 +92,11 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 ![A sample app with a teaching tip in the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipSampleApp.jpg)
 
-### Add a margin 
+### Add an offset 
 
-You can control how far the teach tip is set apart from its target using the Margin property. Margin has four values – left, right, top, and bottom – so only the relevant values are used. For example, if the target is left of the teaching tip, the Margin. Left will be used. If the teaching tip has no target, the Margin’s Right and Bottom can be used to space it from the bottom right corner of the window.  
+You can control how far a pointing teaching tip is set apart from its target and how far a non-pointing teaching tip is set apart from the the edges of the app window using the TargetOffset property. Like [Margin](https://docs.microsoft.com/en-us/dotnet/api/system.windows.frameworkelement.margin?view=netframework-4.7.2), TargetOffset has four values – left, right, top, and bottom – so only the relevant values are used. For example, if the target is left of the teaching tip, the TargetOffset.Left will be used. If the teaching tip has no target, the TargetOffset’s Right and Bottom will be used to space it from the bottom right corner of the window.  
 
-The following example shows a non-pointing tip with the Margin’s Left/Top/Right/Bottom all set to 80.
+The following example shows a non-pointing tip with the TargetOffset’s Left/Top/Right/Bottom all set to 80.
 
 XAML
 ```XAML
@@ -105,7 +105,7 @@ XAML
 <muxc:TeachingTip x:Name="AutoSaveTip"
     Title="Saving automatically"
     Subtitle="We save your changes as you go - so you never have to."
-    Margin="80">
+    TargetOffset="80">
 </muxc:TeachingTip>
 ```
 
@@ -117,7 +117,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 }
 ```
 
-![A sample app with a teaching tip positioned toward, but not fully against, the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipMarginSample.jpg)
+![A sample app with a teaching tip positioned toward, but not fully against, the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipTargetOffsetSample.jpg)
 
 
 ### Add content
@@ -344,7 +344,7 @@ XAML
     Title="Saving automatically"
     Subtitle="We save your changes as you go - so you never have to."
     PreferredPlacement="BottomEdgeAlignedRight"
-    Margin="-80,-50,0,0"
+    TargetOffset="-80,-50,0,0"
     ShouldConstrainToRootBounds="False">
 </muxc:TeachingTip>
 ```
