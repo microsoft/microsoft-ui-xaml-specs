@@ -4,8 +4,7 @@ A teaching tip is a semi-persistent and content-rich flyout that provides contex
 
 **Important APIs:** [TeachingTip class]() [Link TODO]
 
-A teaching tip may also be light-dismiss enabled or used without a pointer indicating reference to any specific UI element. 
-
+A teaching tip may be light-dismiss or require explicit action to close. A teach tip can point at an element or be untargeted.
 
 ### Is this the right control? 
 
@@ -49,8 +48,7 @@ XAML
         <muxc:TeachingTip x:Name="AutoSaveTip"
             Target="{x:Bind SaveButton}"
             Title="Saving automatically"
-            Subtitle="We save your changes as you go - so you never have to."
-            Margin="12"/>
+            Subtitle="We save your changes as you go - so you never have to.">
         </muxc:TeachingTip>
     </Button.Resources>
 </Button>
@@ -60,7 +58,6 @@ C#
 ```C#
 public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 {
-   TeachingTip.SetAttach(SaveButton, AutoSaveTip);
    AutoSaveTip.IsOpen = true;
 }
 ```
@@ -73,7 +70,7 @@ Here's the result when this code runs and the user clicks the button.
 
 Not all tips relate to an element onscreen. For these scenarios, do not set the Target property and the teaching tip will instead display relative to the edges of the app window. However, a teaching tip can have the pointer removed while retaining placement relative to a UI element by setting the PointerMode property to "Off". 
 
-Unlike pointing teaching tips which can only be added to a resource dictionary, non-pointing teaching tips can also be added to the visual tree, as shown below.
+Unlike pointing teaching tips which can only be added to a resource dictionary, non-pointing teaching tips can also be added through the visual tree, as shown below.
 
 XAML
 ```XAML
@@ -97,7 +94,9 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 ### Add a margin 
 
-A teaching tip can have a margin added by setting the Margin property. When a teaching tip is attached to a UI element, a margin will move it away from the UI element it is pointing to. When a teaching tip is not attached to anything, a margin will move it away from the side of the app window it is positioned towards. 
+You can control how far the teach tip is set apart from its target using the Margin property. Margin has four values – left, right, top, and bottom – so only the relevant values are used. For example, if the target is left of the teaching tip, the Margin.Left will be used.  If the teaching tip has no target, the Margin’s Right and Bottom can be used to space it from the bottom right corner of the window.  
+
+The following example shows an untargeted tip with the Margin’s Left/Top/Right/Bottom all set to 80.
 
 XAML
 ```XAML
@@ -132,8 +131,7 @@ XAML
         <muxc:TeachingTip x:Name="AutoSaveTip"
             Target="{x:Bind SaveButton}"
             Title="Saving automatically"
-            Subtitle="We save your changes as you go - so you never have to."
-            Margin="12">
+            Subtitle="We save your changes as you go - so you never have to.">
                 <StackPanel>
                     <CheckBox x:Name="HideTipsCheckBox" Content="Don't show tips at start up" IsChecked="{x:Bind HidingTips, Mode=TwoWay}" />
                     <TextBlock>You can change your tip preferences in <Hyperlink NavigateUri="app:/item/SettingsPage">Settings</Hyperlink> if you change your mind.</TextBlock>
@@ -174,8 +172,7 @@ XAML
             Subtitle="We save your changes as you go - so you never have to."
             ActionButtonText="Disable"
             ActionButtonCommand="DisableAutoSave"
-            CloseButtonText="Got it!"
-            Margin="12">
+            CloseButtonText="Got it!">
                 <CheckBox Content="Don't show tips at start up" IsChecked="{x:Bind HidingTips, Mode=TwoWay}" />
                 <p>You can change your tip preferences in <a href="app:/item/SettingsPage">Settings</a> if you change your mind.</p>
         </muxc:TeachingTip>
@@ -211,7 +208,6 @@ XAML
             <muxc:TeachingTip.HeroContent>
                 <Image Source="Assets/Giraffe.png" />
             </muxc:TeachingTip.HeroContent>
-            Margin="12">
         </muxc:TeachingTip>
     </Button.Resources>
 </Button>
@@ -221,7 +217,7 @@ C#
 ```C#
 public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 {
-    TeachingTipExample.IsOpen=true;
+    AutoSaveTip.IsOpen=true;
 }
 ```
 
@@ -239,8 +235,7 @@ XAML
             Target="{x:Bind SaveButton}"
             Title="Saving automatically"
             Subtitle="We save your changes as you go - so you never have to."
-            IconSource="SaveIcon.png"
-            Margin="12">
+            IconSource="SaveIcon.png">
         </muxc:TeachingTip>
     </Button.Resources>
 </Button>
@@ -250,7 +245,7 @@ C#
 ```C#
 public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 {
-    TeachingTipExample.IsOpen=true;
+    AutoSaveTip.IsOpen=true;
 }
 ```
 
@@ -258,7 +253,9 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 ### Enable light-dismiss
 
-A teaching tip may be light-dismiss enabled so that it will dismiss when a user scrolls or interacts with other elements of the application. Because of this behavior, light-dismiss tips are the best solution when a tip needs to be placed in a scrollable area. The close button will be automatically removed from a light-dismiss teaching tip to indentify its light-dismiss behavior to users. 
+Light-dismiss functionality is disabled by default but it can enabled so that a teaching tip will dismiss, for example, when a user scrolls or interacts with other elements of the application. Because of this behavior, light-dismiss tips are the best solution when a tip needs to be placed in a scrollable area. 
+
+The close button will be automatically removed from a light-dismiss enabled teaching tip to identify its light-dismiss behavior to users. 
 
 XAML
 ```XAML
@@ -267,8 +264,7 @@ XAML
 <muxc:TeachingTip x:Name="AutoSaveTip"
     Title="Saving automatically"
     Subtitle="We save your changes as you go - so you never have to."
-    IsLightDismissEnabled="True"
-    Margin="12">
+    IsLightDismissEnabled="True">
 </muxc:TeachingTip>
 ```
 
@@ -276,7 +272,7 @@ C#
 ```C#
 public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 {
-    TeachingTipExample.IsOpen=true;
+    AutoSaveTip.IsOpen=true;
 }
 ```
 
@@ -284,7 +280,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 ### Preferred placement
 
-Teaching tip replicates all of Flyout's FlyoutPlacementMode placement behavior with the TeachingTipPlacementMode property. As with Flyout, if the preferred placement mode would not leave room for the teaching tip to show, another placement mode will be automatically chosen. 
+Teaching tip replicates all of Flyout's [FlyoutPlacementMode](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Primitives.FlyoutPlacementMode) placement behavior with the TeachingTipPlacementMode property. As with Flyout, if the preferred placement mode would not leave room for the teaching tip to show, another placement mode will be automatically chosen. 
 
 XAML
 ```XAML
@@ -293,8 +289,7 @@ XAML
 <muxc:TeachingTip x:Name="AutoSaveTip"
     Title="Saving automatically"
     Subtitle="We save your changes as you go - so you never have to."
-    PreferredPlacement="TopEdgeAlignedLeft"
-    Margin="20,50,0,0"/>
+    PreferredPlacement="TopEdgeAlignedLeft">
 </muxc:TeachingTip>
 ```
 
@@ -302,7 +297,7 @@ C#
 ```C#
 public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 {
-    TeachingTipExample.IsOpen=true;
+    AutoSaveTip.IsOpen=true;
 }
 ```
 
@@ -310,7 +305,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 ### Escaping window bounds
 
-On Windows 19H1 and above, a teaching tip can escape window bounds by setting the ShouldConstrainToRootBounds property.
+On Windows version 19H1 and above, a teaching tip can escape window bounds by setting the ShouldConstrainToRootBounds property.On earlier versions of Windows, this property is ignored and the teaching tip always stays within the Window bounds.
 
 XAML
 ```XAML
@@ -329,15 +324,15 @@ C#
 ```C#
 public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 {
-    TeachingTipExample.IsOpen=true;
+    AutoSaveTip.IsOpen=true;
 }
 ```
 
 ![A sample app with a teaching tip outside of the app's bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipOutOfWindowBoundsSample.jpg)
 
-### Deferred close
+### Canceling and deferring close
 
-The close event of a teaching tip can be deffered to allow time for an action or custom animation to occur. 
+The Closing event can be used to cancel and/or defer the close of a teaching tip. This can be used to keep the teaching tip open or allow time for an action or custom animation to occur. 
 
 XAML
 ```XAML
@@ -381,7 +376,7 @@ public void OnTipClosing(object sender, TeachingTipClosingEventArgs args)
 ### Recommendations
 * Tips are impermanent and should not contain information or options that are critical to the experience of an application. 
 * Try to avoid showing teaching tips too often. Teaching tips are most likely to each recieve individual attention when they are staggered throughout long sessions or across multiple sessions.    
-* Keep tips succint and their topic clear. Research shows users, on average, only read 3-5 words and only comprehend 2-3 words before deciding whether to interact with a tip. 
+* Keep tips succinct and their topic clear. Research shows users, on average, only read 3-5 words and only comprehend 2-3 words before deciding whether to interact with a tip. 
 
 # API Notes
 
