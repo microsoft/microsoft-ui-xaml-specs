@@ -85,10 +85,10 @@ XAML
 C#
 ```C#
 public bool ShowAutoSaveTip
-        {
-            get { return (bool)GetValue(ShowAutoSaveTipProperty); }
-            set { SetValue(ShowAutoSaveTipProperty, value); }
-        }
+{
+    get { return (bool)GetValue(ShowAutoSaveTipProperty); }
+    set { SetValue(ShowAutoSaveTipProperty, value); }
+}
  
 public static readonly DependencyProperty ShowAutoSaveTipProperty = DependencyProperty.Register("ShowAutoSaveTip", typeof(bool), typeof(MainPage), new PropertyMetadata(false));
 
