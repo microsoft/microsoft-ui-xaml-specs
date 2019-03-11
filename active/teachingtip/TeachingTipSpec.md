@@ -37,7 +37,7 @@ A teaching tip can require the user to dismiss it via an "X" button in a top cor
 
 ### Create a teaching tip
 
-Here's the XAML for a pointing teaching tip control that demonstrates the default look of the TeachingTip with a title and subtitle.
+Here's the XAML for a simple pointing teaching tip control that demonstrates the default look of the TeachingTip with a title and subtitle.
 
 When the user clicks the button, a teaching tip will appear and display a message to the user. 
 
@@ -65,6 +65,39 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 Here's the result when this code runs and the user clicks the button.
 
 ![A sample app with a teaching tip pointing at the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipPointerSample.jpg)
+
+The IsOpen property also enables teaching tip to be implemented with data binding.
+
+XAML
+```XAML
+<Button x:Name="SaveButton" Content="Save" Click="OnFirstSaveButtonClick">
+    <Button.Resources>
+        <muxc:TeachingTip x:Name="AutoSaveTip"
+            IsOpen="{x:Bind ShowAutoSaveTip, Mode=OneWay}"
+            Target="{x:Bind SaveButton}"
+            Title="Saving automatically"
+            Subtitle="We save your changes as you go - so you never have to.">
+        </muxc:TeachingTip>
+    </Button.Resources>
+</Button>
+```
+
+C#
+```C#
+public bool ShowAutoSaveTip
+        {
+            get { return (bool)GetValue(ShowAutoSaveTipProperty); }
+            set { SetValue(ShowAutoSaveTipProperty, value); }
+        }
+ 
+public static readonly DependencyProperty ShowAutoSaveTipProperty = DependencyProperty.Register("ShowAutoSaveTip", typeof(bool), typeof(MainPage), new PropertyMetadata(false));
+
+
+public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
+{
+   ShowAutoSaveTip = true;
+}
+```
 
 ### Non-pointing tips
 
