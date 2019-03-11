@@ -4,7 +4,7 @@ A teaching tip is a semi-persistent and content-rich flyout that provides contex
 
 **Important APIs:** [TeachingTip class]() [Link TODO]
 
-A teaching tip may be light-dismiss or require explicit action to close. A teach tip can point at an element or be untargeted.
+A teaching tip may be light-dismiss or require explicit action to close. A teaching tip can point at an element or be used without an element to point at.
 
 ### Is this the right control? 
 
@@ -94,9 +94,9 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 ### Add a margin 
 
-You can control how far the teach tip is set apart from its target using the Margin property. Margin has four values – left, right, top, and bottom – so only the relevant values are used. For example, if the target is left of the teaching tip, the Margin.Left will be used.  If the teaching tip has no target, the Margin’s Right and Bottom can be used to space it from the bottom right corner of the window.  
+You can control how far the teach tip is set apart from its target using the Margin property. Margin has four values – left, right, top, and bottom – so only the relevant values are used. For example, if the target is left of the teaching tip, the Margin. Left will be used. If the teaching tip has no target, the Margin’s Right and Bottom can be used to space it from the bottom right corner of the window.  
 
-The following example shows an untargeted tip with the Margin’s Left/Top/Right/Bottom all set to 80.
+The following example shows a non-pointing tip with the Margin’s Left/Top/Right/Bottom all set to 80.
 
 XAML
 ```XAML
@@ -280,7 +280,36 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 ### Preferred placement
 
-Teaching tip replicates all of Flyout's [FlyoutPlacementMode](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Primitives.FlyoutPlacementMode) placement behavior with the TeachingTipPlacementMode property. As with Flyout, if the preferred placement mode would not leave room for the teaching tip to show, another placement mode will be automatically chosen. 
+Teaching tip replicates all of Flyout's [FlyoutPlacementMode](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Primitives.FlyoutPlacementMode) placement behavior with the TeachingTipPlacementMode property. The default placement mode will try to place a pointing teaching tip above its target and a non-pointing teaching tip in the bottom right corner of the app window. As with Flyout, if the preferred placement mode would not leave room for the teaching tip to show, another placement mode will be automatically chosen. 
+
+A pointing teaching tip with its PreferredPlacement set to "BottomEdgeAlignedLeft" will appear below its target and will have its left edge aligned to the left edge of the target.
+
+XAML
+```XAML
+<Button Content="Tip Example" Click="OnFirstSaveButtonClick" 
+    <Button.Resources>
+        <muxc:TeachingTip x:Name="AutoSaveTip"
+            Target="{x:Bind SaveButton}"
+            Title="Saving automatically"
+            Subtitle="We save your changes as you go - so you never have to."
+            PreferredPlacement="BottomEdgeAlignedLeft">
+        </muxc:TeachingTip>
+    </Button.Resources>
+</Button>
+```
+
+C#
+```C#
+public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
+{
+    AutoSaveTip.IsOpen=true;
+}
+```
+
+![A sample app with a teaching tip pointing upward at a button that reads "Save". The left edge of the teaching tip and the "Save" button are aligned. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipPointingPreferredPlacementSample.jpg)
+
+
+A non-pointing teaching tip with its PreferredPlacement set to "BottomEdgeAlignedLeft" will appear in the bottom left corner of the app window.
 
 XAML
 ```XAML
@@ -289,7 +318,7 @@ XAML
 <muxc:TeachingTip x:Name="AutoSaveTip"
     Title="Saving automatically"
     Subtitle="We save your changes as you go - so you never have to."
-    PreferredPlacement="TopEdgeAlignedLeft">
+    PreferredPlacement="BottomEdgeAlignedLeft">
 </muxc:TeachingTip>
 ```
 
@@ -301,11 +330,11 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 }
 ```
 
-![A sample app with a teaching tip in the top left corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipPreferredPlacementSample.jpg)
+![A sample app with a teaching tip in the bottom left corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipNonPointingPreferredPlacementSample.jpg)
 
 ### Escaping window bounds
 
-On Windows version 19H1 and above, a teaching tip can escape window bounds by setting the ShouldConstrainToRootBounds property.On earlier versions of Windows, this property is ignored and the teaching tip always stays within the Window bounds.
+On Windows version 19H1 and above, a teaching tip can escape window bounds by setting the ShouldConstrainToRootBounds property. On earlier versions of Windows, this property is ignored and the teaching tip always stays within the Window bounds.
 
 XAML
 ```XAML
@@ -384,24 +413,25 @@ public void OnTipClosing(object sender, TeachingTipClosingEventArgs args)
 
 | Name | Description |
 |:-:|:--|
+| PointerMode | Gets or sets a value that indicates whether to show the pointer for a teaching tip. |
+| PreferredPlacement  | Gets or sets the default placement to be used for the teaching tip. |
 | ShouldConstrainToRootBounds | Gets or sets a value that indicates whether the teaching tip will constrain to the bounds of its root. |
-| PreferredPlacement  | Gets or sets the default placement to be used for the teaching tip, in relation to its placement target if targeted. |
 
 ### Methods   
 
 | Name | Description |
 |:-:|:--|
-| SetAttach | Associates the specified teaching tip with the specified UIElement. |
 | GetAttach | Gets the teaching tip associated with the specified element. |
+| SetAttach | Associates the specified teaching tip with the specified UIElement. |
 
 ### Events    
 
 | Name | Description |
 |:-:|:--|
 | ActionButtonClick | Occurs after the action button has been tapped. |
-| Closing |Occurs just before the tip begins to close. |
-| Closed | Occurs after the tip is closed. |
 | CloseButtonClick | Occurs after the close button has been tapped. |
+| Closed | Occurs after the tip is closed. |
+| Closing |Occurs just before the tip begins to close. |
 
 # API Details 
 
@@ -463,6 +493,7 @@ unsealed runtimeclass TeachingTipTemplateSettings : Windows.UI.Xaml.DependencyOb
     Windows.UI.Xaml.Thickness TopRightHighlightMargin;
     Windows.UI.Xaml.Thickness TopLeftHighlightMargin;
 
+    static Windows.UI.Xaml.DependencyProperty TargetPropertyPath{ get; };
     static Windows.UI.Xaml.DependencyProperty TopRightHighlightMarginProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty TopLeftHighlightMarginProperty{ get; };
 }
@@ -488,6 +519,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 
     Windows.UI.Xaml.Thickness TargetOffset;
     Boolean IsLightDismissEnabled;
+    Boolean ShouldConstrainToRootBounds;
     TeachingTipPlacementMode PreferredPlacement;
     TeachingTipHeroPlacementMode HeroPlacement;
     TeachingTipPointerMode PointerMode;
@@ -523,6 +555,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 
     static Windows.UI.Xaml.DependencyProperty TargetOffsetProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty IsLightDismissEnabledProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty ShouldConstrainToRootBoundsProperty{ get; }; 
     static Windows.UI.Xaml.DependencyProperty PreferredPlacementProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty HeroPlacementProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty PointerModeProperty{ get; };
@@ -557,7 +590,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 |:---:|:---|
 | Opening | * A tip is shown by setting its IsOpen property to true. <br> * Tips will animate on opening. <br> * When a tip does not have enough available window space to fully show in any location [see Placement], it will not open and will instead overwrite IsOpen to false. |
 | Closing | * There are three ways to close a tip: set the IsOpen property to false, the user invokes a close button, or the tip is closed via light dismiss. These will return the method used in TeachingTipCloseReason.  <br> * Closing can be deferred by taking a handle to the deferral object in the closing event args. |
-| Placement | * Placement modes for targeted tips will follow the precedent of Flyout. Full placement mode will be replaced by Center which positions Pointer at the center of the element. <br> * Placement modes for untargeted tips will include each side, corner, and center of the application window. <br> * The following properties are not preferred in tip placement: <br> &nbsp;&nbsp;&nbsp;&nbsp; * There is not enough space for the tip to show without clipping. <br> &nbsp;&nbsp;&nbsp;&nbsp; * The target is not large enough to maintain the tip's alignment and the Pointer's 12px margin from the edge of the tip. <br> &nbsp;&nbsp;&nbsp;&nbsp; * The target element is too large to maintain edge alignment while keeping the Pointer centered on the target. |
+| Placement | * Placement modes for pointing teaching tips will follow the precedent of Flyout. Full placement mode will be replaced by Center which positions Pointer at the center of the element. <br> * Placement modes for non-pointing tips will include each side, corner, and center of the application window. <br> * The following properties are not preferred in tip placement: <br> &nbsp;&nbsp;&nbsp;&nbsp; * There is not enough space for the tip to show without clipping. <br> &nbsp;&nbsp;&nbsp;&nbsp; * The target is not large enough to maintain the tip's alignment and the Pointer's 12px margin from the edge of the tip. <br> &nbsp;&nbsp;&nbsp;&nbsp; * The target element is too large to maintain edge alignment while keeping the Pointer centered on the target. |
 | Light-dismiss | * Allows a tip to be dismissed when the user scrolls or clicks elsewhere within the application. <br> * **TODO:** Work with Accessibility and Design to create a timed fade-out that would allow users to recover a dismissing tip via click or cursor hover. |
 | Persistent Tip Location | * Once a tip is open, it will not move even if its target does. The exception to this is when the window is resized. |
 | Motion | * Tips have built in open and close animations that can be customizable using Storyboards.|
@@ -569,7 +602,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 | State | Action | Narrator |
 |:---|:---|:---|
 | Tip first appears and is not in focus | No action is needed invoke the tip. | “New tip. It says …." | 
-| Tip is first focused on by tabbing through to the tip | Targeted Tip: <br> Tip is injected to tab stop right after its target element. User tabs to reach tip and put it into focus. <br><br> Untargeted Tip: <br> Tip is injected to tab stop as the last item to be created. User tabs to reach tip and put it into focus. <br><br> Light-dismiss: <br> Automatically take focus. | Default Tab Stop, Title, and Subtitle. <br><br> Ex: “X Button, Tip Title, Tip Subtitle.” |
+| Tip is first focused on by tabbing through to the tip | Pointing Tip: <br> Tip is injected to tab stop right after its target element. User tabs to reach tip and put it into focus. <br><br> Non-Pointing Tip: <br> Tip is injected to tab stop as the last item to be created. User tabs to reach tip and put it into focus. <br><br> Light-dismiss: <br> Automatically take focus. | Default Tab Stop, Title, and Subtitle. <br><br> Ex: “X Button, Tip Title, Tip Subtitle.” |
 | Tip is tabbed through | Tab Button: <br> Will go through all actionable items regardless of group in order. When tab is pressed on the last element in the teaching tip, focus will cycle to the first element in the teaching tip.  <br> <br> Arrow keys: <br> Will be able to explore groups in the specified directions. <br> <br> Enter and Escape: <br> Will result in closing the tip. <br> <br> Spacebar: <br> Will select the component focused on. <br> <br> Home and End: <br> Do not have use unless within a XAML component that supports their functionality | Name of XAML or visual component. Ex:<br><br> “X Button” <br><br> “Save Button” <br><br> “Learn More Hyperlink” | 
 | Tip is dismissed | 1. X Button is pressed. <br> 2. Close Button is pressed. <br> 3. Action Button is pressed. <br> Tab focus goes back to where it should be, the predecessor. | Nothing | 
 
