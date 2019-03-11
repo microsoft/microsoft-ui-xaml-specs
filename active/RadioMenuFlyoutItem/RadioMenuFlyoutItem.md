@@ -16,7 +16,7 @@ This control contol allows you to present users with menus containing multiple o
 ## Create RadioMenuFlyoutItems
 *RadioMenuFlyoutItem* can be added into a *MenuBarItem*, *MenuFlyout*, or *MenuFlyoutSubItem*. The following example shows three radio menu flyout items as the content of a cascading menu flyout.
 
-![Three radio menu flyout items in a View goup that allow a user to select the size of icons](RadioMenuFlyoutItems.png)
+![Three radio menu flyout items in a View goup that allow a user to select the size of icons](RadioMenuFlyoutItem.png)
 
 ````Xaml
 <MenuFlyout>
@@ -31,7 +31,7 @@ This control contol allows you to present users with menus containing multiple o
 ## Group RadioMenuFlyoutItem into multiple sets
 Radio menu flyout items work in groups, and users can only select one item in a radio menu flyout item group. To create multiple groups of radio buttons within a single menu, be sure to specify the `GroupName` property of each set.
 
-![Two groups of radio menu flyout items within a View menu bar item](RadioMenuFlyoutItems2.png)
+![Two groups of radio menu flyout items within a View menu bar item](RadioMenuFlyoutItem2.png)
 
 ````Xaml
 <muxc:MenuBar>
