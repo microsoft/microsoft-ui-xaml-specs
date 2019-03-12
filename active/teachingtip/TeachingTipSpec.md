@@ -482,18 +482,18 @@ enum TeachingTipPlacementMode
     RightEdgeAlignedBottom,
 };
 
-enum TeachingTipHeroPlacementMode
+enum TeachingTipHeroContentPlacementMode
 {
+    Auto,
     Top,
     Bottom,
-    Auto,
 };
 
 enum TeachingTipPointerMode
 {
-    Auto,
-    On,
-    Off,
+	Auto,
+	On,
+	Off,
 };
 
 runtimeclass TeachingTipClosedEventArgs
@@ -515,36 +515,47 @@ unsealed runtimeclass TeachingTipTemplateSettings : Windows.UI.Xaml.DependencyOb
     Windows.UI.Xaml.Thickness TopRightHighlightMargin;
     Windows.UI.Xaml.Thickness TopLeftHighlightMargin;
 
-    static Windows.UI.Xaml.DependencyProperty TargetPropertyPath{ get; };
+    Windows.UI.Xaml.Controls.IconElement IconElement;
+
     static Windows.UI.Xaml.DependencyProperty TopRightHighlightMarginProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty TopLeftHighlightMarginProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty IconElementProperty{ get; };
 }
 
+[MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
 unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 {
     TeachingTip();
 
     String Title;
-    String Subtext;
+    String Subtitle;
 
+    [MUX_DEFAULT_VALUE("false")]
     Boolean IsOpen;
 
-    String ActionButtonText;
+    Windows.UI.Xaml.FrameworkElement Target;
+
+    Object ActionButtonText;
     Windows.UI.Xaml.Style ActionButtonStyle;
     Windows.UI.Xaml.Input.ICommand ActionButtonCommand;
     Object ActionButtonCommandParameter;
 
-    String CloseButtonText;
+    Object CloseButtonText;
     Windows.UI.Xaml.Style CloseButtonStyle;
     Windows.UI.Xaml.Input.ICommand CloseButtonCommand;
     Object CloseButtonCommandParameter;
 
     Windows.UI.Xaml.Thickness TargetOffset;
+    [MUX_DEFAULT_VALUE("false")]
     Boolean IsLightDismissEnabled;
-    Boolean ShouldConstrainToRootBounds;
+	[MUX_DEFAULT_VALUE("true")]
+	Boolean ShouldConstrainToRootBounds;
+    [MUX_DEFAULT_VALUE("winrt::TeachingTipPlacementMode::Auto")]
     TeachingTipPlacementMode PreferredPlacement;
-    TeachingTipHeroPlacementMode HeroPlacement;
-    TeachingTipPointerMode PointerMode;
+    [MUX_DEFAULT_VALUE("winrt::TeachingTipHeroContentPlacementMode::Auto")]
+    TeachingTipHeroContentPlacementMode HeroContentPlacement;
+	[MUX_DEFAULT_VALUE("winrt::TeachingTipPointerMode::Auto")]
+	TeachingTipPointerMode PointerMode;
 
     Windows.UI.Xaml.UIElement HeroContent;
     IconSource IconSource;
@@ -558,8 +569,10 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 
     static Windows.UI.Xaml.DependencyProperty IsOpenProperty{ get; };
 
+    static Windows.UI.Xaml.DependencyProperty TargetProperty{ get; };
+
     static Windows.UI.Xaml.DependencyProperty TitleProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty SubtextProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty SubtitleProperty{ get; };
 
     static Windows.UI.Xaml.DependencyProperty ActionButtonTextProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty ActionButtonStyleProperty{ get; };
@@ -573,10 +586,10 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 
     static Windows.UI.Xaml.DependencyProperty TargetOffsetProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty IsLightDismissEnabledProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty ShouldConstrainToRootBoundsProperty{ get; }; 
+	static Windows.UI.XAML.DependencyProperty ShouldConstrainToRootBounds{ get; };
     static Windows.UI.Xaml.DependencyProperty PreferredPlacementProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty HeroPlacementProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty PointerModeProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty HeroContentPlacementProperty{ get; };
+	static Windows.UI.Xaml.DependencyProperty PointerModeProperty{ get; };
 
     static Windows.UI.Xaml.DependencyProperty HeroContentProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty IconSourceProperty{ get; };
