@@ -73,7 +73,7 @@ XAML
 <Button x:Name="SaveButton" Content="Save" Click="OnFirstSaveButtonClick">
     <Button.Resources>
         <muxc:TeachingTip x:Name="AutoSaveTip"
-            IsOpen="{x:Bind ShowAutoSaveTip, Mode=OneWay}"
+            IsOpen="{x:Bind ShowAutoSaveTip, Mode=TwoWay}"
             Target="{x:Bind SaveButton}"
             Title="Saving automatically"
             Subtitle="We save your changes as you go - so you never have to.">
