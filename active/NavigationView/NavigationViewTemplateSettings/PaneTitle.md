@@ -9,7 +9,6 @@ Provides calculated PaneTitle that can be referenced as TemplatedParent sources 
 # Examples
 
 ```
-[WUXC_VERSION_RS5]
 [webhosthidden]
 unsealed runtimeclass NavigationViewTemplateSettings : Windows.UI.Xaml.DependencyObject
 {
