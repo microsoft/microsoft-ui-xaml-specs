@@ -101,7 +101,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 ### Non-pointing tips
 
-Not all tips relate to an element onscreen. For these scenarios, do not set the Target property and the teaching tip will instead display relative to the edges of the UWP window. However, a teaching tip can have the pointer removed while retaining placement relative to a UI element by setting the PointerMode property to "Off". 
+Not all tips relate to an element onscreen. For these scenarios, do not set the Target property and the teaching tip will instead display relative to the edges of the root window. However, a teaching tip can have the pointer removed while retaining placement relative to a UI element by setting the PointerMode property to "Off". 
 
 Unlike pointing teaching tips which can only be added to a resource dictionary, non-pointing teaching tips can also be added through the visual tree, as shown below.
 
@@ -127,7 +127,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 ### Add an offset 
 
-You can control how far a pointing teaching tip is set apart from its target and how far a non-pointing teaching tip is set apart from the the edges of the UWP window using the TargetOffset property. Like [Margin](https://docs.microsoft.com/en-us/dotnet/api/system.windows.frameworkelement.margin?view=netframework-4.7.2), TargetOffset has four values – left, right, top, and bottom – so only the relevant values are used. For example, if the target is left of the teaching tip, the TargetOffset.Left will be used. If the teaching tip has no target, the TargetOffset’s Right and Bottom will be used to space it from the bottom right corner of the window.  
+You can control how far a pointing teaching tip is set apart from its target and how far a non-pointing teaching tip is set apart from the the edges of the root window using the TargetOffset property. Like [Margin](https://docs.microsoft.com/en-us/dotnet/api/system.windows.frameworkelement.margin?view=netframework-4.7.2), TargetOffset has four values – left, right, top, and bottom – so only the relevant values are used. For example, if the target is left of the teaching tip, the TargetOffset.Left will be used. If the teaching tip has no target, the TargetOffset’s Right and Bottom will be used to space it from the bottom right corner of the window.  
 
 The following example shows a non-pointing tip with the TargetOffset’s Left/Top/Right/Bottom all set to 80.
 
@@ -313,7 +313,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 ### Preferred placement
 
-Teaching tip replicates all of Flyout's [FlyoutPlacementMode](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Primitives.FlyoutPlacementMode) placement behavior with the TeachingTipPlacementMode property. The default placement mode will try to place a pointing teaching tip above its target and a non-pointing teaching tip in the bottom right corner of the UWP window. As with Flyout, if the preferred placement mode would not leave room for the teaching tip to show, another placement mode will be automatically chosen. 
+Teaching tip replicates all of Flyout's [FlyoutPlacementMode](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Primitives.FlyoutPlacementMode) placement behavior with the TeachingTipPlacementMode property. The default placement mode will try to place a pointing teaching tip above its target and a non-pointing teaching tip in the bottom right corner of the root window. As with Flyout, if the preferred placement mode would not leave room for the teaching tip to show, another placement mode will be automatically chosen. 
 
 A pointing teaching tip with its PreferredPlacement set to "BottomEdgeAlignedLeft" will appear below its target and will have its left edge aligned to the left edge of the target.
 
@@ -342,7 +342,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 ![A sample app with a teaching tip pointing upward at a button that reads "Save". The left edge of the teaching tip and the "Save" button are aligned. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipPointingPreferredPlacementSample.jpg)
 
 
-A non-pointing teaching tip with its PreferredPlacement set to "BottomEdgeAlignedLeft" will appear in the bottom left corner of the UWP window.
+A non-pointing teaching tip with its PreferredPlacement set to "BottomEdgeAlignedLeft" will appear in the bottom left corner of the root window.
 
 XAML
 ```XAML
@@ -365,9 +365,9 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 ![A sample app with a teaching tip in the bottom left corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipNonPointingPreferredPlacementSample.jpg)
 
-### Escaping UWP window bounds
+### Escaping root window bounds
 
-On Windows version 19H1 and above, a teaching tip can escape UWP window bounds by setting the ShouldConstrainToRootBounds property. On earlier versions of Windows, this property is ignored and the teaching tip always stays within the UWP window bounds.
+On Windows version 19H1 and above, a teaching tip can escape root window bounds by setting the ShouldConstrainToRootBounds property. On earlier versions of Windows, this property is ignored and the teaching tip always stays within the root window bounds.
 
 XAML
 ```XAML
