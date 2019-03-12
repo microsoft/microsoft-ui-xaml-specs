@@ -14,7 +14,6 @@ unsealed runtimeclass NavigationViewTemplateSettings : Windows.UI.Xaml.Dependenc
 {
     ...
 
-    [WUXC_VERSION_MUXONLY]
     {
         String PaneTitle{ get; };
         static Windows.UI.Xaml.DependencyProperty PaneTitleProperty{ get; };
