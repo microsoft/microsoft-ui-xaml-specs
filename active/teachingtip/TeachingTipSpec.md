@@ -56,9 +56,15 @@ XAML
 
 C#
 ```C#
-private void SaveButton_Loaded(object sender, RoutedEventArgs e)
+public MainPage()
 {
-    AutoSaveTip.IsOpen = true;
+    this.InitializeComponent();
+
+    if(!HaveExplainedAutoSave())
+    {
+        AutoSaveTip.IsOpen = true;
+        SetHaveExplainedAutoSave();
+    }
 }
 ```
 
