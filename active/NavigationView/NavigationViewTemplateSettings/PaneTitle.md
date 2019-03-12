@@ -42,5 +42,5 @@ This is intended for use in the style of the `NavigationView` control. Sample us
 ## Class: NavigationViewTemplateSettings 
 | Member Name | Description |
 |:- |:--|
-| PaneTitle | The NavigationView.PaneTitle displayed in the control. Empty when NavigationView.PaneHeader is set, |
+| PaneTitle | The NavigationView.PaneTitle displayed in the control. Empty when NavigationView.PaneHeader is set |
 
