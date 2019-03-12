@@ -4,7 +4,7 @@ PaneTitle is added to NavigationView in RS4, but it's a String. Since RS5, we in
 This API update addes PaneTitle [Template-Settings](https://docs.microsoft.com/en-us/windows/uwp/xaml-platform/template-settings-classes) to the NavigationView control.
 
 # Description
-Provides calculated PaneTitle that can be referenced as TemplatedParent sources when defining templates for a NavigatiionView control. Not intended for general use.
+Provides calculated PaneTitle that can be referenced as TemplatedParent sources when defining templates for a NavigationView control. Not intended for general use.
 
 # Examples
 
