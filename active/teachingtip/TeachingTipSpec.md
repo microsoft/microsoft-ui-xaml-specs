@@ -640,7 +640,7 @@ TeachingTip will alternate between Pane for persistent TeachingTips and Window f
 | Tip first appears and is not in focus | No action is needed invoke the tip. | “New tip. It says …." | 
 | Tip is first focused on by tabbing through to the tip | Pointing Tip: <br> Tip is injected to tab stop right after its target element. User tabs to reach tip and put it into focus. <br><br> Non-Pointing Tip: <br> Tip is injected to tab stop as the last item to be created. User tabs to reach tip and put it into focus. <br><br> Light-dismiss: <br> Automatically take focus. |  |
 | Tip is tabbed through | Tab Button: <br> Will go through all actionable items regardless of group in order. When tab is pressed on the last element in the teaching tip, focus will cycle to the first element in the teaching tip.  <br> <br> Left + Right Arrow Keys: <br> Can be used to navigate between the footer Action and Close buttons if both are present. <br><br> Escape: <br> Will result in closing the tip. <br> <br> | | 
-| Tip is dismissed | 1. X Button is pressed. <br> 2. Close Button is pressed. <br> 3. Action Button is pressed. <br> Tab focus returns to the predecessor. | Nothing | 
+| Tip is dismissed | 1. X Button is pressed. <br> 2. Close Button is pressed. <br> 3. Action Button is pressed. <br> Tab focus returns to the predecessor. | | 
 
 ### Data and Intelligence Metrics
 
