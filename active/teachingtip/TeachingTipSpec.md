@@ -188,7 +188,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 ### Add buttons
 
-A standard "X" close button is automatically added next to the title of a teaching tip. However, a custom close button can be added to the bottom of a teaching tip by setting the CloseButtonText property. 
+A standard "X" close button is automatically added next to the title of a teaching tip. However, a custom close button can be added to the bottom of a teaching tip by setting the CloseButtonContent property. 
 
 **Note: no close button will appear on light-dismiss enabled tips**
 
@@ -204,7 +204,7 @@ XAML
             Subtitle="We save your changes as you go - so you never have to."
             ActionButtonText="Disable"
             ActionButtonCommand="DisableAutoSave"
-            CloseButtonText="Got it!">
+            CloseButtonContent="Got it!">
                 <CheckBox Content="Don't show tips at start up" IsChecked="{x:Bind HidingTips, Mode=TwoWay}" />
                 <p>You can change your tip preferences in <a href="app:/item/SettingsPage">Settings</a> if you change your mind.</p>
         </muxc:TeachingTip>
@@ -539,7 +539,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
     Windows.UI.Xaml.Input.ICommand ActionButtonCommand;
     Object ActionButtonCommandParameter;
 
-    Object CloseButtonText;
+    Object CloseButtonContent;
     Windows.UI.Xaml.Style CloseButtonStyle;
     Windows.UI.Xaml.Input.ICommand CloseButtonCommand;
     Object CloseButtonCommandParameter;
@@ -578,7 +578,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
     static Windows.UI.Xaml.DependencyProperty ActionButtonCommandProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty ActionButtonCommandParameterProperty{ get; };
 
-    static Windows.UI.Xaml.DependencyProperty CloseButtonTextProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty CloseButtonContentProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty CloseButtonStyleProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty CloseButtonCommandProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty CloseButtonCommandParameterProperty{ get; };
