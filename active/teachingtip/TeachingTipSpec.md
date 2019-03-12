@@ -632,7 +632,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 
 #### UI Automation Patterns 
 
-TeachingTip will alternate between Pane for persistent TeachingTips and Window for light-dismiss enabled TeachingTips with IScrollProvider for the scrollable content area within TeachingTip. 
+TeachingTip will alternate between Pane for persistent TeachingTips and Window for light-dismiss enabled TeachingTips with IScrollProvider for the (conditionally) scrollable content area within TeachingTip. 
 
 #### Keyboarding and Narrator Experience 
 | State | Action | Narrator |
