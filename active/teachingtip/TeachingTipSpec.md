@@ -127,7 +127,7 @@ public void OnFirstSaveButtonClick(object sender, RoutedEventArgs args)
 
 ### Add an offset 
 
-You can control how far a pointing teaching tip is set apart from its target and how far a non-pointing teaching tip is set apart from the the edges of the XamlRoot using the TargetOffset property. Like [Margin](https://docs.microsoft.com/en-us/dotnet/api/system.windows.frameworkelement.margin?view=netframework-4.7.2), TargetOffset has four values – left, right, top, and bottom – so only the relevant values are used. For example, if the target is left of the teaching tip, the TargetOffset.Left will be used. If the teaching tip has no target, the TargetOffset’s Right and Bottom will be used to space it from the bottom right corner of the window.  
+You can control how far a pointing teaching tip is set apart from its target and how far a non-pointing teaching tip is set apart from the the edges of the XamlRoot using the TargetOffset property. Like [Margin](https://docs.microsoft.com/en-us/dotnet/api/system.windows.frameworkelement.margin?view=netframework-4.7.2), TargetOffset has four values – left, right, top, and bottom – so only the relevant values are used. For example, if the target is left of the teaching tip, the TargetOffset.Left will be used. If the teaching tip has no target, the TargetOffset’s Right and Bottom will be used to space it from the bottom right corner of the XamlRoot.  
 
 The following example shows a non-pointing tip with the TargetOffset’s Left/Top/Right/Bottom all set to 80.
 
