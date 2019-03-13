@@ -68,7 +68,7 @@ public MainPage()
 }
 ```
 
-Here's the result when this code runs and the Save button gets loaded.
+Here's the result when this Page containing the button and teaching tip shown:
 
 ![A sample app with a teaching tip pointing at the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipPointerSample.jpg)
 
