@@ -165,7 +165,7 @@ A standard "X" close button is automatically added next to the title of a teachi
 
 **Note: no close button will appear on light-dismiss enabled tips**
 
-A custom action button can be added by setting ActionButtonContent, ActionButtonCommand and the ActionButtonCommandParameter properties. 
+A custom action button can be added by setting ActionButtonContent property (and optionally the ActionButtonCommand and the ActionButtonCommandParameter properties).
 
 XAML
 ```XAML
