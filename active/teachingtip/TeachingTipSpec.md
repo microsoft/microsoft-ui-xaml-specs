@@ -198,7 +198,7 @@ A standard "X" close button is automatically added next to the title of a teachi
 
 **Note: no close button will appear on light-dismiss enabled tips**
 
-A custom action button can be added by setting ActionButtonText, ActionButtonCommand and the ActionButtonCommandParameter properties. 
+A custom action button can be added by setting ActionButtonContent, ActionButtonCommand and the ActionButtonCommandParameter properties. 
 
 XAML
 ```XAML
@@ -208,7 +208,7 @@ XAML
             Target="{x:Bind SaveButton}"
             Title="Saving automatically"
             Subtitle="We save your changes as you go - so you never have to."
-            ActionButtonText="Disable"
+            ActionButtonContent="Disable"
             ActionButtonCommand="DisableAutoSave"
             CloseButtonContent="Got it!">
                 <CheckBox Content="Don't show tips at start up" IsChecked="{x:Bind HidingTips, Mode=TwoWay}" />
@@ -540,7 +540,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 
     Windows.UI.Xaml.FrameworkElement Target;
 
-    Object ActionButtonText;
+    Object ActionButtonContent;
     Windows.UI.Xaml.Style ActionButtonStyle;
     Windows.UI.Xaml.Input.ICommand ActionButtonCommand;
     Object ActionButtonCommandParameter;
@@ -579,7 +579,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
     static Windows.UI.Xaml.DependencyProperty TitleProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty SubtitleProperty{ get; };
 
-    static Windows.UI.Xaml.DependencyProperty ActionButtonTextProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty ActionButtonContentProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty ActionButtonStyleProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty ActionButtonCommandProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty ActionButtonCommandParameterProperty{ get; };
