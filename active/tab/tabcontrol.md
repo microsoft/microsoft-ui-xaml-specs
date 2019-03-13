@@ -1,5 +1,3 @@
-> See comments in Markdown for how to use this spec template
-
 <!-- The purpose of this spec is to describe a new feature and
 its APIs that make up a new feature in WinUI. -->
 
