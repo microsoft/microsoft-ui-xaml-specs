@@ -637,7 +637,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 | State | Action |
 |:---|:---|
 | Tip first appears and is not in focus | No action is needed invoke the tip. |
-| Tip is first focused on | Tip steals focus and returns focus to the previous element upon closing. |
+| Tip is first focused on | Pointing Tip: <br> Tip steals focus and returns focus to the previous element upon closing. <br><br> Non-Pointing Tip: <br> Do not steal focus and cannot be accessed by gamepad. |
 | Tip is navigated | Directional navigation: <br> Will spatially navigate focus across actionable items (without respect to group).  <br> <br> A Button: <br> Will interact with the item in focus, such as "press" the action or close button. <br><br> B Button: <br> Will result in closing the tip. <br> <br> |
 | Tip is dismissed | 1. Header "X" Close Button is pressed. <br> 2. Footer Close Button is pressed. <br> 3. Action Button is pressed. <br> 4. B Button returns focus to the element previously in focus. |
 
