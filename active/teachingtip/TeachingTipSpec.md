@@ -527,7 +527,6 @@ unsealed runtimeclass TeachingTipTemplateSettings : Windows.UI.Xaml.DependencyOb
     static Windows.UI.Xaml.DependencyProperty IconElementProperty{ get; };
 }
 
-[MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
 unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 {
     TeachingTip();
@@ -535,7 +534,6 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
     String Title;
     String Subtitle;
 
-    [MUX_DEFAULT_VALUE("false")]
     Boolean IsOpen;
 
     Windows.UI.Xaml.FrameworkElement Target;
@@ -551,16 +549,11 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
     Object CloseButtonCommandParameter;
 
     Windows.UI.Xaml.Thickness TargetOffset;
-    [MUX_DEFAULT_VALUE("false")]
     Boolean IsLightDismissEnabled;
-	[MUX_DEFAULT_VALUE("true")]
-	Boolean ShouldConstrainToRootBounds;
-    [MUX_DEFAULT_VALUE("winrt::TeachingTipPlacementMode::Auto")]
+    Boolean ShouldConstrainToRootBounds;
     TeachingTipPlacementMode PreferredPlacement;
-    [MUX_DEFAULT_VALUE("winrt::TeachingTipHeroContentPlacementMode::Auto")]
     TeachingTipHeroContentPlacementMode HeroContentPlacement;
-	[MUX_DEFAULT_VALUE("winrt::TeachingTipPointerMode::Auto")]
-	TeachingTipPointerMode PointerMode;
+    TeachingTipPointerMode PointerMode;
 
     Windows.UI.Xaml.UIElement HeroContent;
     IconSource IconSource;
