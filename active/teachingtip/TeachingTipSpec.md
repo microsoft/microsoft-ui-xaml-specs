@@ -108,7 +108,7 @@ private void SaveButton_Loaded(object sender, RoutedEventArgs e)
 
 Not all tips relate to an element onscreen. For these scenarios, do not set the Target property and the teaching tip will instead display relative to the edges of the XamlRoot. However, a teaching tip can have the pointer removed while retaining placement relative to a UI element by setting the PointerMode property to "Off". 
 
-Unlike pointing teaching tips which can only be added to a resource dictionary, non-pointing teaching tips can also be added through the visual tree, as shown below.
+Unlike pointing teaching tips which can only be added to a resource dictionary, non-pointing teaching tips can also be added through the element tree, as shown below.
 
 XAML
 ```XAML
