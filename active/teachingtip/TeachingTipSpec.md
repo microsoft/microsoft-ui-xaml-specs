@@ -212,7 +212,7 @@ XAML
             ActionButtonCommand="DisableAutoSave"
             CloseButtonContent="Got it!">
                 <CheckBox Content="Don't show tips at start up" IsChecked="{x:Bind HidingTips, Mode=TwoWay}" />
-                <p>You can change your tip preferences in <a href="app:/item/SettingsPage">Settings</a> if you change your mind.</p>
+                <TextBlock>You can change your tip preferences in <Hyperlink NavigateUri="app:/item/SettingsPage">Settings</Hyperlink> if you change your mind.</TextBlock>
         </muxc:TeachingTip>
     </Button.Resources>
 </Button>
