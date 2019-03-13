@@ -39,8 +39,6 @@ A teaching tip can require the user to dismiss it via an "X" button in a top cor
 
 Here's the XAML for a simple pointing teaching tip control that demonstrates the default look of the TeachingTip with a title and subtitle.
 
-When the Save button is added to the visual tree, a teaching tip will appear and display a message to the user. 
-
 XAML
 ```XAML
 <Button x:Name="SaveButton" Content="Save" Loaded="SaveButton_Loaded">
