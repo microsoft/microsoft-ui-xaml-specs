@@ -637,8 +637,8 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 | State | Action |
 |:---|:---|
 | Tip first appears and is not in focus | No action is needed invoke the tip. |
-| Tip is first focused on | Pointing Tip: <br> Tip steals focus and returns focus to the previous element upon closing. <br><br> Non-Pointing Tip: <br> Do not steal focus and cannot be accessed by gamepad. |
-| Tip is navigated | Directional navigation: <br> Will spatially navigate focus across actionable items (without respect to group).  <br> <br> A Button: <br> Will interact with the item in focus, such as "press" the action or close button. <br><br> B Button: <br> Will result in closing the tip. <br> <br> |
+| Tip is first focused on | Tip steals focus and returns focus to the previous element upon closing. |
+| Tip is navigated | Directional navigation: <br> Will spatially navigate focus across actionable items (without respect to group).  <br> <br> A Button: <br> Will interact with the item in focus, such as "press" the action or close button. <br><br> B Button: <br> Will result in closing the tip. |
 | Tip is dismissed | 1. Header "X" Close Button is pressed. <br> 2. Footer Close Button is pressed. <br> 3. Action Button is pressed. <br> 4. B Button returns focus to the element previously in focus. |
 
 ### Accessibility
@@ -651,8 +651,8 @@ TeachingTip will alternate between Pane for persistent TeachingTips and Window f
 | State | Action | Narrator |
 |:---|:---|:---|
 | Tip first appears and is not in focus | No action is needed invoke the tip. |  Persistent tip: <br> “New tip. It says..." + Title + Subtitle <br><br> Light-dismiss tip: <br> “New light-dismiss tip. It says..." Title + Subtitle | 
-| Tip is first focused on | Pointing Tip: <br> Tip steals focus and returns focus to the previous element upon closing. <br><br> Non-Pointing Tip: <br> Tip is injected at the top of the tab stop order like other popups. User tabs to reach tip and put it into focus. | Title + Button in Focus |
-| Tip is tabbed through | Tab Button: <br> Will go through all actionable items, regardless of group, in order. When tab is pressed on the last element in the teaching tip, focus will cycle to the first element in the teaching tip.  <br> <br> Left + Right Arrow Keys: <br> Can be used to navigate between the footer Action and Close buttons if both are present. <br><br> Escape: <br> Will result in closing the tip. <br> <br> | | 
+| Tip is first focused on | Tip steals focus and returns focus to the previous element upon closing. | Title + Button in Focus |
+| Tip is tabbed through | Tab Button: <br> Will go through all actionable items, regardless of group, in order. When tab is pressed on the last element in the teaching tip, focus will cycle to the first element in the teaching tip.  <br> <br> Left + Right Arrow Keys: <br> Can be used to navigate between the footer Action and Close buttons if both are present. <br><br> Escape: <br> Will result in closing the tip. | | 
 | Tip is dismissed | 1. X Button is pressed. <br> 2. Close Button is pressed. <br> 3. Action Button is pressed. <br> Tab focus returns to the predecessor. | | 
 
 ### Data and Intelligence Metrics
