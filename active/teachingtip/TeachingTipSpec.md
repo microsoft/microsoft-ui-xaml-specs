@@ -37,7 +37,8 @@ A teaching tip can require the user to dismiss it via an "X" button in a top cor
 
 ### Create a teaching tip
 
-Here's the XAML for a simple pointing teaching tip control that demonstrates the default look of the TeachingTip with a title and subtitle.
+Here's the XAML for a pointing teaching tip control that demonstrates the default look of the TeachingTip with a title and subtitle. 
+Note that the teaching tip can appear anywhere in the element tree. In this example below, it's located in a ResourceDictionary.
 
 XAML
 ```XAML
@@ -69,38 +70,6 @@ public MainPage()
 Here's the result when this Page containing the button and teaching tip shown:
 
 ![A sample app with a teaching tip pointing at the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipPointerSample.jpg)
-Note that the TeachingTip can appear anywhere in the element tree. In the above example it's located in a ResourceDictionary.
-The IsOpen property also enables teaching tip to be implemented with data binding.
-
-XAML
-```XAML
-<Button x:Name="SaveButton" Content="Save" Loaded="SaveButton_Loaded">
-    <Button.Resources>
-        <muxc:TeachingTip x:Name="AutoSaveTip"
-            IsOpen="{x:Bind ShowAutoSaveTip, Mode=TwoWay}"
-            Target="{x:Bind SaveButton}"
-            Title="Saving automatically"
-            Subtitle="We save your changes as you go - so you never have to.">
-        </muxc:TeachingTip>
-    </Button.Resources>
-</Button>
-```
-
-C#
-```C#
-public bool ShowAutoSaveTip
-{
-    get { return (bool)GetValue(ShowAutoSaveTipProperty); }
-    set { SetValue(ShowAutoSaveTipProperty, value); }
-}
- 
-public static readonly DependencyProperty ShowAutoSaveTipProperty = DependencyProperty.Register("ShowAutoSaveTip", typeof(bool), typeof(MainPage), new PropertyMetadata(false));
-
-private void SaveButton_Loaded(object sender, RoutedEventArgs e)
-{
-    AutoSaveTip.IsOpen = true;
-}
-```
 
 ### Non-pointing tips
 
