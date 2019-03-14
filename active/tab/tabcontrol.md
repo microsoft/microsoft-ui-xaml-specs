@@ -42,7 +42,7 @@ Tab-like UI comes in two distinct styles that affect not only the visualization 
     * User can add, remove, and rearrange pages
     * User can "tear off" tabs into their own window or "recombine" tabs from one group into another group
 
-The Xaml platform already provides several controls to represent "static-style tabs" including Pivot and top NavigationView. However, these controls do not well support "document-style" tabs due to a variety of limitations, including:
+The Xaml platform already provides several controls to represent "static-style tabs" including [Pivot](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/pivot) and top [NavigationView](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/navigationview#display-modes). However, these controls do not well support "document-style" tabs due to a variety of limitations, including:
 * Significant effort up to (and including) retemplating to build simple tabs
 * No built-in support for closing tabs
 * No built-in support for drag/drop into new windows
