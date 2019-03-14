@@ -59,14 +59,18 @@ only when there's a bug in the caller, such as argument exception.  But if for s
 reason it's necessary for a caller to catch an exception from an API, call that
 out with an explanation either here or in the Examples -->
 
+# API Notes
+<!-- Option 1: Give a one or two line description of each API (type
+and member), or at least the ones that aren't obvious
+from their name.  These descriptions are what show up
+in IntelliSense. For properties, specify the default value of the property if it
+isn't the type's default (for example an int-typed property that doesn't default to zero.) -->
+
+<!-- Option 2: Put these descriptions in the below API Details section,
+with a "///" comment above the member or type. -->
+
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
-
-<!-- For types and members whose functionality isn't clear from the name,
-add a "/// One or two line description" comment above the definition.
-In practice (not by automation) this will be copied to docs.microsoft.com to the member page
-and IntelliSense text. For properties, specify the default value of the property if it
-isn't the type's default (for example an int-typed property that doesn't default to zero). -->
 
 # Appendix
 <!-- Anything else that you want to write down for posterity, but 
