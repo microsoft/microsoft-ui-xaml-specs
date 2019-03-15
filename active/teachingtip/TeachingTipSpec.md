@@ -524,8 +524,8 @@ TeachingTip will alternate between Pane for persistent TeachingTips and Window f
 
 #### Narrator
 
-TeachingTip will leverage the existing APIs used by Windows Notifications. 
-
+TeachingTip will leverage the existing APIs used by Windows Notifications. TeachingTip will also had 
+a custom Landmark called Tip
 | State | Action |
 |:---|:---|
 | Tip appears | Narrator will say "Click Up to move to new notifcation from" + App Name + Tip Contents | 
@@ -555,7 +555,15 @@ Developers feel delighted and satisfied with the feature.
 
 * KPI: Dev NSAT is positive (min), >20 (aspirational) as we exit 2019.
     * Measurement: Developer survey via SIUF, e.g.: "How useful is the feature?" 
+    
+Control is accessible to end users. 
 
+* KPI: F6 is discoverable to keyboard navigation users.  
+    * Measurement: Number of devices and total number of times F6 is used to access the control.
+
+* KPI: 
+    * Measurement: Number of times a control has immediately iterated through its lifecycle to force a close because it could not find room to show. 
+    
 ##### P1: Feature Performance Indicators
 
 Ratio of apps applying teaching tip should be comparable across all Windows experiences.
