@@ -561,7 +561,7 @@ Control is accessible to end users.
 * KPI: F6 is discoverable to keyboard navigation users.  
     * Measurement: Number of devices and total number of times F6 is used to access the control.
 
-* KPI: 
+* KPI: Instances of teaching tip consistently surface to end users. 
     * Measurement: Number of times a control has immediately iterated through its lifecycle to force a close because it could not find room to show. 
     
 ##### P1: Feature Performance Indicators
