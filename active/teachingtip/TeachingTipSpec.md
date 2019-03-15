@@ -524,8 +524,8 @@ TeachingTip will alternate between Pane for persistent TeachingTips and Window f
 
 #### Narrator
 
-TeachingTip will leverage the existing APIs used by Windows Notifications. TeachingTip will also had 
-a custom Landmark called Tip
+TeachingTip will leverage the existing APIs used by Windows Notifications.
+
 | State | Action |
 |:---|:---|
 | Tip appears | Narrator will say "Click Up to move to new notifcation from" + App Name + Tip Contents | 
