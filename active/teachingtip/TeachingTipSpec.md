@@ -508,27 +508,38 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 | Pointer/Hero Content Avoidance | * To avoid the visual oddity of the Pointer emerging from Hero Content, the Pointer and Hero Content will attempt to avoid intersecting using the following rules: <br> &nbsp;&nbsp;&nbsp;&nbsp; * Move the hero content to Top or Bottom (Disabled when HeroContentPlacement is not auto). <br> &nbsp;&nbsp;&nbsp;&nbsp; * Shift the beak along the edge of the tip (Disabled when the placement of the tip is edge aligned). <br> &nbsp;&nbsp;&nbsp;&nbsp; * Change the placement of the tip (Disabled when the tip placement is not auto).  |
 | Out of Window Bounds | * Tips can escape window bounds on newer OS versions via the ShouldConstrainToRootBounds property.  When this property is set to false, the tip uses screen boundaries instead of window boundaries during its placement algorithm. |
 
-### Gamepad Interaction 
+### Inputs and Accessibility
+
+#### UI Automation Patterns 
+
+TeachingTip will alternate between Pane for persistent TeachingTips and Window for light-dismiss enabled TeachingTips with IScrollProvider for the (conditionally) scrollable content area within TeachingTip. 
+
+#### Keyboard Navigation 
+| State | Action |
+|:---|:---|
+| Tip appears | No action is needed invoke the tip. |
+| Tip recieves focus | F6: <br> Tip will be added to F6 region navigation stops so that F6 may be used to focus into and out of the tip. <br><br> Tab: <br> If Narrator is active, TeachingTip will automatically be added to the top of Narrator navigation stops thanks to its UI Automation Pattern(s), similar to popups or ContentDialog, and can be accessed via tabbing. |
+| Tip is tabbed through | Tab Button: <br> Will go through all actionable items, regardless of group, in order. When tab is pressed on the last element in the teaching tip, focus will cycle to the first element in the teaching tip.  <br> <br> Left + Right Arrow Keys: <br> Can be used to navigate between the footer Action and Close buttons if both are present. <br><br> Escape: <br> Will result in closing the tip. |
+| Tip is dismissed | 1. X Button is pressed. <br> 2. Close Button is pressed. <br> 3. Action Button is pressed. <br><br> * Tab increments focus to the next element but does not close the tip. |
+
+#### Narrator
+
+TeachingTip will leverage the existing APIs used by Windows Notifications. 
+
+| State | Action |
+|:---|:---|
+| Tip appears | Narrator will say "Click Up to move to new notifcation from" + App Name + Tip Contents | 
+| Tip recieves focus | Ctrl + Narrator + Up arrow: <br> Will move focus to tip and Narrator will read the element in focus. |
+| Tip is tabbed through | Tab Button: <br> Will navigate through all actionable items, regardless of group, in order. When tab is pressed on the last element in the teaching tip, focus will cycle to the first element in the teaching tip.  <br> <br> Swipe (for touch screen devices): <br> Will navigate through all actionable items, regardless of group, in order. When Swiping on the last element in the teaching tip, focus will move to Narrator's fullscreen invisible Close Button and the user may double tap the screen to close the window. Swiping again will move focus out of the tip. <br><br> Left + Right Arrow Keys: <br> Can be used to navigate between the footer Action and Close buttons if both are present. <br><br> Escape: <br> Will result in closing the tip. |
+| Tip is dismissed | 1. Header Close Button is invoked. <br> 2. Footer Close Button is invoked. <br> 3. Action Button is invoked. <br> 4. Swipe (for touch screen devices) moves focus to Narrator's fullscreen invisible Close Button and the user double taps the screen to close the window. * Tab increments focus to the next element but does not close the tip. |
+
+#### Gamepad  
 | State | Action |
 |:---|:---|
 | Tip appears | No action is needed invoke the tip. |
 | Tip recieves focus | Spatial navigation: <br> Spatial navigation may be used to access tip. Guidance will be added to advise proper design consideration for tip accessibility and testing for gamepad. |
 | Tip is navigated | Spatial navigation: <br> Will spatially navigate focus across actionable items (without respect to group).  <br> <br> A Button: <br> Will interact with the item in focus, such as "press" the action or close button. <br><br> B Button: <br> Will result in closing the tip. |
 | Tip is dismissed | 1. Header "X" Close Button is pressed. <br> 2. Footer Close Button is pressed. <br> 3. Action Button is pressed. <br> 4. B Button returns focus to the element previously in focus. |
-
-### Accessibility
-
-#### UI Automation Patterns 
-
-TeachingTip will alternate between Pane for persistent TeachingTips and Window for light-dismiss enabled TeachingTips with IScrollProvider for the (conditionally) scrollable content area within TeachingTip. 
-
-#### Keyboarding and Narrator Experience 
-| State | Action | Narrator |
-|:---|:---|:---|
-| Tip appears | No action is needed invoke the tip. |  Persistent tip: <br> “New tip. It says..." + Title + Subtitle <br><br> Light-dismiss tip: <br> “New light-dismiss tip. It says..." Title + Subtitle | 
-| Tip recieves focus | F6: <br> Tip will be added to F6 region navigation stops so that F6 may be used to focus into and out of the tip. <br><br> Tab: <br> If Narrator is active, TeachingTip will automatically be added to the top of Narrator navigation stops thanks to its UI Automation Pattern(s), similar to popups or ContentDialog, and can be accessed via tabbing.  | Title + Button in Focus |
-| Tip is tabbed through | Tab Button: <br> Will go through all actionable items, regardless of group, in order. When tab is pressed on the last element in the teaching tip, focus will cycle to the first element in the teaching tip.  <br> <br> Left + Right Arrow Keys: <br> Can be used to navigate between the footer Action and Close buttons if both are present. <br><br> Escape: <br> Will result in closing the tip. | | 
-| Tip is dismissed | 1. X Button is pressed. <br> 2. Close Button is pressed. <br> 3. Action Button is pressed. <br><br> * Tab increments focus to the next element but does not close the tip. | | 
 
 ### Data and Intelligence Metrics
 
