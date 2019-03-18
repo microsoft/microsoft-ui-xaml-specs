@@ -28,8 +28,6 @@ When the information presented does not pertain to a particular UI element, a no
 
 ![A sample app with a teaching tip in the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipSampleApp.jpg)
 
-A teaching tip can require manual acknowledgement before dismissing or a teaching tip may also be light-dismiss enabled so that it will dismiss when a user scrolls or interacts with other elements of the application.
-
 A teaching tip can require the user to dismiss it via an "X" button in a top corner or a "Close" button at the bottom. A teaching tip may also be light-dismiss enabled in which case there is no dismiss button and the teaching tip will instead dismiss when a user scrolls or interacts with other elements of the application. Because of this behavior, light-dismiss tips are the best solution when a tip needs to be placed in a scrollable area. 
 
 ![A sample app with a light-dismiss teaching tip in the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to."](TeachingTipLightDismissSample.jpg)
