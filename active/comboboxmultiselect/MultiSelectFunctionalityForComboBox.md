@@ -1,4 +1,8 @@
-> See comments in Markdown for how to use this spec template
+See comments in Markdown for how to use this spec template.
+
+Please see this spec's [Proposal](https://github.com/Microsoft/microsoft-ui-xaml/issues/263) for more details. 
+
+Be aware of the [Proposal](https://github.com/Microsoft/microsoft-ui-xaml/issues/33) and [Spec](https://github.com/Microsoft/microsoft-ui-xaml-specs/blob/user/savoyschuler/comboboxgrouping/active/comboboxgrouping/GroupingSupportInComboBox.md) for adding Grouping Support to ComboBox as these specs must be coordinated. 
 
 <!-- The purpose of this spec is to describe a new feature and
 its APIs that make up a new feature in WinUI. -->
