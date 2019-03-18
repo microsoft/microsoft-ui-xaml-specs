@@ -86,11 +86,11 @@ XAML
 Note that in this example the TeachingTip is in the element tree rather than in a ResourceDictionary. This has no effect on behavior; the TeachingTip only displays when opened, and takes up no layout space.
 ![A sample app with a teaching tip in the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipSampleApp.jpg)
 
-### Add an offset 
+### Add a placement margin  
 
-You can control how far a targeted teaching tip is set apart from its target and how far a non-targeted teaching tip is set apart from the the edges of the XamlRoot using the TargetOffset property. Like [Margin](https://docs.microsoft.com/en-us/dotnet/api/system.windows.frameworkelement.margin?view=netframework-4.7.2), TargetOffset has four values – left, right, top, and bottom – so only the relevant values are used. For example, if the target is left of the teaching tip, the TargetOffset.Left will be used. If the teaching tip has no target, the TargetOffset’s Right and Bottom will be used to space it from the bottom right corner of the XamlRoot.  
+You can control how far a targeted teaching tip is set apart from its target and how far a non-targeted teaching tip is set apart from the the edges of the XamlRoot by using the PlacementMargin property. Like [Margin](https://docs.microsoft.com/en-us/dotnet/api/system.windows.frameworkelement.margin?view=netframework-4.7.2), PlacementMargin has four values – left, right, top, and bottom – so only the relevant values are used. For example, PlacementMargin.Left applies when the tip is left of the target or on the left edge of the XamlRoot bounds.
 
-The following example shows a non-targeted tip with the TargetOffset’s Left/Top/Right/Bottom all set to 80.
+The following example shows a non-targeted tip with the PlacementMargin’s Left/Top/Right/Bottom all set to 80.
 
 XAML
 ```XAML
@@ -99,7 +99,7 @@ XAML
 <controls:TeachingTip x:Name="AutoSaveTip"
     Title="Saving automatically"
     Subtitle="We save your changes as you go - so you never have to."
-    TargetOffset="80">
+    PlacementMargin="80">
 </controls:TeachingTip>
 ```
 
@@ -268,7 +268,7 @@ XAML
     Title="Saving automatically"
     Subtitle="We save your changes as you go - so you never have to."
     PreferredPlacement="BottomEdgeAlignedRight"
-    TargetOffset="-80,-50,0,0"
+    PlacementMargin="-80,-50,0,0"
     ShouldConstrainToRootBounds="False">
 </controls:TeachingTip>
 ```
@@ -427,7 +427,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
     Windows.UI.Xaml.Input.ICommand CloseButtonCommand;
     Object CloseButtonCommandParameter;
 
-    Windows.UI.Xaml.Thickness TargetOffset;
+    Windows.UI.Xaml.Thickness PlacementMargin;
     Boolean IsLightDismissEnabled;
     Boolean ShouldConstrainToRootBounds;
     TeachingTipPlacementMode PreferredPlacement;
@@ -462,7 +462,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
     static Windows.UI.Xaml.DependencyProperty CloseButtonCommandProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty CloseButtonCommandParameterProperty{ get; };
 
-    static Windows.UI.Xaml.DependencyProperty TargetOffsetProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty PlacementMarginProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty IsLightDismissEnabledProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty ShouldConstrainToRootBounds{ get; };
     static Windows.UI.Xaml.DependencyProperty PreferredPlacementProperty{ get; };
