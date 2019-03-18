@@ -4,7 +4,7 @@ A teaching tip is a semi-persistent and content-rich flyout that provides contex
 
 **Important APIs:** [TeachingTip class]() [Link TODO]
 
-A teaching tip may be light-dismiss or require explicit action to close. A teaching tip can point at an element or be used without an element to point at.
+A teaching tip may be light-dismiss or require explicit action to close. A teaching tip can target a specific UI element with its tail and also be used without a tail or target.
 
 ### Is this the right control? 
 
@@ -20,7 +20,7 @@ Because teaching tip is transient, it would not be the recommended control for p
 
 The teaching tip has several states, including these notable ones.
 
-A teaching tip can point to a specific UI element to enhance contextual clarity of the information it is presenting. 
+A teaching tip can target a specific UI element with its tail to enhance contextual clarity of the information it is presenting. 
 
 ![A sample app with a teaching tip targeting the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipPointerSample.jpg)
 
@@ -327,7 +327,7 @@ public void OnTipClosing(object sender, TeachingTipClosingEventArgs args)
 
 | Name | Description |
 |:-:|:--|
-| TailVisibility | Gets or sets a value that indicates whether to show the pointer for a teaching tip. |
+| TailVisibility | Gets or sets a value that indicates whether to collapse the tail of a teaching tip or leave it visible. |
 | PreferredPlacement  | Gets or sets the default placement to be used for the teaching tip. |
 | ShouldConstrainToRootBounds | Gets or sets a value that indicates whether the teaching tip will constrain to the bounds of its root. |
 
@@ -483,13 +483,13 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 
  | Component |  Notes |
 |:---:|:---|
-| Container | * The container is the body of the tip and encapsulates all the tip components. <br> * Nonmodal. <br> * If content height exceeds max height or width, vertical scrolling will be enabled. See Scroll. <br> * For visibility concerns, the container has a border around the outer edge, which adheres to the pointer if present. See Tail. <br> * For visibility concerns, the top edge of the container has a 1px highlight which also adheres to the pointer if present. See Tail. <br><br> ![An empty teaching tip.](Container.PNG) |
+| Container | * The container is the body of the tip and encapsulates all the tip components. <br> * Nonmodal. <br> * If content height exceeds max height or width, vertical scrolling will be enabled. See Scroll. <br> * For visibility concerns, the container has a border around the outer edge, which adheres to the tail if present. See Tail. <br> * For visibility concerns, the top edge of the container has a 1px highlight which also adheres to the tail if present. See Tail. <br><br> ![An empty teaching tip.](Container.PNG) |
 | Title| * Semi-bolded. <br> * Text wraps at Close (X) Button and Container border. <br><br> ![A teaching tip with a title and subtitle populated with sample text.](Title.PNG) |
 | Subtitle | * Text wraps at Close (X) Button and Container border. <br><br> ![A teaching tip with a subtitle that reads "Body text in a minimum height tip.](Subtitle.PNG) |
 | Content | * Can be customized to include text, images, videos, animation, checkboxes, hyperlinks, and any other XAML content. <br> * Will scroll if there is more content to show than tip height allows. See Scroll Bar. <br> * Placed below Subtitle and above Close/Action Button. <br><br> ![A teaching tip with a sample title and subtitle. The teaching tip has a picture of a mountain in the content area.](Content.PNG) |
 | Close Button | * Will appear as an X Button in the top right corner by default and in the top left corner automatically for RTL languages. The close button may also be set to appear in the bottom right corner of the tip as a traditional button or be set to not show at all so that a custom close option may be implemented in the Content Area. <br> * If a tip is set to light-dismiss, no close button will appear at all. <br><br> ![A teaching tip with a sample title and subtitle. There is a close button in the top right corner.](HeaderClose.PNG) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![A teaching tip with a sample title and subtitle. In the teaching tip's content area is a CheckBox labeled "Don't show tips at startup. At the bottom of the teaching tip is a button that reads "Got it".](FooterClose.PNG) |
 | Action Button | * Allows the user to invoke a custom event. <br> * This is the only non-Close button provided out of the box. Other buttons may be implemented in the Content Area. <br><br> ![A teaching tip with a sample title and subtitle. At the bottom of the tip are two buttons, a blue button on the left that reads "Default" and a gray button on the right that reads "Secondary".](ActionButton.PNG) |
-| Tail | * Triangular extension of the tip body that can be used to indicate that the tip is referring to on-screen UI element. <br> * When TailVisibility is set to auto, the pointer will automatically appear on tips that are attached to a target and off for tips that are not attached to a target. <br> * Prefers to center on target. <br> * Maintains a 12px margin from edges of the tip. <br> * Not animated. <br> * Will not have a shadow as shadows cannot yet be added to nonrectangular surfaces. ![An empty teaching tip with a triangular pointer centered outward on its bottom edge.](Pointer.PNG) |
+| Tail | * Triangular extension of the tip body that can be used to indicate that the tip is referring to on-screen UI element. <br> * When TailVisibility is set to auto, the tail will automatically appear on tips that are attached to a target and off for tips that are not attached to a target. <br> * Prefers to center on target. <br> * Maintains a 12px margin from edges of the tip. <br> * Not animated. <br> * Will not have a shadow as shadows cannot yet be added to nonrectangular surfaces. ![An empty teaching tip with a triangular pointer centered outward on its bottom edge.](Pointer.PNG) |
 | Icon | * Added to the left of the Title and Subtitle by default and automatically moved to the right for RTL languages. <br><br> ![A teaching tip with a sample title and subtitle. To the left of the title is a sample icon showing a graph of connected dots.](Icon.PNG) |
 | Hero Content | * Hero Content is media that stretches to the edges of a tip. <br> * Can be placed at the top or bottom of a tip. <br><br> ![A teaching tip with a sample title and subtitle. Above the title and subtitle is a large border-to-border picture of a giraffe.](HeroContent.PNG) |
 | Scroll Bar | * If the tip's contents are large enough to require scrolling, a scrollbar which will not intersect the Close (X) Button will be added to the content area. <br><br> ![A tall teaching tip with a scrollbar on the right a long string of "Lorem ipsum" text in the body.](ScrollBar.PNG) |
@@ -500,7 +500,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 |:---:|:---|
 | Opening | * A tip is shown by setting its IsOpen property to true. <br> * Tips will animate on opening. <br> * When a tip does not have enough available window space to fully show in any location [see Placement], it will not open and will instead overwrite IsOpen to false. |
 | Closing | * There are three ways to close a tip: set the IsOpen property to false, the user invokes a close button, or the tip is closed via light dismiss. These will return the method used in TeachingTipCloseReason.  <br> * Closing can be deferred by taking a handle to the deferral object in the closing event args. |
-| Placement | * Placement modes for pointing teaching tips will follow the precedent of Flyout. Full placement mode will be replaced by Center which positions Tail at the center of the element. <br> * Placement modes for non-pointing tips will include each side, corner, and center of the application window. <br> * The following properties are not preferred in tip placement: <br> &nbsp;&nbsp;&nbsp;&nbsp; * There is not enough space for the tip to show without clipping. <br> &nbsp;&nbsp;&nbsp;&nbsp; * The target is not large enough to maintain the tip's alignment and the Tail's 12px margin from the edge of the tip. <br> &nbsp;&nbsp;&nbsp;&nbsp; * The target element is too large to maintain edge alignment while keeping the Tail centered on the target. |
+| Placement | * Placement modes for targeted teaching tips will follow the precedent of Flyout. Full placement mode will be replaced by Center which positions Tail at the center of the element. <br> * Placement modes for non-targeted tips will include each side, corner, and center of the application window. <br> * The following properties are not preferred in tip placement: <br> &nbsp;&nbsp;&nbsp;&nbsp; * There is not enough space for the tip to show without clipping. <br> &nbsp;&nbsp;&nbsp;&nbsp; * The target is not large enough to maintain the tip's alignment and the Tail's 12px margin from the edge of the tip. <br> &nbsp;&nbsp;&nbsp;&nbsp; * The target element is too large to maintain edge alignment while keeping the Tail centered on the target. |
 | Light-dismiss | * Allows a tip to be dismissed when the user scrolls or clicks elsewhere within the application. <br> * **TODO:** Work with Accessibility and Design to create a timed fade-out that would allow users to recover a dismissing tip via click or cursor hover. |
 | Persistent Tip Location | * Once a tip is open, it will not move even if its target does. The exception to this is when the window is resized. |
 | Motion | * Tips have built in open and close animations that can be customizable using Storyboards.|
