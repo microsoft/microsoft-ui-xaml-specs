@@ -36,7 +36,7 @@ A teaching tip can require the user to dismiss it via an "X" button in a top cor
 ### Create a teaching tip
 
 Here's the XAML for a targeted teaching tip control that demonstrates the default look of the TeachingTip with a title and subtitle. 
-Note that the teaching tip can appear anywhere in the element tree. In this example below, it's located in a ResourceDictionary.
+Note that the teaching tip can appear anywhere in the element tree or code behind. In this example below, it's located in a ResourceDictionary.
 
 XAML
 ```XAML
@@ -83,7 +83,8 @@ XAML
 </controls:TeachingTip>
 ```
 
-Note that in this example the TeachingTip is in the element tree rather than in a ResourceDictionary. This has no effect on behavior; the TeachingTip only displays when opened, and takes up no layout space.
+Note that in this example the TeachingTip is in the element tree rather than in a ResourceDictionary or in code behind. This has no effect on behavior; the TeachingTip only displays when opened, and takes up no layout space.
+
 ![A sample app with a teaching tip in the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipSampleApp.jpg)
 
 ### Add a placement margin  
