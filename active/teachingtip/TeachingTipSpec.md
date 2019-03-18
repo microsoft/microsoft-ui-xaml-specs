@@ -22,9 +22,9 @@ The teaching tip has several states, including these notable ones.
 
 A teaching tip can point to a specific UI element to enhance contextual clarity of the information it is presenting. 
 
-![A sample app with a teaching tip pointing at the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipPointerSample.jpg)
+![A sample app with a teaching tip targeting the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipPointerSample.jpg)
 
-A teaching tip can be used without a pointer when the information that it is presenting is not specific to a UI element. 
+When the information presented does not pertain to a particular UI element, a nontargeted teaching tip can be created by removing the tail.
 
 ![A sample app with a teaching tip in the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipSampleApp.jpg)
 
@@ -37,7 +37,7 @@ A teaching tip can require the user to dismiss it via an "X" button in a top cor
 
 ### Create a teaching tip
 
-Here's the XAML for a pointing teaching tip control that demonstrates the default look of the TeachingTip with a title and subtitle. 
+Here's the XAML for a targeted teaching tip control that demonstrates the default look of the TeachingTip with a title and subtitle. 
 Note that the teaching tip can appear anywhere in the element tree. In this example below, it's located in a ResourceDictionary.
 
 XAML
@@ -69,13 +69,11 @@ public MainPage()
 
 Here's the result when this Page containing the button and teaching tip shown:
 
-![A sample app with a teaching tip pointing at the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipPointerSample.jpg)
+![A sample app with a teaching tip targeting the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipPointerSample.jpg)
 
-### Non-pointing tips
+### Non-targeted tips
 
-Not all tips relate to an element onscreen. For these scenarios, do not set the Target property and the teaching tip will instead display relative to the edges of the XamlRoot. However, a teaching tip can have the pointer removed while retaining placement relative to a UI element by setting the PointerMode property to "Off". 
-
-Unlike pointing teaching tips which can only be added to a resource dictionary, non-pointing teaching tips can also be added through the element tree, as shown below.
+Not all tips relate to an element onscreen. For these scenarios, do not set the Target property and the teaching tip will instead display relative to the edges of the XamlRoot. However, a teaching tip can have the tail removed while retaining placement relative to a UI element by setting the TailVisibility property to "Collapsed".
 
 XAML
 ```XAML
@@ -92,9 +90,9 @@ Note that in this example the TeachingTip is in the element tree rather than in 
 
 ### Add an offset 
 
-You can control how far a pointing teaching tip is set apart from its target and how far a non-pointing teaching tip is set apart from the the edges of the XamlRoot using the TargetOffset property. Like [Margin](https://docs.microsoft.com/en-us/dotnet/api/system.windows.frameworkelement.margin?view=netframework-4.7.2), TargetOffset has four values – left, right, top, and bottom – so only the relevant values are used. For example, if the target is left of the teaching tip, the TargetOffset.Left will be used. If the teaching tip has no target, the TargetOffset’s Right and Bottom will be used to space it from the bottom right corner of the XamlRoot.  
+You can control how far a targeted teaching tip is set apart from its target and how far a non-targeted teaching tip is set apart from the the edges of the XamlRoot using the TargetOffset property. Like [Margin](https://docs.microsoft.com/en-us/dotnet/api/system.windows.frameworkelement.margin?view=netframework-4.7.2), TargetOffset has four values – left, right, top, and bottom – so only the relevant values are used. For example, if the target is left of the teaching tip, the TargetOffset.Left will be used. If the teaching tip has no target, the TargetOffset’s Right and Bottom will be used to space it from the bottom right corner of the XamlRoot.  
 
-The following example shows a non-pointing tip with the TargetOffset’s Left/Top/Right/Bottom all set to 80.
+The following example shows a non-targeted tip with the TargetOffset’s Left/Top/Right/Bottom all set to 80.
 
 XAML
 ```XAML
@@ -131,7 +129,7 @@ XAML
 </Button>
 ```
 
-![A sample app with a teaching tip pointing at the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." In the content area of the teaching tip is a CheckBox labeled "Don't show tips at startup" and underneath is text that reads "You can change your tip preferences in Settings if you change your mind" where "Settings" is a link to the app's settings page. There is a close button on the top right corner of the teaching tip.](TeachingTipContentSample.jpg)
+![A sample app with a teaching tip targeting the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." In the content area of the teaching tip is a CheckBox labeled "Don't show tips at startup" and underneath is text that reads "You can change your tip preferences in Settings if you change your mind" where "Settings" is a link to the app's settings page. There is a close button on the top right corner of the teaching tip.](TeachingTipContentSample.jpg)
 
 ### Add buttons
 
@@ -159,7 +157,7 @@ XAML
 </Button>
 ```
 
-![A sample app with a teaching tip pointing at the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." In the content area of the teaching tip is a CheckBox labeled "Don't show tips at startup" and underneath is text that reads "You can change your tip preferences in Settings if you change your mind" where "Settings" is a link to the app's settings page. At the bottom of the teaching are two buttons, a gray one on the left that reads "Disable" and a blue one on the right that reads "Got it!"](TeachingTipButtonsSample.jpg)
+![A sample app with a teaching tip targeting the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." In the content area of the teaching tip is a CheckBox labeled "Don't show tips at startup" and underneath is text that reads "You can change your tip preferences in Settings if you change your mind" where "Settings" is a link to the app's settings page. At the bottom of the teaching are two buttons, a gray one on the left that reads "Disable" and a blue one on the right that reads "Got it!"](TeachingTipButtonsSample.jpg)
 
 ### Hero content
 
@@ -181,7 +179,7 @@ XAML
 </Button>
 ```
 
-![A sample app with a teaching tip pointing at the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." At the bottom of the teaching tip is a border-to-border picture of a giraffe. There is a close button on the top right corner of the teaching tip.](TeachingTipHeroContentSample.jpg)
+![A sample app with a teaching tip targeting the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." At the bottom of the teaching tip is a border-to-border picture of a giraffe. There is a close button on the top right corner of the teaching tip.](TeachingTipHeroContentSample.jpg)
 
 ### Add an icon
 
@@ -201,7 +199,7 @@ XAML
 </Button>
 ```
 
-![A sample app with a teaching tip pointing at the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." To the left of the title and subtitle is a floppy disk icon. There is a close button on the top right corner of the teaching tip.](TeachingTipIconSample.jpg)
+![A sample app with a teaching tip targeting the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." To the left of the title and subtitle is a floppy disk icon. There is a close button on the top right corner of the teaching tip.](TeachingTipIconSample.jpg)
 
 ### Enable light-dismiss
 
@@ -224,9 +222,9 @@ XAML
 
 ### Preferred placement
 
-Teaching tip replicates all of Flyout's [FlyoutPlacementMode](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Primitives.FlyoutPlacementMode) placement behavior with the TeachingTipPlacementMode property. The default placement mode will try to place a pointing teaching tip above its target and a non-pointing teaching tip in the bottom right corner of the XamlRoot. As with Flyout, if the preferred placement mode would not leave room for the teaching tip to show, another placement mode will be automatically chosen. 
+Teaching tip replicates all of Flyout's [FlyoutPlacementMode](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Primitives.FlyoutPlacementMode) placement behavior with the TeachingTipPlacementMode property. The default placement mode will try to place a targeted teaching tip above its target and a non-targeted teaching tip in the bottom right corner of the XamlRoot. As with Flyout, if the preferred placement mode would not leave room for the teaching tip to show, another placement mode will be automatically chosen. 
 
-A pointing teaching tip with its PreferredPlacement set to "BottomEdgeAlignedLeft" will appear below its target and will have its left edge aligned to the left edge of the target.
+A targeted teaching tip with its PreferredPlacement set to "BottomEdgeAlignedLeft" will appear below its target and will have its left edge aligned to the left edge of the target.
 
 XAML
 ```XAML
@@ -242,10 +240,10 @@ XAML
 </Button>
 ```
 
-![A sample app with a teaching tip pointing upward at a button that reads "Save". The left edge of the teaching tip and the "Save" button are aligned. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipPointingPreferredPlacementSample.jpg)
+![A sample app with a targeted teaching tip beneath at a button that reads "Save". The left edge of the teaching tip and the "Save" button are aligned. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipPointingPreferredPlacementSample.jpg)
 
 
-A non-pointing teaching tip with its PreferredPlacement set to "BottomEdgeAlignedLeft" will appear in the bottom left corner of the XamlRoot.
+A non-targeted teaching tip with its PreferredPlacement set to "BottomEdgeAlignedLeft" will appear in the bottom left corner of the XamlRoot.
 
 XAML
 ```XAML
@@ -329,7 +327,7 @@ public void OnTipClosing(object sender, TeachingTipClosingEventArgs args)
 
 | Name | Description |
 |:-:|:--|
-| PointerMode | Gets or sets a value that indicates whether to show the pointer for a teaching tip. |
+| TailVisibility | Gets or sets a value that indicates whether to show the pointer for a teaching tip. |
 | PreferredPlacement  | Gets or sets the default placement to be used for the teaching tip. |
 | ShouldConstrainToRootBounds | Gets or sets a value that indicates whether the teaching tip will constrain to the bounds of its root. |
 
@@ -376,11 +374,11 @@ enum TeachingTipHeroContentPlacementMode
     Bottom,
 };
 
-enum TeachingTipPointerMode
+enum TeachingTipTailVisibility
 {
 	Auto,
-	On,
-	Off,
+	Visible,
+	Collapsed,
 };
 
 runtimeclass TeachingTipClosedEventArgs
@@ -435,7 +433,8 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
     Boolean ShouldConstrainToRootBounds;
     TeachingTipPlacementMode PreferredPlacement;
     TeachingTipHeroContentPlacementMode HeroContentPlacement;
-    TeachingTipPointerMode PointerMode;
+    TeachingTip
+    Mode TailVisibility;
 
     Windows.UI.Xaml.UIElement HeroContent;
     IconSource IconSource;
@@ -466,10 +465,10 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 
     static Windows.UI.Xaml.DependencyProperty TargetOffsetProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty IsLightDismissEnabledProperty{ get; };
-	static Windows.UI.XAML.DependencyProperty ShouldConstrainToRootBounds{ get; };
+    static Windows.UI.XAML.DependencyProperty ShouldConstrainToRootBounds{ get; };
     static Windows.UI.Xaml.DependencyProperty PreferredPlacementProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty HeroContentPlacementProperty{ get; };
-	static Windows.UI.Xaml.DependencyProperty PointerModeProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty TailVisibilityProperty{ get; };
 
     static Windows.UI.Xaml.DependencyProperty HeroContentProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty IconSourceProperty{ get; };
@@ -484,13 +483,13 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 
  | Component |  Notes |
 |:---:|:---|
-| Container | * The container is the body of the tip and encapsulates all the tip components. <br> * Nonmodal. <br> * If content height exceeds max height or width, vertical scrolling will be enabled. See Scroll. <br> * For visibility concerns, the container has a border around the outer edge, which adheres to the pointer if present. See Pointer. <br> * For visibility concerns, the top edge of the container has a 1px highlight which also adheres to the pointer if present. See Pointer. <br><br> ![An empty teaching tip.](Container.PNG) |
+| Container | * The container is the body of the tip and encapsulates all the tip components. <br> * Nonmodal. <br> * If content height exceeds max height or width, vertical scrolling will be enabled. See Scroll. <br> * For visibility concerns, the container has a border around the outer edge, which adheres to the pointer if present. See Tail. <br> * For visibility concerns, the top edge of the container has a 1px highlight which also adheres to the pointer if present. See Tail. <br><br> ![An empty teaching tip.](Container.PNG) |
 | Title| * Semi-bolded. <br> * Text wraps at Close (X) Button and Container border. <br><br> ![A teaching tip with a title and subtitle populated with sample text.](Title.PNG) |
 | Subtitle | * Text wraps at Close (X) Button and Container border. <br><br> ![A teaching tip with a subtitle that reads "Body text in a minimum height tip.](Subtitle.PNG) |
 | Content | * Can be customized to include text, images, videos, animation, checkboxes, hyperlinks, and any other XAML content. <br> * Will scroll if there is more content to show than tip height allows. See Scroll Bar. <br> * Placed below Subtitle and above Close/Action Button. <br><br> ![A teaching tip with a sample title and subtitle. The teaching tip has a picture of a mountain in the content area.](Content.PNG) |
 | Close Button | * Will appear as an X Button in the top right corner by default and in the top left corner automatically for RTL languages. The close button may also be set to appear in the bottom right corner of the tip as a traditional button or be set to not show at all so that a custom close option may be implemented in the Content Area. <br> * If a tip is set to light-dismiss, no close button will appear at all. <br><br> ![A teaching tip with a sample title and subtitle. There is a close button in the top right corner.](HeaderClose.PNG) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![A teaching tip with a sample title and subtitle. In the teaching tip's content area is a CheckBox labeled "Don't show tips at startup. At the bottom of the teaching tip is a button that reads "Got it".](FooterClose.PNG) |
 | Action Button | * Allows the user to invoke a custom event. <br> * This is the only non-Close button provided out of the box. Other buttons may be implemented in the Content Area. <br><br> ![A teaching tip with a sample title and subtitle. At the bottom of the tip are two buttons, a blue button on the left that reads "Default" and a gray button on the right that reads "Secondary".](ActionButton.PNG) |
-| Pointer | * Triangular extension of the tip body that can be used to indicate that the tip is referring to on-screen UI element. <br> * When PointerMode is set to auto, the pointer will automatically appear on tips that are attached to a target and off for tips that are not attached to a target. <br> * Prefers to center on target. <br> * Maintains a 12px margin from edges of the tip. <br> * Not animated. <br> * Will not have a shadow as shadows cannot yet be added to nonrectangular surfaces. ![An empty teaching tip with a triangular pointer centered outward on its bottom edge.](Pointer.PNG) |
+| Tail | * Triangular extension of the tip body that can be used to indicate that the tip is referring to on-screen UI element. <br> * When TailVisibility is set to auto, the pointer will automatically appear on tips that are attached to a target and off for tips that are not attached to a target. <br> * Prefers to center on target. <br> * Maintains a 12px margin from edges of the tip. <br> * Not animated. <br> * Will not have a shadow as shadows cannot yet be added to nonrectangular surfaces. ![An empty teaching tip with a triangular pointer centered outward on its bottom edge.](Pointer.PNG) |
 | Icon | * Added to the left of the Title and Subtitle by default and automatically moved to the right for RTL languages. <br><br> ![A teaching tip with a sample title and subtitle. To the left of the title is a sample icon showing a graph of connected dots.](Icon.PNG) |
 | Hero Content | * Hero Content is media that stretches to the edges of a tip. <br> * Can be placed at the top or bottom of a tip. <br><br> ![A teaching tip with a sample title and subtitle. Above the title and subtitle is a large border-to-border picture of a giraffe.](HeroContent.PNG) |
 | Scroll Bar | * If the tip's contents are large enough to require scrolling, a scrollbar which will not intersect the Close (X) Button will be added to the content area. <br><br> ![A tall teaching tip with a scrollbar on the right a long string of "Lorem ipsum" text in the body.](ScrollBar.PNG) |
@@ -501,11 +500,11 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 |:---:|:---|
 | Opening | * A tip is shown by setting its IsOpen property to true. <br> * Tips will animate on opening. <br> * When a tip does not have enough available window space to fully show in any location [see Placement], it will not open and will instead overwrite IsOpen to false. |
 | Closing | * There are three ways to close a tip: set the IsOpen property to false, the user invokes a close button, or the tip is closed via light dismiss. These will return the method used in TeachingTipCloseReason.  <br> * Closing can be deferred by taking a handle to the deferral object in the closing event args. |
-| Placement | * Placement modes for pointing teaching tips will follow the precedent of Flyout. Full placement mode will be replaced by Center which positions Pointer at the center of the element. <br> * Placement modes for non-pointing tips will include each side, corner, and center of the application window. <br> * The following properties are not preferred in tip placement: <br> &nbsp;&nbsp;&nbsp;&nbsp; * There is not enough space for the tip to show without clipping. <br> &nbsp;&nbsp;&nbsp;&nbsp; * The target is not large enough to maintain the tip's alignment and the Pointer's 12px margin from the edge of the tip. <br> &nbsp;&nbsp;&nbsp;&nbsp; * The target element is too large to maintain edge alignment while keeping the Pointer centered on the target. |
+| Placement | * Placement modes for pointing teaching tips will follow the precedent of Flyout. Full placement mode will be replaced by Center which positions Tail at the center of the element. <br> * Placement modes for non-pointing tips will include each side, corner, and center of the application window. <br> * The following properties are not preferred in tip placement: <br> &nbsp;&nbsp;&nbsp;&nbsp; * There is not enough space for the tip to show without clipping. <br> &nbsp;&nbsp;&nbsp;&nbsp; * The target is not large enough to maintain the tip's alignment and the Tail's 12px margin from the edge of the tip. <br> &nbsp;&nbsp;&nbsp;&nbsp; * The target element is too large to maintain edge alignment while keeping the Tail centered on the target. |
 | Light-dismiss | * Allows a tip to be dismissed when the user scrolls or clicks elsewhere within the application. <br> * **TODO:** Work with Accessibility and Design to create a timed fade-out that would allow users to recover a dismissing tip via click or cursor hover. |
 | Persistent Tip Location | * Once a tip is open, it will not move even if its target does. The exception to this is when the window is resized. |
 | Motion | * Tips have built in open and close animations that can be customizable using Storyboards.|
-| Pointer/Hero Content Avoidance | * To avoid the visual oddity of the Pointer emerging from Hero Content, the Pointer and Hero Content will attempt to avoid intersecting using the following rules: <br> &nbsp;&nbsp;&nbsp;&nbsp; * Move the hero content to Top or Bottom (Disabled when HeroContentPlacement is not auto). <br> &nbsp;&nbsp;&nbsp;&nbsp; * Shift the beak along the edge of the tip (Disabled when the placement of the tip is edge aligned). <br> &nbsp;&nbsp;&nbsp;&nbsp; * Change the placement of the tip (Disabled when the tip placement is not auto).  |
+| Tail/Hero Content Avoidance | * To avoid the visual oddity of the Tail emerging from Hero Content, the Tail and Hero Content will attempt to avoid intersecting using the following rules: <br> &nbsp;&nbsp;&nbsp;&nbsp; * Move the hero content to Top or Bottom (Disabled when HeroContentPlacement is not auto). <br> &nbsp;&nbsp;&nbsp;&nbsp; * Shift the beak along the edge of the tip (Disabled when the placement of the tip is edge aligned). <br> &nbsp;&nbsp;&nbsp;&nbsp; * Change the placement of the tip (Disabled when the tip placement is not auto).  |
 | Out of Window Bounds | * Tips can escape window bounds on newer OS versions via the ShouldConstrainToRootBounds property.  When this property is set to false, the tip uses screen boundaries instead of window boundaries during its placement algorithm. |
 
 ### Inputs and Accessibility
