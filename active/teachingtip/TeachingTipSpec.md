@@ -363,6 +363,7 @@ enum TeachingTipPlacementMode
     LeftEdgeAlignedBottom,
     RightEdgeAlignedTop,
     RightEdgeAlignedBottom,
+    Center,
 };
 
 enum TeachingTipHeroContentPlacementMode
