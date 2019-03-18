@@ -131,7 +131,7 @@ XAML
 
 ### Add buttons
 
-A standard "X" close button is automatically added next to the title of a teaching tip. However, a custom close button can be added to the bottom of a teaching tip by setting the CloseButtonContent property. 
+By default, a standard "X" close button is shown next to the title of a teaching tip. The Close button can be customized with the CloseButtonContent property, in which case the button is moved to the bottom of the teaching tip.
 
 **Note: no close button will appear on light-dismiss enabled tips**
 
