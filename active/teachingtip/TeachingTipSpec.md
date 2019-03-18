@@ -463,7 +463,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 
     static Windows.UI.Xaml.DependencyProperty TargetOffsetProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty IsLightDismissEnabledProperty{ get; };
-    static Windows.UI.XAML.DependencyProperty ShouldConstrainToRootBounds{ get; };
+    static Windows.UI.Xaml.DependencyProperty ShouldConstrainToRootBounds{ get; };
     static Windows.UI.Xaml.DependencyProperty PreferredPlacementProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty HeroContentPlacementProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty TailVisibilityProperty{ get; };
