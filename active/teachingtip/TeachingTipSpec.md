@@ -534,6 +534,8 @@ TeachingTip will alternate between Pane for persistent TeachingTips and Window f
 
 TeachingTip will leverage the existing APIs used by Windows Notifications.
 
+To provide targeted tip context for Narrator users, a targeted TeachingTip will inject the name of its target before the tip's title to be read together by Narrator. 
+
 | State | Action |
 |:---|:---|
 | Tip appears | Narrator will say "Click Up to move to new notifcation from" + App Name + Tip Contents | 
