@@ -64,4 +64,3 @@ unsealed runtimeclass RadioMenuFlyoutItem : Windows.UI.Xaml.Controls.MenuFlyoutI
     static Windows.UI.Xaml.DependencyProperty IsCheckedProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty GroupNameProperty{ get; };
 }
-````
