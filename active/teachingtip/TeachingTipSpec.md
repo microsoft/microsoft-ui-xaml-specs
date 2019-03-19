@@ -225,6 +225,8 @@ Teaching tip replicates all of Flyout's [FlyoutPlacementMode](https://docs.micro
 
 A targeted teaching tip with its PreferredPlacement set to "BottomEdgeAlignedLeft" will appear below its target and will have its left edge aligned to the left edge of the target.
 
+For applications that predict gamepad input, please see [Designing for TV](https://docs.microsoft.com/en-us/windows/uwp/design/devices/designing-for-tv). It is encouraged to test gamepad accessibility of each teaching tip using all possible configurations of an app's UI.
+
 XAML
 ```XAML
 <Button x:Name="SaveButton" Content="Save">
@@ -320,7 +322,8 @@ public void OnTipClosing(object sender, TeachingTipClosingEventArgs args)
 ### Recommendations
 * Tips are impermanent and should not contain information or options that are critical to the experience of an application. 
 * Try to avoid showing teaching tips too often. Teaching tips are most likely to each recieve individual attention when they are staggered throughout long sessions or across multiple sessions.    
-* Keep tips succinct and their topic clear. Research shows users, on average, only read 3-5 words and only comprehend 2-3 words before deciding whether to interact with a tip. 
+* Keep tips succinct and their topic clear. Research shows users, on average, only read 3-5 words and only comprehend 2-3 words before deciding whether to interact with a tip.
+* Gamepad accessibility of a teaching tip is not guaranteed. For applications that predict gamepad input, please see [Designing for TV](https://docs.microsoft.com/en-us/windows/uwp/design/devices/designing-for-tv). It is encouraged to test gamepad accessibility of each teaching tip using all possible configurations of an app's UI.
 
 
 ### Reconfiguring an open teaching tip
