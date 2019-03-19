@@ -324,6 +324,13 @@ public void OnTipClosing(object sender, TeachingTipClosingEventArgs args)
 * Try to avoid showing teaching tips too often. Teaching tips are most likely to each recieve individual attention when they are staggered throughout long sessions or across multiple sessions.    
 * Keep tips succinct and their topic clear. Research shows users, on average, only read 3-5 words and only comprehend 2-3 words before deciding whether to interact with a tip. 
 
+
+### Reconfiguring an open teaching tip
+
+All content and properties, with an exception of light-dismiss vs. explicit-dismiss, can be reconfigured while the teaching tip is open and will take effect immediately. 
+
+When reconfiguring a tip between light-dismiss and explicit-dismiss, the tip must be closed and reopened for this change to take affect. Note that not doing so may cause an explicit-dismiss teaching tip to have its Close button removed before the light-dismiss behavior is enabled.
+
 # API Notes
 
 ### Notable Properties  
