@@ -71,7 +71,7 @@ Here's the result when this Page containing the button and teaching tip shown:
 
 ### Non-targeted tips
 
-Not all tips relate to an element onscreen. For these scenarios, do not set the Target property and the teaching tip will instead display relative to the edges of the XamlRoot. However, a teaching tip can have the tail removed while retaining placement relative to a UI element by setting the TailVisibility property to "Collapsed".
+Not all tips relate to an element onscreen. For these scenarios, do not set the Target property and the teaching tip will instead display relative to the edges of the xaml root. However, a teaching tip can have the tail removed while retaining placement relative to a UI element by setting the TailVisibility property to "Collapsed".
 
 XAML
 ```XAML
@@ -89,7 +89,7 @@ Note that in this example the TeachingTip is in the element tree rather than in 
 
 ### Add a placement margin  
 
-You can control how far a targeted teaching tip is set apart from its target and how far a non-targeted teaching tip is set apart from the the edges of the XamlRoot by using the PlacementMargin property. Like [Margin](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.frameworkelement.margin), PlacementMargin has four values – left, right, top, and bottom – so only the relevant values are used. For example, PlacementMargin.Left applies when the tip is left of the target or on the left edge of the XamlRoot bounds.
+You can control how far a targeted teaching tip is set apart from its target and how far a non-targeted teaching tip is set apart from the edges of the xaml root by using the PlacementMargin property. Like [Margin](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.frameworkelement.margin), PlacementMargin has four values – left, right, top, and bottom – so only the relevant values are used. For example, PlacementMargin.Left applies when the tip is left of the target or on the left edge of the xaml root.
 
 The following example shows a non-targeted tip with the PlacementMargin’s Left/Top/Right/Bottom all set to 80.
 
@@ -221,7 +221,7 @@ XAML
 
 ### Preferred placement
 
-Teaching tip replicates all of Flyout's [FlyoutPlacementMode](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Primitives.FlyoutPlacementMode) placement behavior with the TeachingTipPlacementMode property. The default placement mode will try to place a targeted teaching tip above its target and a non-targeted teaching tip in the bottom right corner of the XamlRoot. As with Flyout, if the preferred placement mode would not leave room for the teaching tip to show, another placement mode will be automatically chosen. 
+Teaching tip replicates all of Flyout's [FlyoutPlacementMode](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Primitives.FlyoutPlacementMode) placement behavior with the TeachingTipPlacementMode property. The default placement mode will try to place a targeted teaching tip above its target and a non-targeted teaching tip in the bottom right corner of the xaml root. As with Flyout, if the preferred placement mode would not leave room for the teaching tip to show, another placement mode will be automatically chosen. 
 
 A targeted teaching tip with its PreferredPlacement set to "BottomEdgeAlignedLeft" will appear below its target and will have its left edge aligned to the left edge of the target.
 
@@ -242,7 +242,7 @@ XAML
 ![A sample app with a targeted teaching tip beneath at a button that reads "Save". The left edge of the teaching tip and the "Save" button are aligned. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipPointingPreferredPlacementSample.jpg)
 
 
-A non-targeted teaching tip with its PreferredPlacement set to "BottomEdgeAlignedLeft" will appear in the bottom left corner of the XamlRoot.
+A non-targeted teaching tip with its PreferredPlacement set to "BottomEdgeAlignedLeft" will appear in the bottom left corner of the xaml root.
 
 XAML
 ```XAML
@@ -257,9 +257,9 @@ XAML
 
 ![A sample app with a teaching tip in the bottom left corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipNonPointingPreferredPlacementSample.jpg)
 
-### Escaping XamlRoot bounds
+### Escaping the xaml root bounds
 
-On Windows version 19H1 and above, a teaching tip can escape XamlRoot bounds by setting the ShouldConstrainToRootBounds property. On earlier versions of Windows, this property is ignored and the teaching tip always stays within the XamlRoot bounds.
+On Windows version 19H1 and above, a teaching tip can escape the bounds of the xaml root by setting the ShouldConstrainToRootBounds property. On earlier versions of Windows, this property is ignored and the teaching tip always stays within the bounds of the xaml root.
 
 XAML
 ```XAML
