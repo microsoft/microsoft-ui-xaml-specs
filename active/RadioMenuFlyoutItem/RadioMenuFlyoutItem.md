@@ -64,3 +64,7 @@ unsealed runtimeclass RadioMenuFlyoutItem : Windows.UI.Xaml.Controls.MenuFlyoutI
     static Windows.UI.Xaml.DependencyProperty IsCheckedProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty GroupNameProperty{ get; };
 }
+````
+
+# Appendix
+**API design note:** RadioMenuFlyoutItem derives from MenuFlyoutItem, rather than ToggleMenuFlyoutItem, whereas RadioButton derives from ToggleButton. The reason for not deriving from ToggleMenuFlyoutItem is that it would bring in the three state concept and API, which RadioMenuFlyoutItem doesn't and shouldn't support.
