@@ -1,12 +1,13 @@
 # Background
-Some terminology: "WUX" is the Windows.UI.Xaml that ships in Windows.
-"MUX" is the Microsoft.UI.Xaml that ships on Nuget and goes downlevel to 
-earlier versions of Windows 10 than the latest.
+[The Windows UI Library](https://docs.microsoft.com/en-us/uwp/toolkits/winui/) (**WinUI**, aka "MUX")
+ships a set of Xaml controls in Nuget, rather than as part of Windows. Apps can use the
+controls in this package and target down to RS1.
 
-The Xaml [ItemsRepeater](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.itemsrepeater)
-control ships in MUX and shows a collection of items, like a more primitive ListView control. Typically 
-lists are large and need to be scrolled, so it's put into a
-[ScrollViewer](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ScrollViewer) control.
+WinUI includes the Xaml 
+[ItemsRepeater](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.itemsrepeater)
+control, which shows a collection of items, like a more primitive ListView control. Typically 
+lists are large and need to be scrolled, so it's typically put into a
+[ScrollViewer](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ScrollViewer) control:
 
 ```xaml
 <ScrollViewer>
@@ -20,55 +21,49 @@ to preserve the location of the anchor element on the screen (that is, in the vi
 
 This coordination between ItemsRepeater and ScrollViewer is enabled by ScrollViewer implementing
 [IScrollProvider](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Automation.Provider.IScrollProvider).
-But ScrollViewer ships in WUX, starting in RS5, and so anchoring doesn't work for an
-ItemsRepeater on an app running on RS4 or below.
+But ScrollViewer ships in WUX, and didn't implement that interface until RS5, and
+so anchoring doesn't work for an ItemsRepeater on an app running on RS4 or below.
 
+The solution for this is the new `ItemsRepeaterScrollHost` control in this spec.
+This wraps the ScrollViewer, and and do the coordination with the ItemsRepeater.
 
-<!-- Use this section to provide background context for the new API(s) 
-in this spec. -->
-
-<!-- This section and the appendix are the only sections that likely
-do not get copied to docs.microsoft.com; they're just an aid to reading this spec. -->
-
-<!-- If you're modifying an existing API, included a link here to the
-existing page(s) -->
-
-<!-- For example, this section is a place to explain why you're adding this API rather than
-modifying an existing API. -->
-
-<!-- For example, this is a place to provide a brief explanation of some dependent
-area, just explanation enough to understand this new API, rather than telling
-the reader "go read 100 pages of background information posted at ...". -->
-
+```xaml
+<ItemsRepeaterScrollHost>
+    <ScrollViewer>
+        <ItemsRepeater ... />
+    </ScrollViewer>
+</ItemsRepeaterScrollHost> 
+```
 
 # Description
 <!-- Use this section to provide a brief description of the feature.
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
 
+Use the ItemsRepeaterScrollHost when you're using an 
+[ItemsRepeater](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.itemsrepeater) 
+in a [ScrollViewer](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ScrollViewer),
+and your app will run on versions of Windows prior to Windows 10 1809. If your app will only run
+on versions of Windows 1809 or higher, there is no need to use this control.
 
 # Examples
-<!-- Use this section to explain the features of the API, showing
-example code with each description. The general format is: 
-  feature explanation,
-  example code
-  feature explanation,
-  example code
-  etc.-->
-  
-<!-- Code samples should be in C# and/or C++/WinRT -->
+This example shows a scrollable list of people.
 
-<!-- As an example of this section, see the Examples section for the PasswordBox control 
-(https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
+```xaml
+<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls">
 
+    <controls:ItemsRepeaterScrollHost>
+        <ScrollViewer>
+            <controls:ItemsRepeater ItemsSource='{x:Bind PeopleCollection}' />
+        </ScrollViewer>
+    </controls:ItemsRepeaterScrollHost> 
+    
+</Page
+```
 
 # Remarks
-<!-- Explanation and guidance that doesn't fit into the Examples section. -->
-
-<!-- APIs should only throw exceptions in exceptional conditions; basically,
-only when there's a bug in the caller, such as argument exception.  But if for some
-reason it's necessary for a caller to catch an exception from an API, call that
-out with an explanation either here or in the Examples -->
 
 # API Notes
 <!-- Option 1: Give a one or two line description of each API (type
