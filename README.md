@@ -33,8 +33,11 @@ For WinUI team members, the workflow to author specs is:
 
 1. Ensure your proposal is approved and in plan.
 
-2. Create two working branches: ```user/<username>/<feature>``` and ```user/<username>/<feature>_review```
-(Do your work in the first branch, save the `review` branch for later.)
+2. Create two working branches: ```user/<username>/<feature>``` and ```user/<username>/<feature>_review```.
+Do your work in the first branch, save the `review` branch for later.
+
+    (Two branches allows us to do a two step PR: one a spec review within the team, local experts, and customers of the feature;
+    and one as a broader API review.)
 
 3. Create a new folder for your spec under the ```active``` folder: ```/active/<feature>```
 
