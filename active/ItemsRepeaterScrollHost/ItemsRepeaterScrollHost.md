@@ -82,9 +82,11 @@ on the RS5 ScrollViewer:
 # API Details
 ```C#
 [webhosthidden]
+[content_property("ScrollViewer")]
 runtimeclass ItemsRepeaterScrollHost : Windows.UI.Xaml.FrameworkElement
 {
     ScrollAnchorProvider();
+    ScrollViewer ScrollViewer { get; set; };
     Double HorizontalAnchorRatio { get; set; };
     Double VerticalAnchorRatio { get; set; };
 }
