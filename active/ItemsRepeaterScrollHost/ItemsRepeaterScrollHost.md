@@ -80,10 +80,9 @@ on the RS5 ScrollViewer:
 [VerticalAnchorRatio](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ScrollViewer.VerticalAnchorRatio)
 
 # API Details
-
 ```C#
 [webhosthidden]
-runtimeclass ItemsRepeaterScrollHost : Windows.UI.Xaml.Controls.ContentControl
+runtimeclass ItemsRepeaterScrollHost : Windows.UI.Xaml.FrameworkElement
 {
     ScrollAnchorProvider();
     Double HorizontalAnchorRatio { get; set; };
