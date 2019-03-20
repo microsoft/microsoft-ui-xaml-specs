@@ -14,7 +14,6 @@ UseCompactResources property is added XamlControlsResources to allow customer to
     runtimeclass XamlControlsResources : Windows.UI.Xaml.ResourceDictionary
     {
         ...
-        [WUXC_VERSION_PREVIEW]
         {
             Boolean UseCompactResources{ get; set; };
             static Windows.UI.Xaml.DependencyProperty UseCompactResourcesProperty{ get; };
