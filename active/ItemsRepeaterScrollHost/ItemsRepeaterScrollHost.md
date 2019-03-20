@@ -64,7 +64,8 @@ This example shows a scrollable list of people.
 ```
 
 # Remarks
-_Issue: Does it have to be the direct parent?_
+The ItemsRepeaterScrollHost must be the direct parent of the ScrollViewer.
+The ItemsRepeater need not be the direct child of the ScrollViewer.
 
 If you use an ItemsRepeaterScrollHost on a version of Windows at least as recent
 as 1809, it will have no effect.
