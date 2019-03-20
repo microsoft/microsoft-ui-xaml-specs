@@ -64,21 +64,28 @@ This example shows a scrollable list of people.
 ```
 
 # Remarks
+_Issue: Does it have to be the direct parent?_
+
+If you use an ItemsRepeaterScrollHost on a version of Windows at least as recent
+as 1809, it will have no effect.
 
 # API Notes
-<!-- Option 1: Give a one or two line description of each API (type
-and member), or at least the ones that aren't obvious
-from their name.  These descriptions are what show up
-in IntelliSense. For properties, specify the default value of the property if it
-isn't the type's default (for example an int-typed property that doesn't default to zero.) -->
+The ItemsRepeaterScrollHost properties have the
+same functionality and behavior as the like named properties
+on the RS5 ScrollViewer:
 
-<!-- Option 2: Put these descriptions in the below API Details section,
-with a "///" comment above the member or type. -->
+[HorizontalAnchorRatio](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.ScrollViewer.HorizontalAnchorRatio)
+
+[VerticalAnchorRatio](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ScrollViewer.VerticalAnchorRatio)
 
 # API Details
-<!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 
-# Appendix
-<!-- Anything else that you want to write down for posterity, but 
-that isn't necessary to understand the purpose and usage of the API.
-For example, implementation details. -->
+```C#
+[webhosthidden]
+runtimeclass ScrollAnchorProvider : Windows.UI.Xaml.Controls.ContentControl
+{
+    ScrollAnchorProvider();
+    Double HorizontalAnchorRatio { get; set; };
+    Double VerticalAnchorRatio { get; set; };
+}
+```
