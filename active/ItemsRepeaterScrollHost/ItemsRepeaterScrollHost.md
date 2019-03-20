@@ -82,7 +82,7 @@ on the RS5 ScrollViewer:
 
 ```C#
 [webhosthidden]
-runtimeclass ScrollAnchorProvider : Windows.UI.Xaml.Controls.ContentControl
+runtimeclass ItemsRepeaterScrollHost : Windows.UI.Xaml.Controls.ContentControl
 {
     ScrollAnchorProvider();
     Double HorizontalAnchorRatio { get; set; };
