@@ -20,7 +20,7 @@ or disappear. This item is called the anchor element, so ItemsRepeater and Scrol
 to preserve the location of the anchor element on the screen (that is, in the view port).
 
 This coordination between ItemsRepeater and ScrollViewer is enabled by ScrollViewer implementing
-[IScrollProvider](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Automation.Provider.IScrollProvider).
+[IScrollAnchorProvider](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.IScrollAnchorProvider).
 But ScrollViewer ships in WUX, and didn't implement that interface until RS5, and
 so anchoring doesn't work for an ItemsRepeater on an app running on RS4 or below.
 
@@ -79,14 +79,20 @@ on the RS5 ScrollViewer:
 
 [VerticalAnchorRatio](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ScrollViewer.VerticalAnchorRatio)
 
+[CurrentAnchor](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ScrollViewer.CurrentAnchor)
+
 # API Details
 ```C#
 [webhosthidden]
 [content_property("ScrollViewer")]
 runtimeclass ItemsRepeaterScrollHost : Windows.UI.Xaml.FrameworkElement
 {
-    ScrollAnchorProvider();
-    ScrollViewer ScrollViewer { get; set; };
+    ItemsRepeaterScrollHost();
+    
+    Windows.UI.Xaml.Controls.ScrollViewer ScrollViewer { get; set; };
+    
+    Windows.UI.Xaml.UIElement CurrentAnchor { get; }    
+    
     Double HorizontalAnchorRatio { get; set; };
     Double VerticalAnchorRatio { get; set; };
 }
