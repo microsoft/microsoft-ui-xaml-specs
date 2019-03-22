@@ -99,6 +99,9 @@ example code with each description. The general format is:
 ```
 
 ## Put tabs in the titlebar area
+
+![A sample app that shows the Tab control can extend into the titlebar area](images/tab-extend-to-title.png)
+
 ``` xml
 <TabControl>
     <TabItem Header="Tab 1" />
@@ -123,6 +126,8 @@ public MainPage()
 ```
 
 ## Create a new window when tearing out tabs
+
+![An example picture showing that a tab can be torn out and moved to its own window.](images/tab-new-window.png)
 
 See the [TabView tear out sample](https://github.com/windows-toolkit/Sample-TabView-TearOff/tree/master/TabViewTear) for a more complete sample.
 
