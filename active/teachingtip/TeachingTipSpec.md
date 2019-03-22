@@ -114,7 +114,7 @@ XAML
             Target="{x:Bind SaveButton}"
             Title="Saving automatically"
             Subtitle="We save your changes as you go - so you never have to."
-            PreferredPlacement="BottomEdgeAlignedLeft">
+            PreferredPlacement="BottomLeft">
         </controls:TeachingTip>
     </Button.Resources>
 </Button>
@@ -132,7 +132,7 @@ XAML
 <controls:TeachingTip x:Name="AutoSaveTip"
     Title="Saving automatically"
     Subtitle="We save your changes as you go - so you never have to."
-    PreferredPlacement="BottomEdgeAlignedLeft">
+    PreferredPlacement="BottomLeft">
 </controls:TeachingTip>
 ```
 
@@ -151,7 +151,7 @@ XAML
 <controls:TeachingTip x:Name="AutoSaveTip"
     Title="Saving automatically"
     Subtitle="We save your changes as you go - so you never have to."
-    PreferredPlacement="BottomEdgeAlignedLeft"
+    PreferredPlacement="BottomLeft"
     PlacementMargin="80">
 </controls:TeachingTip>
 ```
@@ -344,8 +344,7 @@ public void OnTipClosing(object sender, TeachingTipClosingEventArgs args)
 
 Some content and properties can be reconfigured while the teaching tip is open and will take effect immediately. Other content and properties, such as the icon property, the Action and Close buttons, and reconfiguring between light-dismiss and explicit-dismiss will all require the teaching tip to be closed and reopened for changes to these properties to take affect. Note that changing dismissal behavior from manual-dismiss to light-dismiss while a teaching tip is open will cause the teaching tip to have its Close button removed before the light-dismiss behavior is enabled and the tip can remain stuck onscreen.
 
-
-# API Notes
+## API Notes
 
 ### Notable Properties  
 
@@ -364,7 +363,7 @@ Some content and properties can be reconfigured while the teaching tip is open a
 | Closed | Occurs after the tip is closed. |
 | Closing |Occurs just before the tip begins to close. |
 
-# API Details 
+## API Details 
 
 ```c++ 
 enum TeachingTipCloseReason
@@ -502,7 +501,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
 }
 ```
 
-# Appendix
+## Appendix
 
 ### Visual Components
 
