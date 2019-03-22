@@ -1,36 +1,47 @@
-# Description
+# Teaching tip
 
 A teaching tip is a semi-persistent and content-rich flyout that provides contextual information. It is often used for informing, reminding, and teaching users about important and new features that may enhance their experience.
 
-**Important APIs:** [TeachingTip class]() [Link TODO]
+**Important APIs:** [TeachingTip class]()
 
 A teaching tip may be light-dismiss or require explicit action to close. A teaching tip can target a specific UI element with its tail and also be used without a tail or target.
 
-### Is this the right control? 
+## Is this the right control? 
 
 Use a **TeachingTip** control to focus a user's attention on new or important updates and features, remind a user of nonessential options that would improve their experience, or teach a user how a task should be completed. 
 
 Because teaching tip is transient, it would not be the recommended control for prompting users about errors or important status changes.
 
 
-# Examples
+## Examples
 
-### Some APIs shown in the following examples are not yet available in the prerelease version of this control. Please see the [Teaching Tip Sample in the XAML Sample Gallery](https://github.com/Microsoft/Xaml-Controls-Gallery/blob/w/saschule/TeachingTipSample/XamlControlsGallery/ControlPages/TeachingTipPage.xaml) for implementation examples that are accurate with the version of this control currently available through prerelease. 
+<table>
+<th align="left">XAML Controls Gallery<th>
+<tr>
+<td><img src="images/xaml-controls-gallery-sm.png" alt="XAML controls gallery"></img></td>
+<td>
+    <p>If you have the <strong style="font-weight: semi-bold">XAML Controls Gallery</strong> app installed, click here to <a href="xamlcontrolsgallery:/item/TeachingTip">open the app and see the TeachingTip in action</a>.</p>
+    <ul>
+    <li><a href="https://www.microsoft.com/store/productId/9MSVH128X2ZT">Get the XAML Controls Gallery app (Microsoft Store)</a></li>
+    <li><a href="https://github.com/Microsoft/Xaml-Controls-Gallery">Get the source code (GitHub)</a></li>
+    </ul>
+</td>
+</tr>
+</table>
 
-
-The teaching tip has several states, including these notable ones.
+A teaching tip can have several configurations, including these notable ones.
 
 A teaching tip can target a specific UI element with its tail to enhance contextual clarity of the information it is presenting. 
 
-![A sample app with a teaching tip targeting the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipPointerSample.jpg)
+![A sample app with a teaching tip targeting the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](images/teaching-tip-targeted.png)
 
 When the information presented does not pertain to a particular UI element, a nontargeted teaching tip can be created by removing the tail.
 
-![A sample app with a teaching tip in the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipSampleApp.jpg)
+![A sample app with a teaching tip in the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](images/teaching-tip-non-targeted.png)
 
 A teaching tip can require the user to dismiss it via an "X" button in a top corner or a "Close" button at the bottom. A teaching tip may also be light-dismiss enabled in which case there is no dismiss button and the teaching tip will instead dismiss when a user scrolls or interacts with other elements of the application. Because of this behavior, light-dismiss tips are the best solution when a tip needs to be placed in a scrollable area. 
 
-![A sample app with a light-dismiss teaching tip in the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to."](TeachingTipLightDismissSample.jpg)
+![A sample app with a light-dismiss teaching tip in the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to."](images/teaching-tip-light-dismiss.png)
 
 
 ### Create a teaching tip
@@ -67,7 +78,7 @@ public MainPage()
 
 Here's the result when this Page containing the button and teaching tip shown:
 
-![A sample app with a teaching tip targeting the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipPointerSample.jpg)
+![A sample app with a teaching tip targeting the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](images/teaching-tip-targeted.png)
 
 ### Non-targeted tips
 
@@ -85,7 +96,47 @@ XAML
 
 Note that in this example the TeachingTip is in the element tree rather than in a ResourceDictionary or in code behind. This has no effect on behavior; the TeachingTip only displays when opened, and takes up no layout space.
 
-![A sample app with a teaching tip in the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipSampleApp.jpg)
+![A sample app with a teaching tip in the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](images/teaching-tip-non-targeted.png)
+
+### Preferred placement
+
+Teaching tip replicates Flyout's [FlyoutPlacementMode](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Primitives.FlyoutPlacementMode) placement behavior with the TeachingTipPlacementMode property. The default placement mode will try to place a targeted teaching tip above its target and a non-targeted teaching tip centered at the bottom of the xaml root. As with Flyout, if the preferred placement mode would not leave room for the teaching tip to show, another placement mode will be automatically chosen. 
+
+For applications that predict gamepad input, please see [gamepad and remote control interactions]( https://docs.microsoft.com/en-us/windows/uwp/design/input/gamepad-and-remote-interactions#xy-focus-navigation-and-interaction). It is encouraged to test gamepad accessibility of each teaching tip using all possible configurations of an app's UI.
+
+A targeted teaching tip with its PreferredPlacement set to "BottomLeft" will appear with the tail centered at the bottom of its target with the teaching tip's body shifted toward the left.
+
+XAML
+```XAML
+<Button x:Name="SaveButton" Content="Save">
+    <Button.Resources>
+        <controls:TeachingTip x:Name="AutoSaveTip"
+            Target="{x:Bind SaveButton}"
+            Title="Saving automatically"
+            Subtitle="We save your changes as you go - so you never have to."
+            PreferredPlacement="BottomEdgeAlignedLeft">
+        </controls:TeachingTip>
+    </Button.Resources>
+</Button>
+```
+
+![A sample app with a "Save" button that is being targeted by a teaching tip underneath its left corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](images/teaching-tip-targeted-preferred-placement.png)
+
+
+A non-targeted teaching tip with its PreferredPlacement set to "BottomLeft" will appear in the bottom left corner of the xaml root.
+
+XAML
+```XAML
+<Button x:Name="SaveButton" Content="Save" />
+
+<controls:TeachingTip x:Name="AutoSaveTip"
+    Title="Saving automatically"
+    Subtitle="We save your changes as you go - so you never have to."
+    PreferredPlacement="BottomEdgeAlignedLeft">
+</controls:TeachingTip>
+```
+
+![A sample app with a teaching tip in the bottom left corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](images/teaching-tip-non-targeted-preferred-placement.png)
 
 ### Add a placement margin  
 
@@ -100,11 +151,12 @@ XAML
 <controls:TeachingTip x:Name="AutoSaveTip"
     Title="Saving automatically"
     Subtitle="We save your changes as you go - so you never have to."
+    PreferredPlacement="BottomEdgeAlignedLeft"
     PlacementMargin="80">
 </controls:TeachingTip>
 ```
 
-![A sample app with a teaching tip positioned toward, but not fully against, the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipTargetOffsetSample.jpg)
+![A sample app with a teaching tip positioned toward, but not fully against, the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](images/teaching-tip-placement-margin.png)
 
 
 ### Add content
@@ -128,7 +180,7 @@ XAML
 </Button>
 ```
 
-![A sample app with a teaching tip targeting the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." In the content area of the teaching tip is a CheckBox labeled "Don't show tips at startup" and underneath is text that reads "You can change your tip preferences in Settings if you change your mind" where "Settings" is a link to the app's settings page. There is a close button on the top right corner of the teaching tip.](TeachingTipContentSample.jpg)
+![A sample app with a teaching tip targeting the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." In the content area of the teaching tip is a CheckBox labeled "Don't show tips at startup" and underneath is text that reads "You can change your tip preferences in Settings if you change your mind" where "Settings" is a link to the app's settings page. There is a close button on the top right corner of the teaching tip.](images/teaching-tip-content.png)
 
 ### Add buttons
 
@@ -149,14 +201,16 @@ XAML
             ActionButtonContent="Disable"
             ActionButtonCommand="DisableAutoSave"
             CloseButtonContent="Got it!">
-                <CheckBox Content="Don't show tips at start up" IsChecked="{x:Bind HidingTips, Mode=TwoWay}" />
-                <TextBlock>You can change your tip preferences in <Hyperlink NavigateUri="app:/item/SettingsPage">Settings</Hyperlink> if you change your mind.</TextBlock>
+                <StackPanel>
+                    <CheckBox x:Name="HideTipsCheckBox" Content="Don't show tips at start up" IsChecked="{x:Bind HidingTips, Mode=TwoWay}" />
+                    <TextBlock>You can change your tip preferences in <Hyperlink NavigateUri="app:/item/SettingsPage">Settings</Hyperlink> if you change your mind.</TextBlock>
+                </StackPanel>
         </controls:TeachingTip>
     </Button.Resources>
 </Button>
 ```
 
-![A sample app with a teaching tip targeting the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." In the content area of the teaching tip is a CheckBox labeled "Don't show tips at startup" and underneath is text that reads "You can change your tip preferences in Settings if you change your mind" where "Settings" is a link to the app's settings page. At the bottom of the teaching are two buttons, a gray one on the left that reads "Disable" and a blue one on the right that reads "Got it!"](TeachingTipButtonsSample.jpg)
+![A sample app with a teaching tip targeting the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." In the content area of the teaching tip is a CheckBox labeled "Don't show tips at startup" and underneath is text that reads "You can change your tip preferences in Settings if you change your mind" where "Settings" is a link to the app's settings page. At the bottom of the teaching are two buttons, a gray one on the left that reads "Disable" and a blue one on the right that reads "Got it!"](images/teaching-tip-buttons.png)
 
 ### Hero content
 
@@ -169,16 +223,16 @@ XAML
         <controls:TeachingTip x:Name="AutoSaveTip"
             Target="{x:Bind SaveButton}"
             Title="Saving automatically"
-            Subtitle="We save your changes as you go - so you never have to."
+            Subtitle="We save your changes as you go - so you never have to.">
             <controls:TeachingTip.HeroContent>
-                <Image Source="Assets/Giraffe.png" />
+                <Image Source="Assets/cloud.png" />
             </controls:TeachingTip.HeroContent>
         </controls:TeachingTip>
     </Button.Resources>
 </Button>
 ```
 
-![A sample app with a teaching tip targeting the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." At the bottom of the teaching tip is a border-to-border picture of a giraffe. There is a close button on the top right corner of the teaching tip.](TeachingTipHeroContentSample.jpg)
+![A sample app with a teaching tip targeting the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." At the bottom of the teaching tip is a border-to-border image of a cartoon man putting files in the cloud. There is a close button on the top right corner of the teaching tip.](images/teaching-tip-hero content.png)
 
 ### Add an icon
 
@@ -198,7 +252,7 @@ XAML
 </Button>
 ```
 
-![A sample app with a teaching tip targeting the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." To the left of the title and subtitle is a floppy disk icon. There is a close button on the top right corner of the teaching tip.](TeachingTipIconSample.jpg)
+![A sample app with a teaching tip targeting the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." To the left of the title and subtitle is a floppy disk icon. There is a close button on the top right corner of the teaching tip.](images/teaching-tip-icon.png)
 
 ### Enable light-dismiss
 
@@ -217,47 +271,7 @@ XAML
 </controls:TeachingTip>
 ```
 
-![A sample app with a light-dismiss teaching tip in the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to."](TeachingTipLightDismissSample.jpg)
-
-### Preferred placement
-
-Teaching tip replicates all of Flyout's [FlyoutPlacementMode](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Primitives.FlyoutPlacementMode) placement behavior with the TeachingTipPlacementMode property. The default placement mode will try to place a targeted teaching tip above its target and a non-targeted teaching tip in the bottom right corner of the xaml root. As with Flyout, if the preferred placement mode would not leave room for the teaching tip to show, another placement mode will be automatically chosen. 
-
-A targeted teaching tip with its PreferredPlacement set to "BottomEdgeAlignedLeft" will appear below its target and will have its left edge aligned to the left edge of the target.
-
-For applications that predict gamepad input, please see [Designing for TV](https://docs.microsoft.com/en-us/windows/uwp/design/devices/designing-for-tv). It is encouraged to test gamepad accessibility of each teaching tip using all possible configurations of an app's UI.
-
-XAML
-```XAML
-<Button x:Name="SaveButton" Content="Save">
-    <Button.Resources>
-        <controls:TeachingTip x:Name="AutoSaveTip"
-            Target="{x:Bind SaveButton}"
-            Title="Saving automatically"
-            Subtitle="We save your changes as you go - so you never have to."
-            PreferredPlacement="BottomEdgeAlignedLeft">
-        </controls:TeachingTip>
-    </Button.Resources>
-</Button>
-```
-
-![A sample app with a targeted teaching tip beneath at a button that reads "Save". The left edge of the teaching tip and the "Save" button are aligned. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipPointingPreferredPlacementSample.jpg)
-
-
-A non-targeted teaching tip with its PreferredPlacement set to "BottomEdgeAlignedLeft" will appear in the bottom left corner of the xaml root.
-
-XAML
-```XAML
-<Button x:Name="SaveButton" Content="Save" />
-
-<controls:TeachingTip x:Name="AutoSaveTip"
-    Title="Saving automatically"
-    Subtitle="We save your changes as you go - so you never have to."
-    PreferredPlacement="BottomEdgeAlignedLeft">
-</controls:TeachingTip>
-```
-
-![A sample app with a teaching tip in the bottom left corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipNonPointingPreferredPlacementSample.jpg)
+![A sample app with a light-dismiss teaching tip in the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to."](images/teaching-tip-light-dismiss.png)
 
 ### Escaping the xaml root bounds
 
@@ -270,19 +284,19 @@ XAML
 <controls:TeachingTip x:Name="AutoSaveTip"
     Title="Saving automatically"
     Subtitle="We save your changes as you go - so you never have to."
-    PreferredPlacement="BottomEdgeAlignedRight"
+    PreferredPlacement="BottomRight"
     PlacementMargin="-80,-50,0,0"
     ShouldConstrainToRootBounds="False">
 </controls:TeachingTip>
 ```
 
-![A sample app with a teaching tip outside of the app's bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](TeachingTipOutOfWindowBoundsSample.jpg)
+![A sample app with a teaching tip outside of the app's bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](images/teaching-tip-escape-xaml-root.png)
 
 ### Canceling and deferring close
 
 The Closing event can be used to cancel and/or defer the close of a teaching tip. This can be used to keep the teaching tip open or allow time for an action or custom animation to occur. When the closing of a teaching tip is canceled, IsOpen will go back to true, however, it will stay false during the deferral. A programmatic close can also be canceled. 
 
-**Note: If no placement option can be that would allow a teaching tip to fully to show, teaching tip will iterate through its event lifecycle to force a close rather than display without an accessible close button. If the app cancels the Closing event, the teaching tip may remain open without an accessible Close button.**
+**Note: If no placement option would allow a teaching tip to fully to show, teaching tip will iterate through its event lifecycle to force a close rather than display without an accessible close button. If the app cancels the Closing event, the teaching tip may remain open without an accessible Close button.**
 
 XAML
 ```XAML
@@ -313,7 +327,7 @@ public void OnTipClosing(object sender, TeachingTipClosingEventArgs args)
 }
 ```
 
-# Remarks
+## Remarks
 
 ### Related articles 
 
@@ -323,14 +337,13 @@ public void OnTipClosing(object sender, TeachingTipClosingEventArgs args)
 * Tips are impermanent and should not contain information or options that are critical to the experience of an application. 
 * Try to avoid showing teaching tips too often. Teaching tips are most likely to each recieve individual attention when they are staggered throughout long sessions or across multiple sessions.    
 * Keep tips succinct and their topic clear. Research shows users, on average, only read 3-5 words and only comprehend 2-3 words before deciding whether to interact with a tip.
-* Gamepad accessibility of a teaching tip is not guaranteed. For applications that predict gamepad input, please see [Designing for TV](https://docs.microsoft.com/en-us/windows/uwp/design/devices/designing-for-tv). It is encouraged to test gamepad accessibility of each teaching tip using all possible configurations of an app's UI.
+* Gamepad accessibility of a teaching tip is not guaranteed. For applications that predict gamepad input, please see [gamepad and remote control interactions]( https://docs.microsoft.com/en-us/windows/uwp/design/input/gamepad-and-remote-interactions#xy-focus-navigation-and-interaction). It is encouraged to test gamepad accessibility of each teaching tip using all possible configurations of an app's UI.
 
 
 ### Reconfiguring an open teaching tip
 
-All content and properties, with an exception of light-dismiss vs. explicit-dismiss, can be reconfigured while the teaching tip is open and will take effect immediately. 
+Some content and properties can be reconfigured while the teaching tip is open and will take effect immediately. Other content and properties, such as the icon property, the Action and Close buttons, and reconfiguring between light-dismiss and explicit-dismiss will all require the teaching tip to be closed and reopened for changes to these properties to take affect. Note that changing dismissal behavior from manual-dismiss to light-dismiss while a teaching tip is open will cause the teaching tip to have its Close button removed before the light-dismiss behavior is enabled and the tip can remain stuck onscreen.
 
-When reconfiguring a tip between light-dismiss and explicit-dismiss, the tip must be closed and reopened for this change to take affect. Note that not doing so may cause an explicit-dismiss teaching tip to have its Close button removed before the light-dismiss behavior is enabled.
 
 # API Notes
 
