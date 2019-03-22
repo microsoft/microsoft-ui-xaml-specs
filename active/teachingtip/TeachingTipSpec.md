@@ -232,7 +232,7 @@ XAML
 </Button>
 ```
 
-![A sample app with a teaching tip targeting the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." At the bottom of the teaching tip is a border-to-border image of a cartoon man putting files in the cloud. There is a close button on the top right corner of the teaching tip.](images/teaching-tip-hero content.png)
+![A sample app with a teaching tip targeting the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." At the bottom of the teaching tip is a border-to-border image of a cartoon man putting files in the cloud. There is a close button on the top right corner of the teaching tip.](images/teaching-tip-hero-content.png)
 
 ### Add an icon
 
