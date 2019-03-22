@@ -122,15 +122,38 @@ public MainPage()
 }
 ```
 
-**TODO**: Tab tear out example
+Tab tear out:
+
+See the [TabView tear out sample](https://github.com/windows-toolkit/Sample-TabView-TearOff/tree/master/TabViewTear) for a more complete sample.
+
 ``` xml
-<TabControl TabDraggedOutside="OpenTabInNewWindow" />
+<TabControl CanDragItems="True"
+            CanReorderItems="True"
+            TabDraggedOutside="TabControl_TabDraggedOutside">
 ```
 ``` csharp
-public void OpenTabInNewWindow(Args e)
+// NOTE: The app is responsible for writing this code. We will provide a sample that may look something like:
+private async void TabControl_TabDraggedOutside(object sender, TabDraggedOutsideEventArgs e)
 {
-  // TODO: Open tab in new CoreWindow or new AppWindow, depending on version... 
+    // Create a new AppWindow
+    AppWindow newWindow = await AppWindow.TryCreateAsync();
+
+    // Create the content for the new window
+    var newPage = new MainPage();
+
+    // Remove tab from existing list
+    Tabs.Items.Remove(e.Tab);
+
+    // Add tab to list of Tabs on new page
+    newPage.AddItemToTabs(e.Tab);
+
+    // Set the Window's content to the new page
+    ElementCompositionPreview.SetAppWindowContent(newWindow, newPage);
+
+    // Show the window
+    await newWindow.TryShowAsync();
 }
+
 ```
 
 # Remarks
