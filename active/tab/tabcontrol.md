@@ -76,7 +76,7 @@ example code with each description. The general format is:
 <!-- As an example of this section, see the Examples section for the PasswordBox control 
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 
-To replicate the behavior of Microsoft Edge:
+## To replicate the behavior of Microsoft Edge
 
 ``` xml
 <TabControl TabWidthBehavior="Equal"
@@ -92,13 +92,13 @@ To replicate the behavior of Microsoft Edge:
 </TabControl>
 ```
 
-The TabControl also supports databinding: 
+## Databind to a set of tabs 
 
 ``` xml
 <TabControl ItemsSource="{x:Bind TabItemCollection}" />
 ```
 
-Putting Tabs in the Titlebar area:
+## Put tabs in the titlebar area
 ``` xml
 <TabControl>
     <TabItem Header="Tab 1" />
@@ -122,7 +122,7 @@ public MainPage()
 }
 ```
 
-Tab tear out:
+## Create a new window when tearing out tabs
 
 See the [TabView tear out sample](https://github.com/windows-toolkit/Sample-TabView-TearOff/tree/master/TabViewTear) for a more complete sample.
 
