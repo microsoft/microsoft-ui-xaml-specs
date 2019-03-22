@@ -92,12 +92,6 @@ example code with each description. The general format is:
 </TabControl>
 ```
 
-## Databind to a set of tabs 
-
-``` xml
-<TabControl ItemsSource="{x:Bind TabItemCollection}" />
-```
-
 ## Put tabs in the titlebar area
 
 ![A sample app that shows the Tab control can extend into the titlebar area](images/tab-extend-to-title.png)
@@ -158,7 +152,12 @@ private async void TabControl_TabDraggedOutside(object sender, TabDraggedOutside
     // Show the window
     await newWindow.TryShowAsync();
 }
+```
 
+## Databind to a set of tabs 
+
+``` xml
+<TabControl ItemsSource="{x:Bind TabItemCollection}" />
 ```
 
 # Remarks
