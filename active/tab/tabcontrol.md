@@ -98,9 +98,29 @@ The TabControl also supports databinding:
 <TabControl ItemsSource="{x:Bind TabItemCollection}" />
 ```
 
-**TODO**: Example of putting tabs in the titlebar area
+Putting Tabs in the Titlebar area:
+``` xml
+<TabControl>
+    <TabItem Header="Tab 1" />
+    <TabItem Header="Tab 2" />
+    <!-- More tabs -->
+</TabControl>
 
-[Title bar customization](https://docs.microsoft.com/en-us/windows/uwp/design/shell/title-bar)
+<Grid x:Name="CustomDragRegion" Width="200" Height="40" HorizontalAlignment="Right" VerticalAlignment="Top" />
+```
+
+``` csharp
+// Customize the titlebar area using the guidance from here: https://docs.microsoft.com/en-us/windows/uwp/design/shell/title-bar
+public MainPage()
+{
+    this.InitializeComponent();
+
+    var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+    coreTitleBar.ExtendViewIntoTitleBar = true;
+
+    Window.Current.SetTitleBar(CustomDragRegion);
+}
+```
 
 **TODO**: Tab tear out example
 ``` xml
