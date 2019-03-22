@@ -122,7 +122,6 @@ XAML
 
 ![A sample app with a "Save" button that is being targeted by a teaching tip underneath its left corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](images/teaching-tip-targeted-preferred-placement.png)
 
-
 A non-targeted teaching tip with its PreferredPlacement set to "BottomLeft" will appear in the bottom left corner of the xaml root.
 
 XAML
@@ -246,7 +245,9 @@ XAML
             Target="{x:Bind SaveButton}"
             Title="Saving automatically"
             Subtitle="We save your changes as you go - so you never have to."
-            IconSource="SaveIcon.png">
+            <controls:TeachingTip.IconSource>
+                <controls:SymbolIconSource Symbol="Save" />
+            </controls:TeachingTip.IconSource>
         </controls:TeachingTip>
     </Button.Resources>
 </Button>
@@ -327,6 +328,7 @@ public void OnTipClosing(object sender, TeachingTipClosingEventArgs args)
 }
 ```
 
+
 ## Remarks
 
 ### Related articles 
@@ -339,10 +341,10 @@ public void OnTipClosing(object sender, TeachingTipClosingEventArgs args)
 * Keep tips succinct and their topic clear. Research shows users, on average, only read 3-5 words and only comprehend 2-3 words before deciding whether to interact with a tip.
 * Gamepad accessibility of a teaching tip is not guaranteed. For applications that predict gamepad input, please see [gamepad and remote control interactions]( https://docs.microsoft.com/en-us/windows/uwp/design/input/gamepad-and-remote-interactions#xy-focus-navigation-and-interaction). It is encouraged to test gamepad accessibility of each teaching tip using all possible configurations of an app's UI.
 
-
 ### Reconfiguring an open teaching tip
 
-Some content and properties can be reconfigured while the teaching tip is open and will take effect immediately. Other content and properties, such as the icon property, the Action and Close buttons, and reconfiguring between light-dismiss and explicit-dismiss will all require the teaching tip to be closed and reopened for changes to these properties to take affect. Note that changing dismissal behavior from manual-dismiss to light-dismiss while a teaching tip is open will cause the teaching tip to have its Close button removed before the light-dismiss behavior is enabled and the tip can remain stuck onscreen.
+Some content and properties can be reconfigured while the teaching tip is open and will take effect immediately. Other content and properties, such as the icon property, the Action and Close buttons, and reconfiguring between light-dismiss and explicit-dismiss will all require the teaching tip to be closed and reopened for changes to these properties to take affect. Note that changing dismissal behavior from manual-dismiss to light-dismiss while a teaching tip is open will cause the teaching tip to have its Close button removed before the light-dismiss behavior is enabled and the tip can remain stuck on-screen.
+
 
 ## API Notes
 
@@ -362,6 +364,7 @@ Some content and properties can be reconfigured while the teaching tip is open a
 | CloseButtonClick | Occurs after the close button has been tapped. |
 | Closed | Occurs after the tip is closed. |
 | Closing |Occurs just before the tip begins to close. |
+
 
 ## API Details 
 
@@ -500,6 +503,7 @@ unsealed runtimeclass TeachingTip : Windows.UI.Xaml.Controls.ContentControl
     static Windows.UI.Xaml.DependencyProperty TemplateSettingsProperty{ get; };
 }
 ```
+
 
 ## Appendix
 
