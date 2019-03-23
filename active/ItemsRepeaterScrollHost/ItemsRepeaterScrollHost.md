@@ -25,7 +25,7 @@ But ScrollViewer ships in WUX, and didn't implement that interface until RS5, an
 so anchoring doesn't work for an ItemsRepeater on an app running on RS4 or below.
 
 The solution for this is the new `ItemsRepeaterScrollHost` control in this spec.
-This wraps the ScrollViewer, and and do the coordination with the ItemsRepeater.
+This wraps the ScrollViewer, and does the coordination with the ItemsRepeater.
 
 ```xaml
 <ItemsRepeaterScrollHost>
@@ -60,7 +60,7 @@ This example shows a scrollable list of people.
         </ScrollViewer>
     </controls:ItemsRepeaterScrollHost> 
     
-</Page
+</Page>
 ```
 
 # Remarks
@@ -84,16 +84,16 @@ on the RS5 ScrollViewer:
 # API Details
 ```C#
 [webhosthidden]
-[content_property("ScrollViewer")]
+[contentproperty("ScrollViewer")]
 runtimeclass ItemsRepeaterScrollHost : Windows.UI.Xaml.FrameworkElement
 {
     ItemsRepeaterScrollHost();
     
-    Windows.UI.Xaml.Controls.ScrollViewer ScrollViewer { get; set; };
+    Windows.UI.Xaml.Controls.ScrollViewer ScrollViewer;
     
     Windows.UI.Xaml.UIElement CurrentAnchor { get; }    
     
-    Double HorizontalAnchorRatio { get; set; };
-    Double VerticalAnchorRatio { get; set; };
+    Double HorizontalAnchorRatio;
+    Double VerticalAnchorRatio;
 }
 ```
