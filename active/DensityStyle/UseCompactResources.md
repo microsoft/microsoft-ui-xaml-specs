@@ -1,5 +1,24 @@
 # Background
-Compact feature is described in [Suggestion: Add Compact Dictionary to WinUI 2.1](https://github.com/Microsoft/microsoft-ui-xaml/issues/98).
+Xaml ships with a set of resources (frequently called "generic.xaml") which define how controls appear.
+The [WinUI](https://docs.microsoft.com/en-us/uwp/toolkits/winui/) package, which ships
+several Xaml controls as a Nuget package, also ships an updated set of resources, in the form
+of the 
+[XamlControlsResources](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.xamlcontrolsresources)
+API. You bring this into your app by adding it to your Application.Resources:
+
+````xaml
+<Application>
+    <Application.Resources>
+        <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls"/> 
+    </Application.Resources>
+</Application>
+````xaml
+
+This spec adds a new property to XamlControlResources that updates the resources to make
+the controls more "dense". For example, reducing the default spacing between controls.
+Overall this allows for more UI to fit into the same screen space.
+Density is described in
+[Suggestion: Add Compact Dictionary to WinUI 2.1](https://github.com/Microsoft/microsoft-ui-xaml/issues/98).
 This provides API to enable Compact in application level.
 
 # Description
