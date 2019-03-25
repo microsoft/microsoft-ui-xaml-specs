@@ -57,7 +57,7 @@ UseCompactResources property is added XamlControlsResources to allow customer to
 ## Class: XamlControlsResources 
 | Member Name | Description |
 |:- |:--|
-| UseCompactResources | True to enable Compact Resources. False when parameter is not set |
+| UseCompactResources | True to enable Compact Resources. Defaults to false |
 
 # Appendix
 <!-- Anything else that you want to write down for posterity, but 
