@@ -18,7 +18,7 @@ Because teaching tip is transient, it would not be the recommended control for p
 <table>
 <th align="left">XAML Controls Gallery<th>
 <tr>
-<td><img src="images/xaml-controls-gallery-sm.png" alt="XAML controls gallery"></img></td>
+<td><img src="../images/xaml-controls-gallery-sm.png" alt="XAML controls gallery"></img></td>
 <td>
     <p>If you have the <strong style="font-weight: semi-bold">XAML Controls Gallery</strong> app installed, click here to <a href="xamlcontrolsgallery:/item/TeachingTip">open the app and see the TeachingTip in action</a>.</p>
     <ul>
@@ -122,6 +122,7 @@ XAML
 
 ![A sample app with a "Save" button that is being targeted by a teaching tip underneath its left corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](images/teaching-tip-targeted-preferred-placement.png)
 
+
 A non-targeted teaching tip with its PreferredPlacement set to "BottomLeft" will appear in the bottom left corner of the xaml root.
 
 XAML
@@ -136,6 +137,13 @@ XAML
 ```
 
 ![A sample app with a teaching tip in the bottom left corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](images/teaching-tip-non-targeted-preferred-placement.png)
+
+The diagram below depicts the result of all 13 PreferredPlacement modes that can be set for targeted teaching tips.
+![Two objects labeled "target" with targeted teaching tips used around them to show teaching tip's targeted preferred placement modes. Centered in the middle of the first target is a targeted teaching tip labeled "Center" pointing down at the target with its tail. Centered above the first target is a targeted teaching tip labeled "Top" pointing down at the target with its tail. Centered right of the first target is a targeted teaching tip labeled "Right" pointing left at the target with its tail. Centered below the first target is a targeted teaching tip labeled "Bottom" pointing up at the target with its tail. Centered left of the first target is a targeted teaching tip labeled "Left" pointing right at the target with its tail. To the left of the second target is a teaching tip labeled "LeftTop" that points right at the target and has its body shifted upward. Above the second target is a teaching tip labeled "TopLeft" that points down at the target and has its body shifted leftward. To the right of the second target is a teaching tip labeled "RightBottom" that points left at the target and has its body shifted downward. Below the second target is a teaching tip labeled "BottomRight" that points up at the target and has its body shifted Rightward.](images/teaching-tip-targeted-preferred-placement-modes.png)
+
+The diagram below depicts the result of all 13 PreferredPlacement modes that can be set for non-targeted teaching tips.
+![An app window showing nine non-targeted teaching tips to demonstrate teaching tip's non-targeted preferred placement modes. The teaching tip in the top left corner of the app is labeled "TopLeft or LeftTop." The teaching tip centered at the app's top edge is labeled "Top." The teaching tip in the top right corner of the app is labeled "TopRight or RightTop." The teaching tip centered at the app's left edge is labeled "Left." The teaching tip centered in the middle of the app is labeled "Center."
+The teaching tip centered at the app's right edge is labeled "Right." The teaching tip in the bottom left corner of the app is labeled "BottomLeft or LeftBottom." The teaching tip centered at the app's bottom edge is labeled "Bottom." The teaching tip in the bottom right corner of the app is labeled "BottomRight or RightBottom."](images/teaching-tip-non-targeted-preferred-placement-modes.png)
 
 ### Add a placement margin  
 
@@ -156,7 +164,6 @@ XAML
 ```
 
 ![A sample app with a teaching tip positioned toward, but not fully against, the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](images/teaching-tip-placement-margin.png)
-
 
 ### Add content
 
@@ -340,6 +347,7 @@ public void OnTipClosing(object sender, TeachingTipClosingEventArgs args)
 * Try to avoid showing teaching tips too often. Teaching tips are most likely to each recieve individual attention when they are staggered throughout long sessions or across multiple sessions.    
 * Keep tips succinct and their topic clear. Research shows users, on average, only read 3-5 words and only comprehend 2-3 words before deciding whether to interact with a tip.
 * Gamepad accessibility of a teaching tip is not guaranteed. For applications that predict gamepad input, please see [gamepad and remote control interactions]( https://docs.microsoft.com/en-us/windows/uwp/design/input/gamepad-and-remote-interactions#xy-focus-navigation-and-interaction). It is encouraged to test gamepad accessibility of each teaching tip using all possible configurations of an app's UI.
+
 
 ### Reconfiguring an open teaching tip
 
