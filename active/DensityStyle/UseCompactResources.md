@@ -19,7 +19,6 @@ the controls more "dense". For example, reducing the default spacing between con
 Overall this allows for more UI to fit into the same screen space.
 Density is described in
 [Suggestion: Add Compact Dictionary to WinUI 2.1](https://github.com/Microsoft/microsoft-ui-xaml/issues/98).
-This provides API to enable Compact in application level.
 
 # Description
 <!-- Use this section to provide a brief description of the feature.
