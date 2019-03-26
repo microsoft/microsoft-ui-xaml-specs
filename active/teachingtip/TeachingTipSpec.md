@@ -283,7 +283,9 @@ XAML
 
 ### Escaping the xaml root bounds
 
-On Windows version 19H1 and above, a teaching tip can escape the bounds of the xaml root by setting the ShouldConstrainToRootBounds property. On earlier versions of Windows, this property is ignored and the teaching tip always stays within the bounds of the xaml root.
+On Windows version 19H1 and above, a teaching tip can escape the bounds of the xaml root and the screen by setting the ShouldConstrainToRootBounds property. When this property is enabled, a teaching tip will not attempt to stay in the bounds of the xaml root nor the screen and will always position at the set PreferredPlacement mode. It is encouraged to enable the IsLightDismissEnabled property and set the PreferredPlacement mode nearest to the center of the xaml root to ensure the best experience for users.
+
+On earlier versions of Windows, this property is ignored and the teaching tip always stays within the bounds of the xaml root.
 
 XAML
 ```XAML
@@ -347,7 +349,7 @@ public void OnTipClosing(object sender, TeachingTipClosingEventArgs args)
 * Try to avoid showing teaching tips too often. Teaching tips are most likely to each recieve individual attention when they are staggered throughout long sessions or across multiple sessions.    
 * Keep tips succinct and their topic clear. Research shows users, on average, only read 3-5 words and only comprehend 2-3 words before deciding whether to interact with a tip.
 * Gamepad accessibility of a teaching tip is not guaranteed. For applications that predict gamepad input, please see [gamepad and remote control interactions]( https://docs.microsoft.com/en-us/windows/uwp/design/input/gamepad-and-remote-interactions#xy-focus-navigation-and-interaction). It is encouraged to test gamepad accessibility of each teaching tip using all possible configurations of an app's UI.
-
+* When enabling a teaching tip to escape the xaml root, it is encouraged to also enable the IsLightDismissEnabled property and set the PreferredPlacement mode nearest to the center of the xaml root. 
 
 ### Reconfiguring an open teaching tip
 
