@@ -2,7 +2,7 @@
 
 A teaching tip is a semi-persistent and content-rich flyout that provides contextual information. It is often used for informing, reminding, and teaching users about important and new features that may enhance their experience.
 
-**Important APIs:** [TeachingTip class]()
+**Important APIs:** [TeachingTip class](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.teachingtip)
 
 A teaching tip may be light-dismiss or require explicit action to close. A teaching tip can target a specific UI element with its tail and also be used without a tail or target.
 
@@ -76,13 +76,13 @@ public MainPage()
 }
 ```
 
-Here's the result when this Page containing the button and teaching tip shown:
+Here's the result when the Page containing the button and teaching tip is shown:
 
 ![A sample app with a teaching tip targeting the save button. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](images/teaching-tip-targeted.png)
 
 ### Non-targeted tips
 
-Not all tips relate to an element onscreen. For these scenarios, do not set the Target property and the teaching tip will instead display relative to the edges of the xaml root. However, a teaching tip can have the tail removed while retaining placement relative to a UI element by setting the TailVisibility property to "Collapsed".
+Not all tips relate to an element onscreen. For these scenarios, do not set the Target property and the teaching tip will instead display relative to the edges of the xaml root. However, a teaching tip can have the tail removed while retaining placement relative to a UI element by setting the TailVisibility property to "Collapsed". The following example is of a non-targeted teaching tip.
 
 XAML
 ```XAML
@@ -164,6 +164,7 @@ XAML
 ```
 
 ![A sample app with a teaching tip positioned toward, but not fully against, the bottom right corner. The tip title reads "Saving automatically" and the subtitle reads "We save your changes as you go - so you never have to." There is a close button on the top right corner of the teaching tip.](images/teaching-tip-placement-margin.png)
+
 
 ### Add content
 
@@ -306,7 +307,7 @@ XAML
 
 The Closing event can be used to cancel and/or defer the close of a teaching tip. This can be used to keep the teaching tip open or allow time for an action or custom animation to occur. When the closing of a teaching tip is canceled, IsOpen will go back to true, however, it will stay false during the deferral. A programmatic close can also be canceled. 
 
-**Note: If no placement option would allow a teaching tip to fully to show, teaching tip will iterate through its event lifecycle to force a close rather than display without an accessible close button. If the app cancels the Closing event, the teaching tip may remain open without an accessible Close button.**
+**Note: If no placement option would allow a teaching tip to fully show, teaching tip will iterate through its event lifecycle to force a close rather than display without an accessible close button. If the app cancels the Closing event, the teaching tip may remain open without an accessible Close button.**
 
 XAML
 ```XAML
@@ -336,7 +337,6 @@ public void OnTipClosing(object sender, TeachingTipClosingEventArgs args)
     }
 }
 ```
-
 
 ## Remarks
 
