@@ -53,7 +53,7 @@ a user input control with the input bound:
 
 ```xaml
 <TextBox Name="ValidationTextbox" 
-         Text="{x:Bind  ViewModel.Person.Name>
+         Text="{x:Bind  ViewModel.Person.Name} "/>
 
 ```
 #### Code - ViewModel
@@ -413,6 +413,158 @@ with a "///" comment above the member or type. -->
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
+
+## InputPropertyAttribute
+The `InputPropertyAttribute` helps us ensure that we only generate validation code for the property specified by this attribute. This will help reduce code bloat by not generating code for properties that will never perform validation (like width). Controls can specify multiple properties as their input property. 
+
+    /// <summary>
+    /// Name of the property that is associated with user input.
+    /// </summary>
+    attribute InputPropertyAttribute
+    {
+         string Name;
+    }
+
+## InputValidationKind  
+Determines how the control displays validation visuals.
+
+    /// <summary>
+    ///    Determines how the control displays it's validation visuals
+    /// </summary>
+    [webhosthidden]
+    enum InputValidationKind
+    {
+        /// <summary>
+        /// Let's the Control dictate how to display visuals. This is the default value.
+        /// </summary>
+        Auto,
+        /// <summary>
+        /// An error icon displays to the right of the control that displays the error messages in a tool tip.
+        /// </summary>
+        Compact,
+        /// <summary>
+        /// Text for the error messages is displayed underneath the control.  
+        /// </summary>
+        Inline,
+        /// <summary>
+        /// Validation visuals are not displayed at all.
+        /// </summary>
+        Hidden,
+    };
+
+## IInputValidationControl
+Any control that wants to participate in input validation should derive from this interface. This, among other things, is what allows the markup compiler to know when to generate the code necessary for listening to the `INotifyDataErrorInfo.ErrorsChanged` event and propagate the results to the `IInputValidationControl.Errors` property.
+
+When the `ValidationCommand` property is non-null, the following will be true:
+1. When the `InputValidationKind` property is set to `Hidden`, the control will *not* invoke the `ValidationCommand.CanValidate` or `ValidationCommand.Validate` methods
+2. When the `InputValidationKind` property is set to `Auto`, the control will use the value of the `ValidationCommand.InputValidationKind` property for the value. If both are `Auto` the default bevahior should be `Inline`.
+3. When focus has been lost, validation should be attempted by calling the `ValidationCommand.CanValidate` method.
+4. If the `IInputValidationControl.ValidationErrors` collection is non-empty, validation should be attempted by calling the `ValidationCommand.CanValidate` method.
+
+The markup compiler uses this interface to properly generate code when using x:Bind iff:
+1. The Source implements INotifyDataErrorInfo
+2. The Target property is the one specified by the TargetType's InputPropertyAttribute
+3. The BindingMode is set to TwoWay
+
+The code generated provides the following functions:
+1. Generate code that listens to the Source's INotifyDataErrorInfo.ErrorsChanged event and populates the Target's 'IInputValidationControl.ValidationErrors' property.
+2. Generate and automatically set the ValidationContext property based on the Source property. If that property has any System.ComponentModel.DataAnnotations.ValidationAttributes, the associated property on the ValidationContext class will be set.
+
+         /// <summary>
+         /// Interface for Controls that participate in input validation.
+         /// <summary/>
+          [webhosthidden]
+         interface IInputValidationControl 
+         {
+             /// <summary>
+             /// Collection of errors to display based on the InputValidationKind property.
+            /// </summary>
+            Windows.Foundation.Collections.IObservableVector<Windows.UI.Xaml.Controls.InputValidationError> ValidationErrors{ get; };
+            /// <summary>
+            ///  Extra information about the Source of the validation. 
+            ///  Note: This is automatically set by the XAML markup compiler. See summary above. 
+            /// </summary>
+            Windows.UI.Xaml.Controls.InputValidationContext ValidationContext;
+            /// <summary>
+            ///  DataTemplate that expresses how the errors are displayed.
+            /// </summary>
+            Windows.UI.Xaml.DataTemplate ErrorTemplate;
+            /// <summary>
+            ///  Determines how the control should visualize validation errors.
+            /// </summary>
+            Windows.UI.Xaml.Controls.InputValidationKind InputValidationKind;
+            /// <summary>
+            /// Command associated with the IInputValidationControl. See InputValidationCommand for more
+            /// information.
+            /// </summary>
+            Windows.UI.Xaml.Controls.InputValidationCommand ValidationCommand;
+         };
+   
+## InputValidationCommand
+The command allows for easy use of input validation without the need for a tight dependency on x:Bind.  This enables developers who aren't striclty using MVVM to use input validation (i.e ReactiveUI).  The InputValidationCommand is what allows for the correct-by-design approach where controls initially validate on focus lost, but then will query for validation on property changed once in an invalid state.  This wouldn't be for free, but the amount of code here is pretty trivial. We could provide some attribute or pattern that tells the markup compiler how to generate that code automatically.  
+
+The command can shared between different IInputValidationControls, as would most likely be the case in the scenario of a forms control.  A custom command can be made that listens for changes to all errors and knows when a form has been completed and ready for submition. The control will query the command as to whether they should perform validation.
+
+Developers can override any of this behavior by creating their own InputValidationCommand.
+ 
+ 
+    /// <summary>
+    /// Command that controls how an IInputValidationControl does validation.
+    /// </summary>
+    [webhosthidden]
+    unsealed runtimeclass InputValidationCommand
+    {
+        [method_name("CreateInstance")] InputValidationCommand();
+        Windows.UI.Xaml.Controls.InputValidationKind InputValidationKind;
+        /// <summary>
+        /// Called by a control to determine if it should call the Validate method.
+        /// </summary>
+        Boolean CanValidate(Windows.UI.Xaml.Controls.IInputValidationControl validationControl);
+        /// <summary>
+        /// If CanValidate returns true, Validate is invoked to perform validation on the
+        /// validationControl provided.
+        /// </summary>
+        void Validate(Windows.UI.Xaml.Controls.IInputValidationControl validationControl);
+        /// <summary>
+        /// Method that derived classes implement to provide their own implementation of the CanValidate method.
+        /// </summary>
+        overridable Boolean CanValidateCore(Windows.UI.Xaml.Controls.IInputValidationControl validationControl);
+        /// <summary>
+        /// Method that derived classes implement to provide their own implementation of the Validate method.
+        /// </summary>
+        overridable void ValidateCore(Windows.UI.Xaml.Controls.IInputValidationControl validationControl);
+    };
+
+## ValidationContext
+The `ValidationContext` class provides context as to what is being required by validation. This class is auto-generated by the XAML markup compiler in certain scenarios (see [IInputValidationControl]()). Controls can use the provided properties on the `ValidationContext` to customize their appearance.  For example, the IsInputRequired field is can allow controls to put the little * next to a header. 
+
+Note: Intended to be extended for things like IsPhoneNumber or IsEmail that will allow controls to have other behavior (like mask text box).
+
+    
+    /// <summary>
+    /// Provides more contextual information about how to validate, display, and/or format input.
+    /// </summary>
+    [webhosthidden]
+    unsealed runtimeclass InputValidationContext
+    {
+        [method_name("CreateInstance")] InputValidationContext(String memberName, Boolean isRequired);
+        Boolean IsInputRequired{ get; };
+        String MemberName{ get; };
+    };
+    
+## InputValidationError
+Provides the error message for what should be displayed to the user.
+    
+    /// <summary>
+    ///  Provides the error message for what should be displayed to the user.
+    /// </summary>
+    [webhosthidden]
+    unsealed runtimeclass InputValidationError
+    {
+        [method_name("CreateInstance")] InputValidationError(String errorMessage);
+        String ErrorMessage{ get; };
+    };
+
 
 # Appendix
 <!-- Anything else that you want to write down for posterity, but 
