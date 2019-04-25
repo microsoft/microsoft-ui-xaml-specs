@@ -1,5 +1,3 @@
-> See comments in Markdown for how to use this spec template
-
 <!-- The purpose of this spec is to describe a new feature and
 its APIs that make up a new feature in WinUI. -->
 
@@ -35,6 +33,15 @@ the reader "go read 100 pages of background information posted at ...". -->
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
 
+Paints an area with a radial gradient.
+
+Paints an area with a radial gradient. A focal point defines the beginning of the gradient, and an ellipse defines the end point of the gradient. Stops can be used to mark the points at which the gradient changes from one color to the next. 
+
+RadialGradientBrush can be animated by changing the location and color of stops over time. 
+
+## Is this the right control? 
+
+Use **RadialGradientBrush** to create interest and depth through a non-linear application of color.
 
 # Examples
 <!-- Use this section to explain the features of the API, showing
@@ -50,6 +57,113 @@ example code with each description. The general format is:
 <!-- As an example of this section, see the Examples section for the PasswordBox control 
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 
+### Create a radial gradient in markup
+
+This example creates a radial gradient with four colors and uses it to paint a Rectangle.
+
+XAML
+```XAML
+<StackPanel>
+  <!-- This rectangle is painted with a radial gradient. -->
+  <Rectangle Width="200" Height="100">
+    <Rectangle.Fill>
+      <RadialGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Color="Yellow" Offset="0.0" />
+        <GradientStop Color="Red" Offset="0.25" />
+        <GradientStop Color="Blue" Offset="0.75" />
+        <GradientStop Color="LimeGreen" Offset="1.0" />
+      </RadialGradientBrush>
+    </Rectangle.Fill>
+  </Rectangle>
+</StackPanel>
+```
+
+### Create a radial gradient in code-behind
+ 
+C#
+```C# 
+public class RadialGradient 
+{ 
+    public SpriteVisual RadialGradientVisual( 
+        Compositor compositor,  
+        Vector2 size, 
+        Vector2 originCenter,     
+        Vector2 radius) 
+    { 
+       // SpriteVisual to be painted with gradated content  
+        var gradientVisual = _compositor.CreateSpriteVisual(); 
+        gradientVisual.Size = size; 
+ 
+        // Create radial gradient brush 
+        var gradientBrush = _compositor.CreateRadialGradientBrush(); 
+        gradientBrush.originCenter = originCenter; 
+        gradientBrush.Radius = radius; 
+ 
+        // Add the stops 
+        SetupGradientBrush(gradientBrush); 
+ 
+        // Set brush on the SpriteVisual 
+        gradientVisual.Brush = gradientBrush; 
+        return gradientVisual; 
+    } 
+ 
+    private SetupGradientBrush(CompositionRadialGradientBrush gradientBrush) 
+    { 
+        var stops = gradientBrush.ColorStops; 
+        stops.Append(_compositor.CreateColorGradientStop(0.0f, Color.Yellow); 
+        stops.Append(_compositor.CreateColorGradientStop(0.25f, Color.Red); 
+        stops.Append(_compositor.CreateColorGradientStop(0.75f, Color.Blue); 
+        stops.Append(_compositor.CreateColorGradientStop(1.0f, Color.LimeGreen); 
+        gradientBrush.InterpolationSpace = CompositionColorSpace.Rgb; 
+        gradientBrush.BorderMode = CompositionGradientExtendMode.Wrap; 
+    } 
+} 
+```
+
+### Animate the color of a gradient stop 
+
+Animate the color of gradient stop 
+
+C#
+```C#
+public class RadialGradient 
+{ 
+    private SpriteVisual RadialGradientVisualWithStopAnimation( 
+        Vector2 size, 
+        Vector2 originCenter, 
+        Vector2 radius) 
+    { 
+        // SpriteVisual to be painted with gradated content  
+        var gradientVisual = _compositor.CreateSpriteVisual(); 
+        gradientVisual.Size = size; 
+ 
+        // Create radial gradient brush 
+        var gradientBrush = _compositor.CreateRadialGradientBrush(); 
+        gradientBrush.GradientOrigin = originCenter; 
+        gradientBrush.EllipseRadius = radius; 
+ 
+        // Add the stops 
+        SetupGradientBrush(gradientBrush); 
+ 
+       // Set brush on the SpriteVisual 
+       gradientVisual.Brush = gradientBrush; 
+ 
+      // Setup animation on color for stop1's color 
+      var colorAnimation = _compositor.CreateColorKeyFrameAnimation(); 
+      colorAnimation.InsertKeyFrame(0.0f, Colors.Blue); 
+      colorAnimation.InsertKeyFrame(0.5f, Colors.LightBlue); 
+      colorAnimation.InsertKeyFrame(0.75f, Colors.Navy); 
+      colorAnimation.InsertKeyFrame(1.0f, Colors.Blue); 
+      colorAnimation.Duration = TimeSpan.FromSeconds(20); 
+      colorAnimation.IterationBehavior = AnimationIterationBehavior.Forever; 
+      stop1.StartAnimation("Color", colorAnimation); 
+ 
+      return gradientVisual; 
+    } 
+ 
+    private Compositor _compositor; 
+} 
+```
 
 # Remarks
 <!-- Explanation and guidance that doesn't fit into the Examples section. -->
@@ -58,6 +172,19 @@ example code with each description. The general format is:
 only when there's a bug in the caller, such as argument exception.  But if for some
 reason it's necessary for a caller to catch an exception from an API, call that
 out with an explanation either here or in the Examples -->
+
+### Related articles 
+
+* [AcrylicBrush](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.acrylicbrush)
+* [SolidColorBrush](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Media.SolidColorBrush)
+* [LinearGradientBrush](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Media.LinearGradientBrush)
+* [ImageBrush](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Media.ImageBrush)
+* [WebViewBrush](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.WebViewBrush)
+* [XamlCompositionBrushBase](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.xamlcompositionbrushbase)
+* [Composition brushes](https://docs.microsoft.com/en-us/windows/uwp/composition/composition-brushes)
+
+## Recommendations
+* 
 
 # API Notes
 <!-- Option 1: Give a one or two line description of each API (type
