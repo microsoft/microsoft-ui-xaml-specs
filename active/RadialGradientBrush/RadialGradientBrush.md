@@ -10,7 +10,7 @@ Hopefully we'll be able to copy it mostly verbatim.
 So the second audience is everyone that reads there to learn how
 and why to use this API. -->
 
-# Background
+<!-- # Background -->
 <!-- Use this section to provide background context for the new API(s) 
 in this spec. -->
 
@@ -120,10 +120,12 @@ runtimeclass RadialGradientBrush : Windows.UI.Xaml.Media.GradientBrush
 
     Windows.UI.Xaml.Media.GradientStopCollection GradientStopCollection
 
+    Boolean IsFeatheringEnabled;
+
     static Windows.UI.Xaml.DependencyProperty EllipseCenterProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty EllipseRadiusProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty GradientOriginProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty EllipseRadiusProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty IsFeatheringEnabledProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty GradientStopCollectionProperty{ get; };
 };
 ```
