@@ -59,17 +59,21 @@ example code with each description. The general format is:
 
 This example creates a radial gradient with four colors and uses it to paint a Rectangle.
 
+![](images/ColorRadialGradientBrush.png)
+
 XAML
 ```XAML
 <StackPanel>
   <!-- This rectangle is painted with a radial gradient. -->
   <Rectangle Width="200" Height="100">
     <Rectangle.Fill>
-      <RadialGradientBrush EllipseCenter="0,0" EllipseRadius="1,1" GradientOrigin="0,0">
-        <GradientStop Color="Yellow" Offset="0.0" />
-        <GradientStop Color="Red" Offset="0.25" />
-        <GradientStop Color="Blue" Offset="0.75" />
-        <GradientStop Color="LimeGreen" Offset="1.0" />
+      <RadialGradientBrush EllipseCenter="0.5,0.5" EllipseRadius="0.5,0.5" GradientOrigin="0.5,0.5">
+        <GradientStop Color="Blue" Offset="0.0" />
+        <GradientStop Color="Yellow" Offset="0.2" />
+        <GradientStop Color="LimeGreen" Offset="0.4" />
+        <GradientStop Color="LightBlue" Offset="0.6" />
+        <GradientStop Color="Blue" Offset="0.8" />
+        <GradientStop Color="White" Offset="1.0" />
       </RadialGradientBrush>
     </Rectangle.Fill>
   </Rectangle>
