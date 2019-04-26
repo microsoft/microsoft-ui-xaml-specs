@@ -67,7 +67,7 @@ XAML
   <!-- This rectangle is painted with a radial gradient. -->
   <Rectangle Width="200" Height="100">
     <Rectangle.Fill>
-      <RadialGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+      <RadialGradientBrush EllipseCenter="0,0" EllipseRadius="1,1" GradientOrigin="0,0">
         <GradientStop Color="Yellow" Offset="0.0" />
         <GradientStop Color="Red" Offset="0.25" />
         <GradientStop Color="Blue" Offset="0.75" />
@@ -76,93 +76,6 @@ XAML
     </Rectangle.Fill>
   </Rectangle>
 </StackPanel>
-```
-
-### Create a radial gradient in code-behind
- 
-C#
-```C# 
-public class RadialGradient 
-{ 
-    public SpriteVisual RadialGradientVisual( 
-        Compositor compositor,  
-        Vector2 size, 
-        Vector2 originCenter,     
-        Vector2 radius) 
-    { 
-       // SpriteVisual to be painted with gradated content  
-        var gradientVisual = _compositor.CreateSpriteVisual(); 
-        gradientVisual.Size = size; 
- 
-        // Create radial gradient brush 
-        var gradientBrush = _compositor.CreateRadialGradientBrush(); 
-        gradientBrush.originCenter = originCenter; 
-        gradientBrush.Radius = radius; 
- 
-        // Add the stops 
-        SetupGradientBrush(gradientBrush); 
- 
-        // Set brush on the SpriteVisual 
-        gradientVisual.Brush = gradientBrush; 
-        return gradientVisual; 
-    } 
- 
-    private SetupGradientBrush(CompositionRadialGradientBrush gradientBrush) 
-    { 
-        var stops = gradientBrush.ColorStops; 
-        stops.Append(_compositor.CreateColorGradientStop(0.0f, Color.Yellow); 
-        stops.Append(_compositor.CreateColorGradientStop(0.25f, Color.Red); 
-        stops.Append(_compositor.CreateColorGradientStop(0.75f, Color.Blue); 
-        stops.Append(_compositor.CreateColorGradientStop(1.0f, Color.LimeGreen); 
-        gradientBrush.InterpolationSpace = CompositionColorSpace.Rgb; 
-        gradientBrush.BorderMode = CompositionGradientExtendMode.Wrap; 
-    } 
-} 
-```
-
-### Animate the color of a gradient stop 
-
-Animate the color of gradient stop 
-
-C#
-```C#
-public class RadialGradient 
-{ 
-    private SpriteVisual RadialGradientVisualWithStopAnimation( 
-        Vector2 size, 
-        Vector2 originCenter, 
-        Vector2 radius) 
-    { 
-        // SpriteVisual to be painted with gradated content  
-        var gradientVisual = _compositor.CreateSpriteVisual(); 
-        gradientVisual.Size = size; 
- 
-        // Create radial gradient brush 
-        var gradientBrush = _compositor.CreateRadialGradientBrush(); 
-        gradientBrush.GradientOrigin = originCenter; 
-        gradientBrush.EllipseRadius = radius; 
- 
-        // Add the stops 
-        SetupGradientBrush(gradientBrush); 
- 
-       // Set brush on the SpriteVisual 
-       gradientVisual.Brush = gradientBrush; 
- 
-      // Setup animation on color for stop1's color 
-      var colorAnimation = _compositor.CreateColorKeyFrameAnimation(); 
-      colorAnimation.InsertKeyFrame(0.0f, Colors.Blue); 
-      colorAnimation.InsertKeyFrame(0.5f, Colors.LightBlue); 
-      colorAnimation.InsertKeyFrame(0.75f, Colors.Navy); 
-      colorAnimation.InsertKeyFrame(1.0f, Colors.Blue); 
-      colorAnimation.Duration = TimeSpan.FromSeconds(20); 
-      colorAnimation.IterationBehavior = AnimationIterationBehavior.Forever; 
-      stop1.StartAnimation("Color", colorAnimation); 
- 
-      return gradientVisual; 
-    } 
- 
-    private Compositor _compositor; 
-} 
 ```
 
 # Remarks
