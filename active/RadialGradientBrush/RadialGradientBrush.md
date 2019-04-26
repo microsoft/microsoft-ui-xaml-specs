@@ -199,6 +199,25 @@ with a "///" comment above the member or type. -->
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 
+```C++
+runtimeclass RadialGradientBrush : Windows.UI.Xaml.Media.GradientBrush
+{
+    RadialGradientBrush();
+
+    Windows.Foundation.Numerics.Vector2 EllipseCenter; 
+    Windows.Foundation.Numerics.Vector2 EllipseRadius; 
+    Windows.Foundation.Numerics.Vector2 GradientOrigin; 
+
+    Windows.UI.Xaml.Media.GradientStopCollection GradientStopCollection
+
+    static Windows.UI.Xaml.DependencyProperty EllipseCenterProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty EllipseRadiusProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty GradientOriginProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty EllipseRadiusProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty GradientStopCollectionProperty{ get; };
+};
+```
+
 # Appendix
 <!-- Anything else that you want to write down for posterity, but 
 that isn't necessary to understand the purpose and usage of the API.
