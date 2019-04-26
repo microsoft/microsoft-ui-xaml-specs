@@ -33,8 +33,6 @@ the reader "go read 100 pages of background information posted at ...". -->
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
 
-Paints an area with a radial gradient.
-
 Paints an area with a radial gradient. A focal point defines the beginning of the gradient, and an ellipse defines the end point of the gradient. Stops can be used to mark the points at which the gradient changes from one color to the next. 
 
 RadialGradientBrush can be animated by changing the location and color of stops over time. 
