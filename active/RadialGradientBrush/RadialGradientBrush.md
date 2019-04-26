@@ -129,8 +129,8 @@ runtimeclass RadialGradientBrush : Windows.UI.Xaml.Media.GradientBrush
     static Windows.UI.Xaml.DependencyProperty EllipseCenterProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty EllipseRadiusProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty GradientOriginProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty IsFeatheringEnabledProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty GradientStopCollectionProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty IsFeatheringEnabledProperty{ get; };
 };
 ```
 
