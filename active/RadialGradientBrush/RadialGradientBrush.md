@@ -94,10 +94,9 @@ out with an explanation either here or in the Examples -->
 * [XamlCompositionBrushBase](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.xamlcompositionbrushbase)
 * [Composition brushes](https://docs.microsoft.com/en-us/windows/uwp/composition/composition-brushes)
 
-## Recommendations
-* 
+<!-- ## Recommendations -->
 
-# API Notes
+<!-- # API Notes -->
 <!-- Option 1: Give a one or two line description of each API (type
 and member), or at least the ones that aren't obvious
 from their name.  These descriptions are what show up
@@ -129,7 +128,7 @@ runtimeclass RadialGradientBrush : Windows.UI.Xaml.Media.GradientBrush
 };
 ```
 
-# Appendix
+<!-- # Appendix -->
 <!-- Anything else that you want to write down for posterity, but 
 that isn't necessary to understand the purpose and usage of the API.
 For example, implementation details. -->
