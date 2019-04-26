@@ -55,11 +55,11 @@ example code with each description. The general format is:
 <!-- As an example of this section, see the Examples section for the PasswordBox control 
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 
-### Create a radial gradient in markup
+## Create a radial gradient in markup
 
 This example creates a radial gradient with four colors and uses it to paint a Rectangle.
 
-![](images/ColorRadialGradientBrush.png)
+![A picture showing a circle that's fill softly changes from blue in the center to yellow, then lime green, to light blue, to blue, to white.](images/ColorRadialGradientBrush.png)
 
 XAML
 ```XAML
@@ -74,6 +74,33 @@ XAML
         <GradientStop Color="LightBlue" Offset="0.6" />
         <GradientStop Color="Blue" Offset="0.8" />
         <GradientStop Color="White" Offset="1.0" />
+      </RadialGradientBrush>
+    </Rectangle.Fill>
+  </Rectangle>
+</StackPanel>
+```
+## Applying banding 
+
+Feathering between colors can be disabled by setting the IsFeatheringEnabled property to false.   
+
+![A picture showing a circle that's fill sharply alternates between black and white.](images/MonochromeRadialGradientBrush.png)
+
+XAML
+```XAML
+<StackPanel>
+  <!-- This rectangle is painted with a radial gradient. -->
+  <Rectangle Width="200" Height="100">
+    <Rectangle.Fill>
+      <RadialGradientBrush EllipseCenter="0.5,0.5" EllipseRadius="0.5,0.5" GradientOrigin="0.5,0.5" IsFeatheringEnabledProperty="False">
+        <GradientStop Color="Black" Offset="0.0" />
+        <GradientStop Color="White" Offset="0.125" />
+        <GradientStop Color="Black" Offset="0.25" />
+        <GradientStop Color="White" Offset="0.375" />
+        <GradientStop Color="Black" Offset="0.5" />
+        <GradientStop Color="White" Offset="1.625" />
+        <GradientStop Color="Black" Offset="0.75" />
+        <GradientStop Color="White" Offset="0.875" />
+        <GradientStop Color="Black" Offset="1.0" />
       </RadialGradientBrush>
     </Rectangle.Fill>
   </Rectangle>
