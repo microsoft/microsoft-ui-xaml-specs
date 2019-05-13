@@ -1,3 +1,5 @@
+# Pager control
+
 <!-- The purpose of this spec is to describe a new feature and
 its APIs that make up a new feature in WinUI. -->
 
@@ -10,7 +12,7 @@ Hopefully we'll be able to copy it mostly verbatim.
 So the second audience is everyone that reads there to learn how
 and why to use this API. -->
 
-# Background
+## Background
 <!-- Use this section to provide background context for the new API(s) 
 in this spec. -->
 
@@ -28,14 +30,14 @@ area, just explanation enough to understand this new API, rather than telling
 the reader "go read 100 pages of background information posted at ...". -->
 
 
-# Description
+## Description
 <!-- Use this section to provide a brief description of the feature.
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
 
 This widget would provide a customizable pager UI, generic states, and generic events that can be configured to navigate pages for several view controls.
 
-# Examples
+## Examples
 <!-- Use this section to explain the features of the API, showing
 example code with each description. The general format is: 
   feature explanation,
@@ -60,12 +62,12 @@ XAML
 <GridView x:Name="gridView1" ... />
     <controls:PagerControl x:Name="MainPagerControl"
         DisplayMode="ComboBox"
-        FirstButton="None"
-        PreviousButton="AlwaysVisible"
+        FirstButtonVisibility="None"
+        PreviousButtonVisibility="AlwaysVisible"
         PreviousButtonText="Prev"
-        NextButton="AlwaysVisible"
+        NextButtonVisibility="AlwaysVisible"
         NextButtonText="Next"
-        LastButton="None"/>
+        LastButtonVisibility="None"/>
 </Grid>
 ```
 
@@ -78,14 +80,15 @@ XAML
 <GridView x:Name="gridView1" ... />
     <controls:PagerControl x:Name="MainPagerControl"
         DisplayMode="NumericalButtonPanel"
-        FirstButton="AlwaysVisible"
-        PreviousButton="AlwaysVisible"
-        NextButton="AlwaysVisible"
-        LastButton="AlwaysVisible"
+        FirstButtonVisibility="AlwaysVisible"
+        PreviousButtonVisibility="AlwaysVisible"
+        NextButtonVisibility="AlwaysVisible"
+        LastButtonVisibility="AlwaysVisible"
         EllipsisEnabled="True"
+	EllipsisShowFirstAndLast="True"
         NumberOfIndicesShowing="6"
-	      EllipsisMaxBefore="5"
-	      EllipsisMaxAfter="1"/>
+	EllipsisMaxBefore="5"
+	EllipsisMaxAfter="1"/>
 </Grid>
 ```
 
@@ -98,15 +101,15 @@ XAML
 <GridView x:Name="gridView1" ... />
     <controls:PagerControl x:Name="MainPagerControl"
         DisplayMode="EditableTextBox"
-        FirstButton="None"
-        PreviousButton="AlwaysVisible"
-        NextButton="AlwaysVisible"
-        LastButton="None"/>
+        FirstButtonVisibility="None"
+        PreviousButtonVisibility="AlwaysVisible"
+        NextButtonVisibility="AlwaysVisible"
+        LastButtonVisibility="None"/>
 </Grid>
 ```
 
 
-# Remarks
+## Remarks
 <!-- Explanation and guidance that doesn't fit into the Examples section. -->
 
 <!-- APIs should only throw exceptions in exceptional conditions; basically,
@@ -114,7 +117,7 @@ only when there's a bug in the caller, such as argument exception.  But if for s
 reason it's necessary for a caller to catch an exception from an API, call that
 out with an explanation either here or in the Examples -->
 
-# API Notes
+## API Notes
 <!-- Option 1: Give a one or two line description of each API (type
 and member), or at least the ones that aren't obvious
 from their name.  These descriptions are what show up
@@ -124,8 +127,98 @@ isn't the type's default (for example an int-typed property that doesn't default
 <!-- Option 2: Put these descriptions in the below API Details section,
 with a "///" comment above the member or type. -->
 
-# API Details
+## API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
+
+```c++ 
+enum DisplayMode
+{
+    Auto,
+    ComboBox,
+    TextBox,
+    ButtonPanel,
+};
+
+
+enum ButtonVisibilityMode
+{
+    Auto,
+    AlwaysVisible,
+    HiddenOnLast,
+    None,
+};
+
+runtimeclass PagerControl
+{
+    PagerControl();
+
+    DisplayMode Display;
+    Windows.UI.Xaml.Style DisplayModeStyle;
+    
+    ButtonVisibilityMode FirstButtonVisibility;
+    ButtonVisibilityMode PreviousButtonVisibility;
+    ButtonVisibilityMode NextButtonVisibility;
+    ButtonVisibilityMode LastButtonVisibility;
+    
+    IconSource FirstButtonGlyph;
+    IconSource PreviousButtonGlyph;
+    IconSource NextButtonGlyph;
+    IconSource LastButtonGlyph;
+    
+    String FirstButtonText;
+    String PreviousButtonText;
+    String NextButtonText;
+    String LastButtonText;
+    
+    Windows.UI.Xaml.Style FirstButtonStyle;
+    Windows.UI.Xaml.Style PreviousButtonStyle;
+    Windows.UI.Xaml.Style NextButtonStyle;
+    Windows.UI.Xaml.Style LastButtonStyle;
+    
+    Integer NumberOfIndicesShowing;
+    Boolean EllipsisEnabled;
+    Boolean EllipsisShowFirstAndLast;
+    Integer EllipsisMaxBefore;
+    Integer EllipsisMaxAfter;
+    
+    String PrefixText;
+    String SuffixText
+    Integer NumberOfPages;
+
+    static Windows.UI.Xaml.DependencyProperty DisplayProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty DisplayModeStyleProperty{ get; };
+    
+    static Windows.UI.Xaml.DependencyProperty FirstButtonVisibilityProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty PreviousButtonVisibilityProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty NextButtonVisibilityProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty LastButtonVisibilityProperty{ get; };
+    
+    static Windows.UI.Xaml.DependencyProperty FirstButtonGlyphProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty PreviousButtonGlyphProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty NextButtonGlyphProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty LastButtonGlyphProperty{ get; };
+    
+    static Windows.UI.Xaml.DependencyProperty FirstButtonTextProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty PreviousButtonTextProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty NextButtonTextProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty LastButtonTextProperty{ get; };
+    
+    static Windows.UI.Xaml.DependencyProperty FirstButtonStyleProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty PreviousButtonStyleProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty NextButtonStyleProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty LastButtonStyleProperty{ get; };
+
+    static Windows.UI.Xaml.DependencyProperty NumberOfIndicesShowingProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty EllipsisEnabledProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty EllipsisShowFirstAndLastProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty EllipsisMaxBeforeProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty EllipsisMaxAfterProperty{ get; };
+    
+    static Windows.UI.Xaml.DependencyProperty PrefixTextProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty SuffixTextProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty NumberOfPagesProperty{ get; };
+}
+```
 
 # Appendix
 <!-- Anything else that you want to write down for posterity, but 
