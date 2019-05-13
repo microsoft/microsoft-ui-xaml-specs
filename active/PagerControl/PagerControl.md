@@ -33,6 +33,7 @@ the reader "go read 100 pages of background information posted at ...". -->
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
 
+This widget would provide a customizable pager UI, generic states, and generic events that can be configured to navigate pages for several view controls.
 
 # Examples
 <!-- Use this section to explain the features of the API, showing
@@ -47,6 +48,62 @@ example code with each description. The general format is:
 
 <!-- As an example of this section, see the Examples section for the PasswordBox control 
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
+
+A pager control can have several configurations, including these notable ones.
+
+### ComboBox Pager Control
+
+![](images/pager-control-combobox.png)
+
+XAML
+```XAML
+<GridView x:Name="gridView1" ... />
+    <controls:PagerControl x:Name="MainPagerControl"
+        DisplayMode="ComboBox"
+        FirstButton="None"
+        PreviousButton="AlwaysVisible"
+        PreviousButtonText="Prev"
+        NextButton="AlwaysVisible"
+        NextButtonText="Next"
+        LastButton="None"/>
+</Grid>
+```
+
+### Numerical Button Panel Pager Control
+
+![](images/pager-control-numerical-button-panel.png)
+
+XAML
+```XAML
+<GridView x:Name="gridView1" ... />
+    <controls:PagerControl x:Name="MainPagerControl"
+        DisplayMode="NumericalButtonPanel"
+        FirstButton="AlwaysVisible"
+        PreviousButton="AlwaysVisible"
+        NextButton="AlwaysVisible"
+        LastButton="AlwaysVisible"
+        EllipsisEnabled="True"
+        NumberOfIndicesShowing="6"
+	      EllipsisMaxBefore="5"
+	      EllipsisMaxAfter="1"/>
+</Grid>
+```
+
+### Editable TextBox Pager Control
+
+![](images/pager-control-editable-textbox.png)
+
+XAML
+```XAML
+<GridView x:Name="gridView1" ... />
+    <controls:PagerControl x:Name="MainPagerControl"
+        DisplayMode="EditableTextBox"
+        FirstButton="None"
+        PreviousButton="AlwaysVisible"
+        NextButton="AlwaysVisible"
+        LastButton="None"/>
+</Grid>
+```
 
 
 # Remarks
@@ -102,22 +159,22 @@ For example, implementation details. -->
     DisplayMode = { Auto | ButtonPanel | EditableComboBox }
     DisplayModeStyle  { string }
     NumberOfIndicesShowing = { int }
-    LastButton = { Auto | AlwaysVisible | HiddenOnLast | None } 
-    LastButtonGlyph = { string }
-    LastButtonText = { string }
-    LastButtonStyle = { string }
     FirstButton = { Auto | AlwaysVisible | HiddenOnFirst | None }
     FirstButtonGlyph = { string }
     FirstButtonText = { string }
     FirstButtonStyle = { string }
-    NextButton = { Auto | AlwaysVisible | HiddenOnLast | None } 
-    NextButtonGlyph = { string }
-    NextButtonText = { string }
-    NextButtonStyle = { string }
     PreviousButton = { Auto | AlwaysVisible | HiddenOnFirst | None }  
     PreviousButtonGlyph = { string }
     PreviousButtonText = { string }
     PreviousButtonStyle = { string }
+    NextButton = { Auto | AlwaysVisible | HiddenOnLast | None } 
+    NextButtonGlyph = { string }
+    NextButtonText = { string }
+    NextButtonStyle = { string }
+    LastButton = { Auto | AlwaysVisible | HiddenOnLast | None } 
+    LastButtonGlyph = { string }
+    LastButtonText = { string }
+    LastButtonStyle = { string }
     EllipsisEnabled = { True | False }
     EllipsisMaxBefore = { int }
     EllipsisMaxAfter = { int }
