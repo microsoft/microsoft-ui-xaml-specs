@@ -35,7 +35,15 @@ the reader "go read 100 pages of background information posted at ...". -->
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
 
-This widget would provide a customizable pager UI, generic states, and generic events that can be configured to navigate pages for several view controls.
+Pager control is a customizable pager UI widget with generic events that can be configured to navigate pages for several view controls.
+
+**Important APIs:** [PagerControl class](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.pagercontrol)
+
+Pager control can be configured to use a ComboBox, editable TextBox, or numeric Button panel as the core pager control.
+
+## Is this the right control? 
+
+Use a **PagerControl** control create an accessible navigation interface for views that have multiple pages to display.
 
 ## Examples
 <!-- Use this section to explain the features of the API, showing
@@ -114,7 +122,7 @@ XAML
 ```XAML
 <GridView x:Name="gridView1" ... />
     <controls:PagerControl x:Name="MainPagerControl"
-        DisplayMode="EditableTextBox"
+        DisplayMode="TextBox"
         NumberOfPages="5"
 	FirstButtonVisibility="None"
         PreviousButtonVisibility="AlwaysVisible"
