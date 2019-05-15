@@ -69,6 +69,11 @@ XAML
         NextButtonVisibility="AlwaysVisible"
         NextButtonText="Next"
         LastButtonVisibility="None"
+	FirstButtonCommand="FirstButtonPressedEvent"
+        PreviousButtonCommand="PreviousButtonPressedEvent"
+        NextButtonCommand="NextButtonPressedEvent"
+        LastButtonCommand="LastButtonPressedEvent"
+        PagerInputCommand="PagerInputEvent"
 	Prefix="Page"
 	Suffix="of "/>
 </Grid>
@@ -88,6 +93,11 @@ XAML
         PreviousButtonVisibility="AlwaysVisible"
         NextButtonVisibility="AlwaysVisible"
         LastButtonVisibility="AlwaysVisible"
+        FirstButtonCommand="FirstButtonPressedEvent"
+        PreviousButtonCommand="PreviousButtonPressedEvent"
+        NextButtonCommand="NextButtonPressedEvent"
+        LastButtonCommand="LastButtonPressedEvent"
+        PagerInputCommand="PagerInputEvent"
         EllipsisEnabled="True"
 	EllipsisShowFirstAndLast="True"
         NumberOfIndicesShowing="6"
@@ -110,6 +120,11 @@ XAML
         PreviousButtonVisibility="AlwaysVisible"
         NextButtonVisibility="AlwaysVisible"
         LastButtonVisibility="None"
+	FirstButtonCommand="FirstButtonPressedEvent"
+        PreviousButtonCommand="PreviousButtonPressedEvent"
+        NextButtonCommand="NextButtonPressedEvent"
+        LastButtonCommand="LastButtonPressedEvent"
+        PagerInputCommand="PagerInputEvent"
 	Suffix="of "/>
 </Grid>
 ```
@@ -178,10 +193,17 @@ runtimeclass PagerControl
     String NextButtonText;
     String LastButtonText;
     
+    Windows.UI.Xaml.Input.ICommand FirstButtonCommand;
+    Windows.UI.Xaml.Input.ICommand PreviousButtonCommand;
+    Windows.UI.Xaml.Input.ICommand NextButtonCommand;
+    Windows.UI.Xaml.Input.ICommand LastButtonCommand;
+    Windows.UI.Xaml.Input.ICommand PagerInputCommand;
+    
     Windows.UI.Xaml.Style FirstButtonStyle;
     Windows.UI.Xaml.Style PreviousButtonStyle;
     Windows.UI.Xaml.Style NextButtonStyle;
     Windows.UI.Xaml.Style LastButtonStyle;
+    
     
     Integer NumberOfIndicesShowing;
     Boolean EllipsisEnabled;
@@ -194,6 +216,8 @@ runtimeclass PagerControl
 
     static Windows.UI.Xaml.DependencyProperty DisplayProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty DisplayModeStyleProperty{ get; };
+    
+    static Windows.UI.Xaml.DependencyProperty NumberOfPagesProperty{ get; };
     
     static Windows.UI.Xaml.DependencyProperty FirstButtonVisibilityProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty PreviousButtonVisibilityProperty{ get; };
@@ -210,6 +234,12 @@ runtimeclass PagerControl
     static Windows.UI.Xaml.DependencyProperty NextButtonTextProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty LastButtonTextProperty{ get; };
     
+    static Windows.UI.Xaml.DependencyProperty FirstButtonCommandProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty PreviousButtonCommandProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty NextButtonCommandProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty LastButtonCommandProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty PagerInputCommandProperty{ get; };
+    
     static Windows.UI.Xaml.DependencyProperty FirstButtonStyleProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty PreviousButtonStyleProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty NextButtonStyleProperty{ get; };
@@ -223,7 +253,6 @@ runtimeclass PagerControl
     
     static Windows.UI.Xaml.DependencyProperty PrefixTextProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty SuffixTextProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty NumberOfPagesProperty{ get; };
 }
 ```
 
