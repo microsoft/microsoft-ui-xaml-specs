@@ -161,6 +161,8 @@ runtimeclass PagerControl
     DisplayMode Display;
     Windows.UI.Xaml.Style DisplayModeStyle;
     
+    Integer NumberOfPages;
+    
     ButtonVisibilityMode FirstButtonVisibility;
     ButtonVisibilityMode PreviousButtonVisibility;
     ButtonVisibilityMode NextButtonVisibility;
@@ -189,7 +191,6 @@ runtimeclass PagerControl
     
     String PrefixText;
     String SuffixText
-    Integer NumberOfPages;
 
     static Windows.UI.Xaml.DependencyProperty DisplayProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty DisplayModeStyleProperty{ get; };
@@ -249,36 +250,4 @@ For example, implementation details. -->
 | State | Action | Narrator |
 |:---|:---|:---|
 | UI pager is first focused on by tabbing | Focus defaults to the next page button if available (current page otherwise) after announcing accessible name of UI pager. | “Page selector. Next page is N." |
-| UI pager is tabbed through | Tab Button: <br> Will go through all actionable items in order without regard to groups. <br> <br> Arrow keys: <br> Will be able to explore groups in the specified directions. Pressing the down arrow key at the bottom of the ComboBox will wrap the user to the top. <br> <br> Escape: <br> Will escape UI pager. <br> <br> Enter and Spacebar: <br> Will select the component focused on. <br> <br> Home: <br> Will move focus to "go back" elements. In the ComboBox, it will jump the user to the first index. <br> <br> End: <br> Will move focus to "go forward" elements. In the ComboBox, it will jump the user to the last index. | Narrator will announce an accessible name of the visual component. Ex:<br><br> “first page button” <br><br> “previous page button” <br><br> “1st page” <br><br> “current page” <br><br> "page selection drop down menu: current page is 1” | 
-
-### API Surface Example
-
-```XAML
-<PagerControl
-    DisplayMode = { Auto | ButtonPanel | EditableComboBox }
-    DisplayModeStyle  { string }
-    NumberOfIndicesShowing = { int }
-    FirstButton = { Auto | AlwaysVisible | HiddenOnFirst | None }
-    FirstButtonGlyph = { string }
-    FirstButtonText = { string }
-    FirstButtonStyle = { string }
-    PreviousButton = { Auto | AlwaysVisible | HiddenOnFirst | None }  
-    PreviousButtonGlyph = { string }
-    PreviousButtonText = { string }
-    PreviousButtonStyle = { string }
-    NextButton = { Auto | AlwaysVisible | HiddenOnLast | None } 
-    NextButtonGlyph = { string }
-    NextButtonText = { string }
-    NextButtonStyle = { string }
-    LastButton = { Auto | AlwaysVisible | HiddenOnLast | None } 
-    LastButtonGlyph = { string }
-    LastButtonText = { string }
-    LastButtonStyle = { string }
-    EllipsisEnabled = { True | False }
-    EllipsisMaxBefore = { int }
-    EllipsisMaxAfter = { int }
-    EllipsisShowBounds = { True | False }
-    PrefixText = { string }  
-    NumberOfPages = { int } >
-</PagerControl>
-```
+| UI pager is tabbed through | Tab Button: <br> Will go through all actionable items in order without regard to groups. <br> <br> Arrow keys: <br> Will be able to explore groups in the specified directions. Pressing the down arrow key at the bottom of the ComboBox will wrap the user to the top. <br> <br> Escape: <br> Will escape UI pager. <br> <br> Enter and Spacebar: <br> Will select the component focused on. <br> <br> Home: <br> Will move focus to "go back" elements. In the ComboBox, it will jump the user to the first index. <br> <br> End: <br> Will move focus to "go forward" elements. In the ComboBox, it will jump the user to the last index. | Narrator will announce an accessible name of the visual component. Ex:<br><br> “first page button” <br><br> “previous page button” <br><br> “1st page” <br><br> “current page” <br><br> "page selection drop down menu: current page is 1” |
