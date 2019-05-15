@@ -62,12 +62,15 @@ XAML
 <GridView x:Name="gridView1" ... />
     <controls:PagerControl x:Name="MainPagerControl"
         DisplayMode="ComboBox"
+	NumberOfPages="10"
         FirstButtonVisibility="None"
         PreviousButtonVisibility="AlwaysVisible"
         PreviousButtonText="Prev"
         NextButtonVisibility="AlwaysVisible"
         NextButtonText="Next"
-        LastButtonVisibility="None"/>
+        LastButtonVisibility="None"
+	Prefix="Page"
+	Suffix="of "/>
 </Grid>
 ```
 
@@ -80,6 +83,7 @@ XAML
 <GridView x:Name="gridView1" ... />
     <controls:PagerControl x:Name="MainPagerControl"
         DisplayMode="NumericalButtonPanel"
+	NumberOfPages="10"
         FirstButtonVisibility="AlwaysVisible"
         PreviousButtonVisibility="AlwaysVisible"
         NextButtonVisibility="AlwaysVisible"
@@ -101,10 +105,12 @@ XAML
 <GridView x:Name="gridView1" ... />
     <controls:PagerControl x:Name="MainPagerControl"
         DisplayMode="EditableTextBox"
-        FirstButtonVisibility="None"
+        NumberOfPages="5"
+	FirstButtonVisibility="None"
         PreviousButtonVisibility="AlwaysVisible"
         NextButtonVisibility="AlwaysVisible"
-        LastButtonVisibility="None"/>
+        LastButtonVisibility="None"
+	Suffix="of "/>
 </Grid>
 ```
 
