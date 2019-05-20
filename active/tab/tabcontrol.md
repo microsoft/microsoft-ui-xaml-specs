@@ -165,6 +165,29 @@ private async void TabControl_TabDraggedOutside(object sender, TabDraggedOutside
 section.  For example, see the Remarks for the MediaPlayerElement 
 (https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.MediaPlayerElement#remarks). -->
 
+## Keyboarding behavior
+### TAB and Arrow key behavior
+The TabControl has areas containing left content, right content, and the Tab content (containing 0 or more Tabs). When the user hits the TAB key, focus moves between the content areas. When focus moves into the Tab content area, the selected Tab gains focus. Once the user is in the Tab content area, pressing the arrow key will move focus between the tabs. Arrow focus is trapped inside the Tab content area.
+
+### Selecting a Tab
+When a Tab has focus, pressing SPACE or ENTER will select that Tab.
+
+### Shortcuts for moving between tabs
+Ctrl+TAB will select the next Tab.
+Ctrl+Shift+TAB will select the previous Tab.
+Tab selection cycles (meaning if the user has selected the last tab and presses Ctrl+TAB, the first tab becomes selected).
+
+Ctrl+1 through 8 will automatically select the corresponding Tab.
+Ctrl+9 will automatically select the last Tab.
+
+### Closing a Tab 
+Hitting CTRL+W or CTRL+F4 will automatically close the selected Tab (assuming it is closable). 
+
+### Keyboard guidance for App Developers
+The above sections outline built-in keyboarding behavior provided by the TabControl. However, there are certain expected keyboard shortcuts that you will be responsible for implementing. 
+* If your Tab control supports adding a new Tab, users expect CTRL+T to open a new tab
+* Consider maintaining a list of recently closed Tabs. If the user presses CTRL+SHIFT+T, they expect recently closed tabs to be reopened.
+* If users can perform more commands on a Tab than just closing the Tab (for example, pinning a Tab or duplicating a Tab), consider adding a context menu to the Tab. 
 
 # API Notes
 <!-- Give a one or two line description of each API (type
@@ -220,8 +243,4 @@ For example, implementation details. -->
 ![Position of TabHeader TabFooter and TabActionContent](https://user-images.githubusercontent.com/25991996/53277918-4c654400-36bb-11e9-9d0d-4fac948bc9f0.png)
 
 # Open Questions
-1. Should Tab Tearoff be something that the control handles or that the app handles?
-1. Should there be a built-in "Add new tab" button? 
-1. How can an app customize that the Selected tab looks like (ie. in Edge)?
-1. The API currently takes a lot of inspiration from the Toolkit. Are there any chances to iterate/improve?
 1. What visual affordance should we use when not all tabs fit? Bumpers or dropdown+flyout?
