@@ -243,4 +243,3 @@ For example, implementation details. -->
 ![Position of TabHeader TabFooter and TabActionContent](https://user-images.githubusercontent.com/25991996/53277918-4c654400-36bb-11e9-9d0d-4fac948bc9f0.png)
 
 # Open Questions
-1. What visual affordance should we use when not all tabs fit? Bumpers or dropdown+flyout?
