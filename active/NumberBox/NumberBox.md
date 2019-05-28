@@ -57,6 +57,18 @@ example code with each description. The general format is:
 <!-- As an example of this section, see the Examples section for the PasswordBox control 
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 
+### Create a NumberBox
+
+### Enable calculation support
+
+### Add formatting
+
+### Add increment stepping
+
+### Add a prefix and suffix 
+
+### Add mininum and maximum values
+
 
 ## Remarks
 <!-- Explanation and guidance that doesn't fit into the Examples section. -->
