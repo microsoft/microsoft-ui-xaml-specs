@@ -59,16 +59,71 @@ example code with each description. The general format is:
 
 ### Create a NumberBox
 
+XAML
+```XAML
+<NumberBox AutomationProperties.Name="simple NumberBox"/>
+```
+
+### Add placeholder text and a header
+
+XAML
+```XAML
+<TextBlock AutomationProperties.Name="simple NumberBox" Header="Enter equation:" PlaceholderText="A + B * C" />
+```
+
 ### Enable calculation support
+
+XAML
+```XAML
+<TextBlock AutomationProperties.Name="NumberBox for simple calculations" 
+    Header="Enter equation:" 
+    PlaceholderText="A + B * C" 
+    CalculationEnabled="True" />
+```
 
 ### Add formatting
 
-### Add increment stepping
+### Add increment and decrement stepping
+
+XAML
+```XAML
+<TextBlock AutomationProperties.Name="NumberBox for items in order" 
+    Header="Order:" 
+    Text="1"
+    StepSize="1"
+    UpDownArrowsEnabled="True"
+    UpDownDragEnabled="True"
+ />
+```
 
 ### Add a prefix and suffix 
 
+XAML
+```XAML
+<TextBlock AutomationProperties.Name="NumberBox for IP address" 
+    Header="Enter equation:" 
+    PlaceholderText="000.000.000.000" 
+    Prefix="IP Address:" />
+```
+
+XAML
+```XAML
+<TextBlock AutomationProperties.Name="NumberBox for cents" 
+    Header="Enter equation:" 
+    PlaceholderText="0.00" 
+    Suffix="cents" />
+```
+
 ### Add mininum and maximum values
 
+XAML
+```XAML
+<TextBlock AutomationProperties.Name="NumberBox for items in order" 
+    Header="Order:" 
+    PlaceholderText="1" 
+    MinValue="1"
+    MaxValue="99" />
+```
 
 ## Remarks
 <!-- Explanation and guidance that doesn't fit into the Examples section. -->
@@ -90,6 +145,32 @@ with a "///" comment above the member or type. -->
 
 ## API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
+
+unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
+{
+    NumberBox();
+    
+    String Prefix;
+    String Suffix;
+    
+    Boolean CalculationEnabled;
+    Boolean UpDownArrowsEnabled;
+    Boolean UpDownDragEnabled;
+    
+    Integer MinValue;
+    Integer MaxValue;
+
+    static Windows.UI.Xaml.DependencyProperty PrefixProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty SuffixProperty{ get; };
+    
+    static Windows.UI.Xaml.DependencyProperty CalculationEnabledProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty UpDownArrowsEnabledProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty UpDownDragEnabledProperty{ get; };
+    
+    static Windows.UI.Xaml.DependencyProperty MinValueProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty MaxValueProperty{ get; };
+}
+```
 
 ## Appendix
 <!-- Anything else that you want to write down for posterity, but 
