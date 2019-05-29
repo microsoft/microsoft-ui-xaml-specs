@@ -78,7 +78,7 @@ XAML
 <TextBlock AutomationProperties.Name="NumberBox for simple calculations" 
     Header="Enter equation:" 
     PlaceholderText="A + B * C" 
-    CalculationEnabled="True" />
+    AcceptsCalculation="True" />
 ```
 
 ### Add formatting
@@ -100,8 +100,8 @@ XAML
 ```XAML
 <TextBlock AutomationProperties.Name="NumberBox for custom input" 
     Header="Enter equation:" 
-    PlaceholderText="00000.00.0"
-    CustomFormatString="#####.##.#"
+    PlaceholderText="00 ft 00 in"
+    CustomFormatString="## ft ## in"
     StripLeadingZeros="False" />
 ```
 
@@ -182,7 +182,7 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     String Prefix;
     String Suffix;
     
-    Boolean CalculationEnabled;
+    Boolean AcceptsCalculation;
     Boolean UpDownArrowsEnabled;
     Boolean UpDownDragEnabled;
   
@@ -196,7 +196,7 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     static Windows.UI.Xaml.DependencyProperty PrefixProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty SuffixProperty{ get; };
     
-    static Windows.UI.Xaml.DependencyProperty CalculationEnabledProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty AcceptsCalculationProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty UpDownArrowsEnabledProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty UpDownDragEnabledProperty{ get; };
     
