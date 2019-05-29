@@ -92,8 +92,7 @@ XAML
     Text="1"
     StepSize="1"
     UpDownArrowsEnabled="True"
-    UpDownDragEnabled="True"
- />
+    UpDownDragEnabled="True" />
 ```
 
 ### Add a prefix and suffix 
@@ -146,6 +145,7 @@ with a "///" comment above the member or type. -->
 ## API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 
+```c++ 
 unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
 {
     NumberBox();
