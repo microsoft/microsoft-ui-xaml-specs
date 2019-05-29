@@ -83,14 +83,36 @@ XAML
 
 ### Add formatting
 
+```XAML
+<TextBlock AutomationProperties.Name="NumberBox for IP addresss" 
+    Header="Enter equation:" 
+    PlaceholderText="000.000.000.000"
+    FormatType="IPAddress" />
+```
+
+```XAML
+<TextBlock AutomationProperties.Name="NumberBox for international telephone" 
+    Header="Enter equation:" 
+    PlaceholderText="0 (123) 456-7890"
+    FormatType="InternationalTelephone" />
+```
+
+```XAML
+<TextBlock AutomationProperties.Name="NumberBox for custom input" 
+    Header="Enter equation:" 
+    PlaceholderText="00000.00.0"
+    CustomFormatString="#####.##.#"
+    StripLeadingZeros="False" />
+```
+
 ### Add increment and decrement stepping
 
 XAML
 ```XAML
 <TextBlock AutomationProperties.Name="NumberBox for items in order" 
     Header="Order:" 
-    Text="1"
-    StepSize="1"
+    Text="2"
+    StepSize="2"
     UpDownArrowsEnabled="True"
     UpDownDragEnabled="True" />
 ```
@@ -146,6 +168,13 @@ with a "///" comment above the member or type. -->
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 
 ```c++ 
+enum NumberBoxFormatType
+{
+    IPAddress,
+    InternationalTelephone,
+    Currency,
+};
+
 unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
 {
     NumberBox();
@@ -156,7 +185,11 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     Boolean CalculationEnabled;
     Boolean UpDownArrowsEnabled;
     Boolean UpDownDragEnabled;
-    
+  
+    NumberBoxFormatType FormatType;
+    String CustomFormatString;
+    Boolean StripLeadingZeros;
+   
     Integer MinValue;
     Integer MaxValue;
 
@@ -167,6 +200,10 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     static Windows.UI.Xaml.DependencyProperty UpDownArrowsEnabledProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty UpDownDragEnabledProperty{ get; };
     
+    static Windows.UI.Xaml.DependencyProperty FormatTypeProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty CustomFormatStringProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty StripLeadingZerosProperty{ get; };
+
     static Windows.UI.Xaml.DependencyProperty MinValueProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty MaxValueProperty{ get; };
 }
@@ -176,3 +213,8 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
 <!-- Anything else that you want to write down for posterity, but 
 that isn't necessary to understand the purpose and usage of the API.
 For example, implementation details. -->
+
+## Appendix
+
+* Should we support some basic format types or only custom format strings? 
+
