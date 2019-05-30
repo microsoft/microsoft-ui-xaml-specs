@@ -221,7 +221,9 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
 that isn't necessary to understand the purpose and usage of the API.
 For example, implementation details. -->
 
-## Appendix
+## Open Questions
 
-* Should we support some basic format types or only custom format strings? 
-
+* Should we support some basic format types for numerical strings or only mathematics and allow custom format strings? Need to rationalize this with InputScopeNameValue and CoreTextInputScope.
+* Custom format property or traditional format string? 
+* Prefix/Suffix excluded to be TextBox improvements instead? How will prefix and suffix values be included in localization and automation output?
+* Embedded calculator? 
