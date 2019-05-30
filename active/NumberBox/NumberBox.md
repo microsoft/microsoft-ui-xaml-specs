@@ -99,7 +99,7 @@ XAML
 <NumberBox AutomationProperties.Name="NumberBox for custom input" 
     PlaceholderText="00 ft 00 in"
     CustomFormatString="## ft ## in"
-    StripLeadingZeros="False" />
+    AreLeadingZerosTrimmed="False" />
 ```
 
 ### Add increment and decrement stepping
@@ -181,7 +181,7 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
   
     NumberBoxFormatType FormatType;
     String CustomFormatString;
-    Boolean StripLeadingZeros;
+    Boolean AreLeadingZerosTrimmed;
    
     Integer MinValue;
     Integer MaxValue;
@@ -195,7 +195,7 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     
     static Windows.UI.Xaml.DependencyProperty FormatTypeProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty CustomFormatStringProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty StripLeadingZerosProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty AreLeadingZerosTrimmedProperty{ get; };
 
     static Windows.UI.Xaml.DependencyProperty MinValueProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty MaxValueProperty{ get; };
