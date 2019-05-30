@@ -96,10 +96,16 @@ XAML
 ```
 
 ```XAML
-<NumberBox AutomationProperties.Name="NumberBox for custom input" 
-    PlaceholderText="00 ft 00 in"
-    CustomFormatString="## ft ## in"
-    AreLeadingZerosTrimmed="False" />
+<NumberBox AutomationProperties.Name="NumberBox with four decimal place precision." 
+    PlaceholderText="00.0000"
+    CustomFormatString="##.####" />
+```
+
+```XAML
+<NumberBox AutomationProperties.Name="NumberBox for US zip code." 
+    PlaceholderText="12345"
+    CustomFormatString="#####"
+    AreLeadingZerosTrimmed="false" />
 ```
 
 ### Add increment and decrement stepping
@@ -117,14 +123,14 @@ XAML
 
 XAML
 ```XAML
-<NumberBox AutomationProperties.Name="NumberBox for IP address" 
+<NumberBox AutomationProperties.Name="NumberBox for US dollar amount" 
     PlaceholderText="0.00" 
     PrefixText="$:" />
 ```
 
 XAML
 ```XAML
-<NumberBox AutomationProperties.Name="NumberBox for cents" 
+<NumberBox AutomationProperties.Name="NumberBox for megabyte entry" 
     PlaceholderText="0" 
     SuffixText="MB" />
 ```
