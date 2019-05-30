@@ -216,7 +216,7 @@ in IntelliSense. -->
 | TabFooterTemplate | DataTemplate | Template for the Footer. |
 | TabActionContent | object | Content immediately to the right of the tabs |
 | TabActionContentTemplate | DataTemplate | Template for the ActionContent. |
-| TabWidthBehavior | enum | Specifies how the tabs should be sized. Values are {Actual, Equal, Compact} |
+| TabWidthBehavior | enum | Specifies how the tabs should be sized. Values are {Actual, Equal, Compact}. Default is Actual. |
 
 | Event | Description |
 |---|---|
