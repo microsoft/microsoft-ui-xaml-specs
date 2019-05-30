@@ -41,7 +41,7 @@ Number box is a numerics only text control with support for input formatting, va
 
 ## Is this the right control? 
 
-Use a **NumberBox** control to receive and display formatted numeric values such as currency, IP addresses, and telephone numbers. A **NumberBox** can also be enabled with basic calculator support to compute multiplication, division, addition, and subtraction across order of operations on entered equations. 
+Use a **NumberBox** control to receive and display formatted numeric values such as currency, IP addresses, and telephone numbers. A **NumberBox** can also be enabled with basic calculator support to compute multiplication, division, addition, and subtraction across parenthetical order with standard operator precedence.
 
 ## Examples
 <!-- Use this section to explain the features of the API, showing
