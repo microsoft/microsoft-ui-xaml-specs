@@ -126,7 +126,7 @@ XAML
 ```XAML
 <NumberBox AutomationProperties.Name="NumberBox for cents" 
     PlaceholderText="0" 
-    SuffixText="cents" />
+    SuffixText="MB" />
 ```
 
 ### Add mininum and maximum values
