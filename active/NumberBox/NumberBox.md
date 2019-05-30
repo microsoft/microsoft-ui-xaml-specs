@@ -37,7 +37,7 @@ For an example, see the introduction to the PasswordBox control
 
 Number box is a numerics only text control with support for input formatting, validation, basic calculation, and increment stepping.
 
-**Important APIs:** [NumberBox class](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.numberbox)
+**Important APIs:** [NumberBox class](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.numberbox) [TODO - generated with MSDN documentation on publication.]
 
 ## Is this the right control? 
 
