@@ -86,13 +86,13 @@ XAML
 ```XAML
 <NumberBox AutomationProperties.Name="NumberBox for IP addresss" 
     PlaceholderText="000.000.000.000"
-    FormatType="IPAddress" />
+    FormatKind="IPv4Address" />
 ```
 
 ```XAML
 <NumberBox AutomationProperties.Name="NumberBox for international telephone" 
     PlaceholderText="0 (123) 456-7890"
-    FormatType="InternationalTelephone" />
+    FormatKind="InternationalTelephone" />
 ```
 
 ```XAML
@@ -161,7 +161,7 @@ with a "///" comment above the member or type. -->
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 
 ```c++ 
-enum NumberBoxFormatType
+enum NumberBoxFormatKind
 {
     IPAddress,
     InternationalTelephone,
@@ -179,7 +179,7 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     Boolean UpDownArrowsEnabled;
     Boolean UpDownDragEnabled;
   
-    NumberBoxFormatType FormatType;
+    NumberBoxFormatKind FormatKind;
     String CustomFormatString;
     Boolean AreLeadingZerosTrimmed;
    
@@ -193,7 +193,7 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     static Windows.UI.Xaml.DependencyProperty UpDownArrowsEnabledProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty UpDownDragEnabledProperty{ get; };
     
-    static Windows.UI.Xaml.DependencyProperty FormatTypeProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty FormatKindProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty CustomFormatStringProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty AreLeadingZerosTrimmedProperty{ get; };
 
