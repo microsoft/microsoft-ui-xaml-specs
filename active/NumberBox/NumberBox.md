@@ -64,7 +64,7 @@ XAML
 <NumberBox AutomationProperties.Name="simple NumberBox"/>
 ```
 
-### Add placeholder text and a header
+### Add placeholder text
 
 XAML
 ```XAML
@@ -85,21 +85,18 @@ XAML
 
 ```XAML
 <TextBlock AutomationProperties.Name="NumberBox for IP addresss" 
-    Header="Enter equation:" 
     PlaceholderText="000.000.000.000"
     FormatType="IPAddress" />
 ```
 
 ```XAML
 <TextBlock AutomationProperties.Name="NumberBox for international telephone" 
-    Header="Enter equation:" 
     PlaceholderText="0 (123) 456-7890"
     FormatType="InternationalTelephone" />
 ```
 
 ```XAML
 <TextBlock AutomationProperties.Name="NumberBox for custom input" 
-    Header="Enter equation:" 
     PlaceholderText="00 ft 00 in"
     CustomFormatString="## ft ## in"
     StripLeadingZeros="False" />
@@ -110,7 +107,6 @@ XAML
 XAML
 ```XAML
 <TextBlock AutomationProperties.Name="NumberBox for items in order" 
-    Header="Order:" 
     Text="2"
     StepSize="2"
     UpDownArrowsEnabled="True"
@@ -122,16 +118,14 @@ XAML
 XAML
 ```XAML
 <TextBlock AutomationProperties.Name="NumberBox for IP address" 
-    Header="Enter equation:" 
-    PlaceholderText="000.000.000.000" 
-    PrefixText="IP Address:" />
+    PlaceholderText="0.00" 
+    PrefixText="$:" />
 ```
 
 XAML
 ```XAML
 <TextBlock AutomationProperties.Name="NumberBox for cents" 
-    Header="Enter equation:" 
-    PlaceholderText="0.00" 
+    PlaceholderText="0" 
     SuffixText="cents" />
 ```
 
@@ -140,7 +134,6 @@ XAML
 XAML
 ```XAML
 <TextBlock AutomationProperties.Name="NumberBox for items in order" 
-    Header="Order:" 
     PlaceholderText="1" 
     MinValue="1"
     MaxValue="99" />
