@@ -68,14 +68,14 @@ XAML
 
 XAML
 ```XAML
-<TextBlock AutomationProperties.Name="simple NumberBox" Header="Enter equation:" PlaceholderText="A + B * C" />
+<NumberBox AutomationProperties.Name="simple NumberBox" Header="Enter equation:" PlaceholderText="A + B * C" />
 ```
 
 ### Enable calculation support
 
 XAML
 ```XAML
-<TextBlock AutomationProperties.Name="NumberBox for simple calculations" 
+<NumberBox AutomationProperties.Name="NumberBox for simple calculations" 
     Header="Enter equation:" 
     PlaceholderText="A + B * C" 
     AcceptsCalculation="True" />
@@ -84,19 +84,19 @@ XAML
 ### Add formatting
 
 ```XAML
-<TextBlock AutomationProperties.Name="NumberBox for IP addresss" 
+<NumberBox AutomationProperties.Name="NumberBox for IP addresss" 
     PlaceholderText="000.000.000.000"
     FormatType="IPAddress" />
 ```
 
 ```XAML
-<TextBlock AutomationProperties.Name="NumberBox for international telephone" 
+<NumberBox AutomationProperties.Name="NumberBox for international telephone" 
     PlaceholderText="0 (123) 456-7890"
     FormatType="InternationalTelephone" />
 ```
 
 ```XAML
-<TextBlock AutomationProperties.Name="NumberBox for custom input" 
+<NumberBox AutomationProperties.Name="NumberBox for custom input" 
     PlaceholderText="00 ft 00 in"
     CustomFormatString="## ft ## in"
     StripLeadingZeros="False" />
@@ -106,7 +106,7 @@ XAML
 
 XAML
 ```XAML
-<TextBlock AutomationProperties.Name="NumberBox for items in order" 
+<NumberBox AutomationProperties.Name="NumberBox for items in order" 
     Text="2"
     StepSize="2"
     UpDownArrowsEnabled="True"
@@ -117,14 +117,14 @@ XAML
 
 XAML
 ```XAML
-<TextBlock AutomationProperties.Name="NumberBox for IP address" 
+<NumberBox AutomationProperties.Name="NumberBox for IP address" 
     PlaceholderText="0.00" 
     PrefixText="$:" />
 ```
 
 XAML
 ```XAML
-<TextBlock AutomationProperties.Name="NumberBox for cents" 
+<NumberBox AutomationProperties.Name="NumberBox for cents" 
     PlaceholderText="0" 
     SuffixText="cents" />
 ```
@@ -133,7 +133,7 @@ XAML
 
 XAML
 ```XAML
-<TextBlock AutomationProperties.Name="NumberBox for items in order" 
+<NumberBox AutomationProperties.Name="NumberBox for items in order" 
     PlaceholderText="1" 
     MinValue="1"
     MaxValue="99" />
