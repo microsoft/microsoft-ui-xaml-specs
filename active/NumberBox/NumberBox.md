@@ -64,12 +64,16 @@ XAML
 <NumberBox AutomationProperties.Name="simple NumberBox"/>
 ```
 
+![](images/numberbox-basic.png)
+
 ### Add placeholder text
 
 XAML
 ```XAML
 <NumberBox AutomationProperties.Name="simple NumberBox" Header="Enter equation:" PlaceholderText="A + B * C" />
 ```
+
+![](images/numberbox-placeholder-text.png)
 
 ### Enable calculation support
 
@@ -81,6 +85,8 @@ XAML
     AcceptsCalculation="True" />
 ```
 
+![](images/numberbox-acceptscalculation.png)
+
 ### Add formatting
 
 ```XAML
@@ -89,11 +95,7 @@ XAML
     FormatKind="IPv4Address" />
 ```
 
-```XAML
-<NumberBox AutomationProperties.Name="NumberBox for international telephone" 
-    PlaceholderText="0 (123) 456-7890"
-    FormatKind="InternationalTelephone" />
-```
+![](images/numberbox-ipv4-formatting-example.png)
 
 ```XAML
 <NumberBox AutomationProperties.Name="NumberBox with four decimal place precision." 
@@ -119,6 +121,8 @@ XAML
     UpDownDragEnabled="True" />
 ```
 
+![](images/numberbox-updownbuttons.png)
+
 ### Add a prefix and suffix 
 
 XAML
@@ -128,12 +132,16 @@ XAML
     PrefixText="$:" />
 ```
 
+![](images/numberbox-prefix.png)
+
 XAML
 ```XAML
 <NumberBox AutomationProperties.Name="NumberBox for megabyte entry" 
     PlaceholderText="0" 
     SuffixText="MB" />
 ```
+
+![](images/numberbox-suffix.png)
 
 ### Add mininum and maximum values
 
