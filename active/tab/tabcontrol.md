@@ -85,9 +85,9 @@ example code with each description. The general format is:
             CanDragItems="True"
             CanReorderItems="True"
             TabDraggedOutside="OpenTabInNewWindow">
-    <TabControl.TabFooter>
-        <Button Content="+" Click="NewTab_Click" />
-    </TabControl.TabFooter>
+    <TabControl.TabActionContent>
+        <Button Style="{ThemeResource AddNewTabButtonStyle}" Click="NewTab_Click" />
+    </TabControl.TabActionContent>
     ...
 </TabControl>
 ```
