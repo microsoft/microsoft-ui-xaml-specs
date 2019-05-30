@@ -41,7 +41,7 @@ Number box is a numerics only text control with support for input formatting, va
 
 ## Is this the right control? 
 
-Use a **NumberBox** control to recieve and display formatted numeric values such as currency, IP addresses, and telephone numbers. A **NumberBox** can also be enabled with basic calculator support to compute multiplication, division, addition, and subtraction across order of operations on entered equations. 
+Use a **NumberBox** control to receive and display formatted numeric values such as currency, IP addresses, and telephone numbers. A **NumberBox** can also be enabled with basic calculator support to compute multiplication, division, addition, and subtraction across order of operations on entered equations. 
 
 ## Examples
 <!-- Use this section to explain the features of the API, showing
@@ -124,7 +124,7 @@ XAML
 <TextBlock AutomationProperties.Name="NumberBox for IP address" 
     Header="Enter equation:" 
     PlaceholderText="000.000.000.000" 
-    Prefix="IP Address:" />
+    PrefixText="IP Address:" />
 ```
 
 XAML
@@ -132,7 +132,7 @@ XAML
 <TextBlock AutomationProperties.Name="NumberBox for cents" 
     Header="Enter equation:" 
     PlaceholderText="0.00" 
-    Suffix="cents" />
+    SuffixText="cents" />
 ```
 
 ### Add mininum and maximum values
@@ -179,8 +179,8 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
 {
     NumberBox();
     
-    String Prefix;
-    String Suffix;
+    String PrefixText;
+    String SuffixText;
     
     Boolean AcceptsCalculation;
     Boolean UpDownArrowsEnabled;
@@ -193,8 +193,8 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     Integer MinValue;
     Integer MaxValue;
 
-    static Windows.UI.Xaml.DependencyProperty PrefixProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty SuffixProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty PrefixTextProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty SuffixTextProperty{ get; };
     
     static Windows.UI.Xaml.DependencyProperty AcceptsCalculationProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty UpDownArrowsEnabledProperty{ get; };
