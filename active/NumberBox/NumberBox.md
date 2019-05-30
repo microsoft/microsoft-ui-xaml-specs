@@ -109,7 +109,7 @@ XAML
 <NumberBox AutomationProperties.Name="NumberBox for items in order" 
     Text="2"
     StepSize="2"
-    UpDownArrowsEnabled="True"
+    UpDownButtonsEnabled="True"
     UpDownDragEnabled="True" />
 ```
 
@@ -176,7 +176,7 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     String SuffixText;
     
     Boolean AcceptsCalculation;
-    Boolean UpDownArrowsEnabled;
+    Boolean UpDownButtonsEnabled;
     Boolean UpDownDragEnabled;
   
     NumberBoxFormatKind FormatKind;
@@ -190,7 +190,7 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     static Windows.UI.Xaml.DependencyProperty SuffixTextProperty{ get; };
     
     static Windows.UI.Xaml.DependencyProperty AcceptsCalculationProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty UpDownArrowsEnabledProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty UpDownButtonsEnabledProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty UpDownDragEnabledProperty{ get; };
     
     static Windows.UI.Xaml.DependencyProperty FormatKindProperty{ get; };
