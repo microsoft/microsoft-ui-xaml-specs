@@ -207,7 +207,7 @@ in IntelliSense. -->
 | Property | Type | Description |
 |:-------- |:---- |:----------- |
 | CanCloseTabs | bool | Default value for the item if it doesn't specify a IsClosable value. |
-| CloseButtonOverlay | enum | Describes the behavior of the close button. Values are {Auto, OnHover, Persistent} |
+| CloseButtonOverlay | enum | Describes the behavior of the close button of unselected tabs. Values are {Auto, OnHover, Persistent}. Default is Auto. In WinUI 2.2, Auto maps to Persistent.  |
 | ItemHeaderTemplate | DataTemplate | Default template for the item if no template specified. |
 | SelectedTabWidth | double | The size of the selected tab header. |
 | TabHeader | object | Content to the left of the tab strip. |
