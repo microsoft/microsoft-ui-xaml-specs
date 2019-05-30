@@ -96,14 +96,21 @@ example code with each description. The general format is:
 
 ![A sample app that shows the Tab control can extend into the titlebar area](images/tab-extend-to-title.png)
 
-``` xml
-<TabControl>
-    <TabItem Header="Tab 1" />
-    <TabItem Header="Tab 2" />
-    <!-- More tabs -->
-</TabControl>
+This sample demonstrates how to extend the TabControl into the title bar area and also specify a portion of the UI as the draggable region. Per the [titlebar customization guidelines](https://docs.microsoft.com/en-us/windows/uwp/design/shell/title-bar), we must set a [specific drag region](https://docs.microsoft.com/en-us/windows/uwp/design/shell/title-bar#draggable-regions). If we don't specify the drag region, the entire titlebar area remains draggable (meaning input won't be routed to the tabs, making the tabs unclickable).
 
-<Grid x:Name="CustomDragRegion" Width="200" Height="40" HorizontalAlignment="Right" VerticalAlignment="Top" />
+``` xml
+<Page>
+    <Grid>
+        <TabControl>
+            <TabItem Icon="Home" Header="Home" IsCloseable="False" />
+            <TabItem Icon="Document" Header="Document 1" />
+            <TabItem Icon="Document" Header="Document 2" />
+            <TabItem Icon="Document" Header="Document 3" />
+        </TabControl>
+
+        <Grid x:Name="CustomDragRegion" Width="200" Height="40" HorizontalAlignment="Right" VerticalAlignment="Top" />
+    </Grid>
+</Page>
 ```
 
 ``` csharp
