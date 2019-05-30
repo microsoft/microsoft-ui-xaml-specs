@@ -87,61 +87,17 @@ XAML
 
 ![](images/numberbox-acceptscalculation.png)
 
-### Add formatting
-
-```XAML
-<NumberBox AutomationProperties.Name="NumberBox for IP addresss" 
-    PlaceholderText="000.000.000.000"
-    FormatKind="IPv4Address" />
-```
-
-![](images/numberbox-ipv4-formatting-example.png)
-
-```XAML
-<NumberBox AutomationProperties.Name="NumberBox with four decimal place precision." 
-    PlaceholderText="00.0000"
-    CustomFormatString="##.####" />
-```
-
-```XAML
-<NumberBox AutomationProperties.Name="NumberBox for US zip code." 
-    PlaceholderText="12345"
-    CustomFormatString="#####"
-    AreLeadingZerosTrimmed="false" />
-```
-
 ### Add increment and decrement stepping
 
 XAML
 ```XAML
 <NumberBox AutomationProperties.Name="NumberBox for items in order" 
-    Text="2"
-    StepSize="2"
+    StepSize="0.1"
     UpDownButtonsEnabled="True"
     UpDownDragEnabled="True" />
 ```
 
 ![](images/numberbox-updownbuttons.png)
-
-### Add a prefix and suffix 
-
-XAML
-```XAML
-<NumberBox AutomationProperties.Name="NumberBox for US dollar amount" 
-    PlaceholderText="0.00" 
-    PrefixText="$:" />
-```
-
-![](images/numberbox-prefix.png)
-
-XAML
-```XAML
-<NumberBox AutomationProperties.Name="NumberBox for megabyte entry" 
-    PlaceholderText="0" 
-    SuffixText="MB" />
-```
-
-![](images/numberbox-suffix.png)
 
 ### Add mininum and maximum values
 
@@ -175,45 +131,40 @@ with a "///" comment above the member or type. -->
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 
 ```c++ 
-enum NumberBoxFormatKind
-{
-    IPAddress,
-    InternationalTelephone,
-    Currency,
-};
-
 unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
 {
     NumberBox();
     
-    String PrefixText;
-    String SuffixText;
+    Double Value;
     
     Boolean AcceptsCalculation;
     Boolean UpDownButtonsEnabled;
-    Boolean UpDownDragEnabled;
+    Boolean HyperDragEnabled;
+    Boolean HyperScrollEnabled;
+    
+    Double StepSize;
   
-    NumberBoxFormatKind FormatKind;
-    String CustomFormatString;
     Boolean AreLeadingZerosTrimmed;
-    Boolean DecimalPrecision;
+    Double DecimalPrecision;
     Boolean DoesInputRound;
-   
-    Integer MinValue;
-    Integer MaxValue;
+    
+    Double MinValue;
+    Double MaxValue;
     
 
-    static Windows.UI.Xaml.DependencyProperty PrefixTextProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty SuffixTextProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty ValueProperty{ get; };
     
     static Windows.UI.Xaml.DependencyProperty AcceptsCalculationProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty UpDownButtonsEnabledProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty UpDownDragEnabledProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty HyperDragEnabledProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty HyperScrollEnabledProperty{ get; };   
     
-    static Windows.UI.Xaml.DependencyProperty FormatKindProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty CustomFormatStringProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty StepSizeProperty{ get; };
+    
     static Windows.UI.Xaml.DependencyProperty AreLeadingZerosTrimmedProperty{ get; };
-
+    static Windows.UI.Xaml.DependencyProperty DecimalPrecisionProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty DoesInputRoundProperty{ get; };
+    
     static Windows.UI.Xaml.DependencyProperty MinValueProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty MaxValueProperty{ get; };
 }
