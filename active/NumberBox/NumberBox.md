@@ -196,9 +196,12 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     NumberBoxFormatKind FormatKind;
     String CustomFormatString;
     Boolean AreLeadingZerosTrimmed;
+    Boolean DecimalPrecision;
+    Boolean DoesInputRound;
    
     Integer MinValue;
     Integer MaxValue;
+    
 
     static Windows.UI.Xaml.DependencyProperty PrefixTextProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty SuffixTextProperty{ get; };
@@ -227,3 +230,4 @@ For example, implementation details. -->
 * Custom format property or traditional format string? 
 * Prefix/Suffix excluded to be TextBox improvements instead? How will prefix and suffix values be included in localization and automation output?
 * Embedded calculator? 
+* Tentative APIs for decimal precision and rounding?
