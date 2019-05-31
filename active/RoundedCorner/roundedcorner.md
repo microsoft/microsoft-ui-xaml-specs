@@ -11,7 +11,7 @@ There are mainly 3 UI parts where the radii of the corners are being rounded and
 
 *When not to round*
 - When a multiple buttons are inside a single button that houses them (e.g. SplitButton).
-![SplitButton](active/RoundedCorner/ImageFiles/SplitButton.png)
+![SplitButton](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/roundedcorner/active/RoundedCorner/ImageFiles/SplitButton.png)
 - When a control is housed inside another container (e.g. ScrollBar's bar and buttons that are part of the ScrollBar container which is also part of a ScrollViewer).
 - When flyout UI element that is connected to a UI that invokes the flyout on one side.
 
