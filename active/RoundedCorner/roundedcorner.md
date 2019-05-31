@@ -7,7 +7,12 @@ This "spec" will be what is being propsed to be a documentation that will be add
 ## Principles
 
 ## High level design
-There are mainly 3 UI parts where the radii of the corners are being rounded.
+There are mainly 3 UI parts where the radii of the corners are being rounded and the default behavior for the same.
+
+*When not to round*
+- When a multiple buttons are inside a single button that houses them (e.g. SplitButton).
+- When a control is housed inside another container (e.g. ScrollBar's bar and buttons that are part of the ScrollBar container which is also part of a ScrollViewer).
+- When flyout UI element that is connected to a UI that invokes the flyout on one side.
 
 *Corners of rectangle UI elements*
 - These UI elements include basic UIs like buttons that users see them on a surface of the screen at all times.
@@ -15,7 +20,7 @@ There are mainly 3 UI parts where the radii of the corners are being rounded.
 
 *Corners of flyout UI elements*
 - These UI elements are those that appear temporarily on UI like a MenuFlyout or Flyout.
-- All 4 corners of the UI are to be rounded unless those flyouts are connected to other UI elements (e.g. AutoSuggestBox), in those cases, only the corners that are not connected to the other UI elements gets rounded. Those connected to other UI elements stay non-rounded.
+- All 4 corners of the UI are to be rounded except for the exception case mentioned above.
 - The default radius value we use here are 4px.
 
 *Rounding of bars*
