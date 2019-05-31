@@ -1,9 +1,7 @@
 # Background
-This "spec" will be what is being propsed to be a documentation that will be added under https://docs.microsoft.com/en-us/windows/uwp/design/style/ "Corner Radius" page to be created.
+This "spec" will be what is being propsed to be a documentation that will be added under https://docs.microsoft.com/en-us/windows/uwp/design/style/ "Corner Radius" page to be created. Thus, spec template has been modified but the core of the information that is necessary for spec discussion should appear here (if not, please give feedback).
 
-
-# Description
-##Corner Radius
+# Corner Radius
 <Add thinking behind why we are rounding corners related to Fluent design.>
   
 
