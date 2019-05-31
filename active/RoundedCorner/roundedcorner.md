@@ -8,6 +8,7 @@ This "spec" will be what is being propsed to be a documentation that will be add
 
 ## High level design
 There are mainly 3 UI parts where the radii of the corners are being rounded.
+
 *Corners of rectangle UI elements*
 - These UI elements include basic UIs like buttons that users see them on a surface of the screen at all times.
 - The default radius value we use are 2px for these UI.
