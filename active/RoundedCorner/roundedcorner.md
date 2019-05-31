@@ -14,6 +14,7 @@ There are mainly 3 UI parts where the radii of the corners are being rounded and
 ![SplitButton](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/roundedcorner/active/RoundedCorner/ImageFiles/SplitButton.png)
 - When a control is housed inside another container (e.g. ScrollBar's bar and buttons that are part of the ScrollBar container which is also part of a ScrollViewer).
 - When flyout UI element that is connected to a UI that invokes the flyout on one side.
+![AutoSuggest](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/roundedcorner/active/RoundedCorner/ImageFiles/AutoSuggest.png)
 
 *Corners of rectangle UI elements*
 - These UI elements include basic UIs like buttons that users see them on a surface of the screen at all times.
