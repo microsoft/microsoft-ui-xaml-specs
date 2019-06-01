@@ -86,7 +86,7 @@ XAML
     StepSize="0.1"
     UpDownButtonsEnabled="True"
     HyperDragEnabled="True" 
-    HyperScrollEnabled = "True" />
+    HyperScrollEnabled="True" />
 ```
 
 ![](images/numberbox-updownbuttons.png)
