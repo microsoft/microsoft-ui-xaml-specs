@@ -16,6 +16,7 @@ There are mainly 3 types of UI parts where the radii of the corners are being ro
 *Corners of rectangle UI elements*
 - These UI elements include basic UIs like buttons that users see them on a surface of the screen at all times.
 - The default radius value we use are 2px for these UI.
+![Button](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/roundedcorner/active/RoundedCorner/ImageFiles/Button.png)
 
 *Corners of flyout UI elements*
 - These UI elements are those that appear temporarily on UI like a MenuFlyout or Flyout.
