@@ -35,13 +35,13 @@ the reader "go read 100 pages of background information posted at ...". -->
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
 
-Number box is a numerics only text control with support for input formatting, validation, basic calculation, and increment stepping.
+Number box is a numerics only text control with support for validation, increment stepping, and computing inline calculations.
 
 **Important APIs:** [NumberBox class](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.numberbox) [TODO - generated with MSDN documentation on publication.]
 
 ## Is this the right control? 
 
-Use a **NumberBox** control to receive and display formatted numeric values such as currency, IP addresses, and telephone numbers. A **NumberBox** can also be enabled with basic calculator support to compute multiplication, division, addition, and subtraction across parenthetical order with standard operator precedence.
+Use a **NumberBox** to capture and display mathematical input. A **NumberBox** can also be enabled with basic calculator support to compute multiplication, division, addition, and subtraction across parenthetical order with standard operator precedence.
 
 ## Examples
 <!-- Use this section to explain the features of the API, showing
@@ -57,16 +57,7 @@ example code with each description. The general format is:
 <!-- As an example of this section, see the Examples section for the PasswordBox control 
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 
-### Create a NumberBox
-
-XAML
-```XAML
-<NumberBox AutomationProperties.Name="simple NumberBox"/>
-```
-
-![](images/numberbox-basic.png)
-
-### Add placeholder text
+### Create a simple NumberBox
 
 XAML
 ```XAML
@@ -94,19 +85,24 @@ XAML
 <NumberBox AutomationProperties.Name="NumberBox for items in order" 
     StepSize="0.1"
     UpDownButtonsEnabled="True"
-    UpDownDragEnabled="True" />
+    HyperDragEnabled="True" 
+    HyperScrollEnabled = "True" />
 ```
 
 ![](images/numberbox-updownbuttons.png)
 
-### Add mininum and maximum values
+### Format display and output
 
 XAML
 ```XAML
-<NumberBox AutomationProperties.Name="NumberBox for items in order" 
-    PlaceholderText="1" 
-    MinValue="1"
-    MaxValue="99" />
+<NumberBox AutomationProperties.Name="NumberBox for solution components" 
+    Header="Enter a percentage:"
+    PlaceholderText="2/3" 
+    MinValue="0"
+    MaxValue="100" 
+    AreLeadingZerosTrimmed="False"
+    DecimalPrecision="5"
+    DoesInputRound=False" />
 ```
 
 ## Remarks
