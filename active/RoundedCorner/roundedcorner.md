@@ -24,7 +24,7 @@ There are mainly 3 types of UI parts where the radii of the corners are being ro
 
 *Rounding of bars*
 - These UI elements are bar like or line like UI (e.g. ProgressBar).
-- The fefault radius value we use here are 2px except for slider in ColorPicker which will be 6px because the bar is wider.
+- The default radius value we use here are 2px except for slider in ColorPicker which will be 6px because the bar is wider.
 
 *When not to round*
 - When a multiple buttons are inside a single button that houses them (e.g. SplitButton).
@@ -35,15 +35,15 @@ There are mainly 3 types of UI parts where the radii of the corners are being ro
 - When flyout UI element that is connected to a UI that invokes the flyout on one side.
 ![AutoSuggest](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/roundedcorner/active/RoundedCorner/ImageFiles/AutoSuggest.png)
 
-## Note on keyboard focus rect and shaodow
-Currently our default design does not require any special work to round the corners of keyboard focus rectangle and shadow. Using higher corner radius value will not break them founcionally, however it is good to be aware of this to avoid unwanted visual glitch that you could introduce with a larger value.
+## Note on keyboard focus rect and shadow
+Currently our default design does not require any special work to round the corners of keyboard focus rectangle and shadow. Using higher corner radius value will not break them founcionally, however it is good to be aware of this to avoid unwanted visual glitches that you could introduce with a larger value.
 
 # Rounded Corner and Performance
 People may not aways be aware of the fact drawing rounded corner naturally use more drawing power compared to square corners. When selecting the value of corner radius, we not only considered the design principles but also were very careful to ensure developers who use our default controls are able to successfully deliver performant applications. 
 
-To simplify this section, think of performnce issues mentioned here to be mainly about page load time as well as app launch time.
+To simplify this section, think of performance issues mentioned here to be mainly about page load time as well as app launch time.
 
-Here are a few key information for people to be aware about the performance:
+Here are a few key pieces of information for people to be aware about the performance:
 - Rounded corners on a larger surface UI are less performant. E.g. avoid drawing rounded corner on a full screen app UI. This is less of an issue if the UI is displayed briefly (e.g. ContentDialog).
 - Drawing many rounded corners at once could be less performant. Many smaller UI with rounded corners perform better than many medium UI with rounded corners.
 
