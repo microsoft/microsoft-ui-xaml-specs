@@ -7,10 +7,8 @@ I am trying out writing a little more "background explanation (WHY)" that our cu
 <Add thinking behind why we are rounding corners related to Fluent design.>
   
 ## Principles
-<Less is more professional, more is more friendlier>
-
 ## High level design
-## Default designs
+### Default control designs
 There are mainly 3 types of UI parts where the radii of the corners are being rounded and here are the descriptions of how this is applied to default controls.
 
 *Corners of rectangle UI elements*
@@ -46,11 +44,3 @@ To simplify this section, think of performance issues mentioned here to be mainl
 Here are a few key pieces of information for people to be aware about the performance:
 - Rounded corners on a larger surface UI are less performant. E.g. avoid drawing rounded corner on a full screen app UI. This is less of an issue if the UI is displayed briefly (e.g. ContentDialog).
 - Drawing many rounded corners at once could be less performant. Many smaller UI with rounded corners perform better than many medium UI with rounded corners.
-
-
-# Remarks
-
-# API Notes and Details
-When this "spec" becomes the external document, add API details to customize the Corner Radius to different values from #684.
-
-# Appendix
