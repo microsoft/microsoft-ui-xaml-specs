@@ -174,3 +174,16 @@ For example, implementation details. -->
 ## Open Questions
 
 * For touch/virtual keyboards, can we intelligently swap to the numerical input keyboard?
+
+* Would anyone be against a validation system which automatically reverts unacceptable input back to the previous value while exposing events that would allow the developer to cancel this behavior and instead decide what to do/raise error indicators or messages?
+
+*  Should we rely on the Xaml ControlTemplate for creating a NumberBox with disjoint UpDownButtons (i.e., this is not common enough to justify supporting out of the box) or should we include a property for setting whether the UpDownButtons appear appear contiguous vs. disjoint?
+
+![one diagram showing UpDownButtons side-by-side and another diagram showing the down button to the left of the NumberBox and the up button to the right of the NumberBox](https://user-images.githubusercontent.com/16964652/58919787-3ae0fe80-86e4-11e9-8136-4c5b204825b0.png)
+
+
+* Is there value in creating a preview for calculation results? @mdtauk created a few example visualizations: 
+
+![NumberBox with a tool tip above to show a preview of the calculation results](https://user-images.githubusercontent.com/16964652/58919441-fbfe7900-86e2-11e9-8d2b-dd4dadfa74c5.png)
+
+![NumberBox with a calculation in progress and grayed out text previewing the calculation results](https://user-images.githubusercontent.com/16964652/58919587-76c79400-86e3-11e9-886c-e57a9e64e48d.png)
