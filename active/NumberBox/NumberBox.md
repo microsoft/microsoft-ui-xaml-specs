@@ -173,8 +173,4 @@ For example, implementation details. -->
 
 ## Open Questions
 
-* Should we support some basic format types for numerical strings or only mathematics and allow custom format strings? Need to rationalize this with InputScopeNameValue and CoreTextInputScope.
-* Custom format property or traditional format string? 
-* Prefix/Suffix excluded to be TextBox improvements instead? How will prefix and suffix values be included in localization and automation output?
-* Embedded calculator? 
-* Tentative APIs for decimal precision and rounding?
+* For touch/virtual keyboards, can we intelligently swap to the numerical input keyboard?
