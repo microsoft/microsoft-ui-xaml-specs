@@ -37,7 +37,7 @@ The ``CornerRadius`` property for controls and their templates can be easily cus
 The following example cover common use-case scenarios where an app-author would like to customize the corner radii of one or more controls.
 
 ## Setting the CornerRadii of controls
-*lorem*
+To make large changes globally and consistently to all controls within a scope, defining/overriding the ``ConrtolThemeCornerRadius`` and ``OverlayThemeCornerRadius`` resources from generic.xaml will affect all controls that benefit from rounded edges.
 
 ``` xml
 <Application.Resources>
@@ -47,7 +47,7 @@ The following example cover common use-case scenarios where an app-author would 
 ```
 
 ## Defining the CornerRadius on specific control(s)
-*lorem*
+When more specific or localized changes to particular controls is desired, a [Lightweight styling](https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/xaml-styles#lightweight-styling) approach is available to set the CornerRadii of controls.
 
 ``` xml
 <Page.Resources>
@@ -95,7 +95,7 @@ in IntelliSense. -->
 | OverlayThemeCornerRadius | 3 |
 
 ## Affected controls
-Below is a list of control-specific [Lightweight styling](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/xaml-styles#lightweight-styling) resources that are getting updated and tied to the global Lightweight resources mentioned above.
+>Below is a list of control-specific [Lightweight styling](https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/xaml-styles#lightweight-styling) resources that are getting updated and tied to the global Lightweight resources mentioned above.
 
 This list also covers which part or parts of a certain control's template will get this new CornerRadius value applied, as some templates have multiple places where a CornerRadius attribute must be changed.
 
@@ -135,7 +135,7 @@ The following table details out the controls who's values corresponds to the glo
 |8| CommandBarFlyout | n/a | n/a |
 |9| SplitButtonFlyout | n/a | n/a |
 |10| Tooltip | ToolTipThemeCornerRadius| LayoutRoot (ContentPresenter CornerRadius property) |
-|11| AutoSuggestBox Popup | AutoSuggestBoxSuggestionsContainerThemeCornerRadius | SuggestionsContainer (Border) |
+|11| AutoSuggestBox Popup | AutoSuggestBoxSuggestionsThemeCornerRadius | SuggestionsContainer (Border) |
 |12| DropDownButton Dropdown | n/a | n/a |
 |13| SplitButton Flyout | n/a | n/a |
 
