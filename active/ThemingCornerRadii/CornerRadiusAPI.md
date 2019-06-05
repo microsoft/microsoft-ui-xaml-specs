@@ -91,8 +91,8 @@ in IntelliSense. -->
 
 |Global Lightweight resource| Default value |
 |:-|:-:|
-| ControlThemeCornerRadius | 3 |
-| OverlayThemeCornerRadius | 3 |
+| ControlThemeCornerRadius | 2 |
+| OverlayThemeCornerRadius | 2 |
 
 ## Affected controls
 >Below is a list of control-specific [Lightweight styling](https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/xaml-styles#lightweight-styling) resources that are getting updated and tied to the global Lightweight resources mentioned above.
@@ -152,13 +152,5 @@ On this API, we would introduce a property for each control-specific CornerRadiu
       ProgressBar="3"/>
 </Grid.Resources>
 ```
-
-# API Details
-<!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
-
-# Appendix
-<!-- Anything else that you want to write down for posterity, but
-that isn't necessary to understand the purpose and usage of the API.
-For example, implementation details. -->
 
 # Open Questions
