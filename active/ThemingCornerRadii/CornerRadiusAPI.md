@@ -140,9 +140,9 @@ The following table details out the controls who's values corresponds to the glo
 |13| SplitButton Flyout | n/a | n/a |
 
 ## CornerRadiusResources API (P2)
-Another step further we can take these new resource additions, is following the same model that we introduced in RS5 of the [ColorSchemeResources](https://docs.microsoft.com/en-us/windows/uwp/design/style/color#how-to-use-colorschemeresources).
+>This API follows a very similar model to that of the [ColorSchemeResources](https://docs.microsoft.com/en-us/windows/uwp/design/style/color#how-to-use-colorschemeresources).
 
-On this API, we would introduce a property for each control-specific CornerRadius Lightweight styling resource.
+``CornerRadiusResources`` is a class that has a property for every control-specific CornerRadius Lightweight styling resource that exists, and allows a condensed, easy-to-read-and-share styling format.
 
 ```xml
 <Grid.Resources>
