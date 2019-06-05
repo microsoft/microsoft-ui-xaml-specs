@@ -123,11 +123,24 @@ isn't the type's default (for example an int-typed property that doesn't default
 <!-- Option 2: Put these descriptions in the below API Details section,
 with a "///" comment above the member or type. -->
 
+### Behavioral Components
+
+| Property | Notes |
+|:---:|:---|
+| Value/Text Changed | * When Text is changed via codebehind or by user input ("Enter" is pressed or the NumberBox loses focus) the NumberBox will be prompted to update its Text and Value properties. A TextChanged event will be raised that will exposes the new Text and the old Value and allows the developer to intercept the and manipulate these properties (such as for manually handling validation error). Value will then be updated to the Text input converted to a Double. <br><br> * Conversely, code behind updates to Value will raise a ValueChanged event that will exposes the new Value and the old Text and allows the developer to intercept the and manipulate these properties (such as for manually handling validation error). Text will then be updated to the Value input converted to a String.    |
+| Validation | * Following the [precedent of the Windows ecosystem](https://github.com/microsoft/microsoft-ui-xaml/issues/483#issuecomment-498485363), if invalid input is entered and the developer does not intercept it  via the ValueChanged or TextChanged events (which exposes the changed property and the one to be updated) to create valid input, the invalid property will be reverted to the other's preserved valid value. <br><br? * Disabling validation override will surface a vaidation error indicator and message to the user. |
+
 ## API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 
 ```c++ 
 runtimeclass NumberBoxValueChangedEventArgs
+{
+    String Text;
+    Double Value
+};
+
+runtimeclass NumberBoxTextChangedEventArgs
 {
     String Text;
     Double Value
@@ -157,6 +170,7 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     NumberBoxTemplateSettings TemplateSettings{ get; };
 
     event Windows.Foundation.TypedEventHandler<NumberBox, NumberBoxValueChangedEventArgs> ValueChanged;
+    event Windows.Foundation.TypedEventHandler<NumberBox, NumberBoxTextChangedEventArgs> TextChanged;
 
     static Windows.UI.Xaml.DependencyProperty ValueProperty{ get; };
     
@@ -197,3 +211,7 @@ For example, implementation details. -->
 ![NumberBox with a tool tip above to show a preview of the calculation results](https://user-images.githubusercontent.com/16964652/58919441-fbfe7900-86e2-11e9-8d2b-dd4dadfa74c5.png)
 
 ![NumberBox with a calculation in progress and highlight text previewing the calculation results](https://user-images.githubusercontent.com/7389110/58920708-5b807700-872b-11e9-9924-21a7b7d37e68.png)
+
+* Is there any localization need for switching the sides of the UpDownButtons? 
+
+* Pending custom requirement for vertical UpDownButtons (compact scenarios).
