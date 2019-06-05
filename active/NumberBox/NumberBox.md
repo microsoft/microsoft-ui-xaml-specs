@@ -196,4 +196,4 @@ For example, implementation details. -->
 
 ![NumberBox with a tool tip above to show a preview of the calculation results](https://user-images.githubusercontent.com/16964652/58919441-fbfe7900-86e2-11e9-8d2b-dd4dadfa74c5.png)
 
-![NumberBox with a calculation in progress and grayed out text previewing the calculation results](https://user-images.githubusercontent.com/16964652/58919587-76c79400-86e3-11e9-886c-e57a9e64e48d.png)
+![NumberBox with a calculation in progress and highlight text previewing the calculation results](https://user-images.githubusercontent.com/7389110/58920708-5b807700-872b-11e9-9924-21a7b7d37e68.png)
