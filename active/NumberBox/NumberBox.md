@@ -128,7 +128,8 @@ with a "///" comment above the member or type. -->
 | Property | Notes |
 |:---:|:---|
 | Value/Text Changed | * When Text is changed via codebehind or by user input ("Enter" is pressed or the NumberBox loses focus) the NumberBox will be prompted to update its Text and Value properties. A TextChanged event will be raised that will exposes the new Text and the old Value and allows the developer to intercept the and manipulate these properties (such as for manually handling validation error). Value will then be updated to the Text input converted to a Double. <br><br> * Conversely, code behind updates to Value will raise a ValueChanged event that will exposes the new Value and the old Text and allows the developer to intercept the and manipulate these properties (such as for manually handling validation error). Text will then be updated to the Value input converted to a String.    |
-| Validation | * Following the [precedent of the Windows ecosystem](https://github.com/microsoft/microsoft-ui-xaml/issues/483#issuecomment-498485363), if invalid input is entered and the developer does not intercept it  via the ValueChanged or TextChanged events (which exposes the changed property and the one to be updated) to create valid input, the invalid property will be reverted to the other's preserved valid value. <br><br? * Disabling validation override will surface a vaidation error indicator and message to the user. |
+| Validation | * Following the [precedent of the Windows ecosystem](https://github.com/microsoft/microsoft-ui-xaml/issues/483#issuecomment-498485363), if invalid input is entered and the developer does not intercept it  via the ValueChanged or TextChanged events (which exposes the changed property and the one to be updated) to create valid input, the invalid property will be reverted to the other's preserved valid value. <br><br? * Disabling validation override will surface a vaidation error indicator and message to the user. <br><br> Should MinValue%StepSize != 0 or MaxValue%StepSize != 0, this will also trigger a validation error that the developer may intercept during the TextChanged event. If validation override is not disabled and the change is not intercepted via the respective event, the value will be returned to the last valid state. E.g, in this scenario, if StepSize=0.2, MaxValue=3.0, and the value 2.9 is incremented, it will be returned to 2.9. |
+| StepSize vs. MaxValue/MinValue |  |
 
 ## API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
@@ -215,3 +216,5 @@ For example, implementation details. -->
 * Is there any localization need for switching the sides of the UpDownButtons? 
 
 * Pending custom requirement for vertical UpDownButtons (compact scenarios).
+
+* InputScope: Number or FormulaNumber?
