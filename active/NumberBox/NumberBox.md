@@ -127,6 +127,12 @@ with a "///" comment above the member or type. -->
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 
 ```c++ 
+runtimeclass NumberBoxValueChangedEventArgs
+{
+    String Text;
+    Double Value
+};
+
 unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
 {
     NumberBox();
@@ -147,6 +153,10 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     Double MinValue;
     Double MaxValue;
     
+
+    NumberBoxTemplateSettings TemplateSettings{ get; };
+
+    event Windows.Foundation.TypedEventHandler<NumberBox, NumberBoxValueChangedEventArgs> ValueChanged;
 
     static Windows.UI.Xaml.DependencyProperty ValueProperty{ get; };
     
