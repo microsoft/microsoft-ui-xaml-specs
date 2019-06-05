@@ -79,7 +79,7 @@ Depending on the granularity desired by the app-author, they can override either
 </Grid>
 ```
 
-![Mixed resources cornerradius values](images\CornerRoundnessExample.png)
+![Mixed resources cornerradius values](..\images\CornerRoundnessExample.png)
 
 In this example, all controls' border radii have been set to two via the ``ControlThemeCornerRadius`` global resource, and the Button is honoring the control-specific reource ``ButtonThemeCornerRadius``.
 
