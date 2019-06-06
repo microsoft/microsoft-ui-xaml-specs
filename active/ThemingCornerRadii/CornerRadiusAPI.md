@@ -109,7 +109,7 @@ The following table details out the controls who's values corresponds to the glo
 |3| TextBox | TextBoxThemeCornerRadius | BorderElement (Border) |
 |4| AutoSuggestBox | AutoSuggestBoxThemeCornerRadius | AutoSuggestBoxTextBoxStyle (CornerRadius Property definition) |
 |5| Slider | SliderThemeCornerRadius | HorizontalTrackRect, HorizontalDecreaseRect, VerticalTrackRect, VerticalDecreaseRect (All Rectangles) |
-|6| ComboBox | ComboBoxThemeCornerRadius | CornerRadius Property (Setter in Style) |
+|6| ComboBox | ComboBoxThemeCornerRadius, ComboBoxItemThemeCornerRadius | CornerRadius Property (Setter in Style) |
 |7| DatePicker | DatePickerThemeCornerRadius | CornerRadius Property (Setter in Style) |
 |8| TimePicker | TimePickerThemeCornerRadius | CornerRadius Property (Setter in Style) |
 |9| CalendarDatePicker | CalendarDatePickerThemeCornerRadius | CornerRadius Property (Setter in Style) |
@@ -125,19 +125,15 @@ The following table details out the controls who's values corresponds to the glo
 
 |#| Control | Lightweight resource(s) | Affected template attribute/style |
 |:-:|:-|:-|:-|
-|1| ContentDialog | n/a | n/a |
-|2| Flyout | n/a | n/a |
-|3| Popup | n/a | n/a |
-|4| ComboBox Dropdown | n/a | n/a |
-|5| DatePicker Flyout | DatePickerFlyoutThemeCornerRadius | DatePickerFlyoutPresenter (CornerRadius property) |
-|6| TimePicker Flyout | TimePickerFlyoutThemeCornerRadius | TimePickerFlyoutPresenter (CornerRadius property) |
-|7| MenuFlyout | MenuFlyoutThemeCornerRadius | MenuFlyoutPresenter (DefaultMenuFlyoutPresenterStyle CornerRadius propery) |
-|8| CommandBarFlyout | n/a | n/a |
-|9| SplitButtonFlyout | n/a | n/a |
-|10| Tooltip | ToolTipThemeCornerRadius| LayoutRoot (ContentPresenter CornerRadius property) |
-|11| AutoSuggestBox Popup | AutoSuggestBoxSuggestionsThemeCornerRadius | SuggestionsContainer (Border) |
-|12| DropDownButton Dropdown | n/a | n/a |
-|13| SplitButton Flyout | n/a | n/a |
+|1| ContentDialog | ContentDialogThemeCornerRadius | CornerRadius Property (Setter in Style) |
+|2| Flyout | FlyoutThemeCornerRadius | CornerRadius Property (Setter in Style) |
+|3| ComboBox Popup | ComboBoxPopupThemeCornerRadius | PopupBorder (Border) |
+|4| DatePicker Flyout | DatePickerFlyoutThemeCornerRadius | DatePickerFlyoutPresenter (CornerRadius property) |
+|5| TimePicker Flyout | TimePickerFlyoutThemeCornerRadius | TimePickerFlyoutPresenter (CornerRadius property) |
+|6| MenuFlyout | MenuFlyoutThemeCornerRadius | MenuFlyoutPresenter (DefaultMenuFlyoutPresenterStyle CornerRadius propery) |
+|7| CommandBar Overflow | CommandBarOverflowThemeCornerRadius | OverflowContentRoot (Grid) |
+|8| Tooltip | ToolTipThemeCornerRadius| LayoutRoot (ContentPresenter CornerRadius property) |
+|9| AutoSuggestBox Popup | AutoSuggestBoxSuggestionsThemeCornerRadius | SuggestionsContainer (Border) |
 
 ## CornerRadiusResources API (P2)
 >This API follows a very similar model to that of the [ColorSchemeResources](https://docs.microsoft.com/en-us/windows/uwp/design/style/color#how-to-use-colorschemeresources).
