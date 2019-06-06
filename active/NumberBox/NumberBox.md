@@ -210,6 +210,10 @@ For example, implementation details. -->
 
 * Consenus on Validation behavior. (See Appendix > Behavioral Components)
 
+* Naming and firing of Value/Text changed events?
+
+* Up/Down arrow keys for stepping NumberBox with keyboard nav?  
+
 * Is there value in creating a preview for calculation results? @mdtauk created a few example visualizations: 
 
 ![NumberBox with a tool tip above to show a preview of the calculation results](https://user-images.githubusercontent.com/16964652/58919441-fbfe7900-86e2-11e9-8d2b-dd4dadfa74c5.png)
