@@ -92,7 +92,7 @@ in IntelliSense. -->
 |Global Lightweight resource| Default value |
 |:-|:-:|
 | ControlThemeCornerRadius | 2 |
-| OverlayThemeCornerRadius | 2 |
+| OverlayThemeCornerRadius | 4 |
 
 ## Affected controls
 >Below is a list of control-specific [Lightweight styling](https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/xaml-styles#lightweight-styling) resources that are getting updated and tied to the global Lightweight resources mentioned above.
