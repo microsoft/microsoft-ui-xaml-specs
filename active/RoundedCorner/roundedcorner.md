@@ -4,11 +4,13 @@ This "spec" will be what is being propsed to be a documentation that will be add
 I am trying out writing a little more "background explanation (WHY)" that our customers have expressed we provide with our documentaiton in some of our focus groups. I would like feedback as this does not follow normal documentation pattern.
 
 # Corner Radius
+![button](img file)
 <Add thinking behind why we are rounding corners related to Fluent design.>
   
 ## Principles
-## High level design
-### Default control designs
+<I'll ask Fluent collective to put together something here>
+
+## Default control designs
 There are mainly 3 types of UI parts where the radii of the corners are being rounded and here are the descriptions of how this is applied to default controls.
 
 *Corners of rectangle UI elements*
@@ -44,3 +46,65 @@ To simplify this section, think of performance issues mentioned here to be mainl
 Here are a few key pieces of information for people to be aware about the performance:
 - Rounded corners on a larger surface UI are less performant. E.g. avoid drawing rounded corner on a full screen app UI. This is less of an issue if the UI is displayed briefly (e.g. ContentDialog).
 - Drawing many rounded corners at once could be less performant. Many smaller UI with rounded corners perform better than many medium UI with rounded corners.
+
+# Customization options
+<Add Kiki's spec details here>
+
+# Appendix
+There are three categories of changes being proposed (requirement number 1.1, 1.2, and 1.3) and here are mock up of those.
+
+Here are relevant visual comp files: 
+•	Raw files: https://github.com/microsoft/microsoft-ui-xaml-specs/tree/user/chigy/roundedcorner/active/RoundedCorner/ImageFiles
+•	In an easier to consume format thanks to community: https://github.com/mrlacey/microsoft-ui-xaml-specs/blob/RoundedCornerVisualizations/active/RoundedCorner/ImageFiles/index.md
+
+*Form type controls (req 1.1)*
+•	Button
+•	CheckBox
+•	ComboBox
+•	DropDownButton
+•	Slider
+•	SplitButton
+•	ToggleButton
+•	ToggleSplitButton
+•	Flipview
+•	GridView
+•	ListView
+•	TreeView
+•	ContentDialog
+•	AutoSuggestBox
+•	PasswordBox
+•	RichEditBox
+•	TextBox
+•	DatePicker
+•	CalendarDatePicker
+•	Tab control
+
+*Popup/transient menu type controls (req 1.2)*
+•	CalendarDatePicker
+•	DatePicker
+•	TimePicker
+•	Flyout
+•	TeachingTip
+•	ToolTip
+•	DropDownButton
+•	SplitButton
+•	Slider
+•	AutoSuggestBox
+•	CommandBarFlyout
+•	MenuFlyout
+•	ComboBox
+•	ColorPicker
+•	MediaPlayerElement
+•	ContentDialog
+•	MenuBar
+•	ToggleSplitButton
+
+*Bars (req 1.3)*
+•	NavigationView
+•	Pivot
+•	ScrollIndicator
+•	ProgressBar
+•	Slider
+•	ColorPicker
+•	MediaPlayerElement
+•	WebView (may or may not get it from XAML change, checking)
