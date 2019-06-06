@@ -128,7 +128,7 @@ with a "///" comment above the member or type. -->
 | Property | Notes |
 |:---:|:---|
 | Value/Text Changed | * When Text is changed via codebehind or by user input ("Enter" is pressed or the NumberBox loses focus) the NumberBox will be prompted to update its Text and Value properties. A TextChanged event will be raised that will exposes the new Text and the old Value and allows the developer to intercept the and manipulate these properties (such as for manually handling validation error). Value will then be updated to the Text input converted to a Double. <br><br> * Conversely, code behind updates to Value will raise a ValueChanged event that will exposes the new Value and the old Text and allows the developer to intercept the and manipulate these properties (such as for manually handling validation error). Text will then be updated to the Value input converted to a String.    |
-| Validation | * Following the [precedent of the Windows ecosystem](https://github.com/microsoft/microsoft-ui-xaml/issues/483#issuecomment-498485363), if invalid input is entered and the developer does not intercept it  via the ValueChanged or TextChanged events (which exposes the changed property and the one to be updated) to create valid input, the invalid property will be reverted to the other's preserved valid value. <br><br? * Disabling validation override will surface a vaidation error indicator and message to the user. <br><br> * Should MinValue%StepSize != 0 or MaxValue%StepSize != 0, this will also trigger a validation error that the developer may intercept during the TextChanged event. If validation override is not disabled and the change is not intercepted via the respective event, the value will be returned to the last valid state. E.g, in this scenario, if StepSize=0.2, MaxValue=3.0, and the value 2.9 is incremented, it will be returned to 2.9. |
+| Validation | * Input that is non-numerical forumalic or exceeds the min/max values will trigger an [Input Validation warning]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md). <br><br> * The developer can intercept the ValueChanged or TextChanged events (which exposes the changed property and the one to be updated) and manually manipulate invalid input before an [Input Validation warning]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md) is displayed. <br><br> * Enabling the IsInvalidInputOverwritten property will revert invalid input to the last valid state without displaying [Input Validation warning]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md). E.g., if IsInvalidInputOverwritten is enabled, StepSize=0.2, MaxValue=3.0, and the value 2.9 is incremented, 3.1 will register as invalid and it will be overwritten back to 2.9. |
 | StepSize vs. MaxValue/MinValue |  |
 
 ## API Details
@@ -152,12 +152,11 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     NumberBox();
     
     Double Value;
-    
     Boolean AcceptsCalculation;
+    
     Boolean UpDownButtonsEnabled;
     Boolean HyperDragEnabled;
     Boolean HyperScrollEnabled;
-    
     Double StepSize;
   
     Boolean AreLeadingZerosTrimmed;
@@ -167,6 +166,8 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     Double MinValue;
     Double MaxValue;
     
+    Boolean IsInvalidInputOverwritten
+    
 
     NumberBoxTemplateSettings TemplateSettings{ get; };
 
@@ -174,12 +175,11 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     event Windows.Foundation.TypedEventHandler<NumberBox, NumberBoxTextChangedEventArgs> TextChanged;
 
     static Windows.UI.Xaml.DependencyProperty ValueProperty{ get; };
-    
     static Windows.UI.Xaml.DependencyProperty AcceptsCalculationProperty{ get; };
+    
     static Windows.UI.Xaml.DependencyProperty UpDownButtonsEnabledProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty HyperDragEnabledProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty HyperScrollEnabledProperty{ get; };   
-    
     static Windows.UI.Xaml.DependencyProperty StepSizeProperty{ get; };
     
     static Windows.UI.Xaml.DependencyProperty AreLeadingZerosTrimmedProperty{ get; };
@@ -188,6 +188,8 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     
     static Windows.UI.Xaml.DependencyProperty MinValueProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty MaxValueProperty{ get; };
+    
+    static Windows.UI.Xaml.DependencyProperty IsInvalidInputOverwrittenProperty{ get; };
 }
 ```
 
