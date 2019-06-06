@@ -4,7 +4,7 @@ This "spec" will be what is being propsed to be a documentation that will be add
 I am trying out writing a little more "background explanation (WHY)" that our customers have expressed we provide with our documentaiton in some of our focus groups. I would like feedback as this does not follow normal documentation pattern.
 
 # Corner Radius
-![button](img file)
+![button](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/roundedcorner/active/RoundedCorner/ImageFiles/Button2.png)
 <Add thinking behind why we are rounding corners related to Fluent design.>
   
 ## Principles
