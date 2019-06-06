@@ -104,7 +104,7 @@ The following table details out the controls who's values corresponds to the glo
 
 |#| Control | Lightweight resource(s) | Affected template attribute/style |
 |:-:|:-|:-|:-|
-|1| Button | ButtonThemeCornerRadius | ContentPresenter |
+|1| Button | ButtonThemeCornerRadius | CornerRadius Property (Setter in Style) |
 |2| Checkbox | CheckboxThemeCornerRadius | RootGrid (Grid), NormalRectangle (Checkbox Box Rectangle) |
 |3| TextBox | TextBoxThemeCornerRadius | BorderElement (Border) |
 |4| AutoSuggestBox | AutoSuggestBoxThemeCornerRadius | AutoSuggestBoxTextBoxStyle (CornerRadius Property definition) |
@@ -115,10 +115,10 @@ The following table details out the controls who's values corresponds to the glo
 |9| CalendarDatePicker | CalendarDatePickerThemeCornerRadius | CornerRadius Property (Setter in Style) |
 |10| ProgressBar | ProgressBarThemeCornerRadius | DeterminateRoot (Border) ProgressBarIndicator (Rectangle) |
 |11| RichEditBox | RichEditBoxThemeCornerRadius | CornerRadius Property (Setter in Style) |
-|12| ToggleButton | ToggleButtonThemeCornerRadius | ContentPresenter |
+|12| ToggleButton | ToggleButtonThemeCornerRadius | CornerRadius Property (Setter in Style) |
 |13| ToggleSwitch | ToggleSwitchThemeCornerRadius | OuterBorder (Rectangle), SwitchKnobBounds (Rectangle) |
-|14| SplitButton | SplitButtonThemeCornerRadius | ContentPresenter |
-|15| DropDownButton | DropDownButtonThemeCornerRadius | ContentPresenter |
+|14| SplitButton | SplitButtonThemeCornerRadius | CornerRadius Property (Setter in Style) |
+|15| DropDownButton | DropDownButtonThemeCornerRadius | CornerRadius Property (Setter in Style) |
 
 ### OverlayThemeCornerRadius
 The following table details out the controls who's values corresponds to the global CornerRadius value for ``OverlayThemeCornerRadius``.
