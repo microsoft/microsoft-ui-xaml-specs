@@ -200,14 +200,7 @@ For example, implementation details. -->
 
 ## Open Questions
 
-* For touch/virtual keyboards, can we intelligently swap to the numerical input keyboard?
-
-* Would anyone be against a validation system which automatically reverts unacceptable input back to the previous value while exposing events that would allow the developer to cancel this behavior and instead decide what to do/raise error indicators or messages?
-
-*  Should we rely on the Xaml ControlTemplate for creating a NumberBox with disjoint UpDownButtons (i.e., this is not common enough to justify supporting out of the box) or should we include a property for setting whether the UpDownButtons appear appear contiguous vs. disjoint?
-
-![one diagram showing UpDownButtons side-by-side and another diagram showing the down button to the left of the NumberBox and the up button to the right of the NumberBox](https://user-images.githubusercontent.com/16964652/58919787-3ae0fe80-86e4-11e9-8136-4c5b204825b0.png)
-
+* Consenus on Validation behavior. [See API Notes > Behavioral Components]
 
 * Is there value in creating a preview for calculation results? @mdtauk created a few example visualizations: 
 
@@ -215,10 +208,15 @@ For example, implementation details. -->
 
 ![NumberBox with a calculation in progress and highlight text previewing the calculation results](https://user-images.githubusercontent.com/7389110/58920708-5b807700-872b-11e9-9924-21a7b7d37e68.png)
 
-* Is there any localization need for switching the sides of the UpDownButtons? 
+* InputScope: Number or FormulaNumber?
+
+*  Should we rely on the Xaml ControlTemplate for creating a NumberBox with disjoint UpDownButtons (i.e., this is not common enough to justify supporting out of the box) or should we include a property for setting whether the UpDownButtons appear appear contiguous vs. disjoint?
+
+![one diagram showing UpDownButtons side-by-side and another diagram showing the down button to the left of the NumberBox and the up button to the right of the NumberBox](https://user-images.githubusercontent.com/16964652/58919787-3ae0fe80-86e4-11e9-8136-4c5b204825b0.png)
 
 * Pending custom requirement for vertical UpDownButtons (compact scenarios).
 
-* InputScope: Number or FormulaNumber?
+* Is there any localization need for switching the sides of the UpDownButtons? 
 
-* Should Value/Text changed events fire on "Enter"/loss of focus or on every change - case in mind is hyper drag/scrolling where users would be testing the number range.  Additionally, constant validation affords an opportunity to display validation error indicator/message before reverting a bad value back to the last good one on "Enter"/Loss of focus. 
+* Can touch/virtual keyboards intelligently adapt to numeral-formulaic input?
+
