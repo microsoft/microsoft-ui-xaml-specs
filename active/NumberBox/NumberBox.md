@@ -218,3 +218,5 @@ For example, implementation details. -->
 * Pending custom requirement for vertical UpDownButtons (compact scenarios).
 
 * InputScope: Number or FormulaNumber?
+
+* Should Value/Text changed events fire on "Enter"/loss of focus or on every change - case in mind is hyper drag/scrolling where users would be testing the number range.  Additionally, constant validation affords an opportunity to display validation error indicator/message before reverting a bad value back to the last good one on "Enter"/Loss of focus. 
