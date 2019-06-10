@@ -136,6 +136,12 @@ with a "///" comment above the member or type. -->
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 
 ```c++ 
+enum NumberBoxUpDownButtonsPlacementMode
+{
+    Off,
+    Inline,
+};
+
 runtimeclass NumberBoxValueChangedEventArgs
 {
     String Text;
@@ -153,9 +159,13 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     NumberBox();
     
     Double Value;
+    
+    Boolean BasicValidationEnabled;
+    Boolean IsInvalidInputOverwritten;
+    
     Boolean AcceptsCalculation;
     
-    Boolean UpDownButtonsEnabled;
+    NumberBoxUpDownButtonsPlacementMode UpDownButtonsPlacementMode;
     Boolean HyperDragEnabled;
     Boolean HyperScrollEnabled;
     Double StepFrequency;
@@ -166,9 +176,6 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     
     Double MinValue;
     Double MaxValue;
-    
-    Boolean IsInvalidInputOverwritten
-    
 
     NumberBoxTemplateSettings TemplateSettings{ get; };
 
@@ -176,6 +183,10 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     event Windows.Foundation.TypedEventHandler<NumberBox, NumberBoxTextChangedEventArgs> TextChanged;
 
     static Windows.UI.Xaml.DependencyProperty ValueProperty{ get; };
+    
+    static Windows.UI.Xaml.DependencyProperty BasicValidationEnabledProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty IsInvalidInputOverwrittenProperty{ get; };
+    
     static Windows.UI.Xaml.DependencyProperty AcceptsCalculationProperty{ get; };
     
     static Windows.UI.Xaml.DependencyProperty UpDownButtonsEnabledProperty{ get; };
@@ -189,8 +200,6 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     
     static Windows.UI.Xaml.DependencyProperty MinValueProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty MaxValueProperty{ get; };
-    
-    static Windows.UI.Xaml.DependencyProperty IsInvalidInputOverwrittenProperty{ get; };
 }
 ```
 
@@ -203,8 +212,7 @@ For example, implementation details. -->
 
 | Property | Notes |
 |:---:|:---|
-| Value/Text Changed | * When Text is changed via codebehind or by user input ("Enter" is pressed or the NumberBox loses focus) the NumberBox will be prompted to update its Text and Value properties. A TextChanged event will be raised that will exposes the new Text and the old Value and allows the developer to intercept the and manipulate these properties (such as for manually handling validation error). Value will then be updated to the Text input converted to a Double. <br><br> * Conversely, code behind updates to Value will raise a ValueChanged event that will exposes the new Value and the old Text and allows the developer to intercept the and manipulate these properties (such as for manually handling validation error). Text will then be updated to the Value input converted to a String.    |
-| Validation | * Input that is non-numerical forumalic or exceeds the min/max values will trigger an [Input Validation warning]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md). <br><br> * The developer can intercept the ValueChanged or TextChanged events (which exposes the changed property and the one to be updated) and manually manipulate invalid input before an [Input Validation warning]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md) is displayed. <br><br> * Enabling the IsInvalidInputOverwritten property will revert invalid input to the last valid state without displaying [Input Validation warning]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md). E.g., if IsInvalidInputOverwritten is enabled, StepFrequency=0.2, MaxValue=3.0, and the value 2.9 is incremented, 3.1 will register as invalid and it will be overwritten back to 2.9. |
+| Validation | * If BasicValidationEnabled="False", no automatic validation will occur on the control. This setting allows developers to configure custom validation via [Input Validation]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md). <br><br> * If BasicValidationEnabled="True" and IsInvalidInputOverwritten="False", input that is outside the bounds of MinValue/MaxValue or non-numerical/formulaic will trigger a validation warning consistent with [Input Validation]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md). This can take the form of a warning icon or a warning message as specified by the developer. <br><br> * If BasicValidationEnabled="True" and IsInvalidInputOverwritten="True", input that is non-numerical/formulaic will automatically be overwritten with the last legal value. Input that is outside the bounds of MinValue/MaxValue will be coerced to the respective bound. <br><br> * NOTE: In all scenarios, when Text is changed via codebehind or by user input, the NumberBox will be prompted to update its Value property. TextChanged/TextChanging events will be raised that will expose the new Text and the old Value and allows the developer to intercept the and manipulate these properties. Conversely, code behind updates to Value will raise ValueChanged/ValueChagning events that will expose the new Value and the old Text and allows the developer to intercept the and manipulate these properties (such as for manually handling validation error). Basic validation/overwritting, if enabled, will occur after these events to ensure valid input.|
 
 ## Open Questions
 
