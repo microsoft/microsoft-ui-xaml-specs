@@ -138,7 +138,7 @@ with a "///" comment above the member or type. -->
 ```c++ 
 enum NumberBoxUpDownButtonsPlacementMode
 {
-    Off,
+    Hidden,
     Inline,
 };
 
