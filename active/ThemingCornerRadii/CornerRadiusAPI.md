@@ -119,6 +119,25 @@ The following table details out the controls who's values corresponds to the glo
 |13| ToggleSwitch | ToggleSwitchThemeCornerRadius | OuterBorder (Rectangle), SwitchKnobBounds (Rectangle) |
 |14| SplitButton | SplitButtonThemeCornerRadius | CornerRadius Property (Setter in Style) |
 |15| DropDownButton | DropDownButtonThemeCornerRadius | CornerRadius Property (Setter in Style) |
+|16| PasswordBox | PasswordBoxThemeCornerRadius | CornerRadius Property (Setter in Style) |
+|17| RichEditBox | RichEditBoxThemeCornerRadius | CornerRadius Property (Setter in Style) |
+|18| Tab Control | TabControlThemeCornerRadius | *tbd* |
+|19| ToggleSplitButton | ToggleSplitButtonThemeCornerRadius | CornerRadius Property (Setter in Style) *Top,Bottom only on one side for each button "split"* |
+|20| FlipView | FlipViewThemeCornerRadius | *tbd* |
+|21| GridView | GridViewThemeCornerRadius | *tbd* |
+|22| ListView | ListViewThemeCornerRadius | *tbd* |
+|23| TreeView | TreeViewThemeCornerRadius | *tbd* |
+
+#### Control "Bars"
+The following controls receiving rounded corners don't back backplates that can round per-say, but instead have visual components (dubbed "bars") that indicate selection or state that will be getting rounded.
+
+|#| Control | Lightweight resource(s) | Affected template attribute/style |
+|:-:|:-|:-|:-|
+|1| NavigationView | NavigationViewSelectorThemeCornerRadius | NavigationViewItemPresenter *(Top and Left style)* SelectionIndicator (Rectangle) |
+|2| Pivot | PivotSelectorThemeCornerRadius | FocusFollower (Rectangle) |
+|3| ScrollIndicator | ScrollIndicatorThemeCornerRadius | *tbd* |
+|4| ColorPicker | ColorPickerThemeCornerRadius | *tbd* |
+|5| MediaPlayerElement | MediaPlayerElementTrackThemeCornerRadius | *tbd* |
 
 ### OverlayThemeCornerRadius
 The following table details out the controls who's values corresponds to the global CornerRadius value for ``OverlayThemeCornerRadius``.
@@ -134,6 +153,10 @@ The following table details out the controls who's values corresponds to the glo
 |7| CommandBar Overflow | CommandBarOverflowThemeCornerRadius | OverflowContentRoot (Grid) |
 |8| Tooltip | ToolTipThemeCornerRadius| LayoutRoot (ContentPresenter CornerRadius property) |
 |9| AutoSuggestBox Popup | AutoSuggestBoxSuggestionsThemeCornerRadius | SuggestionsContainer (Border) |
+|10| ToggleSplitButton Dropdown | ToggleSplitButtonDropdownThemeCornerRadius | *tbd* |
+|11| MenuBar Flyout | MenuBarFlyoutThemeCornerRadius | *tbd* |
+|12| TeachingTip | TeachingTipThemeCornerRadius | *tbd* |
+|13| CalendarDatePicker | CalendarDatePickerFlyoutThemeCornerRadius | FlyoutPresenter CornerRadius (Setter in AttachedFlyout Style) |
 
 ## CornerRadiusResources API (P2)
 >This API follows a very similar model to that of the [ColorSchemeResources](https://docs.microsoft.com/en-us/windows/uwp/design/style/color#how-to-use-colorschemeresources).
