@@ -84,7 +84,7 @@ XAML
 ```XAML
 <NumberBox AutomationProperties.Name="NumberBox for items in order" 
     StepFrequency="0.1"
-    UpDownButtonsEnabled="True"
+    UpDownButtonsPlacementMode="Inline"
     HyperDragEnabled="True" 
     HyperScrollEnabled="True" />
 ```
@@ -98,6 +98,7 @@ XAML
 <NumberBox AutomationProperties.Name="NumberBox for solution components" 
     Header="Enter a percentage:"
     PlaceholderText="2/3" 
+    MinMaxMode="WrapEnabled"
     MinValue="0"
     MaxValue="100" 
     AreLeadingZerosTrimmed="False"
@@ -142,6 +143,15 @@ enum NumberBoxUpDownButtonsPlacementMode
     Inline,
 };
 
+enum NumberBoxMinMaxMode
+{
+    None,
+    MinEnabled,
+    MaxEnabled,
+    MinAndMaxEnabled,
+    WrapEnabled,
+};
+
 runtimeclass NumberBoxValueChangedEventArgs
 {
     String Text;
@@ -174,6 +184,7 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     Double DecimalPrecision;
     Boolean DoesInputRound;
     
+    NumberBoxMinMaxMode MinMaxMode;
     Double MinValue;
     Double MaxValue;
 
@@ -198,6 +209,7 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     static Windows.UI.Xaml.DependencyProperty DecimalPrecisionProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty DoesInputRoundProperty{ get; };
     
+    static Windows.UI.Xaml.DependencyProperty MinMaxModeProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty MinValueProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty MaxValueProperty{ get; };
 }
@@ -213,7 +225,9 @@ For example, implementation details. -->
 | Property | Notes |
 |:---:|:---|
 | Validation | * If BasicValidationEnabled="False", no automatic validation will occur on the control. This setting allows developers to configure custom validation via [Input Validation]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md). <br><br> * If BasicValidationEnabled="True" and IsInvalidInputOverwritten="False", input that is outside the bounds of MinValue/MaxValue or non-numerical/formulaic will trigger a validation warning consistent with [Input Validation]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md). This can take the form of a warning icon or a warning message as specified by the developer. <br><br> * If BasicValidationEnabled="True" and IsInvalidInputOverwritten="True", input that is non-numerical/formulaic will automatically be overwritten with the last legal value. Input that is outside the bounds of MinValue/MaxValue will be coerced to the respective bound. <br><br> * NOTE: In all scenarios, when Text is changed via codebehind or by user input, the NumberBox will be prompted to update its Value property. TextChanged/TextChanging events will be raised that will expose the new Text and the old Value and allows the developer to intercept the and manipulate these properties. Conversely, code behind updates to Value will raise ValueChanged/ValueChagning events that will expose the new Value and the old Text and allows the developer to intercept the and manipulate these properties (such as for manually handling validation error). Basic validation/overwritting, if enabled, will occur after these events to ensure valid input.|
-|Decimal Precision | * Positive DecimalPrecision values truncate post-decimal values. E.g., DecimalPrecision="5", DoesInputRound="False", input is 6.1234567, Text="6.12345" on evalutation. E.g., DecimalPrecision="5", input is 6.123, Text="6.12300" on evalutation. <br><br> * Negative DecimalPrecision values truncate pre-decimal values. E.g., DecimalPrecision="-3", DoesInputRound="False", input is 54321, Text="54000" on evalutation. E.g., DecimalPrecision="-3", DoesInputRound="True", input is 54321, Text="55000" on evalutation. <br><br> * "0" gets auto-filled on leading decimal. E.g., input is .4, Text="0.4" on evaluation. 
+|Decimal Precision | * Positive DecimalPrecision values truncate post-decimal values. E.g., DecimalPrecision="5", DoesInputRound="False", input is 6.1234567, Text="6.12345" on evalutation. E.g., DecimalPrecision="5", input is 6.123, Text="6.12300" on evalutation. <br><br> * Negative DecimalPrecision values truncate pre-decimal values. E.g., DecimalPrecision="-3", DoesInputRound="False", input is 54321, Text="54000" on evalutation. E.g., DecimalPrecision="-3", DoesInputRound="True", input is 54321, Text="55000" on evalutation. <br><br> * "0" gets auto-filled on leading decimal. E.g., input is .4, Text="0.4" on evaluation. |
+| Hyper Scroll | * Focus and hover required for hyper scroll behavior to take place as to not reduce quality of experience on scrollable surfaces. |
+
 
 ## Open Questions
 
