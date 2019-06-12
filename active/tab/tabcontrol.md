@@ -250,3 +250,8 @@ For example, implementation details. -->
 ![Position of TabHeader TabFooter and TabActionContent](https://user-images.githubusercontent.com/25991996/53277918-4c654400-36bb-11e9-9d0d-4fac948bc9f0.png)
 
 # Open Questions
+* Should TabControl support tabs that don't close?
+* Does TabControl need two areas to the right of the tab pane (as spec'd) or can there just be one content area?
+* The spec outlines several keyboard behaviors which may be considered "non-standard". Should those be built into the control directly?
+* Compact mode isn't required for Terminal v1 - can we push this feature out to v2? 
+* Do we need a TabClosed event? It would be useful from a consistency point of view, but is it required for v1?
