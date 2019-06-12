@@ -224,16 +224,13 @@ For example, implementation details. -->
 
 | Property | Notes |
 |:---:|:---|
+| Scope | "Number" will be used for the InputScope. This may be overwritten by the developer but alternative InputScope types will not be explicitly supported. | 
 | Validation | * If BasicValidationEnabled="False", no automatic validation will occur on the control. This setting allows developers to configure custom validation via [Input Validation]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md). <br><br> * If BasicValidationEnabled="True" and IsInvalidInputOverwritten="False", input that is outside the bounds of MinValue/MaxValue or non-numerical/formulaic will trigger a validation warning consistent with [Input Validation]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md). This can take the form of a warning icon or a warning message as specified by the developer. <br><br> * If BasicValidationEnabled="True" and IsInvalidInputOverwritten="True", input that is non-numerical/formulaic will automatically be overwritten with the last legal value. Input that is outside the bounds of MinValue/MaxValue will be coerced to the respective bound. <br><br> * NOTE: In all scenarios, when Text is changed via codebehind or by user input, the NumberBox will be prompted to update its Value property. TextChanged/TextChanging events will be raised that will expose the new Text and the old Value and allows the developer to intercept the and manipulate these properties. Conversely, code behind updates to Value will raise ValueChanged/ValueChagning events that will expose the new Value and the old Text and allows the developer to intercept the and manipulate these properties (such as for manually handling validation error). Basic validation/overwritting, if enabled, will occur after these events to ensure valid input.|
 |Decimal Precision | * Positive DecimalPrecision values truncate post-decimal values. E.g., DecimalPrecision="5", DoesInputRound="False", input is 6.1234567, Text="6.12345" on evalutation. E.g., DecimalPrecision="5", input is 6.123, Text="6.12300" on evalutation. <br><br> * Negative DecimalPrecision values truncate pre-decimal values. E.g., DecimalPrecision="-3", DoesInputRound="False", input is 54321, Text="54000" on evalutation. E.g., DecimalPrecision="-3", DoesInputRound="True", input is 54321, Text="55000" on evalutation. <br><br> * "0" gets auto-filled on leading decimal. E.g., input is .4, Text="0.4" on evaluation. |
 | Hyper Scroll | * Focus and hover required for hyper scroll behavior to take place as to not reduce quality of experience on scrollable surfaces. |
 
 
 ## Open Questions
-
-* Consenus on Validation behavior. (See Appendix > Behavioral Components)
-
-* Naming and firing of Value/Text changed events?
 
 * Up/Down arrow keys for stepping NumberBox with keyboard nav?  
 
@@ -242,16 +239,6 @@ For example, implementation details. -->
 ![NumberBox with a tool tip above to show a preview of the calculation results](https://user-images.githubusercontent.com/16964652/58919441-fbfe7900-86e2-11e9-8d2b-dd4dadfa74c5.png)
 
 ![NumberBox with a calculation in progress and highlight text previewing the calculation results](https://user-images.githubusercontent.com/7389110/58920708-5b807700-872b-11e9-9924-21a7b7d37e68.png)
-
-* InputScope: Number or FormulaNumber?
-
-*  Should we rely on the Xaml ControlTemplate for creating a NumberBox with disjoint UpDownButtons (i.e., this is not common enough to justify supporting out of the box) or should we include a property for setting whether the UpDownButtons appear appear contiguous vs. disjoint?
-
-![one diagram showing UpDownButtons side-by-side and another diagram showing the down button to the left of the NumberBox and the up button to the right of the NumberBox](https://user-images.githubusercontent.com/16964652/58919787-3ae0fe80-86e4-11e9-8136-4c5b204825b0.png)
-
-* Pending custom requirement for vertical UpDownButtons (compact scenarios).
-
-* Is there any localization need for switching the sides of the UpDownButtons? 
 
 * Can touch/virtual keyboards intelligently adapt to numeral-formulaic input?
 
