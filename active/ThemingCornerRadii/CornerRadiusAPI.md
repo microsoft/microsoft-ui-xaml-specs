@@ -37,7 +37,7 @@ The ``CornerRadius`` property for controls and their templates can be easily cus
 The following example cover common use-case scenarios where an app-author would like to customize the corner radii of one or more controls.
 
 ## Setting the CornerRadii of controls
-To make large changes globally and consistently to all controls within a scope, defining/overriding the ``ConrtolThemeCornerRadius`` and ``OverlayThemeCornerRadius`` resources from generic.xaml will affect all controls that benefit from rounded edges.
+To make large changes globally and consistently to all controls within a scope, defining/overriding the ``ControlThemeCornerRadius`` and ``OverlayThemeCornerRadius`` resources from generic.xaml will affect all controls that benefit from rounded edges.
 
 ``` xml
 <Application.Resources>
