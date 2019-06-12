@@ -74,7 +74,7 @@ public class ViewModel
 ```
 
 #### C# only - Person (Model)
-Person.Name is the source of the bind (this.ViewModel.Person.Name).  Person derives from ValidationWrapper (app code) which will provide the data validation for Name.  It’s marked with [MinLength] and [MaxLength] data annotations.  The property accessors use GetValue/SetValue in the base ValidationWrapper class for storage and to check the validity.
+Person.Name is the source of the bind (this.ViewModel.Person.Name).  Person derives from ValidationWrapper (app code) which will provide the GetValue/SetValue methods which perform data validation for Name.  It’s marked with [MinLength] and [MaxLength] data annotations.  The property accessors use GetValue/SetValue in the base ValidationWrapper class for storage and to check the validity.
 
 ``` csharp
 using System.ComponentModel.DataAnnotations;
