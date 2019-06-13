@@ -61,7 +61,7 @@ example code with each description. The general format is:
 
 XAML
 ```XAML
-<NumberBox AutomationProperties.Name="simple NumberBox" Header="Enter equation:" PlaceholderText="A + B * C" />
+<NumberBox x:Name="EquationInputNumberBox" Header="Enter equation:" PlaceholderText="A + B * C" />
 ```
 
 ![](images/numberbox-placeholder-text.png)
@@ -70,7 +70,7 @@ XAML
 
 XAML
 ```XAML
-<NumberBox AutomationProperties.Name="NumberBox for simple calculations" 
+<NumberBox x:Name="EquationInputNumberBox"
     Header="Enter equation:" 
     PlaceholderText="A + B * C" 
     AcceptsCalculation="True" />
@@ -82,8 +82,9 @@ XAML
 
 XAML
 ```XAML
-<NumberBox AutomationProperties.Name="NumberBox for items in order" 
-    StepFrequency="0.1"
+<NumberBox x:Name="ItemQuantityNumberBox" 
+    Header="Quantity"
+    StepFrequency="2"
     SpinButtonPlacementMode="Inline"
     HyperDragEnabled="True" 
     HyperScrollEnabled="True" />
@@ -95,7 +96,7 @@ XAML
 
 XAML
 ```XAML
-<NumberBox AutomationProperties.Name="NumberBox for solution components" 
+<NumberBox x:Name="PercentageNumberBox" 
     Header="Enter a percentage:"
     PlaceholderText="2/3" 
     MinMaxMode="WrapEnabled"
