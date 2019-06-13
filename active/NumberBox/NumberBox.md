@@ -143,6 +143,14 @@ enum NumberBoxUpDownButtonsPlacementMode
     Inline,
 };
 
+enum NumberBoxBasicValidationMode
+{
+    InvalidInputOverwritten,
+    IconMessage,
+    TextBlockMessage,
+    Disabled,
+};
+
 enum NumberBoxMinMaxMode
 {
     None,
@@ -170,8 +178,8 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     
     Double Value;
     
-    Boolean BasicValidationEnabled;
-    Boolean IsInvalidInputOverwritten;
+    NumberBoxBasicValidationMode BasicValidationMode;
+    TextBlock ValidationErrorMessage;
     
     Boolean AcceptsCalculation;
     Boolean EnterTriggersEvaluation;
@@ -196,8 +204,8 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
 
     static Windows.UI.Xaml.DependencyProperty ValueProperty{ get; };
     
-    static Windows.UI.Xaml.DependencyProperty BasicValidationEnabledProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty IsInvalidInputOverwrittenProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty BasicValidationModeProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty ValidationErrorMessageProperty{ get; };
     
     static Windows.UI.Xaml.DependencyProperty AcceptsCalculationProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty EnterTriggersEvaluationProperty{ get; };
@@ -228,7 +236,7 @@ For example, implementation details. -->
 |:---:|:---|
 | InputScope | "Number" will be used for the InputScope. This may be overwritten by the developer but alternative InputScope types will not be explicitly supported. | 
 | AcceptsCalculation | NumberBox will provide computation support for multiplication, division, addition, and subtraction across parenthetical order with standard operator precedence; i.e., [ 0-9()+-/* ] |
-| Validation | * If BasicValidationEnabled="False", no automatic validation will occur on the control. This setting allows developers to configure custom validation via [Input Validation]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md). <br><br> * If BasicValidationEnabled="True" and IsInvalidInputOverwritten="False", input that is outside the bounds of MinValue/MaxValue or non-numerical/formulaic will trigger a validation warning consistent with [Input Validation]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md). This can take the form of a warning icon or a warning message as specified by the developer. <br><br> * If BasicValidationEnabled="True" and IsInvalidInputOverwritten="True", input that is non-numerical/formulaic will automatically be overwritten with the last legal value. Input that is outside the bounds of MinValue/MaxValue will be coerced to the respective bound. <br><br> * NOTE: In all scenarios, when Text is changed via codebehind or by user input, the NumberBox will be prompted to update its Value property. TextChanged/TextChanging events will be raised that will expose the new Text and the old Value and allows the developer to intercept the and manipulate these properties. Conversely, code behind updates to Value will raise ValueChanged/ValueChagning events that will expose the new Value and the old Text and allows the developer to intercept the and manipulate these properties (such as for manually handling validation error). Basic validation/overwritting, if enabled, will occur after these events to ensure valid input.|
+| Validation | * If BasicValidationMode="Disabled", no automatic validation will occur. This setting allows developers to configure custom validation via [Input Validation]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md). <br><br> * If BasicValidationMode="TextBlockMessage" or BasicValidationMode="IconMessage", input that is outside the bounds of MinValue/MaxValue or non-numerical/formulaic will trigger a validation warning consistent with [Input Validation]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md). A MinValue error will display "Minimum is <MinValue>." A MaxValue error will display "Maximum is <MinValue>." Input errors will display "Only use numbers and ()+-/*." <br><br> * If BasicValidationMode="InvalidInputOverwritten", input that is non-numerical/formulaic will automatically be overwritten with the last legal value. Input that is outside the bounds of MinValue/MaxValue will be coerced to the respective bound. |
 | Events | * Loss of focus, "=", and stepping [SEE API NOTES > UPDOWNBUTTONS && HYPER SCROLL && HYPER DRAG && KEYBOARD STEPPING] will trigger evalution. <br><br> * When Text (derived from TextBox) is changed by codebehind or user input on the evaluation triggers noted above, the TextChanging event will be fired. After, if BasicValidationEnabled="True", validation will be performed [See API NOTES > VALIDATION]. Text will then be updated and the TextChanged event will be fired. Text will then be converted to a Double and the ValueChanging event event will be fired. After, Value will be updated and the ValueChanged event will be fired. <br><br> * When Value is changed by codebehind, the ValueChanging event will be fired. After, if BasicValidationEnabled="True", validation will be performed [See API NOTES > VALIDATION]. Value will then be updated and the ValueChanged event will be fired. Value will then be converted to a String and the TextChanging event event will be fired.  After, Text will be updated and the TextChanged event will be fired. <br><br> * Each event affords the developer the opportunity to perform value manipulation or manually configured validation. |
 |Decimal Precision | * Positive DecimalPrecision values truncate post-decimal values. E.g., DecimalPrecision="5", DoesInputRound="False", input is 6.1234567, Text="6.12345" on evalutation. E.g., DecimalPrecision="5", input is 6.123, Text="6.12300" on evalutation. <br><br> * Negative DecimalPrecision values truncate pre-decimal values. E.g., DecimalPrecision="-3", DoesInputRound="False", input is 54321, Text="54000" on evalutation. E.g., DecimalPrecision="-3", DoesInputRound="True", input is 54321, Text="55000" on evalutation. <br><br> * "0" gets auto-filled on leading decimal. E.g., input is .4, Text="0.4" on evaluation. |
 | UpDown Buttons | * If a calculation is stepped, it will be calculated before the step is applied. |
