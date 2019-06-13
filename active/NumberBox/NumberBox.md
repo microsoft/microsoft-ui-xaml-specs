@@ -261,7 +261,13 @@ For example, implementation details. -->
 
 | State | Action |
 |:---|:---|
-| | |
+| Focus is moved to NumberBox's editable text field. | |
+| Evaluation is triggered. | |
+| Validation Error Message is returned. | |
+| Focus is moved to NumberBox's validation error message. | |
+| Focus is moved to NumberBox's SpinnerButton (Decrement). | |
+| Focus is moved to NumberBox's SpinnerButton (Increment). | |
+
 
 #### Gamepad  
 
