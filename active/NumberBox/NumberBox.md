@@ -275,6 +275,8 @@ For example, implementation details. -->
 
 ## Open Questions
 
+* How should SpinButton styling be exposed?
+
 * Should "Enter" trigger evaluation or would that conflict with anticipated form submission? 
 
 * Should the validation text resize the width of the control, or should it wrap onto multiple lines?
