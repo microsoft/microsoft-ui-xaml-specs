@@ -251,7 +251,11 @@ For example, implementation details. -->
 #### Keyboard Navigation 
 | State | Action |
 |:---|:---|
-| | |
+| Focus is on item in tab stop order before NumberBox | Tab moves focus into NumberBox's editable text field. |
+| Focus is on NumberBox's editable text field. | Tab triggers evaluation and moves focus to validation error message if one is returned. Otherwise, tab moves focus to SpinnerButton (Decrement). |
+| Focus is on NumberBox's validation error message. | Tab moves focus to NumberBox's SpinnerButton (Decrement). |
+| Focus is on NumberBox's SpinnerButton (Decrement). | Tab moves focus to SpinnerButton (Increment). |
+| Focus is on NumberBox's SpinnerButton (Increment). | Tab moves focus out of NumberBox and to the next item in the tab stop order. |
 
 #### Narrator
 
