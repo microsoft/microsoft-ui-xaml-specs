@@ -266,7 +266,7 @@ For example, implementation details. -->
 
 | State | Action |
 |:---|:---|
-| Focus is moved to NumberBox's editable text field. | |
+| Focus is moved to NumberBox's editable text field. | AutomationProperty.Name, Header, and Text properties are read. |
 | Evaluation is triggered. | |
 | Validation Error Message is returned. | |
 | Focus is moved to NumberBox's validation error message. | |
