@@ -174,6 +174,7 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     Boolean IsInvalidInputOverwritten;
     
     Boolean AcceptsCalculation;
+    Boolean EnterTriggersEvaluation;
     
     NumberBoxUpDownButtonsPlacementMode UpDownButtonsPlacementMode;
     Boolean HyperDragEnabled;
@@ -199,6 +200,7 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     static Windows.UI.Xaml.DependencyProperty IsInvalidInputOverwrittenProperty{ get; };
     
     static Windows.UI.Xaml.DependencyProperty AcceptsCalculationProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty EnterTriggersEvaluationProperty{ get; };
     
     static Windows.UI.Xaml.DependencyProperty UpDownButtonsEnabledProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty HyperDragEnabledProperty{ get; };
