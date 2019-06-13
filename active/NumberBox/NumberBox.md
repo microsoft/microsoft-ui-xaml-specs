@@ -175,7 +175,7 @@ runtimeclass NumberBoxValueChangedEventArgs
 unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
 {
     NumberBox();
-    
+   
     Double Value;
     
     NumberBoxBasicValidationMode BasicValidationMode;
@@ -188,9 +188,16 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     Boolean HyperScrollEnabled;
     Double StepFrequency;
   
-    Boolean AreLeadingZerosTrimmed;
-    Double DecimalPrecision;
-    Boolean DoesInputRound;
+    Int FractionDigits;
+    Int IntegerDigits; 
+    Int SignificantDigits 
+    Boolean IsDecimalPointAlwaysDisplayed;
+    Boolean IsZeroSigned;
+    RoundingAlgorithm RoundingAlgorithm;
+    INumberRounder NumberRounder;
+    
+    SignificantDigitsNumberRounder significantDigitsNumberRounder;
+    DecimalFormatter decimalFormatter;
     
     NumberBoxMinMaxMode MinMaxMode;
     Double MinValue;
