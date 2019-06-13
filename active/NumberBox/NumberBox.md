@@ -90,7 +90,7 @@ XAML
     HyperScrollEnabled="True" />
 ```
 
-![](images/numberbox-updownbuttons.png)
+![](images/numberbox-spinnerbutton.png)
 
 ### Format display and output
 
