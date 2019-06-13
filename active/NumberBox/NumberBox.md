@@ -283,11 +283,15 @@ For example, implementation details. -->
 
 ## Open Questions
 
+* Enter: Should this break the tradition of single-line TextBox not eating the Enter key (form submission) to the broaden/purify the user's means of invoking calculation? 
+
+* Escape: Should this key purge un-evaluated input and return the Text to the last stored value (Value)? 
+
 * How should SpinButton styling be exposed?
 
-* Should "Enter" trigger evaluation or would that conflict with anticipated form submission? 
+* Should NumberBox request a configered DecimalFormatter/NumberRounder or expose aligned properties and configure these classes internally? Both? 
 
-* Should the validation text resize the width of the control, or should it wrap onto multiple lines?
+* Should the validation step resize the width of the control? or should it wrap onto multiple lines?
 
 * Is there value in creating a preview for calculation results? @mdtauk created a few example visualizations: 
 
