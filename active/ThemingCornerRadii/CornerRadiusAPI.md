@@ -37,24 +37,55 @@ The ``CornerRadius`` property for controls and their templates can be easily cus
 The following example cover common use-case scenarios where an app-author would like to customize the corner radii of one or more controls.
 
 ## Setting the CornerRadii of controls
-To make large changes globally and consistently to all controls within a scope, defining/overriding the ``ControlThemeCornerRadius`` and ``OverlayThemeCornerRadius`` resources from generic.xaml will affect all controls that benefit from rounded edges.
+There are three main ways to set the corner radius' of controls, depending on the scope and level of granularity desired when customizing/setting the corners.
+
+### Global CornerRadius changes
+To make large changes globally and consistently to all controls within a scope, defining/overriding the ``ControlCornerRadius`` and ``OverlayCornerRadius`` resources from generic.xaml will affect all controls that benefit from rounded edges.
 
 ``` xml
 <Application.Resources>
-  <Thickness x:Key="ControlThemeCornerRadius">10</Thickness>
-  <Thickness x:Key="OverlayThemeCornerRadius">10</Thickness>
+  <Thickness x:Key="ControlCornerRadius">10</Thickness>
+  <Thickness x:Key="OverlayCornerRadius">10</Thickness>
 </Application.Resources>
 ```
 
-## Defining the CornerRadius on specific control(s)
-When more specific or localized changes to particular controls is desired, a [Lightweight styling](https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/xaml-styles#lightweight-styling) approach is available to set the CornerRadii of controls.
+### Varied Scope Control-specific CornerRadius changes
+Using [Lightweight styling](https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/xaml-styles#lightweight-styling), you can customize at which scope you want corner radius values of specific controls to be changed.
 
 ``` xml
 <Page.Resources>
-  <Thickness x:Key="ButtonThemeCornerRadius">5</Thickness>
-  <Thickness x:Key="ProgressBarThemeCornerRadius">3</Thickness>
+  <Thickness x:Key="ButtonCornerRadius">5</Thickness>
+  <Thickness x:Key="ProgressBarCornerRadius">3</Thickness>
 </Page.Resources>
 ```
+
+This can apply at a page level (shown above) and app level (like ``Application.Resources``) or scoped to a container:
+
+``` xml
+<Grid>
+  <Grid.Resources>
+    <Thickness x:Key="ButtonCornerRadius">5</Thickness>
+  </Grid.Resources>
+  <Button Content="My Rounded Button"/>
+</Grid>
+```
+
+### Chaning the CornerRadius property on a control
+Lastly, you can also change the CornerRadius property directly on the control itself, either via a style (which can be scoped) or via the ``CornerRadius`` property on the control itself.
+
+An example of indirect corner radius property setting on a style (can be scoped):
+``` xml
+<Style TargetType="Button">
+  <Setter Property="CornerRadius" Value="6"/>
+</Style>
+```
+
+An example of a corner radius property on the control itself:
+``` xml
+<Button CornerRadius="6" Content="My Rounded Button"/>
+```
+
+Depending on the control you set the ``CornerRadius`` property on, it will effect it differently. If you want to edit the radiis more individually (e.g. the ProgressBar's fill roundness versus ProgressBar's background roundess), consider using the corrent Lightweight styling resource instead.
 
 # Remarks
 <!-- Explanation and guidance that doesn't fit into the Examples
@@ -66,8 +97,8 @@ Depending on the granularity desired by the app-author, they can override either
 
 ```xml
 <Page.Resources>
-  <Thickness x:Key="ControlThemeCornerRadius">2</Thickness>
-  <Thickness x:Key="ButtonThemeCornerRadius">10</Thickness>
+  <Thickness x:Key="ControlCornerRadius">2</Thickness>
+  <Thickness x:Key="ButtonCornerRadius">10</Thickness>
 </Page.Resources>
 
 <Grid>
@@ -81,7 +112,7 @@ Depending on the granularity desired by the app-author, they can override either
 
 ![Mixed resources cornerradius values](images/CornerRoundnessExample.png)
 
-In this example, all controls' border radii have been set to two via the ``ControlThemeCornerRadius`` global resource, and the Button is honoring the control-specific reource ``ButtonThemeCornerRadius``.
+In this example, all controls' border radii have been set to two via the ``ControlCornerRadius`` global resource, and the Button is honoring the control-specific reource ``ButtonCornerRadius``.
 
 # API Notes
 <!-- Give a one or two line description of each API (type
@@ -91,72 +122,72 @@ in IntelliSense. -->
 
 |Global Lightweight resource| Default value |
 |:-|:-:|
-| ControlThemeCornerRadius | 2 |
-| OverlayThemeCornerRadius | 4 |
+| ControlCornerRadius | 2 |
+| OverlayCornerRadius | 4 |
 
 ## Affected controls
 >Below is a list of control-specific [Lightweight styling](https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/xaml-styles#lightweight-styling) resources that are getting updated and tied to the global Lightweight resources mentioned above.
 
 This list also covers which part or parts of a certain control's template will get this new CornerRadius value applied, as some templates have multiple places where a CornerRadius attribute must be changed.
 
-### ControlThemeCornerRadius
-The following table details out the controls who's values corresponds to the global CornerRadius value for ``ControlThemeCornerRadius``.
+### ControlCornerRadius
+The following table details out the controls who's values corresponds to the global CornerRadius value for ``ControlCornerRadius``.
 
 |#| Control | Lightweight resource(s) | Affected template attribute/style |
 |:-:|:-|:-|:-|
-|1| Button | ButtonThemeCornerRadius | CornerRadius Property (Setter in Style) |
-|2| Checkbox | CheckboxThemeCornerRadius | RootGrid (Grid), NormalRectangle (Checkbox Box Rectangle) |
-|3| TextBox | TextBoxThemeCornerRadius | BorderElement (Border) |
-|4| AutoSuggestBox | AutoSuggestBoxThemeCornerRadius | AutoSuggestBoxTextBoxStyle (CornerRadius Property definition) |
-|5| Slider | SliderThemeCornerRadius | HorizontalTrackRect, HorizontalDecreaseRect, VerticalTrackRect, VerticalDecreaseRect (All Rectangles) |
-|6| ComboBox | ComboBoxThemeCornerRadius, ComboBoxItemThemeCornerRadius | CornerRadius Property (Setter in Style) |
-|7| DatePicker | DatePickerThemeCornerRadius | CornerRadius Property (Setter in Style) |
-|8| TimePicker | TimePickerThemeCornerRadius | CornerRadius Property (Setter in Style) |
-|9| CalendarDatePicker | CalendarDatePickerThemeCornerRadius | CornerRadius Property (Setter in Style) |
-|10| ProgressBar | ProgressBarThemeCornerRadius | DeterminateRoot (Border) ProgressBarIndicator (Rectangle) |
-|11| RichEditBox | RichEditBoxThemeCornerRadius | CornerRadius Property (Setter in Style) |
-|12| ToggleButton | ToggleButtonThemeCornerRadius | CornerRadius Property (Setter in Style) |
-|13| ToggleSwitch | ToggleSwitchThemeCornerRadius | OuterBorder (Rectangle), SwitchKnobBounds (Rectangle) |
-|14| SplitButton | SplitButtonThemeCornerRadius | CornerRadius Property (Setter in Style) |
-|15| DropDownButton | DropDownButtonThemeCornerRadius | CornerRadius Property (Setter in Style) |
-|16| PasswordBox | PasswordBoxThemeCornerRadius | CornerRadius Property (Setter in Style) |
-|17| RichEditBox | RichEditBoxThemeCornerRadius | CornerRadius Property (Setter in Style) |
-|18| Tab Control | TabControlThemeCornerRadius | *tbd* |
-|19| ToggleSplitButton | ToggleSplitButtonThemeCornerRadius | CornerRadius Property (Setter in Style) *Top,Bottom only on one side for each button "split"* |
-|20| FlipView | FlipViewThemeCornerRadius | *tbd* |
-|21| GridView | GridViewThemeCornerRadius | *tbd* |
-|22| ListView | ListViewThemeCornerRadius | *tbd* |
-|23| TreeView | TreeViewThemeCornerRadius | *tbd* |
+|1| Button | ButtonCornerRadius | CornerRadius Property (Setter in Style) |
+|2| Checkbox | CheckboxCornerRadius | RootGrid (Grid), NormalRectangle (Checkbox Box Rectangle) |
+|3| TextBox | TextBoxCornerRadius | BorderElement (Border) |
+|4| AutoSuggestBox | AutoSuggestBoxCornerRadius | AutoSuggestBoxTextBoxStyle (CornerRadius Property definition) |
+|5| Slider | SliderCornerRadius | HorizontalTrackRect, HorizontalDecreaseRect, VerticalTrackRect, VerticalDecreaseRect (All Rectangles) |
+|6| ComboBox | ComboBoxCornerRadius, ComboBoxItemCornerRadius | CornerRadius Property (Setter in Style) |
+|7| DatePicker | DatePickerCornerRadius | CornerRadius Property (Setter in Style) |
+|8| TimePicker | TimePickerCornerRadius | CornerRadius Property (Setter in Style) |
+|9| CalendarDatePicker | CalendarDatePickerCornerRadius | CornerRadius Property (Setter in Style) |
+|10| ProgressBar | ProgressBarFillCornerRadius, ProgressBarBackgroundCornerRadius | DeterminateRoot (Fill, is a Border element) ProgressBarIndicator (Background, is a Rectangle element) |
+|11| RichEditBox | RichEditBoxCornerRadius | CornerRadius Property (Setter in Style) |
+|12| ToggleButton | ToggleButtonCornerRadius | CornerRadius Property (Setter in Style) |
+|13| SplitButton | SplitButtonCornerRadius | CornerRadius Property (Setter in Style) |
+|14| DropDownButton | DropDownButtonCornerRadius | CornerRadius Property (Setter in Style) |
+|15| PasswordBox | PasswordBoxCornerRadius | CornerRadius Property (Setter in Style) |
+|16| RichEditBox | RichEditBoxCornerRadius | CornerRadius Property (Setter in Style) |
+|17| Tab Control | TabControlCornerRadius | *tbd* |
+|18| ToggleSplitButton | ToggleSplitButtonCornerRadius | CornerRadius Property (Setter in Style) *Top,Bottom only on one side for each button "split"* |
+|19| FlipView | FlipViewCornerRadius | *tbd* |
+|20| GridView | GridViewCornerRadius | *tbd* |
+|21| ListView | ListViewCornerRadius | *tbd* |
+|22| TreeView | TreeViewCornerRadius | *tbd* |
 
 #### Control "Bars"
 The following controls receiving rounded corners don't back backplates that can round per-say, but instead have visual components (dubbed "bars") that indicate selection or state that will be getting rounded.
 
 |#| Control | Lightweight resource(s) | Affected template attribute/style |
 |:-:|:-|:-|:-|
-|1| NavigationView | NavigationViewSelectorThemeCornerRadius | NavigationViewItemPresenter *(Top and Left style)* SelectionIndicator (Rectangle) |
-|2| Pivot | PivotSelectorThemeCornerRadius | FocusFollower (Rectangle) |
-|3| ScrollIndicator | ScrollIndicatorThemeCornerRadius | *tbd* |
-|4| ColorPicker | ColorPickerThemeCornerRadius | *tbd* |
-|5| MediaPlayerElement | MediaPlayerElementTrackThemeCornerRadius | *tbd* |
+|1| NavigationView | NavigationViewSelectorCornerRadius | NavigationViewItemPresenter *(Top and Left style)* SelectionIndicator (Rectangle) |
+|2| Pivot | PivotSelectorCornerRadius | FocusFollower (Rectangle) |
+|3| ScrollIndicator | ScrollIndicatorCornerRadius | *tbd* |
+|4| ColorPicker | ColorPickerCornerRadius | *tbd* |
+|5| MediaPlayerElement | MediaPlayerElementTrackCornerRadius | *tbd* |
 
-### OverlayThemeCornerRadius
-The following table details out the controls who's values corresponds to the global CornerRadius value for ``OverlayThemeCornerRadius``.
+### OverlayCornerRadius
+The following table details out the controls who's values corresponds to the global CornerRadius value for ``OverlayCornerRadius``.
 
 |#| Control | Lightweight resource(s) | Affected template attribute/style |
 |:-:|:-|:-|:-|
-|1| ContentDialog | ContentDialogThemeCornerRadius | CornerRadius Property (Setter in Style) |
-|2| Flyout | FlyoutThemeCornerRadius | CornerRadius Property (Setter in Style) |
-|3| ComboBox Popup | ComboBoxPopupThemeCornerRadius | PopupBorder (Border) |
-|4| DatePicker Flyout | DatePickerFlyoutThemeCornerRadius | DatePickerFlyoutPresenter (CornerRadius property) |
-|5| TimePicker Flyout | TimePickerFlyoutThemeCornerRadius | TimePickerFlyoutPresenter (CornerRadius property) |
-|6| MenuFlyout | MenuFlyoutThemeCornerRadius | MenuFlyoutPresenter (DefaultMenuFlyoutPresenterStyle CornerRadius propery) |
-|7| CommandBar Overflow | CommandBarOverflowThemeCornerRadius | OverflowContentRoot (Grid) |
-|8| Tooltip | ToolTipThemeCornerRadius| LayoutRoot (ContentPresenter CornerRadius property) |
-|9| AutoSuggestBox Popup | AutoSuggestBoxSuggestionsThemeCornerRadius | SuggestionsContainer (Border) |
-|10| ToggleSplitButton Dropdown | ToggleSplitButtonDropdownThemeCornerRadius | *tbd* |
-|11| MenuBar Flyout | MenuBarFlyoutThemeCornerRadius | *tbd* |
-|12| TeachingTip | TeachingTipThemeCornerRadius | *tbd* |
-|13| CalendarDatePicker | CalendarDatePickerFlyoutThemeCornerRadius | FlyoutPresenter CornerRadius (Setter in AttachedFlyout Style) |
+|1| ContentDialog | ContentDialogCornerRadius | CornerRadius Property (Setter in Style) |
+|2| Flyout | FlyoutCornerRadius | CornerRadius Property (Setter in Style) |
+|3| ComboBox Popup | ComboBoxPopupCornerRadius | PopupBorder (Border) |
+|4| DatePicker Flyout | DatePickerFlyoutCornerRadius | DatePickerFlyoutPresenter (CornerRadius property) |
+|5| TimePicker Flyout | TimePickerFlyoutCornerRadius | TimePickerFlyoutPresenter (CornerRadius property) |
+|6| MenuFlyout | MenuFlyoutCornerRadius | MenuFlyoutPresenter (DefaultMenuFlyoutPresenterStyle CornerRadius propery) |
+|7| CommandBar Overflow | CommandBarOverflowCornerRadius | OverflowContentRoot (Grid) |
+|8| Tooltip | ToolTipCornerRadius| LayoutRoot (ContentPresenter CornerRadius property) |
+|9| AutoSuggestBox Popup | AutoSuggestBoxSuggestionsCornerRadius | SuggestionsContainer (Border) |
+|10| ToggleSplitButton Dropdown | ToggleSplitButtonDropdownCornerRadius | *tbd* |
+|11| MenuBar Flyout | MenuBarFlyoutCornerRadius | *tbd* |
+|12| TeachingTip | TeachingTipCornerRadius | *tbd* |
+|13| CalendarDatePicker | CalendarDatePickerFlyoutCornerRadius | FlyoutPresenter CornerRadius (Setter in AttachedFlyout Style) |
+|14| CommandBarFlyout | CommandBarFlyoutCornerRadius | *tbd* |
 
 ## CornerRadiusResources API (P2)
 >This API follows a very similar model to that of the [ColorSchemeResources](https://docs.microsoft.com/en-us/windows/uwp/design/style/color#how-to-use-colorschemeresources).
