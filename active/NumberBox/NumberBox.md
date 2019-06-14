@@ -194,10 +194,6 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     Boolean IsDecimalPointAlwaysDisplayed;
     Boolean IsZeroSigned;
     RoundingAlgorithm RoundingAlgorithm;
-    INumberRounder NumberRounder;
-    
-    SignificantDigitsNumberRounder significantDigitsNumberRounder;
-    DecimalFormatter decimalFormatter;
     
     NumberBoxMinMaxMode MinMaxMode;
     Double MinValue;
