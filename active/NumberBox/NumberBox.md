@@ -199,6 +199,10 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     Double MinValue;
     Double MaxValue;
 
+    IconSource DecrementIcon;
+    IconSource IncrementIcon;
+    Windows.UI.Xaml.Style DecrementButtonStyle;
+    Windows.UI.Xaml.Style IncrementButtonStyle;
     NumberBoxTemplateSettings TemplateSettings{ get; };
 
     event Windows.Foundation.TypedEventHandler<NumberBox, NumberBoxValueChangingEventArgs> ValueChanging;
