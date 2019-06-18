@@ -220,9 +220,12 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     static Windows.UI.Xaml.DependencyProperty HyperScrollEnabledProperty{ get; };   
     static Windows.UI.Xaml.DependencyProperty StepFrequencyProperty{ get; };
     
-    static Windows.UI.Xaml.DependencyProperty AreLeadingZerosTrimmedProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty DecimalPrecisionProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty DoesInputRoundProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty FractionDigitsProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty IntegerDigitsProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty SignificantDigitsProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty IsDecimalPointAlwaysDisplayedProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty IsZeroSignedProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty RoundingAlgorithmProperty{ get; };
     
     static Windows.UI.Xaml.DependencyProperty MinMaxModeProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty MinValueProperty{ get; };
