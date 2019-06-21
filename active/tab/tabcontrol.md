@@ -184,16 +184,15 @@ Ctrl+TAB will select the next Tab.
 Ctrl+Shift+TAB will select the previous Tab.
 Tab selection cycles (meaning if the user has selected the last tab and presses Ctrl+TAB, the first tab becomes selected).
 
-Ctrl+1 through 8 will automatically select the corresponding Tab.
-Ctrl+9 will automatically select the last Tab.
-
 ### Closing a Tab 
-Hitting CTRL+W or CTRL+F4 will automatically close the selected Tab (assuming it is closable). 
+Hitting CTRL+F4 will close the selected Tab (assuming it is closable). 
 
 ### Keyboard guidance for App Developers
 The above sections outline built-in keyboarding behavior provided by the TabControl. However, there are certain expected keyboard shortcuts that you will be responsible for implementing. 
-* If your Tab control supports adding a new Tab, users expect CTRL+T to open a new tab
+* If your app does not already handle the CTRL+T shortcut, consider using it to open a new tab.
+* If your app does not already handle the CTRL+W shortcut, consider using it to close the selected tab.
 * Consider maintaining a list of recently closed Tabs. If the user presses CTRL+SHIFT+T, they expect recently closed tabs to be reopened.
+* Modern browsers support selecting tabs when pressing CTRL and a number. Consider handling Ctrl+1 through 8, which should select that number Tab. Additionally, you can consider handling Ctrl+9 which selects the last tab (regardless of the number of tabs).
 * If users can perform more commands on a Tab than just closing the Tab (for example, pinning a Tab or duplicating a Tab), consider adding a context menu to the Tab. 
 
 # API Notes
