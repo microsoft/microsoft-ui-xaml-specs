@@ -82,12 +82,10 @@ example code with each description. The general format is:
 <TabControl TabWidthMode="Equal"
             CanCloseTabs="True"
             CloseButtonOverlay="OnHover"
-            CanDragItems="True"
-            CanReorderItems="True"
-            TabDraggedOutside="OpenTabInNewWindow">
-    <TabControl.TabActionContent>
-        <Button Style="{ThemeResource AddNewTabButtonStyle}" Click="NewTab_Click" />
-    </TabControl.TabActionContent>
+            CanDragTabs="True"
+            CanReorderTabs="True"
+            TabDraggedOutside="OpenTabInNewWindow"
+            AddTabButtonClick="NewTab_Click">
     ...
 </TabControl>
 ```
@@ -133,8 +131,8 @@ public MainPage()
 See the [TabView tear out sample](https://github.com/windows-toolkit/Sample-TabView-TearOff/tree/master/TabViewTear) for a more complete sample.
 
 ``` xml
-<TabControl CanDragItems="True"
-            CanReorderItems="True"
+<TabControl CanDragTabs="True"
+            CanReorderTabs="True"
             TabDraggedOutside="TabControl_TabDraggedOutside">
 ```
 ``` csharp
@@ -167,6 +165,12 @@ private async void TabControl_TabDraggedOutside(object sender, TabDraggedOutside
 <TabControl ItemsSource="{x:Bind TabItemCollection}" />
 ```
 
+## Implement browser-style keyboarding behavior
+TODO
+
+## Combine tabs from one window into another window
+TODO -- should this be part of the "tab tear out" sample above?
+
 # Remarks
 <!-- Explanation and guidance that doesn't fit into the Examples
 section.  For example, see the Remarks for the MediaPlayerElement 
@@ -174,7 +178,7 @@ section.  For example, see the Remarks for the MediaPlayerElement
 
 ## Keyboarding behavior
 ### TAB and Arrow key behavior
-The TabControl has areas containing left content, right content, and the Tab content (containing 0 or more Tabs). When the user hits the TAB key, focus moves between the content areas. When focus moves into the Tab content area, the selected Tab gains focus. Once the user is in the Tab content area, pressing the arrow key will move focus between the tabs. Arrow focus is trapped inside the Tab content area.
+The TabControl has three content areas: TabStrip, TabStripHeader (to the left of the TabStrip) and TabStripFooter (to the right of the TabStrip). When the user hits the TAB key, focus moves between the content areas. When focus moves into the Tab content area, the selected Tab gains focus. Once the user is in the Tab content area, pressing the arrow key will move focus between the tabs. Arrow focus is trapped inside the Tab content area.
 
 ### Selecting a Tab
 When a Tab has focus, pressing SPACE or ENTER will select that Tab.
