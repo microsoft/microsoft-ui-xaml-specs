@@ -79,7 +79,7 @@ example code with each description. The general format is:
 ## To replicate the behavior of Microsoft Edge
 
 ``` xml
-<TabControl TabWidthBehavior="Equal"
+<TabControl TabWidthMode="Equal"
             CanCloseTabs="True"
             CloseButtonOverlay="OnHover"
             CanDragItems="True"
@@ -201,22 +201,33 @@ and member), or at least the ones that aren't obvious
 from their name.  These descriptions are what show up
 in IntelliSense. -->
 
-### TabControl properties and events
+### TabControl properties, events, methods
 
 | Property | Type | Description |
 |:-------- |:---- |:----------- |
 | AddTabButtonVisibility | Visibility | Determines if the plus button appears to the right of the tab strip |
 | CanDragTabs | bool | Gets or sets a value that indicates whether tabs in the collection can be dragged. Default is true. |
 | CanReorderTabs | bool | Gets or sets a value that indicates whether tabs in the collection can be reordered through user interaction. Default is true. |
+| ItemsSource | object | Gets or sets an object source used to generate the tabs. |
+| Items | IVector<object> | Gets the collection used to generate the tabs. |
+| ItemTemplate | DataTemplate | Gets or sets the DataTemplate used to display each item. |
+| SelectedIndex | Int32 | Gets or sets the index of the selected item. |
+| SelectedItem | object | Gets or sets the selected item. |
 | TabStripHeader | object | Content to the left of the tab strip. |
 | TabStripFooter | object | Content to the right of the tab strip. |
-| TabWidthBehavior | enum | Specifies how the tabs should be sized. Values are {Actual, Equal}. Default is Actual. |
+| TabWidthMode | enum | Specifies how the tabs should be sized. Values are {Actual, Equal}. Default is Actual. |
 
 | Event | Description |
 |---|---|
 | AddTabButtonClick | Fires when the + button is clicked. |
+| SelectionChanged | Occurs when the currently selected tab changes. |
 | TabClosing | Fires when a tab is about to be closed. Can be cancelled to prevent closure. |
 | TabDraggedOutside | Fires when a Tab is dragged outside of the Tab bar. |
+
+| Method | Description |
+|---|---|
+| DependencyObject ContainerFromItem(object item) | Returns the generated container for the specified item. |
+| DependencyObject ContainerFromIndex(Int32 index) | Returns the generated container for the specified index. |
 
 ### TabItem properties and events
 
