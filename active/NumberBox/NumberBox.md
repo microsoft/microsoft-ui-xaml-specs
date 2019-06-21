@@ -161,6 +161,12 @@ enum NumberBoxMinMaxMode
     WrapEnabled,
 };
 
+enum NumberBoxNumberRounder
+{
+    IncrementNumberRounder,
+    SignificantDigitsNumberRounder,
+};
+
 runtimeclass NumberBoxValueChangingEventArgs
 {
     Boolean IsContentChanging;
@@ -179,7 +185,6 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     Double Value;
     
     NumberBoxBasicValidationMode BasicValidationMode;
-    TextBlock ValidationErrorMessage;
     
     Boolean AcceptsCalculation;
     
@@ -188,12 +193,16 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     Boolean HyperScrollEnabled;
     Double StepFrequency;
   
-    Int FractionDigits;
     Int IntegerDigits; 
-    Int SignificantDigits 
+    Int FractionDigits;
+    Int SignificantDigits; 
     Boolean IsDecimalPointAlwaysDisplayed;
     Boolean IsZeroSigned;
+    
     RoundingAlgorithm RoundingAlgorithm;
+    NumberBoxNumberRounder NumberRounder; 
+    Uint IncrementPrecision;
+    Double SignificantDigitPrecision;
     
     NumberBoxMinMaxMode MinMaxMode;
     Double MinValue;
