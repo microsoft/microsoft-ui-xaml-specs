@@ -220,7 +220,6 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     static Windows.UI.Xaml.DependencyProperty ValueProperty{ get; };
     
     static Windows.UI.Xaml.DependencyProperty BasicValidationModeProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty ValidationErrorMessageProperty{ get; };
     
     static Windows.UI.Xaml.DependencyProperty AcceptsCalculationProperty{ get; };
     
@@ -228,13 +227,17 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     static Windows.UI.Xaml.DependencyProperty HyperDragEnabledProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty HyperScrollEnabledProperty{ get; };   
     static Windows.UI.Xaml.DependencyProperty StepFrequencyProperty{ get; };
-    
-    static Windows.UI.Xaml.DependencyProperty FractionDigitsProperty{ get; };
+
     static Windows.UI.Xaml.DependencyProperty IntegerDigitsProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty FractionDigitsProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty SignificantDigitsProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty IsDecimalPointAlwaysDisplayedProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty IsZeroSignedProperty{ get; };
+    
     static Windows.UI.Xaml.DependencyProperty RoundingAlgorithmProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty NumberRounderProperty{ get; }; 
+    static Windows.UI.Xaml.DependencyProperty IncrementPrecisionProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty SignificantDigitPrecisionProperty{ get; };
     
     static Windows.UI.Xaml.DependencyProperty MinMaxModeProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty MinValueProperty{ get; };
