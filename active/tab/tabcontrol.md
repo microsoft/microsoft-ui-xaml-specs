@@ -255,8 +255,8 @@ in IntelliSense. -->
 that isn't necessary to understand the purpose and usage of the API.
 For example, implementation details. -->
 
-![Position of TabStripHeader and TabStripFooter](images/tab-control-parts-1.png)
+![Position of TabStripHeader and TabStripFooter](images/tab-control-parts-1.PNG)
 
-![Parts of a tab item](images/tab-control-parts-2.png)
+![Parts of a tab item](images/tab-control-parts-2.PNG)
 
 # Open Questions
