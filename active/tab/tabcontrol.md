@@ -206,8 +206,11 @@ in IntelliSense. -->
 | Property | Type | Description |
 |:-------- |:---- |:----------- |
 | AddTabButtonVisibility | Visibility | Determines if the plus button appears to the right of the tab strip |
+| CanDragTabs | bool | Gets or sets a value that indicates whether tabs in the collection can be dragged. Default is true. |
+| CanReorderTabs | bool | Gets or sets a value that indicates whether tabs in the collection can be reordered through user interaction. Default is true. |
 | TabStripHeader | object | Content to the left of the tab strip. |
 | TabStripFooter | object | Content to the right of the tab strip. |
+| TabWidthBehavior | enum | Specifies how the tabs should be sized. Values are {Actual, Equal}. Default is Actual. |
 
 | Event | Description |
 |---|---|
@@ -223,7 +226,7 @@ in IntelliSense. -->
 | Header | object | The content that appears inside the tab itself.  |
 | HeaderTemplate | DataTemplate | Template for the header object. |
 | Icon | IconElement | Icon for the tab. |
-| IsClosable | bool | Determines if the tab shows a close button. |
+| IsClosable | bool | Determines if the tab shows a close button. Default is "True". |
 
 | Event | Description |
 |---|---|
