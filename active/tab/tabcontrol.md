@@ -205,20 +205,13 @@ in IntelliSense. -->
 
 | Property | Type | Description |
 |:-------- |:---- |:----------- |
-| CanCloseTabs | bool | Default value for the item if it doesn't specify a IsClosable value. |
-| CloseButtonOverlay | enum | Describes the behavior of the close button of unselected tabs. Values are {Auto, OnHover, Persistent}. Default is Auto. In WinUI 2.2, Auto maps to Persistent.  |
-| ItemHeaderTemplate | DataTemplate | Default template for the item if no template specified. |
-| SelectedTabWidth | double | The size of the selected tab header. |
-| TabHeader | object | Content to the left of the tab strip. |
-| TabHeaderTemplate | DataTemplate | Template for the Header. |
-| TabFooter | object | Content to the far right of the tab strip. |
-| TabFooterTemplate | DataTemplate | Template for the Footer. |
-| TabActionContent | object | Content immediately to the right of the tabs |
-| TabActionContentTemplate | DataTemplate | Template for the ActionContent. |
-| TabWidthBehavior | enum | Specifies how the tabs should be sized. Values are {Actual, Equal, Compact}. Default is Actual. |
+| AddTabButtonVisibility | Visibility | Determines if the plus button appears to the right of the tab strip |
+| TabStripHeader | object | Content to the left of the tab strip. |
+| TabStripFooter | object | Content to the right of the tab strip. |
 
 | Event | Description |
 |---|---|
+| AddTabButtonClick | Fires when the + button is clicked. |
 | TabClosing | Fires when a tab is about to be closed. Can be cancelled to prevent closure. |
 | TabDraggedOutside | Fires when a Tab is dragged outside of the Tab bar. |
 
