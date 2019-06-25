@@ -13,7 +13,7 @@ So the second audience is everyone that reads there to learn how
 and why to use this API. -->
 
 # Background
-In WPF Developers had access to Input Validation via [INotifyDataErrorInfo](https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.inotifydataerrorinfo?view=netframework-4.7.2) We are adding the same capability to UWP.
+In WPF Developers had access to Input Validation via [INotifyDataErrorInfo](https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.inotifydataerrorinfo?view=netframework-4.7.2) We are adding the same capability to UWP.There are differences from the previous implementations, we are building off the of lessons learned. Which will results in differences in the new model.
 <!-- Use this section to provide background context for the new API(s) 
 in this spec. -->
 
