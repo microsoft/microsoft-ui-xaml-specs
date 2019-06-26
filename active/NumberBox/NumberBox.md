@@ -163,6 +163,7 @@ enum NumberBoxMinMaxMode
 
 enum NumberBoxNumberRounder
 {
+    None,
     IncrementNumberRounder,
     SignificantDigitsNumberRounder,
 };
