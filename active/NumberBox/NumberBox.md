@@ -300,12 +300,29 @@ For example, implementation details. -->
 | Focus is on NumberBox's SpinButton (Increment). | Spatial navigation: <br> Spatial navigation will navigate between the SpinButton, the editable textfield, or away from NumberBox. <br><br> A: <br> Invoke increment SpinButton action. |
 
 ### Data and Intelligence Metrics
-
 ##### P0: Feature Key Performance Indicators
+
+Feature has received enough app/developer validation and feedback for it to exit preview.
+
+* KPI: Three or more first party applications are validating the feature in prerelease.
+    * Measurement: Occurrence of NumberBox type in apps on developer devices via telemetry (running under debugger). **Note for telemetry sampling considerations:** Need to be cautious for WinUI as it does not work the same way as with OS SDK. If the solution is not carefully considered, it will result in too little dev data (at 2% sampling) or too much end-user data (at 100% sampling) and hence throttling (telemetry data loss). Requires further investigation. 
+    * Measurement: Count of users providing feedback on GitHub/UserVoice/Feedback Hub/SIUF.
+    
+Developers feel delighted and satisfied with the feature. 
+
+* KPI: Dev NSAT is positive (min), >20 (aspirational) as we exit 2019.
+    * Measurement: Developer survey via SIUF, e.g.: "How useful is the feature?"
     
 ##### P1: Feature Performance Indicators
 
+Calculation support is leveraged by developers + appropriately surfaced to end users. 
+
+* KPI: ~4% of unique instances of NumberBox surface an equation evaluation. 
+    * Measurement: Ratio of occurances of NumberBox triggering evaluations compared to total count of NumberBox instances. 
+    
 ##### P2+: Trailing Indicators
+
+N/A
 
 ## Open Questions
 
