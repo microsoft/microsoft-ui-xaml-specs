@@ -273,10 +273,10 @@ For example, implementation details. -->
 | State | Action |
 |:---|:---|
 | Focus is on item in tab stop order before NumberBox | Tab moves focus into NumberBox's editable text field. |
-| Focus is on NumberBox's editable text field. | Tab triggers evaluation and moves focus to validation error message if one is returned. Otherwise, tab moves focus to SpinnerButton (Decrement). |
-| Focus is on NumberBox's validation error message. | Tab moves focus to NumberBox's SpinnerButton (Decrement). |
-| Focus is on NumberBox's SpinnerButton (Decrement). | Tab moves focus to SpinnerButton (Increment). |
-| Focus is on NumberBox's SpinnerButton (Increment). | Tab moves focus out of NumberBox and to the next item in the tab stop order. |
+| Focus is on NumberBox's editable text field. | Tab triggers evaluation and moves focus to validation error message if one is returned. Otherwise, tab moves focus to SpinButton (Decrement). |
+| Focus is on NumberBox's validation error message. | Tab moves focus to NumberBox's SpinButton (Decrement). |
+| Focus is on NumberBox's SpinButton (Decrement). | Tab moves focus to SpinButton (Increment). |
+| Focus is on NumberBox's SpinButton (Increment). | Tab moves focus out of NumberBox and to the next item in the tab stop order. |
 
 #### Narrator
 
@@ -286,15 +286,19 @@ For example, implementation details. -->
 | Evaluation is triggered. | |
 | Validation Error Message is returned. | |
 | Focus is moved to NumberBox's validation error message. | |
-| Focus is moved to NumberBox's SpinnerButton (Decrement). | |
-| Focus is moved to NumberBox's SpinnerButton (Increment). | |
+| Focus is moved to NumberBox's SpinButton (Decrement). | |
+| Focus is moved to NumberBox's SpinButton (Increment). | |
 
 
 #### Gamepad  
 
 | State | Action |
 |:---|:---|
-| | |
+| Focus is near NumberBox | Spatial navigation may be used to access NumberBox where NumberBox's editable text field first receives focus. |
+| Focus is on NumberBox's editable text field. | Spatial navigation: <br> Spatial navigation will navigate between the SpinButton, the editable textfield, or away from NumberBox. <br><br> A: <br> Will enter input mode. Calculation will be triggered on exit of input mode. <br><br> B (while in input mode): <br>
+Will trigger evaluation and exit input mode. |
+| Focus is on NumberBox's SpinButton (Decrement). | SSpatial navigation: <br> Spatial navigation will navigate between the SpinButton, the editable textfield, or away from NumberBox. <br><br> A: <br> Invoke decrement SpinButton action. |
+| Focus is on NumberBox's SpinButton (Increment). | Spatial navigation: <br> Spatial navigation will navigate between the SpinButton, the editable textfield, or away from NumberBox. <br><br> A: <br> Invoke increment SpinButton action. |
 
 ### Data and Intelligence Metrics
 
