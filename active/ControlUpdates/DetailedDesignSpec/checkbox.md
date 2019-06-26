@@ -1,4 +1,5 @@
 # Checkbox detailed design spec / redline
+This spec lists out all the details of checkbox design that should be updated as part of #839. Depending on developer resources, not all could be implemented so this is not final plan.
 
 ## The anatomy of checkbox
 ![anatomy](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ControlUpdates/active/ControlUpdates/DetailedDesignSpec/Images/Anatomy.png)
@@ -41,7 +42,7 @@ Using these three basic styles on different controls based on typical use of the
 | Pressed | ||||
 | Disabled | ||||
 
-## Controls that use Checkbox and style it uses
+## Controls that use Checkbox and style it should be using
 
 | Control | Unseledted | Selected |
 | :---------- | :------- | :------- |
