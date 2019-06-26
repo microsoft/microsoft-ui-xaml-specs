@@ -283,11 +283,11 @@ For example, implementation details. -->
 | State | Action |
 |:---|:---|
 | Focus is moved to NumberBox's editable text field. | AutomationProperty.Name, Header, and Text properties are read. |
-| Evaluation is triggered. | |
-| Validation Error Message is returned. | |
-| Focus is moved to NumberBox's validation error message. | |
-| Focus is moved to NumberBox's SpinButton (Decrement). | |
-| Focus is moved to NumberBox's SpinButton (Increment). | |
+| Evaluation is triggered. | Evaluation is announced. |
+| Validation Error Message is returned. | Error message is announced. |
+| Focus is moved to NumberBox's validation error message. | Error message is announced. |
+| Focus is moved to NumberBox's SpinButton (Decrement). | Property name is announced. |
+| Focus is moved to NumberBox's SpinButton (Increment). | Property name is announced.  |
 
 
 #### Gamepad  
@@ -296,7 +296,7 @@ For example, implementation details. -->
 |:---|:---|
 | Focus is near NumberBox | Spatial navigation may be used to access NumberBox where NumberBox's editable text field first receives focus. |
 | Focus is on NumberBox's editable text field. | Spatial navigation: <br> Spatial navigation will navigate between the SpinButton, the editable textfield, or away from NumberBox. <br><br> A: <br> Will enter input mode. Calculation will be triggered on exit of input mode. <br><br> B (while in input mode): <br> Will trigger evaluation and exit input mode. |
-| Focus is on NumberBox's SpinButton (Decrement). | SSpatial navigation: <br> Spatial navigation will navigate between the SpinButton, the editable textfield, or away from NumberBox. <br><br> A: <br> Invoke decrement SpinButton action. |
+| Focus is on NumberBox's SpinButton (Decrement). | Spatial navigation: <br> Spatial navigation will navigate between the SpinButton, the editable textfield, or away from NumberBox. <br><br> A: <br> Invoke decrement SpinButton action. |
 | Focus is on NumberBox's SpinButton (Increment). | Spatial navigation: <br> Spatial navigation will navigate between the SpinButton, the editable textfield, or away from NumberBox. <br><br> A: <br> Invoke increment SpinButton action. |
 
 ### Data and Intelligence Metrics
