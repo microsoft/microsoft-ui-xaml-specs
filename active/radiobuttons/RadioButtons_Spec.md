@@ -80,6 +80,77 @@ set that up.
 
 ![alt text](multicolumns.png)
 
+# Remarks
+The RadioButtons control has special navigation behavior that helps not only keyboard accelerant users, but also accessibility users to navigate the list more quickly and more easily.
+
+## Putting focus into the RadioButtons list
+There are two states that the RadioButtons control can have with it's RadioButton content:
+
+- A list of RadioButton controls where none are selected/checked
+- A list of RadioButton controls where one is already selected/checked
+
+The following two sections (below) cover the focus behavior when tabbing into the list in both cases outlined in the bullet list above.
+
+### A RadioButton is selected
+When a RadioButton is selected and the user tabs into the list, focus is put on the selected RadioButton.
+
+|List not tab focused | Has initial tab focus|
+|:--:|:--:|
+| ![alt text](selecteditem_notabfocus.png) | ![alt text](selecteditem_tabfocus.png)|
+
+### No RadioButton is selected
+When no RadioButton controls are selected in the RadioButtons list, focus is put on the first RadioButton in the list.
+
+> Note: The RadioButton that receives tab focus from this initial navigation will **not be selected/checked**.
+
+|List not tab focused | Has initial tab focus|
+|:--:|:--:|
+| ![alt text](noselecteditem_notabfocus.png) | ![alt text](noselecteditem_tabfocus.png)|
+
+## Keyboard navigation
+When you have a single column list of RadioButton control options and you have already put focus onto an item, you can navigate the RadioButtons list in logical sequential order using the keyboard.
+
+- The down or right arrow keys will move to the "next" logical item
+- The up or left arrow keys will move to the "previous" logical item
+
+![alt text](keyboardnav_singlecol.png)
+
+## Multi-Column RadioButtons list
+In instances where there is more that one column of RadioButton items within a single RadioButtons list control, the list will flow a column-major layout.
+
+|MaxColumns not specified or = 1 |  MaximumColumns="2" |  MaximumColumns="3" |
+|:--:|:--:|:--:|
+| ![alt text](singlecolumn_example.png) | ![alt text](multicolumn_example_1.png) | ![alt text](multicolumn_example_2.png) |
+
+The markup remains almost the same, and is in the "logial" order that the keyboard behavior will navigate through is indicated in the markup.
+
+The only change is to the number of columns specified, which is defined in the ``MaximumColumns`` property.
+
+```xml
+<RadioButtons Header="Select Number" MaximumColumns="2">
+    <x:String>1</x:String>
+    <x:String>2</x:String>
+    <x:String>3</x:String>
+    <x:String>4</x:String>
+    <x:String>5</x:String>
+    <x:String>6</x:String>
+    <x:String>7</x:String>
+</RadioButtons>
+```
+
+### Navigating with multiple columns
+The keyboarding behavior is the same as the single-column navigation, it just wraps to the next column when there is more than one defined.
+
+![alt text](keyboardnav_multicol.png)
+
+## Selection follows Focus
+When you are navigating a RadioButtons list via the keyboard, as focus is placed on a previous or next RadioButton item, that item will also get selected/checked. This means the previous item that was selected/checked will be unselected, and the currently focused one will be instead.
+
+|Before keyboard navigation | After keyboard navigation|
+|:--|:--|
+| ![alt text](2selected_nonav.png) | ![alt text](3selected_yesnav.png)|
+| Focus is on the "2" RadioButton, and it is shown as selected | The down or right arrow key has been pressed, so focus was moved to the "3" RadioButton, thus selected 3 and unselected 2. |
+
 # API Details
 
 ## RadioButtons
