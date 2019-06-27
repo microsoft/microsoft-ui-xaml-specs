@@ -1,5 +1,5 @@
 # Checkbox detailed design spec / redline
-This spec lists out all the details of checkbox design that should be updated as part of #839. Depending on developer resources, not all could be implemented so this is not final plan.
+This spec lists out all the details of checkbox design that should be updated as part of [#839](https://github.com/microsoft/microsoft-ui-xaml/issues/839). Depending on developer resources, not all could be implemented so this is not final plan.
 
 ## The anatomy of checkbox
 ![anatomy](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ControlUpdates/active/ControlUpdates/DetailedDesignSpec/Images/Anatomy.png)
@@ -11,7 +11,7 @@ Checkbox has the following UI elements that determines visuals:
 4. The fill
 5. Text
 
-* The box border - 1px border (if we implement #835. Otherwise 2px). Rounded corner following #524 design.
+* The box border - 1px border (if we implement [#835](https://github.com/microsoft/microsoft-ui-xaml/issues/835). Otherwise 2px). Rounded corner following [#524](https://github.com/microsoft/microsoft-ui-xaml/issues/524) design.
 * The glyph - 16px
 * The fill - 8x8px
 * Text - 14px (standard text size)
@@ -37,10 +37,10 @@ Using these three basic styles on different controls based on typical use of the
 
 | State | 1. Outline unseledted | 2. Fill selected | 3. Fill unselected |
 | :---------- | :------- | :------- | :------- |
-| Rest | ||||
-| Hover | ||||
-| Pressed | ||||
-| Disabled | ||||
+| Rest | #000000 80% (no change) | Accent Color (TBD) | Accent Color (TBD)  |
+| Hover | #000000 60% | Accent Color (TBD) | Accent Color (TBD) |
+| Pressed | #000000 40% | Accent Color (TBD) | Accent Color (TBD) |
+| Disabled | #000000 40% (no change) | #000000 20% | #000000 20% |
 
 ## Controls that use Checkbox and style it should be using
 
