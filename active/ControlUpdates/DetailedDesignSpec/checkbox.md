@@ -1,5 +1,5 @@
 # Checkbox detailed design spec / redline
-This spec lists out all the details of checkbox design that should be updated as part of [#839](https://github.com/microsoft/microsoft-ui-xaml/issues/839). Depending on developer resources, not all could be implemented so this is not final plan.
+This spec lists out all the details of checkbox design that should be updated as part of [#839](https://github.com/microsoft/microsoft-ui-xaml/issues/839). Depending on schedule and other unforseen circumstances, not all could be implemented so this does not represent a final plan yet.
 
 ## The anatomy of checkbox
 ![anatomy](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ControlUpdates/active/ControlUpdates/DetailedDesignSpec/Images/Anatomy.png)
@@ -29,6 +29,7 @@ Checkbox has mainly 3 styles:
 1. Outline unselected
 2. Fill selected
 3. Fill unselected
+
 Using these three basic styles on different controls based on typical use of the control, we create coherent experience for application surfaces.
 
 ![styles](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ControlUpdates/active/ControlUpdates/DetailedDesignSpec/Images/BaseDesign.png)
@@ -37,10 +38,10 @@ Using these three basic styles on different controls based on typical use of the
 
 | State | 1. Outline unseledted | 2. Fill selected | 3. Fill unselected |
 | :---------- | :------- | :------- | :------- |
-| Rest | #000000 80% (no change) | Accent Color (TBD) | Accent Color (TBD)  |
-| Hover | #000000 60% | Accent Color (TBD) | Accent Color (TBD) |
-| Pressed | #000000 40% | Accent Color (TBD) | Accent Color (TBD) |
-| Disabled | #000000 40% (no change) | #000000 20% | #000000 20% |
+| Rest | #000000 80% (no change) | Accent Color (TBD) | #E6E6E6 100% (no change)  |
+| Hover | #000000 60% | Accent Color (TBD) | #E6E6E6 100% (no change) |
+| Pressed | #000000 100% | #000000 40% | #E6E6E6 100% (no change) |
+| Disabled | #000000 40% (no change) | #000000 20% | #E6E6E6 100% (no change) |
 
 ## Controls that use Checkbox and style it should be using
 
