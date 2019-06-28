@@ -1,12 +1,12 @@
-# Background
-This "spec" will be what is being proposed to be a documentation that will be added under https://docs.microsoft.com/en-us/windows/uwp/design/style/ "Corner Radius" page to be created. Thus, spec template has been modified but the core of the information that is necessary for spec discussion should appear here (if not, please give feedback as not intentional).
-
-I am trying out writing a little more "background explanation (WHY)" that our customers have expressed we provide with our documentatiton in some of our focus groups. I would like feedback as this does not follow normal documentation pattern.
-
 # Corner Radius
 ![button](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/roundedcorner/active/RoundedCorner/ImageFiles/Button2.png)
 <Add thinking behind why we are rounding corners related to Fluent design.>
-  
+
+## Background
+This "spec" will be what is being proposed to be copied over to docs.microsoft.com as a documentation under https://docs.microsoft.com/en-us/windows/uwp/design/style/ "Corner Radius" page to be created.
+
+I am trying out writing a little more "background explanation (WHY)" that our customers have expressed we provide with our documentatiton in some of our focus groups. I would like feedback as this does not follow normal documentation pattern.
+
 ## Principles
 <I'll ask Fluent collective to put together something here>
 
