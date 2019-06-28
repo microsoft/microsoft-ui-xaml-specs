@@ -142,7 +142,7 @@ If you specify an odd number of items in the RadioButtons group list, or define 
 |![alt text](multicolumn_example_2.png)|
 
 ```xml
-<RadioButtons Header="Select Number" MaximumColumns="2">
+<RadioButtons Header="Select Number" MaximumColumns="3">
     <x:String>1</x:String>
     <x:String>2</x:String>
     <x:String>3</x:String>
