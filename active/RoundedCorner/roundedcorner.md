@@ -1,7 +1,7 @@
 # Background
-This "spec" will be what is being propsed to be a documentation that will be added under https://docs.microsoft.com/en-us/windows/uwp/design/style/ "Corner Radius" page to be created. Thus, spec template has been modified but the core of the information that is necessary for spec discussion should appear here (if not, please give feedback as not intentional).
+This "spec" will be what is being proposed to be a documentation that will be added under https://docs.microsoft.com/en-us/windows/uwp/design/style/ "Corner Radius" page to be created. Thus, spec template has been modified but the core of the information that is necessary for spec discussion should appear here (if not, please give feedback as not intentional).
 
-I am trying out writing a little more "background explanation (WHY)" that our customers have expressed we provide with our documentaiton in some of our focus groups. I would like feedback as this does not follow normal documentation pattern.
+I am trying out writing a little more "background explanation (WHY)" that our customers have expressed we provide with our documentatiton in some of our focus groups. I would like feedback as this does not follow normal documentation pattern.
 
 # Corner Radius
 ![button](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/roundedcorner/active/RoundedCorner/ImageFiles/Button2.png)
@@ -18,13 +18,67 @@ There are mainly 3 types of UI parts where the radii of the corners are being ro
 - The default radius value we use are 2px for these UI.
 ![Button](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/roundedcorner/active/RoundedCorner/ImageFiles/Button.png)
 
+**Controls being rounded**
+- Button
+- CheckBox
+- ComboBox
+- DropDownButton
+- Slider
+- SplitButton
+- ToggleButton
+- ToggleSplitButton
+- Flipview
+- GridView
+- ListView
+- TreeView
+- ContentDialog
+- AutoSuggestBox
+- PasswordBox
+- RichEditBox
+- TextBox
+- DatePicker
+- CalendarDatePicker
+- Tab control
+
 *Corners of flyout UI elements*
 - These UI elements are those that appear temporarily on UI like a MenuFlyout or Flyout.
 - The default radius value we use here are 4px.
+![flyout](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/roundedcorner/active/RoundedCorner/ImageFiles/Flyout.png)
+
+**Controls being rounded**
+- CalendarDatePicker
+- DatePicker
+- TimePicker
+- Flyout
+- TeachingTip
+- ToolTip
+- DropDownButton
+- SplitButton
+- Slider
+- AutoSuggestBox
+- CommandBarFlyout
+- MenuFlyout
+- ComboBox
+- ColorPicker
+- MediaPlayerElement
+- ContentDialog
+- MenuBar
+- ToggleSplitButton
 
 *Rounding of bars*
 - These UI elements are bar like or line like UI (e.g. ProgressBar).
 - The default radius value we use here are 2px except for slider in ColorPicker which will be 6px because the bar is wider.
+![bars](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/roundedcorner/active/RoundedCorner/ImageFiles/Bars.png)
+
+**Controls being rounded**
+- NavigationView
+- Pivot
+- ScrollIndicator
+- ProgressBar
+- Slider
+- ColorPicker
+- MediaPlayerElement
+- WebView (may or may not get it from XAML change, checking)
 
 *When not to round*
 - When a multiple buttons are inside a single button that houses them (e.g. SplitButton).
@@ -36,75 +90,20 @@ There are mainly 3 types of UI parts where the radii of the corners are being ro
 ![AutoSuggest](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/roundedcorner/active/RoundedCorner/ImageFiles/AutoSuggest.png)
 
 ## Note on keyboard focus rect and shadow
-Currently our default design does not require any special work to round the corners of keyboard focus rectangle and shadow. Using higher corner radius value will not break them founcionally, however it is good to be aware of this to avoid unwanted visual glitches that you could introduce with a larger value.
+Currently our default design does not require any special work to round the corners of keyboard focus rectangle and shadow. Using higher corner radius value will not break them functionally, however it is good to be aware of this to avoid unwanted visual glitches that you could introduce with a larger value.
 
 # Rounded Corner and Performance
-People may not aways be aware of the fact drawing rounded corner naturally use more drawing power compared to square corners. When selecting the value of corner radius, we not only considered the design principles but also were very careful to ensure developers who use our default controls are able to successfully deliver performant applications. 
+People may not always be aware of the fact drawing rounded corner naturally use more drawing power compared to square corners. When selecting the value of corner radius, we not only considered the design principles but also were very careful to ensure developers who use our default controls are able to successfully deliver performant applications. 
 
 To simplify this section, think of performance issues mentioned here to be mainly about page load time as well as app launch time.
 
-Here are a few key pieces of information for people to be aware about the performance:
-- Rounded corners on a larger surface UI are less performant. E.g. avoid drawing rounded corner on a full screen app UI. This is less of an issue if the UI is displayed briefly (e.g. ContentDialog).
-- Drawing many rounded corners at once could be less performant. Many smaller UI with rounded corners perform better than many medium UI with rounded corners.
+Key information to note:
+- Rounded corners on a larger surface UI are less performant. Avoid drawing rounded corner on a full screen app UI. This is less of an issue if the UI is displayed briefly (e.g. ContentDialog).
 
 # Customization options
-<Add Kiki's spec details here>
+<Add spec details from [#279](https://github.com/microsoft/microsoft-ui-xaml/issues/279) once the feature is complete here in this section>
 
 # Appendix
-There are three categories of changes being proposed (requirement number 1.1, 1.2, and 1.3) and here are mock up of those.
-
-Here are relevant visual comp files: 
-•	Raw files: https://github.com/microsoft/microsoft-ui-xaml-specs/tree/user/chigy/roundedcorner/active/RoundedCorner/ImageFiles
-•	In an easier to consume format thanks to community: https://github.com/mrlacey/microsoft-ui-xaml-specs/blob/RoundedCornerVisualizations/active/RoundedCorner/ImageFiles/index.md
-
-*Form type controls (req 1.1)*
-•	Button
-•	CheckBox
-•	ComboBox
-•	DropDownButton
-•	Slider
-•	SplitButton
-•	ToggleButton
-•	ToggleSplitButton
-•	Flipview
-•	GridView
-•	ListView
-•	TreeView
-•	ContentDialog
-•	AutoSuggestBox
-•	PasswordBox
-•	RichEditBox
-•	TextBox
-•	DatePicker
-•	CalendarDatePicker
-•	Tab control
-
-*Popup/transient menu type controls (req 1.2)*
-•	CalendarDatePicker
-•	DatePicker
-•	TimePicker
-•	Flyout
-•	TeachingTip
-•	ToolTip
-•	DropDownButton
-•	SplitButton
-•	Slider
-•	AutoSuggestBox
-•	CommandBarFlyout
-•	MenuFlyout
-•	ComboBox
-•	ColorPicker
-•	MediaPlayerElement
-•	ContentDialog
-•	MenuBar
-•	ToggleSplitButton
-
-*Bars (req 1.3)*
-•	NavigationView
-•	Pivot
-•	ScrollIndicator
-•	ProgressBar
-•	Slider
-•	ColorPicker
-•	MediaPlayerElement
-•	WebView (may or may not get it from XAML change, checking)
+Here are relevant visual comp files:
+- Raw files: https://github.com/microsoft/microsoft-ui-xaml-specs/tree/user/chigy/roundedcorner/active/RoundedCorner/ImageFiles
+- In an easier to consume format thanks to community: https://github.com/mrlacey/microsoft-ui-xaml-specs/blob/RoundedCornerVisualizations/active/RoundedCorner/ImageFiles/index.md
