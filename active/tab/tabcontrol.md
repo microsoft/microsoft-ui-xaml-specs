@@ -166,7 +166,96 @@ private async void TabView_TabDraggedOutside(object sender, TabDraggedOutsideEve
 ```
 
 ## Implement browser-style keyboarding behavior
-TODO
+
+The below example shows how to use KeyboardAccelerators to enable the following experiences:
+* Open a new tab with CTRL+T
+* Close the selected tab with CTRL+W
+* Change the selected tab with CTRL+1 through CTRL+8
+* Select the last tab with CTRL+9
+
+``` xml
+<controls:TabView
+    x:Name="TabRoot"
+    AddTabButtonClick="AddTabButton_Click"
+    >
+    <controls:TabView.KeyboardAccelerators>
+        <KeyboardAccelerator Key="T" Modifiers="Control" Invoked="NewTabKeyboardAccelerator_Invoked" />
+        <KeyboardAccelerator Key="W" Modifiers="Control" Invoked="CloseSelectedTabKeyboardAccelerator_Invoked" />
+        <KeyboardAccelerator Key="Number1" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+        <KeyboardAccelerator Key="Number2" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+        <KeyboardAccelerator Key="Number3" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+        <KeyboardAccelerator Key="Number4" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+        <KeyboardAccelerator Key="Number5" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+        <KeyboardAccelerator Key="Number6" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+        <KeyboardAccelerator Key="Number7" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+        <KeyboardAccelerator Key="Number8" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+        <KeyboardAccelerator Key="Number9" Modifiers="Control" Invoked="NavigateToNumberedTabKeyboardAccelerator_Invoked" />
+    </controls:TabView.KeyboardAccelerators>
+    <!-- ... some tabs ... -->
+</controls:TabView>
+```
+
+``` csharp
+
+private void NewTabKeyboardAccelerator_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+{
+    // See previous sample
+    CreateNewTab();
+}
+
+private void CloseSelectedTabKeyboardAccelerator_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+{
+    // Only close the selected tab if it is closeable
+    if (((TabViewItem)TabRoot.SelectedItem).IsCloseable)
+    {
+        TabRoot.Items.Remove(TabRoot.SelectedItem);
+    }
+}
+
+private void NavigateToNumberedTabKeyboardAccelerator_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+{
+    int tabToSelect = 0;
+
+    switch (sender.Key)
+    {
+        case Windows.System.VirtualKey.Number1:
+            tabToSelect = 0;
+            break;
+        case Windows.System.VirtualKey.Number2:
+            tabToSelect = 1;
+            break;
+        case Windows.System.VirtualKey.Number3:
+            tabToSelect = 2;
+            break;
+        case Windows.System.VirtualKey.Number4:
+            tabToSelect = 3;
+            break;
+        case Windows.System.VirtualKey.Number5:
+            tabToSelect = 4;
+            break;
+        case Windows.System.VirtualKey.Number6:
+            tabToSelect = 5;
+            break;
+        case Windows.System.VirtualKey.Number7:
+            tabToSelect = 6;
+            break;
+        case Windows.System.VirtualKey.Number8:
+            tabToSelect = 7;
+            break;
+        case Windows.System.VirtualKey.Number9:
+            // Select the last tab
+            tabToSelect = TabRoot.Items.Count - 1;
+            break;
+    }
+
+    // Only select the tab if it is in the list
+    if (tabToSelect < TabRoot.Items.Count)
+    {
+        TabRoot.SelectedIndex = tabToSelect;
+    }
+}
+
+```
 
 ## Combine tabs from one window into another window
 TODO -- should this be part of the "tab tear out" sample above?
