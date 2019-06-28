@@ -135,7 +135,7 @@ The only change is to the number of columns specified, which is defined in the `
 </RadioButtons>
 ```
 
-If you specify an odd number of items in the RadioButtons group list, or define an odd number for the way it's split (via ``MaximumColumns``) the group will put the trailing number in the first column, and divid the rest evenly.
+If you specify an odd number of items in the RadioButtons group list, or define an odd number for the way it's split (via ``MaximumColumns``) the group will put the trailing number in the first column, and divide the rest evenly.
 
 |MaximumColumns = 3|
 |:--|
