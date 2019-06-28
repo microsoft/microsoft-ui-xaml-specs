@@ -94,7 +94,7 @@ The following two sections (below) cover the focus behavior when tabbing into th
 ### A RadioButton is selected
 When a RadioButton is selected and the user tabs into the list, focus is put on the selected RadioButton.
 
-|List not tab focused | Has initial tab focus|
+|Focus is on button<br>RadioButton group does not have focus| Tab has been pressed<br>RadioButton group now has focus|
 |:--:|:--:|
 | ![alt text](selecteditem_notabfocus.png) | ![alt text](selecteditem_tabfocus.png)|
 
