@@ -165,6 +165,54 @@ private async void TabView_TabDraggedOutside(object sender, TabDraggedOutsideEve
 <TabView ItemsSource="{x:Bind TabItemCollection}" />
 ```
 
+## Add a new tab using the Add (+) Tab Button
+The TabView control provides an Add (+) Tab button at the end of the tab strip. When the user clicks the Add Tab button, the control will fire an event which you can listen to in order to add a new tab.
+
+``` xml
+<controls:TabView
+    x:Name="TabRoot"
+    AddTabButtonClick="AddTabButton_Click"
+    >
+    <!-- ... some tabs ... -->
+</controls:TabView>
+```
+
+``` csharp
+
+private void AddTabButton_Click(object sender, RoutedEventArgs e)
+{
+    CreateNewTab();
+}
+
+private void CreateNewTab()
+{
+    // MyDocument is a data object that represents the content inside a Tab
+    MyDocument doc = new MyDocument();
+    doc.Title = "New Document";
+    doc.Content = GenerateBaconIpsum();
+    doc.Icon = new SymbolIcon(Symbol.Document);
+
+    // Create a new TabViewItem from the MyDocument object and add it to the Items collection
+    TabRoot.Items.Add(CreateNewTabFromDocument(doc));
+}
+
+private TabViewItem CreateNewTabFromDocument(MyDocument doc)
+{
+    TabViewItem newItem = new TabViewItem();
+
+    newItem.Header = doc.Title;
+    newItem.Icon = doc.Icon;
+
+    // The Content of a TabViewItem is often a frame which hosts a page.
+    Frame frame = new Frame();
+    newItem.Content = frame;
+    frame.Navigate(typeof(DocumentPage), doc);
+
+    return newItem;
+}
+
+```
+
 ## Implement browser-style keyboarding behavior
 
 The below example shows how to use KeyboardAccelerators to enable the following experiences:
@@ -176,7 +224,6 @@ The below example shows how to use KeyboardAccelerators to enable the following 
 ``` xml
 <controls:TabView
     x:Name="TabRoot"
-    AddTabButtonClick="AddTabButton_Click"
     >
     <controls:TabView.KeyboardAccelerators>
         <KeyboardAccelerator Key="T" Modifiers="Control" Invoked="NewTabKeyboardAccelerator_Invoked" />
