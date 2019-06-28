@@ -60,9 +60,9 @@ The Tab control is a collection of tabs that each represents a new page or docum
 
 **Is this the right control?**
 
-Use a TabControl to help the user manage multiple app pages or documents within the same window. 
+Use a TabView to help the user manage multiple app pages or documents within the same window. 
 
-Do not use a TabControl to display a static set of tabs that the user cannot rearrange, open, or close. Use a Pivot or top NavigationView instead. 
+Do not use a TabView to display a static set of tabs that the user cannot rearrange, open, or close. Use a Pivot or top NavigationView instead. 
 
 # Examples
 <!-- Use this section to explain the features of the API, showing
@@ -79,7 +79,7 @@ example code with each description. The general format is:
 ## To replicate the behavior of Microsoft Edge
 
 ``` xml
-<TabControl TabWidthMode="Equal"
+<TabView TabWidthMode="Equal"
             CanCloseTabs="True"
             CloseButtonOverlay="OnHover"
             CanDragTabs="True"
@@ -87,24 +87,24 @@ example code with each description. The general format is:
             TabDraggedOutside="OpenTabInNewWindow"
             AddTabButtonClick="NewTab_Click">
     ...
-</TabControl>
+</TabView>
 ```
 
 ## Put tabs in the titlebar area
 
 ![A sample app that shows the Tab control can extend into the titlebar area](images/tab-extend-to-title.png)
 
-This sample demonstrates how to extend the TabControl into the title bar area and also specify a portion of the UI as the draggable region. Per the [titlebar customization guidelines](https://docs.microsoft.com/en-us/windows/uwp/design/shell/title-bar), we must set a [specific drag region](https://docs.microsoft.com/en-us/windows/uwp/design/shell/title-bar#draggable-regions). If we don't specify the drag region, the entire titlebar area remains draggable (meaning input won't be routed to the tabs, making the tabs unclickable).
+This sample demonstrates how to extend the TabView into the title bar area and also specify a portion of the UI as the draggable region. Per the [titlebar customization guidelines](https://docs.microsoft.com/en-us/windows/uwp/design/shell/title-bar), we must set a [specific drag region](https://docs.microsoft.com/en-us/windows/uwp/design/shell/title-bar#draggable-regions). If we don't specify the drag region, the entire titlebar area remains draggable (meaning input won't be routed to the tabs, making the tabs unclickable).
 
 ``` xml
 <Page>
     <Grid>
-        <TabControl>
+        <TabView>
             <TabItem Icon="Home" Header="Home" IsCloseable="False" />
             <TabItem Icon="Document" Header="Document 1" />
             <TabItem Icon="Document" Header="Document 2" />
             <TabItem Icon="Document" Header="Document 3" />
-        </TabControl>
+        </TabView>
 
         <Grid x:Name="CustomDragRegion" Width="200" Height="40" HorizontalAlignment="Right" VerticalAlignment="Top" />
     </Grid>
@@ -131,13 +131,13 @@ public MainPage()
 See the [TabView tear out sample](https://github.com/windows-toolkit/Sample-TabView-TearOff/tree/master/TabViewTear) for a more complete sample.
 
 ``` xml
-<TabControl CanDragTabs="True"
+<TabView CanDragTabs="True"
             CanReorderTabs="True"
-            TabDraggedOutside="TabControl_TabDraggedOutside">
+            TabDraggedOutside="TabView_TabDraggedOutside">
 ```
 ``` csharp
 // NOTE: The app is responsible for writing this code. We will provide a sample that may look something like:
-private async void TabControl_TabDraggedOutside(object sender, TabDraggedOutsideEventArgs e)
+private async void TabView_TabDraggedOutside(object sender, TabDraggedOutsideEventArgs e)
 {
     // Create a new AppWindow
     AppWindow newWindow = await AppWindow.TryCreateAsync();
@@ -162,7 +162,7 @@ private async void TabControl_TabDraggedOutside(object sender, TabDraggedOutside
 ## Databind to a set of tabs 
 
 ``` xml
-<TabControl ItemsSource="{x:Bind TabItemCollection}" />
+<TabView ItemsSource="{x:Bind TabItemCollection}" />
 ```
 
 ## Implement browser-style keyboarding behavior
@@ -178,7 +178,7 @@ section.  For example, see the Remarks for the MediaPlayerElement
 
 ## Keyboarding behavior
 ### TAB and Arrow key behavior
-The TabControl has three content areas: TabStrip, TabStripHeader (to the left of the TabStrip) and TabStripFooter (to the right of the TabStrip). When the user hits the TAB key, focus moves between the content areas. When focus moves into the Tab content area, the selected Tab gains focus. Once the user is in the Tab content area, pressing the arrow key will move focus between the tabs. Arrow focus is trapped inside the Tab content area.
+The TabView has three content areas: TabStrip, TabStripHeader (to the left of the TabStrip) and TabStripFooter (to the right of the TabStrip). When the user hits the TAB key, focus moves between the content areas. When focus moves into the Tab content area, the selected Tab gains focus. Once the user is in the Tab content area, pressing the arrow key will move focus between the tabs. Arrow focus is trapped inside the Tab content area.
 
 ### Selecting a Tab
 When a Tab has focus, pressing SPACE or ENTER will select that Tab.
@@ -192,7 +192,7 @@ Tab selection cycles (meaning if the user has selected the last tab and presses 
 Hitting CTRL+F4 will close the selected Tab (assuming it is closable). 
 
 ### Keyboard guidance for App Developers
-The above sections outline built-in keyboarding behavior provided by the TabControl. However, there are certain expected keyboard shortcuts that you will be responsible for implementing. 
+The above sections outline built-in keyboarding behavior provided by the TabView. However, there are certain expected keyboard shortcuts that you will be responsible for implementing. 
 * If your app does not already handle the CTRL+T shortcut, consider using it to open a new tab.
 * If your app does not already handle the CTRL+W shortcut, consider using it to close the selected tab.
 * Consider maintaining a list of recently closed Tabs. If the user presses CTRL+SHIFT+T, they expect recently closed tabs to be reopened.
@@ -205,7 +205,7 @@ and member), or at least the ones that aren't obvious
 from their name.  These descriptions are what show up
 in IntelliSense. -->
 
-### TabControl properties, events, methods
+### TabView properties, events, methods
 
 | Property | Type | Description |
 |:-------- |:---- |:----------- |
