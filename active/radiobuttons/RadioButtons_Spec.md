@@ -118,13 +118,28 @@ When you have a single column list of RadioButton control options and you have a
 ## Multi-Column RadioButtons list
 In instances where there is more that one column of RadioButton items within a single RadioButtons list control, the list will flow a column-major layout.
 
-|MaxColumns not specified or = 1 |  MaximumColumns="2" |  MaximumColumns="3" |
-|:--:|:--:|:--:|
-| ![alt text](singlecolumn_example.png) | ![alt text](multicolumn_example_1.png) | ![alt text](multicolumn_example_2.png) |
+|MaximumColumns not specified <br>OR<br> MaximumColumns = 1 |  MaximumColumns = 2 |
+|:--:|:--:|
+| ![alt text](singlecolumn_example.png) | ![alt text](multicolumn_example_1.png) |
 
 The markup remains almost the same, and is in the "logial" order that the keyboard behavior will navigate through is indicated in the markup.
 
 The only change is to the number of columns specified, which is defined in the ``MaximumColumns`` property.
+
+```xml
+<RadioButtons Header="Select Number" MaximumColumns="2">
+    <x:String>1</x:String>
+    <x:String>2</x:String>
+    <x:String>3</x:String>
+    <x:String>4</x:String>
+</RadioButtons>
+```
+
+If you specify an odd number of items in the RadioButtons group list, or define an odd number for the way it's split (via ``MaximumColumns``) the group will put the trailing number in the first column, and divid the rest evenly.
+
+|MaximumColumns = 3|
+|:--|
+|![alt text](multicolumn_example_2.png)|
 
 ```xml
 <RadioButtons Header="Select Number" MaximumColumns="2">
