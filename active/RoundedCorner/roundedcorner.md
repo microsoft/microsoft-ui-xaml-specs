@@ -8,7 +8,7 @@ This "spec" will be what is being proposed to be copied over to docs.microsoft.c
 I am trying out writing a little more "background explanation (WHY)" that our customers have expressed we provide with our documentatiton in some of our focus groups. I would like feedback as this does not follow normal documentation pattern.
 
 ## Principles
-<I'll ask Fluent collective to put together something here>
+<Work with Fluent collective to put together something here>
 
 ## Default control designs
 There are mainly 3 types of UI parts where the radii of the corners are being rounded and here are the descriptions of how this is applied to default controls.
