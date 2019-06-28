@@ -103,7 +103,7 @@ When no RadioButton controls are selected in the RadioButtons list, focus is put
 
 > Note: The RadioButton that receives tab focus from this initial navigation will **not be selected/checked**.
 
-|List not tab focused | Has initial tab focus|
+|Focus is on button<br>RadioButton group does not have focus | Tab has been pressed<br>RadioButton group now has focus|
 |:--:|:--:|
 | ![alt text](noselecteditem_notabfocus.png) | ![alt text](noselecteditem_tabfocus.png)|
 
