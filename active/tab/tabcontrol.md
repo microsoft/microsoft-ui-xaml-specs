@@ -100,10 +100,10 @@ This sample demonstrates how to extend the TabView into the title bar area and a
 <Page>
     <Grid>
         <TabView>
-            <TabItem Icon="Home" Header="Home" IsCloseable="False" />
-            <TabItem Icon="Document" Header="Document 1" />
-            <TabItem Icon="Document" Header="Document 2" />
-            <TabItem Icon="Document" Header="Document 3" />
+            <TabViewItem Icon="Home" Header="Home" IsCloseable="False" />
+            <TabViewItem Icon="Document" Header="Document 1" />
+            <TabViewItem Icon="Document" Header="Document 2" />
+            <TabViewItem Icon="Document" Header="Document 3" />
         </TabView>
 
         <Grid x:Name="CustomDragRegion" Width="200" Height="40" HorizontalAlignment="Right" VerticalAlignment="Top" />
@@ -162,7 +162,7 @@ private async void TabView_TabDraggedOutside(object sender, TabDraggedOutsideEve
 ## Databind to a set of tabs 
 
 ``` xml
-<TabView ItemsSource="{x:Bind TabItemCollection}" />
+<TabView ItemsSource="{x:Bind TabViewItemCollection}" />
 ```
 
 ## Add a new tab using the Add (+) Tab Button
@@ -369,7 +369,7 @@ in IntelliSense. -->
 | DependencyObject ContainerFromItem(object item) | Returns the generated container for the specified item. |
 | DependencyObject ContainerFromIndex(Int32 index) | Returns the generated container for the specified index. |
 
-### TabItem properties and events
+### TabViewItem properties and events
 
 | Property | Type | Description |
 |:-------- |:---- |:----------- |
