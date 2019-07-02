@@ -92,6 +92,9 @@ There are mainly 3 types of UI parts where the radii of the corners are being ro
 ## Note on keyboard focus rect and shadow
 Currently our default design does not require any special work to round the corners of keyboard focus rectangle and shadow. Using higher corner radius value will not break them functionally, however it is good to be aware of this to avoid unwanted visual glitches that you could introduce with a larger value.
 
+Here is an example of larger corner radius make the shadow look undesirable.
+![ContentDialogShadow](https://user-images.githubusercontent.com/6964369/60532329-ee241f80-9cb1-11e9-9268-67036d840eff.png)
+
 # Rounded Corner and Performance
 People may not always be aware of the fact drawing rounded corner naturally use more drawing power compared to square corners. When selecting the value of corner radius, we not only considered the design principles but also were very careful to ensure developers who use our default controls are able to successfully deliver performant applications. 
 
