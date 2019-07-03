@@ -179,7 +179,7 @@ The TabView control provides an Add (+) Tab button at the end of the tab strip. 
 
 ``` csharp
 
-private void AddTabButton_Click(object sender, RoutedEventArgs e)
+private void AddTabButton_Click(TabView sender, TabViewAddTabButtonClickEventArgs e)
 {
     CreateNewTab();
 }
@@ -345,8 +345,8 @@ in IntelliSense. -->
 
 | Property | Type | Description |
 |:-------- |:---- |:----------- |
-| AddButtonCommand | ICommand | Gets or sets the command to invoke when the Add button is tapped. |
-| AddButtonCommandParameter | object | Gets or sets the parameter to pass to the command for the Add button. |
+| AddTabButtonCommand | ICommand | Gets or sets the command to invoke when the Add button is tapped. |
+| AddTabButtonCommandParameter | object | Gets or sets the parameter to pass to the command for the Add button. |
 | AddTabButtonVisibility | Visibility | Determines if the plus button appears to the right of the tab strip |
 | CanDragTabs | bool | Gets or sets a value that indicates whether tabs in the collection can be dragged. Default is true. |
 | CanReorderTabs | bool | Gets or sets a value that indicates whether tabs in the collection can be reordered through user interaction. Default is true. |
