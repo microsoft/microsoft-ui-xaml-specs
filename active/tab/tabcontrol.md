@@ -313,19 +313,19 @@ section.  For example, see the Remarks for the MediaPlayerElement
 (https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.MediaPlayerElement#remarks). -->
 
 ## Keyboarding behavior
-### TAB and Arrow key behavior
-The TabView has three content areas: TabStrip, TabStripHeader (to the left of the TabStrip) and TabStripFooter (to the right of the TabStrip). When the user hits the TAB key, focus moves between the content areas. When focus moves into the Tab content area, the selected Tab gains focus. Once the user is in the Tab content area, pressing the arrow key will move focus between the tabs. Arrow focus is trapped inside the Tab content area.
+### TAB and Arrow key behavior in the TabStrip
+When focus moves into the TabStrip area, the selected TabViewItem gains focus. The user can then use the LEFT/RIGHT arrow keys to move focus (not selection) to other tabs in the TabStrip. Arrow focus is trapped inside the Tab content area. To move focus out of the TabStrip area, the user can press the TAB key which will move focus to the next focusable element. 
 
-### Selecting a Tab
-When a Tab has focus, pressing SPACE or ENTER will select that Tab.
+### Selecting a tab
+When a TabViewItem has focus, pressing SPACE or ENTER will select that TabViewItem.
 
-### Shortcuts for moving between tabs
-Ctrl+TAB will select the next Tab.
-Ctrl+Shift+TAB will select the previous Tab.
-Tab selection cycles (meaning if the user has selected the last tab and presses Ctrl+TAB, the first tab becomes selected).
+### Shortcuts for selecting adjacent tabs
+Ctrl+TAB will select the next TabViewItem.
+Ctrl+Shift+TAB will select the previous TabViewItem.
+TAB selection cycles (meaning if the user has selected the last tab and presses Ctrl+TAB, the first tab becomes selected).
 
-### Closing a Tab 
-Hitting CTRL+F4 will close the selected Tab (assuming it is closable). 
+### Closing a tab 
+Hitting CTRL+F4 will close the selected TabViewItem (assuming it is closable). 
 
 ### Keyboard guidance for App Developers
 The above sections outline built-in keyboarding behavior provided by the TabView. However, there are certain expected keyboard shortcuts that you will be responsible for implementing. 
