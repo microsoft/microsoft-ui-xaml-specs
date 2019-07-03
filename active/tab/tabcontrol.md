@@ -29,7 +29,7 @@ the reader "go read 100 pages of background information posted at ...". -->
 
 > See [proposal document](https://github.com/Microsoft/microsoft-ui-xaml/issues/304) for more background
 
-The Tab control is a way to display a set of tabs and their respective content. Tab controls are useful for displaying several pages (or documents) of content while giving a user the capability to rearrange, open, or close new tabs. 
+The TabView control is a way to display a set of tabs and their respective content. Tab controls are useful for displaying several pages (or documents) of content while giving a user the capability to rearrange, open, or close new tabs. 
 
 ![Tabs in Edge](https://user-images.githubusercontent.com/25991996/52679758-f6d6ad80-2eea-11e9-9955-fd111c26d982.png)
 
@@ -90,9 +90,9 @@ example code with each description. The general format is:
 </TabView>
 ```
 
-## Put tabs in the titlebar area
+## Put TabView in the titlebar area
 
-![A sample app that shows the Tab control can extend into the titlebar area](images/tab-extend-to-title.png)
+![A sample app that shows how TabView can extend into the titlebar area](images/tab-extend-to-title.png)
 
 This sample demonstrates how to extend the TabView into the title bar area and also specify a portion of the UI as the draggable region. Per the [titlebar customization guidelines](https://docs.microsoft.com/en-us/windows/uwp/design/shell/title-bar), we must set a [specific drag region](https://docs.microsoft.com/en-us/windows/uwp/design/shell/title-bar#draggable-regions). If we don't specify the drag region, the entire titlebar area remains draggable (meaning input won't be routed to the tabs, making the tabs unclickable).
 
@@ -126,7 +126,7 @@ public MainPage()
 
 ## Create a new window when tearing out tabs
 
-![An example picture showing that a tab can be torn out and moved to its own window.](images/tab-new-window.png)
+![An example picture showing that TabView can be torn out and moved to its own window.](images/tab-new-window.png)
 
 See the [TabView tear out sample](https://github.com/windows-toolkit/Sample-TabView-TearOff/tree/master/TabViewTear) for a more complete sample.
 
@@ -333,7 +333,7 @@ The above sections outline built-in keyboarding behavior provided by the TabView
 * If your app does not already handle the CTRL+W shortcut, consider using it to close the selected tab.
 * Consider maintaining a list of recently closed Tabs. If the user presses CTRL+SHIFT+T, they expect recently closed tabs to be reopened.
 * Modern browsers support selecting tabs when pressing CTRL and a number. Consider handling Ctrl+1 through 8, which should select that number Tab. Additionally, you can consider handling Ctrl+9 which selects the last tab (regardless of the number of tabs).
-* If users can perform more commands on a Tab than just closing the Tab (for example, pinning a Tab or duplicating a Tab), consider adding a context menu to the Tab. 
+* If users can perform more commands on a Tab than just closing the Tab (for example, pinning a Tab or duplicating a Tab), consider adding a context menu to the TabViewItem. 
 
 # API Notes
 <!-- Give a one or two line description of each API (type
