@@ -79,7 +79,7 @@ example code with each description. The general format is:
 ## To replicate the behavior of Microsoft Edge
 
 ``` xml
-<TabView TabWidthMode="Equal"
+<TabView TabViewItemWidthMode="Equal"
             CanCloseTabs="True"
             CloseButtonOverlay="OnHover"
             CanDragTabs="True"
@@ -343,22 +343,22 @@ in IntelliSense. -->
 
 ### TabView properties, events, methods
 
-| Property | Type | Description |
-|:-------- |:---- |:----------- |
-| AddTabButtonCommand | ICommand | Gets or sets the command to invoke when the Add button is tapped. |
-| AddTabButtonCommandParameter | object | Gets or sets the parameter to pass to the command for the Add button. |
-| AddTabButtonVisibility | Visibility | Determines if the plus button appears to the right of the tab strip |
-| CanDragTabs | bool | Gets or sets a value that indicates whether tabs in the collection can be dragged. Default is true. |
-| CanReorderTabs | bool | Gets or sets a value that indicates whether tabs in the collection can be reordered through user interaction. Default is true. |
-| ItemsSource | object | Gets or sets an object source used to generate the tabs. |
-| Items | IVector<object> | Gets the collection used to generate the tabs. |
-| ItemTemplate | DataTemplate | Gets or sets the DataTemplate used to display each item. |
-| ItemTemplateSelector | DataTemplateSelector | Gets or sets a reference to a custom DataTemplateSelector logic class. The DataTemplateSelector referenced by this property returns a template to apply to items. |
-| SelectedIndex | Int32 | Gets or sets the index of the selected item. |
-| SelectedItem | object | Gets or sets the selected item. |
-| TabStripHeader | object | Content to the left of the tab strip. |
-| TabStripFooter | object | Content to the right of the tab strip. |
-| TabWidthMode | enum | Specifies how the tabs should be sized. Values are {Actual, Equal}. Default is Actual. |
+| Property | Description |
+|:-------- |:----------- |
+| AddTabButtonCommand | Gets or sets the command to invoke when the Add button is tapped. |
+| AddTabButtonCommandParameter | Gets or sets the parameter to pass to the command for the Add button. |
+| CanDragTabs | Gets or sets a value that indicates whether tabs in the collection can be dragged. Default is true. |
+| CanReorderTabs | Gets or sets a value that indicates whether tabs in the collection can be reordered through user interaction. Default is true. |
+| IsAddTabButtonVisible | Determines if the plus button appears to the right of the tab strip |
+| ItemsSource | Gets or sets an object source used to generate the tabs. |
+| Items | Gets the collection used to generate the tabs. |
+| ItemTemplate | Gets or sets the DataTemplate used to display each item. |
+| ItemTemplateSelector | Gets or sets a reference to a custom DataTemplateSelector logic class. The DataTemplateSelector referenced by this property returns a template to apply to items. |
+| SelectedIndex | Gets or sets the index of the selected item. |
+| SelectedItem | Gets or sets the selected item. |
+| TabStripHeader | Content to the left of the tab strip. |
+| TabStripFooter | Content to the right of the tab strip. |
+| TabViewItemWidthMode | Specifies how the tabs should be sized. Values are {Actual, Equal}. Default is Actual. |
 
 | Event | Description |
 |---|---|
@@ -374,13 +374,13 @@ in IntelliSense. -->
 
 ### TabViewItem properties and events
 
-| Property | Type | Description |
-|:-------- |:---- |:----------- |
-| Content | object | The main content that appears in the tab. |
-| Header | object | The content that appears inside the tab itself.  |
-| HeaderTemplate | DataTemplate | Template for the header object. |
-| Icon | IconElement | Icon for the tab. |
-| IsClosable | bool | Determines if the tab shows a close button. Default is "True". |
+| Property | Description |
+|:-------- |:----------- |
+| Content | The main content that appears in the tab. |
+| Header | The content that appears inside the tab itself.  |
+| HeaderTemplate | Template for the header object. |
+| Icon | Icon for the tab. |
+| IsCloseable | Determines if the tab shows a close button. Default is "True". |
 
 | Event | Description |
 |---|---|
@@ -388,6 +388,169 @@ in IntelliSense. -->
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
+
+```
+namespace MU_XC_NAMESPACE
+{
+
+[WUXC_VERSION_PREVIEW]
+[webhosthidden]
+enum TabViewItemWidthMode
+{
+    Actual = 0,
+    Equal = 1,
+};
+
+[WUXC_VERSION_PREVIEW]
+[webhosthidden]
+runtimeclass TabViewTabClosingEventArgs
+{
+    Object Item { get; };
+
+    Boolean Cancel { get; set; };
+}
+
+[WUXC_VERSION_PREVIEW]
+[webhosthidden]
+unsealed runtimeclass TabView : Windows.UI.Xaml.Controls.Control
+{
+    TabView();
+
+    [MUX_DEFAULT_VALUE("winrt::TabViewItemWidthMode::Actual")]
+    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
+    TabViewItemWidthMode TabViewItemWidthMode{ get; set; };
+
+    // TODO: Remove
+    [MUX_DEFAULT_VALUE("true")]
+    Boolean CanCloseTabs{ get; set; };
+
+    [MUX_DEFAULT_VALUE("true")]
+    Boolean CanDragTabs{ get; set; };
+
+    // TODO: Add
+    [MUX_DEFAULT_VALUE("true")]
+    Boolean CanReorderTabs{ get; set; };
+
+    Object TabStripFooterContent{ get; set; };
+    Windows.UI.Xaml.DataTemplate TabStripFooterContentTemplate{ get; set; };
+    
+    Object TabStripHeader{ get; set; };
+    Windows.UI.Xaml.DataTemplate TabStripHeaderTemplate{ get; set; };
+
+    [MUX_DEFAULT_VALUE("true")]
+    Boolean IsAddTabButtonVisible{ get; set; };
+    Windows.UI.Xaml.Input.ICommand AddTabButtonCommand{ get; set; };
+    Object AddTabButtonCommandParameter{ get; set; };
+
+    event Windows.Foundation.TypedEventHandler<TabView, TabViewTabClosingEventArgs> TabClosing;
+
+    // TODO: Update parameter to TabViewAddTabButtonClickEventArgs
+    event Windows.Foundation.TypedEventHandler<TabView, TabViewAddTabButtonClickEventArgs> AddTabButtonClick;
+
+    // TODO: Add
+    event Windows.Foundation.TypedEventHandler<TabView, TabDraggedOutsideEventArgs> TabDraggedOutside;
+
+    // From ListView
+    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
+    Object ItemsSource;
+
+    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
+    Windows.Foundation.Collections.IVector<Object> Items{ get; };
+
+    Windows.UI.Xaml.DataTemplate ItemTemplate;
+    Windows.UI.Xaml.Controls.DataTemplateSelector ItemTemplateSelector{ get; set; };
+
+    [MUX_DEFAULT_VALUE("-1")]
+    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
+    Int32 SelectedIndex;
+
+    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
+    Object SelectedItem;
+
+    Windows.UI.Xaml.DependencyObject ContainerFromItem(Object item);
+    Windows.UI.Xaml.DependencyObject ContainerFromIndex(Int32 index);
+
+    event Windows.UI.Xaml.Controls.SelectionChangedEventHandler SelectionChanged;
+
+    static Windows.UI.Xaml.DependencyProperty TabViewItemWidthModeProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty CanCloseTabsProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty CanDragTabsProperty{ get; };
+    // TODO: Add
+    static Windows.UI.Xaml.DependencyProperty CanReorderTabsProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty TabStripFooterContentProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty TabStripFooterContentTemplateProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty TabStripHeaderProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty TabStripHeaderTemplateProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty IsAddTabButtonVisibleProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty AddTabButtonCommandProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty AddTabButtonCommandParameterProperty{ get; };
+
+    static Windows.UI.Xaml.DependencyProperty ItemsSourceProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty ItemsProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty ItemTemplateProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty ItemTemplateSelectorProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty SelectedIndexProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty SelectedItemProperty{ get; };
+}
+
+[WUXC_VERSION_PREVIEW]
+[webhosthidden]
+unsealed runtimeclass TabViewItem : Windows.UI.Xaml.Controls.ListViewItem
+{
+    TabViewItem();
+
+    Object Header{ get; set; };
+
+    Windows.UI.Xaml.DataTemplate HeaderTemplate{ get; set; };
+
+    Windows.UI.Xaml.Controls.IconElement Icon{ get; set; };
+
+    [MUX_DEFAULT_VALUE("true")]
+    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
+    Boolean IsCloseable{ get; set; };
+
+    static Windows.UI.Xaml.DependencyProperty HeaderProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty HeaderTemplateProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty IconProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty IsCloseableProperty{ get; };
+
+    // TODO: Add
+    event Windows.Foundation.TypedEventHandler<TabViewItem, TabViewTabClosingEventArgs> TabClosing;
+}
+
+}
+
+namespace MU_XCP_NAMESPACE
+{
+
+[WUXC_VERSION_PREVIEW]
+[webhosthidden]
+unsealed runtimeclass TabViewListView : Windows.UI.Xaml.Controls.ListView
+{
+    TabViewListView();
+}
+
+}
+
+namespace MU_XAP_NAMESPACE
+{
+
+[WUXC_VERSION_PREVIEW]
+[webhosthidden]
+unsealed runtimeclass TabViewAutomationPeer : Windows.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer
+{
+    TabViewAutomationPeer(MU_XC_NAMESPACE.TabView owner);
+}
+
+[WUXC_VERSION_PREVIEW]
+[webhosthidden]
+unsealed runtimeclass TabViewItemAutomationPeer : Windows.UI.Xaml.Automation.Peers.ListViewItemAutomationPeer
+{
+    TabViewItemAutomationPeer(MU_XC_NAMESPACE.TabViewItem owner);
+}
+
+}
+```
 
 # Appendix
 <!-- Anything else that you want to write down for posterity, but 
