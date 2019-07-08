@@ -179,7 +179,7 @@ runtimeclass NumberBoxValueChangedEventArgs
     System.Collections.Generic.ICollection<System.Windows.Controls.ValueChange> Changes;
 };
 
-unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
+unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.Control
 {
     NumberBox();
    
