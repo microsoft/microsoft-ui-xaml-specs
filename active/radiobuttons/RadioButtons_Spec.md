@@ -166,6 +166,11 @@ When you are navigating a RadioButtons list via the keyboard, as focus is placed
 | ![alt text](2selected_nonav.png) | ![alt text](3selected_yesnav.png)|
 | Focus is on the "2" RadioButton, and it is shown as selected | The down or right arrow key has been pressed, so focus was moved to the "3" RadioButton, thus selected 3 and unselected 2. |
 
+## No Wrapping
+The RadioButtons group does not wrap. This is because when using a screen reader, a sense of boundary and clear indication of ends versus beginnings is lost and thus making it difficult for vision accessible users to navigate the list easily. There is also no enumeration with a RadioButtons group, since groups like this are meant to have a resonable number of items within.
+
+If you find that you need wrapping behavior, perhaps a RadioButtons group isn't for you. Consider using a [ListView with multiple selection enabled](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/listview-and-gridview#item-selection-and-interaction).
+
 # API Details
 
 ## RadioButtons
