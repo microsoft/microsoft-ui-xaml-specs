@@ -224,7 +224,7 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.TextBox
     
     static Windows.UI.Xaml.DependencyProperty AcceptsCalculationProperty{ get; };
     
-    static Windows.UI.Xaml.DependencyProperty SpinButtonEnabledProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty SpinButtonPlacementModeProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty HyperDragEnabledProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty HyperScrollEnabledProperty{ get; };   
     static Windows.UI.Xaml.DependencyProperty StepFrequencyProperty{ get; };
