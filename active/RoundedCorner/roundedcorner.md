@@ -72,7 +72,7 @@ There are mainly 3 types of UI parts where the radii of the corners are being ro
 
 **Controls being rounded**
 - NavigationView's selection indicator
-- Pivot
+- Pivot's selection indicator
 - ScrollIndicator
 - ProgressBar
 - Slider
