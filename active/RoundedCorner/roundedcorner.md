@@ -78,6 +78,7 @@ There are mainly 3 types of UI parts where the radii of the corners are being ro
 - Slider
 - ColorPicker
 - MediaPlayerElement (tooltip flyout only)
+
 Note: WebView uses the scroll indicator coming from HTML directly. So this will not be rounded until scroll indicator from hosted HTML gets the rounded treatment.
 
 *When not to round*
