@@ -67,7 +67,7 @@ There are mainly 3 types of UI parts where the radii of the corners are being ro
 
 *Rounding of bars*
 - These UI elements are shaped like bars or lines, for example ProgressBar.
-- The default radius value we use here are 2px except for slider in ColorPicker which will be 6px because the bar is wider.
+- The default radius values we use here are 2px. One exception is the slider in ColorPicker which will be 6px because the bar is wider.
 ![bars](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/roundedcorner/active/RoundedCorner/ImageFiles/Bars.png)
 
 **Controls being rounded**
