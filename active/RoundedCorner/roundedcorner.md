@@ -14,7 +14,7 @@ I am trying out writing a little more "background explanation (WHY)" that our cu
 There are mainly 3 types of UI parts where the radii of the corners are being rounded and here are the descriptions of how this is applied to default controls.
 
 *Corners of rectangle UI elements*
-- These UI elements include basic UIs like buttons that users see them on a surface of the screen at all times.
+- These UI elements include basic controls like buttons that users see on screen at all times.
 - The default radius value we use are 2px for these UI.
 ![Button](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/roundedcorner/active/RoundedCorner/ImageFiles/Button.png)
 
