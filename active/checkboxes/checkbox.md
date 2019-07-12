@@ -29,7 +29,7 @@ Checkbox has mainly 3 styles:
 
 Visually, fill style is little more visible and highlights the controls better than the Outline style.
 
-For Windows, we default to using Outline style for Unselcted and Fill style for Selected with exception of GridView.
+For Windows, we default to using Outline style for Unselected and Fill style for Selected with exception of GridView.
 GridView is often used on top of colored tile or images and default Fill visual is being used to make the checkbox more visible at unselected state.
 
 For details on which control use what style, refer to later section.
