@@ -14,7 +14,7 @@ Checkbox has the following UI elements that determines visuals:
 ### Checkbox colors
 Following colors are used to denote the state of the checkbox:
 1. Fill color of the box
-2. Foreground color of the border
+2. Color of the border
 3. Foreground color of the glyph
 4. The fill color
 5. Foreground color for the text
