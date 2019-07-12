@@ -16,7 +16,7 @@ Following colors are used to denote the state of the checkbox:
 1. Fill color of the box
 2. Color of the border
 3. Foreground color of the glyph
-4. The fill color
+4. The fill color of the indeterminate indicator
 5. Foreground color for the text
 
 ### Basic checkbox styles
