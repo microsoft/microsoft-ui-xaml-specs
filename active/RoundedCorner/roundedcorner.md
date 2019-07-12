@@ -41,7 +41,7 @@ There are mainly 3 types of UI parts where the radii of the corners are being ro
 - Tab control
 
 *Corners of flyout UI elements*
-- These UI elements are those that appear temporarily on UI like a MenuFlyout or Flyout.
+- These are transient UI elements that appear on screen temporarily, for example MenuFlyout or Flyout.
 - The default radius value we use here are 4px.
 ![flyout](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/roundedcorner/active/RoundedCorner/ImageFiles/Flyout.png)
 
