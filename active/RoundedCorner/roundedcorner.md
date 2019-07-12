@@ -77,7 +77,7 @@ There are mainly 3 types of UI parts where the radii of the corners are being ro
 - ProgressBar
 - Slider
 - ColorPicker
-- MediaPlayerElement
+- MediaPlayerElement (tooltip flyout only)
 - WebView (may or may not get it from XAML change, checking)
 
 *When not to round*
