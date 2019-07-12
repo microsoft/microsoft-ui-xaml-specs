@@ -71,7 +71,7 @@ There are mainly 3 types of UI parts where the radii of the corners are being ro
 ![bars](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/roundedcorner/active/RoundedCorner/ImageFiles/Bars.png)
 
 **Controls being rounded**
-- NavigationView
+- NavigationView's selection indicator
 - Pivot
 - ScrollIndicator
 - ProgressBar
