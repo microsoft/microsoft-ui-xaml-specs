@@ -82,7 +82,7 @@ There are mainly 3 types of UI parts where the radii of the corners are being ro
 Note: WebView uses the scroll indicator coming from HTML directly. So this will not be rounded until scroll indicator from hosted HTML gets the rounded treatment.
 
 ### When not to round
-- When multiple buttons are inside a single control that houses them (e.g. SplitButton).
+- When multiple UI elements touch each other that is housed inside a container (e.g. ScrollBar's bar and buttons touch each other inside the ScrollBar container), there should be no space when they contact.
 ![SplitButton](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/roundedcorner/active/RoundedCorner/ImageFiles/SplitButton2.png)
 - When a control is housed inside another container (e.g. ScrollBar's bar and buttons that are part of the ScrollBar container which is also part of a ScrollViewer).
 
