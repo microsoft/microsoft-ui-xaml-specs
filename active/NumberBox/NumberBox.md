@@ -202,8 +202,8 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.Control
     
     RoundingAlgorithm RoundingAlgorithm;
     NumberBoxNumberRounder NumberRounder; 
-    Uint IncrementPrecision;
-    Double SignificantDigitPrecision;
+    Double IncrementPrecision;
+    Int SignificantDigitPrecision;
     
     NumberBoxMinMaxMode MinMaxMode;
     Double MinValue;
