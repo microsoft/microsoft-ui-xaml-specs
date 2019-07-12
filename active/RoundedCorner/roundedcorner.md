@@ -54,7 +54,7 @@ There are mainly 3 types of UI parts where the radii of the corners are being ro
 - ToolTip
 - DropDownButton
 - SplitButton
-- Slider
+- Slider (tooltip flyout only)
 - AutoSuggestBox
 - CommandBarFlyout
 - MenuFlyout
