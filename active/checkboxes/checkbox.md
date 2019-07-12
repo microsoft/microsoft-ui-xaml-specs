@@ -2,7 +2,7 @@
 This spec lists out all the details of checkbox design that should be updated as part of [#839](https://github.com/microsoft/microsoft-ui-xaml/issues/839). Depending on schedule and other unforseen circumstances, not all could be implemented so this does not represent a final plan yet.
 
 ## The anatomy of checkbox
-![anatomy](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ControlUpdates/active/ControlUpdates/DetailedDesignSpec/Images/Anatomy2.png)
+![anatomy](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/checkboxes/active/checkboxes/Images/Anatomy.png)
 ### Basic checkbox UI elements
 Checkbox has the following UI elements that determines visuals:
 1. The box fill
@@ -25,7 +25,7 @@ Checkbox has mainly 3 styles:
 2. Fill selected
 3. Fill unselected
 
-![styles](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ControlUpdates/active/ControlUpdates/DetailedDesignSpec/Images/BaseDesign2.png)
+![styles](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/checkboxes/active/checkboxes/Images/BaseDesign.png)
 
 Visually, fill style is little more visible and highlights the controls better than the Outline style.
 
