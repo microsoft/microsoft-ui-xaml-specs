@@ -25,11 +25,16 @@ Checkbox has mainly 3 styles:
 2. Fill selected
 3. Fill unselected
 
-Using these three basic styles on different controls based on typical use of the control, we create coherent experience for application surfaces.
+Visually, fill style is little more visible and highlights the controls better than the Outline style.
+
+For Windows, we default to using Outline style for Unselcted and Fill style for Selected with exception of GridView.
+GridView is often used on top of colored tile or images and default Fill visual is being used to make the checkbox more visible at unselected state.
+
+For details on which control use what style, refer to later section.
 
 ![styles](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ControlUpdates/active/ControlUpdates/DetailedDesignSpec/Images/BaseDesign2.png)
 
-## Default design
+## Default design specification
 ### UI element sizes
 
 | UI element | Size | 
@@ -48,7 +53,8 @@ Using these three basic styles on different controls based on typical use of the
 | Pressed | #000000 100% | SystemAccentColorLight1 | #E6E6E6 100% (no change) |
 | Disabled | #000000 40% (no change) | #000000 20% | #E6E6E6 100% (no change) |
 
-## Controls that use Checkbox and style it should be using
+## Checkbox styles
+As mentioned earlier, Checkbox has Outine and Fill styles. Following shows which control use what style by default.
 
 | Control | Unseledted | Selected |
 | :---------- | :------- | :------- |
