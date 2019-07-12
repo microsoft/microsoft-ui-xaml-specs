@@ -44,7 +44,7 @@ For details on which control use what style, refer to later section.
 | The indeterminate marker | 8x8px |
 | Text | 14px (standard text size) |
 
-### Color values
+### Light Theme Color values
 
 | State | 1. Outline unseledted | 2. Fill selected | 3. Fill unselected |
 | :---------- | :------- | :------- | :------- |
@@ -52,6 +52,10 @@ For details on which control use what style, refer to later section.
 | Hover | #000000 60% (this might be wrong if we implement [#953](https://github.com/microsoft/microsoft-ui-xaml/issues/953)) | #E6E6E6 100% (no change)| SystemAccentColorDark1 (if we implement [#953](https://github.com/microsoft/microsoft-ui-xaml/issues/953)) | #E6E6E6 100% (no change) |
 | Pressed | #000000 100% (this might be wrong if we implement [#953](https://github.com/microsoft/microsoft-ui-xaml/issues/953))| SystemAccentColorLight1 (if we implement [#953](https://github.com/microsoft/microsoft-ui-xaml/issues/953)) | #E6E6E6 100% (no change) | #E6E6E6 100% (no change) |
 | Disabled | #000000 40% (no change) | #000000 20% | #E6E6E6 100% (no change) |
+
+### Dark Theme Color values
+
+Still waiting for detail
 
 ## Checkbox styles
 As mentioned earlier, Checkbox has Outine and Fill styles. Following shows which control use what style by default.
