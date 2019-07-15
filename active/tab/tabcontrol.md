@@ -312,23 +312,9 @@ TODO -- should this be part of the "tab tear out" sample above?
 section.  For example, see the Remarks for the MediaPlayerElement 
 (https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.MediaPlayerElement#remarks). -->
 
-## Keyboarding behavior
-### TAB and Arrow key behavior in the TabStrip
-When focus moves into the TabStrip area, the selected TabViewItem gains focus. The user can then use the LEFT/RIGHT arrow keys to move focus (not selection) to other tabs in the TabStrip. Arrow focus is trapped inside the Tab content area. To move focus out of the TabStrip area, the user can press the TAB key which will move focus to the next focusable element. 
+## Keyboard guidance for App Developers
+The [Appendix/Detailed Keyboarding Behavior](#detailed-keyboarding-behavior) section outlines built-in keyboarding behavior provided by the TabView. This section discusses specific recommendations to extend the keyboarding functionality for your app.
 
-### Selecting a tab
-When a TabViewItem has focus, pressing SPACE or ENTER will select that TabViewItem.
-
-### Shortcuts for selecting adjacent tabs
-Ctrl+TAB will select the next TabViewItem.
-Ctrl+Shift+TAB will select the previous TabViewItem.
-TAB selection cycles (meaning if the user has selected the last tab and presses Ctrl+TAB, the first tab becomes selected).
-
-### Closing a tab 
-Hitting CTRL+F4 will close the selected TabViewItem (assuming it is closable). 
-
-### Keyboard guidance for App Developers
-The above sections outline built-in keyboarding behavior provided by the TabView. However, there are certain expected keyboard shortcuts that you will be responsible for implementing. 
 * If your app does not already handle the CTRL+T shortcut, consider using it to open a new tab.
 * If your app does not already handle the CTRL+W shortcut, consider using it to close the selected tab.
 * Consider maintaining a list of recently closed Tabs. If the user presses CTRL+SHIFT+T, they expect recently closed tabs to be reopened.
@@ -560,5 +546,35 @@ For example, implementation details. -->
 ![Position of TabStripHeader and TabStripFooter](images/tab-control-parts-1.PNG)
 
 ![Parts of a tab item](images/tab-control-parts-2.PNG)
+
+## Detailed Keyboarding Behavior
+
+This section discusses the built-in keyboarding functionality of the TabView control. The [Keyboard Guidance for App Developers](#Keyboard-guidance-for-App-Developers) section discusses specific recommendations to extend the keyboarding functionality for apps using TabView.
+
+### TAB and Arrow key behavior in the TabStrip
+When focus moves into the TabStrip area, the selected TabViewItem gains focus. The user can then use the LEFT/RIGHT arrow keys to move focus (not selection) to other tabs in the TabStrip. Arrow focus is trapped inside the Tab content area. To move focus out of the TabStrip area, the user can press the TAB key which will move focus to the next focusable element. 
+
+_Move focus via TAB_
+
+![Move focus via TAB](images/tab-control-keyboarding-1.PNG)
+
+_ARROW does not cycle focus_
+
+![ARROW does not cycle focus](images/tab-control-keyboarding-3.PNG)
+
+### Selecting a tab
+When a TabViewItem has focus, pressing SPACE or ENTER will select that TabViewItem.
+
+_Use ARROW to move focus, ENTER to select tab_
+
+![Use ARROW to move focus, ENTER to select tab](images/tab-control-keyboarding-2.PNG)
+
+### Shortcuts for selecting adjacent tabs
+Ctrl+TAB will select the next TabViewItem.
+Ctrl+Shift+TAB will select the previous TabViewItem.
+TAB selection cycles (meaning if the user has selected the last tab and presses Ctrl+TAB, the first tab becomes selected).
+
+### Closing a tab 
+Hitting CTRL+F4 will close the selected TabViewItem (assuming it is closable). 
 
 # Open Questions
