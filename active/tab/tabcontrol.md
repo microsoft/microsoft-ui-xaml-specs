@@ -304,9 +304,6 @@ private void NavigateToNumberedTabKeyboardAccelerator_Invoked(KeyboardAccelerato
 
 ```
 
-## Combine tabs from one window into another window
-TODO -- should this be part of the "tab tear out" sample above?
-
 # Remarks
 <!-- Explanation and guidance that doesn't fit into the Examples
 section.  For example, see the Remarks for the MediaPlayerElement 
