@@ -1,7 +1,7 @@
 # Checkbox detailed design spec / redline
 This spec lists out all the details of checkbox design that should be updated as part of [#839](https://github.com/microsoft/microsoft-ui-xaml/issues/839). Depending on schedule and other unforseen circumstances, not all could be implemented so this does not represent a final plan yet.
 
-### Basic checkbox styles
+## Checkbox styles
 Checkbox has mainly 3 styles:
 1. Outline unselected
 2. Fill selected
