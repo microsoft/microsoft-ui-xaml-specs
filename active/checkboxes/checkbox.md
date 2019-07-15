@@ -1,6 +1,21 @@
 # Checkbox detailed design spec / redline
 This spec lists out all the details of checkbox design that should be updated as part of [#839](https://github.com/microsoft/microsoft-ui-xaml/issues/839). Depending on schedule and other unforseen circumstances, not all could be implemented so this does not represent a final plan yet.
 
+### Basic checkbox styles
+Checkbox has mainly 3 styles:
+1. Outline unselected
+2. Fill selected
+3. Fill unselected
+
+![styles](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/checkboxes/active/checkboxes/Images/BaseDesign.png)
+
+Visually, fill style is little more visible and highlights the controls better than the Outline style.
+
+For Windows, we default to using Outline style for Unselected and Fill style for Selected with exception of GridView.
+GridView is often used on top of colored tile or images and default Fill visual is being used to make the checkbox more visible at unselected state.
+
+For details on which control use what style, refer to later section.
+
 ## The anatomy of checkbox
 ![anatomy](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/checkboxes/active/checkboxes/Images/Anatomy.png)
 ### Basic checkbox UI elements
@@ -18,21 +33,6 @@ Following colors are used to denote the state of the checkbox:
 3. Foreground color of the glyph
 4. The fill color of the indeterminate indicator
 5. Foreground color for the text
-
-### Basic checkbox styles
-Checkbox has mainly 3 styles:
-1. Outline unselected
-2. Fill selected
-3. Fill unselected
-
-![styles](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/checkboxes/active/checkboxes/Images/BaseDesign.png)
-
-Visually, fill style is little more visible and highlights the controls better than the Outline style.
-
-For Windows, we default to using Outline style for Unselected and Fill style for Selected with exception of GridView.
-GridView is often used on top of colored tile or images and default Fill visual is being used to make the checkbox more visible at unselected state.
-
-For details on which control use what style, refer to later section.
 
 ## Default design specification
 ### UI element sizes
