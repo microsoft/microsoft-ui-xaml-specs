@@ -3,17 +3,19 @@ This spec lists out all the details of button styles design that should be updat
 
 ## Button styles
 There are three main button styles Windows application might consider using depeneding on type of usage:
-1. Fill Primary
-2. Fill Accent
-3. Outline
+1. Standard (fill)
+2. Primary
+3. Ghost (outline)
 
-![StyleDefinitions](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ButtonStyles/active/ButtonStyles/Images/StyleDefinitions.png)
+![StyleDefinitions](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ButtonStyles/active/ButtonStyles/Images/StyleDefinitions3.png)
 
 Outline style is less visible to users compared to Fill style and are more appropriate to be used on form type of UI where it is not the [**default button**](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/dialogs#defaultbutton).
 
-Fill style is more visible especially against background that is not a solid color. Windows shell tend to use this style more as the buttons tend to be drawn on top of other UI element that is not solid white or black.
+* Standard (fill) – It is the default for Windows and most common button style. It can be used on most backgrounds reliably and will keep UI clear and understandable.
+* Primary – It is for highlighting your primary action at a given moment. A very good example is use of this style in [Dialog control](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/dialogs#defaultbutton). Use only one of these at a time in order to keep a clear emphasis on a single course of action.
+* Ghost (outline) – As the name indicates, it is subtle style and may not work well on images or non uniformly colors surfaces.
 
-There is no strict rules for which style to use, however use of the button in a consistent manner within your UI that has the same meaning will help your user navigate your app's UI with less effort.
+Either fill or ghost style buttons may be used as desired for your application, however use them in a consistent manner within your UI. This will help your user navigate your app's UI with less effort.
 
 ## The anatomy of button
 ![anatomy](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ButtonStyles/active/ButtonStyles/Images/Anatomy.png)
@@ -41,7 +43,7 @@ Button has the following UI elements that determines visuals:
 
 ### Light Theme Color values
 
-| State | 1. Fill Primary | 2. Fill Accent | 3. Outline |
+| State | 1. Standard (fill) | 2. Primary | 3. Ghost (outline) |
 | :---------- | :------- | :------- | :------- |
 | Rest |  |  |  |
 | Hover |  |  |  |
@@ -50,7 +52,7 @@ Button has the following UI elements that determines visuals:
 
 ### Dark Theme Color values
 
-| State | 1. Fill Primary | 2. Fill Accent | 3. Outline |
+| State | 1. Standard (fill) | 2. Primary | 3. Ghost (outline) |
 | :---------- | :------- | :------- | :------- |
 | Rest |  |  |  |
 | Hover |  |  |  |
