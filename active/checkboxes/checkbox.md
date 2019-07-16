@@ -26,7 +26,7 @@ Checkbox has the following UI elements that determines visuals:
 4. The indeterminate marker
 5. Text
 
-### Checkbox colors
+### Checkbox colors for states
 Following colors are used to denote the state of the checkbox:
 1. Fill color of the box
 2. Color of the border
@@ -48,14 +48,19 @@ Following colors are used to denote the state of the checkbox:
 
 | State | 1. Outline unseledted | 2. Fill selected | 3. Fill unselected |
 | :---------- | :------- | :------- | :------- |
-| Rest | #000000 80% (no change) | SystemAccentColor | #E6E6E6 100% (no change)  |
-| Hover | #000000 60% (this might be wrong if we implement [#953](https://github.com/microsoft/microsoft-ui-xaml/issues/953)) | #E6E6E6 100% (no change)| SystemAccentColorDark1 (if we implement [#953](https://github.com/microsoft/microsoft-ui-xaml/issues/953)) | #E6E6E6 100% (no change) |
-| Pressed | #000000 100% (this might be wrong if we implement [#953](https://github.com/microsoft/microsoft-ui-xaml/issues/953))| SystemAccentColorLight1 (if we implement [#953](https://github.com/microsoft/microsoft-ui-xaml/issues/953)) | #E6E6E6 100% (no change) | #E6E6E6 100% (no change) |
-| Disabled | #000000 40% (no change) | #000000 20% | #E6E6E6 100% (no change) |
+| Rest | Outline: #000000 80% (no change) |	Fill: SystemAccentColor (no change) |	Fill: #E6E6E6 100% (no change) |
+| Hover | Outline: #000000 100% (no change) |	Fill: SystemAccentColorLight1 |	Fill: #E6E6E6 100% (no change) |
+| Pressed | Outline: #000000 100%, Fill: #000000 40% | Fill: SystemAccentColorDark1 | Fill: #E6E6E6 100% (no change) |
+| Disabled | Outline: #000000 40% (no change) |Fill: #000000 40%, Checkmark: #FFFFFF 60% | Fill: #E6E6E6 100% (no change) |
 
 ### Dark Theme Color values
 
-Still waiting for detail
+| State | 1. Outline unseledted | 2. Fill selected | 3. Fill unselected |
+| :---------- | :------- | :------- | :------- |
+| Rest | Outline: #FFFFFF 80% (no change) |	Fill: SystemAccentColor (no change) |	Fill: #E6E6E6 100% |
+| Hover | Outline: #FFFFFF 100% (no change) |	Fill: SystemAccentColorDark1 |	Fill: #E6E6E6 100% |
+| Pressed | Outline: #FFFFFF 100%, Fill: #FFFFFF 40% | Fill: SystemAccentColorLight1 | Fill: #E6E6E6 100% |
+| Disabled | Outline: #FFFFFF 40% (no change) |Fill: #FFFFFF 40%, Checkmark: #FFFFFF 60% | Fill: #E6E6E6 100% |
 
 ## Checkbox styles
 As mentioned earlier, Checkbox has Outine and Fill styles. Following shows which control use what style by default.
