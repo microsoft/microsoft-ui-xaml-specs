@@ -11,9 +11,9 @@ There are three main button styles Windows application might consider using depe
 
 Outline style is less visible to users compared to Fill style and are more appropriate to be used on form type of UI where it is not the [**default button**](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/dialogs#defaultbutton).
 
-* Standard (fill) – It is the default for Windows and most common button style. It can be used on most backgrounds reliably and will keep UI clear and understandable.
-* Primary – It is for highlighting your primary action at a given moment. A very good example is use of this style in [Dialog control](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/dialogs#defaultbutton). Use only one of these at a time in order to keep a clear emphasis on a single course of action.
-* Ghost (outline) – As the name indicates, it is subtle style and may not work well on images or non uniformly colors surfaces.
+* **Standard (fill)** – It is the default for Windows and most common button style. It can be used on most backgrounds reliably and will keep UI clear and understandable.
+* **Primary** – It is for highlighting your primary action at a given moment. A very good example is use of this style in [Dialog control](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/dialogs#defaultbutton). Use only one of these at a time in order to keep a clear emphasis on a single course of action.
+* **Ghost (outline)** – As the name indicates, it is subtle style and may not work well on images or non uniformly colors surfaces.
 
 Either fill or ghost style buttons may be used as desired for your application, however use them in a consistent manner within your UI. This will help your user navigate your app's UI with less effort.
 
