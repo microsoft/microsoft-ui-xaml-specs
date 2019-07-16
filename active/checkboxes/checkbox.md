@@ -48,19 +48,19 @@ Following colors are used to denote the state of the checkbox:
 
 | State | 1. Outline unseledted | 2. Fill selected | 3. Fill unselected |
 | :---------- | :------- | :------- | :------- |
-| Rest | Outline: #000000 80% (no change) |	Fill: SystemAccentColor (no change) |	Fill: #E6E6E6 100% (no change) |
-| Hover | Outline: #000000 100% (no change) |	Fill: SystemAccentColorLight1 |	Fill: #E6E6E6 100% (no change) |
-| Pressed | Outline: #000000 100%, Fill: #000000 40% | Fill: SystemAccentColorDark1 | Fill: #E6E6E6 100% (no change) |
-| Disabled | Outline: #000000 40% (no change) |Fill: #000000 40%, Checkmark: #FFFFFF 60% | Fill: #E6E6E6 100% (no change) |
+| Rest | Border: #000000 80% (no change) |	Fill: SystemAccentColor (no change) |	Fill: #E6E6E6 100% (no change) |
+| Hover | Border: #000000 100% (no change) |	Fill: SystemAccentColorLight1 |	Fill: #E6E6E6 100% (no change) |
+| Pressed | Border: #000000 100%, Fill: #000000 40% | Fill: SystemAccentColorDark1 | Fill: #E6E6E6 100% (no change) |
+| Disabled | Border: #000000 40% (no change) |Fill: #000000 40%, Checkmark: #FFFFFF 60% | Fill: #E6E6E6 100% (no change) |
 
 ### Dark Theme Color values
 
 | State | 1. Outline unseledted | 2. Fill selected | 3. Fill unselected |
 | :---------- | :------- | :------- | :------- |
-| Rest | Outline: #FFFFFF 80% (no change) |	Fill: SystemAccentColor (no change) |	Fill: #E6E6E6 100% |
-| Hover | Outline: #FFFFFF 100% (no change) |	Fill: SystemAccentColorDark1 |	Fill: #E6E6E6 100% |
-| Pressed | Outline: #FFFFFF 100%, Fill: #FFFFFF 40% | Fill: SystemAccentColorLight1 | Fill: #E6E6E6 100% |
-| Disabled | Outline: #FFFFFF 40% (no change) |Fill: #FFFFFF 40%, Checkmark: #FFFFFF 60% | Fill: #E6E6E6 100% |
+| Rest | Border: #FFFFFF 80% (no change) |	Fill: SystemAccentColor (no change) |	Fill: #E6E6E6 100% |
+| Hover | Border: #FFFFFF 100% (no change) |	Fill: SystemAccentColorDark1 |	Fill: #E6E6E6 100% |
+| Pressed | Border: #FFFFFF 100%, Fill: #FFFFFF 40% | Fill: SystemAccentColorLight1 | Fill: #E6E6E6 100% |
+| Disabled | Border: #FFFFFF 40% (no change) |Fill: #FFFFFF 40%, Checkmark: #FFFFFF 60% | Fill: #E6E6E6 100% |
 
 ## Checkbox styles
 As mentioned earlier, Checkbox has Outine and Fill styles. Following shows which control use what style by default.
