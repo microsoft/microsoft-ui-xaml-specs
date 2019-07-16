@@ -7,7 +7,7 @@ Checkbox has mainly 3 styles:
 2. Fill selected
 3. Fill unselected
 
-![styles](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/checkboxes/active/checkboxes/Images/BaseDesign.png)
+![styles](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/checkboxes/active/checkboxes/Images/BaseDesign2.png)
 
 Visually, fill style is little more visible and highlights the controls better than the Outline style.
 
@@ -17,7 +17,7 @@ GridView is often used on top of colored tile or images and default Fill visual 
 For details on which control use what style, refer to later section.
 
 ## The anatomy of checkbox
-![anatomy](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/checkboxes/active/checkboxes/Images/Anatomy.png)
+![anatomy](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/checkboxes/active/checkboxes/Images/Anatomy2.png)
 ### Basic checkbox UI elements
 Checkbox has the following UI elements that determines visuals:
 1. The box fill
