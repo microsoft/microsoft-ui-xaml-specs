@@ -1,5 +1,5 @@
 # Checkbox detailed design spec / redline
-This spec lists out all the details of checkbox design that should be updated as part of [#839](https://github.com/microsoft/microsoft-ui-xaml/issues/839). Depending on schedule and other unforseen circumstances, not all could be implemented so this does not represent a final plan yet.
+This spec lists out all the details of checkbox design that should be updated as part of [#839](https://github.com/microsoft/microsoft-ui-xaml/issues/839). Depending on schedule and other unforeseen circumstances, not all could be implemented so this does not represent a final plan yet.
 
 ## Checkbox styles
 Checkbox has mainly 3 styles:
@@ -46,7 +46,7 @@ Following colors are used to denote the state of the checkbox:
 
 ### Light Theme Color values
 
-| State | 1. Outline unseledted | 2. Fill selected | 3. Fill unselected |
+| State | 1. Outline unselected | 2. Fill selected | 3. Fill unselected |
 | :---------- | :------- | :------- | :------- |
 | Rest | Border: #000000 80% (no change) |	Fill: SystemAccentColor (no change) |	Fill: #E6E6E6 100% (no change) |
 | Hover | Border: #000000 100% (no change) |	Fill: SystemAccentColorLight1 |	Fill: #E6E6E6 100% (no change) |
@@ -55,7 +55,7 @@ Following colors are used to denote the state of the checkbox:
 
 ### Dark Theme Color values
 
-| State | 1. Outline unseledted | 2. Fill selected | 3. Fill unselected |
+| State | 1. Outline unselected | 2. Fill selected | 3. Fill unselected |
 | :---------- | :------- | :------- | :------- |
 | Rest | Border: #FFFFFF 80% (no change) |	Fill: SystemAccentColor (no change) |	Fill: #E6E6E6 100% |
 | Hover | Border: #FFFFFF 100% (no change) |	Fill: SystemAccentColorDark1 |	Fill: #E6E6E6 100% |
@@ -63,9 +63,9 @@ Following colors are used to denote the state of the checkbox:
 | Disabled | Border: #FFFFFF 40% (no change) |Fill: #FFFFFF 40%, Checkmark: #FFFFFF 60% | Fill: #E6E6E6 100% |
 
 ## Checkbox styles
-As mentioned earlier, Checkbox has Outine and Fill styles. Following shows which control use what style by default.
+As mentioned earlier, Checkbox has Outline and Fill styles. Following shows which control use what style by default.
 
-| Control | Unseledted | Selected |
+| Control | Unselected | Selected |
 | :---------- | :------- | :------- |
 | CheckBox | Outline | Fill |
 | ListItem | Outline | Fill |
