@@ -1,4 +1,4 @@
-> See comments in Markdown for how to use this spec template
+<!--See comments in Markdown for how to use this spec template-> 
 
 <!-- The purpose of this spec is to describe a new feature and
 its APIs that make up a new feature in WinUI. -->
@@ -29,12 +29,24 @@ modifying an existing API. -->
 area, just explanation enough to understand this new API, rather than telling
 the reader "go read 100 pages of background information posted at ...". -->
 
+>See proposal documents for:
+>
+> [determinate mode for ProgressRing](https://github.com/microsoft/microsoft-ui-xaml/issues/688) 
+>
+> [ProgressRing style](https://github.com/microsoft/microsoft-ui-xaml/issues/837)
+>
+> [Guidance for Progress controls](https://github.com/microsoft/microsoft-ui-xaml/issues/880)
 
+Progress controls indicate to a user that an operation is occuring. This includes ProgressBar and ProgressRing controls. ProgressBar has both a determinate and indeterminate state. ProgressRing only has an indeterminate state.
+
+Important APIs: [ProgressBar](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.progressbar) and [ProgressRing](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.progressring)
 # Description
 <!-- Use this section to provide a brief description of the feature.
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
+The ProgressRing control indicates that an operation is ongoing. The determinate mode of ProgressRing shows the percentage completed of a task. 
 
+The style updates to progress controls will align with new designs and with other Microsoft products.
 
 # Examples
 <!-- Use this section to explain the features of the API, showing
@@ -50,6 +62,19 @@ example code with each description. The general format is:
 <!-- As an example of this section, see the Examples section for the PasswordBox control 
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 
+The following examples show how to use the isIndeterminate property to change the mode of the ProgressRing.
+
+## Indeterminate ProgressRing
+
+```xml
+<ProgressRing IsActive="True" Height="100" Width="100" IsIndeterminate="True"/>
+```
+
+## Determinate ProgressRing
+
+```xml
+<ProgressRing IsActive="True" Height="100" Width="100"/>
+```
 
 # Remarks
 <!-- Explanation and guidance that doesn't fit into the Examples section. -->
@@ -68,6 +93,7 @@ isn't the type's default (for example an int-typed property that doesn't default
 
 <!-- Option 2: Put these descriptions in the below API Details section,
 with a "///" comment above the member or type. -->
+
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
