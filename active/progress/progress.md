@@ -62,7 +62,7 @@ example code with each description. The general format is:
 <!-- As an example of this section, see the Examples section for the PasswordBox control 
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 
-The following examples show how to use the isIndeterminate property to change the mode of the ProgressRing.
+The following examples show how to use the isIndeterminate property to change the mode of the ProgressRing and the Value property to change the proportionate amount indicated. 
 
 ## Indeterminate ProgressRing
 
@@ -73,7 +73,7 @@ The following examples show how to use the isIndeterminate property to change th
 ## Determinate ProgressRing
 
 ```xml
-<ProgressRing IsActive="True" Height="100" Width="100"/>
+<ProgressRing IsActive="True" Height="100" Width="100" Value="5"/>
 ```
 
 # Remarks
@@ -102,3 +102,6 @@ with a "///" comment above the member or type. -->
 <!-- Anything else that you want to write down for posterity, but 
 that isn't necessary to understand the purpose and usage of the API.
 For example, implementation details. -->
+
+# Open Questions
+The Value property for ProgressBar is a number out of 100 (i.e. it can hold integers from 0 to 100, inclusive). Should the Value property for ProgressRing also be out of 100, or be out of 360 to reflect the circular shape?
