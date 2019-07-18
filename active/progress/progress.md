@@ -106,4 +106,6 @@ For example, implementation details. -->
 # Open Questions
 Using IsIndeterminate as the property aligns with ProgressBar. However, this could break existing uses of ProgressRing that expect it to default to indeterminate mode.
 
+ProgressRing derives from Control but ProgressBar derives from RangeBase. RangeBase "represents an element that has a value within a specific range". Is there value to changing ProgressRing's base class? And if there is value, is it possible to do so at this time? (question modified from [here](https://github.com/microsoft/microsoft-ui-xaml-specs/pull/36#discussion_r305069598))
+
 The Value property for ProgressBar is a number out of 100 (i.e. it can hold integers from 0 to 100, inclusive). Should the Value property for ProgressRing also be out of 100, or be out of 360 to reflect the circular shape?
