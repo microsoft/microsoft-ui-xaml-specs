@@ -104,4 +104,6 @@ that isn't necessary to understand the purpose and usage of the API.
 For example, implementation details. -->
 
 # Open Questions
+Using IsIndeterminate as the property aligns with ProgressBar. However, this could break existing uses of ProgressRing that expect it to default to indeterminate mode.
+
 The Value property for ProgressBar is a number out of 100 (i.e. it can hold integers from 0 to 100, inclusive). Should the Value property for ProgressRing also be out of 100, or be out of 360 to reflect the circular shape?
