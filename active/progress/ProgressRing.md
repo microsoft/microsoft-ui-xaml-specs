@@ -44,9 +44,7 @@ Important APIs: [ProgressBar](https://docs.microsoft.com/en-us/uwp/api/windows.u
 <!-- Use this section to provide a brief description of the feature.
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
-The ProgressRing control indicates that an operation is ongoing. The determinate mode of ProgressRing shows the percentage completed of a task. 
-
-The style updates to progress controls will align with new designs and with other Microsoft products.
+ Represents a control that indicates that an operation is ongoing. The typical visual appearance is a ring-shaped "spinner" that animates a filled area as progress continues.
 
 # Examples
 <!-- Use this section to explain the features of the API, showing
@@ -73,7 +71,7 @@ The following examples show how to use the isIndeterminate property to change th
 ## Determinate ProgressRing
 
 ```xml
-<ProgressRing IsActive="True" Height="100" Width="100" Value="5"/>
+<ProgressRing IsActive="True" Height="100" Width="100" Value="75"/>
 ```
 
 # Remarks
@@ -94,6 +92,13 @@ isn't the type's default (for example an int-typed property that doesn't default
 <!-- Option 2: Put these descriptions in the below API Details section,
 with a "///" comment above the member or type. -->
 
+|Name | Description |
+|:--|:-:|
+| IsIndeterminate | Gets or sets a value that indicates whether the progress ring reports generic progress with a repeating pattern or reports progress based on the Value property |
+| Value | Gets or sets the current setting of the control | 
+
+
+*It should be noted that ProgressBar inherits the Value property from RangeBase, see the related Open Question.
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
