@@ -8,7 +8,7 @@ Many of our controls use the following visual styles:
 3. Outline
 
 Here is an example of these visual styles used for Buttons. 
-![StyleDefinitions](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ButtonStyles/active/ButtonStyles/Images/StyleDefinitions3.png)
+![StyleDefinitions](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ButtonStyles/active/ButtonStyles/Images/StyleDefinitions4.png)
 
 
 
