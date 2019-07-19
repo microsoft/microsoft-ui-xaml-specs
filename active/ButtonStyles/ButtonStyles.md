@@ -1,21 +1,28 @@
 # Button Styles detailed design spec / redline
-This spec lists out all the details of button styles design that should be updated as part of [#1054](https://github.com/microsoft/microsoft-ui-xaml/issues/1054). Depending on schedule and other unforseen circumstances, not all could be implemented so this does not represent a final plan yet.
+This spec provides the systematic approach to coherent visual styles used for Buttons. This also have an overlap to what we are doing with the CheckBox visual change, but this spec covers Button only.
 
-## Button styles
-There are three main button styles Windows application might consider using depeneding on type of usage:
-1. Standard (fill)
-2. Primary
-3. Ghost (outline)
+## Shared Visual Styles
+Many of our controls use the following visual styles:
+1. Fill
+2. Accent
+3. Outline
 
+Here is an example of these visual styles used for Buttons. 
 ![StyleDefinitions](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ButtonStyles/active/ButtonStyles/Images/StyleDefinitions3.png)
 
-Outline style is less visible to users compared to Fill style and are more appropriate to be used on form type of UI where it is not the [**default button**](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/dialogs#defaultbutton).
 
-* **Standard (fill)** – It is the default for Windows and most common button style. It can be used on most backgrounds reliably and will keep UI clear and understandable.
-* **Primary** – It is for highlighting your primary action at a given moment. A very good example is use of this style in [Dialog control](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/dialogs#defaultbutton). Use only one of these at a time in order to keep a clear emphasis on a single course of action.
-* **Ghost (outline)** – As the name indicates, it is subtle style and may not work well on images or non uniformly colors surfaces.
 
-Either fill or ghost style buttons may be used as desired for your application, however use them in a consistent manner within your UI. This will help your user navigate your app's UI with less effort.
+* **Fill**
+    *  The default style used for Buttons on Windows, thus built as a default button visual style for WinUI. 
+    *  It can be used on most backgrounds reliably and will keep UI clear and understandable.
+* **Accent**
+    * A visual style suitable for highlighting your primary action at a given moment. A very good example is use of this style in [Dialog control's DefaultButton](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/dialogs#defaultbutton). 
+    * Use only one of these at a time in order to keep a clear emphasis on a single course of action.
+* **Outline**
+    * This style is less visible to users compared to Fill style and are more appropriate to be used on form type of UI where less visual hierarchy might be desired.
+    * It is subtler style compared with other styles and may not work well on images or non uniformly colors surfaces.
+
+You can choose to use buttons using either fill or outline visual styles as desired for your application, however use them in a consistent manner within your UI. This will help your user navigate your app's UI with less effort.
 
 ## The anatomy of button
 ![anatomy](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ButtonStyles/active/ButtonStyles/Images/Anatomy.png)
@@ -43,7 +50,7 @@ Button has the following UI elements that determines visuals:
 
 ### Light Theme Color values
 
-| State | 1. Standard (fill) | 2. Primary | 3. Ghost (outline) |
+| State | 1. Fill | 2. Accent | 3. Outline |
 | :---------- | :------- | :------- | :------- |
 | Rest |  |  |  |
 | Hover |  |  |  |
@@ -52,7 +59,7 @@ Button has the following UI elements that determines visuals:
 
 ### Dark Theme Color values
 
-| State | 1. Standard (fill) | 2. Primary | 3. Ghost (outline) |
+| State | 1. Fill | 2. Accent | 3. Outline |
 | :---------- | :------- | :------- | :------- |
 | Rest |  |  |  |
 | Hover |  |  |  |
