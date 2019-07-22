@@ -56,7 +56,7 @@ This spec therefore covers "document-style tabs" specifically as this platform g
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
 
-The Tab control is a collection of tabs that each represents a new page or document in your app. Tab controls are useful when your app has several pages of content and the user expects to be able to add, close, and rearrange the pages.
+TabView is a collection of tabs that each represents a new page or document in your app. Use TabView when your app has several pages of content and the user expects to be able to add, close, and rearrange the pages.
 
 **Is this the right control?**
 
