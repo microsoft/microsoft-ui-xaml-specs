@@ -37,7 +37,7 @@ the reader "go read 100 pages of background information posted at ...". -->
 >
 > [Guidance for Progress controls](https://github.com/microsoft/microsoft-ui-xaml/issues/880)
 
-Progress controls indicate to a user that an operation is occuring. This includes ProgressBar and ProgressRing controls. ProgressBar has both a determinate and indeterminate state. ProgressRing only has an indeterminate state.
+Progress controls indicate to a user that an operation is occuring. This includes ProgressBar and ProgressRing controls. ProgressBar has both a determinate and indeterminate mode. ProgressRing only has an indeterminate mode. 
 
 Important APIs: [ProgressBar](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.progressbar) and [ProgressRing](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.progressring)
 # Description
@@ -59,6 +59,7 @@ example code with each description. The general format is:
 
 <!-- As an example of this section, see the Examples section for the PasswordBox control 
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
+[Please see this table of current ProgressBar and ProgressRing modes and states.](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/kathyang/progress-styles/active/progress-styles/progress-styles.md)
 
 The following examples show how to use the isIndeterminate property to change the mode of the ProgressRing and the Value property to change the proportionate amount indicated. 
 
@@ -75,6 +76,16 @@ The following examples show how to use the isIndeterminate property to change th
 <ProgressRing IsActive="True" Height="100" Width="100" Value="75"/>
 ```
 ![](images/ProgressRing-determinate.PNG)
+
+ProgressRing currently has an IsActive property. Below is a table showing how determinate ProgressRing is affected by this property.
+
+|IsActive | Image | 
+|:--|:-:|
+| True | ![](images/ProgressRing-determinate.PNG) |
+| False | ![](images/ProgressRing-determinate-not-active.PNG) | 
+
+*Note that the design of determinate ProgressRing is not finalized.
+
 # Remarks
 <!-- Explanation and guidance that doesn't fit into the Examples section. -->
 
@@ -93,13 +104,10 @@ isn't the type's default (for example an int-typed property that doesn't default
 <!-- Option 2: Put these descriptions in the below API Details section,
 with a "///" comment above the member or type. -->
 
-|Name | Description |
+|Name | Description | 
 |:--|:-:|
-| IsIndeterminate | Gets or sets a value that indicates whether the progress ring reports generic progress with a repeating pattern or reports progress based on the Value property |
+| IsIndeterminate | Defaults to True. Gets or sets a value that indicates whether the progress ring reports generic progress with a repeating pattern or reports progress based on the Value property |
 | Value | Gets or sets the current setting of the control | 
-
-
-*It should be noted that ProgressBar inherits the Value property from RangeBase, see the related Open Question.
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
@@ -110,7 +118,7 @@ that isn't necessary to understand the purpose and usage of the API.
 For example, implementation details. -->
 
 # Open Questions
-1) Using IsIndeterminate as the property aligns with ProgressBar. However, this could break existing uses of ProgressRing that expect it to default to indeterminate mode. 
+
 
 2) ProgressRing derives from Control but ProgressBar derives from RangeBase. RangeBase "represents an element that has a value within a specific range". Is there value to changing ProgressRing's base class? And if there is value, is it possible to do so at this time? (question modified from [here](https://github.com/microsoft/microsoft-ui-xaml-specs/pull/36#discussion_r305069598))
 
