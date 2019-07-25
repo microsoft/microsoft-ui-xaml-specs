@@ -1,5 +1,5 @@
 # Progress Styles
-This table provides a comparison of progress styles for the ProgressBar and ProgressRing controls in different modes and states
+This table provides a comparison of current progress styles for the ProgressBar and ProgressRing controls in different modes and states
 
 ## ProgressBar
 ProgressBar has IsIndeterminate, Value, ShowPaused, and ShowError properties. 
@@ -34,12 +34,13 @@ IsIndeterminate is False
 | 85 | True | True | ![](images/ProgressBar-determinate-paused-error.PNG) |
 
 ## ProgressRing
-ProgressRing has IsActive property, and does not currently have IsIndeterminate, Value, ShowPaused, or ShowError properties
+ProgressRing has IsActive property, and does not currently have IsIndeterminate, Value, ShowPaused, or ShowError properties.
 ### ProgressRing (Indeterminate)
 | IsActive | Image |
 |:--| :-:|
 | True | ![](images/ProgressRing-indeterminate.PNG) |
 | False | ![](images/ProgressRing-indeterminate-not-active.PNG) |
+
 
 
 
