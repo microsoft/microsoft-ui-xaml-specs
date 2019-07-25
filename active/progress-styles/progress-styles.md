@@ -7,7 +7,7 @@ ProgressBar has IsIndeterminate, Value, ShowPaused, and ShowError properties.
 ### ProgressBar (Indeterminate)
 IsIndeterminate is True
 
-| Value | ShowPaused | ShowError | Supported |
+| Value | ShowPaused | ShowError | Image |
 |:--| :-:|:-:|:-:| 
 |  | False | False | ![](images/ProgressBar-indeterminate-active.PNG) |
 |  | True | False | ![](images/ProgressBar-indeterminate-paused.PNG) |
@@ -22,7 +22,7 @@ IsIndeterminate is True
 ### ProgressBar (Determinate)
 IsIndeterminate is False
 
-| Value | ShowPaused | ShowError | Supported |
+| Value | ShowPaused | ShowError | Image |
 |:--| :-:|:-:|:-:| 
 |  | False | False | ![](images/ProgressBar-determinate-no-value.PNG) |
 |  | True | False | ![](images/ProgressBar-determinate-no-value.PNG) |
