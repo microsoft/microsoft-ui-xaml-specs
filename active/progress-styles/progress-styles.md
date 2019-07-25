@@ -38,7 +38,7 @@ ProgressBar indicates progress based on the Value, relative to the Minimum and M
 
 | Properties | Image | 
 |:--| :-:|
-| Minimum=0 Maximum=10 Value=8.5| ![](images/ProgressBar-determinate-active.PNG) |
+| Minimum=10 Maximum=20 Value=18.5| ![](images/ProgressBar-determinate-active.PNG) |
 
 ## ProgressRing
 ProgressRing has IsActive property, and does not currently have IsIndeterminate, Value, ShowPaused, or ShowError properties.
