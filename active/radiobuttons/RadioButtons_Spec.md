@@ -63,23 +63,6 @@ public sealed partial class MainPage : Page
 }
 ```
 
-## Multiple Columns
-Some groups of RadioButton elements may want a multi-column layout. This is an example on how to
-set that up.
-
-```xaml
-<muxc:RadioButtons Header="App Mode" MaxColumns="3">
-    <x:String>Column 1</x:String>
-    <x:String>Column 2</x:String>
-    <x:String>Column 3</x:String>
-    <x:String>Column 1</x:String>
-    <x:String>Column 2</x:String>
-    <x:String>Column 3</x:String>
-</muxc:RadioButtons>
-```
-
-![alt text](multicolumns.png)
-
 # Remarks
 The RadioButtons control has special navigation behavior that helps not only keyboard accelerant users, but also accessibility users to navigate the list more quickly and more easily.
 
@@ -110,21 +93,21 @@ When no RadioButton controls are selected in the RadioButtons list, focus is put
 ## Keyboard navigation
 When you have a single column list of RadioButton control options and you have already put focus onto an item, you can navigate the RadioButtons list in logical sequential order using the keyboard.
 
-- The down or right arrow keys will move to the "next" logical item
-- The up or left arrow keys will move to the "previous" logical item
+- The up or down arrow keys will move to the "next" or "previous" logical item (defined in markup)
+- The left or right arrow keys will move spatially
 
 ![alt text](keyboardnav_singlecol.png)
 
-## Multi-Column RadioButtons list
+This means that in purely vertical RadioButton group lists, left/right arrow keys will not do anything, but up/down will still navigate as expected. However, in purely horizontal RadioButton group lists, left and right will navigate the same way as up and down.
+
+>This behavior is defined more below when we discuss multi-column RadioButton group lists.
+
+## Vertical and horizontal RadioButton lists
 In instances where there is more that one column of RadioButton items within a single RadioButtons list control, the list will flow a column-major layout.
 
-|MaximumColumns not specified <br>OR<br> MaximumColumns = 1 |  MaximumColumns = 2 |
+|MaximumColumns not specified <br>OR<br> MaximumColumns = 1 |  MaximumColumns = 4 |
 |:--:|:--:|
 | ![alt text](singlecolumn_example.png) | ![alt text](multicolumn_example_1.png) |
-
-The markup remains almost the same, and is in the "logial" order that the keyboard behavior will navigate through is indicated in the markup.
-
-The only change is to the number of columns specified, which is defined in the ``MaximumColumns`` property.
 
 ```xml
 <RadioButtons Header="Select Number" MaximumColumns="2">
@@ -135,7 +118,11 @@ The only change is to the number of columns specified, which is defined in the `
 </RadioButtons>
 ```
 
-If you specify an odd number of items in the RadioButtons group list, or define an odd number for the way it's split (via ``MaximumColumns``) the group will put the trailing number in the first column, and divide the rest evenly.
+By default, the RadioButtons list will fill itself vertically, meaning if no ``MaximumColumns`` value is set, it will be assumed to be 1 and orient itself vertically.
+
+### Multiple columns (uncommon case)
+
+If you specify a ``MaxiumumColumns`` value that is not equal to the number of items in the RadioButtons list, the list will arrange  itself in column-major order and put any uneven/remaining items in the first column, in the case of an uneven ``MaximumColumns`` value or list items defined.
 
 |MaximumColumns = 3|
 |:--|
@@ -153,7 +140,7 @@ If you specify an odd number of items in the RadioButtons group list, or define 
 </RadioButtons>
 ```
 
-### Navigating with multiple columns
+#### Keyboard navigation with multiple columns
 The keyboarding behavior is the same as the single-column navigation, it just wraps to the next column when there is more than one defined.
 
 ![alt text](keyboardnav_multicol.png)
@@ -165,6 +152,15 @@ When you are navigating a RadioButtons list via the keyboard, as focus is placed
 |:--|:--|
 | ![alt text](2selected_nonav.png) | ![alt text](3selected_yesnav.png)|
 | Focus is on the "2" RadioButton, and it is shown as selected | The down or right arrow key has been pressed, so focus was moved to the "3" RadioButton, thus selected 3 and unselected 2. |
+
+## Narrator behavior
+
+Below is a detailed table of, depending on the user interaction, what the narrator is expected to say.
+
+|Upon *first* putting focus into the group | Navigating to a selected item |
+|:--|:--|
+| "Group name" RadioButton collection, x of N selected | RadioButton "name" selected, x of N |
+|"Group name" RadioButton collection control, none selected| RadioButton "name" not selected, x of N <br> *(If navigating with shift-arrow keys, meaning no selection following focus)* |
 
 ## No Wrapping
 The RadioButtons group does not wrap. This is because when using a screen reader, a sense of boundary and clear indication of ends versus beginnings is lost and thus making it difficult for vision accessible users to navigate the list easily. There is also no enumeration with a RadioButtons group, since groups like this are meant to have a resonable number of items within.
