@@ -77,7 +77,7 @@ The following examples show how to use the IsIndeterminate property to change th
 ```
 ![](images/ProgressRing-determinate.PNG)
 
-Below are tables showing how ProgressRing is affected by the IsIndeterminate, IsActive, Value, ShowPaused, and ShowError properties.
+Below are tables showing how ProgressRing is affected by the IsActive, IsIndeterminate, ShowPaused, ShowError and Value properties.
 
 ## Inactive ProgressRing
 | Note | Image |
@@ -117,9 +117,11 @@ IsIndeterminate is False
 
 ### Minimum and Maximum
 
-| Note | Properties | Image |
-|:--|:-:|:-:|
-| ProgressRing should indicate progress based on the Value, relative to the Minimum and Maximum | Minimum=10, Maximum=18, and Value=6| ![](images/ProgressRing-determinate.PNG) |
+ProgressRing should indicate progress based on the Value, relative to the Minimum and Maximum.
+
+| Properties | Image |
+|:--|:-:|
+| Minimum=10, Maximum=18, and Value=16| ![](images/ProgressRing-determinate.PNG) |
 
 *Note that the designs for ProgressRing are not finalized. See [here](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ControlUpdates/active/ControlUpdates/images/Progress.png) for early designs. 
 
