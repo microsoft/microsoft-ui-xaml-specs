@@ -117,9 +117,9 @@ IsIndeterminate is False
 
 ### Minimum and Maximum
 
-| Note | Image |
-|:--|:-:|
-| ProgressRing should indicate progress based on the Value (within the range | ![](images/ProgressRing-determinate.PNG) |
+| Note | Properties | Image |
+|:--|:-:|:-:|
+| ProgressRing should indicate progress based on the Value, relative to the Minimum and Maximum | Minimum=10, Maximum=18, and Value=6| ![](images/ProgressRing-determinate.PNG) |
 
 *Note that the designs for ProgressRing are not finalized. See [here](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ControlUpdates/active/ControlUpdates/images/Progress.png) for early designs. 
 
@@ -151,8 +151,8 @@ Below are properties being added to ProgressRing. The IsIndeterminate property o
 | ShowPaused | Defaults to False. Gets or sets a value that indicates whether the progress bar should use visual states that communicate a Paused state to the user.|
 | ShowError | Defaults to False. Gets or sets a value that indicates whether the progress bar should use visual states that communicate an Error state to the user. |
 | LargeChange | Gets or sets a value to be added to or subtracted from the Value of a RangeBase control. (Inherited from RangeBase) |
-| Maximum | Gets or sets the highest possible Value of the range element. (Inherited from RangeBase) |
-| Minimum | Gets or sets the Minimum possible Value of the range element. (Inherited from RangeBase) |
+| Maximum | Defaults to 100. Gets or sets the highest possible Value of the range element. (Inherited from RangeBase) |
+| Minimum | Defaults to 0. Gets or sets the Minimum possible Value of the range element. (Inherited from RangeBase) |
 | SmallChange | Gets or sets a Value to be added to or subtracted from the Value of a RangeBase control. (Inherited from RangeBase) |
 | ValueChanged | Event that occurs when the range value changes. (Inherited from RangeBase) |
 
