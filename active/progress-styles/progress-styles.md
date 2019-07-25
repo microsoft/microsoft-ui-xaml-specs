@@ -28,6 +28,7 @@ IsIndeterminate is False
 |  | True | False | ![](images/ProgressBar-determinate-no-value.PNG) |
 |  | False | True | ![](images/ProgressBar-determinate-no-value.PNG) |
 |  | True | True | ![](images/ProgressBar-determinate-no-value.PNG) |
+| 0 | False | False | ![](images/ProgressBar-determinate-no-value.PNG) |
 | 85 | False | False | ![](images/ProgressBar-determinate-active.PNG) |
 | 85 | True | False | ![](images/ProgressBar-determinate-paused.PNG) |
 | 85 | False | True | ![](images/ProgressBar-determinate-error.PNG) |
