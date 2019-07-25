@@ -33,6 +33,13 @@ IsIndeterminate is False
 | True  | True  |    | ![](images/ProgressBar-determinate-no-value.PNG) |
 | True  | True  | 85 | ![](images/ProgressBar-determinate-paused-error.PNG) |
 
+### ProgressBar Minimum and Maximum
+ProgressBar indicates progress based on the Value, relative to the Minimum and Maximum.
+
+| Properties | Image | 
+|:--| :-:|
+| Minimum=0 Maximum=10 Value=8.5| ![](images/ProgressBar-determinate-active.PNG) |
+
 ## ProgressRing
 ProgressRing has IsActive property, and does not currently have IsIndeterminate, Value, ShowPaused, or ShowError properties.
 ### ProgressRing (Indeterminate)
