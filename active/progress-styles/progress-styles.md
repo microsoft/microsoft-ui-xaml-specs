@@ -4,4 +4,4 @@ This table provides a comparison of progress styles for the ProgressBar and Prog
 ## ProgressBar
 |IsIndeterminate | ShowPaused | ShowError | Image |
 |:--|:-:| :-:|:-:|
-| True | False | False | Placeholder |
+| True | False | False | ![](images/ProgressBar-indeterminate-active.PNG) |
