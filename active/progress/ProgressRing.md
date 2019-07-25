@@ -79,7 +79,7 @@ The following examples show how to use the IsIndeterminate property to change th
 
 Below are tables showing how ProgressRing is affected by the IsIndeterminate, IsActive, Value, ShowPaused, and ShowError properties.
 
-## Not Active ProgressRing
+## Inactive ProgressRing
 | Note | Image |
 |:--|:-:|
 | When IsActive is False, ProgressRing will always appear blank, regardless of other properties | ![](images/ProgressRing-determinate-not-active.PNG) |
