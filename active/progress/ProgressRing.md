@@ -80,8 +80,9 @@ The following examples show how to use the IsIndeterminate property to change th
 Below are tables showing how ProgressRing is affected by the IsDeterminate, IsActive, Value, ShowPaused, and ShowError properties.
 
 ## Not Active ProgressRing
-When IsActive is False, ProgressRing will always appear blank:
-![](images/ProgressRing-determinate-not-active.PNG)
+| Note | Image |
+|:--|:-:|
+| When IsActive is False, ProgressRing will always appear blank, regardless of other properties | ![](images/ProgressRing-determinate-not-active.PNG) |
 
 ## Indeterminate ProgressRing
 IsDeterminate is True
@@ -89,25 +90,29 @@ IsDeterminate is True
 | Value | ShowPaused | ShowError| Image | 
 |:--|:-:| :-:| :-:|
 |  | False | False | ![](images/ProgressRing-indeterminate.PNG) |
-|  | True | False | ![](images/ProgressRing-determinate-not-active.PNG) |
-|  | False | True | ![](images/ProgressRing-determinate-not-active.PNG) |
-|  | True | True | ![](images/ProgressRing-determinate-not-active.PNG) | 
+|  | True | False | ![](images/ProgressRing-determinate-empty.PNG) |
+|  | False | True | ![](images/ProgressRing-determinate-empty.PNG) |
+|  | True | True | ![](images/ProgressRing-determinate-empty.PNG) | 
 | 75 | False | False | ![](images/ProgressRing-indeterminate.PNG) |
-| 75 | True | False | ![](images/ProgressRing-determinate-not-active.PNG) |
-| 75 | False | True | ![](images/ProgressRing-determinate-not-active.PNG) |
-| 75 | True | True | ![](images/ProgressRing-determinate-not-active.PNG) | 
+| 75 | True | False | ![](images/ProgressRing-determinate-empty.PNG) |
+| 75 | False | True | ![](images/ProgressRing-determinate-empty.PNG) |
+| 75 | True | True | ![](images/ProgressRing-determinate-empty.PNG) | 
 
 
 ## Determinate ProgressRing
 IsDeterminate is False
 
-| IsActive | Value | Image |
-|:--|:-:|:-:|
-| True |  | ![](images/ProgressRing-determinate-not-active.PNG) |
-| False |  | ![](images/ProgressRing-determinate-not-active.PNG) |
-| True | 0 | ![](images/ProgressRing-determinate-not-active.PNG) |
-| True | 75 | ![](images/ProgressRing-determinate.PNG) |
-| False | 75 | ![](images/ProgressRing-determinate-not-active.PNG) | 
+| Value | ShowPaused | ShowError| Image | 
+|:--|:-:| :-:| :-:|
+|  | False | False | ![](images/ProgressRing-determinate-empty.PNG) |
+|  | True | False | ![](images/ProgressRing-determinate-empty.PNG) |
+|  | False | True | ![](images/ProgressRing-determinate-empty.PNG) |
+|  | True | True | ![](images/ProgressRing-determinate-empty.PNG) | 
+| 0 | False | False | ![](images/ProgressRing-determinate-empty.PNG) |
+| 75 | False | False | ![](images/ProgressRing-determinate.PNG) |
+| 75 | True | False | ![](images/ProgressRing-determinate-paused.PNG) |
+| 75 | False | True | ![](images/ProgressRing-determinate-empty.PNG) |
+| 75 | True | True | ![](images/ProgressRing-determinate-empty.PNG) | 
 
 *Note that the designs for ProgressRing are not finalized. See [here](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ControlUpdates/active/ControlUpdates/images/Progress.png) for early designs. 
 
@@ -119,9 +124,7 @@ only when there's a bug in the caller, such as argument exception.  But if for s
 reason it's necessary for a caller to catch an exception from an API, call that
 out with an explanation either here or in the Examples -->
 
-With the addition of a determinate mode of ProgressRing, the ShowPaused and showError properties that ProgressBar already has should be aligned in ProgressRing. ProgressRing can be used in scenarios where progress is paused, or an error occured during the process. 
-
-The IsIndeterminate property of ProgressRing will default to True for back compatability.
+With the addition of a determinate mode of ProgressRing, the ShowPaused and ShowError properties that ProgressBar already has should be aligned in ProgressRing. ProgressRing can be used in scenarios where progress is paused, or an error occured during the process. 
 
 # API Notes
 <!-- Option 1: Give a one or two line description of each API (type
@@ -132,7 +135,7 @@ isn't the type's default (for example an int-typed property that doesn't default
 
 <!-- Option 2: Put these descriptions in the below API Details section,
 with a "///" comment above the member or type. -->
-Below are properties being added to ProgressRing:
+Below are properties being added to ProgressRing. The IsIndeterminate property of ProgressRing will default to True for back compatability.
 
 |Name | Description | 
 |:--|:-:|
@@ -152,7 +155,3 @@ For example, implementation details. -->
 # Open Questions
 
 1) ProgressRing derives from Control but ProgressBar derives from RangeBase. RangeBase "represents an element that has a value within a specific range". Is there value to changing ProgressRing's base class? And if there is value, is it possible to do so at this time? (question modified from [here](https://github.com/microsoft/microsoft-ui-xaml-specs/pull/36#discussion_r305069598))
-
-3) Adding IsIndeterminate would result in closer functional parity between ProgressRing and ProgressBar - should these controls be combined into one, with two views? (question modified from [here](https://github.com/microsoft/microsoft-ui-xaml-specs/pull/36#discussion_r305118085)
-
-The Value property for ProgressBar is a number out of 100 (i.e. it can hold integers from 0 to 100, inclusive). Should the Value property for ProgressRing also be out of 100, or be out of 360 to reflect the circular shape?
