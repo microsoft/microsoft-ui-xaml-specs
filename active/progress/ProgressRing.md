@@ -61,7 +61,7 @@ example code with each description. The general format is:
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 [Please see this table of current ProgressBar and ProgressRing modes and states.](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/kathyang/progress-styles/active/progress-styles/progress-styles.md)
 
-The following examples show how to use the isIndeterminate property to change the mode of the ProgressRing and the Value property to change the proportionate amount indicated. 
+The following examples show how to use the IsIndeterminate property to change the mode of the ProgressRing and the Value property to change the proportionate amount indicated. 
 
 ## Indeterminate ProgressRing
 
@@ -77,17 +77,26 @@ The following examples show how to use the isIndeterminate property to change th
 ```
 ![](images/ProgressRing-determinate.PNG)
 
-Below is a table showing how ProgressRing is affected by the IsActive and Value properties.
+Below are tables showing how ProgressRing is affected by the IsDeterminate, IsActive, Value, ShowPaused, and ShowError properties.
+
+## Not Active ProgressRing
+When IsActive is False, ProgressRing will always appear blank:
+![](images/ProgressRing-determinate-not-active.PNG)
 
 ## Indeterminate ProgressRing
 IsDeterminate is True
 
-| IsActive | Value | Image | 
-|:--|:-:| :-:|
-| True |  | ![](images/ProgressRing-indeterminate.PNG) |
-| False |  | ![](images/ProgressRing-determinate-not-active.PNG) | 
-| True | 75 | ![](images/ProgressRing-indeterminate.PNG) |
-| False | 75 | ![](images/ProgressRing-determinate-not-active.PNG) | 
+| Value | ShowPaused | ShowError| Image | 
+|:--|:-:| :-:| :-:|
+|  | False | False | ![](images/ProgressRing-indeterminate.PNG) |
+|  | True | False | ![](images/ProgressRing-determinate-not-active.PNG) |
+|  | False | True | ![](images/ProgressRing-determinate-not-active.PNG) |
+|  | True | True | ![](images/ProgressRing-determinate-not-active.PNG) | 
+| 75 | False | False | ![](images/ProgressRing-indeterminate.PNG) |
+| 75 | True | False | ![](images/ProgressRing-determinate-not-active.PNG) |
+| 75 | False | True | ![](images/ProgressRing-determinate-not-active.PNG) |
+| 75 | True | True | ![](images/ProgressRing-determinate-not-active.PNG) | 
+
 
 ## Determinate ProgressRing
 IsDeterminate is False
@@ -96,10 +105,11 @@ IsDeterminate is False
 |:--|:-:|:-:|
 | True |  | ![](images/ProgressRing-determinate-not-active.PNG) |
 | False |  | ![](images/ProgressRing-determinate-not-active.PNG) |
+| True | 0 | ![](images/ProgressRing-determinate-not-active.PNG) |
 | True | 75 | ![](images/ProgressRing-determinate.PNG) |
 | False | 75 | ![](images/ProgressRing-determinate-not-active.PNG) | 
 
-*Note that the design of determinate ProgressRing is not finalized. The ShowPaused and ShowError properties affect ProgressRing aligning with ProgressBar and align with new visual styles. 
+*Note that the designs for ProgressRing are not finalized. See [here](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ControlUpdates/active/ControlUpdates/images/Progress.png) for early designs. 
 
 # Remarks
 <!-- Explanation and guidance that doesn't fit into the Examples section. -->
@@ -127,7 +137,7 @@ Below are properties being added to ProgressRing:
 |Name | Description | 
 |:--|:-:|
 | IsIndeterminate | Defaults to True. Gets or sets a value that indicates whether the progress ring reports generic progress with a repeating pattern or reports progress based on the Value property |
-| Value | Gets or sets the current setting of the control | 
+| Value | Gets or sets the current setting of the control, between 0 and 1| 
 | ShowPaused | Defaults to False. Gets or sets a value that indicates whether the progress bar should use visual states that communicate a Paused state to the user.|
 | ShowError | Defaults to False. Gets or sets a value that indicates whether the progress bar should use visual states that communicate an Error state to the user. |
 
