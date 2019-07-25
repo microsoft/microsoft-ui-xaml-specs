@@ -77,14 +77,29 @@ The following examples show how to use the isIndeterminate property to change th
 ```
 ![](images/ProgressRing-determinate.PNG)
 
-ProgressRing currently has an IsActive property. Below is a table showing how determinate ProgressRing is affected by this property.
+Below is a table showing how ProgressRing is affected by the IsActive and Value properties.
 
-|IsActive | Image | 
-|:--|:-:|
-| True | ![](images/ProgressRing-determinate.PNG) |
-| False | ![](images/ProgressRing-determinate-not-active.PNG) | 
+## Indeterminate ProgressRing
+IsDeterminate is True
 
-*Note that the design of determinate ProgressRing is not finalized.
+| IsActive | Value | Image | 
+|:--|:-:| :-:|
+| True |  | ![](images/ProgressRing-indeterminate.PNG) |
+| False |  | ![](images/ProgressRing-determinate-not-active.PNG) | 
+| True | 75 | ![](images/ProgressRing-indeterminate.PNG) |
+| False | 75 | ![](images/ProgressRing-determinate-not-active.PNG) | 
+
+## Determinate ProgressRing
+IsDeterminate is False
+
+| IsActive | Value | Image |
+|:--|:-:|:-:|
+| True |  | ![](images/ProgressRing-determinate-not-active.PNG) |
+| False |  | ![](images/ProgressRing-determinate-not-active.PNG) |
+| True | 75 | ![](images/ProgressRing-determinate.PNG) |
+| False | 75 | ![](images/ProgressRing-determinate-not-active.PNG) | 
+
+*Note that the design of determinate ProgressRing is not finalized. The ShowPaused and ShowError properties affect ProgressRing aligning with ProgressBar and align with new visual styles. 
 
 # Remarks
 <!-- Explanation and guidance that doesn't fit into the Examples section. -->
@@ -93,6 +108,10 @@ ProgressRing currently has an IsActive property. Below is a table showing how de
 only when there's a bug in the caller, such as argument exception.  But if for some
 reason it's necessary for a caller to catch an exception from an API, call that
 out with an explanation either here or in the Examples -->
+
+With the addition of a determinate mode of ProgressRing, the ShowPaused and showError properties that ProgressBar already has should be aligned in ProgressRing. ProgressRing can be used in scenarios where progress is paused, or an error occured during the process. 
+
+The IsIndeterminate property of ProgressRing will default to True for back compatability.
 
 # API Notes
 <!-- Option 1: Give a one or two line description of each API (type
@@ -103,11 +122,14 @@ isn't the type's default (for example an int-typed property that doesn't default
 
 <!-- Option 2: Put these descriptions in the below API Details section,
 with a "///" comment above the member or type. -->
+Below are properties being added to ProgressRing:
 
 |Name | Description | 
 |:--|:-:|
 | IsIndeterminate | Defaults to True. Gets or sets a value that indicates whether the progress ring reports generic progress with a repeating pattern or reports progress based on the Value property |
 | Value | Gets or sets the current setting of the control | 
+| ShowPaused | Defaults to False. Gets or sets a value that indicates whether the progress bar should use visual states that communicate a Paused state to the user.|
+| ShowError | Defaults to False. Gets or sets a value that indicates whether the progress bar should use visual states that communicate an Error state to the user. |
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
@@ -119,8 +141,7 @@ For example, implementation details. -->
 
 # Open Questions
 
-
-2) ProgressRing derives from Control but ProgressBar derives from RangeBase. RangeBase "represents an element that has a value within a specific range". Is there value to changing ProgressRing's base class? And if there is value, is it possible to do so at this time? (question modified from [here](https://github.com/microsoft/microsoft-ui-xaml-specs/pull/36#discussion_r305069598))
+1) ProgressRing derives from Control but ProgressBar derives from RangeBase. RangeBase "represents an element that has a value within a specific range". Is there value to changing ProgressRing's base class? And if there is value, is it possible to do so at this time? (question modified from [here](https://github.com/microsoft/microsoft-ui-xaml-specs/pull/36#discussion_r305069598))
 
 3) Adding IsIndeterminate would result in closer functional parity between ProgressRing and ProgressBar - should these controls be combined into one, with two views? (question modified from [here](https://github.com/microsoft/microsoft-ui-xaml-specs/pull/36#discussion_r305118085)
 
