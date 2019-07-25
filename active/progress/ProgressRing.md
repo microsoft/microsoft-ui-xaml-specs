@@ -77,7 +77,7 @@ The following examples show how to use the IsIndeterminate property to change th
 ```
 ![](images/ProgressRing-determinate.PNG)
 
-Below are tables showing how ProgressRing is affected by the IsDeterminate, IsActive, Value, ShowPaused, and ShowError properties.
+Below are tables showing how ProgressRing is affected by the IsIndeterminate, IsActive, Value, ShowPaused, and ShowError properties.
 
 ## Not Active ProgressRing
 | Note | Image |
@@ -85,34 +85,41 @@ Below are tables showing how ProgressRing is affected by the IsDeterminate, IsAc
 | When IsActive is False, ProgressRing will always appear blank, regardless of other properties | ![](images/ProgressRing-determinate-not-active.PNG) |
 
 ## Indeterminate ProgressRing
-IsDeterminate is True
+IsIndeterminate is True
 
-| Value | ShowPaused | ShowError| Image | 
+| ShowPaused | ShowError| Value | Image | 
 |:--|:-:| :-:| :-:|
-|  | False | False | ![](images/ProgressRing-indeterminate.PNG) |
-|  | True | False | ![](images/ProgressRing-determinate-empty.PNG) |
-|  | False | True | ![](images/ProgressRing-determinate-empty.PNG) |
-|  | True | True | ![](images/ProgressRing-determinate-empty.PNG) | 
-| 75 | False | False | ![](images/ProgressRing-indeterminate.PNG) |
-| 75 | True | False | ![](images/ProgressRing-determinate-empty.PNG) |
-| 75 | False | True | ![](images/ProgressRing-determinate-empty.PNG) |
-| 75 | True | True | ![](images/ProgressRing-determinate-empty.PNG) | 
+| False | False |    | ![](images/ProgressRing-indeterminate.PNG) |
+| False | False | 75 | ![](images/ProgressRing-indeterminate.PNG) |
+| False | True  |    | ![](images/ProgressRing-determinate-empty.PNG) |
+| False | True  | 75 | ![](images/ProgressRing-determinate-empty.PNG) |
+| True  | True  |    | ![](images/ProgressRing-determinate-empty.PNG) | 
+| True  | True  | 75 | ![](images/ProgressRing-determinate-empty.PNG) | 
+| True  | False |    | ![](images/ProgressRing-determinate-empty.PNG) |
+| True  | False | 75 | ![](images/ProgressRing-determinate-empty.PNG) |
 
+Setting a Value on an Indeterminate ProgressRing should display as though there is no Value.
 
 ## Determinate ProgressRing
-IsDeterminate is False
+IsIndeterminate is False
 
-| Value | ShowPaused | ShowError| Image | 
+| ShowPaused | ShowError| Value | Image | 
 |:--|:-:| :-:| :-:|
-|  | False | False | ![](images/ProgressRing-determinate-empty.PNG) |
-|  | True | False | ![](images/ProgressRing-determinate-empty.PNG) |
-|  | False | True | ![](images/ProgressRing-determinate-empty.PNG) |
-|  | True | True | ![](images/ProgressRing-determinate-empty.PNG) | 
-| 0 | False | False | ![](images/ProgressRing-determinate-empty.PNG) |
-| 75 | False | False | ![](images/ProgressRing-determinate.PNG) |
-| 75 | True | False | ![](images/ProgressRing-determinate-paused.PNG) |
-| 75 | False | True | ![](images/ProgressRing-determinate-empty.PNG) |
-| 75 | True | True | ![](images/ProgressRing-determinate-empty.PNG) | 
+| False | False |    | ![](images/ProgressRing-determinate-empty.PNG) |
+| False | False | 0  | ![](images/ProgressRing-determinate-empty.PNG) |
+| False | False | 75 | ![](images/ProgressRing-determinate.PNG) |
+| False | True  |    | ![](images/ProgressRing-determinate-empty.PNG) | 
+| False | True  | 75 | ![](images/ProgressRing-determinate-empty.PNG) |
+| True  | False |    | ![](images/ProgressRing-determinate-empty.PNG) |
+| True  | False | 75 | ![](images/ProgressRing-determinate-paused.PNG) |
+| True  | True  |    | ![](images/ProgressRing-determinate-empty.PNG) |
+| True  | True  | 75 | ![](images/ProgressRing-determinate-empty.PNG) | 
+
+### Minimum and Maximum
+
+| Note | Image |
+|:--|:-:|
+| ProgressRing should indicate progress based on the Value (within the range | ![](images/ProgressRing-determinate.PNG) |
 
 *Note that the designs for ProgressRing are not finalized. See [here](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ControlUpdates/active/ControlUpdates/images/Progress.png) for early designs. 
 
@@ -124,7 +131,7 @@ only when there's a bug in the caller, such as argument exception.  But if for s
 reason it's necessary for a caller to catch an exception from an API, call that
 out with an explanation either here or in the Examples -->
 
-With the addition of a determinate mode of ProgressRing, the ShowPaused and ShowError properties that ProgressBar already has should be aligned in ProgressRing. ProgressRing can be used in scenarios where progress is paused, or an error occured during the process. With this additional capability, the determinate ProgressRing does not represent a "hung" state where the user cannot interact with the app. 
+With the addition of a determinate mode of ProgressRing, the ShowPaused and ShowError properties that ProgressBar already has should be aligned in ProgressRing. ProgressRing can be used in scenarios where progress is paused, or an error occured during the process. With this additional capability, the determinate ProgressRing does not represent a "hung" state where the user cannot interact with the app. Previously, guidance recommended that ProgressRing only be used when the user cannot continue to interact with the app, but this is no longer the only use case and ProgressRing can be used in scenarios where user interaction can continue while the ring is spinning. 
 
 # API Notes
 <!-- Option 1: Give a one or two line description of each API (type
@@ -140,9 +147,14 @@ Below are properties being added to ProgressRing. The IsIndeterminate property o
 |Name | Description | 
 |:--|:-:|
 | IsIndeterminate | Defaults to True. Gets or sets a value that indicates whether the progress ring reports generic progress with a repeating pattern or reports progress based on the Value property |
-| Value | Gets or sets the current setting of the control, between 0 and 1| 
+| Value | Gets or sets the current setting of the range control, which may be coerced. (Inherited from RangeBase) | 
 | ShowPaused | Defaults to False. Gets or sets a value that indicates whether the progress bar should use visual states that communicate a Paused state to the user.|
 | ShowError | Defaults to False. Gets or sets a value that indicates whether the progress bar should use visual states that communicate an Error state to the user. |
+| LargeChange | Gets or sets a value to be added to or subtracted from the Value of a RangeBase control. (Inherited from RangeBase) |
+| Maximum | Gets or sets the highest possible Value of the range element. (Inherited from RangeBase) |
+| Minimum | Gets or sets the Minimum possible Value of the range element. (Inherited from RangeBase) |
+| SmallChange | Gets or sets a Value to be added to or subtracted from the Value of a RangeBase control. (Inherited from RangeBase) |
+| ValueChanged | Event that occurs when the range value changes. (Inherited from RangeBase) |
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
@@ -155,3 +167,4 @@ For example, implementation details. -->
 # Open Questions
 
 1) ProgressRing derives from Control but ProgressBar derives from RangeBase. RangeBase "represents an element that has a value within a specific range". Is there value to changing ProgressRing's base class? And if there is value, is it possible to do so at this time? (question modified from [here](https://github.com/microsoft/microsoft-ui-xaml-specs/pull/36#discussion_r305069598))
+
