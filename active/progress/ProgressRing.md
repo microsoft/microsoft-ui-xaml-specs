@@ -93,10 +93,10 @@ IsIndeterminate is True
 | False | False | 75 | ![](images/ProgressRing-indeterminate.PNG) |
 | False | True  |    | ![](images/ProgressRing-determinate-empty.PNG) |
 | False | True  | 75 | ![](images/ProgressRing-determinate-empty.PNG) |
-| True  | True  |    | ![](images/ProgressRing-determinate-empty.PNG) | 
-| True  | True  | 75 | ![](images/ProgressRing-determinate-empty.PNG) | 
 | True  | False |    | ![](images/ProgressRing-determinate-empty.PNG) |
 | True  | False | 75 | ![](images/ProgressRing-determinate-empty.PNG) |
+| True  | True  |    | ![](images/ProgressRing-determinate-empty.PNG) | 
+| True  | True  | 75 | ![](images/ProgressRing-determinate-empty.PNG) | 
 
 Setting a Value on an Indeterminate ProgressRing should display as though there is no Value.
 
