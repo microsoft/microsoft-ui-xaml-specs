@@ -124,7 +124,7 @@ only when there's a bug in the caller, such as argument exception.  But if for s
 reason it's necessary for a caller to catch an exception from an API, call that
 out with an explanation either here or in the Examples -->
 
-With the addition of a determinate mode of ProgressRing, the ShowPaused and ShowError properties that ProgressBar already has should be aligned in ProgressRing. ProgressRing can be used in scenarios where progress is paused, or an error occured during the process. 
+With the addition of a determinate mode of ProgressRing, the ShowPaused and ShowError properties that ProgressBar already has should be aligned in ProgressRing. ProgressRing can be used in scenarios where progress is paused, or an error occured during the process. With this additional capability, the determinate ProgressRing does not represent a "hung" state where the user cannot interact with the app. 
 
 # API Notes
 <!-- Option 1: Give a one or two line description of each API (type
