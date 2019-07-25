@@ -1,5 +1,5 @@
 # Progress Styles
-This table provides a comparison of current progress styles for the ProgressBar and ProgressRing controls in different modes and states
+These tables provides a comparison of current progress styles for the ProgressBar and ProgressRing controls in different modes and states.
 
 ## ProgressBar
 ProgressBar has IsIndeterminate, Value, ShowPaused, and ShowError properties. 
