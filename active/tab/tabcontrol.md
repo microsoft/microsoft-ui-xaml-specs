@@ -146,7 +146,7 @@ private async void TabView_TabDraggedOutside(object sender, TabDraggedOutsideEve
     var newPage = new MainPage();
 
     // Remove tab from existing list
-    Tabs.Items.Remove(e.Tab);
+    Tabs.TabItems.Remove(e.Tab);
 
     // Add tab to list of Tabs on new page
     newPage.AddItemToTabs(e.Tab);
@@ -162,7 +162,7 @@ private async void TabView_TabDraggedOutside(object sender, TabDraggedOutsideEve
 ## Databind to a set of tabs 
 
 ``` xml
-<TabView ItemsSource="{x:Bind TabViewItemCollection}" />
+<TabView TabItemsSource="{x:Bind TabViewItemCollection}" />
 ```
 
 ## Add a new tab using the Add (+) Tab Button
@@ -192,8 +192,8 @@ private void CreateNewTab()
     doc.Content = GenerateBaconIpsum();
     doc.Icon = new SymbolIcon(Symbol.Document);
 
-    // Create a new TabViewItem from the MyDocument object and add it to the Items collection
-    TabRoot.Items.Add(CreateNewTabFromDocument(doc));
+    // Create a new TabViewItem from the MyDocument object and add it to the TabItems collection
+    TabRoot.TabItems.Add(CreateNewTabFromDocument(doc));
 }
 
 private TabViewItem CreateNewTabFromDocument(MyDocument doc)
@@ -255,7 +255,7 @@ private void CloseSelectedTabKeyboardAccelerator_Invoked(KeyboardAccelerator sen
     // Only close the selected tab if it is closeable
     if (((TabViewItem)TabRoot.SelectedItem).IsCloseable)
     {
-        TabRoot.Items.Remove(TabRoot.SelectedItem);
+        TabRoot.TabItems.Remove(TabRoot.SelectedItem);
     }
 }
 
@@ -291,12 +291,12 @@ private void NavigateToNumberedTabKeyboardAccelerator_Invoked(KeyboardAccelerato
             break;
         case Windows.System.VirtualKey.Number9:
             // Select the last tab
-            tabToSelect = TabRoot.Items.Count - 1;
+            tabToSelect = TabRoot.TabItems.Count - 1;
             break;
     }
 
     // Only select the tab if it is in the list
-    if (tabToSelect < TabRoot.Items.Count)
+    if (tabToSelect < TabRoot.TabItems.Count)
     {
         TabRoot.SelectedIndex = tabToSelect;
     }
@@ -333,8 +333,8 @@ in IntelliSense. -->
 | CanDragTabs | Gets or sets a value that indicates whether tabs in the collection can be dragged. Default is true. |
 | CanReorderTabs | Gets or sets a value that indicates whether tabs in the collection can be reordered through user interaction. Default is true. |
 | IsAddTabButtonVisible | Determines if the plus button appears to the right of the tab strip |
-| ItemsSource | Gets or sets an object source used to generate the tabs. |
-| Items | Gets the collection used to generate the tabs. |
+| TabItemsSource | Gets or sets an object source used to generate the tabs. |
+| TabItems | Gets the collection used to generate the tabs. |
 | ItemTemplate | Gets or sets the DataTemplate used to display each item. |
 | ItemTemplateSelector | Gets or sets a reference to a custom DataTemplateSelector logic class. The DataTemplateSelector referenced by this property returns a template to apply to items. |
 | SelectedIndex | Gets or sets the index of the selected item. |
@@ -433,12 +433,14 @@ unsealed runtimeclass TabView : Windows.UI.Xaml.Controls.Control
     // TODO: Add
     event Windows.Foundation.TypedEventHandler<TabView, TabDraggedOutsideEventArgs> TabDraggedOutside;
 
+    // TODO: Update
     // From ListView
     [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
-    Object ItemsSource;
+    Object TabItemsSource;
 
+    // TODO: Update
     [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
-    Windows.Foundation.Collections.IVector<Object> Items{ get; };
+    Windows.Foundation.Collections.IVector<Object> TabItems{ get; };
 
     Windows.UI.Xaml.DataTemplate ItemTemplate;
     Windows.UI.Xaml.Controls.DataTemplateSelector ItemTemplateSelector{ get; set; };
@@ -468,12 +470,13 @@ unsealed runtimeclass TabView : Windows.UI.Xaml.Controls.Control
     static Windows.UI.Xaml.DependencyProperty AddTabButtonCommandProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty AddTabButtonCommandParameterProperty{ get; };
 
-    static Windows.UI.Xaml.DependencyProperty ItemsSourceProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty ItemsProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty ItemTemplateProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty ItemTemplateSelectorProperty{ get; };
+    // TODO: Update to "TabItem*"
+    static Windows.UI.Xaml.DependencyProperty TabItemsSourceProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty TabItemsProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty TabItemTemplateProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty TabItemTemplateSelectorProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty SelectedIndexProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty SelectedItemProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty SelectedTabItemProperty{ get; };
 }
 
 [WUXC_VERSION_PREVIEW]
