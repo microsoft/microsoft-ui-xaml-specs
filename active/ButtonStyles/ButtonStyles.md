@@ -6,6 +6,7 @@ Many of our controls use the following visual styles:
 1. Fill
 2. Accent
 3. Outline
+4. Ghost
 
 Here is an example of these visual styles used for Buttons. 
 ![StyleDefinitions](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ButtonStyles/active/ButtonStyles/Images/StyleDefinitions4.png)
@@ -21,8 +22,10 @@ Here is an example of these visual styles used for Buttons.
 * **Outline**
     * This style is less visible to users compared to Fill style and are more appropriate to be used on form type of UI where less visual hierarchy might be desired.
     * It is subtler style compared with other styles and may not work well on images or non uniformly colors surfaces.
+* **Ghost**
+   * This style is to be used for buttons that does not have the appearance of button when rest for use on UI surfaces that needs buttons that do not stand out.
 
-You can choose to use buttons using either fill or outline visual styles as desired for your application, however use them in a consistent manner within your UI. This will help your user navigate your app's UI with less effort.
+You can choose to use buttons using either fill, outline, or Ghost visual styles as desired for your application, however use them in a consistent manner within your UI. This will help your user navigate your app's UI with less effort.
 
 ## The anatomy of button
 ![anatomy](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ButtonStyles/active/ButtonStyles/Images/Anatomy.png)
@@ -50,20 +53,20 @@ Button has the following UI elements that determines visuals:
 
 ### Light Theme Color values
 
-| State | 1. Fill | 2. Accent | 3. Outline |
-| :---------- | :------- | :------- | :------- |
-| Rest |  |  |  |
-| Hover |  |  |  |
-| Pressed |  |  |  |
-| Disabled |  |  |  |
+| State | 1. Fill | 2. Accent | 3. Outline | 4. Ghost |
+| :---------- | :------- | :------- | :------- | :------- |
+| Rest |  |  |  |  |
+| Hover |  |  |  |  |
+| Pressed |  |  |  |  |
+| Disabled |  |  |  |  |
 
 ### Dark Theme Color values
 
-| State | 1. Fill | 2. Accent | 3. Outline |
-| :---------- | :------- | :------- | :------- |
-| Rest |  |  |  |
-| Hover |  |  |  |
-| Pressed |  |  |  |
-| Disabled |  |  |  |
+| State | 1. Fill | 2. Accent | 3. Outline | 4. Ghost |
+| :---------- | :------- | :------- | :------- | :------- |
+| Rest |  |  |  |  |
+| Hover |  |  |  |  |
+| Pressed |  |  |  |  |
+| Disabled |  |  |  |  |
 
 
