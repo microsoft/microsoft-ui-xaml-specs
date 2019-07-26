@@ -9,7 +9,7 @@ Many of our controls use the following visual styles:
 4. Ghost
 
 Here is an example of these visual styles used for Buttons. 
-![StyleDefinitions](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ButtonStyles/active/ButtonStyles/Images/StyleDefinitions4.png)
+![StyleDefinitions](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ButtonStyles/active/ButtonStyles/Images/StyleDefinitions.png)
 
 
 
@@ -23,8 +23,8 @@ Here is an example of these visual styles used for Buttons.
     * This style is less visible to users compared to Fill style and are more appropriate to be used on form type of UI where less visual hierarchy might be desired.
     * It is subtler style compared with other styles and may not work well on images or non uniformly colors surfaces.
 * **Ghost**
-   * This style is to be used for buttons that does not have the appearance of button when rest for use on UI surfaces that needs buttons that do not stand out.
-
+   * This style is to be used for UI that is clickable that is desirable not to have the appearance of button when resting on a UI surface to make it stand out less.
+   
 You can choose to use buttons using either fill, outline, or Ghost visual styles as desired for your application, however use them in a consistent manner within your UI. This will help your user navigate your app's UI with less effort.
 
 ## The anatomy of button
