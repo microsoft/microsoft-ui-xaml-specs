@@ -9,7 +9,7 @@ Many of our controls use the following visual styles:
 4. Ghost
 
 Here is an example of these visual styles used for Buttons. 
-![StyleDefinitions](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ButtonStyles/active/ButtonStyles/Images/StyleDefinitions.png)
+![StyleDefinitions](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/ButtonStyles/active/ButtonStyles/Images/StyleDefinitions2.png)
 
 
 
