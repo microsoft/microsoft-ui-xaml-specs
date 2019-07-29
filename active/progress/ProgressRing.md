@@ -66,14 +66,14 @@ The following examples show how to use the IsIndeterminate property to change th
 ## Indeterminate ProgressRing
 
 ```xml
-<ProgressRing IsActive="True" Height="100" Width="100" IsIndeterminate="True"/>
+<ProgressRing IsActive="True" Height="100" Width="100"/>
 ```
 
 ![](images/ProgressRing-indeterminate.PNG)
 ## Determinate ProgressRing
 
 ```xml
-<ProgressRing IsActive="True" Height="100" Width="100" Value="75"/>
+<ProgressRing IsActive="True" Height="100" Width="100" Value="75" IsIndeterminate="False"/>
 ```
 ![](images/ProgressRing-determinate.PNG)
 
