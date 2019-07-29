@@ -133,7 +133,9 @@ only when there's a bug in the caller, such as argument exception.  But if for s
 reason it's necessary for a caller to catch an exception from an API, call that
 out with an explanation either here or in the Examples -->
 
-With the addition of a determinate mode of ProgressRing, the ShowPaused and ShowError properties that ProgressBar already has should be aligned in ProgressRing. ProgressRing can be used in scenarios where progress is paused, or an error occured during the process. With this additional capability, the determinate ProgressRing does not represent a "hung" state where the user cannot interact with the app. Previously, guidance recommended that ProgressRing only be used when the user cannot continue to interact with the app, but this is no longer the only use case and ProgressRing can be used in scenarios where user interaction can continue while the ring is spinning. 
+With the addition of a determinate mode of ProgressRing, the ShowPaused and ShowError properties that ProgressBar already has should be aligned in ProgressRing. ProgressRing can be used in scenarios where progress is paused, or an error occured during the process. With this additional capability, the determinate ProgressRing does not represent a "hung" state where the user cannot interact with the app. Previously, guidance recommended that ProgressRing only be used when the user cannot continue to interact with the app, but this is no longer the only use case and ProgressRing can be used in scenarios where user interaction can continue while the ring is spinning.
+
+ProgressRing will continue to inherit from Control, and will not inherit from RangeBase (like how ProgressBar does). 
 
 # API Notes
 <!-- Option 1: Give a one or two line description of each API (type
@@ -146,17 +148,15 @@ isn't the type's default (for example an int-typed property that doesn't default
 with a "///" comment above the member or type. -->
 Below are properties being added to ProgressRing. The IsIndeterminate property of ProgressRing will default to True for back compatability.
 
-|Name | Description | 
-|:--|:-:|
-| IsIndeterminate | Defaults to True. Gets or sets a value that indicates whether the progress ring reports generic progress with a repeating pattern or reports progress based on the Value property |
-| Value | Gets or sets the current setting of the range control, which may be coerced. (Inherited from RangeBase) | 
-| ShowPaused | Defaults to False. Gets or sets a value that indicates whether the progress bar should use visual states that communicate a Paused state to the user.|
-| ShowError | Defaults to False. Gets or sets a value that indicates whether the progress bar should use visual states that communicate an Error state to the user. |
-| LargeChange | Gets or sets a value to be added to or subtracted from the Value of a RangeBase control. (Inherited from RangeBase) |
-| Maximum | Defaults to 100. Gets or sets the highest possible Value of the range element. (Inherited from RangeBase) |
-| Minimum | Defaults to 0. Gets or sets the Minimum possible Value of the range element. (Inherited from RangeBase) |
-| SmallChange | Gets or sets a Value to be added to or subtracted from the Value of a RangeBase control. (Inherited from RangeBase) |
-| ValueChanged | Event that occurs when the range value changes. (Inherited from RangeBase) |
+|Name | Type | Description | 
+|:--|:-:|:-:|
+| IsIndeterminate | boolean | Defaults to True. Gets or sets a value that indicates whether the progress ring reports generic progress with a repeating pattern (indeterminate progress) or reports progress based on the Value property (determinate progress) |
+| Value | double | Gets or sets the current setting of the range control, which may be coerced. | 
+| ShowPaused | boolean | Defaults to False. Gets or sets a value that indicates whether the progress bar should use visual states that communicate a Paused state to the user.|
+| ShowError | boolean | Defaults to False. Gets or sets a value that indicates whether the progress bar should use visual states that communicate an Error state to the user. |
+| Maximum | double | Defaults to 100. Gets or sets the highest possible Value of the range element. |
+| Minimum | double | Defaults to 0. Gets or sets the Minimum possible Value of the range element. |
+| ValueChanged | event | Event that occurs when the range value changes. |
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
