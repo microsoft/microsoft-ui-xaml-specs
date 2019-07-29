@@ -53,16 +53,16 @@ Button has the following UI elements that determines visuals:
 
 ### Light Theme Color values
 
-| State | 1. Fill | 2. Accent | 3. Outline | 4. Ghost |
+| State | Fill style | Accent style | Outline style | Ghost style |
 | :---------- | :------- | :------- | :------- | :------- |
-| Rest |  |  |  |  |
-| Hover |  |  |  |  |
-| Pressed |  |  |  |  |
-| Disabled |  |  |  |  |
+| Rest |1. #FF000000 (100% Black) *no change* <br/>2. #33000000 (20% Black) *no change* |1. #FFFFFFFF (100% White) *no change* <br/>2. 100% Accent color *no change* |3. #FF8A8886  |1. #FF000000 (100% Black) <br/>2. Transparent color |
+| Hover |1. #FF000000 (100% Black) *no change* <br/>2. #1A000000 (10% Black) |1. #FFFFFFFF (100% White) *no change* <br/>2. 100% AccentLight1 color |  |1. #FF000000 (100% Black) <br/>2. #1A000000 (10% Black) |
+| Pressed |1. #FF000000 (100% Black) *no change* <br/>2. #66000000 (40% Black) *no change* |1. #FFFFFFFF (100% White) *no change* <br/>2. 100% AccentDark1 color  |  |1. #FF000000 (100% Black) <br/>2. #33000000 (20% Black) |
+| Disabled |1. #66000000 (40% Black) *no change* <br/>2. #33000000 (20% Black) *no change* |1. #66000000 (40% Black) *no change* <br/>2. #33000000 (20% Black) *no change*  |  |1. #66000000 (40% Black) <br/>2. Transparent color |
 
 ### Dark Theme Color values
 
-| State | 1. Fill | 2. Accent | 3. Outline | 4. Ghost |
+| State | Fill style | Accent style | Outline style | Ghost style |
 | :---------- | :------- | :------- | :------- | :------- |
 | Rest |  |  |  |  |
 | Hover |  |  |  |  |
