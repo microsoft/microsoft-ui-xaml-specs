@@ -1,4 +1,4 @@
-# Progress Styles
+# Progress Styles Tables
 These tables provides a comparison of current progress styles for the ProgressBar and ProgressRing controls in different modes and states.
 
 ## ProgressBar
