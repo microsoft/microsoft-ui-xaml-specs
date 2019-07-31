@@ -56,10 +56,10 @@ Button is composed of the following UI elements:
 
 | State | Fill style | Accent style | Outline style | Ghost style |
 | :---------- | :------- | :------- | :------- | :------- |
-| Rest |1. #FF000000 (100% Black) *no change* <br/>2. #33000000 (20% Black) *no change* |1. #FFFFFFFF (100% White) *no change* <br/>2. 100% Accent color *no change* |1. #FF323130 <br/>2.#FFFFFFFF (100% White) <br/>3. #FF8A8886  |1. #FF000000 (100% Black) <br/>2. Transparent color |
-| Hover |1. #FF000000 (100% Black) *no change* <br/>2. #1A000000 (10% Black) |1. #FFFFFFFF (100% White) *no change* <br/>2. 100% AccentLight1 color |1. #FF201F1E <br/> 2. #FFF3F2F1 <br/>3. #FF8A8886 |1. #FF000000 (100% Black) <br/>2. #1A000000 (10% Black) |
-| Pressed |1. #FF000000 (100% Black) *no change* <br/>2. #66000000 (40% Black) *no change* |1. #FFFFFFFF (100% White) *no change* <br/>2. 100% AccentDark1 color |1. #FF201F1E <br/>2. #FFEDEBE9 <br/>3. #FF8A8886 |1. #FF000000 (100% Black) <br/>2. #33000000 (20% Black) |
-| Disabled |1. #66000000 (40% Black) *no change* <br/>2. #33000000 (20% Black) *no change* |1. #66000000 (40% Black) *no change* <br/>2. #33000000 (20% Black) *no change*  |1. #FFA19F9D <br/>2. #FFF3F2F1 <br/> 3. Transparent color  |1. #66000000 (40% Black) <br/>2. Transparent color |
+| Rest |1. #FF000000 (100% Black) *no change* <br/>2. #33000000 (20% Black) *no change* |1. #FFFFFFFF (100% White) *no change* <br/>2. 100% Accent color *no change* |1. #FF323130 <br/>2.#FFFFFFFF (100% White) <br/>4. #FF8A8886  |1. #FF000000 (100% Black) <br/>2. Transparent color |
+| Hover |1. #FF000000 (100% Black) *no change* <br/>2. #1A000000 (10% Black) |1. #FFFFFFFF (100% White) *no change* <br/>2. 100% AccentLight1 color |1. #FF201F1E <br/> 2. #FFF3F2F1 <br/>4. #FF8A8886 |1. #FF000000 (100% Black) <br/>2. #1A000000 (10% Black) |
+| Pressed |1. #FF000000 (100% Black) *no change* <br/>2. #66000000 (40% Black) *no change* |1. #FFFFFFFF (100% White) *no change* <br/>2. 100% AccentDark1 color |1. #FF201F1E <br/>2. #FFEDEBE9 <br/>4. #FF8A8886 |1. #FF000000 (100% Black) <br/>2. #33000000 (20% Black) |
+| Disabled |1. #66000000 (40% Black) *no change* <br/>2. #33000000 (20% Black) *no change* |1. #66000000 (40% Black) *no change* <br/>2. #33000000 (20% Black) *no change*  |1. #FFA19F9D <br/>2. #FFF3F2F1 <br/> 4. Transparent color  |1. #66000000 (40% Black) <br/>2. Transparent color |
 
 ### Dark Theme Color values
 
