@@ -2,10 +2,10 @@
 This spec lists out all the details of checkbox design that should be updated as part of [#839](https://github.com/microsoft/microsoft-ui-xaml/issues/839). Depending on schedule and other unforeseen circumstances, not all could be implemented so this does not represent a final plan yet.
 
 ## Checkbox styles
-Checkbox has mainly 3 styles:
-1. Outline unselected
-2. Fill selected
-3. Fill unselected
+Checkbox has mainly 3 visual styles:
+1. Outline - unselected
+2. Fill - selected
+3. Fill - unselected
 
 ![styles](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/chigy/checkboxes/active/checkboxes/Images/BaseDesign2.png)
 
