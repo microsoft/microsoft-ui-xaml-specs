@@ -1,8 +1,12 @@
 # Background
 
-`SelectedNodes` is the only API we currently have on TreeView to update selections, and it only works in multi-select mode, which means there's no easy way to programmatically change selections in single selection mode. Also, with the new data binding capability, people would prefer to work on their own data source instead of `TreeViewNode`. With current APIs, they will have to do `ContainerFromItem` and then `NodeFromContainer` to get the associated TreeViewNode in order to update SelectedNodes.
+The Xaml [TreeView](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView) control shows a list of hierarchical data, similar to a ListView. 
 
-This API change introduces 3 new APIs to make things easier, `SelectedNode`, `SelectedItem` and `SelectedItems`.
+When TreeView was first released, you populated it using the [RootNode property](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView.RootNodes), giving it a tree of nodes, each node referencing a data item. There was negative feedback about this nodes approach, though, from developers preferring a more data binding friendly pattern along the lines of [ListView.ItemsSource](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ItemsControl.ItemsSource). 
+
+So a [TreeView.ItemsSource](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView.ItemsSource) property was added, and now you can use either the nodes approach or the ItemsSource approach. But unlike ListView, TreeView doesn't have the corresponding SelectedItem and SelectedItems properties for single- and multi-select. Those are being added in this spec.
+
+Also being added in this spec, for the case where the RootNode is being used instead of ItemsSource, is an API to select a single node. That is, there is a [SelectedNodes](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView.SelectedNodes) property today, and this spec is adding a singular SelectedNode property.
 
 Related GitHub issues:  
 https://github.com/microsoft/microsoft-ui-xaml/issues/197  
@@ -13,10 +17,38 @@ https://github.com/microsoft/microsoft-ui-xaml/issues/386
 
 Extend TreeView selection API sets to make selections easier.
 
-- Fix SelectedNodes: Currently this only works in multi-select mode. It should also work in single selection mode (consistent with ListView).
-- Add SelectedNode: get/set the selected TreeViewNode for single selection
-- Add SelectedItem: get/set the selected item for single selection
-- Add SelectedItems: get the SelectedItems collection.
+- Add `SelectedNode`: get/set the selected TreeViewNode for single selection
+- Add `SelectedItem`: get/set the selected item for single selection
+- Add `SelectedItems`: get the SelectedItems collection.
+- Fix existing `SelectedNodes` property: Currently this only works in multi-select mode ([SelectionMode](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView.SelectionMode) set to `Multiple`). It will now also work in single selection mode (consistent with ListView).
+
+# Examples
+
+## TreeView.SelectedNode
+Ouput the depth of the selected tree view node.
+```C#
+TreeViewNode selectedNode = treeView.SelectedNode;
+if (selectedNode != null)
+{
+    Debug.WriteLine($"Selected node depth: {selectedNode.Depth}");
+}
+```
+
+## TreeView.SelectedItem
+Bind the TreeView control to a View Model with the data source and the currently selected item.
+```Xaml
+<TreeView ItemsSource="{x:Bind Descendants}"
+            SelectedItem="{x:Bind CurrentDescendant, Mode=TwoWay}" />
+```
+
+## TreeView.SelectedItems
+```C#
+void AddToSelection(TreeView treeView, object item)
+{
+    IList<Object> selectedItems = treeView.SelectedItems;
+    selectedItems.Add(item);
+}
+```
 
 # API Details
 
@@ -37,33 +69,11 @@ namespace Microsoft.UI.Xaml.Controls
 }
 ```
 
-# Examples
-
-```C#
-TreeViewNode node = ...
-// Set SelectedNode for single selection
-treeView.SelectedNode = node;
-// Get SelectedNode in single selection
-TreeViewNode selectedNode = treeView.SelectedNode;
-
-
-TreeViewItemsSourceType item = ...
-// Set SelectedItem
-treeView.SelectedItem = item;
-// Get SelectedItems
-TreeViewItemsSourceType selectedItem = treeView.SelectedItem;
-
-// Get SelectedItems collection
-IList<Object> selectedItems = treeView.SelectedItems();
-// Modify the collection to update selections
-selectedItems.Add(item);
-
-```
-
 # Remarks
 
-SelectedNode(s) always returns/takes TreeViewNode.
 SelectedItem(s) returns Object(collection of objects), it will be the ItemsSource type object when using databinding, or TreeViewNode when not using databinding.
+
+Prior to WinUI 2.2, the [TreeView.SelectedNodes](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView.SelectedNodes) property can only be used when the [SelectionMode](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView.SelectionMode) is set to `Multiple`.
 
 # API Notes
 
