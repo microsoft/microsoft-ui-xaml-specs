@@ -33,13 +33,22 @@ CornerRadiusFilterConverter helps us filter CornerRadius values on specific dire
 
 # Examples
 A ControlTemplate for a Button that has square bottom corners, and top corners that can be set by the Button.CornerRadius property.
+
 ```XAML
 <ControlTemplate TargetType="Button">
-    <Border Background="{TemplateBinding Background}"
-            CornerRadius="{TemplateBinding CornerRadius, Converter={StaticResource CornerRadiusFilterConverter}, ConverterParameter=Top}"
-            Padding="{TemplateBinding Padding}">
-        <ContentPresenter />
-    </Border>
+    <Grid>
+        <Grid.Resources>
+            <CornerRadiusFilterConverter Filter="Top" x:Name="TopCornersFilter" />
+        </Grid.Resources>
+
+        <Border Background="{TemplateBinding Background}"
+                CornerRadius="{Binding  CornerRadius, 
+                RelativeSource={RelativeSource TemplatedParent}, 
+                Converter={StaticResource TopCornersFilter}}"
+                Padding="{TemplateBinding Padding}">
+            <ContentPresenter />
+        </Border>
+    </Grid>
 </ControlTemplate>
 ```
 
@@ -54,6 +63,16 @@ namespace Microsoft.UI.Xaml.Controls.Primitives
     runtimeclass CornerRadiusFilterConverter : Windows.UI.Xaml.Data.IValueConverter
     {
         CornerRadiusFilterConverter();
+        CornerRadiusFilterKind Filter;
+    };
+
+    [webhosthidden]
+    public enum CornerRadiusFilterKind
+    {
+        Top,
+        Right,
+        Left,
+        Bottom
     };
 }
 ```
