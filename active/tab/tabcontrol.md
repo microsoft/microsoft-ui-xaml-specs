@@ -393,6 +393,13 @@ runtimeclass TabViewTabClosingEventArgs
 
 [WUXC_VERSION_PREVIEW]
 [webhosthidden]
+runtimeclass TabViewItemDroppedOutsideEventArgs 
+{
+    TabViewItem Tab { get; };
+}
+
+[WUXC_VERSION_PREVIEW]
+[webhosthidden]
 unsealed runtimeclass TabView : Windows.UI.Xaml.Controls.Control
 {
     TabView();
