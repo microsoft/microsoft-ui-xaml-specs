@@ -438,7 +438,7 @@ unsealed runtimeclass TabView : Windows.UI.Xaml.Controls.Control
 
     // TODO: Update
     [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
-    Windows.Foundation.Collections.IVector<Object> TabItems{ get; };
+    Windows.Foundation.Collections.IVector<TabViewItem> TabItems{ get; };
 
     Windows.UI.Xaml.DataTemplate ItemTemplate;
     Windows.UI.Xaml.Controls.DataTemplateSelector ItemTemplateSelector{ get; set; };
