@@ -402,9 +402,6 @@ unsealed runtimeclass TabView : Windows.UI.Xaml.Controls.Control
     TabViewTabWidthMode TabWidthMode{ get; set; };
 
     [MUX_DEFAULT_VALUE("true")]
-    Boolean CanCloseTabs{ get; set; };
-
-    [MUX_DEFAULT_VALUE("true")]
     Boolean CanDragTabs{ get; set; };
 
     [MUX_DEFAULT_VALUE("true")]
