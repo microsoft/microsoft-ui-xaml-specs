@@ -82,7 +82,7 @@ example code with each description. The general format is:
 <TabView TabViewItemWidthMode="Equal"
          CanDragTabs="True"
          CanReorderTabs="True"
-         TabDraggedOutside="OpenTabInNewWindow"
+         TabDroppedOutside="OpenTabInNewWindow"
          AddTabButtonClick="NewTab_Click">
     ...
 </TabView>
@@ -131,11 +131,11 @@ See the [TabView tear out sample](https://github.com/windows-toolkit/Sample-TabV
 ``` xml
 <TabView CanDragTabs="True"
             CanReorderTabs="True"
-            TabDraggedOutside="TabView_TabDraggedOutside">
+            TabDroppedOutside="TabView_TabDroppedOutside">
 ```
 ``` csharp
 // NOTE: The app is responsible for writing this code. We will provide a sample that may look something like:
-private async void TabView_TabDraggedOutside(object sender, TabDraggedOutsideEventArgs e)
+private async void TabView_TabDroppedOutside(object sender, TabDroppedOutsideEventArgs e)
 {
     // Create a new AppWindow
     AppWindow newWindow = await AppWindow.TryCreateAsync();
@@ -346,7 +346,7 @@ in IntelliSense. -->
 | AddTabButtonClick | Fires when the + button is clicked. |
 | SelectionChanged | Occurs when the currently selected tab changes. |
 | TabClosing | Fires when a tab is about to be closed. Can be cancelled to prevent closure. |
-| TabDraggedOutside | Fires when a Tab is dragged outside of the Tab bar. |
+| TabDroppedOutside | Fires when a Tab is dropped outside of the Tab bar. |
 
 | Method | Description |
 |---|---|
@@ -429,7 +429,7 @@ unsealed runtimeclass TabView : Windows.UI.Xaml.Controls.Control
     event Windows.Foundation.TypedEventHandler<TabView, TabViewAddTabButtonClickEventArgs> AddTabButtonClick;
 
     // TODO: Add
-    event Windows.Foundation.TypedEventHandler<TabView, TabDraggedOutsideEventArgs> TabDraggedOutside;
+    event Windows.Foundation.TypedEventHandler<TabView, TabDroppedOutsideEventArgs> TabDroppedOutside;
 
     // TODO: Update
     // From ListView
