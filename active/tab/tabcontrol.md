@@ -135,7 +135,7 @@ See the [TabView tear out sample](https://github.com/windows-toolkit/Sample-TabV
 ```
 ``` csharp
 // NOTE: The app is responsible for writing this code. We will provide a sample that may look something like:
-private async void TabView_TabDroppedOutside(object sender, TabDroppedOutsideEventArgs e)
+private async void TabView_TabDroppedOutside(TabView sender, TabDroppedOutsideEventArgs e)
 {
     // Create a new AppWindow
     AppWindow newWindow = await AppWindow.TryCreateAsync();
