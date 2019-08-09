@@ -388,7 +388,7 @@ enum TabViewTabWidthMode
 [webhosthidden]
 runtimeclass TabViewTabClosingEventArgs
 {
-    Object Item { get; };
+    TabViewItem Tab { get; };
 }
 
 [WUXC_VERSION_PREVIEW]
