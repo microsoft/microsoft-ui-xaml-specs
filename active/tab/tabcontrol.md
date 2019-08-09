@@ -401,14 +401,12 @@ unsealed runtimeclass TabView : Windows.UI.Xaml.Controls.Control
     [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
     TabViewTabWidthMode TabWidthMode{ get; set; };
 
-    // TODO: Remove
     [MUX_DEFAULT_VALUE("true")]
     Boolean CanCloseTabs{ get; set; };
 
     [MUX_DEFAULT_VALUE("true")]
     Boolean CanDragTabs{ get; set; };
 
-    // TODO: Add
     [MUX_DEFAULT_VALUE("true")]
     Boolean CanReorderTabs{ get; set; };
 
@@ -425,18 +423,15 @@ unsealed runtimeclass TabView : Windows.UI.Xaml.Controls.Control
 
     event Windows.Foundation.TypedEventHandler<TabView, TabViewTabClosingEventArgs> TabClosing;
 
-    // TODO: Update parameter to TabViewAddTabButtonClickEventArgs
     event Windows.Foundation.TypedEventHandler<TabView, TabViewAddTabButtonClickEventArgs> AddTabButtonClick;
 
-    // TODO: Add
     event Windows.Foundation.TypedEventHandler<TabView, TabDroppedOutsideEventArgs> TabDroppedOutside;
 
-    // TODO: Update
+
     // From ListView
     [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
     Object TabItemsSource;
 
-    // TODO: Update
     [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
     Windows.Foundation.Collections.IVector<TabViewItem> TabItems{ get; };
 
@@ -461,7 +456,6 @@ unsealed runtimeclass TabView : Windows.UI.Xaml.Controls.Control
     static Windows.UI.Xaml.DependencyProperty TabWidthModeProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty CanCloseTabsProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty CanDragTabsProperty{ get; };
-    // TODO: Add
     static Windows.UI.Xaml.DependencyProperty CanReorderTabsProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty TabStripFooterContentProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty TabStripFooterContentTemplateProperty{ get; };
@@ -470,8 +464,6 @@ unsealed runtimeclass TabView : Windows.UI.Xaml.Controls.Control
     static Windows.UI.Xaml.DependencyProperty IsAddTabButtonVisibleProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty AddTabButtonCommandProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty AddTabButtonCommandParameterProperty{ get; };
-
-    // TODO: Update to "TabItem*"
     static Windows.UI.Xaml.DependencyProperty TabItemsSourceProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty TabItemsProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty TabItemTemplateProperty{ get; };
@@ -501,7 +493,6 @@ unsealed runtimeclass TabViewItem : Windows.UI.Xaml.Controls.ListViewItem
     static Windows.UI.Xaml.DependencyProperty IconProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty IsCloseableProperty{ get; };
 
-    // TODO: Add
     event Windows.Foundation.TypedEventHandler<TabViewItem, TabViewTabClosingEventArgs> TabClosing;
 }
 
