@@ -164,7 +164,7 @@ private async void TabView_TabDroppedOutside(object sender, TabDroppedOutsideEve
 ```
 
 ## Add a new tab using the Add (+) Tab Button
-The TabView control provides an Add (+) Tab button at the end of the tab strip. When the user clicks the Add Tab button, the control will fire an event which you can listen to in order to add a new tab.
+The TabView control provides an Add (+) Tab button at the end of the tab strip. When the user clicks the Add Tab button, the control will raise an event which you can listen to in order to add a new tab.
 
 ``` xml
 <controls:TabView
@@ -343,10 +343,10 @@ in IntelliSense. -->
 
 | Event | Description |
 |---|---|
-| AddTabButtonClick | Fires when the + button is clicked. |
+| AddTabButtonClick | Raised when the + button is clicked. |
 | SelectionChanged | Occurs when the currently selected tab changes. |
-| TabClosing | Fires when a tab is about to be closed. Can be cancelled to prevent closure. |
-| TabDroppedOutside | Fires when a Tab is dropped outside of the Tab bar. |
+| TabClosing | Raised when a tab is about to be closed. Can be cancelled to prevent closure. |
+| TabDroppedOutside | Raised when a Tab is dropped outside of the Tab bar. |
 
 | Method | Description |
 |---|---|
@@ -365,7 +365,7 @@ in IntelliSense. -->
 
 | Event | Description |
 |---|---|
-| TabClosing | Fires when a tab's close button is clicked. |
+| TabClosing | Raised when a tab's close button is clicked. |
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
