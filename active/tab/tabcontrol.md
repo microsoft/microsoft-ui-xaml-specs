@@ -76,16 +76,14 @@ example code with each description. The general format is:
 <!-- As an example of this section, see the Examples section for the PasswordBox control 
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 
-## To replicate the behavior of Microsoft Edge
+## Basic TabView Sample, similar to a Web Browser
 
 ``` xml
 <TabView TabViewItemWidthMode="Equal"
-            CanCloseTabs="True"
-            CloseButtonOverlay="OnHover"
-            CanDragTabs="True"
-            CanReorderTabs="True"
-            TabDraggedOutside="OpenTabInNewWindow"
-            AddTabButtonClick="NewTab_Click">
+         CanDragTabs="True"
+         CanReorderTabs="True"
+         TabDraggedOutside="OpenTabInNewWindow"
+         AddTabButtonClick="NewTab_Click">
     ...
 </TabView>
 ```
