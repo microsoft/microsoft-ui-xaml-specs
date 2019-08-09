@@ -79,7 +79,7 @@ example code with each description. The general format is:
 ## Basic TabView Sample, similar to a Web Browser
 
 ``` xml
-<TabView TabViewItemWidthMode="Equal"
+<TabView TabWidthMode="Equal"
          CanDragTabs="True"
          CanReorderTabs="True"
          TabDroppedOutside="OpenTabInNewWindow"
@@ -341,7 +341,7 @@ in IntelliSense. -->
 | SelectedItem | Gets or sets the selected item. |
 | TabStripHeader | Content to the left of the tab strip. |
 | TabStripFooter | Content to the right of the tab strip. |
-| TabViewItemWidthMode | Specifies how the tabs should be sized. Values are {Actual, Equal}. Default is Actual. |
+| TabWidthMode | Specifies how the tabs should be sized. Values are {Actual, Equal}. Default is Actual. |
 
 | Event | Description |
 |---|---|
@@ -378,7 +378,7 @@ namespace MU_XC_NAMESPACE
 
 [WUXC_VERSION_PREVIEW]
 [webhosthidden]
-enum TabViewItemWidthMode
+enum TabViewTabWidthMode
 {
     Actual = 0,
     Equal = 1,
@@ -397,9 +397,9 @@ unsealed runtimeclass TabView : Windows.UI.Xaml.Controls.Control
 {
     TabView();
 
-    [MUX_DEFAULT_VALUE("winrt::TabViewItemWidthMode::Actual")]
+    [MUX_DEFAULT_VALUE("winrt::TabWidthMode::Actual")]
     [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
-    TabViewItemWidthMode TabViewItemWidthMode{ get; set; };
+    TabViewTabWidthMode TabWidthMode{ get; set; };
 
     // TODO: Remove
     [MUX_DEFAULT_VALUE("true")]
@@ -458,7 +458,7 @@ unsealed runtimeclass TabView : Windows.UI.Xaml.Controls.Control
 
     event Windows.UI.Xaml.Controls.SelectionChangedEventHandler SelectionChanged;
 
-    static Windows.UI.Xaml.DependencyProperty TabViewItemWidthModeProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty TabWidthModeProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty CanCloseTabsProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty CanDragTabsProperty{ get; };
     // TODO: Add
