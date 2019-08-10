@@ -57,7 +57,6 @@ A ControlTemplate for a Button that has square bottom corners, and top corners t
 ```
 namespace Microsoft.UI.Xaml.Controls.Primitives
 {
-    [bindable]
     [webhosthidden]
     [default_interface]
     runtimeclass CornerRadiusFilterConverter : Windows.UI.Xaml.Data.IValueConverter
