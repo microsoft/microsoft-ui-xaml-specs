@@ -21,17 +21,29 @@ Typically, a control's ControlTemplate binds the control's CornerRadius to an it
 
 But there are cases where the ControlTemplate needs to get only some of the components out of the CornerRadius struct, for example the top left and right corners, in order to have a rounded top and a square bottom. There's no way to create a TemplateBinding to a struct field, so you can't bind to CornerRadius.TopLeft.
 
-For example when CommandBarFlyout opens up its secondary menu, primary and secondary menus are clipped together we need to clear rounded corners on bottom of primary menu and top of secondary menu to close the gaps.
+For example when CommandBarFlyout opens up its secondary menu, primary and secondary menus are clipped together we need to clear rounded corners on bottom of primary menu and top of secondary menu to close the gaps. The following shows circles on the rounded corners and squares on the squared corners:
 
 ![CommandBarFlyout CornerRadius example](images/commandbarflyout-cornerradius-example.png)
 
 The solution in this spec is a stock IValueConverter that can be used with the TemplateBinding to extract fields out of the struct.
 
+This doesn't help, however, when there's no TemplateBinding on which to set it. That happens with the 
+[AutoSuggestBox](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.AutoSuggestBox)
+and [ComboBox](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ComboBox)
+controls. The solution to that in this spec is a couple of properties that triggers code to square off the properties. This isn't an elegant solution, but it's what we can do from an out-of-band component to modify the behavior of an in-box component.
+
 # Description
 
-CornerRadiusFilterConverter helps us filter CornerRadius values on specific directions and set values to 0 for the rest.
+## CornerRadiusFilterConverter class
+Use the CornerRadiusFilterConverter with a Binding or TemplateBinding to create a new CornerRadius struct from an existing one, extracting only some of the fields, leaving the others zero.
+
+## AutoSuggestBoxHelper/ComboBoxHelper KeepInteriorCornersSquare property
+Set this property on an AutoSuggestBox/ComboBox to keep the interior corners square, even if the CornerRadius property is non zero.
+
 
 # Examples
+
+## CornerRadiusFilterConverter example
 A ControlTemplate for a Button that has square bottom corners, and top corners that can be set by the Button.CornerRadius property.
 
 ```XAML
@@ -52,8 +64,20 @@ A ControlTemplate for a Button that has square bottom corners, and top corners t
 </ControlTemplate>
 ```
 
+## KeepInteriorCornersSquare example
+
+Give a ComboBox rounded external corners, but keep the internal corners square.
+```
+<ComboBox ItemsSource="{x:Bind Options}"
+          SelectedItem="{x:Bind SelectedOption, Mode=TwoWay}"
+          CornerRadius="5"
+          primitives:AutoSuggestBoxHelper.KeepInteriorCornersSquare="true" />
+```
+
+
 # API Details
 
+## CornerRadiusFilterConverter
 ```
 namespace Microsoft.UI.Xaml.Controls.Primitives
 {
@@ -75,6 +99,33 @@ namespace Microsoft.UI.Xaml.Controls.Primitives
     };
 }
 ```
+
+## KeepInteriorCornersSquare
+
+```
+namespace Microsoft.UI.Xaml.Controls.Primitives
+{
+    [webhosthidden]
+    [default_interface]
+    runtimeclass AutoSuggestBoxHelper
+    {
+        static Windows.UI.Xaml.DependencyProperty KeepInteriorCornersSquareProperty{ get; };
+        static void SetKeepInteriorCornersSquare(Windows.UI.Xaml.Controls.AutoSuggestBox element, Boolean value);
+        static Boolean GetKeepInteriorCornersSquare(Windows.UI.Xaml.Controls.AutoSuggestBox element);
+    };
+
+    [webhosthidden]
+    [default_interface]
+    runtimeclass ComboBoxHelper
+    {
+        static Windows.UI.Xaml.DependencyProperty KeepInteriorCornersSquareProperty{ get; };
+        static void SetKeepInteriorCornersSquare(Windows.UI.Xaml.Controls.ComboBox element, Boolean value);
+        static Boolean GetKeepInteriorCornersSquare(Windows.UI.Xaml.Controls.ComboBox element);
+    };
+
+}
+```
+
 
 # Remarks
 
