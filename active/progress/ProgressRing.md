@@ -135,7 +135,7 @@ out with an explanation either here or in the Examples -->
 
 With the addition of a determinate mode of ProgressRing, the ShowPaused and ShowError properties that ProgressBar already has should be aligned in ProgressRing. ProgressRing can be used in scenarios where progress is paused, or an error occured during the process. With this additional capability, the determinate ProgressRing does not represent a "hung" state where the user cannot interact with the app. Previously, guidance recommended that ProgressRing only be used when the user cannot continue to interact with the app, but this is no longer the only use case and ProgressRing can be used in scenarios where user interaction can continue while the ring is spinning.
 
-ProgressRing will continue to inherit from Control, and will not inherit from RangeBase. There is an ongoing investigation into adding content (Text or icons) in the center of the ProgressRing, and this spec will be updated to reflect any changes.
+ProgressRing will continue to inherit from Control, and will not inherit from RangeBase. Rangebase has functionality that is not used in ProgressBar and would not be used in ProgressRing. There is an ongoing investigation into adding content (Text or icons) in the center of the ProgressRing to potentially align with Xbox and other Microsoft teams.
 
 # API Notes
 <!-- Option 1: Give a one or two line description of each API (type
