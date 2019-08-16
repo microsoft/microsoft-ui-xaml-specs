@@ -167,4 +167,4 @@ that isn't necessary to understand the purpose and usage of the API.
 For example, implementation details. -->
 
 # Open Questions
-
+* How should the edge cases of 0%, 1%, 98%, 99% be visualized? We are currently discussing with other teams at Microsoft how to visualize this with the rounded interior corners.  
