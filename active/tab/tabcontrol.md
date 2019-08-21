@@ -368,8 +368,8 @@ in IntelliSense. -->
 
 | Property | Description |
 |:-------- |:----------- |
-| Content | The main content that appears in the tab. |
-| Header | The content that appears inside the tab itself.  |
+| Content | The content that appears inside the TabView's content area when the TabViewItem is selected. |
+| Header | The content that appears inside the tab strip to represent the tab.  |
 | HeaderTemplate | Template for the header object. |
 | Icon | Icon for the tab. |
 | IsCloseable | Determines if the tab shows a close button. Default is "True". |
