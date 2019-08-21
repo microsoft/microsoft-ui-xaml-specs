@@ -104,7 +104,7 @@ This sample demonstrates how to extend the TabView into the title bar area and a
             <TabViewItem Icon="Document" Header="Document 3" />
         </TabView>
 
-        <Grid x:Name="CustomDragRegion" Width="200" Height="40" HorizontalAlignment="Right" VerticalAlignment="Top" />
+        <Grid x:Name="CustomDragRegion" HorizontalAlignment="Right" VerticalAlignment="Top" />
     </Grid>
 </Page>
 ```
@@ -117,8 +117,17 @@ public MainPage()
 
     var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
     coreTitleBar.ExtendViewIntoTitleBar = true;
+    coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
 
     Window.Current.SetTitleBar(CustomDragRegion);
+}
+
+private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
+{
+    // Set the custom drag region's MinWidth to the SystemOverlayRightInset (which encompasses the caption buttons and the built-in drag region)
+    CustomDragRegion.MinWidth = sender.SystemOverlayRightInset;
+
+    CustomDragRegion.Height = sender.Height;
 }
 ```
 
