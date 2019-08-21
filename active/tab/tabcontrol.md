@@ -356,7 +356,7 @@ in IntelliSense. -->
 |---|---|
 | AddTabButtonClick | Raised when the + button is clicked. |
 | SelectionChanged | Occurs when the currently selected tab changes. |
-| TabClosing | Raised when a tab is about to be closed. Can be cancelled to prevent closure. |
+| TabCloseRequested | Raised when the user attempts to close a Tab via clicking the x-to-close, CTRL+F4, or mousewheel. |
 | TabDroppedOutside | Raised when a Tab is dropped outside of the Tab bar. |
 
 | Method | Description |
@@ -376,7 +376,7 @@ in IntelliSense. -->
 
 | Event | Description |
 |---|---|
-| TabClosing | Raised when a tab's close button is clicked. |
+| TabCloseRequested | Raised when a tab's close button is clicked. |
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
@@ -395,8 +395,9 @@ enum TabViewTabWidthMode
 
 [WUXC_VERSION_PREVIEW]
 [webhosthidden]
-runtimeclass TabViewTabClosingEventArgs
+runtimeclass TabViewTabCloseRequestedEventArgs
 {
+    object Item { get; }
     TabViewItem Tab { get; };
 }
 
@@ -434,7 +435,7 @@ unsealed runtimeclass TabView : Windows.UI.Xaml.Controls.Control
     Windows.UI.Xaml.Input.ICommand AddTabButtonCommand{ get; set; };
     Object AddTabButtonCommandParameter{ get; set; };
 
-    event Windows.Foundation.TypedEventHandler<TabView, TabViewTabClosingEventArgs> TabClosing;
+    event Windows.Foundation.TypedEventHandler<TabView, TabViewTabCloseRequestedEventArgs> TabCloseRequested;
 
     event Windows.Foundation.TypedEventHandler<TabView, TabViewAddTabButtonClickEventArgs> AddTabButtonClick;
 
@@ -506,7 +507,7 @@ unsealed runtimeclass TabViewItem : Windows.UI.Xaml.Controls.ListViewItem
     static Windows.UI.Xaml.DependencyProperty IconProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty IsCloseableProperty{ get; };
 
-    event Windows.Foundation.TypedEventHandler<TabViewItem, TabViewTabClosingEventArgs> TabClosing;
+    event Windows.Foundation.TypedEventHandler<TabViewItem, TabViewTabCloseRequestedEventArgs> TabCloseRequested;
 }
 
 }
