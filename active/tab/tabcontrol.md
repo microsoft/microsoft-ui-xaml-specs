@@ -339,6 +339,11 @@ What happens when too many tabs appear in the tab strip? The TabView control res
 | Equal | The tabs get narrower to a min width and then bumpers appear and allow for horizontal scrolling. |
 | SizeToContent | The tabs do not get narrower than their natural size, but bumpers will appear and allow for horizontal scrolling. | 
 
+## Guidance for Tab selection
+* Users expect that a tab is selected by default. Ensure that a TabViewItem is initially selected when TabView is created by setting the SelectedItem or SelectedIndex.
+* The TabView will attempt to ensure that a tab is selected if the previously selected Tab is closed. By default, the TabView will select the next tab item if it is enabled. 
+* If no tab is selected, the main content area of the TabView will appear blank.
+
 # API Notes
 <!-- Give a one or two line description of each API (type
 and member), or at least the ones that aren't obvious
