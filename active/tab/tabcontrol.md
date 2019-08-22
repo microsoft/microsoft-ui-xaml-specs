@@ -84,7 +84,7 @@ example code with each description. The general format is:
          CanReorderTabs="True"
          TabDroppedOutside="OpenTabInNewWindow"
          AddTabButtonClick="Tabs_AddTabButtonClick"
-		 TabCloseRequested="Tabs_TabCloseRequested">
+         TabCloseRequested="Tabs_TabCloseRequested">
     ...
 </TabView>
 ```
@@ -179,8 +179,7 @@ The TabView control provides an Add (+) Tab button at the end of the tab strip. 
 ``` xml
 <controls:TabView
     x:Name="TabRoot"
-    AddTabButtonClick="AddTabButton_Click"
-    >
+    AddTabButtonClick="AddTabButton_Click">
     <!-- ... some tabs ... -->
 </controls:TabView>
 ```
@@ -189,16 +188,16 @@ The TabView control provides an Add (+) Tab button at the end of the tab strip. 
 
 private void AddTabButton_Click(TabView sender, TabViewAddTabButtonClickEventArgs e)
 {
-	var newTab = new TabViewItem();
-	newTab.IconSource = new SymbolIconSource() { Symbol = Symbol.Document };
-	newTab.Header = "New Document";
+    var newTab = new TabViewItem();
+    newTab.IconSource = new SymbolIconSource() { Symbol = Symbol.Document };
+    newTab.Header = "New Document";
 
-	// The Content of a TabViewItem is often a frame which hosts a page.
+    // The Content of a TabViewItem is often a frame which hosts a page.
     Frame frame = new Frame();
     newTab.Content = frame;
     frame.Navigate(typeof(BaconIpsumPage));
 
-	Tabs.TabItems.Add(newTab);
+    Tabs.TabItems.Add(newTab);
 }
 
 ```
@@ -212,9 +211,7 @@ The below example shows how to use KeyboardAccelerators to enable the following 
 * Select the last tab with CTRL+9
 
 ``` xml
-<controls:TabView
-    x:Name="TabRoot"
-    >
+<controls:TabView x:Name="TabRoot">
     <controls:TabView.KeyboardAccelerators>
         <KeyboardAccelerator Key="T" Modifiers="Control" Invoked="NewTabKeyboardAccelerator_Invoked" />
         <KeyboardAccelerator Key="W" Modifiers="Control" Invoked="CloseSelectedTabKeyboardAccelerator_Invoked" />
