@@ -325,6 +325,14 @@ The [Appendix/Detailed Keyboarding Behavior](#detailed-keyboarding-behavior) sec
 * Modern browsers support selecting tabs when pressing CTRL and a number. Consider handling Ctrl+1 through 8, which should select that number Tab. Additionally, you can consider handling Ctrl+9 which selects the last tab (regardless of the number of tabs).
 * If users can perform more commands on a Tab than just closing the Tab (for example, pinning a Tab or duplicating a Tab), consider adding a context menu to the TabViewItem. 
 
+## Tab Strip Overflow
+What happens when too many tabs appear in the tab strip? The TabView control resizes the tabs and provides a scrollbar so the app doesn't need to. The behavior is slightly different depending on the value of the TabView.TabWidthMode property.
+
+| TabWidthMode Value | Behavior |
+|:-------- |:----------- |
+| Equal | The tabs get narrower to a min width and then bumpers appear and allow for horizontal scrolling. |
+| SizeToContent | The tabs do not get narrower than their natural size, but bumpers will appear and allow for horizontal scrolling. | 
+
 # API Notes
 <!-- Give a one or two line description of each API (type
 and member), or at least the ones that aren't obvious
@@ -350,7 +358,7 @@ in IntelliSense. -->
 | SelectedItem | Gets or sets the selected item. |
 | TabStripHeader | Content to the left of the tab strip. |
 | TabStripFooter | Content to the right of the tab strip. |
-| TabWidthMode | Specifies how the tabs should be sized. Values are {Actual, Equal}. Default is Actual. |
+| TabWidthMode | Specifies how the tabs should be sized. Values are {Equal, SizeToContent}. Default is Equal. |
 
 | Event | Description |
 |---|---|
@@ -389,8 +397,8 @@ namespace MU_XC_NAMESPACE
 [webhosthidden]
 enum TabViewTabWidthMode
 {
-    Actual = 0,
-    Equal = 1,
+    Equal = 0,
+    SizeToContent = 1,
 };
 
 [WUXC_VERSION_PREVIEW]
@@ -414,7 +422,7 @@ unsealed runtimeclass TabView : Windows.UI.Xaml.Controls.Control
 {
     TabView();
 
-    [MUX_DEFAULT_VALUE("winrt::TabWidthMode::Actual")]
+    [MUX_DEFAULT_VALUE("winrt::TabWidthMode::Equal")]
     [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
     TabViewTabWidthMode TabWidthMode{ get; set; };
 
