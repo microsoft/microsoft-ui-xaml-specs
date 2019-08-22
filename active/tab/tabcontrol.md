@@ -399,50 +399,64 @@ in IntelliSense. -->
 namespace MU_XC_NAMESPACE
 {
 
-[WUXC_VERSION_PREVIEW]
+[WUXC_VERSION_MUXONLY]
 [webhosthidden]
-enum TabViewTabWidthMode
+enum TabViewWidthMode
 {
     Equal = 0,
     SizeToContent = 1,
 };
 
-[WUXC_VERSION_PREVIEW]
+[WUXC_VERSION_MUXONLY]
 [webhosthidden]
 runtimeclass TabViewTabCloseRequestedEventArgs
 {
-    object Item { get; }
+    Object Item { get; };
     TabViewItem Tab { get; };
 }
 
-[WUXC_VERSION_PREVIEW]
+[WUXC_VERSION_MUXONLY]
 [webhosthidden]
-runtimeclass TabViewItemDroppedOutsideEventArgs 
+runtimeclass TabViewTabDroppedOutsideEventArgs
 {
+    Object Item { get; };
     TabViewItem Tab { get; };
 }
 
-[WUXC_VERSION_PREVIEW]
+[WUXC_VERSION_MUXONLY]
+[webhosthidden]
+runtimeclass TabViewTabDragStartingEventArgs
+{
+    Boolean Cancel { get; set; };
+    Windows.ApplicationModel.DataTransfer.DataPackage Data { get; };
+    Object Item { get; };
+    TabViewItem Tab { get; };
+}
+
+[WUXC_VERSION_MUXONLY]
+[webhosthidden]
+runtimeclass TabViewTabDragCompletedEventArgs
+{
+    Windows.ApplicationModel.DataTransfer.DataPackageOperation DropResult { get; };
+    Object Item { get; };
+    TabViewItem Tab { get; };
+}
+
+[WUXC_VERSION_MUXONLY]
 [webhosthidden]
 unsealed runtimeclass TabView : Windows.UI.Xaml.Controls.Control
 {
     TabView();
 
-    [MUX_DEFAULT_VALUE("winrt::TabWidthMode::Equal")]
+    [MUX_DEFAULT_VALUE("winrt::TabViewWidthMode::Equal")]
     [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
-    TabViewTabWidthMode TabWidthMode{ get; set; };
+    TabViewWidthMode TabWidthMode{ get; set; };
 
-    [MUX_DEFAULT_VALUE("true")]
-    Boolean CanDragTabs{ get; set; };
-
-    [MUX_DEFAULT_VALUE("true")]
-    Boolean CanReorderTabs{ get; set; };
-
-    Object TabStripFooterContent{ get; set; };
-    Windows.UI.Xaml.DataTemplate TabStripFooterContentTemplate{ get; set; };
-    
     Object TabStripHeader{ get; set; };
     Windows.UI.Xaml.DataTemplate TabStripHeaderTemplate{ get; set; };
+
+    Object TabStripFooter{ get; set; };
+    Windows.UI.Xaml.DataTemplate TabStripFooterTemplate{ get; set; };
 
     [MUX_DEFAULT_VALUE("true")]
     Boolean IsAddTabButtonVisible{ get; set; };
@@ -451,23 +465,23 @@ unsealed runtimeclass TabView : Windows.UI.Xaml.Controls.Control
 
     event Windows.Foundation.TypedEventHandler<TabView, TabViewTabCloseRequestedEventArgs> TabCloseRequested;
 
-    event Windows.Foundation.TypedEventHandler<TabView, TabViewAddTabButtonClickEventArgs> AddTabButtonClick;
+    event Windows.Foundation.TypedEventHandler<TabView, TabViewTabDroppedOutsideEventArgs> TabDroppedOutside;
 
-    event Windows.Foundation.TypedEventHandler<TabView, TabDroppedOutsideEventArgs> TabDroppedOutside;
-
+    event Windows.Foundation.TypedEventHandler<TabView, Object> AddTabButtonClick;
 
     // From ListView
-    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
     Object TabItemsSource;
+    Windows.Foundation.Collections.IVector<Object> TabItems{ get; };
 
-    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
-    Windows.Foundation.Collections.IVector<TabViewItem> TabItems{ get; };
+    Windows.UI.Xaml.DataTemplate TabItemTemplate;
+    Windows.UI.Xaml.Controls.DataTemplateSelector TabItemTemplateSelector{ get; set; };
 
-    Windows.UI.Xaml.DataTemplate TabContentTemplate;
-    Windows.UI.Xaml.Controls.DataTemplateSelector TabContentTemplateSelector{ get; set; };
-
-    Windows.UI.Xaml.DataTemplate TabHeaderTemplate;
-    Windows.UI.Xaml.Controls.DataTemplateSelector TabHeaderTemplateSelector{ get; set; };
+    [MUX_DEFAULT_VALUE("true")]
+    Boolean CanDragTabs{ get; set; };
+    [MUX_DEFAULT_VALUE("true")]
+    Boolean CanReorderTabs{ get; set; };
+    [MUX_DEFAULT_VALUE("true")]
+    Boolean AllowDropTabs{ get; set; };
 
     [MUX_DEFAULT_VALUE("-1")]
     [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
@@ -481,47 +495,69 @@ unsealed runtimeclass TabView : Windows.UI.Xaml.Controls.Control
 
     event Windows.UI.Xaml.Controls.SelectionChangedEventHandler SelectionChanged;
 
+    event Windows.Foundation.TypedEventHandler<TabView, TabViewTabDragStartingEventArgs> TabDragStarting;
+    event Windows.Foundation.TypedEventHandler<TabView, TabViewTabDragCompletedEventArgs> TabDragCompleted;
+    event Windows.UI.Xaml.DragEventHandler TabStripDragOver;
+    event Windows.UI.Xaml.DragEventHandler TabStripDrop;
+
     static Windows.UI.Xaml.DependencyProperty TabWidthModeProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty CanCloseTabsProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty CanDragTabsProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty CanReorderTabsProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty TabStripFooterContentProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty TabStripFooterContentTemplateProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty TabStripHeaderProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty TabStripHeaderTemplateProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty TabStripFooterProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty TabStripFooterTemplateProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty IsAddTabButtonVisibleProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty AddTabButtonCommandProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty AddTabButtonCommandParameterProperty{ get; };
+
     static Windows.UI.Xaml.DependencyProperty TabItemsSourceProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty TabItemsProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty TabItemTemplateProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty TabItemTemplateSelectorProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty CanDragTabsProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty CanReorderTabsProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty AllowDropTabsProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty SelectedIndexProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty SelectedTabItemProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty SelectedItemProperty{ get; };
 }
 
-[WUXC_VERSION_PREVIEW]
+[WUXC_VERSION_MUXONLY]
 [webhosthidden]
 unsealed runtimeclass TabViewItem : Windows.UI.Xaml.Controls.ListViewItem
 {
     TabViewItem();
 
+    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
     Object Header{ get; set; };
 
     Windows.UI.Xaml.DataTemplate HeaderTemplate{ get; set; };
 
-    Windows.UI.Xaml.Controls.IconElement Icon{ get; set; };
+    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
+    IconSource IconSource{ get; set; };
 
     [MUX_DEFAULT_VALUE("true")]
     [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
-    Boolean IsCloseable{ get; set; };
+    Boolean IsClosable{ get; set; };
+
+    TabViewItemTemplateSettings TabViewTemplateSettings{ get; };
+
+    event Windows.Foundation.TypedEventHandler<TabViewItem, TabViewTabCloseRequestedEventArgs> CloseRequested;
 
     static Windows.UI.Xaml.DependencyProperty HeaderProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty HeaderTemplateProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty IconProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty IsCloseableProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty IconSourceProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty IsClosableProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty TabViewTemplateSettingsProperty{ get; };
+}
 
-    event Windows.Foundation.TypedEventHandler<TabViewItem, TabViewTabCloseRequestedEventArgs> TabCloseRequested;
+[WUXC_VERSION_MUXONLY]
+[webhosthidden]
+unsealed runtimeclass TabViewItemTemplateSettings : Windows.UI.Xaml.DependencyObject
+{
+    TabViewItemTemplateSettings();
+
+    Windows.UI.Xaml.Controls.IconElement IconElement;
+
+    static Windows.UI.Xaml.DependencyProperty IconElementProperty{ get; };
 }
 
 }
@@ -529,7 +565,7 @@ unsealed runtimeclass TabViewItem : Windows.UI.Xaml.Controls.ListViewItem
 namespace MU_XCP_NAMESPACE
 {
 
-[WUXC_VERSION_PREVIEW]
+[WUXC_VERSION_MUXONLY]
 [webhosthidden]
 unsealed runtimeclass TabViewListView : Windows.UI.Xaml.Controls.ListView
 {
@@ -541,14 +577,14 @@ unsealed runtimeclass TabViewListView : Windows.UI.Xaml.Controls.ListView
 namespace MU_XAP_NAMESPACE
 {
 
-[WUXC_VERSION_PREVIEW]
+[WUXC_VERSION_MUXONLY]
 [webhosthidden]
 unsealed runtimeclass TabViewAutomationPeer : Windows.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer
 {
     TabViewAutomationPeer(MU_XC_NAMESPACE.TabView owner);
 }
 
-[WUXC_VERSION_PREVIEW]
+[WUXC_VERSION_MUXONLY]
 [webhosthidden]
 unsealed runtimeclass TabViewItemAutomationPeer : Windows.UI.Xaml.Automation.Peers.ListViewItemAutomationPeer
 {
