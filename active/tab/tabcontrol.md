@@ -83,7 +83,8 @@ example code with each description. The general format is:
          CanDragTabs="True"
          CanReorderTabs="True"
          TabDroppedOutside="OpenTabInNewWindow"
-         AddTabButtonClick="NewTab_Click">
+         AddTabButtonClick="Tabs_AddTabButtonClick"
+		 TabCloseRequested="Tabs_TabCloseRequested">
     ...
 </TabView>
 ```
