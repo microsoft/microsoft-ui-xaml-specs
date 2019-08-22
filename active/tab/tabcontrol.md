@@ -189,34 +189,16 @@ The TabView control provides an Add (+) Tab button at the end of the tab strip. 
 
 private void AddTabButton_Click(TabView sender, TabViewAddTabButtonClickEventArgs e)
 {
-    CreateNewTab();
-}
+	var newTab = new TabViewItem();
+	newTab.IconSource = new SymbolIconSource() { Symbol = Symbol.Document };
+	newTab.Header = "New Document";
 
-private void CreateNewTab()
-{
-    // MyDocument is a data object that represents the content inside a Tab
-    MyDocument doc = new MyDocument();
-    doc.Title = "New Document";
-    doc.Content = GenerateBaconIpsum();
-    doc.Icon = new SymbolIcon(Symbol.Document);
-
-    // Create a new TabViewItem from the MyDocument object and add it to the TabItems collection
-    TabRoot.TabItems.Add(CreateNewTabFromDocument(doc));
-}
-
-private TabViewItem CreateNewTabFromDocument(MyDocument doc)
-{
-    TabViewItem newItem = new TabViewItem();
-
-    newItem.Header = doc.Title;
-    newItem.Icon = doc.Icon;
-
-    // The Content of a TabViewItem is often a frame which hosts a page.
+	// The Content of a TabViewItem is often a frame which hosts a page.
     Frame frame = new Frame();
-    newItem.Content = frame;
-    frame.Navigate(typeof(DocumentPage), doc);
+    newTab.Content = frame;
+    frame.Navigate(typeof(BaconIpsumPage));
 
-    return newItem;
+	Tabs.TabItems.Add(newTab);
 }
 
 ```
