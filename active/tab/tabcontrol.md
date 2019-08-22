@@ -316,6 +316,11 @@ private void NavigateToNumberedTabKeyboardAccelerator_Invoked(KeyboardAccelerato
 section.  For example, see the Remarks for the MediaPlayerElement 
 (https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.MediaPlayerElement#remarks). -->
 
+## Parts of a TabView
+![Position of TabStripHeader and TabStripFooter](images/tab-control-parts-1.PNG)
+
+![Parts of a tab item](images/tab-control-parts-2.PNG)
+
 ## Keyboard guidance for App Developers
 The [Appendix/Detailed Keyboarding Behavior](#detailed-keyboarding-behavior) section outlines built-in keyboarding behavior provided by the TabView. This section discusses specific recommendations to extend the keyboarding functionality for your app.
 
@@ -556,10 +561,6 @@ unsealed runtimeclass TabViewItemAutomationPeer : Windows.UI.Xaml.Automation.Pee
 <!-- Anything else that you want to write down for posterity, but 
 that isn't necessary to understand the purpose and usage of the API.
 For example, implementation details. -->
-
-![Position of TabStripHeader and TabStripFooter](images/tab-control-parts-1.PNG)
-
-![Parts of a tab item](images/tab-control-parts-2.PNG)
 
 ## Detailed Keyboarding Behavior
 
