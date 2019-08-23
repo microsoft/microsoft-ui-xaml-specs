@@ -340,10 +340,8 @@ in IntelliSense. -->
 | IsAddTabButtonVisible | Determines if the plus button appears to the right of the tab strip |
 | TabItemsSource | Gets or sets an object source used to generate the tabs. |
 | TabItems | Gets the collection used to generate the tabs. |
-| TabContentTemplate | Gets or sets the DataTemplate used to display the content within each tab. |
-| TabContentTemplateSelector | Gets or sets a reference to a custom DataTemplateSelector logic class. The DataTemplateSelector referenced by this property returns a template to apply to items. |
-| TabHeaderTemplate | Gets or sets the DataTemplate used to display the header content within each tab. |
-| TabHeaderTemplateSelector | Gets or sets a reference to a custom DataTemplateSelector logic class. The DataTemplateSelector referenced by this property returns a template to apply to items. |
+| TabItemTemplate | Gets or sets the DataTemplate used to display the TabViewItem. |
+| TabItemTemplateSelector | Gets or sets a reference to a custom DataTemplateSelector logic class. The DataTemplateSelector referenced by this property returns a template to apply to items. |
 | SelectedIndex | Gets or sets the index of the selected item. |
 | SelectedItem | Gets or sets the selected item. |
 | TabStripHeader | Content to the left of the tab strip. |
