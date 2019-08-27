@@ -624,4 +624,14 @@ TAB selection cycles (meaning if the user has selected the last tab and presses 
 ### Closing a tab 
 Hitting CTRL+F4 will close the selected TabViewItem (assuming it is closable). 
 
+## Visual Design Mockups
+
+![Light Theme TabView](images/TabView_light.png)
+
+![Dark Theme TabView](images/TabView_dark.png)
+
+![Light Theme TabView + Accent background](images/TabView_light_accent.png)
+
+![Dark Theme TabView + Accent background](images/TabView_dark_accent.png)
+
 # Open Questions
