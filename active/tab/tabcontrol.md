@@ -156,7 +156,12 @@ private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sende
 
 ![An example picture showing that TabView can be torn out and moved to its own window.](images/tab-new-window.png)
 
-See the [TabView tear out sample](https://github.com/windows-toolkit/Sample-TabView-TearOff/tree/master/TabViewTear) for a more complete sample.
+There are different ways that content can be hosted inside an app. The [Show multiple views for an app](https://docs.microsoft.com/en-us/windows/uwp/design/layout/show-multiple-views) documentation outlines the various technologies for displaying multiple views or windows. 
+
+The example below uses AppWindow, which is available starting in Windows 10, version 1903 (SDK 18362). AppWindow simplifies the creation of multi-window UWP apps because it operates on the same UI thread that it's created from. The complete TabView + AppWindow sample can be found in the [Xaml Controls Gallery](https://github.com/microsoft/Xaml-Controls-Gallery/blob/w/stmoy/TabViewPreview/XamlControlsGallery/TabViewPages/TabViewWindowingSamplePage.xaml.cs). 
+
+If your app targets Windows 10 versions less than 1903, you will need to use CoreWindow/ApplicationView. The Windows Community Toolkit [TabView tear out sample](https://github.com/windows-toolkit/Sample-TabView-TearOff/tree/master/TabViewTear) demonstrates how to create a multi-window application using CoreWindow/ApplicationView.
+
 
 ``` xml
 <TabView CanDragTabs="True"
@@ -164,7 +169,7 @@ See the [TabView tear out sample](https://github.com/windows-toolkit/Sample-TabV
             TabDroppedOutside="TabView_TabDroppedOutside">
 ```
 ``` csharp
-// NOTE: The app is responsible for writing this code. We will provide a sample that may look something like:
+// NOTE: The app is responsible for writing this code. A full sample can be found in the Xaml Controls Gallery.
 private async void TabView_TabDroppedOutside(TabView sender, TabDroppedOutsideEventArgs e)
 {
     // Create a new AppWindow
