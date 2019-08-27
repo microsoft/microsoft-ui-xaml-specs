@@ -31,7 +31,7 @@ the reader "go read 100 pages of background information posted at ...". -->
 
 The TabView control is a way to display a set of tabs and their respective content. Tab controls are useful for displaying several pages (or documents) of content while giving a user the capability to rearrange, open, or close new tabs. 
 
-![Tabs in Edge](https://user-images.githubusercontent.com/25991996/52679758-f6d6ad80-2eea-11e9-9955-fd111c26d982.png)
+![An app showing a TabView](images/tab-overview.png)
 
 Tab-like UI comes in two distinct styles that affect not only the visualization of the control, but also the user experience:
 * Static tabs
@@ -79,14 +79,31 @@ example code with each description. The general format is:
 ## Basic TabView Sample, similar to a Web Browser
 
 ``` xml
-<TabView TabWidthMode="Equal"
-         CanDragTabs="True"
-         CanReorderTabs="True"
-         TabDroppedOutside="OpenTabInNewWindow"
-         AddTabButtonClick="Tabs_AddTabButtonClick"
-         TabCloseRequested="Tabs_TabCloseRequested">
-    ...
-</TabView>
+<TabView AddTabButtonClick="Tabs_AddTabButtonClick"
+         TabCloseRequested="Tabs_TabCloseRequested" />
+```
+
+``` csharp
+// Add a new Tab to the TabView
+private void Tabs_AddTabButtonClick(TabView sender, TabViewAddTabButtonClickEventArgs e)
+{
+    var newTab = new TabViewItem();
+    newTab.IconSource = new SymbolIconSource() { Symbol = Symbol.Document };
+    newTab.Header = "New Document";
+
+    // The Content of a TabViewItem is often a frame which hosts a page.
+    Frame frame = new Frame();
+    newTab.Content = frame;
+    frame.Navigate(typeof(BaconIpsumPage));
+
+    sender.TabItems.Add(newTab);
+}
+
+// Remove the requested tab from the TabView
+private void Tabs_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
+{
+    sender.TabItems.Remove(args.Tab);
+}
 ```
 
 ## Put TabView in the titlebar area
@@ -196,35 +213,6 @@ private async void TabView_TabDroppedOutside(TabView sender, TabDroppedOutsideEv
 
 ``` xml
 <TabView TabItemsSource="{x:Bind TabViewItemCollection}" />
-```
-
-## Add a new tab using the Add (+) Tab Button
-The TabView control provides an Add (+) Tab button at the end of the tab strip. When the user clicks the Add Tab button, the control will raise an event which you can listen to in order to add a new tab.
-
-``` xml
-<controls:TabView
-    x:Name="TabRoot"
-    AddTabButtonClick="AddTabButton_Click">
-    <!-- ... some tabs ... -->
-</controls:TabView>
-```
-
-``` csharp
-
-private void AddTabButton_Click(TabView sender, TabViewAddTabButtonClickEventArgs e)
-{
-    var newTab = new TabViewItem();
-    newTab.IconSource = new SymbolIconSource() { Symbol = Symbol.Document };
-    newTab.Header = "New Document";
-
-    // The Content of a TabViewItem is often a frame which hosts a page.
-    Frame frame = new Frame();
-    newTab.Content = frame;
-    frame.Navigate(typeof(BaconIpsumPage));
-
-    Tabs.TabItems.Add(newTab);
-}
-
 ```
 
 ## Implement browser-style keyboarding behavior
