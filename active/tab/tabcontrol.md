@@ -97,16 +97,19 @@ This sample demonstrates how to extend the TabView into the title bar area and a
 
 ``` xml
 <Page>
-    <Grid>
-        <TabView>
-            <TabViewItem Icon="Home" Header="Home" IsCloseable="False" />
-            <TabViewItem Icon="Document" Header="Document 1" />
-            <TabViewItem Icon="Document" Header="Document 2" />
-            <TabViewItem Icon="Document" Header="Document 3" />
-        </TabView>
+    <TabView HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <TabViewItem Icon="Home" Header="Home" IsCloseable="False" />
+        <TabViewItem Icon="Document" Header="Document 1" />
+        <TabViewItem Icon="Document" Header="Document 2" />
+        <TabViewItem Icon="Document" Header="Document 3" />
 
-        <Grid x:Name="CustomDragRegion" HorizontalAlignment="Right" VerticalAlignment="Top" />
-    </Grid>
+        <TabView.TabStripHeader>
+            <Grid x:Name="ShellTitlebarInset" Background="Transparent" />
+        </TabView.TabStripHeader>
+        <TabView.TabStripFooter>
+            <Grid x:Name="CustomDragRegion" Background="Transparent" />
+        </TabView.TabStripFooter>
+    </TabView>
 </Page>
 ```
 
@@ -125,10 +128,27 @@ public MainPage()
 
 private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
 {
-    // Set the custom drag region's MinWidth to the SystemOverlayRightInset (which encompasses the caption buttons and the built-in drag region)
-    CustomDragRegion.MinWidth = sender.SystemOverlayRightInset;
+    // To ensure that the tabs in the titlebar are not occluded by shell
+    // content, we must ensure that we account for left and right overlays.
+    // In LTR layouts, the right inset includes the caption buttons and the
+    // drag region, which is flipped in RTL. 
 
-    CustomDragRegion.Height = sender.Height;
+    // The SystemOverlayLeftInset and SystemOverlayRightInset values are
+    // in terms of physical left and right. Therefore, we need to flip
+    // then when our flow direction is RTL.
+    if (FlowDirection == FlowDirection.LeftToRight)
+    {
+        CustomDragRegion.MinWidth = sender.SystemOverlayRightInset;
+        ShellTitlebarInset.MinWidth = sender.SystemOverlayLeftInset;
+    }
+    else
+    {
+        CustomDragRegion.MinWidth = sender.SystemOverlayLeftInset;
+        ShellTitlebarInset.MinWidth = sender.SystemOverlayRightInset;
+    }
+
+    // Ensure that the height of the custom regions are the same as the titlebar.
+    CustomDragRegion.Height = ShellTitlebarInset.Height = sender.Height;
 }
 ```
 
