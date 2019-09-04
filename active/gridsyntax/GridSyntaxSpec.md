@@ -13,6 +13,49 @@ So the second audience is everyone that reads there to learn how
 and why to use this API. -->
 
 # Background
+The proposal for this feature can be found [here.](https://github.com/microsoft/microsoft-ui-xaml/issues/673) The existing API documentation for Grid can be found [here.](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.grid)
+
+
+Grid is one of the most widely used controls, yet it has a noticeably long and repetitive syntax which leads to a tough learning curve for new developers. Currently, to create a Grid, developers must define each row height and column width on separate lines:
+```xml
+<Grid>
+    <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="1*" />
+          <ColumnDefinition Width="2*" />
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="300" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+          <RowDefinition Height="1*" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="25" />
+          <RowDefinition Height= "14" />
+          <RowDefinition Height="20" />
+    </Grid.RowDefinitions>
+</Grid>
+```
+
+This code creates multiple ColumnDefinition objects and RowDefinitions objects and adds them to the Grid's ColumnDefinitions and RowDefinitions collections, respectively. ColumnDefinitions and RowDefinitions are read-only properties of Grid, and the syntax shown above is currently the only way to update these properties. Due to their read-only nature, existing typeconverters cannot be used with these properties. 
+
+The existing syntax supports specialized functionality such as:
+- Declaring max/min height or width
+```xml
+<Grid MaxHeight="600" MaxWidth="600">
+  ...
+</Grid>
+```
+
+- Data binding for row/height values:
+```xml
+<Grid>
+  <Grid.RowDefinitions>
+    <RowDefinition Height="{x:Bind sampleDataValue}" />
+    ...
+  </Grid.RowDefinitions>
+</Grid>
+```
+  
 <!-- Use this section to provide background context for the new API(s) 
 in this spec. -->
 
