@@ -159,7 +159,7 @@ calendarView1.SelectedDates.Add(new DateTime(1997, 6, 19));
 ```
 New, equally functional syntax using proposed XAML language feature:
 ```xml 
-<CalendarView SelectedDates='1/5/1977, 6/19/1997' />
+<CalendarView SelectedDates="'1/5/1977', '6/19/1997'" />
 ```
 
 #### ListView
@@ -174,7 +174,7 @@ Current Syntax to populate ListView Items collection:
 ```
 New, equally functional syntax using proposed XAML language feature:
 ```xml 
-<ListView Items="Hello, world" />
+<ListView Items="'Hello', 'world'" />
 ```
 
 ### User Error
