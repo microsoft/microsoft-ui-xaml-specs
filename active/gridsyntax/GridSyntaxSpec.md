@@ -79,7 +79,8 @@ For an example, see the introduction to the PasswordBox control
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
 A new XAML language feature that allows read-only collection-typed properties to be edited by providing a comma-delimited list (or parentheses and comma-delimited for nested lists). In terms of Grid, this means that ColumnDefinitions and RowDefinitions properties are  able to be defined by providing a list of Width values and list of Height values, respectively. However, this feature is also applicable to other scenarios within the XAML language where collection-typed read-only properties are updated (see Remarks for examples of such scenarios). 
 
-An additional update assigns the content property of ColumnDefinition to its Width property, and the content property of RowDefinition to its Height property.
+In order to support this language feature in Grid, a mechanism will need to be put in place that allows ColumnDefinition and RowDefinition objects to be createable from a string value. The CreateFromString attribute will be defined for ColumnDefintion/RowDefinition objects so it allows them to be created by providing a width/height value as a string. This will be used to make the new syntax (see below) fully functional.
+
 
 # Examples
 ### New succinct syntax
@@ -91,12 +92,20 @@ The code below has the same functionality as the code shown above with the origi
 ```
 
 ### New succinct syntax for more complex types
-The code below shows an example of how the syntax would be used for collection-typed properties that have more complex value types, i.e. Points. This shows how collections will be delimited by a comma as well as parentheses for these more complex types that require it.
+The code below shows an example of how the syntax would be used for collection-typed properties that have more complex value types.
+
+This shows how Point objects will be delimited by a comma, but indvidual values will be encased in single quotes.
 ```xml
-<Foo PointList="(1,2), (9,4), (2,6)"/>
+<Foo PointList=" '1,2', '9,4', '2,6'"/>
 ```
 
-### Grid-specific syntax that uses new feature of assigned content properties
+This shows how String values will be supported, even if they include commas or single quotes inside of them. Each string will be encased in single quotes and delimited by commas, and single quotes inside of a string will be escaped by using an HTML entity. The collection shown below has 4 elements, and 'hello, world!' is one element.
+
+```xml
+<Bar Words=" 'hello', 'world', 'hello, world!', 'it&apos;s a beautiful day'" />
+```
+
+### Grid-specific syntax that uses new feature of assigned content properties ??????
 The code below has the same functionality as the code shown above with the original syntax, but uses the ColumnDefinition and RowDefinition content properties to assign heights to each row and widths to each column.
 ```xml
 <Grid>
@@ -137,6 +146,9 @@ example code with each description. The general format is:
 only when there's a bug in the caller, such as argument exception.  But if for some
 reason it's necessary for a caller to catch an exception from an API, call that
 out with an explanation either here or in the Examples -->
+### Syntax Details and Corner Cases
+The new succinct syntax is formed by assigning a read-only collection-typed property to a collection of values. This collection of values is encased between a set of double quotes. String values, as well as any other more complex type that may require commas within it (i.e. Point objects, sets), are encased between a set of single quotes. This ensures that string values may contain commas, and Points, sets, or any other kind of nested collection object may be supported. To use a single quote within a complex value that is encased in single quotes (i.e., to put a single quote or apostrophe inside of a string value), the HTML entity (&apos;) should be used to escape that character.
+
 ### Other Use Cases for Succinct Syntax
 The succinct syntax was created with the goal of making Grid more intuitive. However, this new syntax will be implemented as a language feature and work properly for any read-only collection-typed property. The current syntaxes will still be functional for all other scenarios, as it will be with Grid. Examples of some of these scenarios include, but are not limited to:
 #### CalendarView
@@ -186,7 +198,7 @@ If a developer uses both syntaxes in their Grid definition, i.e.
     </Grid.RowDefinitions>
 </Grid>
 ```
-the most recently defined Row Height and Column Width values will be used, (the ones defined line by line) rather than the values provided in the ColumnDefinitions and RowDefinitions lists. The user will not be alerted of this error.
+a duplicate property error will be thrown. This is already implemented for read/write properties, but will be implemented for read-only properties such as these as well. 
 
 
 # API Notes
@@ -206,3 +218,21 @@ with a "///" comment above the member or type. -->
 <!-- Anything else that you want to write down for posterity, but 
 that isn't necessary to understand the purpose and usage of the API.
 For example, implementation details. -->
+
+### Syntax Considerations and Rationale
+In developing the syntax, the team considered developer familiarty and patterns as much as possible to ensure that the Grid learning curve could be decreased. One of the considerations was how similar the syntax should be to JSON, as that's a popular notation style that often addresses the same problems that XAML does. 
+
+JSON defines their arrays as: ```"words" : ["apple", "banana", "cherry"]```
+
+XAML defines a collection-typed property as: ```<Words="'Apple', 'Banana', 'Cherry'"/>```
+
+The syntax that we chose encloses strings individually in quotes, as JSON does, but it does so in a way that is more consistent with existing XAML style and XAML functions. An example of this syntax used elsewhere in XAML is for the x:Bind syntax:
+
+```xml <TextBlock Text="{x:Bind VM.MyText, FallbackValue='Hello, world', Mode=TwoWay}" />```
+
+This uses a comma as a delimiter, but also allows strings to have commas within them. For these reasons, we chose to use the syntax in which a collection can be delimited by commas but have more complex values be encased within single quotes.
+
+
+### Release Details
+The xmlns will not be updated for this XAML language feature addition, i.e. there will be no formal update to the XAML language. Visual Studio, however, will have to be updated to accept the new syntax structure. This feature will be released with WinUI and not with the XAML SDK.
+
