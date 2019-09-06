@@ -213,6 +213,8 @@ with a "///" comment above the member or type. -->
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
+ColumnDefinitions: add CreateFromString attribute
+Grid: Set function for ColumnDefinitions and RowDefinitions properties
 
 # Appendix
 <!-- Anything else that you want to write down for posterity, but 
