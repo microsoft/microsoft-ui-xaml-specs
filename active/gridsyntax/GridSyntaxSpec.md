@@ -105,8 +105,8 @@ This shows how String values will be supported, even if they include commas or s
 <Bar Words=" 'hello', 'world', 'hello, world!', 'it&apos;s a beautiful day'" />
 ```
 
-### Grid-specific syntax that uses new feature of assigned content properties ??????
-The code below has the same functionality as the code shown above with the original syntax, but uses the ColumnDefinition and RowDefinition content properties to assign heights to each row and widths to each column.
+### Grid-specific syntax with CreateFromString attribute assigned 
+The code below has the same functionality as the code shown above with the original syntax, but uses the CreateFromString attribute to write it in the following way.
 ```xml
 <Grid>
     <Grid.ColumnDefinitions>
