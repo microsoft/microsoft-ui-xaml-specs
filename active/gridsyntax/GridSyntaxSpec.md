@@ -238,15 +238,16 @@ This uses a comma as a delimiter, but also allows strings to have commas within 
 The xmlns will not be updated for this XAML language feature addition, i.e. there will be no formal update to the XAML language. Visual Studio, however, will have to be updated to accept the new syntax structure. This feature will be released with WinUI and not with the XAML SDK.
 
 ### Data and Intelligence Metrics
-#### Feature Key Performance Indictors
+#### P0: Feature Key Performance Indictors
 * Syntax has increased developer/consumer satisfaction
     * Measurement: XAML Survey if available or survey through XAML discussions/other relevant channel
     * Measurement: How many times Grid has been implemented using the new syntax in comparison to how often it was being implemented previously
-
-* Syntax has decreased Grid's learning curve
-    * Measurement: How many users began to use new syntax and abandoned their app vs. uploaded their app to the Windows store (telemtetry via Visual Studio)
-    * Measurement: How many apps using this new syntax were created by new/first-time developers
     
 * Implementation of syntax change has strengthened brand loyalty among customers/developers by assuring customers/developers that their voices are being heard and their quality of life is being considered
     * Measurement: Number of *new* commenters on this thread (i.e. made their first WinUI Github comment/contribution on this thread), and how many of them went on to be active on other WinUI or Microsoft threads
     * Measurement: Number of the commenters from this thread went on to create other issues after this one was resolved (beleiving that their voices would be heard!)
+
+#### P1: Feature Performance Indictators
+* Syntax has decreased Grid's learning curve
+    * Measurement: How many users began to use new syntax and abandoned their app vs. uploaded their app to the Windows store (telemtetry via Visual Studio)
+    * Measurement: How many apps using this new syntax were created by new/first-time developers
