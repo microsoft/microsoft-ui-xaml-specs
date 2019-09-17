@@ -240,14 +240,16 @@ The xmlns will not be updated for this XAML language feature addition, i.e. ther
 ### Data and Intelligence Metrics
 #### P0: Feature Key Performance Indictors
 * Syntax has increased developer/consumer satisfaction
-    * Measurement: XAML Survey if available or survey through XAML discussions/other relevant channel
-    * Measurement: How many times Grid has been implemented using the new syntax in comparison to how often it was being implemented previously
+    * KPI: At least 80% of new apps released to Windows store after release of feature are using the new syntax,a nd 50% of developers express a positive reaction to this change.
+    * Measurement: XAML Survey if available or survey through XAML discussions/other relevant channel.
+    * Measurement: How many times Grid has been implemented using the new syntax in published Windows apps.
     
 * Implementation of syntax change has strengthened brand loyalty among customers/developers by assuring customers/developers that their voices are being heard and their quality of life is being considered
-    * Measurement: Number of *new* commenters on this thread (i.e. made their first WinUI Github comment/contribution on this thread), and how many of them went on to be active on other WinUI or Microsoft threads
-    * Measurement: Number of the commenters from this thread went on to create other issues after this one was resolved (beleiving that their voices would be heard!)
+    * KPI: Multiple new commenters on this thread have gone to be active on other threads, and all experienced commenters from this thread have gone on to create at least one other thread or issue on the WinUI repo. 
+    * Measurement: Number of *new* commenters on this thread (i.e. made their first WinUI Github comment/contribution on this thread), and how many of them went on to be active on other WinUI or Microsoft threads.
+    * Measurement: Number of the commenters from this thread went on to create other issues after this one was resolved (beleiving that their voices would be heard!).
 
 #### P1: Feature Performance Indictators
 * Syntax has decreased Grid's learning curve
-    * Measurement: How many users began to use new syntax and abandoned their app vs. uploaded their app to the Windows store (telemtetry via Visual Studio)
+    * KPI: A slight increase (<5%) of apps released to the Windows store were created by new developers
     * Measurement: How many apps using this new syntax were created by new/first-time developers
