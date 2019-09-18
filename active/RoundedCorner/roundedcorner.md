@@ -5,7 +5,7 @@
 ## Background
 This "spec" will be what is being proposed to be copied over to docs.microsoft.com as a documentation under https://docs.microsoft.com/en-us/windows/uwp/design/style/ "Corner Radius" page to be created.
 
-I am trying out writing a little more "background explanation (WHY)" that our customers have expressed we provide with our documentatiton in some of our focus groups. I would like feedback as this does not follow normal documentation pattern.
+I am trying out writing a little more "background explanation (WHY)" that our customers have expressed we provide with our documentation in some of our focus groups. I would like feedback as this does not follow normal documentation pattern.
 
 ## Principles
 *Todo: Work with Fluent collective to put together something here around WHY*
@@ -97,7 +97,7 @@ Here is an example of larger corner radius make the shadow look undesirable.
 ![ContentDialogShadow](https://user-images.githubusercontent.com/6964369/60532329-ee241f80-9cb1-11e9-9268-67036d840eff.png)
 
 # Rounded Corner and Performance
-People may not always be aware of the fact drawing rounded corner naturally use more drawing power compared to square corners. When selecting the value of corner radius, we not only considered the design principles but also were very careful to ensure developers who use our default controls are able to successfully deliver performant applications. 
+People may not always be aware of the fact drawing rounded corner naturally use more drawing power compared to square corners. When selecting the value of corner radius, we not only considered the design principles but also were very careful to ensure developers who use our default controls are able to successfully deliver performant applications.
 
 To simplify this section, think of performance issues mentioned here to be mainly about page load time as well as app launch time.
 
@@ -105,7 +105,52 @@ Key information to note:
 - Rounded corners on a larger surface UI are less performant. Avoid drawing rounded corner on a full screen app UI. This is less of an issue if the UI is displayed briefly (e.g. ContentDialog).
 
 # Customization options
-<Add spec details from [#279](https://github.com/microsoft/microsoft-ui-xaml/issues/279) once the feature is complete here in this section>
+The default corner radii values that we provide are not set in stone and there are a few ways the app-developer can easily modify the rounded amount. This can be done through two global resources, or through the 'CornerRadius' property directly on the control, depending on the level of customization granularity desired.
+
+## Page or app-wide CornerRadius changes
+The two main resources that control the corner radiis of all the controls are:
+
+- `OverlayCornerRadius`
+- `ControlCornerRadius`
+
+Changing these two resources' values at any scope will effect all controls within that scope accordingly.
+
+This means if you want to change the roundness of all controls where roundness could be applied, you can define both resources at the app level, with the new CornerRadius values like so:
+
+``` xml
+<Application.Resources>
+  <Thickness x:Key="OverlayCornerRadius">4</Thickness>
+  <Thickness x:Key="ControlCornerRadius">8</Thickness>
+</Application.Resources>
+```
+
+Alternately, if you want to change all controls' roundness within a particular scope, like at a page or container level, you can follow a similar pattern:
+
+``` xml
+<Grid x:Name="myGrid">
+  <Grid.Resources>
+    <Thickness x:Key="ControlCornerRadius">8</Thickness>
+  </Grid.Resources>
+</Grid>
+```
+
+**Can I define OverlayCornerRadius at a page or container level?**
+
+The `OverlayCornerRadius` must be defined at the app level in order to take effect.
+
+This is because our popups and flyouts are dynamic and created at the root element in the Visual Tree. Meaning any resources that they use should also be defined there. Otherwise they're out of scope.
+
+## Per-control CornerRadius changes
+The `CornerRadius` property on controls can also be modified directly, if changing the roundness of only a select number of controls is desired.
+
+|default | property modified |
+|:-- |:-- |
+|![DefaultCheckBox](ImageFiles/DefaultCheckBox.png)| ![CustomCheckBox](ImageFiles/CustomCheckBox.png)|
+|`<CheckBox Content="Checkbox"/>` | `<CheckBox Content="Checkbox" CornerRadius="5"/> ` |
+
+**It's important to note** that not all controls' corners will respond to their `CornerRadius` property being modified.
+
+To ensure that the control whose corners you wish to round will indeed respond to their `CornerRadius` property the way you expect, first check that the `ControlCornerRadius` or `OverlayCornerRadius` global resources affect the control in question. If they do not, check that the control you wish to round has corners at all. Many of our controls do not render actual edges and therefore cannot make proper use of the `CornerRadius` property.
 
 # Appendix
 Here are relevant visual comp files:
