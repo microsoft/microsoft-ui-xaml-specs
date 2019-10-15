@@ -76,9 +76,9 @@ the reader "go read 100 pages of background information posted at ...". -->
 <!-- Use this section to provide a brief description of the feature.
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
-A new XAML language feature that allows read-only collection-typed properties to be edited by providing a comma-delimited list (or parentheses and comma-delimited for nested lists). In terms of Grid, this means that ColumnDefinitions and RowDefinitions properties are  able to be defined by providing a list of Width values and list of Height values, respectively. However, this feature is also applicable to other scenarios within the XAML language where collection-typed read-only properties are updated (see Remarks for examples of such scenarios). 
+A new XAML language feature that allows read-only collection-type properties to be created by assigning the CreateFromString attribute. The CreateFromString attribute will allow these read-only collection-type properties to be defined/created from a comma-delimited string. In terms of Grid, this means that the ColumnDefinitions and RowDefinitions properties are able to be defined by providing a comma-delimited string of ColumnDefinitions (Width values) and a comma-delimited string of RowDefinitions (Height values), respectively. However, this feature is also applicable to other scenarios within the XAML language where collection-typed read-only properties are created (see Remarks for examples of such scenarios). 
 
-In order to support this language feature in Grid, a mechanism will need to be put in place that allows ColumnDefinition and RowDefinition objects to be createable from a string value. The CreateFromString attribute will be defined for ColumnDefintion/RowDefinition objects so it allows them to be created by providing a width/height value as a string. This will be used to make the new syntax (see below) fully functional.
+In order to support this language feature in Grid, a mechanism is needed that allows ColumnDefinition and RowDefinition objects to be createable from their Width/Height properties, respectively. To achieve this, the content property of ColumnDefinition is set to the Width property, and the content property of RowDefinition is set to the Height property. Developers can assign a comma-delimited string of integers to the ColumnDefinitions property, and each of those integers is parsed as a Width values, creating a ColumnDefinition (and the same applies to RowDefinition with Height). This will be used to make the new syntax (see below) fully functional.
 
 
 # Examples
@@ -105,7 +105,7 @@ This shows how String values will be supported, even if they include commas or s
 ```
 
 ### Grid-specific syntax with CreateFromString attribute assigned 
-The code below has the same functionality as the code shown above with the original syntax, but uses the CreateFromString attribute to write it in the following way.
+The code below has the same functionality as the code shown above with the original syntax, but uses the ColumnDefinition and RowDefinition content property assignments to write it in the following way.
 ```xml
 <Grid>
     <Grid.ColumnDefinitions>
@@ -240,7 +240,7 @@ The xmlns will not be updated for this XAML language feature addition, i.e. ther
 ### Data and Intelligence Metrics
 #### P0: Feature Key Performance Indictors
 * Syntax has increased developer/consumer satisfaction
-    * KPI: At least 80% of new apps released to Windows store after release of feature are using the new syntax,a nd 50% of developers express a positive reaction to this change.
+    * KPI: At least 80% of new apps released to Windows store after release of feature are using the new syntax, and 50% of developers express a positive reaction to this change.
     * Measurement: XAML Survey if available or survey through XAML discussions/other relevant channel.
     * Measurement: How many times Grid has been implemented using the new syntax in published Windows apps.
     
