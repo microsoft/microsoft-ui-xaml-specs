@@ -212,9 +212,80 @@ with a "///" comment above the member or type. -->
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
-ColumnDefinitions: add CreateFromString attribute
-Grid: Set function for ColumnDefinitions and RowDefinitions properties
 
+**ColumnDefinition API**
+```csharp
+[contract(Windows.Foundation.UniversalApiContract, 1)]
+[webhosthidden]
+
+/// Sets the ColumnDefinition's content property to the Width property.
+[contentproperty("Width")]
+
+[static_name("Windows.UI.Xaml.Controls.IColumnDefinitionStatics", 06b0d728-d044-40c6-942e-ae60eac74851)]
+[interface_name("Windows.UI.Xaml.Controls.IColumnDefinition", f7f1b229-f024-467f-970a-7e705615db7b)]
+runtimeclass ColumnDefinition : Windows.UI.Xaml.DependencyObject
+{
+    ColumnDefinition();
+    Windows.UI.Xaml.GridLength Width;
+    Double MaxWidth;
+    Double MinWidth;
+    Double ActualWidth{ get; };
+    static Windows.UI.Xaml.DependencyProperty WidthProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty MaxWidthProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty MinWidthProperty{ get; };
+};
+```
+
+**RowDefinition API**
+```csharp
+[contract(Windows.Foundation.UniversalApiContract, 1)]
+[webhosthidden]
+
+/// Sets the RowDefinition's content property to the Height property.
+[contentproperty("Height")]
+
+[static_name("Windows.UI.Xaml.Controls.IRowDefinitionStatics", 5adf3fe5-2056-4724-94d6-e4812b022ec8)]
+[interface_name("Windows.UI.Xaml.Controls.IRowDefinition", 4abae829-d80c-4a5e-a48c-f8b3d3b6533d)]
+runtimeclass RowDefinition : Windows.UI.Xaml.DependencyObject
+{
+    RowDefinition();
+    Windows.UI.Xaml.GridLength Height;
+    Double MaxHeight;
+    Double MinHeight;
+    Double ActualHeight{ get; };
+    static Windows.UI.Xaml.DependencyProperty HeightProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty MaxHeightProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty MinHeightProperty{ get; };
+};
+```
+
+**ColumnDefinitions API**
+```csharp
+[contract(Windows.Foundation.UniversalApiContract, 1)]
+[webhosthidden]
+
+/// Allows ColumnDefinitions to be createable from string using the method Create.
+[CreateFromString(MethodName = nameof(Create))]
+
+runtimeclass ColumnDefinitionCollection :[default] Windows.Foundation.Collections.IVector<Windows.UI.Xaml.Controls.ColumnDefinition>
+{
+    [method_name("Create")] ColumnDefinitionCollection Create(string Widths);
+};
+```
+
+**RowDefinitions API**
+```csharp
+[contract(Windows.Foundation.UniversalApiContract, 1)]
+[webhosthidden]
+
+/// Allows RowDefinitions to be createable from string using the method Create.
+[CreateFromString(MethodName = nameof(Create))]
+
+runtimeclass RowDefinitionCollection :[default] Windows.Foundation.Collections.IVector<Windows.UI.Xaml.Controls.RowDefinition>
+{
+    [method_name("Create")] RowDefinitionCollection Create(string Heights);
+};
+```
 # Appendix
 <!-- Anything else that you want to write down for posterity, but 
 that isn't necessary to understand the purpose and usage of the API.
