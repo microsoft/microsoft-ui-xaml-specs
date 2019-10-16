@@ -199,8 +199,6 @@ If a developer uses both syntaxes in their Grid definition, i.e.
 ```
 a duplicate property error will be thrown. This is already implemented for read/write properties, but will be implemented for read-only properties such as these as well. 
 
-
-# API Notes
 <!-- Option 1: Give a one or two line description of each API (type
 and member), or at least the ones that aren't obvious
 from their name.  These descriptions are what show up
