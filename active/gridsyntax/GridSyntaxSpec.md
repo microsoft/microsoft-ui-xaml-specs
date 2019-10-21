@@ -76,7 +76,11 @@ the reader "go read 100 pages of background information posted at ...". -->
 <!-- Use this section to provide a brief description of the feature.
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
-A new XAML language feature that allows read-only collection-type properties to be created by assigning the CreateFromString attribute. The CreateFromString attribute will allow these read-only collection-type properties to be defined/created from a comma-delimited string. In terms of Grid, this means that the ColumnDefinitions and RowDefinitions properties are able to be defined by providing a comma-delimited string of ColumnDefinitions (Width values) and a comma-delimited string of RowDefinitions (Height values), respectively. However, this feature is also applicable to other scenarios within the XAML language where collection-typed read-only properties are created (see Remarks for examples of such scenarios). 
+## Overview
+A new XAML language feature that allows the initialization of collection-type properties (even if they are read-only) using element attribute syntax.
+
+## Implementation Details
+Read-only collection-type properties will be assigned a new CreateFromString attribute. The CreateFromString attribute will allow them to be defined/created from a comma-delimited string. In terms of Grid, this means that the ColumnDefinitions and RowDefinitions properties are able to be defined by providing a comma-delimited string of ColumnDefinitions (Width values) and a comma-delimited string of RowDefinitions (Height values), respectively. However, this feature is also applicable to other scenarios within the XAML language where collection-typed read-only properties are created (see Remarks for examples of such scenarios). 
 
 In order to support this language feature in Grid, a mechanism is needed that allows ColumnDefinition and RowDefinition objects to be createable from their Width/Height properties, respectively. To achieve this, the content property of ColumnDefinition is set to the Width property, and the content property of RowDefinition is set to the Height property. Developers can assign a comma-delimited string of integers to the ColumnDefinitions property, and each of those integers is parsed as a Width values, creating a ColumnDefinition (and the same applies to RowDefinition with Height). This will be used to make the new syntax (see below) fully functional.
 
