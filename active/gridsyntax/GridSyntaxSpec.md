@@ -326,3 +326,10 @@ The xmlns will not be updated for this XAML language feature addition, i.e. ther
 * Syntax has decreased Grid's learning curve
     * KPI: A slight increase (<5%) of apps released to the Windows store were created by new developers
     * Measurement: How many apps using this new syntax were created by new/first-time developers
+
+# Open Questions
+- What are the important tooling details that should be included for implementation? Some previous concerns to think about..
+    - Parser/designer understanding coldefs and rowdefs
+    - Should be easier since we are implementing without a type converter (using content property assignment instead). Will we face any challenges in the CreateFromString side? i.e. would we be creating unvalidateable attributes?
+    - Need the ability to see what XAML version developer is using
+- Finalized decision (maybe just need a refresher on this): How are we sending out this update - updating xmlns, formal update to XAML language, ms-xaml spec update?
