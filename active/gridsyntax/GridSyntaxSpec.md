@@ -54,7 +54,7 @@ The existing syntax supports specialized functionality such as:
   </Grid.RowDefinitions>
 </Grid>
 ```
-Grid's usability, intuitiveness, and developer satsifaction will be improved upon by utilizing a more succinct syntax, as will be described throughout this spec.
+Grid's usability, intuitiveness, and developer satsifaction will be improved upon by utilizing a more succinct syntax, as will be described throughout this spec. With Grid as the inspiration, other collection-type properties will be able to take advantage of a more succinct syntax as well and see the same benefits.
 <!-- Use this section to provide background context for the new API(s) 
 in this spec. -->
 
@@ -76,13 +76,18 @@ the reader "go read 100 pages of background information posted at ...". -->
 <!-- Use this section to provide a brief description of the feature.
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
-## Overview
-A new XAML language feature that allows the initialization of collection-type properties (even if they are read-only) using element attribute syntax.
+A new XAML language feature that allows the initialization of collection-type properties (including read-only properties) using element attribute syntax. We will also be assigning properties within Grid to make sure that this syntax works properly specifically for Grid's use cases.
 
-## Implementation Details
-Read-only collection-type properties will be assigned a new CreateFromString attribute. The CreateFromString attribute will allow them to be defined/created from a comma-delimited string. In terms of Grid, this means that the ColumnDefinitions and RowDefinitions properties are able to be defined by providing a comma-delimited string of ColumnDefinitions (Width values) and a comma-delimited string of RowDefinitions (Height values), respectively. However, this feature is also applicable to other scenarios within the XAML language where collection-typed read-only properties are created (see Remarks for examples of such scenarios). 
+1. When the parser encounters an element attribute that is assigning to a collection-type property, it recognizes that initialization of a collection from a string is being requested.
+2. The parser tokenizes the attribute value (a comma-delimited string) into a series of substrings, each of which represents the initialization value of a single element of the collection
+3. The parser will perform the usual "initialize an instance of a type from a string" operation.
+4. If the type has a ContentProperty, then a new instance of the type will be created (zero-argument constructor) and the string value will be assigned to the content property (this might in turn invoke a type converter, but the details are at a lower abstraction level and so are not germane to this discussion).
+5. If the type has either a built-in type converter or a CreateFromString attribute specifying a factory method, then that will be invoked with the string value as an argument, returning a new instance of the type.
 
-In order to support this language feature in Grid, a mechanism is needed that allows ColumnDefinition and RowDefinition objects to be createable from their Width/Height properties, respectively. To achieve this, the content property of ColumnDefinition is set to the Width property, and the content property of RowDefinition is set to the Height property. Developers can assign a comma-delimited string of integers to the ColumnDefinitions property, and each of those integers is parsed as a Width values, creating a ColumnDefinition (and the same applies to RowDefinition with Height). This will be used to make the new syntax (see below) fully functional.
+If neither step 4 nor 5 is performed, then this is an error.
+
+In terms of Grid, this means that the ColumnDefinitions and RowDefinitions properties are able to be defined by providing a comma-delimited string of ColumnDefinitions (Width values) and a comma-delimited string of RowDefinitions (Height values), respectively. 
+In order to support this language feature in Grid, a mechanism is needed that allows ColumnDefinition and RowDefinition objects to be createable from their Width/Height properties, respectively. To achieve this, the content property of ColumnDefinition is set to the Width property, and the content property of RowDefinition is set to the Height property.This will be used to make the new syntax (see below) fully functional.
 
 
 # Examples
@@ -97,12 +102,12 @@ The code below has the same functionality as the code shown above with the origi
 ### New succinct syntax for more complex types
 The code below shows an example of how the syntax would be used for collection-typed properties that have more complex value types.
 
-This shows how Point objects will be delimited by a comma, but indvidual values will be encased in single quotes.
+This shows how Point objects will be delimited by a comma, but indvidual values will be encased in single quotes or double quotes, whichever is not used to enclose the attribute value.
 ```xml
 <Foo PointList=" '1,2', '9,4', '2,6'"/>
 ```
 
-This shows how String values will be supported, even if they include commas or single quotes inside of them. Each string will be encased in single quotes and delimited by commas, and single quotes inside of a string will be escaped by using an HTML entity. The collection shown below has 4 elements, and 'hello, world!' is one element.
+This shows how String values will be supported, even if they include commas or quotes inside of them. Attribute values (i.e `Words` in this example) can be enclosed with either ' or ", so whichever quotation mark is not used can be employed within the value itself, and does not need to be escaped as an XML character entity. The collection shown below has 4 elements, and 'hello, world!' is one element.
 
 ```xml
 <Bar Words=" 'hello', 'world', 'hello, world!', 'it&apos;s a beautiful day'" />
@@ -150,10 +155,10 @@ only when there's a bug in the caller, such as argument exception.  But if for s
 reason it's necessary for a caller to catch an exception from an API, call that
 out with an explanation either here or in the Examples -->
 ### Syntax Details and Corner Cases
-The new succinct syntax is formed by assigning a read-only collection-typed property to a collection of values. This collection of values is encased between a set of double quotes. String values, as well as any other more complex type that may require commas within it (i.e. Point objects, sets), are encased between a set of single quotes. This ensures that string values may contain commas, and Points, sets, or any other kind of nested collection object may be supported. To use a single quote within a complex value that is encased in single quotes (i.e., to put a single quote or apostrophe inside of a string value), the HTML entity (&apos;) should be used to escape that character.
+The new succinct syntax is formed by assigning a collection-type property to a collection of values. This collection of values is encased between a set of double quotes. String values, as well as any other more complex type that may require commas within it (i.e. Point objects, sets), are encased between a set of single quotes. This ensures that string values may contain commas, and Points, sets, or any other kind of nested collection object may be supported. To use a single quote within a complex value that is encased in single quotes (i.e., to put a single quote or apostrophe inside of a string value), the HTML entity (&apos;) should be used to escape that character.
 
 ### Other Use Cases for Succinct Syntax
-The succinct syntax was created with the goal of making Grid more intuitive. However, this new syntax will be implemented as a language feature and work properly for any read-only collection-typed property. The current syntaxes will still be functional for all other scenarios, as it will be with Grid. Examples of some of these scenarios include, but are not limited to:
+The succinct syntax was created with the goal of making Grid more intuitive. However, this new syntax will be implemented as a language feature and work properly for any collection-type property. The current syntaxes will still be functional for all other scenarios, as it will be with Grid. Examples of some of these scenarios include, but are not limited to:
 #### CalendarView
 Current Syntax to populate SelectedDates collection:
 ```xml
@@ -261,33 +266,6 @@ runtimeclass RowDefinition : Windows.UI.Xaml.DependencyObject
 };
 ```
 
-**ColumnDefinitions API**
-```csharp
-[contract(Windows.Foundation.UniversalApiContract, 1)]
-[webhosthidden]
-
-/// Allows ColumnDefinitions to be createable from string using the method Create.
-[CreateFromString(MethodName = nameof(Create))]
-
-runtimeclass ColumnDefinitionCollection :[default] Windows.Foundation.Collections.IVector<Windows.UI.Xaml.Controls.ColumnDefinition>
-{
-    [method_name("Create")] ColumnDefinitionCollection Create(string Widths);
-};
-```
-
-**RowDefinitions API**
-```csharp
-[contract(Windows.Foundation.UniversalApiContract, 1)]
-[webhosthidden]
-
-/// Allows RowDefinitions to be createable from string using the method Create.
-[CreateFromString(MethodName = nameof(Create))]
-
-runtimeclass RowDefinitionCollection :[default] Windows.Foundation.Collections.IVector<Windows.UI.Xaml.Controls.RowDefinition>
-{
-    [method_name("Create")] RowDefinitionCollection Create(string Heights);
-};
-```
 # Appendix
 <!-- Anything else that you want to write down for posterity, but 
 that isn't necessary to understand the purpose and usage of the API.
