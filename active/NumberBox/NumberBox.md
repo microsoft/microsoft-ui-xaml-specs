@@ -287,7 +287,7 @@ N/A
 
 ## TODO
 
-* Finalize designs and replace mock ups. 
+* Finalize designs and replace mock ups (with particular regard to SpinButtons). 
 
 * Valiate localization options. 
 
