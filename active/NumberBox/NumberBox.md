@@ -285,6 +285,18 @@ Calculation support is leveraged by developers + appropriately surfaced to end u
 
 N/A
 
+## TODO
+
+* Finalize designs and replace mock ups. 
+
+* Valiate localization options. 
+
+* Align hyperdrag/hyperscroll behavior with VS Blend implementation.
+
+* DOCS: Discern V2 validation API additions. 
+
+* DOCS: Add API use examples. 
+
 ## Open Questions
 
 * Is there value in creating a preview for calculation results? @mdtauk created a few example visualizations: 
@@ -293,5 +305,4 @@ N/A
 
 ![NumberBox with a calculation in progress and highlight text previewing the calculation results](https://user-images.githubusercontent.com/7389110/58920708-5b807700-872b-11e9-9924-21a7b7d37e68.png)
 
-* Can touch/virtual keyboards intelligently adapt to numeral-formulaic input?
-
+* Should/can touch/virtual keyboards intelligently adapt to numeral-formulaic only input?
