@@ -85,27 +85,10 @@ XAML
 <NumberBox x:Name="ItemQuantityNumberBox" 
     Header="Quantity"
     StepFrequency="2"
-    SpinButtonPlacementMode="Inline"
-    HyperDragEnabled="True" 
-    HyperScrollEnabled="True" />
+    SpinButtonPlacementMode="Inline" />
 ```
 
 ![](images/numberbox-spinnerbutton.png)
-
-### Format display and output
-
-XAML
-```XAML
-<NumberBox x:Name="PercentageNumberBox" 
-    Header="Enter a percentage:"
-    PlaceholderText="2/3" 
-    MinMaxMode="WrapEnabled"
-    MinValue="0"
-    MaxValue="100" 
-    AreLeadingZerosTrimmed="False"
-    DecimalPrecision="5"
-    DoesInputRound=False" />
-```
 
 ## Remarks
 <!-- Explanation and guidance that doesn't fit into the Examples section. -->
@@ -152,22 +135,6 @@ enum NumberBoxBasicValidationMode
     Disabled,
 };
 
-enum NumberBoxMinMaxMode
-{
-    None,
-    MinEnabled,
-    MaxEnabled,
-    MinAndMaxEnabled,
-    WrapEnabled,
-};
-
-enum NumberBoxNumberRounder
-{
-    None,
-    IncrementNumberRounder,
-    SignificantDigitsNumberRounder,
-};
-
 runtimeclass NumberBoxValueChangingEventArgs
 {
     Boolean IsContentChanging;
@@ -182,32 +149,27 @@ runtimeclass NumberBoxValueChangedEventArgs
 unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.Control
 {
     NumberBox();
-   
+
+    Double Minimum;
+    Double Maximum;
     Double Value;
-    
-    NumberBoxBasicValidationMode BasicValidationMode;
-    
-    Boolean AcceptsCalculation;
-    
-    NumberBoxSpinButtonPlacementMode SpinButtonPlacementMode;
-    Boolean HyperDragEnabled;
-    Boolean HyperScrollEnabled;
     Double StepFrequency;
-  
-    Int IntegerDigits; 
-    Int FractionDigits;
-    Int SignificantDigits; 
-    Boolean IsDecimalPointAlwaysDisplayed;
-    Boolean IsZeroSigned;
-    
-    RoundingAlgorithm RoundingAlgorithm;
-    NumberBoxNumberRounder NumberRounder; 
-    Double IncrementPrecision;
-    Int SignificantDigitPrecision;
-    
-    NumberBoxMinMaxMode MinMaxMode;
-    Double MinValue;
-    Double MaxValue;
+
+    String Header;
+    String Text; 
+    String PlaceholderText;
+
+    NumberBoxBasicValidationMode BasicValidationMode;
+
+    Boolean AcceptsCalculation;
+
+    NumberBoxSpinButtonPlacementMode SpinButtonPlacementMode{ get; set; };
+
+    Boolean HyperScrollEnabled;
+    Boolean HyperDragEnabled;
+    Boolean WrapEnabled;
+
+    Windows.Globalization.NumberFormatting.INumberFormatter2 NumberFormatter;
 
     IconSource DecrementIcon;
     IconSource IncrementIcon;
@@ -215,9 +177,9 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.Control
     Windows.UI.Xaml.Style IncrementButtonStyle;
     NumberBoxTemplateSettings TemplateSettings{ get; };
 
-    event Windows.Foundation.TypedEventHandler<NumberBox, NumberBoxValueChangingEventArgs> ValueChanging;
     event Windows.Foundation.TypedEventHandler<NumberBox, NumberBoxValueChangedEventArgs> ValueChanged;
-
+    event Windows.Foundation.TypedEventHandler<NumberBox, NumberBoxValueChangingEventArgs> ValueChanging;
+        
     static Windows.UI.Xaml.DependencyProperty ValueProperty{ get; };
     
     static Windows.UI.Xaml.DependencyProperty BasicValidationModeProperty{ get; };
