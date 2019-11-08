@@ -37,7 +37,7 @@ Grid is one of the most widely used controls, yet it has a noticeably long and r
 
 This code creates multiple ColumnDefinition objects and RowDefinitions objects and adds them to the Grid's ColumnDefinitions and RowDefinitions collections, respectively. ColumnDefinitions and RowDefinitions are read-only properties of Grid, and the syntax shown above is currently the only way to update these properties. Due to their read-only nature, existing typeconverters cannot be used with these properties. 
 
-The existing syntax supports specialized functionality such as:
+The existing syntax supports functionality such as:
 - Declaring max/min height or width
 ```xml
 <Grid MaxHeight="600" MaxWidth="600">
@@ -80,11 +80,7 @@ A new XAML language feature that allows the initialization of collection-type pr
 
 1. When the parser encounters an element attribute that is assigning to a collection-type property, it recognizes that initialization of a collection from a string is being requested.
 2. The parser tokenizes the attribute value (a comma-delimited string) into a series of substrings, each of which represents the initialization value of a single element of the collection
-3. The parser will perform the usual "initialize an instance of a type from a string" operation.
-4. If the type has a ContentProperty, then a new instance of the type will be created (zero-argument constructor) and the string value will be assigned to the content property (this might in turn invoke a type converter, but the details are at a lower abstraction level and so are not germane to this discussion).
-5. If the type has either a built-in type converter or a CreateFromString attribute specifying a factory method, then that will be invoked with the string value as an argument, returning a new instance of the type.
-
-If neither step 4 nor 5 is performed, then this is an error.
+3. The parser will perform the usual "initialize an instance of a type from a string" operation, using the assigned ContentProperty with the string as an argument to create the object. See Section 6.6.4. Value Creation from Attribute Text in the [MS-XAML Spec](http://download.microsoft.com/download/0/a/6/0a6f7755-9af5-448b-907d-13985accf53e/[MS-XAML].pdf) for more details. 
 
 In terms of Grid, this means that the ColumnDefinitions and RowDefinitions properties are able to be defined by providing a comma-delimited string of ColumnDefinitions (Width values) and a comma-delimited string of RowDefinitions (Height values), respectively. 
 In order to support this language feature in Grid, a mechanism is needed that allows ColumnDefinition and RowDefinition objects to be createable from their Width/Height properties, respectively. To achieve this, the content property of ColumnDefinition is set to the Width property, and the content property of RowDefinition is set to the Height property.This will be used to make the new syntax (see below) fully functional.
@@ -113,7 +109,7 @@ This shows how String values will be supported, even if they include commas or q
 <Bar Words=" 'hello', 'world', 'hello, world!', 'it&apos;s a beautiful day'" />
 ```
 
-### Grid-specific syntax with CreateFromString attribute assigned 
+### Grid-specific syntax using assigned ContentProperty 
 The code below has the same functionality as the code shown above with the original syntax, but uses the ColumnDefinition and RowDefinition content property assignments to write it in the following way.
 ```xml
 <Grid>
@@ -306,6 +302,7 @@ The xmlns will not be updated for this XAML language feature addition, i.e. ther
     * Measurement: How many apps using this new syntax were created by new/first-time developers
 
 # Open Questions
+- Is this a read-only property, or does it work for any type of property, including read-only?
 - What are the important tooling details that should be included for implementation? Some previous concerns to think about..
     - Parser/designer understanding coldefs and rowdefs
     - Should be easier since we are implementing without a type converter (using content property assignment instead). Will we face any challenges in the CreateFromString side? i.e. would we be creating unvalidateable attributes?
