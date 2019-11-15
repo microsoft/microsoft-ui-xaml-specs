@@ -220,8 +220,10 @@ with a "///" comment above the member or type. -->
 [contract(Windows.Foundation.UniversalApiContract, 1)]
 [webhosthidden]
 
-/// Sets the ColumnDefinition's content property to the Width property.
+// Sets the ColumnDefinition's content property to the Width property.
+// vvv
 [contentproperty("Width")]
+// ^^^
 
 [static_name("Windows.UI.Xaml.Controls.IColumnDefinitionStatics", 06b0d728-d044-40c6-942e-ae60eac74851)]
 [interface_name("Windows.UI.Xaml.Controls.IColumnDefinition", f7f1b229-f024-467f-970a-7e705615db7b)]
@@ -243,8 +245,10 @@ runtimeclass ColumnDefinition : Windows.UI.Xaml.DependencyObject
 [contract(Windows.Foundation.UniversalApiContract, 1)]
 [webhosthidden]
 
-/// Sets the RowDefinition's content property to the Height property.
+// Sets the RowDefinition's content property to the Height property.
+// vvv
 [contentproperty("Height")]
+// ^^^
 
 [static_name("Windows.UI.Xaml.Controls.IRowDefinitionStatics", 5adf3fe5-2056-4724-94d6-e4812b022ec8)]
 [interface_name("Windows.UI.Xaml.Controls.IRowDefinition", 4abae829-d80c-4a5e-a48c-f8b3d3b6533d)]
