@@ -96,11 +96,10 @@ The code below has the same functionality as the code shown above with the origi
 ```
 
 ### New succinct syntax for more complex types
-The code below shows an example of how the syntax would be used for collection-typed properties that have more complex value types.
+The code below shows an example of how the syntax would be used for a collection-typed property that has a different value type. The ColorWheel's Color property is a collection of Color objects, but will be able to be initialized using a comma-separated string with this new language feature, as shown below: 
 
-This shows how Point objects will be delimited by a comma, but indvidual values will be encased in single quotes or double quotes, whichever is not used to enclose the attribute value.
 ```xml
-<Foo PointList=" '1,2', '9,4', '2,6'"/>
+<ColorWheel Colors="Red, Green, Blue"/>
 ```
 
 This shows how String values will be supported, even if they include commas or quotes inside of them. Attribute values (i.e `Words` in this example) can be enclosed with either ' or ", so whichever quotation mark is not used can be employed within the value itself, and does not need to be escaped as an XML character entity. The collection shown below has 4 elements, and 'hello, world!' is one element.
