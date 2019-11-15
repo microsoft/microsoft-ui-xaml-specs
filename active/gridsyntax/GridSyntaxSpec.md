@@ -102,7 +102,7 @@ The code below shows an example of how the syntax would be used for a collection
 <ColorWheel Colors="Red, Green, Blue"/>
 ```
 
-This shows how String values will be supported, even if they include commas or quotes inside of them. Attribute values (i.e `Words` in this example) can be enclosed with either ' or ", so whichever quotation mark is not used can be employed within the value itself, and does not need to be escaped as an XML character entity. The collection shown below has 4 elements, and 'hello, world!' is one element.
+This shows how String values will be supported, even if they include commas or quotes inside of them. Following standard XML syntax,  you can enclose portions within attribute values (e.g. `hello` in this example) with opposite quotes. So for example if the attribute value uses double quotes, you can use single quotes within the attribute value. The collection shown below has 4 elements, and 'hello, world!' is one element.
 
 ```xml
 <Bar Words=" 'hello', 'world', 'hello, world!', 'it&apos;s a beautiful day'" />
@@ -150,7 +150,7 @@ only when there's a bug in the caller, such as argument exception.  But if for s
 reason it's necessary for a caller to catch an exception from an API, call that
 out with an explanation either here or in the Examples -->
 ### Syntax Details and Corner Cases
-The new succinct syntax is formed by assigning a collection-type property to a collection of values. This collection of values is encased between a set of double quotes. String values, as well as any other more complex type that may require commas within it (i.e. Point objects, sets), are encased between a set of single quotes. This ensures that string values may contain commas, and Points, sets, or any other kind of nested collection object may be supported. To use a single quote within a complex value that is encased in single quotes (i.e., to put a single quote or apostrophe inside of a string value), the HTML entity (&apos;) should be used to escape that character.
+The new succinct syntax is formed by assigning a collection of values to a read-only collection-type property. This collection of values is encased between a set of quotes. String values, as well as any other more complex types that may require commas within it (i.e. Point objects, sets), are encased between a set of opposite quotes. This ensures that string values may contain commas, and Points, sets, or any other kind of nested collection object may be supported.
 
 ### Other Use Cases for Succinct Syntax
 The succinct syntax was created with the goal of making Grid more intuitive. However, this new syntax will be implemented as a language feature and work properly for any collection-type property. The current syntaxes will still be functional for all other scenarios, as it will be with Grid. Examples of some of these scenarios include, but are not limited to:
