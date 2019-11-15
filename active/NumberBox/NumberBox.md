@@ -29,19 +29,20 @@ modifying an existing API. -->
 area, just explanation enough to understand this new API, rather than telling
 the reader "go read 100 pages of background information posted at ...". -->
 
+Xaml has a TextBox control for text input, which can be used for numeric input, but numeric input scenarios benefit from custom features, such as buttons to increment/decrement. The NumberBox control in this spec provides these features. This will ship as part of the [WinUI package](https://www.nuget.org/packages/Microsoft.UI.Xaml), not as part of the Windows OS.
+
 
 ## Description
 <!-- Use this section to provide a brief description of the feature.
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
 
-Number box is a numerics only text control with support for validation, increment stepping, and computing inline calculations.
-
-**Important APIs:** [NumberBox class](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.numberbox) [TODO - generated with MSDN documentation on publication.]
+<!-- Borrowing text from TextBox -->
+Represents a control that can be used to display and edit numbers. This supports validation, increment stepping, and computing inline calculations of basic equations, such as multiplication, division, addition, and subtraction.
 
 ## Is this the right control? 
 
-Use a **NumberBox** to capture and display mathematical input. A **NumberBox** can also be enabled with basic calculator support to compute multiplication, division, addition, and subtraction across parenthetical order with standard operator precedence.
+You can use a NumberBox control to capture and display mathematic input. If you need an editable text box that accepts more than numbers, use the [TextBox](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.TextBox) control. If you need an editable text box that accepts passwords or other sensitive input, see [PasswordBox](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.passwordbox). If you need a text box to enter search terms, see [AutoSuggestBox](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.autosuggestbox). If you need to enter or edit formatted text, see [RichEditBox](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.richeditbox).
 
 ## Examples
 <!-- Use this section to explain the features of the API, showing
@@ -57,16 +58,29 @@ example code with each description. The general format is:
 <!-- As an example of this section, see the Examples section for the PasswordBox control 
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 
+<!-- Todo: Needs an input validation example, and probably a section in the Remarks about input validation. -->
+
 ### Create a simple NumberBox
 
 XAML
-```XAML
-<NumberBox x:Name="EquationInputNumberBox" Header="Enter equation:" PlaceholderText="A + B * C" />
-```
 
+<!-- todo: need a picture that matches the markup (the placeholder suggests a calculation, but this sample doesn't enable calculations-->
+
+<!-- todo: Can we remove these names? They don't serve any purpose here, and just add noise. And we should x:Bind the value, so that the example shows how you get the value out. -->
+
+```XAML
+<NumberBox x:Name="EquationInputNumberBox" Header="Enter equation:" />
+```
 ![](images/numberbox-placeholder-text.png)
 
 ### Enable calculation support
+
+To let the user enter equations, use the `AcceptsCalculation` property. This default to false.
+
+<!-- todo: Need to briefly tell the story of calculations here, I'm not sure how it works. When the user hits enter, does it do the calculation? Does the user have to enter the '='? Does it keep showing the equation after it's done the calculation or does setting this property just allow me to type non-numerics into the box?
+
+A basic description can be here, if it gets too involved put the rest in the Remarks section. 
+-->
 
 XAML
 ```XAML
@@ -79,6 +93,10 @@ XAML
 ![](images/numberbox-acceptscalculation.png)
 
 ### Add increment and decrement stepping
+
+Use the `SpinButtonPlacementMode` property to enable buttons in the NumberBox control that can be clicked to increment or decrement the value in the NumberBox. This defaults to `Hidden`, set to `Inline` to enable the buttons. The amount of increment/decrement is specified with the `StepFrequency` property, which defaults to 1.
+
+<!-- todo: What happens if I set this as well as AcceptsCalculation? Is this ignored? -->
 
 XAML
 ```XAML
@@ -98,6 +116,8 @@ only when there's a bug in the caller, such as argument exception.  But if for s
 reason it's necessary for a caller to catch an exception from an API, call that
 out with an explanation either here or in the Examples -->
 
+<!-- todo: Calculations probably require a more involved description, this is the place to put it. -->
+
 ## API Notes
 <!-- Option 1: Give a one or two line description of each API (type
 and member), or at least the ones that aren't obvious
@@ -109,7 +129,7 @@ isn't the type's default (for example an int-typed property that doesn't default
 with a "///" comment above the member or type. -->
 
 
-## API Notes
+<!-- todo: The behavior WRT InputScope should be described here. Here, rather than the table below, because InputScope isn't a NumberBox property, but it's NumberBox behavior on an inner TextBox. -->
 
 ### Notable Properties  
 
@@ -119,6 +139,12 @@ with a "///" comment above the member or type. -->
 
 ## API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
+
+<!-- todo: There's a bunch of API in here that's not described in the Examples, Remarks, or API Notes. That's OK for obvious APIs like Header (although it's good that that's demonstrated in an Example already.) But for example there's been no mention of HyperScroll. -->
+
+<!-- todo: We're missing some basic text capabilities: SelectionFlyout, SelectionHighlightColor, TextReadingOrder, PreventKeyboardDisplayOnProgrammaticFocus, Description. These are basic feature that I think any text control should have. -->
+
+<!-- todo: Missing some APIs in here, like TemplatSettings class and event args classes -->
 
 ```c++ 
 enum NumberBoxSpinButtonPlacementMode
@@ -159,23 +185,30 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.Control
     String Text; 
     String PlaceholderText;
 
+<!-- todo: Why does this say "basic"? Is there also an advanced validation mode? -->   
     NumberBoxBasicValidationMode BasicValidationMode;
 
     Boolean AcceptsCalculation;
 
     NumberBoxSpinButtonPlacementMode SpinButtonPlacementMode{ get; set; };
 
+<!-- todo: This should have the "Is" prefix, to differentiate them from events. -->
     Boolean HyperScrollEnabled;
     Boolean HyperDragEnabled;
     Boolean WrapEnabled;
 
+<!-- NumberFormatter is worth an example -->
     Windows.Globalization.NumberFormatting.INumberFormatter2 NumberFormatter;
+
+<!-- todo: Suggest DecrementButtonIcon naming, to match DecrementButtonStyle -->
 
     IconSource DecrementIcon;
     IconSource IncrementIcon;
     Windows.UI.Xaml.Style DecrementButtonStyle;
     Windows.UI.Xaml.Style IncrementButtonStyle;
     NumberBoxTemplateSettings TemplateSettings{ get; };
+
+<!-- todo: Do we need ValueChanging? Assume we do, the Remarks or API Notes section should explain it's behavior. Does this respond to TextBox's TextChanging or BeforeTextChanging events? -->
 
     event Windows.Foundation.TypedEventHandler<NumberBox, NumberBoxValueChangedEventArgs> ValueChanged;
     event Windows.Foundation.TypedEventHandler<NumberBox, NumberBoxValueChangingEventArgs> ValueChanging;
@@ -214,6 +247,8 @@ that isn't necessary to understand the purpose and usage of the API.
 For example, implementation details. -->
 
 ### Behavioral Components
+
+<!-- A bunch of this stuff belongs in DMC, and therefore belongs above the Appendix -->
 
 | Property | Notes |
 |:---:|:---|
