@@ -95,8 +95,6 @@ XAML
 
 Use the `SpinButtonPlacementMode` property to enable buttons in the NumberBox control that can be clicked to increment or decrement the value in the NumberBox. This defaults to `Hidden`, set to `Inline` to enable the buttons. The amount of increment/decrement is specified with the `StepFrequency` property, which defaults to 1.
 
-<!-- todo: What happens if I set this as well as AcceptsCalculation? Is this ignored? -->
-
 XAML
 ```XAML
 <NumberBox Header="Quantity"
