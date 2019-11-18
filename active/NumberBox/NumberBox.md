@@ -203,32 +203,28 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.Control
 
     event Windows.Foundation.TypedEventHandler<NumberBox, NumberBoxValueChangedEventArgs> ValueChanged;
     event Windows.Foundation.TypedEventHandler<NumberBox, NumberBoxValueChangingEventArgs> ValueChanging;
-        
-    static Windows.UI.Xaml.DependencyProperty ValueProperty{ get; };
     
-    static Windows.UI.Xaml.DependencyProperty BasicValidationModeProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty MinimumProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty MaximumProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty ValueProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty StepFrequencyProperty{ get; };
+    
+    static Windows.UI.Xaml.DependencyProperty Header{ get; };
+    static Windows.UI.Xaml.DependencyProperty HeaderTemplate{ get; };
+    static Windows.UI.Xaml.DependencyProperty Text{ get; };
+    static Windows.UI.Xaml.DependencyProperty PlaceholderText{ get; };
+    
+    static Windows.UI.Xaml.DependencyProperty ValidationModeProperty{ get; };
     
     static Windows.UI.Xaml.DependencyProperty AcceptsCalculationProperty{ get; };
     
     static Windows.UI.Xaml.DependencyProperty SpinButtonPlacementModeProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty HyperDragEnabledProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty HyperScrollEnabledProperty{ get; };   
-    static Windows.UI.Xaml.DependencyProperty StepFrequencyProperty{ get; };
-
-    static Windows.UI.Xaml.DependencyProperty IntegerDigitsProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty FractionDigitsProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty SignificantDigitsProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty IsDecimalPointAlwaysDisplayedProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty IsZeroSignedProperty{ get; };
     
-    static Windows.UI.Xaml.DependencyProperty RoundingAlgorithmProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty NumberRounderProperty{ get; }; 
-    static Windows.UI.Xaml.DependencyProperty IncrementPrecisionProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty SignificantDigitPrecisionProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty IsHyperDragEnabledProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty IsHyperScrollEnabledProperty{ get; };   
+    static Windows.UI.Xaml.DependencyProperty IsWrapEnabled{ get; };
     
-    static Windows.UI.Xaml.DependencyProperty MinMaxModeProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty MinValueProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty MaxValueProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty NumberFormatter{ get; };
 }
 ```
 
@@ -245,9 +241,9 @@ For example, implementation details. -->
 |:---:|:---|
 | InputScope | "Number" will be used for the InputScope. This may be overwritten by the developer but alternative InputScope types will not be explicitly supported. | 
 | AcceptsCalculation | NumberBox will provide computation support for multiplication, division, addition, and subtraction across parenthetical order with standard operator precedence; i.e., [ 0-9()+-/* ] |
-| Validation | * If BasicValidationMode="Disabled", no automatic validation will occur. This setting allows developers to configure custom validation via [Input Validation]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md). <br><br> * If BasicValidationMode="TextBlockMessage" or BasicValidationMode="IconMessage", input that is outside the bounds of MinValue/MaxValue or non-numerical/formulaic will trigger a validation warning consistent with [Input Validation]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md). A MinValue error will display "Minimum is [MinValue]." A MaxValue error will display "Maximum is [MaxValue]." Input errors will display "Only use numbers and ()+-/* ." Division by zero will return "Division by 0 unsupported." <br><br> * If BasicValidationMode="InvalidInputOverwritten", input that is non-numerical/formulaic will automatically be overwritten with the last legal value. Input that is stepped outside the bounds of MinValue/MaxValue will be coerced to the respective bound. Manually entered input that is outside outside the bounds of MinValue/MaxValue will be reverted to the last valid input. |
+| Validation | * If BasicValidationMode="Disabled", no automatic validation will occur. This setting allows developers to configure custom validation via [Input Validation]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md). <br><br> * If BasicValidationMode="TextBlockMessage" or BasicValidationMode="IconMessage", input that is outside the bounds of Minimum/Maximum or non-numerical/formulaic will trigger a validation warning consistent with [Input Validation]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md). A Minimum error will display "Minimum is [Minimum]." A Maximum error will display "Maximum is [Maximum]." Input errors will display "Only use numbers and ()+-/* ." Division by zero will return "Division by 0 unsupported." <br><br> * If BasicValidationMode="InvalidInputOverwritten", input that is non-numerical/formulaic will automatically be overwritten with the last legal value. Input that is stepped outside the bounds of Minimum/Maximum will be coerced to the respective bound. Manually entered input that is outside outside the bounds of Minimum/Maximum will be reverted to the last valid input. |
 | Events | * Loss of focus, "Enter", and stepping [SEE API NOTES > SPINBUTTON && HYPER SCROLL && HYPER DRAG && KEYBOARD STEPPING] will trigger evalution. <br><br> * When Text (derived from TextBox) is changed by codebehind or user input on the evaluation triggers noted above, the TextChanging event will be fired. After, if BasicValidationEnabled="True", validation will be performed [See API NOTES > VALIDATION]. Text will then be updated and the TextChanged event will be fired. Text will then be converted to a Double and the ValueChanging event event will be fired. After, Value will be updated and the ValueChanged event will be fired. <br><br> * When Value is changed by codebehind, the ValueChanging event will be fired. After, if BasicValidationEnabled="True", validation will be performed [See API NOTES > VALIDATION]. Value will then be updated and the ValueChanged event will be fired. Value will then be converted to a String and the TextChanging event event will be fired.  After, Text will be updated and the TextChanged event will be fired. <br><br> * Requesting Value will forcibly trigger calculation. If Value is in an error state (NumberBoxBasicValidationMode != InvalidInputOverwritten), return Double.NaN (as Null can have meaning). |
-| SpinButton | * If a calculation is stepped, it will be calculated before the step is applied. <br><br> SpinButton will disable increment/decrement components when at MaxValue/MinValue, respectively. |
+| SpinButton | * If a calculation is stepped, it will be calculated before the "step" is applied. <br><br> SpinButton will disable increment/decrement buttons when the limits imposed by Maximum or Minimum would not allow another respective step. <br><br> * If IsWrapEnabled = "true", a step will not stop at the Minium or Maxmum, it will wrap instead. For example, if Minimum="0", Maximum="100", StepFrequency="5", and Value="98", and IsWrapEnabled="True", an incremental step results in Value="3".  |
 | Hyper Scroll | * Focus and hover required for hyper scroll behavior to take place as to not reduce quality of experience on scrollable surfaces. <br><br> * If a calculation is stepped, it will be calculated before the step is applied.|
 | Hyper Drag | * Align to WinRT XAML Toolkit's NumericUpDown implementation. <br><br> * If a calculation is stepped, it will be calculated before the step is applied. |
 | Keyboard Stepping | * Up and Down arrow keys will increment and decrement the Text/Value when NumberBox is in focus. <br><br> * If a calculation is stepped, it will be calculated before the step is applied. |
