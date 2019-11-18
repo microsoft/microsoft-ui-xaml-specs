@@ -184,18 +184,16 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.Control
     String Header;
     String Text; 
     String PlaceholderText;
-
-<!-- todo: Why does this say "basic"? Is there also an advanced validation mode? -->   
+  
     NumberBoxValidationMode ValidationMode;
 
     Boolean AcceptsCalculation;
 
     NumberBoxSpinButtonPlacementMode SpinButtonPlacementMode{ get; set; };
 
-<!-- todo: This should have the "Is" prefix, to differentiate them from events. -->
-    Boolean HyperScrollEnabled;
-    Boolean HyperDragEnabled;
-    Boolean WrapEnabled;
+    Boolean IsHyperScrollEnabled;
+    Boolean IsHyperDragEnabled;
+    Boolean IsWrapEnabled;
 
 <!-- NumberFormatter is worth an example -->
     Windows.Globalization.NumberFormatting.INumberFormatter2 NumberFormatter;
