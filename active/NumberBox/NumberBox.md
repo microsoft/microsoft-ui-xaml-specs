@@ -1,43 +1,9 @@
 # Number box
 
-<!-- The purpose of this spec is to describe a new feature and
-its APIs that make up a new feature in WinUI. -->
-
-<!-- There are two audiences for the spec. The first are people
-that want to evaluate and give feedback on the API, as part of
-the submission process.  When it's complete
-it will be incorporated into the public documentation at
-docs.microsoft.com (http://docs.microsoft.com/uwp/toolkits/winui/).
-Hopefully we'll be able to copy it mostly verbatim.
-So the second audience is everyone that reads there to learn how
-and why to use this API. -->
-
 ## Background
-<!-- Use this section to provide background context for the new API(s) 
-in this spec. -->
-
-<!-- This section and the appendix are the only sections that likely
-do not get copied to docs.microsoft.com; they're just an aid to reading this spec. -->
-
-<!-- If you're modifying an existing API, included a link here to the
-existing page(s) -->
-
-<!-- For example, this section is a place to explain why you're adding this API rather than
-modifying an existing API. -->
-
-<!-- For example, this is a place to provide a brief explanation of some dependent
-area, just explanation enough to understand this new API, rather than telling
-the reader "go read 100 pages of background information posted at ...". -->
-
 Xaml has a TextBox control for text input, which can be used for numeric input, but numeric input scenarios benefit from custom features, such as buttons to increment/decrement. The NumberBox control in this spec provides these features. This will ship as part of the [WinUI package](https://www.nuget.org/packages/Microsoft.UI.Xaml), not as part of the Windows OS.
 
-
 ## Description
-<!-- Use this section to provide a brief description of the feature.
-For an example, see the introduction to the PasswordBox control 
-(http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
-
-<!-- Borrowing text from TextBox -->
 Represents a control that can be used to display and edit numbers. This supports validation, increment stepping, and computing inline calculations of basic equations, such as multiplication, division, addition, and subtraction.
 
 ## Is this the right control? 
@@ -45,19 +11,6 @@ Represents a control that can be used to display and edit numbers. This supports
 You can use a NumberBox control to capture and display mathematic input. If you need an editable text box that accepts more than numbers, use the [TextBox](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.TextBox) control. If you need an editable text box that accepts passwords or other sensitive input, see [PasswordBox](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.passwordbox). If you need a text box to enter search terms, see [AutoSuggestBox](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.autosuggestbox). If you need to enter or edit formatted text, see [RichEditBox](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.richeditbox).
 
 ## Examples
-<!-- Use this section to explain the features of the API, showing
-example code with each description. The general format is: 
-  feature explanation,
-  example code
-  feature explanation,
-  example code
-  etc.-->
-  
-<!-- Code samples should be in C# and/or C++/WinRT -->
-
-<!-- As an example of this section, see the Examples section for the PasswordBox control 
-(https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
-
 <!-- Todo: Needs an input validation example, and probably a section in the Remarks about input validation. -->
 
 ### Create a simple NumberBox
@@ -134,8 +87,6 @@ with a "///" comment above the member or type. -->
 | StepFrequency | Gets or sets the value part of a value range that steps should be created for. |
 
 ## API Details
-<!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
-
 <!-- todo: There's a bunch of API in here that's not described in the Examples, Remarks, or API Notes. That's OK for obvious APIs like Header (although it's good that that's demonstrated in an Example already.) But for example there's been no mention of HyperScroll. -->
 
 <!-- todo: We're missing some basic text capabilities: SelectionFlyout, SelectionHighlightColor, TextReadingOrder, PreventKeyboardDisplayOnProgrammaticFocus, Description. These are basic feature that I think any text control should have. -->
