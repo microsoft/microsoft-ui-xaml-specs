@@ -66,10 +66,10 @@ XAML
 
 <!-- todo: need a picture that matches the markup (the placeholder suggests a calculation, but this sample doesn't enable calculations-->
 
-<!-- todo: Can we remove these names? They don't serve any purpose here, and just add noise. And we should x:Bind the value, so that the example shows how you get the value out. -->
+<!-- todo: We should x:Bind the value, so that the example shows how you get the value out. -->
 
 ```XAML
-<NumberBox x:Name="EquationInputNumberBox" Header="Enter equation:" />
+<NumberBox Header="Enter equation:" />
 ```
 ![](images/numberbox-placeholder-text.png)
 
@@ -84,8 +84,7 @@ A basic description can be here, if it gets too involved put the rest in the Rem
 
 XAML
 ```XAML
-<NumberBox x:Name="EquationInputNumberBox"
-    Header="Enter equation:" 
+<NumberBox Header="Enter equation:" 
     PlaceholderText="A + B * C" 
     AcceptsCalculation="True" />
 ```
@@ -100,8 +99,7 @@ Use the `SpinButtonPlacementMode` property to enable buttons in the NumberBox co
 
 XAML
 ```XAML
-<NumberBox x:Name="ItemQuantityNumberBox" 
-    Header="Quantity"
+<NumberBox Header="Quantity"
     StepFrequency="2"
     SpinButtonPlacementMode="Inline" />
 ```
