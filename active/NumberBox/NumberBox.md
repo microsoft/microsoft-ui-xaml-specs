@@ -153,7 +153,7 @@ enum NumberBoxSpinButtonPlacementMode
     Inline,
 };
 
-enum NumberBoxBasicValidationMode
+enum NumberBoxValidationMode
 {
     InvalidInputOverwritten,
     IconMessage,
@@ -186,7 +186,7 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.Control
     String PlaceholderText;
 
 <!-- todo: Why does this say "basic"? Is there also an advanced validation mode? -->   
-    NumberBoxBasicValidationMode BasicValidationMode;
+    NumberBoxValidationMode ValidationMode;
 
     Boolean AcceptsCalculation;
 
