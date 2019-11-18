@@ -15,7 +15,7 @@ You can use a NumberBox control to capture and display mathematic input. If you 
 
 ### Create a simple NumberBox
 
-XAML
+Here's the XAML for a NumberBox that demonstrates the default look.
 
 <!-- todo: need a picture that matches the markup (the placeholder suggests a calculation, but this sample doesn't enable calculations-->
 
@@ -28,21 +28,15 @@ XAML
 
 ### Enable calculation support
 
-To let the user enter equations, use the `AcceptsCalculation` property. This defaults to false.
-
-<!-- todo: Need to briefly tell the story of calculations here, I'm not sure how it works. When the user hits enter, does it do the calculation? Does the user have to enter the '='? Does it keep showing the equation after it's done the calculation or does setting this property just allow me to type non-numerics into the box?
-
-A basic description can be here, if it gets too involved put the rest in the Remarks section. 
--->
+Setting the 'AcceptsCalculation' property to true enables NumberBox to evaluate basic inline expressions such as multiplication, division, addition, and subtraction using standard order of operations. Evaluation is triggered on loss of focus or when the user presses the "Enter" key. Once an expression is evaluated, the original form of the expression is not preserved.
 
 XAML
 ```XAML
 <NumberBox Header="Enter equation:" 
-    PlaceholderText="A + B * C" 
     AcceptsCalculation="True" />
 ```
 
-![](images/numberbox-acceptscalculation.png)
+<!-- ![](images/numberbox-acceptscalculation.png) -->
 
 ### Add increment and decrement stepping
 
