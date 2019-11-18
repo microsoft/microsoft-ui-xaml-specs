@@ -40,13 +40,13 @@ XAML
 
 ### Add increment and decrement stepping
 
-Use the `SpinButtonPlacementMode` property to enable buttons in the NumberBox control that can be clicked to increment or decrement the value in the NumberBox. This defaults to `Hidden`, set to `Inline` to enable the buttons. The amount of increment/decrement is specified with the `StepFrequency` property, which defaults to 1.
+Use the `SpinButtonPlacementMode` property to enable buttons in the NumberBox control that can be clicked to increment or decrement the value in the NumberBox. This defaults to `Hidden`, set to `Flyout` to enable the buttons to appear above the control on click or hover. The amount of increment/decrement is specified with the `StepFrequency` property, which defaults to 1.
 
 XAML
 ```XAML
 <NumberBox Header="Quantity"
     StepFrequency="2"
-    SpinButtonPlacementMode="Inline" />
+    SpinButtonPlacementMode="Flyout" />
 ```
 
 ![](images/numberbox-spinnerbutton.png)
@@ -91,7 +91,7 @@ with a "///" comment above the member or type. -->
 enum NumberBoxSpinButtonPlacementMode
 {
     Hidden,
-    Inline,
+    Flyout,
 };
 
 enum NumberBoxValidationMode
