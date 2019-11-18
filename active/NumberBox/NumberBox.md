@@ -200,14 +200,6 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.Control
 <!-- NumberFormatter is worth an example -->
     Windows.Globalization.NumberFormatting.INumberFormatter2 NumberFormatter;
 
-<!-- todo: Suggest DecrementButtonIcon naming, to match DecrementButtonStyle -->
-
-    IconSource DecrementIcon;
-    IconSource IncrementIcon;
-    Windows.UI.Xaml.Style DecrementButtonStyle;
-    Windows.UI.Xaml.Style IncrementButtonStyle;
-    NumberBoxTemplateSettings TemplateSettings{ get; };
-
 <!-- todo: Do we need ValueChanging? Assume we do, the Remarks or API Notes section should explain it's behavior. Does this respond to TextBox's TextChanging or BeforeTextChanging events? -->
 
     event Windows.Foundation.TypedEventHandler<NumberBox, NumberBoxValueChangedEventArgs> ValueChanged;
