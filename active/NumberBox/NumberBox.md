@@ -182,6 +182,7 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.Control
     Double StepFrequency;
 
     String Header;
+    DataTemplate HeaderTemplate;
     String Text; 
     String PlaceholderText;
   
