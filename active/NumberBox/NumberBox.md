@@ -75,7 +75,7 @@ XAML
 
 ### Enable calculation support
 
-To let the user enter equations, use the `AcceptsCalculation` property. This default to false.
+To let the user enter equations, use the `AcceptsCalculation` property. This defaults to false.
 
 <!-- todo: Need to briefly tell the story of calculations here, I'm not sure how it works. When the user hits enter, does it do the calculation? Does the user have to enter the '='? Does it keep showing the equation after it's done the calculation or does setting this property just allow me to type non-numerics into the box?
 
