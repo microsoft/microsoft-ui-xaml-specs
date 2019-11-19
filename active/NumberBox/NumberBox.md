@@ -24,7 +24,7 @@ Here's the XAML for a basic NumberBox that demonstrates the default look. Use [x
 
 ### Enable calculation support
 
-Setting the 'AcceptsCalculation' property to true enables NumberBox to evaluate basic inline expressions such as multiplication, division, addition, and subtraction using standard order of operations. Evaluation is triggered on loss of focus or when the user presses the "Enter" key. Once an expression is evaluated, the original form of the expression is not preserved.
+Setting the `AcceptsCalculation` property to true enables NumberBox to evaluate basic inline expressions such as multiplication, division, addition, and subtraction using standard order of operations. Evaluation is triggered on loss of focus or when the user presses the "Enter" key. Once an expression is evaluated, the original form of the expression is not preserved.
 
 XAML
 ```XAML
@@ -63,7 +63,7 @@ XAML
 
 ### Enabling input validation
 
-Setting the ValidationMode property to "InvalidInputOverwritten" will enable NumberBox to overwrite invalid input with the last valid value when evaluation is triggered on loss of focus or a press of the "Enter" key. This is disabled by default. 
+Setting `ValidationMode` to `InvalidInputOverwritten` will enable NumberBox to overwrite invalid input with the last valid value when evaluation is triggered on loss of focus or a press of the "Enter" key. This is disabled by default. 
 
 XAML
 ```XAML
@@ -72,7 +72,7 @@ XAML
     ValidationMode="InvalidInputOverwritten" />
 ```
 
-Setting the ValidationMode property to "Disabled" allows custom input validation to be configured.  
+Setting `ValidationMode` to `Disabled` allows custom input validation to be configured.  
 
 ### Formatting input 
 
@@ -91,7 +91,7 @@ out with an explanation either here or in the Examples -->
 
 ### Input Scope
 
-"Number" will be used for the [input scope](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Input.InputScopeNameValue). This input scope is intended for working with digits 0-9. This may be overwritten but alternative InputScope types will not be explicitly supported. 
+`Number` will be used for the [input scope](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Input.InputScopeNameValue). This input scope is intended for working with digits 0-9. This may be overwritten but alternative InputScope types will not be explicitly supported. 
 
 ## API Notes
 <!-- Option 1: Give a one or two line description of each API (type
