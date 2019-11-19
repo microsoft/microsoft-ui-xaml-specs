@@ -100,18 +100,11 @@ Setting `ValidationMode` to `Disabled` allows custom input validation to be conf
 
 ### Not a Number
 
+When a NumberBox is cleared of input, `Value` will be set to `NaN` to indicate no numerical value is present. 
+
 ## Recommendations
 
-* Use `Header` or `PlaceholderText` if the purpose of the NumberBox isn't clear. `Header` is visible whether or not the NumberBox has a value. `PlaceholderText` is displayed inside the NumberBox and disappears once a value has been entered.
-
-
-Give the password box an appropriate width for the range of values that can be entered. Word length varies between languages, so take localization into account if you want your app to be world-ready.
-Don't put another control right next to a password input box. The password box has a password reveal button for users to verify the passwords they have typed, and having another control right next to it might make users accidentally reveal their passwords when they try to interact with the other control. To prevent this from happening, put some spacing between the password in put box and the other control, or put the other control on the next line.
-Consider presenting two password boxes for account creation: one for the new password, and a second to confirm the new password.
-Only show a single password box for logins.
-When a password box is used to enter a PIN, consider providing an instant response as soon as the last number is entered instead of using a confirmation button.
-
-When a NumberBox is cleared of input, `Value` will be set to `NaN` to indicate no numerical value is present. 
+* `Text` and `Value` make it easy to capture the value of a NumberBox as a String or as a Double without needing to convert the value bewteen types. When programmatically altering the value of a NumberBox, it is recommended to do so through the `Value` property. `Value` will overwrite `Text` in initial set up. After the initial set up, changes to one will be progrogated to the other, but consistently making programmatic changes through `Value` helps avoid any conceptual misunderstanding that NumberBox will accept non-numeric characters through `Text`.  
 
 ## API Notes
 
