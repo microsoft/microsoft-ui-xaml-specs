@@ -33,8 +33,6 @@ XAML
     AcceptsCalculation="True" />
 ```
 
-<!-- ![](images/numberbox-acceptscalculation.png) -->
-
 ### Add increment and decrement stepping
 
 Use the `SpinButtonPlacementMode` property to enable buttons in the NumberBox control that can be clicked to increment or decrement the value in the NumberBox. This defaults to `Hidden`, but NumberBox offers two visible placement modes: `Inline` and `Compact`. The amount of increment/decrement is specified with the `StepFrequency` property, which defaults to 1.
@@ -44,6 +42,7 @@ Set `SpinButtonPlacementMode` to `Inline` to enable the buttons to appear beside
 XAML
 ```XAML
 <NumberBox Header="Quantity"
+    Value="{x:Bind Path=ViewModel.NumberBoxValue, Mode=TwoWay}"
     StepFrequency="2"
     SpinButtonPlacementMode="Inline" />
 ```
@@ -55,6 +54,7 @@ Set `SpinButtonPlacementMode` to `Compact` to enable the buttons to appear as a 
 XAML
 ```XAML
 <NumberBox Header="Quantity"
+    Value="{x:Bind Path=ViewModel.NumberBoxValue, Mode=TwoWay}"
     StepFrequency="2"
     SpinButtonPlacementMode="Compact" />
 ```
@@ -63,7 +63,16 @@ XAML
 
 ### Enabling input validation
 
-<!-- todo: fill in -->
+Setting the ValidationMode property to "InvalidInputOverwritten" will enable NumberBox to overwrite invalid input with the last valid value when evaluation is triggered on loss of focus or a press of the "Enter" key. This is disabled by default. 
+
+XAML
+```XAML
+<NumberBox Header="Quantity"
+    Value="{x:Bind Path=ViewModel.NumberBoxValue, Mode=TwoWay}"
+    ValidationMode="InvalidInputOverwritten" />
+```
+
+Setting the ValidationMode property to "Disabled" allows custom input validation to be configured.  
 
 ### Formatting input 
 
@@ -117,8 +126,6 @@ enum NumberBoxSpinButtonPlacementMode
 enum NumberBoxValidationMode
 {
     InvalidInputOverwritten,
-    IconMessage,
-    TextBlockMessage,
     Disabled,
 };
 
