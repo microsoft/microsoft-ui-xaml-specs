@@ -93,8 +93,6 @@ Setting `ValidationMode` to `Disabled` allows custom input validation to be conf
 | StepFrequency | Gets or sets the value part of a value range that steps should be created for. |
 
 ## API Details
-<!-- todo: We're missing some basic text capabilities: SelectionFlyout, SelectionHighlightColor, TextReadingOrder, PreventKeyboardDisplayOnProgrammaticFocus, Description. These are basic feature that I think any text control should have. -->
-
 <!-- todo: Missing some APIs in here, like TemplatSettings class and event args classes -->
 
 ```c++ 
@@ -130,6 +128,12 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.Control
     DataTemplate HeaderTemplate;
     String Text; 
     String PlaceholderText;
+    
+    FlyoutBase SelectionFlyout;
+    SolidColorBrush SelectionHighlightColor;
+    TextReadingOrder TextReadingOrder;
+    Boolean PreventKeyboardDisplayOnProgrammaticFocus;
+    Object Description;
   
     NumberBoxValidationMode ValidationMode;
 
