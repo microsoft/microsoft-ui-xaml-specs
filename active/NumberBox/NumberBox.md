@@ -79,15 +79,6 @@ Setting `ValidationMode` to `Disabled` allows custom input validation to be conf
 <!-- todo: fill in -->
 
 ## Remarks
-<!-- Explanation and guidance that doesn't fit into the Examples section. -->
-
-<!-- APIs should only throw exceptions in exceptional conditions; basically,
-only when there's a bug in the caller, such as argument exception.  But if for some
-reason it's necessary for a caller to catch an exception from an API, call that
-out with an explanation either here or in the Examples -->
-
-<!-- todo: Calculations probably require a more involved description, this is the place to put it. -->
-<!-- Todo: Needs an input validation example, and probably a section in the Remarks about input validation. -->
 
 ### Input Scope
 
