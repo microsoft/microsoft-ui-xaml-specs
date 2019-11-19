@@ -51,6 +51,14 @@ XAML
 
 ![](images/numberbox-spinnerbutton.png)
 
+### Enabling input validation
+
+<!-- todo: fill in -->
+
+### Formatting input 
+
+<!-- todo: fill in -->
+
 ## Remarks
 <!-- Explanation and guidance that doesn't fit into the Examples section. -->
 
@@ -137,7 +145,6 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.Control
     Boolean IsHyperDragEnabled;
     Boolean IsWrapEnabled;
 
-<!-- NumberFormatter is worth an example -->
     Windows.Globalization.NumberFormatting.INumberFormatter2 NumberFormatter;
 
 <!-- todo: Do we need ValueChanging? Assume we do, the Remarks or API Notes section should explain it's behavior. Does this respond to TextBox's TextChanging or BeforeTextChanging events? -->
