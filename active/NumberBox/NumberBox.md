@@ -113,8 +113,8 @@ enum NumberBoxValidationMode
 
 runtimeclass NumberBoxValueChangedEventArgs
 {
-    System.Windows.Controls.UndoAction Action;
-    System.Collections.Generic.ICollection<System.Windows.Controls.ValueChange> Changes;
+    Double OldValue{ get; };
+    Double NewValue{ get; };
 };
 
 unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.Control
