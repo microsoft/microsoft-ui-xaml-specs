@@ -20,7 +20,7 @@ Here's the XAML for a basic NumberBox that demonstrates the default look. Use [x
 <NumberBox Header="Enter expression:"
     Value="{x:Bind Path=ViewModel.NumberBoxValue, Mode=TwoWay}" />
 ```
-![](images/numberbox-placeholder-text.png)
+![An in-focus input field showing 0.](images/numberbox-basic.PNG)
 
 ### Enable calculation support
 
@@ -47,7 +47,7 @@ XAML
     SpinButtonPlacementMode="Inline" />
 ```
 
-![](images/numberbox-spinbutton-inline.png)
+![A NumberBox with a down-arrow button and up-arrow button beside it.](images/numberbox-spinbutton-inline.PNG)
 
 Set `SpinButtonPlacementMode` to `Compact` to enable the buttons to appear as a Flyout only when the NumberBox is clicked or hovered over. 
 
@@ -59,7 +59,9 @@ XAML
     SpinButtonPlacementMode="Compact" />
 ```
 
-![](images/numberbox-spinbutton-compact.png)
+![A NumberBox with a small icon inside of it showing an arrow pointing up and an arrow pointing down.](images/numberbox-spinbutton-compact-non-visible.PNG)
+
+![A NumberBox with a down-arrow button and up-arrow button floating off to the side at an elevated layer.](images/numberbox-spinbutton-compact-visible.PNG)
 
 ### Enabling input validation
 
