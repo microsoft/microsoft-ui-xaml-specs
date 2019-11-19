@@ -11,18 +11,14 @@ Represents a control that can be used to display and edit numbers. This supports
 You can use a NumberBox control to capture and display mathematic input. If you need an editable text box that accepts more than numbers, use the [TextBox](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.TextBox) control. If you need an editable text box that accepts passwords or other sensitive input, see [PasswordBox](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.passwordbox). If you need a text box to enter search terms, see [AutoSuggestBox](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.autosuggestbox). If you need to enter or edit formatted text, see [RichEditBox](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.richeditbox).
 
 ## Examples
-<!-- Todo: Needs an input validation example, and probably a section in the Remarks about input validation. -->
 
 ### Create a simple NumberBox
 
-Here's the XAML for a NumberBox that demonstrates the default look.
-
-<!-- todo: need a picture that matches the markup (the placeholder suggests a calculation, but this sample doesn't enable calculations-->
-
-<!-- todo: We should x:Bind the value, so that the example shows how you get the value out. -->
+Here's the XAML for a basic NumberBox that demonstrates the default look. Use [x:Bind](https://docs.microsoft.com/en-us/windows/uwp/xaml-platform/x-bind-markup-extension#property-path) to ensure the data displayed to the user remains in sync with the data stored in your app. 
 
 ```XAML
-<NumberBox Header="Enter equation:" />
+<NumberBox Header="Enter expression:"
+    Value="{x:Bind Path=ViewModel.NumberBoxValue, Mode=TwoWay}" />
 ```
 ![](images/numberbox-placeholder-text.png)
 
@@ -32,7 +28,8 @@ Setting the 'AcceptsCalculation' property to true enables NumberBox to evaluate 
 
 XAML
 ```XAML
-<NumberBox Header="Enter equation:" 
+<NumberBox Header="Enter expression:" 
+    Value="{x:Bind Path=ViewModel.NumberBoxValue, Mode=TwoWay}"
     AcceptsCalculation="True" />
 ```
 
@@ -40,16 +37,29 @@ XAML
 
 ### Add increment and decrement stepping
 
-Use the `SpinButtonPlacementMode` property to enable buttons in the NumberBox control that can be clicked to increment or decrement the value in the NumberBox. This defaults to `Hidden`, set to `Flyout` to enable the buttons to appear above the control on click or hover. The amount of increment/decrement is specified with the `StepFrequency` property, which defaults to 1.
+Use the `SpinButtonPlacementMode` property to enable buttons in the NumberBox control that can be clicked to increment or decrement the value in the NumberBox. This defaults to `Hidden`, but NumberBox offers two visible placement modes: `Inline` and `Compact`. The amount of increment/decrement is specified with the `StepFrequency` property, which defaults to 1.
+
+Set `SpinButtonPlacementMode` to `Inline` to enable the buttons to appear beside the control. ol on click or hover. 
 
 XAML
 ```XAML
 <NumberBox Header="Quantity"
     StepFrequency="2"
-    SpinButtonPlacementMode="Flyout" />
+    SpinButtonPlacementMode="Inline" />
 ```
 
-![](images/numberbox-spinnerbutton.png)
+![](images/numberbox-spinbutton-inline.png)
+
+Set `SpinButtonPlacementMode` to `Compact` to enable the buttons to appear as a Flyout only when the NumberBox is clicked or hovered over. 
+
+XAML
+```XAML
+<NumberBox Header="Quantity"
+    StepFrequency="2"
+    SpinButtonPlacementMode="Compact" />
+```
+
+![](images/numberbox-spinbutton-compact.png)
 
 ### Enabling input validation
 
@@ -68,6 +78,7 @@ reason it's necessary for a caller to catch an exception from an API, call that
 out with an explanation either here or in the Examples -->
 
 <!-- todo: Calculations probably require a more involved description, this is the place to put it. -->
+<!-- Todo: Needs an input validation example, and probably a section in the Remarks about input validation. -->
 
 ## API Notes
 <!-- Option 1: Give a one or two line description of each API (type
@@ -99,7 +110,8 @@ with a "///" comment above the member or type. -->
 enum NumberBoxSpinButtonPlacementMode
 {
     Hidden,
-    Flyout,
+    Compact,
+    Inline,
 };
 
 enum NumberBoxValidationMode
@@ -181,9 +193,9 @@ For example, implementation details. -->
 |:---:|:---|
 | InputScope | "Number" will be used for the InputScope. This may be overwritten by the developer but alternative InputScope types will not be explicitly supported. | 
 | AcceptsCalculation | NumberBox will provide computation support for multiplication, division, addition, and subtraction across parenthetical order with standard operator precedence; i.e., [ 0-9()+-/* ] |
-| Validation | * If BasicValidationMode="Disabled", no automatic validation will occur. This setting allows developers to configure custom validation via [Input Validation]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md). <br><br> * If BasicValidationMode="InvalidInputOverwritten", input that is non-numerical/formulaic will automatically be overwritten with the last legal value. Input that is stepped outside the bounds of Minimum/Maximum will be coerced to the respective bound. Manually entered input that is outside outside the bounds of Minimum/Maximum will be reverted to the last valid input. |
-| Events | * Loss of focus, "Enter", and stepping [SEE API NOTES > SPINBUTTON && HYPER SCROLL && HYPER DRAG && KEYBOARD STEPPING] will trigger evalution. <br><br> * When Text (derived from TextBox) is changed by codebehind or user input on the evaluation triggers noted above, the TextChanging event will be fired. After, if BasicValidationEnabled="True", validation will be performed [See API NOTES > VALIDATION]. Text will then be updated and the TextChanged event will be fired. Text will then be converted to a Double and the ValueChanging event event will be fired. After, Value will be updated and the ValueChanged event will be fired. <br><br> * When Value is changed by codebehind, the ValueChanging event will be fired. After, if BasicValidationEnabled="True", validation will be performed [See API NOTES > VALIDATION]. Value will then be updated and the ValueChanged event will be fired. Value will then be converted to a String and the TextChanging event event will be fired.  After, Text will be updated and the TextChanged event will be fired. <br><br> * Requesting Value will forcibly trigger calculation. If Value is in an error state (NumberBoxBasicValidationMode != InvalidInputOverwritten), return Double.NaN (as Null can have meaning). |
-| SpinButton | * If a calculation is stepped, it will be calculated before the "step" is applied. <br><br> SpinButton will disable increment/decrement buttons when the limits imposed by Maximum or Minimum would not allow another respective step. <br><br> * If IsWrapEnabled = "true", a step will not stop at the Minium or Maxmum, it will wrap instead. For example, if Minimum="0", Maximum="100", StepFrequency="5", and Value="98", and IsWrapEnabled="True", an incremental step results in Value="3".  |
+| Validation | * If ValidationMode="Disabled", no automatic validation will occur. This setting allows developers to configure custom validation via [Input Validation]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md). <br><br> * If ValidationMode="InvalidInputOverwritten", input that is non-numerical/formulaic will automatically be overwritten with the last legal value. Input that is stepped outside the bounds of Minimum/Maximum will be coerced to the respective bound. Manually entered input that is outside outside the bounds of Minimum/Maximum will be reverted to the last valid input. |
+| Events | * Loss of focus, "Enter", and stepping [SEE API NOTES > SPINBUTTON && HYPER SCROLL && HYPER DRAG && KEYBOARD STEPPING] will trigger evalution. <br><br> * When Text (derived from TextBox) is changed by codebehind or user input on the evaluation triggers noted above, the TextChanging event will be fired. After, if ValidationEnabled="True", validation will be performed [See API NOTES > VALIDATION]. Text will then be updated and the TextChanged event will be fired. Text will then be converted to a Double and the ValueChanging event event will be fired. After, Value will be updated and the ValueChanged event will be fired. <br><br> * When Value is changed by codebehind, the ValueChanging event will be fired. After, if ValidationEnabled="True", validation will be performed [See API NOTES > VALIDATION]. Value will then be updated and the ValueChanged event will be fired. Value will then be converted to a String and the TextChanging event event will be fired.  After, Text will be updated and the TextChanged event will be fired. <br><br> * Requesting Value will forcibly trigger calculation. If Value is in an error state (NumberBoxValidationMode != InvalidInputOverwritten), return Double.NaN (as Null can have meaning). |
+| SpinButton | * When SpinButtonPlacementMode="Compact", the SpinButton will appear over NumberBox as a Flyout on focus or hover.  <br><br> * If a calculation is stepped, it will be calculated before the "step" is applied. <br><br> * SpinButton will disable increment/decrement buttons when the limits imposed by Maximum or Minimum would not allow another respective step. <br><br> * If IsWrapEnabled = "true", a step will not stop at the Minium or Maxmum, it will wrap instead. For example, if Minimum="0", Maximum="100", StepFrequency="5", and Value="98", and IsWrapEnabled="True", an incremental step results in Value="3".  |
 | Keyboard Stepping | * Up and Down arrow keys will increment and decrement the Text/Value when NumberBox is in focus. <br><br> * If a calculation is stepped, it will be calculated before the step is applied. |
 
 ### Inputs and Accessibility
@@ -194,7 +206,7 @@ For example, implementation details. -->
 | State | Action |
 |:---|:---|
 | Focus is on item in tab stop order before NumberBox | Tab moves focus into NumberBox's editable text field. |
-| Focus is on NumberBox's editable text field. | Tab triggers evaluation and moves focus to validation error message if one is returned. Otherwise, tab moves focus to SpinButton (Decrement). |
+| Focus is on NumberBox's editable text field. | Tab triggers evaluation and moves focus to validation error message if one is returned. Otherwise, tab moves focus to SpinButton (Decrement) if visible or out of NumberBox and to the next item in the tab stop order otherwise. |
 | Focus is on NumberBox's validation error message. | Tab moves focus to NumberBox's SpinButton (Decrement). |
 | Focus is on NumberBox's SpinButton (Decrement). | Tab moves focus to SpinButton (Increment). |
 | Focus is on NumberBox's SpinButton (Increment). | Tab moves focus out of NumberBox and to the next item in the tab stop order. |
@@ -251,7 +263,7 @@ N/A
 
 | Feature | Notes |
 |:---:|:---|
-| Input Validation | <br><br> * Add TextBlockMessage and IconMessage modes to ValidationMode. Both are dependant on WinUI [Input Validation]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md) work. <br><br> * If BasicValidationMode="TextBlockMessage" or BasicValidationMode="IconMessage", input that is outside the bounds of Minimum/Maximum or non-numerical/formulaic will trigger a validation warning consistent with [Input Validation]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md). A Minimum error will display "Minimum is [Minimum]." A Maximum error will display "Maximum is [Maximum]." Input errors will display "Only use numbers and ()+-/* ." Division by zero will return "Division by 0 unsupported." |
+| Input Validation | <br><br> * Add TextBlockMessage and IconMessage modes to ValidationMode. Both are dependant on WinUI [Input Validation]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md) work. <br><br> * If ValidationMode="TextBlockMessage" or ValidationMode="IconMessage", input that is outside the bounds of Minimum/Maximum or non-numerical/formulaic will trigger a validation warning consistent with [Input Validation]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md). A Minimum error will display "Minimum is [Minimum]." A Maximum error will display "Maximum is [Maximum]." Input errors will display "Only use numbers and ()+-/* ." Division by zero will return "Division by 0 unsupported." |
 | Hyper Scroll | * Allows a user to step by scrolling while focused in NumberBox. Align behavior with VS Blend implementation. * Focus and hover required for hyper scroll behavior to take place as to not reduce quality of experience on scrollable surfaces. <br><br> * If a calculation is stepped, it will be calculated before the step is applied.|
 | Hyper Scroll | * Allows a user to step by scrolling while focused in NumberBox. Align behavior with VS Blend implementation. * Focus and hover required for hyper scroll behavior to take place as to not reduce quality of experience on scrollable surfaces. <br><br> * If a calculation is stepped, it will be calculated before the step is applied.|
 | Hyper Drag | * Allows a user to step by focusing on a NumberBox and dragging the cursor while clicking. Align to WinRT XAML Toolkit's NumericUpDown and VS Blend's implementation. <br><br> * If a calculation is stepped, it will be calculated before the step is applied. |
