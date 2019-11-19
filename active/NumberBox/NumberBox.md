@@ -148,8 +148,6 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.Control
 
     NumberBoxSpinButtonPlacementMode SpinButtonPlacementMode{ get; set; };
 
-    Boolean IsHyperScrollEnabled;
-    Boolean IsHyperDragEnabled;
     Boolean IsWrapEnabled;
 
     Windows.Globalization.NumberFormatting.INumberFormatter2 NumberFormatter;
@@ -172,8 +170,6 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.Control
     
     static Windows.UI.Xaml.DependencyProperty SpinButtonPlacementModeProperty{ get; };
     
-    static Windows.UI.Xaml.DependencyProperty IsHyperDragEnabledProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty IsHyperScrollEnabledProperty{ get; };   
     static Windows.UI.Xaml.DependencyProperty IsWrapEnabled{ get; };
     
     static Windows.UI.Xaml.DependencyProperty NumberFormatter{ get; };
