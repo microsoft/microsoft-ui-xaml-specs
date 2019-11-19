@@ -16,11 +16,26 @@ You can use a NumberBox control to capture and display mathematic input. If you 
 
 Here's the XAML for a basic NumberBox that demonstrates the default look. Use [x:Bind](https://docs.microsoft.com/en-us/windows/uwp/xaml-platform/x-bind-markup-extension#property-path) to ensure the data displayed to the user remains in sync with the data stored in your app. 
 
+
+```XAML
+<NumberBox Value="{x:Bind Path=ViewModel.NumberBoxValue, Mode=TwoWay}" />
+```
+![An in-focus input field showing 0.](images/numberbox-basic.PNG)
+
+### Labeling NumberBox
+
+Use `Header` or `PlaceholderText` if the purpose of the NumberBox isn't clear. `Header` is visible whether or not the NumberBox has a value. 
+
 ```XAML
 <NumberBox Header="Enter expression:"
     Value="{x:Bind Path=ViewModel.NumberBoxValue, Mode=TwoWay}" />
 ```
-![An in-focus input field showing 0.](images/numberbox-basic.PNG)
+`PlaceholderText` is displayed inside the NumberBox and disappears once a value has been entered.
+
+```XAML
+<NumberBox PlaceholderText="A + B"
+    Value="{x:Bind Path=ViewModel.NumberBoxValue, Mode=TwoWay}" />
+```
 
 ### Enable calculation support
 
@@ -28,8 +43,7 @@ Setting the `AcceptsCalculation` property to true enables NumberBox to evaluate 
 
 XAML
 ```XAML
-<NumberBox Header="Enter expression:" 
-    Value="{x:Bind Path=ViewModel.NumberBoxValue, Mode=TwoWay}"
+<NumberBox Value="{x:Bind Path=ViewModel.NumberBoxValue, Mode=TwoWay}"
     AcceptsCalculation="True" />
 ```
 
@@ -41,8 +55,7 @@ This defaults to `Hidden`, but NumberBox offers two visible placement modes: `In
 
 XAML
 ```XAML
-<NumberBox Header="Quantity"
-    Value="{x:Bind Path=ViewModel.NumberBoxValue, Mode=TwoWay}"
+<NumberBox Value="{x:Bind Path=ViewModel.NumberBoxValue, Mode=TwoWay}"
     StepFrequency="2"
     SpinButtonPlacementMode="Inline" />
 ```
@@ -53,8 +66,7 @@ Set `SpinButtonPlacementMode` to `Compact` to enable the buttons to appear as a 
 
 XAML
 ```XAML
-<NumberBox Header="Quantity"
-    Value="{x:Bind Path=ViewModel.NumberBoxValue, Mode=TwoWay}"
+<NumberBox Value="{x:Bind Path=ViewModel.NumberBoxValue, Mode=TwoWay}"
     StepFrequency="2"
     SpinButtonPlacementMode="Compact" />
 ```
@@ -85,6 +97,21 @@ Setting `ValidationMode` to `Disabled` allows custom input validation to be conf
 ### Input Scope
 
 `Number` will be used for the [input scope](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Input.InputScopeNameValue). This input scope is intended for working with digits 0-9. This may be overwritten but alternative InputScope types will not be explicitly supported. 
+
+### Not a Number
+
+## Recommendations
+
+* Use `Header` or `PlaceholderText` if the purpose of the NumberBox isn't clear. `Header` is visible whether or not the NumberBox has a value. `PlaceholderText` is displayed inside the NumberBox and disappears once a value has been entered.
+
+
+Give the password box an appropriate width for the range of values that can be entered. Word length varies between languages, so take localization into account if you want your app to be world-ready.
+Don't put another control right next to a password input box. The password box has a password reveal button for users to verify the passwords they have typed, and having another control right next to it might make users accidentally reveal their passwords when they try to interact with the other control. To prevent this from happening, put some spacing between the password in put box and the other control, or put the other control on the next line.
+Consider presenting two password boxes for account creation: one for the new password, and a second to confirm the new password.
+Only show a single password box for logins.
+When a password box is used to enter a PIN, consider providing an instant response as soon as the last number is entered instead of using a confirmation button.
+
+When a NumberBox is cleared of input, `Value` will be set to `NaN` to indicate no numerical value is present. 
 
 ## API Notes
 
