@@ -89,6 +89,10 @@ out with an explanation either here or in the Examples -->
 <!-- todo: Calculations probably require a more involved description, this is the place to put it. -->
 <!-- Todo: Needs an input validation example, and probably a section in the Remarks about input validation. -->
 
+### Input Scope
+
+"Number" will be used for the [input scope](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Input.InputScopeNameValue). This input scope is intended for working with digits 0-9. This may be overwritten but alternative InputScope types will not be explicitly supported. 
+
 ## API Notes
 <!-- Option 1: Give a one or two line description of each API (type
 and member), or at least the ones that aren't obvious
@@ -99,9 +103,6 @@ isn't the type's default (for example an int-typed property that doesn't default
 <!-- Option 2: Put these descriptions in the below API Details section,
 with a "///" comment above the member or type. -->
 
-
-<!-- todo: The behavior WRT InputScope should be described here. Here, rather than the table below, because InputScope isn't a NumberBox property, but it's NumberBox behavior on an inner TextBox. -->
-
 ### Notable Properties  
 
 | Name | Description |
@@ -109,8 +110,6 @@ with a "///" comment above the member or type. -->
 | StepFrequency | Gets or sets the value part of a value range that steps should be created for. |
 
 ## API Details
-<!-- todo: There's a bunch of API in here that's not described in the Examples, Remarks, or API Notes. That's OK for obvious APIs like Header (although it's good that that's demonstrated in an Example already.) But for example there's been no mention of HyperScroll. -->
-
 <!-- todo: We're missing some basic text capabilities: SelectionFlyout, SelectionHighlightColor, TextReadingOrder, PreventKeyboardDisplayOnProgrammaticFocus, Description. These are basic feature that I think any text control should have. -->
 
 <!-- todo: Missing some APIs in here, like TemplatSettings class and event args classes -->
