@@ -110,11 +110,6 @@ enum NumberBoxValidationMode
     Disabled,
 };
 
-runtimeclass NumberBoxValueChangingEventArgs
-{
-    Boolean IsContentChanging;
-};
-
 runtimeclass NumberBoxValueChangedEventArgs
 {
     System.Windows.Controls.UndoAction Action;
@@ -147,10 +142,7 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.Control
 
     Windows.Globalization.NumberFormatting.INumberFormatter2 NumberFormatter;
 
-<!-- todo: Do we need ValueChanging? Assume we do, the Remarks or API Notes section should explain it's behavior. Does this respond to TextBox's TextChanging or BeforeTextChanging events? -->
-
     event Windows.Foundation.TypedEventHandler<NumberBox, NumberBoxValueChangedEventArgs> ValueChanged;
-    event Windows.Foundation.TypedEventHandler<NumberBox, NumberBoxValueChangingEventArgs> ValueChanging;
     
     static Windows.UI.Xaml.DependencyProperty MinimumProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty MaximumProperty{ get; };
