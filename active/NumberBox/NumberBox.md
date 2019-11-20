@@ -30,12 +30,17 @@ Use `Header` or `PlaceholderText` if the purpose of the NumberBox isn't clear. `
 <NumberBox Header="Enter expression:"
     Value="{x:Bind Path=ViewModel.NumberBoxValue, Mode=TwoWay}" />
 ```
+
+![An in-focus input field showing 0.](images/numberbox-header.PNG)
+
 `PlaceholderText` is displayed inside the NumberBox and disappears once a value has been entered.
 
 ```XAML
 <NumberBox PlaceholderText="A + B"
     Value="{x:Bind Path=ViewModel.NumberBoxValue, Mode=TwoWay}" />
 ```
+
+![An in-focus input field showing 0.](images/numberbox-placeholder-text.PNG)
 
 ### Enable calculation support
 
@@ -90,7 +95,28 @@ Setting `ValidationMode` to `Disabled` allows custom input validation to be conf
 
 ### Formatting input 
 
-<!-- todo: fill in -->
+[Number formatting](https://docs.microsoft.com/en-us/uwp/api/windows.globalization.numberformatting) can be used to format the value of a Numberbox by configuring an instance of a formatting class and assigning it to the `NumberFormatter` property. Decimal, currency, percent, and significant figures are few of the number formatting classes available. 
+
+Here is an example of using DecimalFormatter to format a NumberBox's value to have one integer digit and two fraction digits:  
+
+XAML
+```XAML
+<NumberBox  x:Name="FormattedNumberBox"
+Value="{x:Bind Path=ViewModel.NumberBoxValue, Mode=TwoWay}" />
+```
+
+C#
+```C#
+private void SetNumberBoxNumberFormatter()
+{
+    DecimalFormatter formatter = new DecimalFormatter();
+    formatter.IntegerDigits = 1;
+    formatter.FractionDigits = 2;
+    FormattedNumberBox.NumberFormatter = formatter;
+}
+```
+
+![A NumberBox showign a value of 0.00.](images/numberbox-formatted.PNG)
 
 ### Enabling hyper scroll 
 
