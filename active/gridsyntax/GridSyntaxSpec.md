@@ -82,9 +82,9 @@ A new XAML language feature that allows the initialization of collection-type pr
 
 2. The parser tokenizes the attribute value (a comma-delimited string) into a series of substrings, each of which represents the initialization value of a single element of the collection.
 
-3a. The parser will perform the usual "initialize an instance of a type from a string" operation, using the assigned ContentProperty with the string as an argument to create the object. See Section 6.6.4. Value Creation from Attribute Text in the [MS-XAML Spec](http://download.microsoft.com/download/0/a/6/0a6f7755-9af5-448b-907d-13985accf53e/[MS-XAML].pdf) for more details. 
+3. The parser will perform the usual "initialize an instance of a type from a string" operation, using the assigned ContentProperty with the string as an argument to create the object. See Section 6.6.4. Value Creation from Attribute Text in the [MS-XAML Spec](http://download.microsoft.com/download/0/a/6/0a6f7755-9af5-448b-907d-13985accf53e/[MS-XAML].pdf) for more details. 
 
-3b. If the property being assigned to already has a value, i.e. its collection already has items in it, the intialized instances will be appended to the existing collection. If the collection is null, a new collection will be created with the initialized items. 
+<t/> NOTE: If the property being assigned to already has a value, i.e. its collection already has items in it, the intialized instances will be appended to the existing collection. If the collection is null, a new collection will be created with the initialized items. 
 
 In terms of Grid, this means that the ColumnDefinitions and RowDefinitions properties are able to be defined by providing a comma-delimited string of ColumnDefinitions (Width values) and a comma-delimited string of RowDefinitions (Height values), respectively. 
 In order to support this language feature in Grid, a mechanism is needed that allows ColumnDefinition and RowDefinition objects to be createable from their Width/Height properties, respectively. To achieve this, the content property of ColumnDefinition is set to the Width property, and the content property of RowDefinition is set to the Height property.This will be used to make the new syntax (see below) fully functional.
