@@ -54,13 +54,13 @@ A standard ColorPicker using DisplayMode "Vertical":
 ```xaml
 <muxc:ColorPicker IsAlphaEnabled="True" DisplayMode="Vertical"/>
 ```
-![Vertical ColorPicker]("./ColorPicker_VerticalMode.png")
+![Vertical ColorPicker](./ColorPicker_VerticalMode.png)
 
 Standard ColorPicker using DisplayMode "Horizontal":
 ```xaml
-<muxc:ColorPicker IsAlphaEnabled="True" DisplayMode="Vertical"/>
+<muxc:ColorPicker IsAlphaEnabled="True" DisplayMode="Horizontal"/>
 ```
-![Horizontal ColorPicker]("./ColorPicker_VerticalMode.png")
+![Horizontal ColorPicker](./ColorPicker_HorizontalMode.png)
 
 <!-- As an example of this section, see the Examples section for the PasswordBox control 
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
