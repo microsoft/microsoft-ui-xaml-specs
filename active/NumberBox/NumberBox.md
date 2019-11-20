@@ -31,7 +31,7 @@ Use `Header` or `PlaceholderText` if the purpose of the NumberBox isn't clear. `
     Value="{x:Bind Path=ViewModel.NumberBoxValue, Mode=TwoWay}" />
 ```
 
-![An in-focus input field showing 0.](images/numberbox-header.PNG)
+![A header reading "Enter expression:" above a NumberBox.](images/numberbox-header.PNG)
 
 `PlaceholderText` is displayed inside the NumberBox and disappears once a value has been entered.
 
@@ -40,7 +40,7 @@ Use `Header` or `PlaceholderText` if the purpose of the NumberBox isn't clear. `
     Value="{x:Bind Path=ViewModel.NumberBoxValue, Mode=TwoWay}" />
 ```
 
-![An in-focus input field showing 0.](images/numberbox-placeholder-text.PNG)
+![A NumberBox containing placeholder text reading "A + B".](images/numberbox-placeholder-text.PNG)
 
 ### Enable calculation support
 
