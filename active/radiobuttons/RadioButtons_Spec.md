@@ -169,29 +169,35 @@ If you find that you need wrapping behavior, perhaps a RadioButtons group isn't 
 
 # API Details
 
-## RadioButtons
+## RadioButtons IDL
 
-```
-namespace Microsoft.UI.Xaml.Controls
+``` c++
+namespace MU_XC_NAMESPACE
 {
+
+[WUXC_VERSION_PREVIEW]
 [webhosthidden]
 [contentproperty("Items")]
+[MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
+[MUX_PROPERTY_CHANGED_CALLBACK_METHODNAME("OnPropertyChanged")]
 unsealed runtimeclass RadioButtons : Windows.UI.Xaml.Controls.Control
 {
     RadioButtons();
 
     Object ItemsSource;
     Windows.Foundation.Collections.IVector<Object> Items{ get; };
-    Windows.UI.Xaml.DataTemplate ItemTemplate;
+    [MUX_DEFAULT_VALUE("winrt::RadioButtonsElementFactory{}")]
+    Object ItemTemplate;
 
-    Windows.UI.Xaml.DependencyObject ContainerFromItem(Object item);
-    Windows.UI.Xaml.DependencyObject ContainerFromIndex(Int32 index);
+    Windows.UI.Xaml.UIElement ContainerFromIndex(Int32 index);
 
+    [MUX_DEFAULT_VALUE("-1")]
     Int32 SelectedIndex;
-    Object SelectedItem;
+    Object SelectedItem{ get; };
     event Windows.UI.Xaml.Controls.SelectionChangedEventHandler SelectionChanged;
 
-    Int32 MaxColumns;
+    [MUX_DEFAULT_VALUE("1")]
+    Int32 MaximumColumns;
     Object Header;
 
     static Windows.UI.Xaml.DependencyProperty ItemsSourceProperty{ get; };
@@ -199,54 +205,84 @@ unsealed runtimeclass RadioButtons : Windows.UI.Xaml.Controls.Control
     static Windows.UI.Xaml.DependencyProperty ItemTemplateProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty SelectedIndexProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty SelectedItemProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty MaxColumnsProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty MaximumColumnsProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty HeaderProperty{ get; };
 }
-}
-```
 
-## RadioButtons Automation Peer
+}
 
-```
-namespace Microsoft.UI.Xaml.Automation.Peers
-{
-[webhosthidden]
-unsealed runtimeclass RadioButtonsListViewItemAutomationPeer : Windows.UI.Xaml.Automation.Peers.ListViewItemAutomationPeer
-{
-    RadioButtonsListViewItemAutomationPeer(RadioButtonsListViewItem owner);
-}
-}
 ```
 
 ## RadioButtons Primitives
 
-```
-namespace Microsoft.UI.Xaml.Controls.Primitives
+``` c++
+namespace MU_XCP_NAMESPACE
 {
-[webhosthidden]
-unsealed runtimeclass RadioButtonsListView : Windows.UI.Xaml.Controls.ListView
-{
-    RadioButtonsListView();
-}
-
+[WUXC_VERSION_PREVIEW]
 [webhosthidden]
 [default_interface]
-unsealed runtimeclass RadioButtonsListViewItem : Windows.UI.Xaml.Controls.ListViewItem
+unsealed runtimeclass RadioButtonsElementFactory : MU_XC_NAMESPACE.ElementFactory
 {
-    RadioButtonsListViewItem();
+    RadioButtonsElementFactory();
 }
+
+[WUXC_VERSION_PREVIEW]
+[webhosthidden]
+[default_interface]
+unsealed runtimeclass ColumnMajorUniformToLargestGridLayout : MU_XC_NAMESPACE.NonVirtualizingLayout
+{
+    ColumnMajorUniformToLargestGridLayout();
+
+    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
+    Int32 MaximumColumns{ get; set; };
+    static Windows.UI.Xaml.DependencyProperty MaximumColumnsProperty{ get; };
+
+    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
+    Int32 ColumnSpacing{ get; set; };
+    static Windows.UI.Xaml.DependencyProperty ColumnSpacingProperty{ get; };
+
+    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
+    Int32 RowSpacing{ get; set; };
+    static Windows.UI.Xaml.DependencyProperty RowSpacingProperty{ get; };
 }
+
+}
+
+```
+
+## RadioButtons.xaml
+
+``` xml
+<Style TargetType="local:RadioButtons" BasedOn="{StaticResource DefaultRadioButtonsStyle}" />
+
+<Style x:Key="DefaultRadioButtonsStyle" TargetType="local:RadioButtons">
+    <Setter Property="IsTabStop" Value="False" />
+    <Setter Property="TabNavigation" Value="Once" />
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="local:RadioButtons">
+                <StackPanel>
+                    <ContentPresenter Content="{TemplateBinding Header}"/>
+                    <local:ItemsRepeater x:Name="InnerRepeater" ItemTemplate="{TemplateBinding ItemTemplate}">
+                        <local:ItemsRepeater.Layout>
+                            <primitives:ColumnMajorUniformToLargestGridLayout ColumnSpacing="7" RowSpacing="3"/>
+                        </local:ItemsRepeater.Layout>
+                    </local:ItemsRepeater>
+                </StackPanel>
+                </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
 ```
 
 # API Notes
 
 | Name | Description |
 |:-:|:--|
-| Header | Places a text label above the group of RadioButton elements and is exposed to the UIA tree via the DataContext property on the RadioButtons control's ContentPresenter. |
-| HeaderTemplate | The template that specifies the visualization of the header object |
-| SelectedItem | Gets or sets the selected item. Selection is denoted by that item's RadioButton icon being checked. |
-| SelectedIndex | Gets or sets the selected index. Selection is denoted by that item's RadioButton icon being checked.|
+| Header | Places a label object above the group of RadioButton elements and is exposed to the UIA tree via the DataContext property on the RadioButtons control's ContentPresenter. |
+| SelectedItem | Gets the content of the selected RadioButton item. Selection is denoted by that item's RadioButton icon being checked. |
+| SelectedIndex | Gets or sets the selected RadioButton item by index. Selection is denoted by that item's RadioButton icon being checked.|
 | Items | Gets or sets an object source used to generate the content of the ItemsControl. All items placed within the RadioButtons control will get the content of a generated RadioButton. |
 | ItemsSource | Gets or sets an object source used to generate the content of the ItemsControl. |
 | ItemTemplate | The template set on any generated RadioButton elements within the RadioButtons control. If the root of the ItemTemplate is a RadioButton it will be used as the generated container. |
-| MaxColumns | Defines the number of columns used to determine the control's layout |
+| MaximumColumns | Defines the number of columns used to determine the control's layout |
