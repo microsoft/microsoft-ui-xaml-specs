@@ -36,8 +36,7 @@ The aim of this new API is, to make the ColorPicker more versatile to use and pr
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
 
-With the DisplayMode API for the ColorPicker, the ColorPicker is able to either layout itsself horizontally or vertically. 
-In addition to this the ColorPicker can also choose its layout based on the space available.
+With the DisplayMode API for the ColorPicker, the ColorPicker is able to either layout itsself horizontally or vertically.
 
 # Examples
 <!-- Use this section to explain the features of the API, showing
@@ -50,15 +49,15 @@ example code with each description. The general format is:
   
 <!-- Code samples should be in C# and/or C++/WinRT -->
 
-A standard ColorPicker using DisplayMode "Vertical":
+### A standard ColorPicker using Orientation "Vertical"
 ```xaml
-<muxc:ColorPicker IsAlphaEnabled="True" DisplayMode="Vertical"/>
+<muxc:ColorPicker IsAlphaEnabled="True" Orientation="Vertical"/>
 ```
 ![Vertical ColorPicker](./ColorPicker_VerticalMode.png)
 
-Standard ColorPicker using DisplayMode "Horizontal":
+### Standard ColorPicker using Orientation "Horizontal"
 ```xaml
-<muxc:ColorPicker IsAlphaEnabled="True" DisplayMode="Horizontal"/>
+<muxc:ColorPicker IsAlphaEnabled="True" Orientation="Horizontal"/>
 ```
 ![Horizontal ColorPicker](./ColorPicker_HorizontalMode.png)
 
@@ -74,8 +73,6 @@ only when there's a bug in the caller, such as argument exception.  But if for s
 reason it's necessary for a caller to catch an exception from an API, call that
 out with an explanation either here or in the Examples -->
 
-When using `DisplayMode="Auto"` the ColorPicker will prefer height over width, meaning if has enough vertical space it will choose a vertical layout, regardless of the horizontal space available.
-
 # API Notes
 <!-- Option 1: Give a one or two line description of each API (type
 and member), or at least the ones that aren't obvious
@@ -86,7 +83,7 @@ isn't the type's default (for example an int-typed property that doesn't default
 <!-- Option 2: Put these descriptions in the below API Details section,
 with a "///" comment above the member or type. -->
 
-DisplayMode: The DisplayMode determining wether to display horizontally or vertically.
+Orientation: The orientation determining wether to display horizontally or vertically.
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 ```c#
@@ -95,21 +92,9 @@ DisplayMode: The DisplayMode determining wether to display horizontally or verti
 unsealed runtimeclass ColorPicker
 {
     /// Gets or sets the DisplayMode of the ColorPicker
-    ColorPickerDisplayMode DisplayMode = ColorPickerDisplayMode.Vertical;
+    Windows.UI.Xaml.Controls.Orientation Orientation = Windows.UI.Xaml.Controls.Orientation.Vertical;
 }
 
-enum ColorPickerDisplayMode
-{
-    /// ColorPicker will adapt based on space available,
-    /// while vertical orientation will be preferred over horizontal orientation
-    Auto,
-
-    /// The ColorPicker will layout itsself such that horizontal space footprint is minimized
-    Vertical,
-
-    /// The ColorPicker will layout itsself such that vertical space footprint is minimized
-    Horizontal,
-}
 
 ```
 # Appendix
