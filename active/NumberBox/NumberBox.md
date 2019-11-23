@@ -44,12 +44,12 @@ Use `Header` or `PlaceholderText` if the purpose of the NumberBox isn't clear. `
 
 ### Enable calculation support
 
-Setting the `AcceptsCalculation` property to true enables NumberBox to evaluate basic inline expressions such as multiplication, division, addition, and subtraction using standard order of operations. Evaluation is triggered on loss of focus or when the user presses the "Enter" key. Once an expression is evaluated, the original form of the expression is not preserved.
+Setting the `AcceptsExpression` property to true enables NumberBox to evaluate basic inline expressions such as multiplication, division, addition, and subtraction using standard order of operations. Evaluation is triggered on loss of focus or when the user presses the "Enter" key. Once an expression is evaluated, the original form of the expression is not preserved.
 
 XAML
 ```XAML
 <NumberBox Value="{x:Bind Path=ViewModel.NumberBoxValue, Mode=TwoWay}"
-    AcceptsCalculation="True" />
+    AcceptsExpression="True" />
 ```
 
 ### Add increment and decrement stepping
@@ -195,7 +195,7 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.Control
   
     NumberBoxValidationMode ValidationMode;
 
-    Boolean AcceptsCalculation;
+    Boolean AcceptsExpression;
 
     NumberBoxSpinButtonPlacementMode SpinButtonPlacementMode{ get; set; };
 
@@ -218,7 +218,7 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.Control
     
     static Windows.UI.Xaml.DependencyProperty ValidationModeProperty{ get; };
     
-    static Windows.UI.Xaml.DependencyProperty AcceptsCalculationProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty AcceptsExpressionProperty{ get; };
     
     static Windows.UI.Xaml.DependencyProperty SpinButtonPlacementModeProperty{ get; };
     
@@ -236,7 +236,7 @@ unsealed runtimeclass NumberBox : Windows.UI.Xaml.Controls.Control
 | Property | Notes |
 |:---:|:---|
 | InputScope | "Number" will be used for the InputScope. This may be overwritten by the developer but alternative InputScope types will not be explicitly supported. | 
-| AcceptsCalculation | NumberBox will provide computation support for multiplication, division, addition, and subtraction across parenthetical order with standard operator precedence; i.e., [ 0-9()+-/* ] |
+| AcceptsExpression | NumberBox will provide computation support for multiplication, division, addition, and subtraction across parenthetical order with standard operator precedence; i.e., [ 0-9()+-/* ] |
 | Validation | * If ValidationMode="Disabled", no automatic validation will occur. This setting allows developers to configure custom validation via [Input Validation]( https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/lucashaines/inputvalidation/active/InputValidation/InputValidation.md). <br><br> * If ValidationMode="InvalidInputOverwritten", input that is non-numerical/formulaic will automatically be overwritten with the last legal value. |
 | Events | * Loss of focus, "Enter", and stepping [SEE API NOTES > SPINBUTTON && HYPER SCROLL && HYPER DRAG && KEYBOARD STEPPING] will trigger evalution. <br><br> * When Text (derived from TextBox) is changed by codebehind or user input on the evaluation triggers noted above, the TextChanging event will be fired. After, if ValidationEnabled="True", validation will be performed [See API NOTES > VALIDATION]. Text will then be updated and the TextChanged event will be fired. Text will then be converted to a Double and the ValueChanging event event will be fired. After, Value will be updated and the ValueChanged event will be fired. <br><br> * When Value is changed by codebehind, the ValueChanging event will be fired. After, if ValidationEnabled="True", validation will be performed [See API NOTES > VALIDATION]. Value will then be updated and the ValueChanged event will be fired. Value will then be converted to a String and the TextChanging event event will be fired.  After, Text will be updated and the TextChanged event will be fired. |
 | SpinButton | * When SpinButtonPlacementMode="Compact", the SpinButton will appear over NumberBox as a Flyout when NumberBox is in foucs.  <br><br> * If a pre-evaluation expression is stepped, it will be evaluated before the "step" is applied. <br><br> * SpinButton will disable increment/decrement buttons when the limits imposed by Maximum or Minimum would not allow another respective step. <br><br> * If IsWrapEnabled = "true", a step will not stop at the Minium or Maxmum, it will wrap instead. For example, if Minimum="0", Maximum="100", StepFrequency="5", and Value="98", and IsWrapEnabled="True", an incremental step results in Value="3".  |
