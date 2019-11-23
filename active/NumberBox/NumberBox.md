@@ -102,7 +102,7 @@ Here is an example of using DecimalFormatter to format a NumberBox's value to ha
 XAML
 ```XAML
 <NumberBox  x:Name="FormattedNumberBox"
-Value="{x:Bind Path=ViewModel.NumberBoxValue, Mode=TwoWay}" />
+    Value="{x:Bind Path=ViewModel.NumberBoxValue, Mode=TwoWay}" />
 ```
 
 C#
