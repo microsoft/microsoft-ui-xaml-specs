@@ -93,6 +93,8 @@ XAML
 
 Setting `ValidationMode` to `Disabled` allows custom input validation to be configured.  
 
+With regard to decimal points and commas, the formatting used by a user will be replaced by the formatting configured for the NumberBox. An input validation error will not be triggered. 
+
 ### Formatting input 
 
 [Number formatting](https://docs.microsoft.com/en-us/uwp/api/windows.globalization.numberformatting) can be used to format the value of a Numberbox by configuring an instance of a formatting class and assigning it to the `NumberFormatter` property. Decimal, currency, percent, and significant figures are few of the number formatting classes available. 
@@ -117,6 +119,8 @@ private void SetNumberBoxNumberFormatter()
 ```
 
 ![A NumberBox showign a value of 0.00.](images/numberbox-formatted.PNG)
+
+With regard to decimal points and commas, the formatting used by a user will be replaced by the formatting configured for the NumberBox. An input validation error will not be triggered. 
 
 ## Remarks
 
