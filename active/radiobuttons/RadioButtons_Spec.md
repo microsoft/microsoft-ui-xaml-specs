@@ -66,12 +66,12 @@ public sealed partial class MainPage : Page
 ## Vertical and horizontal RadioButton lists
 In instances where there is more that one column of RadioButton items within a single RadioButtons list control, the list will flow a column-major layout.
 
-|MaximumColumns not specified <br>OR<br> MaximumColumns = 1 |  MaximumColumns = 4 |
+|MaxColumns not specified <br>OR<br> MaxColumns = 1 |  MaxColumns = 4 |
 |:--:|:--:|
 | ![alt text](singlecolumn_example.png) | ![alt text](multicolumn_example_1.png) |
 
 ```xml
-<RadioButtons Header="Select Number" MaximumColumns="2">
+<RadioButtons Header="Select Number" MaxColumns="2">
     <x:String>1</x:String>
     <x:String>2</x:String>
     <x:String>3</x:String>
@@ -79,18 +79,18 @@ In instances where there is more that one column of RadioButton items within a s
 </RadioButtons>
 ```
 
-By default, the RadioButtons list will fill itself vertically, meaning if no ``MaximumColumns`` value is set, it will be assumed to be 1 and orient itself vertically.
+By default, the RadioButtons list will fill itself vertically, meaning if no ``MaxColumns`` value is set, it will be assumed to be 1 and orient itself vertically.
 
 ### Multiple columns (uncommon case)
 
-If you specify a ``MaxiumumColumns`` value that is not equal to the number of items in the RadioButtons list, the list will arrange  itself in column-major order and put any uneven/remaining items in the first column, in the case of an uneven ``MaximumColumns`` value or list items defined.
+If you specify a ``MaxColumns`` value that is not equal to the number of items in the RadioButtons list, the list will arrange  itself in column-major order and put any uneven/remaining items in the first column, in the case of an uneven ``MaxColumns`` value or list items defined.
 
-|MaximumColumns = 3|
+|MaxColumns = 3|
 |:--|
 |![alt text](multicolumn_example_2.png)|
 
 ```xml
-<RadioButtons Header="Select Number" MaximumColumns="3">
+<RadioButtons Header="Select Number" MaxColumns="3">
     <x:String>1</x:String>
     <x:String>2</x:String>
     <x:String>3</x:String>
@@ -202,7 +202,7 @@ namespace MU_XC_NAMESPACE
     Object SelectedItem{ get; };
     event Windows.UI.Xaml.Controls.SelectionChangedEventHandler SelectionChanged;
 
-    Int32 MaximumColumns;
+    Int32 MaxColumns;
     Object Header;
 
     static Windows.UI.Xaml.DependencyProperty ItemsSourceProperty{ get; };
@@ -210,7 +210,7 @@ namespace MU_XC_NAMESPACE
     static Windows.UI.Xaml.DependencyProperty ItemTemplateProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty SelectedIndexProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty SelectedItemProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty MaximumColumnsProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty MaxColumnsProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty HeaderProperty{ get; };
   }
 }
@@ -230,7 +230,7 @@ namespace MU_XCP_NAMESPACE
   {
     ColumnMajorUniformToLargestGridLayout();
 
-    Int32 MaximumColumns{ get; set; };
+    Int32 MaxColumns{ get; set; };
     static Windows.UI.Xaml.DependencyProperty MaxColumnsProperty{ get; };
 
     Int32 ColumnSpacing{ get; set; };
