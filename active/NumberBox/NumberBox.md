@@ -301,6 +301,8 @@ N/A
 
 #### Explore
 
+* Is it interesting to provide configurability of the calculation engine, or make the engine available for general-purpose expression parsing? For example, should it be enabled that the developer could plug in something that routed the expression to wolframalpha.com and handed back the resulting value?
+ 
 * Is there value in creating a preview for calculation results? @mdtauk created some example visualizations: 
 
 ![NumberBox with a tool tip above to show a preview of the calculation results](https://user-images.githubusercontent.com/16964652/58919441-fbfe7900-86e2-11e9-8d2b-dd4dadfa74c5.png)
