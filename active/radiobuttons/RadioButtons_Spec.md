@@ -56,11 +56,49 @@ public sealed partial class MainPage : Page
         this.InitializeComponent();
 
         radioButtonItems = new List<OptionDataModel>();
-        radioButtonItems.Add(new OptionDataModel() { label = "Item 1" });
-        radioButtonItems.Add(new OptionDataModel() { label = "Item 2" });
-        radioButtonItems.Add(new OptionDataModel() { label = "Item 3" });
+        radioButtonItems.Add(new OptionDataModel() { Label = "Item 1" });
+        radioButtonItems.Add(new OptionDataModel() { Label = "Item 2" });
+        radioButtonItems.Add(new OptionDataModel() { Label = "Item 3" });
     }
 }
+```
+
+## Vertical and horizontal RadioButton lists
+In instances where there is more that one column of RadioButton items within a single RadioButtons list control, the list will flow a column-major layout.
+
+|MaximumColumns not specified <br>OR<br> MaximumColumns = 1 |  MaximumColumns = 4 |
+|:--:|:--:|
+| ![alt text](singlecolumn_example.png) | ![alt text](multicolumn_example_1.png) |
+
+```xml
+<RadioButtons Header="Select Number" MaximumColumns="2">
+    <x:String>1</x:String>
+    <x:String>2</x:String>
+    <x:String>3</x:String>
+    <x:String>4</x:String>
+</RadioButtons>
+```
+
+By default, the RadioButtons list will fill itself vertically, meaning if no ``MaximumColumns`` value is set, it will be assumed to be 1 and orient itself vertically.
+
+### Multiple columns (uncommon case)
+
+If you specify a ``MaxiumumColumns`` value that is not equal to the number of items in the RadioButtons list, the list will arrange  itself in column-major order and put any uneven/remaining items in the first column, in the case of an uneven ``MaximumColumns`` value or list items defined.
+
+|MaximumColumns = 3|
+|:--|
+|![alt text](multicolumn_example_2.png)|
+
+```xml
+<RadioButtons Header="Select Number" MaximumColumns="3">
+    <x:String>1</x:String>
+    <x:String>2</x:String>
+    <x:String>3</x:String>
+    <x:String>4</x:String>
+    <x:String>5</x:String>
+    <x:String>6</x:String>
+    <x:String>7</x:String>
+</RadioButtons>
 ```
 
 # Remarks
@@ -102,45 +140,7 @@ This means that in purely vertical RadioButton group lists, left/right arrow key
 
 >This behavior is defined more below when we discuss multi-column RadioButton group lists.
 
-## Vertical and horizontal RadioButton lists
-In instances where there is more that one column of RadioButton items within a single RadioButtons list control, the list will flow a column-major layout.
-
-|MaximumColumns not specified <br>OR<br> MaximumColumns = 1 |  MaximumColumns = 4 |
-|:--:|:--:|
-| ![alt text](singlecolumn_example.png) | ![alt text](multicolumn_example_1.png) |
-
-```xml
-<RadioButtons Header="Select Number" MaximumColumns="2">
-    <x:String>1</x:String>
-    <x:String>2</x:String>
-    <x:String>3</x:String>
-    <x:String>4</x:String>
-</RadioButtons>
-```
-
-By default, the RadioButtons list will fill itself vertically, meaning if no ``MaximumColumns`` value is set, it will be assumed to be 1 and orient itself vertically.
-
-### Multiple columns (uncommon case)
-
-If you specify a ``MaxiumumColumns`` value that is not equal to the number of items in the RadioButtons list, the list will arrange  itself in column-major order and put any uneven/remaining items in the first column, in the case of an uneven ``MaximumColumns`` value or list items defined.
-
-|MaximumColumns = 3|
-|:--|
-|![alt text](multicolumn_example_2.png)|
-
-```xml
-<RadioButtons Header="Select Number" MaximumColumns="3">
-    <x:String>1</x:String>
-    <x:String>2</x:String>
-    <x:String>3</x:String>
-    <x:String>4</x:String>
-    <x:String>5</x:String>
-    <x:String>6</x:String>
-    <x:String>7</x:String>
-</RadioButtons>
-```
-
-#### Keyboard navigation with multiple columns
+### Keyboard navigation with multiple columns
 The keyboarding behavior is the same as the single-column navigation, it just wraps to the next column when there is more than one defined.
 
 ![alt text](keyboardnav_multicol.png)
@@ -153,7 +153,7 @@ When you are navigating a RadioButtons list via the keyboard, as focus is placed
 | ![alt text](2selected_nonav.png) | ![alt text](3selected_yesnav.png)|
 | Focus is on the "2" RadioButton, and it is shown as selected | The down or right arrow key has been pressed, so focus was moved to the "3" RadioButton, thus selected 3 and unselected 2. |
 
-## Narrator behavior
+## Accessibility behavior
 
 Below is a detailed table of, depending on the user interaction, what the narrator is expected to say.
 
@@ -169,34 +169,39 @@ If you find that you need wrapping behavior, perhaps a RadioButtons group isn't 
 
 # API Details
 
+## API Notes
+
+| Name | Description |
+|:-|:--|
+| Header | Places a label object above the group of RadioButton elements and is exposed to the UIA tree via the DataContext property on the RadioButtons control's ContentPresenter. |
+| SelectedItem | Gets the content of the selected RadioButton item. Selection is denoted by that item's RadioButton icon being checked. |
+| SelectedIndex | Gets or sets the selected RadioButton item by index. Selection is denoted by that item's RadioButton icon being checked.|
+| Items | Gets or sets an object source within the RadioButtons group. All items placed within the RadioButtons control will be in the content of a generated RadioButton. |
+| ItemsSource | Gets or sets an object source used to generate the content of the ItemsControl. |
+| ItemTemplate | The template set on any generated RadioButton elements within the RadioButtons control. If the root of the ItemTemplate is a RadioButton it will be used as the generated container. |
+| MaxColumns | Defines the number of columns used to determine the control's layout |
+| ColumnMajorUniformToLargestGridLayout | To be defined. |
+
 ## RadioButtons IDL
 
 ``` c++
 namespace MU_XC_NAMESPACE
 {
 
-[WUXC_VERSION_PREVIEW]
-[webhosthidden]
-[contentproperty("Items")]
-[MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
-[MUX_PROPERTY_CHANGED_CALLBACK_METHODNAME("OnPropertyChanged")]
-unsealed runtimeclass RadioButtons : Windows.UI.Xaml.Controls.Control
-{
+  unsealed runtimeclass RadioButtons : Windows.UI.Xaml.Controls.Control
+  {
     RadioButtons();
 
     Object ItemsSource;
     Windows.Foundation.Collections.IVector<Object> Items{ get; };
-    [MUX_DEFAULT_VALUE("winrt::RadioButtonsElementFactory{}")]
     Object ItemTemplate;
 
     Windows.UI.Xaml.UIElement ContainerFromIndex(Int32 index);
 
-    [MUX_DEFAULT_VALUE("-1")]
     Int32 SelectedIndex;
     Object SelectedItem{ get; };
     event Windows.UI.Xaml.Controls.SelectionChangedEventHandler SelectionChanged;
 
-    [MUX_DEFAULT_VALUE("1")]
     Int32 MaximumColumns;
     Object Header;
 
@@ -207,10 +212,8 @@ unsealed runtimeclass RadioButtons : Windows.UI.Xaml.Controls.Control
     static Windows.UI.Xaml.DependencyProperty SelectedItemProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty MaximumColumnsProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty HeaderProperty{ get; };
+  }
 }
-
-}
-
 ```
 
 ## RadioButtons Primitives
@@ -218,39 +221,28 @@ unsealed runtimeclass RadioButtons : Windows.UI.Xaml.Controls.Control
 ``` c++
 namespace MU_XCP_NAMESPACE
 {
-[WUXC_VERSION_PREVIEW]
-[webhosthidden]
-[default_interface]
-unsealed runtimeclass RadioButtonsElementFactory : MU_XC_NAMESPACE.ElementFactory
-{
+  unsealed runtimeclass RadioButtonsElementFactory : MU_XC_NAMESPACE.ElementFactory
+  {
     RadioButtonsElementFactory();
-}
+  }
 
-[WUXC_VERSION_PREVIEW]
-[webhosthidden]
-[default_interface]
-unsealed runtimeclass ColumnMajorUniformToLargestGridLayout : MU_XC_NAMESPACE.NonVirtualizingLayout
-{
+  unsealed runtimeclass ColumnMajorUniformToLargestGridLayout : MU_XC_NAMESPACE.NonVirtualizingLayout
+  {
     ColumnMajorUniformToLargestGridLayout();
 
-    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
     Int32 MaximumColumns{ get; set; };
-    static Windows.UI.Xaml.DependencyProperty MaximumColumnsProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty MaxColumnsProperty{ get; };
 
-    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
     Int32 ColumnSpacing{ get; set; };
     static Windows.UI.Xaml.DependencyProperty ColumnSpacingProperty{ get; };
 
-    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
     Int32 RowSpacing{ get; set; };
     static Windows.UI.Xaml.DependencyProperty RowSpacingProperty{ get; };
+  }
 }
-
-}
-
 ```
 
-## RadioButtons.xaml
+## Default ControlTemplate
 
 ``` xml
 <Style TargetType="local:RadioButtons" BasedOn="{StaticResource DefaultRadioButtonsStyle}" />
@@ -274,15 +266,3 @@ unsealed runtimeclass ColumnMajorUniformToLargestGridLayout : MU_XC_NAMESPACE.No
     </Setter>
 </Style>
 ```
-
-# API Notes
-
-| Name | Description |
-|:-:|:--|
-| Header | Places a label object above the group of RadioButton elements and is exposed to the UIA tree via the DataContext property on the RadioButtons control's ContentPresenter. |
-| SelectedItem | Gets the content of the selected RadioButton item. Selection is denoted by that item's RadioButton icon being checked. |
-| SelectedIndex | Gets or sets the selected RadioButton item by index. Selection is denoted by that item's RadioButton icon being checked.|
-| Items | Gets or sets an object source used to generate the content of the ItemsControl. All items placed within the RadioButtons control will get the content of a generated RadioButton. |
-| ItemsSource | Gets or sets an object source used to generate the content of the ItemsControl. |
-| ItemTemplate | The template set on any generated RadioButton elements within the RadioButtons control. If the root of the ItemTemplate is a RadioButton it will be used as the generated container. |
-| MaximumColumns | Defines the number of columns used to determine the control's layout |
