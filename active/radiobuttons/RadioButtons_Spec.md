@@ -153,8 +153,6 @@ When you have a single column list of RadioButton control options and you have a
 
 This means that in purely vertical RadioButton group lists, left/right arrow keys will not do anything, but up/down will still navigate as expected. However, in purely horizontal RadioButton group lists, left and right will navigate the same way as up and down.
 
->This behavior is defined more below when we discuss multi-column RadioButton group lists.
-
 ### Keyboard navigation with multiple columns
 The keyboarding behavior is the same as the single-column navigation, it just wraps to the next column when there is more than one defined.
 
