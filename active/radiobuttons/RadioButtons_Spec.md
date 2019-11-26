@@ -17,7 +17,7 @@ while also correctly supporting keyboarding and Narrator functionality.
 
 # Examples
 
-The following example demonstrates how to create a small collective group of RadioButton elements
+The following example demonstrates how to create a group of RadioButton elements
 using the RadioButtons control.
 
 ```xaml
