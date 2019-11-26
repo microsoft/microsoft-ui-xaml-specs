@@ -167,7 +167,7 @@ When you are navigating a RadioButtons list via the keyboard, as focus is placed
 |Before keyboard navigation | After keyboard navigation|
 |:--|:--|
 | ![alt text](2selected_nonav.png) | ![alt text](3selected_yesnav.png)|
-| Focus is on the "2" RadioButton, and it is shown as selected | The down or right arrow key has been pressed, so focus was moved to the "3" RadioButton, thus selected 3 and unselected 2. |
+| Focus is on the "2" RadioButton, and it is shown as selected | The down arrow key has been pressed, so focus was moved to the "3" RadioButton, thus selected 3 and unselected 2. |
 
 ### No Selection follows focus with gamepad
 If you're navigating the RadioButtons container with a gamepad controller, the selection follows focus behavior will be disabled. When navigating a RadioButtons control, no gamepad engagement is necessary to initiate navigation or to select RadioButton elements within the group.
