@@ -179,7 +179,7 @@ Below is a detailed table of, depending on the user interaction, what the narrat
 |Upon *first* putting focus into the group | Navigating to a selected item |
 |:--|:--|
 | "Group name" RadioButton collection, x of N selected | RadioButton "name" selected, x of N |
-|"Group name" RadioButton collection control, none selected| RadioButton "name" not selected, x of N <br> *(If navigating with shift-arrow keys, meaning no selection following focus)* |
+|"Group name" RadioButton collection, none selected| RadioButton "name" not selected, x of N <br> *(If navigating with shift-arrow keys, meaning no selection following focus)* |
 
 # API Details
 
