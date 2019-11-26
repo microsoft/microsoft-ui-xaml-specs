@@ -146,7 +146,7 @@ The keyboarding behavior is the same as the single-column navigation, it just wr
 ![alt text](keyboardnav_multicol.png)
 
 ## Selection follows focus
-When you are navigating a RadioButtons list via the keyboard, as focus is placed on a previous or next RadioButton item, that item will also get selected/checked. This means the previous item that was selected/checked will be unselected, and the currently focused one will be instead.
+When you are navigating a RadioButtons list via the keyboard, as focus is placed on a previous or next RadioButton item, that item will also get selected/checked. This means the previous item that was selected/checked will be unselected.
 
 |Before keyboard navigation | After keyboard navigation|
 |:--|:--|
