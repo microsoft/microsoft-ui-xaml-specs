@@ -291,6 +291,13 @@ This uses a comma as a delimiter, but also allows strings to have commas within 
 ### Release Details
 The xmlns will not be updated for this XAML language feature addition, i.e. there will be no formal update to the XAML language. Visual Studio, however, will have to be updated to accept the new syntax structure. This feature will be released with WinUI and not with the XAML SDK.
 
+### Tooling/Visual Studio Considerations
+The Designer is able to tell when an element is createable from string, and this language feature will make it so all collection-type properties are createable from string (if that string is formatted as a comma-separated list). So, the Designer will recognize that a collection-type property is assigned to a string, check if it is assignable from string, and then attempt to treat the string as a comma-separated list, similar to the way the XAML Parser works. 
+
+For the new syntax to work for Grid specifically, the Designer will not have any extra issues, as it will be able to query for a content property and create the appropriate ColumnDefinition or RowDefinition. 
+
+In terms of usage of this new XAML language feature in Visual Studio, VS needs a way to recognize the current XAML version that the developer is using. This will be done by... 
+
 ### Data and Intelligence Metrics
 #### P0: Feature Key Performance Indictors
 * Syntax has increased developer/consumer satisfaction
