@@ -13,7 +13,7 @@ It's like a ListView control, but the items in the list are RadioButton controls
 # Description
 
 RadioButtons is a new control that enables you to create groups of RadioButton elements easily,
-while also correctly supporting keyboarding and narrator functionality.
+while also correctly supporting keyboarding and Narrator functionality.
 
 # Examples
 
