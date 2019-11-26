@@ -1,5 +1,5 @@
 # Background
-Radio buttons are used for mutually exclusive options in an app. When the users selects
+Radio buttons are used for mutually exclusive options in an app. When the user selects
 one of a group, the previously-checked button is unchecked. Consequently, radio buttons
 must be grouped, which is done with the Xaml [RadioButton](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.RadioButton)
 control by setting the GroupName property on each button to the same value.
