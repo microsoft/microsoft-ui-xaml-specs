@@ -64,14 +64,18 @@ public sealed partial class MainPage : Page
 ```
 
 ## Vertical and horizontal RadioButton lists
-In instances where there is more that one column of RadioButton items within a single RadioButtons list control, the list will flow a column-major layout.
+In instances where there is more that one column of RadioButton items within a single RadioButtons container, the list will flow a column-major layout.
 
-|MaxColumns not specified <br>OR<br> MaxColumns = 1 |  MaxColumns = 4 |
-|:--:|:--:|
-| ![alt text](singlecolumn_example.png) | ![alt text](multicolumn_example_1.png) |
+This means the number specified in the `MaxColumns` property will populate the RadioButtons group in order from top to bottom, left to right.
+
+If no ``MaxColumns`` value is set, it will be assumed to be 1 and orient itself vertically:
+
+|MaxColumns not specified <br>OR<br> MaxColumns = 1 |
+|:--:|
+| ![alt text](singlecolumn_example.png) |
 
 ```xml
-<RadioButtons Header="Select Number" MaxColumns="2">
+<RadioButtons Header="Select Number">
     <x:String>1</x:String>
     <x:String>2</x:String>
     <x:String>3</x:String>
@@ -79,11 +83,24 @@ In instances where there is more that one column of RadioButton items within a s
 </RadioButtons>
 ```
 
-By default, the RadioButtons list will fill itself vertically, meaning if no ``MaxColumns`` value is set, it will be assumed to be 1 and orient itself vertically.
+If `MaxColumns` is equal to the number of items in the RadioButtons container, the group will appear oriented completely horizontally.
+
+| MaxColumns = 4 |
+|:--:|
+| ![alt text](multicolumn_example_1.png) |
+
+```xml
+<RadioButtons Header="Select Number" MaxComuns="4">
+    <x:String>1</x:String>
+    <x:String>2</x:String>
+    <x:String>3</x:String>
+    <x:String>4</x:String>
+</RadioButtons>
+```
 
 ### Multiple columns (uncommon case)
 
-If you specify a ``MaxColumns`` value that is not equal to the number of items in the RadioButtons list, the list will arrange  itself in column-major order and put any uneven/remaining items in the first column, in the case of an uneven ``MaxColumns`` value or list items defined.
+If you specify a ``MaxColumns`` value that is not equal to the number of items in the RadioButtons list, the list will arrange  itself in column-major order and put any uneven/remaining items in the first column.
 
 |MaxColumns = 3|
 |:--|
@@ -122,8 +139,6 @@ When a RadioButton is selected and the user tabs into the list, focus is put on 
 ### No RadioButton is selected
 When no RadioButton controls are selected in the RadioButtons list, focus is put on the first RadioButton in the list.
 
-> Note: The RadioButton that receives tab focus from this initial navigation will **not be selected/checked**.
-
 |Focus is on button<br>RadioButton group does not have focus | Tab has been pressed<br>RadioButton group now has focus|
 |:--:|:--:|
 | ![alt text](noselecteditem_notabfocus.png) | ![alt text](noselecteditem_tabfocus.png)|
@@ -145,6 +160,9 @@ The keyboarding behavior is the same as the single-column navigation, it just wr
 
 ![alt text](keyboardnav_multicol.png)
 
+#### Wrapping Behavior
+The RadioButtons group does not wrap. This is because when using a screen reader, a sense of boundary and clear indication of ends versus beginnings is lost and thus making it difficult for blind users to navigate the list easily. There is also no enumeration with a RadioButtons group, since groups like this are meant to have a resonable number of items within.
+
 ## Selection follows focus
 When you are navigating a RadioButtons list via the keyboard, as focus is placed on a previous or next RadioButton item, that item will also get selected/checked. This means the previous item that was selected/checked will be unselected, and the currently focused one will be instead.
 
@@ -164,11 +182,6 @@ Below is a detailed table of, depending on the user interaction, what the narrat
 |:--|:--|
 | "Group name" RadioButton collection, x of N selected | RadioButton "name" selected, x of N |
 |"Group name" RadioButton collection control, none selected| RadioButton "name" not selected, x of N <br> *(If navigating with shift-arrow keys, meaning no selection following focus)* |
-
-## No Wrapping
-The RadioButtons group does not wrap. This is because when using a screen reader, a sense of boundary and clear indication of ends versus beginnings is lost and thus making it difficult for blind users to navigate the list easily. There is also no enumeration with a RadioButtons group, since groups like this are meant to have a resonable number of items within.
-
-If you find that you need wrapping behavior, perhaps a RadioButtons group isn't for you. Consider using a [ListView with multiple selection enabled](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/listview-and-gridview#item-selection-and-interaction).
 
 # API Details
 
