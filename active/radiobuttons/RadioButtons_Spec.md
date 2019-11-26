@@ -105,7 +105,7 @@ If you specify a ``MaxColumns`` value that is not equal to the number of items i
 The RadioButtons control has special navigation behavior that helps keyboard users navigate the list more quickly and more easily.
 
 ## Putting focus into the RadioButtons list
-There are two states that the RadioButtons control can have with it's RadioButton content:
+There are two states that the RadioButtons control can have with its RadioButton content:
 
 - A list of RadioButton controls where none are selected/checked
 - A list of RadioButton controls where one is already selected/checked
