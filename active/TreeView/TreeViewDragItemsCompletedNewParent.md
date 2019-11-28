@@ -21,13 +21,13 @@ Imagine we have a tree like below with team name and their players.
 Drag Player2 and then drop it inside Team2 above Player3. In DragItemsCompleted event handler we can do the following to produce a status update text "Player 2 has changed to Team 2".
 
 ```C#
-        private void TreeView_DragItemsCompleted(TreeView sender, TreeViewDragItemsCompletedEventArgs args)
-        {
-            var playerName = args.Items[0] as string;
-            var teamName = args.NewParentItem as string;
+private void TreeView_DragItemsCompleted(TreeView sender, TreeViewDragItemsCompletedEventArgs args)
+{
+    var playerName = args.Items[0] as string;
+    var teamName = args.NewParentItem as string;
 
-            StatusTextBlock.SetText($"{playerName} has changed to {teamName}");
-        }
+    StatusTextBlock.SetText($"{playerName} has changed to {teamName}");
+}
 ```
 
 # API Details
