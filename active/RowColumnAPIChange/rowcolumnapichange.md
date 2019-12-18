@@ -1,4 +1,3 @@
-> See comments in Markdown for how to use this spec template
 
 <!-- The purpose of this spec is to describe a new feature and
 its APIs that make up a new feature in WinUI. -->
@@ -29,12 +28,23 @@ modifying an existing API. -->
 area, just explanation enough to understand this new API, rather than telling
 the reader "go read 100 pages of background information posted at ...". -->
 
+The current UWP API Reference has `RowDefinition` and `ColumnDefinition` classes, both of which respectively make up `Grid`'s `RowDefinitions` and `ColumnDefinitions` properties. Currently, RowDefinition and ColumnDefinition constructors do not take any arguments. Definition of a ColumnDefinition's `Width` property or a RowDefinition's `Height` property must be done inside the creation of a Row/ColumnDefinition, or on a separate line once the object has been created.
+
+This spec sets out to change that, and therefore sets out to change the following APIs:
+
+[RowDefinition Class](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.RowDefinition)
+
+[ColumnDefinition Class](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.columndefinition)
 
 # Description
 <!-- Use this section to provide a brief description of the feature.
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
+This new feature will allow developers to define their column widths and row heights within the column and row definitions themselves, not only making the code-behind easier to write, but making it cleaner and more understandable to read as well. 
 
+The planned API change will overload the ColumnDefinition and RowDefinition constructors to take in one or two arguments. The first overloaded constructor for `ColumnDefinition()` will take only a double-type argument called Width (Height for `RowDefinition()`). The second overloaded constructor for ColumnDefinition() will take a double-type argument Width (Height for RowDefinition()) and a [GridUnitType](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.gridlength.gridunittype) argument.
+
+This overloaded constructor takes the same arguments as the [GridLength](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.GridLength) constructor does - a double and a GridUnitType.  RowDefinition's Height property and ColumnDefinition's Width property are both of type GridLength, so with this change GridLength's arguments will be ported over to the ColumnDefinition and RowDefinition constructors directly.
 
 # Examples
 <!-- Use this section to explain the features of the API, showing
@@ -49,9 +59,36 @@ example code with each description. The general format is:
 
 <!-- As an example of this section, see the Examples section for the PasswordBox control 
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
+Current syntax to define a Grid with one column in code-behind:
+```csharp
+var grid = new Grid();
+var column = new ColumnDefinition();
+column.Width = new GridLength(1.0, GridUnitType.Star);
+grid.ColumnDefinitions.Add(column);
+```
+
+or
+
+```csharp
+var column = new ColumnDefinition
+{
+    Width = new GridLength(1.0, GridUnitType.Star)
+};
+```
 
 
-# Remarks
+New syntax to define a Grid with one column in code-behind:
+```csharp
+var grid = new Grid();
+grid.ColumnDefinitions.Add(new ColumnDefinition(1.0, GridUnitType.Star)); // Width="1*"
+```
+
+New syntax to define a Grid wtih one simple (no GridUnitType value) column in code-behind:
+```csharp
+grid.ColumnDefinitions.Add(new ColumnDefinition(500.0)); // Width="500px"
+```
+
+<!-- # Remarks -->
 <!-- Explanation and guidance that doesn't fit into the Examples section. -->
 
 <!-- APIs should only throw exceptions in exceptional conditions; basically,
@@ -60,19 +97,72 @@ reason it's necessary for a caller to catch an exception from an API, call that
 out with an explanation either here or in the Examples -->
 
 # API Notes
-<!-- Option 1: Give a one or two line description of each API (type
-and member), or at least the ones that aren't obvious
-from their name.  These descriptions are what show up
-in IntelliSense. For properties, specify the default value of the property if it
-isn't the type's default (for example an int-typed property that doesn't default to zero.) -->
+ColumnDefinition constructor will be overloaded to take a double `pixelWidth` OR take two arguments consisting of a double `width` and a GridUnitType `type`:
 
-<!-- Option 2: Put these descriptions in the below API Details section,
-with a "///" comment above the member or type. -->
+```csharp
+public ColumnDefinition(double pixelWidth) { ... }
+```
+
+```csharp
+public ColumnDefinition(double width, GridUnitType type) { ... }
+```
+
+RowDefinition constructor will be overloaded to take a double `pixelHeight` OR take two arguments consisting of a double `height` and a GridUnitType `type`:
+
+```csharp
+public RowDefinition(double pixelHeight) { ... }
+```
+
+```csharp
+public RowDefinition(double height, GridUnitType type) { ... }
+```
 
 # API Details
-<!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
+```csharp
+//RowDefinition API:
+[contract(Windows.Foundation.UniversalApiContract, 1)]
+[webhosthidden]
+[static_name("Windows.UI.Xaml.Controls.IRowDefinitionStatics", 5adf3fe5-2056-4724-94d6-e4812b022ec8)]
+[interface_name("Windows.UI.Xaml.Controls.IRowDefinition", 4abae829-d80c-4a5e-a48c-f8b3d3b6533d)]
+runtimeclass RowDefinition
+    : Windows.UI.Xaml.DependencyObject
+{
+    // vvvv
+    RowDefinition(double pixelHeight, GridUnitType type);
+    RowDefinition(double height);
+    // ^^^^
+    Windows.UI.Xaml.GridLength Height;
+    Double MaxHeight;
+    Double MinHeight;
+    Double ActualHeight{ get; };
+    static Windows.UI.Xaml.DependencyProperty HeightProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty MaxHeightProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty MinHeightProperty{ get; };
+};
 
-# Appendix
+//ColumnDefinition API:
+[contract(Windows.Foundation.UniversalApiContract, 1)]
+[webhosthidden]
+[static_name("Windows.UI.Xaml.Controls.IColumnDefinitionStatics", 06b0d728-d044-40c6-942e-ae60eac74851)]
+[interface_name("Windows.UI.Xaml.Controls.IColumnDefinition", f7f1b229-f024-467f-970a-7e705615db7b)]
+runtimeclass ColumnDefinition
+    : Windows.UI.Xaml.DependencyObject
+{
+    // vvvv
+    ColumnDefinition(double pixelWidth, GridUnitType type);
+    ColumnDefinition(double width);
+    // ^^^^
+    Windows.UI.Xaml.GridLength Width;
+    Double MaxWidth;
+    Double MinWidth;
+    Double ActualWidth{ get; };
+    static Windows.UI.Xaml.DependencyProperty WidthProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty MaxWidthProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty MinWidthProperty{ get; };
+};
+```
+
+<!-- # Appendix -->
 <!-- Anything else that you want to write down for posterity, but 
 that isn't necessary to understand the purpose and usage of the API.
 For example, implementation details. -->
