@@ -42,11 +42,10 @@ A few key points:
 
 # Table of Contents
 
-[Overview](#Overview)  
-[API](#API)   
-[Examples](#Layout-examples)   
-[API Notes](#API-Notes)   
-[API Details (IDL)](#API-Details)      
+[Overview](#overview)  
+[Examples](#layout-examples)   
+[API Notes](#api-notes)   
+[API Details (IDL)](#api-details)      
 
 
 # Overview
