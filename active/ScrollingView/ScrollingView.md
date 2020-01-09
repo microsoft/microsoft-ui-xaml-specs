@@ -18,13 +18,13 @@ For example the following shows a large text block that wraps horizontally and s
 
 The touch support in ScrollViewer is implemented with [DirectManipulation](https://docs.microsoft.com/en-us/previous-versions/windows/desktop/directmanipulation/direct-manipulation-portal), and has a lot of complicated history and implementation and dev experience. And DirectManipulation is deprecated, replaced by [InteractionTracker](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Composition.Interactions.InteractionTracker). (See also [Benefits of InteractionTracker](#Benefits-of-InteractionTracker) later in this document.)
 
-So this spec describes a new ScrollViewer control named `ScrollingView`. This new control is highly aligned in behavior and API with the existing ScrollViewer control, but is based on InteractionTracker, has new features such as animation-driven view changes, and is also designed to ensure full functionality of [ItemsRepeater](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.ItemsRepeater).
+This spec describes a new ScrollViewer control named `ScrollingView`. This new control is highly aligned in behavior and API with the existing ScrollViewer control, but is based on InteractionTracker, has new features such as animation-driven view changes, and is also designed to ensure full functionality of [ItemsRepeater](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.ItemsRepeater).
 
-`ScrollingView` is not yet a full replacement for ScrollViewer. So the latter is not yet being deprecated. `ScrollingView` will continue to be developed (in open source) after it's first release as part of the WinUI framework package.
+`ScrollingView` is not yet a full replacement for ScrollViewer. So the latter is not yet being deprecated. `ScrollingView` will continue to be developed (in open source) after its first release as part of the WinUI framework package.
 
 In order to avoid naming conflicts since the old and new controls are in the same Microsoft.UI.Xaml.Controls namespace, the new control is called `ScrollingView`. 
 
-So the above example becomes (simply renaming the control):
+The above example becomes (simply renaming the control):
 
 ```xml
 <Page xmlns=<http://schemas.microsoft.com/winfx/2006/xaml/presentation>
@@ -38,7 +38,7 @@ So the above example becomes (simply renaming the control):
 A few key points:
   - `ScrollingView` performs scrolling, panning, and zooming. There's no good word that covers that, and given the existing ScrollViewer naming, this is being called just *Scrolling*View. And the word "scroll" implies "pan" throughout.
   - The public API will largely mirror the existing control to minimize barriers to adoption.
-  - The API will differ in key areas that we believe will address top points of developer confusion with the existing control and/or provide meaningful improvements. For each scenario in this spec the code for both the new `ScrollingView` (new control) and the existing ScrollViewer (existing control) are provided.
+  - The API will differ in key areas that we believe will address top points of developer confusion with the existing control and/or provide meaningful improvements. For each scenario in this spec the code for both the new `ScrollingView` (new control) and the existing ScrollViewer (existing control) are provided if different.
 
 # Table of Contents
 
@@ -60,7 +60,7 @@ The area that includes all of the content of the `ScrollingView` is the *extent*
 
 A second kind of scrolling element, the `ScrollingPresenter`, is more primitive, providing just clipping and translation of content, and not providing scroll bars and other features found in a `ScrollingView`. A `ScrollingView` typically uses a `ScrollingPresenter` as part of its implementation (in its ControlTemplate). `ScrollingPresenter` is in a [separate spec](ScrollingPresenter.md).
 
-The `ScrollingView` adds the default user interaction widgets (scrollbars, scroll indicator, etc.) and policy. As a Control it can be templated and can receive keyboard focus. It has the built-in logic to decide whether to scroll the viewport or move focus in response to a key event. It sets the properties on its `ScrollingPresenter` to common values, for example the basic `<ScrollingView/>` is configured for vertical scrolling. 
+The `ScrollingView` adds the default user interaction widgets (scrollbars, scroll indicator, etc.) and policy. As a Control it can be templated and can receive keyboard focus. It has the built-in logic to decide whether to scroll the viewport or move focus in response to a key event. It sets the properties on its `ScrollingPresenter` to values chosen to match common usage, for example the basic `<ScrollingView/>` is configured for vertical scrolling. 
 
 Most of the time you simply wrap content with a `ScrollingView` to enable a default vertical scrolling experience when the content is too large to fit in the user visible area.
 
@@ -88,7 +88,7 @@ This example sets an image that will be displayed at its natural size, but only 
 
 *ScrollViewer (existing control)*
 
-Similar to above.
+Identical to above.
 
 
 ## Vertical layout
@@ -97,7 +97,7 @@ The layout of the `ScrollingView`'s content can be vertical, horizontal, both, o
 
 By default the `ScrollingView`'s content layout (orientation) is set to Vertical, which means that the user can scroll the content up and down. Horizontal means left and right.
 
-In the following example, the `ContentOrientation` property is left at its default value of Vertical, with an ItemsRepeater as the `ScrollingView`'s Content. The UniformGridLayout for the ItemsRepeater positions the items horizontally in a row until it runs out of space (500px in this example), then positions the next item on the next row. The ItemsRepeater may then be taller than the 400px that the user can see, but the user can then scroll the content vertically. (The ContentOrientation property defaults to Vertical.)
+In the following example, the `ContentOrientation` property is left at its default value of Vertical, with an ItemsRepeater as the `ScrollingView`'s Content. The UniformGridLayout for the ItemsRepeater positions the items horizontally in a row until it runs out of space (500px in this example), then positions the next item on the next row. The ItemsRepeater may then be taller than the 400px that the user can see, but the user can then scroll the content vertically.
 
 **`ScrollingView` markup (new)**
 
@@ -113,7 +113,7 @@ In the following example, the `ContentOrientation` property is left at its defau
 
 **ScrollViewer markup (existing)**
 
-Similar to above.
+Identical to above.
 
 ## Horizontal layout
 
@@ -183,7 +183,7 @@ This is accomplished by:
 Since ZoomMode is enabled, the user can zoom in and then scroll.
 
 
-**`ScrollingView` (new)`**
+**`ScrollingView` (new)**
 
 ```xml
 <mux:ScrollingView ContentOrientation="None" ZoomMode="Enabled">
@@ -238,7 +238,7 @@ The default value of the Horizontal/VerticalScrollBarVisibility properties is 'A
 
 ### Hiding both scroll bars
 
-In this example the scroll bars are hidden, meaning that it won't be possible to scroll the content with scroll bars.
+In this example the scroll bars are hidden, meaning that it won't be possible to scroll the content with scroll bars. Scrolling by other means is still permitted.
 
 *`ScrollingView` (new)*
 
@@ -264,12 +264,10 @@ In this example the scroll bars are hidden, meaning that it won't be possible to
 
 # Interactivity examples
 
-This section focuses on properties that let you  define the user interaction capabilities with the `ScrollingView`.
+This section focuses on properties that let you define the user interaction capabilities with the `ScrollingView`.
 
 ## Controlling user's ability to zoom
-Enable zooming using the `ZoomeMode` property (which is Disabled by default).
-
-When zooming is disabled, is all zooming disabled, or only user zooming? I.e. can I still set the zoom programatically?
+Enable zooming through user interaction using the `ZoomMode` property (which is Disabled by default). Changes to the ZoomMode property take effect immediately and may affect an on-going user interaction.
 
 *`ScrollingView` (new)*
 
@@ -318,6 +316,8 @@ HorizontalScrollMode determines whether the user can interact with the control w
 The possible values are Enabled and Disabled, and the default value for both directions is Enabled.
 
 When the scroll mode is Enabled and the content is smaller than the viewport, the user can still wiggle (overpan) the content with touch input.
+
+Changes to the HorizontalScrollMode and VerticalScrollMode properties take effect immediately and may affect an on-going user interaction.
 
 This example shows vertical-only scrolling. Even though the content is wider than the viewport, the user cannot scroll horizontally.
 
@@ -524,7 +524,7 @@ Note that this behavior depends on the [UIElement.CanBeScrollAnchor](https://doc
 
 *ScrollViewer (existing)*
 
-Similar to above.
+Identical to above.
 
 
 # Using Layout-centric Properties and Events in Code
@@ -553,8 +553,8 @@ private void DecreaseZoomFactor(float percent)
 ```csharp
 private void DecreaseZoomFactor(float percent)
 {
-    double newHorizontalOffset = ...;
-    double newVerticalOffset = ...;
+    double newHorizontalOffset = (_scrollViewer.HorizontalOffset + _scrollViewer.ViewportWidth / 2.0) * (1.0 - percent) - _scrollViewer.ViewportWidth / 2.0;
+    double newVerticalOffset = (_scrollViewer.VerticalOffset + _scrollViewer.ViewportHeight / 2.0) * (1.0 - percent) - _scrollViewer.ViewportHeight / 2.0;
     _scrollViewer.ChangeView(
         newHorizontalOffset, newVerticalOffset, (1.0 - percent) * _scrollViewer.ZoomFactor);
 }
@@ -676,7 +676,7 @@ In this example a custom list control with a `ScrollingView` in its control temp
 
 More precisely, the Home key animates to the top of the content excluding the top header and presenving the current horizontal offset. Thus the top header ends up being scrolled off.
 
-The End key similarly animates to the bottom of the content exclusing the bottom header  and presenving the current horizontal offset. 
+The End key similarly animates to the bottom of the content exclusing the bottom header and presenving the current horizontal offset. 
 
 *`ScrollingView` (new)*
 
@@ -800,7 +800,7 @@ private void ScrollingView_ScrollAnimationStarting(ScrollingView scrollingView, 
     if (_scrollsWithCustomDuration.Contains(e.ScrollInfo))
     {
         TimeSpan animationDuration = GetAnimationCustomDuration(e.StartPosition, e.EndPosition);
-        e.Animation.Duration = animationDuration;
+        (e.Animation as Vector3KeyFrameAnimation).Duration = animationDuration;
         _scrollsWithCustomDuration.Remove(e.ScrollInfo);
     }
 }
@@ -828,7 +828,7 @@ private void Joystick_PositionChanged(Joystick joystick, object args)
     {
         if (!_requestScrollTimer.IsEnabled)
         {
-            // Adjust `ScrollingView`'s velocity at most once a second as long as joystick isn't released
+            // Adjust `ScrollingView`'s velocity at most once a second as long as joystick isn't centered.
             AdjustScrollingViewVelocity();
             _requestScrollTimer.Start();
         }
@@ -902,9 +902,9 @@ protected override void OnNavigatedTo(NavigationEventArgs e)
     float newZoomFactor = _pageRestorationCache["scrollViewerZoomFactor"];
     _scrollViewer.ChangeView(
         horizontalOffset: (_scrollViewer.HorizontalOffset + _scrollViewer.ViewportWidth / 2) *
-        newZoomFactor / _scrollViewer.ZoomFactor - _scrollViewer.ViewportWidth / 2,
+            newZoomFactor / _scrollViewer.ZoomFactor - _scrollViewer.ViewportWidth / 2,
         verticalOffset: (_scrollViewer.VerticalOffset + _scrollViewer.ViewportHeight / 2) *
-        newZoomFactor / _scrollViewer.ZoomFactor - _scrollViewer.ViewportHeight / 2,
+            newZoomFactor / _scrollViewer.ZoomFactor - _scrollViewer.ViewportHeight / 2,
         zoomFactor: newZoomFactor,
         disableAnimation: true);
 }
@@ -928,14 +928,14 @@ protected override void OnKeyUp(KeyRoutedEventArgs e)
     if (e.Key == VirtualKey.Home)
     {
         _scrollingView.ZoomTo(
-        zoomFactor: _scrollingView.MinZoomFactor,
-        centerPoint: new Vector2(_scrollingView.ViewportWidth/2, _scrollingView.ViewportHeight/2));
+            zoomFactor: _scrollingView.MinZoomFactor,
+            centerPoint: null);
     }
     else if (e.Key == VirtualKey.End)
     {
         _scrollingView.ZoomTo(
-        zoomFactor: _scrollingView.MaxZoomFactor,
-        centerPoint: new Vector2(_scrollingView.ViewportWidth/2, _scrollingView.ViewportHeight/2));
+            zoomFactor: _scrollingView.MaxZoomFactor,
+            centerPoint: null);
     }
 }
 ```
@@ -954,16 +954,16 @@ protected override void OnKeyUp(KeyRoutedEventArgs e)
     if (e.Key == VirtualKey.Home)
     {
         _scrollViewer.ChangeView(
-        _scrollViewer.HorizontalOffset * _scrollViewer.MinZoomFactor / _scrollViewer.ZoomFactor,
-        _scrollViewer.VerticalOffset * _scrollViewer.MinZoomFactor / _scrollViewer.ZoomFactor,
-        _scrollViewer.MinZoomFactor);
+            (_scrollViewer.HorizontalOffset + _scrollViewer.ViewportWidth / 2) * _scrollViewer.MinZoomFactor / _scrollViewer.ZoomFactor - _scrollViewer.ViewportWidth / 2,
+            (_scrollViewer.VerticalOffset + _scrollViewer.ViewportHeight / 2) * _scrollViewer.MinZoomFactor / _scrollViewer.ZoomFactor - _scrollViewer.ViewportHeight / 2,
+            _scrollViewer.MinZoomFactor);
     }
     else if (e.Key == VirtualKey.End)
     {
         _scrollViewer.ChangeView(
-        _scrollViewer.HorizontalOffset * _scrollViewer.MaxZoomFactor / _scrollViewer.ZoomFactor,
-        _scrollViewer.VerticalOffset * _scrollViewer.MaxZoomFactor / _scrollViewer.ZoomFactor,
-        _scrollViewer.MaxZoomFactor);
+            (_scrollViewer.HorizontalOffset + _scrollViewer.ViewportWidth / 2) * _scrollViewer.MaxZoomFactor / _scrollViewer.ZoomFactor - _scrollViewer.ViewportWidth / 2,
+            (_scrollViewer.VerticalOffset + _scrollViewer.ViewportHeight / 2) * _scrollViewer.MaxZoomFactor / _scrollViewer.ZoomFactor - _scrollViewer.ViewportHeight / 2,
+            _scrollViewer.MaxZoomFactor);
     }
 }
 ```
@@ -1039,7 +1039,7 @@ object sender, RangeBaseValueChangedEventArgs e)
     float zoomFactorDelta = GetZoomFactorDelta();
     _scrollingView.ZoomBy(
         zoomFactorDelta,
-        centerPoint: new Vector2(_scrollingView.ViewportWidth/2, _scrollingView.ViewportHeight/2));
+        centerPoint: null);
 }
 
 private void ScrollingView_ZoomAnimationStarting(ScrollingView scrollingView, ScrollingZoomAnimationStartingEventArgs e)
@@ -1074,7 +1074,7 @@ private void VerticalJoystick_PositionChanged(VerticalJoystick verticalJoystick,
     {
         if (!_requestZoomTimer.IsEnabled)
         {
-            // Adjust `ScrollingView`'s velocity at most once a second as long as joystick isn't release
+            // Adjust `ScrollingView`'s velocity at most once a second as long as joystick isn't centered.
             AdjustScrollingViewZoomFactor();
             _requestZoomTimer.Start();
         }
@@ -1386,7 +1386,7 @@ When VerticalScrollMode is set to Enabled, the user will be able to pan vertical
 The user can also scroll vertically with the mouse wheel and scroll bar as long as the ScrollableHeight property is strictly positive.
 
 ### ScrollingView.IgnoredInputKind property
-Gets or sets the kinds of user input the control does not respond to. Defaults to Non
+Gets or sets the kinds of user input the control does not respond to. Defaults to None.
 
 Each input kind affects both scrolling and zooming capabilities. For instance, if the Pen flag is included, the user can no longer scroll nor zoom using the pen.
 
@@ -1426,7 +1426,7 @@ When it is 0.0, the left-most element in the viewport is being anchored horizont
 
 When it is 1.0, the right-most element in the viewport is being anchored horizontally.
 
-Any number in between is valid. For instance, if it's 0.5, the element in the middle of the viewport is being anchored.
+Any number in between is valid. For instance, if it's 0.5, the element closest to the middle of the viewport is being anchored.
 
 
 ### ScrollingView.ScrollFrom method
@@ -1524,7 +1524,7 @@ The snapping location is moved to the center of the viewport when the Center ali
 | ExtentHeight | Gets the vertical size of the content. | 0 |
 | ViewportWidth | Gets the horizontal size of the viewport. | 0 |
 | ViewportHeight | Gets the vertical size of the viewport. | 0 |
-| ExpressionAnimationSources | Gets a CompositionPropertySet of scrolling related property values.<br/>The returned instance can be used to drive Composition animations and includes these properties:<br/>- Extent: Represents the content size (unaffected by the ZoomFactor, i.e. at Zoomfactor 1.0).<br/>- Viewport: Represents the viewport size.<br/>- Offset: Represents the content offset in the XAML layout engine. This offset may not be (0, 0) when element anchoring is turned on.<br/>- Position: Represents an animated Vector2 built using the underlying InteractionTracker's Position.X and Position.Y components.<br/>- MinPosition: Represents a Vector2 built using the underlying InteractionTracker's MinPosition.X and MinPosition.Y components.<br/>- MaxPosition: Represents a Vector2 built using the underlying InteractionTracker's MaxPosition.X and MaxPosition.Y components.<br/>- ZoomFactor: Represents an animated Scalar built using the underlying InteractionTracker's Scale component.
+| ExpressionAnimationSources | Gets a CompositionPropertySet of scrolling related property values.<br/>The returned instance can be used to drive Composition animations and includes these properties:<br/>- Extent: Represents the content size (unaffected by the ZoomFactor, i.e. at ZoomFactor 1.0).<br/>- Viewport: Represents the viewport size.<br/>- Offset: Represents the content offset in the XAML layout engine. This offset may not be (0, 0) when element anchoring is turned on.<br/>- Position: Represents an animated Vector2 built using the underlying InteractionTracker's Position.X and Position.Y components.<br/>- MinPosition: Represents a Vector2 built using the underlying InteractionTracker's MinPosition.X and MinPosition.Y components.<br/>- MaxPosition: Represents a Vector2 built using the underlying InteractionTracker's MaxPosition.X and MaxPosition.Y components.<br/>- ZoomFactor: Represents an animated Scalar built using the underlying InteractionTracker's Scale component.
 
 
 ### ScrollingView, additional events
@@ -1559,8 +1559,8 @@ The snapping location is moved to the center of the viewport when the Center ali
 
 | **Member** | **Description**                                                            |
 |------------|----------------------------------------------------------------------------|
-| AnimationMode | Gets or sets a value indicating whether an animation is allowed or not for the zoom factor change.
-| SnapPointsMode | Gets or sets a value indicating whether the snap points must be ignored or respected during the zoom factor change. Defaults to Default.<br/><br/>When animationMode is Auto, the view change is animated when OS settings enable animations. When snapPointsMode is Default, snap points are applied.
+| AnimationMode | Gets or sets a value indicating whether an animation is allowed or not for the zoom factor change.<br/>When AnimationMode is Auto, the view change is animated when OS settings enable animations. 
+| SnapPointsMode | Gets or sets a value indicating whether the snap points must be ignored or respected during the zoom factor change. Defaults to Default.<br/>When SnapPointsMode is Default, snap points are applied.
 
 ## ScrollingZoomAnimationStartingEventArgs class
 
@@ -1600,7 +1600,7 @@ Gets or sets a value indicating whether the participation must be cancelled or n
 
 Used by the BringingIntoView event which is raised when the `ScrollingView` is about to participate in a bring-into-view request triggered by a FrameworkElement.RequestBringIntoView event.
 
-By setting the SnapPointsMode property to ScrollingSnapPointsMode.Default, the participating `ScrollingView` will attempt to land on a mandatory snap point, if present.
+Setting the SnapPointsMode property to ScrollngSnapPointsMode.Default causes the participating `ScrollViewer` to land on a mandatory snap point, if present.
 
 Allows customization of that participation.
 
@@ -1628,7 +1628,7 @@ Used by the AnchorRequested event which is raised when the `ScrollingView` is se
 
 ## ScrollingScrollOptions class
 
-When animationMode is Auto, the view change is animated when OS settings enable animations. When snapPointsMode is Default, snap points are applied.
+When AnimationMode is Auto, the view change is animated when OS settings enable animations. When SnapPointsMode is Default, snap points are applied.
 
 
 | **Member** | **Description**                                                            |
@@ -2004,8 +2004,8 @@ These are benefits for an InteractionTracker-based scrolling/zooming control com
 <td>Both offsets and zoom factor can be changed with an additional velocity.</td>
 </tr>
 <tr class="odd">
-<td>Control can be first class fa�ade / IAnimatable citizen</td>
-<td>InteractionTracker-based control can implement new Composition IAnimatable interface and take fully advantage of fa�ades.</td>
+<td>Control can be first class façade / IAnimatable citizen</td>
+<td>InteractionTracker-based control can implement new Composition IAnimatable interface and take fully advantage of façades.</td>
 </tr>
 <tr class="even">
 <td>Access to velocities</td>
