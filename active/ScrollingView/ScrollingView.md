@@ -286,7 +286,7 @@ Enable zooming through user interaction using the `ZoomMode` property (which is 
 ```
 
 ## Controlling the Minimum and Maximum Zoom Factor
-Use the `MinZoomFactor` and `MaxZoomFactor` properties to control the amount the user may zoom the content. These properties are ignored if the ZoomMode is Disabled.
+Use the `MinZoomFactor` and `MaxZoomFactor` properties to control the amount the user may zoom the content. These properties are effective for both user interactions and programmatic API calls.
 
 *`ScrollingView` (new)*
 
@@ -641,8 +641,8 @@ public MainPage()
 protected override void OnNavigatedFrom(NavigationEventArgs e)
 {
     base.OnNavigatedFrom(e);
-    _pageRestorationCache["scrollingViewHorizontalOffset"] = _scrollingView.HorizontalOffset);
-    _pageRestorationCache["scrollingViewVerticalOffset"] = _scrollingView.VerticalOffset);
+    _pageRestorationCache["scrollingViewHorizontalOffset"] = _scrollingView.HorizontalOffset;
+    _pageRestorationCache["scrollingViewVerticalOffset"] = _scrollingView.VerticalOffset;
 }
 
 // Restore offsets cached while leaving the page in OnNavigatedFrom
@@ -688,13 +688,13 @@ protected override void OnKeyUp(KeyRoutedEventArgs e)
     {
         _scrollingView.ScrollTo(
             _scrollingView.HorizontalOffset,
-            _headerHeight);
+            Math.Min(_scrollingView.ScrollableHeight, _headerHeight));
     }
     else if (e.Key == VirtualKey.End)
     {
         _scrollingView.ScrollTo(
             _scrollingView.HorizontalOffset,
-            _scrollingView.ScrollableHeight - _footerHeight);
+            Math.Max(0, _scrollingView.ScrollableHeight - _footerHeight));
     }
 }
 ```
@@ -879,7 +879,7 @@ public MainPage()
 protected override void OnNavigatedFrom(NavigationEventArgs e)
 {
     base.OnNavigatedFrom(e);
-    _pageRestorationCache["scrollingViewZoomFactor"] = _scrollingView.ZoomFactor);
+    _pageRestorationCache["scrollingViewZoomFactor"] = _scrollingView.ZoomFactor;
 }
 
 // Restore zoom factor cached while leaving the page in OnNavigatedFrom
@@ -1681,7 +1681,7 @@ Used by the ScrollCompleted event which is raised when the offset changes caused
 
 ## Shared enumerations and structures
 
-Present in namespace namespace Microsoft.UI.Xaml.Controls:
+Present in namespace Microsoft.UI.Xaml.Controls:
 
 ```csharp
 struct ScrollingScrollInfo
