@@ -3,15 +3,15 @@
 The WebView2 is the WinUI 3.0 version of the WebView control. It includes usage of the updated Microsoft Edge browser based on the Chromium web engine.
 <br> 
 <br>
-[Documentation for the WinUI 2.0 version of the WebView control](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.WebView)
+[Documentation for the current XAML EdgeHTML based WebView control](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.WebView)
 <br>
 <br>
 [Discussion of the core Microsoft Edge WebView2](https://docs.microsoft.com/en-us/microsoft-edge/hosting/webview2)
 
 # Description
 
-The WebView is a control that allows for HTML content to be hosted within an application. It renders web content using the Microsoft Edge rendering engine.
-Use a WebView control to display richly formatted HTML content from a remote web server, dynamically generated code, or content files in your app. Rich content can also contain script code and communicate between the script and your app’s code.
+The WebView2 is a control that allows for HTML content to be hosted within an application. It renders web content using the Microsoft Edge (Chromium) rendering engine.
+Use a WebView2 control to display richly formatted HTML content from a remote web server, dynamically generated code, or content files in your app. Rich content can also contain script code and communicate between the script and your app’s code.
 
 # Examples
 
@@ -46,14 +46,16 @@ You can interact with the content of the WebView2 by using the ExecuteScriptAsyn
 To invoke JavaScript inside the WebView2 content, use the ExecuteScriptAsync method. ExecuteScriptAsync returns a string which is the object result of the script execution converted to JSON and then returned as a string.
 
 ```
-// You can use ExecuteScriptAsync to inject  //content into the web page.
-// Here, the text of a Xaml TextBox is written to a div in an HTML page hosted in //myWebView2.
+
+// Here, the text of a Xaml TextBox is written to a div in an HTML page hosted in myWebView2.
+
 private async void Button_Click(object sender, RoutedEventArgs e)
 {
-    String functionString = 
-String.Format("document.getElementById('nameDiv').innerText = 'Hello, {0}';", nameTextBox.Text);
-await myWebView2.ExecuteScriptAsync(new string[] { functionString });
+    String functionString = String.Format("document.getElementById('nameDiv').innerText = 
+    'Hello, {0}';", nameTextBox.Text);
+    await myWebView2.ExecuteScriptAsync(new string[] { functionString });
 }
+
 ```
 
 <br>
@@ -63,7 +65,6 @@ Scripts in the WebView2 content can use window.chrome.webview.postMessage.postMe
 
 
 ```
-// Event allows for notification when a webMessage event is fired from the JavaScript on the html side of the webview.
 
 myWebView2.WebMessageReceived += (WebView2 sender, WebView2WebMessageReceivedEventArgs args) =>
 {
@@ -108,7 +109,7 @@ ContentLoading fires when new content has started loading on the webview's main 
 <br>
 
 **SourceChanged:**
-Occurs when the 'Source' property is changed
+Occurs when the 'Source' property is changed.
 
 <br>
 
@@ -123,13 +124,12 @@ private void myWebView2_NavigationCompleted(WebView2 sender, WebView2NavigationC
 {
     if (args.IsSuccess == true)
     {
-        statusTextBlock.Text = "Navigation to “ +
-        args.Uri.ToString() + " completed successfully.";
+        statusTextBlock.Text = "Navigation to “ + args.Uri.ToString() + " completed successfully.";
     }
 
     else
     {
-    statusTextBlock.Text = "Navigation to: " + args.Uri.ToString() + " failed with error ” + args.WebErrorStatus,ToString();
+        statusTextBlock.Text = "Navigation to: " + args.Uri.ToString() + " failed with error ” + args.WebErrorStatus.ToString();
     }
 }
 ```
@@ -143,7 +143,7 @@ Fires navigation event without altering the navigation stack.
 
 # Remarks
 
-// This API may ship before the WinRT CoreWebView object is included, meaning functionality of the Webview2 will be limited to the APIs included on this object.
+This API may ship before the WinRT CoreWebView2 object is included, meaning functionality of the Webview2 will be limited to the APIs included on this object.
 
 # API Notes
 
@@ -160,7 +160,7 @@ void NavigateToString(String htmlContent) – Loads the specified HTML content a
 
 Windows.Foundation.IAsyncOperation ExecuteScriptAsync(String javascriptCode) –
 
-Executes the specified script function from the currently loaded HTML, with specific arguments, as an asynchronous action.
+Executes the specified script from the currently loaded HTML, as an asynchronous action.
 
 void Reload() – Reloads the current content in the WebView2.
 
@@ -186,9 +186,9 @@ NavigationCompleted – Occurs when the WebView2 has finished loading the curren
 API Details
 
 ```
-namespace MU\_XC\_NAMESPACE
+namespace (MU_XC_NAMESPACE)
 {
-    [WUXC\_VERSION\_PREVIEW]
+    [WUXC_VERSION_PREVIEW]
     [webhosthidden]
 
     runtimeclass WebView2ElementNavigationCompletedEventArgs
@@ -197,7 +197,7 @@ namespace MU\_XC\_NAMESPACE
         Windows.Web.WebErrorStatus WebErrorStatus{ get; };
     }
 
-    [WUXC\_VERSION\_PREVIEW]
+    [WUXC_VERSION_PREVIEW]
     [webhosthidden]
     runtimeclass WebView2ElementWebMessageReceivedEventArgs
     {
@@ -206,7 +206,7 @@ namespace MU\_XC\_NAMESPACE
         String WebMessageAsString{ get; };
     }
 
-    [WUXC\_VERSION\_PREVIEW]
+    [WUXC_VERSION_PREVIEW]
     [webhosthidden]
     runtimeclass WebView2ElementNavigationStartingEventArgs
     {
@@ -217,25 +217,21 @@ namespace MU\_XC\_NAMESPACE
         Boolean Cancel{ get; set; };
     }
 
-    [WUXC\_VERSION\_PREVIEW]
-    [webhosthidden]
-    [MUX\_PROPERTY\_CHANGED\_CALLBACK(TRUE)]
-    [MUX\_PROPERTY\_CHANGED\_CALLBACK\_METHODNAME("OnPropertyChanged")]
     unsealed runtimeclass WebView2Element : Windows.UI.Xaml.Controls.Control
     {
         WebView2Element();
         Windows.Foundation.IAsyncOperation ExecuteScriptAsync(String javascriptCode);
 
-        Windows.Foundation.Uri UriSource{ get; set; };
-        Boolean CanGoForward{ get; set; };
-        Boolean CanGoBack{ get; set; };
+        Windows.Foundation.Uri Source{ get; };
+        Boolean CanGoForward{ get; };
+        Boolean CanGoBack{ get; };
         void Reload();
         void GoForward();
         void GoBack();
         void NavigateToString(String htmlContent);
 
 
-        static Windows.UI.Xaml.DependencyProperty UriSourceProperty{ get; };
+        static Windows.UI.Xaml.DependencyProperty SourceProperty{ get; };
         static Windows.UI.Xaml.DependencyProperty CanGoForwardProperty{ get; };
         static Windows.UI.Xaml.DependencyProperty CanGoBackProperty{ get; };
 
