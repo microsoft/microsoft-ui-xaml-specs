@@ -51,7 +51,7 @@ To invoke JavaScript inside the WebView2 content, use the ExecuteScriptAsync met
 private async void Button_Click(object sender, RoutedEventArgs e)
 {
     String functionString = 
-String.Format(”document.getElementById('nameDiv').innerText = 'Hello, {0}';”, nameTextBox.Text);
+String.Format("document.getElementById('nameDiv').innerText = 'Hello, {0}';", nameTextBox.Text);
 await myWebView2.ExecuteScriptAsync(new string[] { functionString });
 }
 ```
