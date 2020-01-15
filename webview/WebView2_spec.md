@@ -1,12 +1,12 @@
 # Background
 
 The WebView2 is the WinUI 3.0 version of the WebView control. It includes usage of the updated Microsoft Edge browser based on the Chromium web engine.
-<br> 
-<br>
+
 [Documentation for the current XAML EdgeHTML based WebView control](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.WebView)
-<br>
-<br>
+
 [Discussion of the core Microsoft Edge WebView2](https://docs.microsoft.com/en-us/microsoft-edge/hosting/webview2)
+
+This API may ship before the WinRT CoreWebView2 object is included, meaning functionality of the Webview2 will be limited to the APIs included on this object.
 
 # Description
 
@@ -15,15 +15,14 @@ Use a WebView2 control to display richly formatted HTML content from a remote we
 
 # Examples
 
-**NavigateToString:**
+## NavigateToString:
 The following code example demonstrates how to load local HTML into a WebView2 control.
 
 ```
 myWebView2.NavigateToString("<html><body><h2>This is an HTML fragment</h2></body></html>”);
 ```
-<br>
 
-**Source:**
+## Source:
 To set the initial content of the WebView2, set the Source property in XAML. The XAML parser automatically converts the string to a Uri.
 
 ```
@@ -39,9 +38,8 @@ To set the initial content of the WebView2, set the Source property in XAML. The
 <!-- no provided uri initialization -->
 <WebView2 x:Name="MyWebView_4"/>
 ```
-<br>
 
-**ExecuteScriptAsync:**
+## ExecuteScriptAsync:
 You can interact with the content of the WebView2 by using the ExecuteScriptAsync method to invoke or inject script into the WebView2 content, and the WebMessageReceived event to get information back from the WebView2 content.
 To invoke JavaScript inside the WebView2 content, use the ExecuteScriptAsync method. ExecuteScriptAsync returns a string which is the object result of the script execution converted to JSON and then returned as a string.
 
@@ -53,14 +51,12 @@ private async void Button_Click(object sender, RoutedEventArgs e)
 {
     String functionString = String.Format("document.getElementById('nameDiv').innerText = 
     'Hello, {0}';", nameTextBox.Text);
-    await myWebView2.ExecuteScriptAsync(new string[] { functionString });
+    await myWebView2.ExecuteScriptAsync(functionString);
 }
 
 ```
 
-<br>
-
-**WebMessageReceived:**
+## WebMessageReceived:
 Scripts in the WebView2 content can use window.chrome.webview.postMessage.postMessage(“Message”) with JSON parameters to send information back to your app. To receive these messages, handle the WebMessageReceived event.
 
 
@@ -84,9 +80,8 @@ myWebView2.WebMessageReceived += (WebView2 sender, WebView2WebMessageReceivedEve
     }
 };
 ```
-<br>
 
-**NavigationStarting:**
+## NavigationStarting:
 Occurs before the WebView2 navigates to new content. You can cancel navigation in a handler for this event by setting the WebView2NavigationStartingEventArgs.Cancel property to true.
 
 
@@ -101,19 +96,15 @@ private void myWebView_NavigationStarting(WebView2 sender, WebView2NavigationSta
     }
 }
 ```
-<br>
 
-**ContentLoading:**
+## ContentLoading:
 ContentLoading fires when new content has started loading on the webview's main frame or if a same page navigation occurs (such as through fragment navigations or history.pushState navigations). This follows the NavigationStarting event and precedes the NavigationCompleted event.
 
-<br>
 
-**SourceChanged:**
+## SourceChanged:
 Occurs when the 'Source' property is changed.
 
-<br>
-
-**NavigationCompleted**:
+## NavigationCompleted:
 Occurs when the WebView2 has finished loading the current content or if the navigation has failed. To determine whether the navigation has failed, check the IsSuccess and WebErrorStatus properties of the WebViewNavigationCompletedEventArgs class.
 
 
@@ -122,40 +113,33 @@ myWebView2.NavigationCompleted += myWebView2_NavigationCompleted;
 
 private void myWebView2_NavigationCompleted(WebView2 sender, WebView2NavigationCompletedEventArgs args)
 {
-    if (args.IsSuccess == true)
+    if (args.IsSuccess)
     {
-        statusTextBlock.Text = "Navigation to “ + args.Uri.ToString() + " completed successfully.";
+        statusTextBlock.Text = $"Navigation to {args.Uri} completed successfully.";
     }
 
     else
     {
-        statusTextBlock.Text = "Navigation to: " + args.Uri.ToString() + " failed with error ” + args.WebErrorStatus.ToString();
+        statusTextBlock.Text = $"Navigation to: " + args.Uri.ToString() + " failed with error " + args.WebErrorStatus.ToString();
     }
 }
 ```
 
-<br>
 
-**Reload:**
+## Reload:
 Fires navigation event without altering the navigation stack.
-
-<br>
-
-# Remarks
-
-This API may ship before the WinRT CoreWebView2 object is included, meaning functionality of the Webview2 will be limited to the APIs included on this object.
 
 # API Notes
 
-**Properties:**
-<br>
+## Properties:
+
 Source – Gets or sets the Uniform Resource Identifier (URI) source of the HTML content to display in the WebView2 control.
 
 CoreWebView2 – Stores the core WebView object with full access to Anaheim WebView API set.
-<br>
 
-**Methods:**
-<br>
+
+## Methods:
+
 void NavigateToString(String htmlContent) – Loads the specified HTML content as a new document.
 
 Windows.Foundation.IAsyncOperation ExecuteScriptAsync(String javascriptCode) –
@@ -165,10 +149,10 @@ Executes the specified script from the currently loaded HTML, as an asynchronous
 void Reload() – Reloads the current content in the WebView2.
 
 void Stop() – Stops the current WebView2 navigation or download.
-<br>
 
-**Events:**
-<br>
+
+## Events:
+
 WebMessageReceived – Occurs when the content contained in the WebView2 control passes a string to the application by using JavaScipt.
 
 NavigationStarting – Occurs before the WebView2 navigates to new content. You can cancel navigation in a handler for this event by setting the WebViewNavigationStartingEventArgs.Cancel property to true.
@@ -179,7 +163,6 @@ SourceChanged - Occurs when the 'Source' property is changed
 
 NavigationCompleted – Occurs when the WebView2 has finished loading the current content or if the navigation has failed.
 
-<br>
 
 # API Details
 
@@ -191,7 +174,7 @@ namespace (MU_XC_NAMESPACE)
     [WUXC_VERSION_PREVIEW]
     [webhosthidden]
 
-    runtimeclass WebView2ElementNavigationCompletedEventArgs
+    runtimeclass WebView2NavigationCompletedEventArgs
     {
         Boolean IsSuccess{ get; };
         Windows.Web.WebErrorStatus WebErrorStatus{ get; };
@@ -199,7 +182,7 @@ namespace (MU_XC_NAMESPACE)
 
     [WUXC_VERSION_PREVIEW]
     [webhosthidden]
-    runtimeclass WebView2ElementWebMessageReceivedEventArgs
+    runtimeclass WebView2WebMessageReceivedEventArgs
     {
         String Source{ get; };
         String WebMessageAsJson{ get; };
@@ -208,7 +191,7 @@ namespace (MU_XC_NAMESPACE)
 
     [WUXC_VERSION_PREVIEW]
     [webhosthidden]
-    runtimeclass WebView2ElementNavigationStartingEventArgs
+    runtimeclass WebView2NavigationStartingEventArgs
     {
         String Uri{ get; };
         Boolean IsUserInitiated{ get; };
@@ -217,9 +200,9 @@ namespace (MU_XC_NAMESPACE)
         Boolean Cancel{ get; set; };
     }
 
-    unsealed runtimeclass WebView2Element : Windows.UI.Xaml.Controls.Control
+    unsealed runtimeclass WebView2 : Windows.UI.Xaml.Controls.Control
     {
-        WebView2Element();
+        WebView2();
         Windows.Foundation.IAsyncOperation ExecuteScriptAsync(String javascriptCode);
 
         Windows.Foundation.Uri Source{ get; };
@@ -235,9 +218,9 @@ namespace (MU_XC_NAMESPACE)
         static Windows.UI.Xaml.DependencyProperty CanGoForwardProperty{ get; };
         static Windows.UI.Xaml.DependencyProperty CanGoBackProperty{ get; };
 
-        event Windows.Foundation.TypedEventHandler<WebView2Element, WebView2ElementNavigationCompletedEventArgs> NavigationCompleted;
-        event Windows.Foundation.TypedEventHandler<WebView2Element, WebView2ElementWebMessageReceivedEventArgs> WebMessageReceived;
-        event Windows.Foundation.TypedEventHandler<WebView2Element, WebView2ElementNavigationStartingEventArgs> NavigationStarting;
+        event Windows.Foundation.TypedEventHandler<WebView2, WebView2NavigationCompletedEventArgs> NavigationCompleted;
+        event Windows.Foundation.TypedEventHandler<WebView2, WebView2WebMessageReceivedEventArgs> WebMessageReceived;
+        event Windows.Foundation.TypedEventHandler<WebView2, WebView2NavigationStartingEventArgs> NavigationStarting;
     }
 }
 ```
