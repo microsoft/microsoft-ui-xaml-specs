@@ -1,6 +1,6 @@
 # Background
 
-The WebView2 is the WinUI 3.0 version of the WebView control. It includes usage of the updated Microsoft Edge browser based on the Chromium web engine.
+This spec describes the WebView2 Xaml control, which is the [WinUI 3.0](https://github.com/microsoft/microsoft-ui-xaml/issues/1531) version of the existing [WebView](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.WebView) control. It includes usage of the updated Microsoft Edge browser based on the Chromium web engine.
 
 [Documentation for the current XAML EdgeHTML based WebView control](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.WebView)
 
@@ -19,6 +19,7 @@ Use a WebView2 control to display richly formatted HTML content from a remote we
 The following code example demonstrates how to load local HTML into a WebView2 control.
 
 ```
+var myWebView2 = new WebView2();
 myWebView2.NavigateToString("<html><body><h2>This is an HTML fragment</h2></body></html>”);
 ```
 
