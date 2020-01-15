@@ -19,6 +19,7 @@ Use a WebView2 control to display richly formatted HTML content from a remote we
 The following code example demonstrates how to load local HTML into a WebView2 control.
 
 ```
+var myWebView2 = new WebView2();
 myWebView2.NavigateToString("<html><body><h2>This is an HTML fragment</h2></body></html>”);
 ```
 <br>
