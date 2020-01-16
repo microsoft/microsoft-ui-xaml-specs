@@ -66,7 +66,7 @@ Scripts in the WebView2 content can use window.chrome.webview.postMessage.postMe
 myWebView2.WebMessageReceived += (WebView2 sender, WebView2WebMessageReceivedEventArgs args) =>
 {
     // Important to validate that the Uri is what we expect from that webview.
-    string uriAsString = sender.UriSource.ToString();
+    string uriAsString = sender.Source.ToString();
 
     if (args.Source == uriAsString)
     {
