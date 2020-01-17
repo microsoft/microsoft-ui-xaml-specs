@@ -28,7 +28,7 @@ modifying an existing API. -->
 area, just explanation enough to understand this new API, rather than telling
 the reader "go read 100 pages of background information posted at ...". -->
 
-The current UWP API Reference has `RowDefinition` and `ColumnDefinition` classes, both of which respectively make up `Grid`'s `RowDefinitions` and `ColumnDefinitions` properties. Currently, RowDefinition and ColumnDefinition constructors do not take any arguments. Definition of a ColumnDefinition's `Width` property or a RowDefinition's `Height` property must be done inside the creation of a Row/ColumnDefinition, or on a separate line once the object has been created.
+The current UWP API Reference has `RowDefinition` and `ColumnDefinition` classes, both of which respectively make up `Grid`'s `RowDefinitions` and `ColumnDefinitions` properties. Currently, RowDefinition and ColumnDefinition constructors do not take any arguments. Definition of a ColumnDefinition's `Width` property or a RowDefinition's `Height` property must be done by creating a GridLength object inside the creation of a Row/ColumnDefinition, or on a separate line once the object has been created.
 
 This spec sets out to change that, and therefore sets out to change the following APIs:
 
@@ -83,7 +83,7 @@ var grid = new Grid();
 grid.ColumnDefinitions.Add(new ColumnDefinition(1.0, GridUnitType.Star)); // Width="1*"
 ```
 
-New syntax to define a Grid wtih one simple (no GridUnitType value) column in code-behind:
+New syntax to define a Grid with one simple column in code-behind, where the GridUnitType is a pixel:
 ```csharp
 grid.ColumnDefinitions.Add(new ColumnDefinition(500.0)); // Width="500px"
 ```
@@ -128,8 +128,8 @@ runtimeclass RowDefinition
     : Windows.UI.Xaml.DependencyObject
 {
     // vvvv
-    RowDefinition(double pixelHeight, GridUnitType type);
-    RowDefinition(double height);
+    RowDefinition(double height, GridUnitType type);
+    RowDefinition(double pixelHeight);
     // ^^^^
     Windows.UI.Xaml.GridLength Height;
     Double MaxHeight;
@@ -149,8 +149,8 @@ runtimeclass ColumnDefinition
     : Windows.UI.Xaml.DependencyObject
 {
     // vvvv
-    ColumnDefinition(double pixelWidth, GridUnitType type);
-    ColumnDefinition(double width);
+    ColumnDefinition(double width, GridUnitType type);
+    ColumnDefinition(double pixelWidth);
     // ^^^^
     Windows.UI.Xaml.GridLength Width;
     Double MaxWidth;
