@@ -100,13 +100,6 @@ private void myWebView_NavigationStarting(WebView2 sender, WebView2NavigationSta
 }
 ```
 
-## ContentLoading:
-ContentLoading fires when new content has started loading on the webview's main frame or if a same page navigation occurs (such as through fragment navigations or history.pushState navigations). This follows the NavigationStarting event and precedes the NavigationCompleted event.
-
-
-## SourceChanged:
-Occurs when the 'Source' property is changed.
-
 ## NavigationCompleted:
 Occurs when the WebView2 has finished loading the current content or if the navigation has failed. To determine whether the navigation has failed, check the IsSuccess and WebErrorStatus properties of the WebViewNavigationCompletedEventArgs class.
 
@@ -140,6 +133,9 @@ Source – Gets or sets the Uniform Resource Identifier (URI) source of the HTML
 
 CoreWebView2 – Stores the core WebView object with full access to Anaheim WebView API set.
 
+Boolean CanGoBack - Read only property which returns whether calling GoBack() will navigate the webview to the previous page in the navigation history
+
+Boolean CanGoForward - Read only property which returns whether calling GoForward() will navigate the webview to the next page in the navigation history.
 
 ## Methods:
 
@@ -153,6 +149,9 @@ void Reload() – Reloads the current content in the WebView2.
 
 void Stop() – Stops the current WebView2 navigation or download.
 
+Void GoBack() - Navigates the webview to the previous page in the navigation history.
+
+Void GoForward() - Navigates the webview to the next page in the navigation history.
 
 ## Events:
 
