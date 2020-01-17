@@ -6,6 +6,8 @@ This spec describes the WebView2 Xaml control, which is the [WinUI 3.0](https://
 
 [Discussion of the core Microsoft Edge WebView2](https://docs.microsoft.com/en-us/microsoft-edge/hosting/webview2)
 
+[Download Page for Latest Version of Microsoft Edge](https://www.microsoft.com/en-us/edge)
+
 This API may ship before the WinRT CoreWebView2 object is included, meaning functionality of the Webview2 will be limited to the APIs included on this object.
 
 # Description
@@ -14,14 +16,6 @@ The WebView2 is a control that allows for HTML content to be hosted within an ap
 Use a WebView2 control to display richly formatted HTML content from a remote web server, dynamically generated code, or content files in your app. Rich content can also contain script code and communicate between the script and your app’s code.
 
 # Examples
-
-## NavigateToString:
-The following code example demonstrates how to load local HTML into a WebView2 control.
-
-```
-var myWebView2 = new WebView2();
-myWebView2.NavigateToString("<html><body><h2>This is an HTML fragment</h2></body></html>”);
-```
 
 ## Source:
 To set the initial content of the WebView2, set the Source property in XAML. The XAML parser automatically converts the string to a Uri.
@@ -35,6 +29,14 @@ To set the initial content of the WebView2, set the Source property in XAML. The
 
 <!-- Source file is in the app package. -->
 <WebView2 x:Name="MyWebView_3" Source="ms-appx-web:///help/about.html"/>
+
+## Alternative Instantiation Options::
+You can also create a WebView with NavigateToString and also optionally by providing no uri or content up front:
+
+```
+var myWebView2 = new WebView2();
+myWebView2.NavigateToString("<html><body><h2>This is an HTML fragment</h2></body></html>”);
+```
 
 <!-- no provided uri initialization -->
 <WebView2 x:Name="MyWebView_4"/>
@@ -225,3 +227,5 @@ namespace (MU_XC_NAMESPACE)
     }
 }
 ```
+# Remarks
+Many users of WebView will be moving from WebView to WebView2. This should be a relatively pain-free process. The goal is to keep as many of the APIs comparable as possible. However, given the change in web engines and architectural impacts a 1:1 parity of APIs will not exist. Some migration notes will emerge as common issues are hit. These will be captured here.
