@@ -172,19 +172,14 @@ NavigationCompleted – Occurs when the WebView2 has finished loading the curren
 API Details
 
 ```
-namespace (MU_XC_NAMESPACE)
+namespace
 {
-    [WUXC_VERSION_PREVIEW]
-    [webhosthidden]
-
     runtimeclass WebView2NavigationCompletedEventArgs
     {
         Boolean IsSuccess{ get; };
         Windows.Web.WebErrorStatus WebErrorStatus{ get; };
     }
 
-    [WUXC_VERSION_PREVIEW]
-    [webhosthidden]
     runtimeclass WebView2WebMessageReceivedEventArgs
     {
         String Source{ get; };
@@ -192,8 +187,6 @@ namespace (MU_XC_NAMESPACE)
         String WebMessageAsString{ get; };
     }
 
-    [WUXC_VERSION_PREVIEW]
-    [webhosthidden]
     runtimeclass WebView2NavigationStartingEventArgs
     {
         String Uri{ get; };
