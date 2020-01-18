@@ -29,16 +29,19 @@ To set the initial content of the WebView2, set the Source property in XAML. The
 
 <!-- Source file is in the app package. -->
 <WebView2 x:Name="MyWebView_3" Source="ms-appx-web:///help/about.html"/>
+```
 
 ## Alternative Instantiation Options::
-You can also create a WebView with NavigateToString and also optionally by providing no uri or content up front:
+You can also create a WebView with NavigateToString
 
 ```
 var myWebView2 = new WebView2();
 myWebView2.NavigateToString("<html><body><h2>This is an HTML fragment</h2></body></html>”);
 ```
 
-<!-- no provided uri initialization -->
+Or, by providing no URI or content up front:
+
+```
 <WebView2 x:Name="MyWebView_4"/>
 ```
 
