@@ -32,17 +32,16 @@ To set the initial content of the WebView2, set the Source property in XAML. The
 ```
 
 ## Alternative Instantiation Options:
-You can also create a WebView with NavigateToString 
+You can also create a WebView with NavigateToString:
 
 ```
 var myWebView2 = new WebView2();
 myWebView2.NavigateToString("<html><body><h2>This is an HTML fragment</h2></body></html>”);
 ```
 
-And optionally by providing no uri or content up front
+Or, by providing no URI or content up front:
 
 ```
-<!-- no provided uri initialization -->
 <WebView2 x:Name="MyWebView_4"/>
 ```
 
