@@ -32,7 +32,7 @@ To set the initial content of the WebView2, set the Source property in XAML. The
 ```
 
 ## Alternative Instantiation Options::
-You can also create a WebView with NavigateToString
+You can also create a WebView with NavigateToString:
 
 ```
 var myWebView2 = new WebView2();
