@@ -31,7 +31,7 @@ To set the initial content of the WebView2, set the Source property in XAML. The
 <WebView2 x:Name="MyWebView_3" Source="ms-appx-web:///help/about.html"/>
 ```
 
-## Alternative Instantiation Options::
+## Alternative Instantiation Options:
 You can also create a WebView with NavigateToString:
 
 ```
