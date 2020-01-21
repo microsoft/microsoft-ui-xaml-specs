@@ -2,13 +2,29 @@
 
 This spec describes the WebView2 Xaml control, which is the [WinUI 3.0](https://github.com/microsoft/microsoft-ui-xaml/issues/1531) version of the existing [WebView](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.WebView) control. It includes usage of the updated Microsoft Edge browser based on the Chromium web engine.
 
+The API detailed below refers to the middle box is the diagram below. The 'WebView core API' refers to the API covered by the [core Microsoft Edge WebView2](https://docs.microsoft.com/en-us/microsoft-edge/hosting/webview2)
+
+```
+ _________________________
+|                         |
+|       WinUI 3 App       |
+|_________________________|
+|                         |
+| WinUI WebView element   |
+|          API            |
+|_________________________|
+|                         |
+|   WebView2 core API     |
+|                         |
+|_________________________|
+
+```
+
+## Helpful links:
+
 [Documentation for the current XAML EdgeHTML based WebView control](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.WebView)
 
-[Discussion of the core Microsoft Edge WebView2](https://docs.microsoft.com/en-us/microsoft-edge/hosting/webview2)
-
 [Download Page for Latest Version of Microsoft Edge](https://www.microsoft.com/en-us/edge)
-
-This API may ship before the WinRT CoreWebView2 object is included, meaning functionality of the Webview2 will be limited to the APIs included on this object.
 
 # Description
 
@@ -124,10 +140,6 @@ private void myWebView2_NavigationCompleted(WebView2 sender, WebView2NavigationC
 }
 ```
 
-
-## Reload:
-Fires navigation event without altering the navigation stack.
-
 # API Notes
 
 ## Properties:
@@ -223,4 +235,9 @@ namespace
 }
 ```
 # Remarks
+
+## Migration from Webview -> WebView2
 Many users of WebView will be moving from WebView to WebView2. This should be a relatively pain-free process. The goal is to keep as many of the APIs comparable as possible. However, given the change in web engines and architectural impacts a 1:1 parity of APIs will not exist. Some migration notes will emerge as common issues are hit. These will be captured here.
+
+## Core WebView2 Timeline
+This API may ship before the WinRT CoreWebView2 object, meaning functionality of the Webview2 would be limited to the APIs included in this document for some interim period of time.
