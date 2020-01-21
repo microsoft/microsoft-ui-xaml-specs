@@ -125,9 +125,6 @@ private void myWebView2_NavigationCompleted(WebView2 sender, WebView2NavigationC
 ```
 
 
-## Reload:
-Fires navigation event without altering the navigation stack.
-
 # API Notes
 
 ## Properties:
