@@ -135,7 +135,7 @@ private void myWebView2_NavigationCompleted(WebView2 sender, WebView2NavigationC
 
     else
     {
-        statusTextBlock.Text = $"Navigation to: " + args.Uri.ToString() + " failed with error " + args.WebErrorStatus.ToString();
+        statusTextBlock.Text = $"Navigation to: " + args.Uri.ToString() + " failed with error " + args.WebErrorStatus.ToString("G");
     }
 }
 ```
