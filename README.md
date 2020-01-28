@@ -17,8 +17,8 @@ This repo is maintained by the Microsoft WinUI team.
 
 ### Please DO:
 
-* provide feedback on **active pull requests**, which represent new features that are being reviewed
-* provide feedback on spec documents in the ```active``` folder, which represent new features that are being worked on for a future release
+* provide feedback by **commenting on active pull requests**. Open PRs are for specs in the early feature review process
+* provide feedback by **opening [issues](https://github.com/microsoft/microsoft-ui-xaml-specs/issues/new) regarding spec documents in the [active](https://github.com/microsoft/microsoft-ui-xaml-specs/tree/master/active) folder**. Specs in the `active` folder represent new features that are being implemented for a future release
 
 ### Please DO NOT:
 
