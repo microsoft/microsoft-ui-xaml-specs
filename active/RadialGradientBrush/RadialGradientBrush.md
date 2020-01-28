@@ -55,6 +55,16 @@ The options for fallback behavior on downlevel pre-1903 OS versions are:
 3. **Rely on FallbackColor**
    * Since [CompositionRadialGradientBrush](https://docs.microsoft.com/uwp/api/windows.ui.composition.compositionradialgradientbrush) should be available downlevel with WinUI 3, #1 (FallbackColor) seems like a reasonable approach in the meantime.
 
+## InterpolationSpace
+
+The underlying [CompositionRadialGradientBrush](https://docs.microsoft.com/uwp/api/windows.ui.composition.compositionradialgradientbrush) currently only supports the following [CompositionColorSpace](https://docs.microsoft.com/uwp/api/windows.ui.composition.compositioncolorspace) values:
+
+* `Auto`
+* `Rgb`
+* `RgbLinear`
+
+Applying any other interpolation color space will have no effect.
+
 # Description
 
 <!-- Use this section to provide a brief description of the feature.
@@ -150,16 +160,6 @@ When `MappingMode` is set to `RelativeTBoundingBox`, the X and Y values of the t
 
 When `MappingMode` is set to `Absolute`, the X and Y values of the three properties are treated as absolute coordinates within the brush's rendered bounds.
 
-## InterpolationSpace
-
-The underlying [CompositionRadialGradientBrush](https://docs.microsoft.com/uwp/api/windows.ui.composition.compositionradialgradientbrush) only supports the following [CompositionColorSpace](https://docs.microsoft.com/uwp/api/windows.ui.composition.compositioncolorspace) values:
-
-* `Auto`
-* `Rgb`
-* `RgbLinear`
-
-Applying any other interpolation color space will have no effect.
-
 ## Windows 10 Version Support
 
 Gradient rendering is supported on Windows 10 version 1903 (v10.0.18362.0) and higher. On previous OS versions the brush will render a solid color specified by the `FallbackColor` property.
@@ -189,36 +189,44 @@ with a "///" comment above the member or type. -->
 | EllipseRadius | The radius of the ellipse that contains the gradient. The default is `(0.5, 0.5)`. |
 | GradientOriginOffset | The gradient origin's offset from the center of the element. |
 | GradientStops | A collection of [GradientStop](https://docs.microsoft.com/uwp/api/windows.ui.xaml.media.gradientstop) objects that define the gradient. |
-| InterpolationSpace | The color space used to interpolate the gradient's colors. The default is `Auto`. |
+| InterpolationSpace | The color space used to interpolate the gradient's colors. The default is `Auto`. For supported values, see [CompositionRadialGradientBrush.InterpolationSpace](https://docs.microsoft.com/uwp/api/windows.ui.composition.compositiongradientbrush.interpolationspace#Windows_UI_Composition_CompositionGradientBrush_InterpolationSpace) |
 | MappingMode | Defines whether `EllipseCenter`, `EllipseRadius` and `GradientOriginOffset` represent relative coordinates in the range 0 to 1 or absolute coordinates. The default is `RelativeToBoundingBox`. |
+| SpreadMethod | Gets or sets the type of spread method that specifies how to draw a gradient that starts or ends inside the bounds of the object to be painted. The default is `Pad`. |
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 
 ```C++
+[WUXC_VERSION_PREVIEW]
 [webhosthidden]
-[MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
-[MUX_PROPERTY_CHANGED_CALLBACK_METHODNAME("OnPropertyChanged")]
 [contentproperty("GradientStops")]
 unsealed runtimeclass RadialGradientBrush : Windows.UI.Xaml.Media.XamlCompositionBrushBase
 {
     RadialGradientBrush();
 
+    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
     [MUX_DEFAULT_VALUE("winrt::Point(0.5,0.5)")]
     Windows.Foundation.Point EllipseCenter { get; set; };
 
+    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
     [MUX_DEFAULT_VALUE("winrt::Point(0.5,0.5)")]
     Windows.Foundation.Point EllipseRadius { get; set; };
 
+    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
     Windows.Foundation.Point GradientOriginOffset { get; set; };
 
+    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
     [MUX_DEFAULT_VALUE("winrt::BrushMappingMode::RelativeToBoundingBox")]
     Windows.UI.Xaml.Media.BrushMappingMode MappingMode { get; set; };
 
+    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
     [MUX_DEFAULT_VALUE("winrt::Windows::UI::Composition::CompositionColorSpace::Auto")]
     Windows.UI.Composition.CompositionColorSpace InterpolationSpace { get; set; };
 
-    [MUX_PROPERTY_CHANGED_CALLBACK(FALSE)]
+    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
+    [MUX_DEFAULT_VALUE("winrt::GradientSpreadMethod::Pad")]
+    Windows.UI.Xaml.Media.GradientSpreadMethod SpreadMethod { get; set; };
+
     Windows.Foundation.Collections.IObservableVector<Windows.UI.Xaml.Media.GradientStop> GradientStops { get; };
 
     static Windows.UI.Xaml.DependencyProperty EllipseCenterProperty { get; };
@@ -226,6 +234,7 @@ unsealed runtimeclass RadialGradientBrush : Windows.UI.Xaml.Media.XamlCompositio
     static Windows.UI.Xaml.DependencyProperty GradientOriginOffsetProperty { get; };
     static Windows.UI.Xaml.DependencyProperty InterpolationSpaceProperty { get; };
     static Windows.UI.Xaml.DependencyProperty MappingModeProperty { get; };
+    static Windows.UI.Xaml.DependencyProperty SpreadMethodProperty { get; };
 }
 ```
 
