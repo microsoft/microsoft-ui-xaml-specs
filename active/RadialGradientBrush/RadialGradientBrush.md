@@ -156,7 +156,7 @@ The gradient origin defaults to center and can be offset using the `GradientOrig
 
 `MappingMode` defines whether `EllipseCenter`, `EllipseRadius` and `GradientOriginOffset` represent relative or absolute coordinates.
 
-When `MappingMode` is set to `RelativeTBoundingBox`, the X and Y values of the three properties are treated as relative to the brush's rendered bounds, where `(0,0)` represents the top left and `(1,1)` represents the bottom right of the brush's rendered bounds for the `EllipseCenter` and `EllipseRadius` properties and `(0,9)` represents the center for the `GradientOriginOffset` property.
+When `MappingMode` is set to `RelativeTBoundingBox`, the X and Y values of the three properties are treated as relative to the brush's rendered bounds, where `(0,0)` represents the top left and `(1,1)` represents the bottom right of the brush's rendered bounds for the `EllipseCenter` and `EllipseRadius` properties and `(0,0)` represents the center for the `GradientOriginOffset` property.
 
 When `MappingMode` is set to `Absolute`, the X and Y values of the three properties are treated as absolute coordinates within the brush's rendered bounds.
 
