@@ -54,6 +54,7 @@ in IntelliSense. -->
 
 
 # API Details
+```c++
 [WUXC_VERSION_PREVIEW]
 [webhosthidden]
 runtimeclass NavigationViewExpandingEventArgs
@@ -165,6 +166,7 @@ unsealed runtimeclass NavigationViewItemPresenter : Windows.UI.Xaml.Controls.Con
         static Windows.UI.Xaml.DependencyProperty TemplateSettingsProperty{ get; };
     }
 }
+```
 
 # Appendix
 <!-- Anything else that you want to write down for posterity, but 
