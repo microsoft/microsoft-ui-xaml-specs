@@ -13,6 +13,8 @@ Although NavigationViewItem can contain any number of nested levels, we recommen
 We believe two levels is ideal for usability and comprehension.
 
 NavigationView shows hierarchy in all its pane display modes, including Top and LeftCompact.
+
+*Note:* The following is a comp and will be updated with screenshots before this doc is published.
 ![NavigationView in Left, LeftCompact, and Top modes showing hierarchy](NavigationView_Hierarchy.png)
 
 ## Selection
