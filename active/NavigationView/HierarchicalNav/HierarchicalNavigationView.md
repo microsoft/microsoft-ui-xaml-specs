@@ -2,7 +2,8 @@
 # Background
 Currently, NavigationView's MenuItems list allows for displaying a flat list of items in the pane. 
 It's common for apps to want to present users with a hierarchical navigation tree. 
-This feature adds the capability to nest items within the pane. 
+This feature adds the capability to nest items within the pane.
+There is additional discussion about how to use this control in the [Navigation view](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/navigationview) design document.
 
 
 # Hierarchy
@@ -14,6 +15,11 @@ We believe two levels is ideal for usability and comprehension.
 NavigationView shows hierarchy in all its pane display modes, including Top and LeftCompact.
 ![NavigationView in Left, LeftCompact, and Top modes showing hierarchy](NavigationView_Hierarchy.png)
 
+## Selection
+By default, any item can contain children, be invoked, or be selected.
+There's more detail about the [ItemInvoked](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationview.iteminvoked?view=winui-2.3) and [SelectionChanged](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationview.selectionchanged?view=winui-2.3) events later in this document.
+When providing users with a hierarchical tree of navigation options, you may choose to make parent items non-selectable, for example when your app doesn't have a destination page associated with that parent item.
+To prevent an item from showing the selection indicator when activated by the user, set its [SelectsOnInvoked](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationviewitem.selectsoninvoked?view=winui-2.3) property to False.
 
 # Examples
 
