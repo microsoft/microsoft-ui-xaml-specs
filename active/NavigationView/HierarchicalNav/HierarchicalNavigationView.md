@@ -1,10 +1,10 @@
 
 # Background
+The Xaml [NavigationView](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.NavigationView) control enables navigation of app content. It has a header, a view for the main content, and a menu pane for navigation commands. There is additional discussion about how to use this control in the [Navigation view](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/navigationview) design document.
+
 Currently, NavigationView's MenuItems list allows for displaying a flat list of items in the pane. 
 It's common for apps to want to present users with a hierarchical navigation tree. 
 This feature adds the capability to nest items within the pane.
-There is additional discussion about how to use this control in the [Navigation view](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/navigationview) design document.
-
 
 # Hierarchy
 To show a hierarchical list of nested navigation items in the pane, use NavigationViewItem's `MenuItems` property.
