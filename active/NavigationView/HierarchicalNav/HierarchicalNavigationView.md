@@ -29,6 +29,20 @@ For example, the selected item may be a child node inside a non-expanded subtree
 In this situation, the first visible ancestor of the selected item will show as selected, and the selection indicator will move as users expand the subtree. 
 The entire navigation view will show no more than one selection indicator.
 
+## Keyboarding
+Users can move focus around the navigation view using their [keyboard](https://docs.microsoft.com/en-us/windows/uwp/design/input/keyboard-interactions). 
+The arrow keys expose "inner navigation" within the pane and follow the interactions provided in [tree view](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/tree-view).
+- **Up arrow** moves focus to the item directly above the item currently in focus
+- **Down arrow** moves focus the item directly below the item currently in focus; note that the items do not need to be visually adjecent, focus will move from the last item in the pane's list to the settings item.
+- **Right arrow**
+  - if the current item is a collapsed parent with children, right arrow expands the item but does not move focus
+  - if the current item is an expanded parent with children, right arrow moves focus to the first child
+  - if the current item is a leaf node, right arrow does nothing
+- **Left arrow** 
+  - if the current item is a collapsed parent with children, left arrow does nothing
+  - if the current item is an expanded parent with children, left arrow collapse the item but does not move focus
+  - if the current item is a leaf node, left arrow moves focus to the current item's parent
+
 # Examples
 
 ## Add items in markup
