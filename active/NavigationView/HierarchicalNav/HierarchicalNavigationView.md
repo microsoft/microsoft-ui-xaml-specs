@@ -146,7 +146,7 @@ unsealed runtimeclass NavigationViewItem : NavigationViewItemBase
         [MUX_DEFAULT_VALUE("false")]
         Boolean HasUnrealizedChildren{ get; set; };
         [MUX_DEFAULT_VALUE("false")]
-        Boolean IsChildSelected{ get; set; };
+        Boolean IsChildSelected{ get; };
 
         [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
         Windows.Foundation.Collections.IVector<Object> MenuItems{ get; };
