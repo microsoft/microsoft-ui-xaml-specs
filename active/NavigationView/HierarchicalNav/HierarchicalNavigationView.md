@@ -52,13 +52,11 @@ Declare app navigation hierarchy in markup.
 <muxc:NavigationView>
     <muxc:NavigationView.MenuItems>
         <muxc:NavigationViewItem Content="Home" Icon="Home" ToolTipService.ToolTip="Home"/>
-        <muxc:NavigationViewItem Content="Collections" 
-                            Icon="Keyboard" ToolTipService.ToolTip="Collections">
+        <muxc:NavigationViewItem Content="Collections" Icon="Keyboard" ToolTipService.ToolTip="Collections">
             <muxc:NavigationViewItem.MenuItems>
-                <muxc:NavigationViewItem Content="Bookshelf" 
-                                Icon="Library" ToolTipService.ToolTip="Bookshelf"/>
-                <muxc:NavigationViewItem Content="Mail" 
-                                Icon="Mail" ToolTipService.ToolTip="Mail"/>
+                <muxc:NavigationViewItem Content="Bookshelf" Icon="Library" 
+                    ToolTipService.ToolTip="Bookshelf"/>
+                <muxc:NavigationViewItem Content="Mail" Icon="Mail" ToolTipService.ToolTip="Mail"/>
             </muxc:NavigationViewItem.MenuItems>
         </muxc:NavigationViewItem>
     </muxc:NavigationView.MenuItems>
@@ -67,6 +65,104 @@ Declare app navigation hierarchy in markup.
 
 ## Add items using data binding
 
+```xaml
+<DataTemplate x:Key="NavigationViewMenuItem" x:DataType="local:Category">
+    <muxc:NavigationViewItem Content="{x:Bind Name}" MenuItemsSource="{x:Bind Children}" 
+        SelectsOnInvoked="{x:Bind IsLeaf}"/>
+</DataTemplate>
+
+<muxc:NavigationView x:Name="navview" MenuItemsSource="{x:Bind categories, Mode=OneWay}" 
+    MenuItemTemplate="{StaticResource NavigationViewMenuItem}" ItemInvoked="{x:Bind ClickedItem}" 
+    Expanding="ExpandingItem" Collapsed="CollapsedItem" PaneDisplayMode="Left">
+    
+    <StackPanel Margin="10,10,0,0">
+        <TextBlock Margin="0,10,0,0" x:Name="ExpandingItemLabel" Text="Last Expanding: N/A"/>
+        <TextBlock x:Name="CollapsedItemLabel" Text="Last Collapsed: N/A"/>
+    </StackPanel>    
+</muxcontrols:NavigationView>
+```
+
+```c#
+
+    public class Category
+    {
+        public String Name { get; set; }
+        public String Icon { get; set; }
+        public ObservableCollection<Category> Children { get; set; }
+        public bool IsLeaf { get; set; }
+
+        public Category(String name, String icon, ObservableCollection<Category> children, bool isLeaf)
+        {
+            this.Name = name;
+            this.Icon = icon;
+            this.Children = children;
+            this.IsLeaf = isLeaf;
+        }
+    }
+    
+    public sealed partial class HierarchicalNavigationViewDataBinding : Page
+    {
+
+        ObservableCollection<Category> categories = new ObservableCollection<Category>();
+
+        public HierarchicalNavigationViewDataBinding()
+        {
+            this.InitializeComponent();
+
+            var categories3 = new ObservableCollection<Category>();
+            categories3.Add(new Category("Menu Item 3", "Icon", null, true));
+            categories3.Add(new Category("Menu Item 4", "Icon", null, true));
+
+            var categories2 = new ObservableCollection<Category>();
+            categories2.Add(new Category("Menu Item 2", "Icon", categories3, false));
+
+            
+            var categories5 = new ObservableCollection<Category>();
+            categories5.Add(new Category("Menu Item 7", "Icon", null, true));
+            categories5.Add(new Category("Menu Item 8", "Icon", null, true));
+
+            var categories4 = new ObservableCollection<Category>();
+            categories4.Add(new Category("Menu Item 6", "Icon", categories5, false));
+
+            categories.Add(new Category("Menu Item 1", "Icon", categories2, false));
+            categories.Add(new Category("Menu Item 5", "Icon", categories4, true));
+            categories.Add(new Category("Menu Item 9", "Icon", null, true));
+        }
+
+        private void ClickedItem(object sender, NavigationViewItemInvokedEventArgs e)
+        {
+            var clickedItem = e.InvokedItem;
+            var clickedItemContainer = e.InvokedItemContainer;
+        }
+
+        private void ExpandingItem(object sender, NavigationViewItemExpandingEventArgs e)
+        {
+            var nvib = e.ExpandingItemContainer;
+            if(nvib != null)
+            {
+                var name = "Last Expanding: " + nvib.Content;
+                ExpandingItemLabel.Text = name;
+            }
+            else
+            {
+                ExpandingItemLabel.Text = "Last Expanding: ERROR - No container returned!";
+            }
+        }
+
+        private void CollapsedItem(object sender, NavigationViewCollapsedEventArgs e)
+        {
+            var nvib = e.CollapsedItemContainer;
+            if (nvib != null)
+            {
+                var name = "Last Collapsed: " + nvib.Content;
+                CollapsedItemLabel.Text = name;
+            }
+            else
+            {
+                CollapsedItemLabel.Text = "Last Collapsed: ERROR - No container returned!";
+            }
+        }
+```
 
 # Remarks
 <!-- Explanation and guidance that doesn't fit into the Examples
