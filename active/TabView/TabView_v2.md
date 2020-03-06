@@ -29,7 +29,7 @@ the reader "go read 100 pages of background information posted at ...". -->
 
 > This spec corresponds to [issue 2007](https://github.com/microsoft/microsoft-ui-xaml/issues/2007) on the WinUI repo.
 
-The WinUI TabView is missing two main features relative to the Windows Community Toolkit (WCT) TabView:
+The WinUI [TabView](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TabView) control is a way to display a set of tabs and their respective content. There's also a TabView control in the [Windows Community Toolkit](https://docs.microsoft.com/en-us/windows/communitytoolkit/controls/tabview), which has two main features not found in the WinUI version.:
 * **TabWidthMode: Compact** ([WCT API Link](https://docs.microsoft.com/en-us/dotnet/api/microsoft.toolkit.uwp.ui.controls.tabwidthmode?view=win-comm-toolkit-dotnet-stable)) 
 * **Overlay close button** ([WCT API Link](https://docs.microsoft.com/en-us/dotnet/api/microsoft.toolkit.uwp.ui.controls.tabview.isclosebuttonoverlay?view=win-comm-toolkit-dotnet-stable#Microsoft_Toolkit_Uwp_UI_Controls_TabView_IsCloseButtonOverlay))
 
@@ -56,7 +56,7 @@ Describes the behavior of the x-to-close button found on each TabViewItem.
 
 The `CloseButtonOverlayMode` enum has three values: {`Auto`, `OnHover`, `Persistent`}
 
-> The `CloseButtonOverlayMode` will only effect tabs that are closeable - ie. the value of the `TabViewItem`'s `IsClosable` property is `TRUE`.
+> The `CloseButtonOverlayMode` will only affect tabs that are closeable - ie. the value of the `TabViewItem`'s `IsClosable` property is `TRUE`.
 
 `OnHover`: The x-to-close button only appears on the selected tab and any tabs that are being hovered.
 
@@ -66,7 +66,7 @@ The `CloseButtonOverlayMode` enum has three values: {`Auto`, `OnHover`, `Persist
 
 ![Persistent](./TabView_Close_Persistent.png)
 
-`Auto`: Maps to `Persistent`.
+`Auto`: Currently maps to `Persistent`.
 
 > Prior to this change, the behavior of the x-to-close button was always `Persistent` with no option to change the behavior.
 
@@ -152,7 +152,7 @@ For example, implementation details. -->
 
 1. The corresponding visual effect might change over time
 
-The CloseButtonOverlayMode enum describes a visual effect that is likely to change over time. For example, Spartan Edge used the hover model, whereas chromium Ege uses a persistent model. An enum allows that platform to have an opinion (via `Auto`) and an option to change the behavior over time in a way that a boolean does not. 
+The CloseButtonOverlayMode enum describes a visual effect that is likely to change over time. For example, Spartan Edge used the hover model, whereas chromium Edge uses a persistent model. An enum allows that platform to have an opinion (via `Auto`) and an option to change the behavior over time in a way that a boolean does not. 
 
 2. Per-device input support
 
