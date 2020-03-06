@@ -27,12 +27,50 @@ modifying an existing API. -->
 area, just explanation enough to understand this new API, rather than telling
 the reader "go read 100 pages of background information posted at ...". -->
 
+> This spec corresponds to [issue 2007](https://github.com/microsoft/microsoft-ui-xaml/issues/2007) on the WinUI repo.
+
+The WinUI TabView is missing two main features relative to the Windows Community Toolkit (WCT) TabView:
+* **TabWidthMode: Compact** ([WCT API Link](https://docs.microsoft.com/en-us/dotnet/api/microsoft.toolkit.uwp.ui.controls.tabwidthmode?view=win-comm-toolkit-dotnet-stable)) 
+* **Overlay close button** ([WCT API Link](https://docs.microsoft.com/en-us/dotnet/api/microsoft.toolkit.uwp.ui.controls.tabview.isclosebuttonoverlay?view=win-comm-toolkit-dotnet-stable#Microsoft_Toolkit_Uwp_UI_Controls_TabView_IsCloseButtonOverlay))
+
+Once these feature gaps have been closed and the WinUI TabView is at parity with the Windows Community Toolkit version, we will be able to deprecate the WCT TabView control.
 
 # Description
 <!-- Use this section to provide a brief description of the feature.
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
 
+## TabViewWidthMode: Compact
+
+This change introduces a new value to the existing `TabViewWidthMode` enum: `Compact`.
+
+Setting `Compact` will cause unselected tab headers to display only the tab's icon. If an icon is not set, the tab will display nothing.
+
+The selected tab will render at its natural size (ie. the size it would render in `SizeToContent` mode.)
+
+![Compact](./TabView_Width_Compact.png)
+
+## CloseButtonOverlayMode
+
+Describes the behavior of the x-to-close button found on each TabViewItem. 
+
+The `CloseButtonOverlayMode` enum has three values: {`Auto`, `OnHover`, `Persistent`}
+
+> The `CloseButtonOverlayMode` will only effect tabs that are closeable - ie. the value of the `TabViewItem`'s `IsClosable` property is `TRUE`.
+
+`OnHover`: The x-to-close button only appears on the selected tab and any tabs that are being hovered.
+
+![Hover](./TabView_Close_Hover.gif)
+
+`Persistent`: The x-to-close button always appears on every tab. 
+
+![Persistent](./TabView_Close_Persistent.png)
+
+`Auto`: Maps to `Persistent`.
+
+> Prior to this change, the behavior of the x-to-close button was always `Persistent` with no option to change the behavior.
+
+> See the [Appendix](#Appendix) section for why this value is an enum and not a boolean.
 
 # Examples
 <!-- Use this section to explain the features of the API, showing
@@ -70,7 +108,56 @@ with a "///" comment above the member or type. -->
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 
+```
+[WUXC_VERSION_MUXONLY]
+[webhosthidden]
+enum TabViewWidthMode
+{
+    Equal = 0,
+    SizeToContent = 1,
+    Compact = 2,
+};
+
+[WUXC_VERSION_PREVIEW]
+[webhosthidden]
+enum TabViewCloseButtonOverlayMode
+{
+    Auto = 0,
+    OnHover = 1,
+    Persistent = 2,
+};
+
+[WUXC_VERSION_MUXONLY]
+[webhosthidden]
+[contentproperty("TabItems")]
+unsealed runtimeclass TabView : Windows.UI.Xaml.Controls.Control
+{
+
+    [WUXC_VERSION_PREVIEW]
+    [MUX_DEFAULT_VALUE("winrt::TabViewCloseButtonOverlayMode::Persistent")]
+    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
+    TabViewCloseButtonOverlayMode CloseButtonOverlayMode{ get; set; };
+
+    [WUXC_VERSION_PREVIEW]
+    static Windows.UI.Xaml.DependencyProperty CloseButtonOverlayModeProperty{ get; };
+}
+```
+
 # Appendix
 <!-- Anything else that you want to write down for posterity, but 
 that isn't necessary to understand the purpose and usage of the API.
 For example, implementation details. -->
+
+**Why is CloseButtonOverlayMode an enum and not a boolean?**
+
+1. The corresponding visual effect might change over time
+
+The CloseButtonOverlayMode enum describes a visual effect that is likely to change over time. For example, Spartan Edge used the hover model, whereas chromium Ege uses a persistent model. An enum allows that platform to have an opinion (via `Auto`) and an option to change the behavior over time in a way that a boolean does not. 
+
+2. Per-device input support
+
+The original spec had discussion around the desired default (persistent vs. hover) both in the context of user experience as well as touch-friendliness. An enum value provides the platform an option to set per-device or per-input behavior if desired.
+
+3. Futureproofing
+
+An enum gives the platform an option to introduce other modes in the future. Although there haven't been specific modes proposed yet, an enum leaves the door open for changes.
