@@ -12,6 +12,11 @@ _Open question:_ Should PaneFooter be deprecated because this new API is a direc
 <!-- Use this section to provide a brief description of the feature.
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
+Some apps may choose to visually group navigation items into top-aligned and bottom-aligned lists.
+While this grouping is possible today using navigation view's [PaneFooter](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationview.panefooter?view=winui-2.3) property, the approach has interaction downsides that this feature will correct.
+By adding FooterMenuItems, we'll unify the [Settings item](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationview.settingsitem?view=winui-2.3) with other navigation items in its immediate proximity.
+As a result, keyboard and Narrator users will feel that the footer list behavior meets their expectations.
+Selection behavior and animations will also feel better integrated into the whole NavigationView control.
 
 
 # Examples
