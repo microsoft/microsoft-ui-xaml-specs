@@ -482,9 +482,9 @@ Contains the argument returned by a window size change event.
     public bool Handled { get; set; };
     ```
 
-- WindowSizeChangedEventArgs.Visible: Gets the new size of the window in units of effective (view) pixels.
+- WindowSizeChangedEventArgs.WindowSize: Gets the new size of the window in units of effective (view) pixels.
     ```CS
-    public Size Visible { get; } 
+    public Size WindowSize { get; } 
     ```
 
 
