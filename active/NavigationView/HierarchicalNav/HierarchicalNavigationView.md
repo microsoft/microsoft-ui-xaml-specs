@@ -23,6 +23,76 @@ There's more detail about the [ItemInvoked](https://docs.microsoft.com/en-us/uwp
 When providing users with a hierarchical tree of navigation options, you may choose to make parent items non-selectable, for example when your app doesn't have a destination page associated with that parent item.
 To prevent an item from showing the selection indicator when invoked, set its [SelectsOnInvoked](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationviewitem.selectsoninvoked?view=winui-2.3) property to False.
 
+```xaml
+<DataTemplate x:Key="NavigationViewMenuItem" x:DataType="local:Category">
+    <muxc:NavigationViewItem Content="{x:Bind Name}" 
+        MenuItemsSource="{x:Bind Children}"
+        SelectsOnInvoked="{x:Bind IsLeaf}" />
+</DataTemplate>
+
+<muxc:NavigationView x:Name="navview" 
+    MenuItemsSource="{x:Bind categories, Mode=OneWay}" 
+    MenuItemTemplate="{StaticResource NavigationViewMenuItem}">
+   
+</muxcontrols:NavigationView>
+```
+
+```c#
+public class Category
+{
+    public String Name { get; set; }
+    public String Icon { get; set; }
+    public ObservableCollection<Category> Children { get; set; }
+    public bool IsLeaf { get; set; }
+}
+    
+public sealed partial class HierarchicalNavigationViewDataBinding : Page
+{
+    public HierarchicalNavigationViewDataBinding()
+    {
+        this.InitializeComponent();
+           
+        public ObservableCollection<Category> Categories = new ObservableCollection<Category>(){
+            new Category(){
+                Name = "Menu Item 1",
+                Icon = "Icon",
+                Children = new ObservableCollection<Category>() {
+                    new Category(){
+                        Name = "Menu Item 2",
+                        Icon = "Icon",
+                        Children = new ObservableCollection<Category>() {
+                            new Category() { 
+                                Name  = "Menu Item 2", 
+                                Icon = "Icon",
+                                Children = new ObservableCollection<Category>() {
+                                    new Category() { Name  = "Menu Item 3", Icon = "Icon", IsLeaf = true },
+                                    new Category() { Name  = "Menu Item 4", Icon = "Icon", IsLeaf = true }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            new Category(){
+                Name = "Menu Item 5",
+                Icon = "Icon",
+                Children = new ObservableCollection<Category>() {
+                    new Category(){
+                        Name = "Menu Item 6",
+                        Icon = "Icon",
+                        Children = new ObservableCollection<Category>() {
+                            new Category() { Name  = "Menu Item 7", Icon = "Icon", IsLeaf = true },
+                            new Category() { Name  = "Menu Item 8", Icon = "Icon", IsLeaf = true }
+                        }
+                    }
+                }
+            },
+            new Category(){ Name = "Menu Item 9", Icon = "Icon", IsLeaf = true }
+        };
+    }
+}
+```
+
 Selected items will draw their selection indicators along their left edge when in left mode or their bottom edge when in top mode. 
 The selected item may not always remain visible.
 For example, the selected item may be a child node inside a non-expanded subtree.
@@ -70,105 +140,108 @@ Declare app navigation hierarchy in markup.
     <muxc:NavigationViewItem Content="{x:Bind Name}" MenuItemsSource="{x:Bind Children}"/>
 </DataTemplate>
 
-<muxc:NavigationView x:Name="navview" MenuItemsSource="{x:Bind categories, Mode=OneWay}" 
-    MenuItemTemplate="{StaticResource NavigationViewMenuItem}" ItemInvoked="{x:Bind OnItemInvoked}" 
-    Expanding="OnItemExpanding" Collapsed="OnItemCollapsed" PaneDisplayMode="Left">
+<muxc:NavigationView x:Name="navview" 
+    MenuItemsSource="{x:Bind categories, Mode=OneWay}" 
+    MenuItemTemplate="{StaticResource NavigationViewMenuItem}" 
+    ItemInvoked="{x:Bind OnItemInvoked}" 
+    Expanding="OnItemExpanding" 
+    Collapsed="OnItemCollapsed" 
+    PaneDisplayMode="Left">
     
     <StackPanel Margin="10,10,0,0">
         <TextBlock Margin="0,10,0,0" x:Name="ExpandingItemLabel" Text="Last Expanding: N/A"/>
         <TextBlock x:Name="CollapsedItemLabel" Text="Last Collapsed: N/A"/>
     </StackPanel>    
-</muxcontrols:NavigationView>
+</muxc:NavigationView>
 ```
 
 ```c#
-
-    public class Category
-    {
-        public String Name { get; set; }
-        public String Icon { get; set; }
-        public ObservableCollection<Category> Children { get; set; }
-        public bool IsLeaf { get; set; }
-    }
+public class Category
+{
+    public String Name { get; set; }
+    public String Icon { get; set; }
+    public ObservableCollection<Category> Children { get; set; }
+}
     
-    public sealed partial class HierarchicalNavigationViewDataBinding : Page
+public sealed partial class HierarchicalNavigationViewDataBinding : Page
+{
+    public HierarchicalNavigationViewDataBinding()
     {
-        public HierarchicalNavigationViewDataBinding()
-        {
-            this.InitializeComponent();
+        this.InitializeComponent();
            
-            public ObservableCollection<Category> Categories = new ObservableCollection<Category>(){
-                new Category(){
-                    Name = "Menu Item 1",
-                    Icon = "Icon",
-                    Children = new ObservableCollection<Category>() {
-                        new Category(){
-                            Name = "Menu Item 2",
-                            Icon = "Icon",
-                            Children = new ObservableCollection<Category>() {
-                                new Category() { 
-                                    Name  = "Menu Item 2", 
-                                    Icon = "Icon",
-                                    Children = new ObservableCollection<Category>() {
-                                        new Category() { Name  = "Menu Item 3", Icon = "Icon", IsLeaf = true },
-                                        new Category() { Name  = "Menu Item 4", Icon = "Icon", IsLeaf = true }
-                                    }
+        public ObservableCollection<Category> Categories = new ObservableCollection<Category>(){
+            new Category(){
+                Name = "Menu Item 1",
+                Icon = "Icon",
+                Children = new ObservableCollection<Category>() {
+                   new Category(){
+                        Name = "Menu Item 2",
+                        Icon = "Icon",
+                        Children = new ObservableCollection<Category>() {
+                            new Category() { 
+                                Name  = "Menu Item 2", 
+                                Icon = "Icon",
+                                Children = new ObservableCollection<Category>() {
+                                    new Category() { Name  = "Menu Item 3", Icon = "Icon" },
+                                    new Category() { Name  = "Menu Item 4", Icon = "Icon" }
                                 }
                             }
                         }
                     }
-                },
-                new Category(){
-                    Name = "Menu Item 5",
-                    Icon = "Icon",
-                    Children = new ObservableCollection<Category>() {
-                        new Category(){
-                            Name = "Menu Item 6",
-                            Icon = "Icon",
-                            Children = new ObservableCollection<Category>() {
-                                new Category() { Name  = "Menu Item 7", Icon = "Icon", IsLeaf = true },
-                                new Category() { Name  = "Menu Item 8", Icon = "Icon", IsLeaf = true }
-                            }
+                }
+            },
+            new Category(){
+                Name = "Menu Item 5",
+                Icon = "Icon",
+                Children = new ObservableCollection<Category>() {
+                    new Category(){
+                        Name = "Menu Item 6",
+                        Icon = "Icon",
+                        Children = new ObservableCollection<Category>() {
+                            new Category() { Name  = "Menu Item 7", Icon = "Icon" },
+                            new Category() { Name  = "Menu Item 8", Icon = "Icon" }
                         }
                     }
-                },
-                new Category(){ Name = "Menu Item 9", Icon = "Icon", IsLeaf = true }
-            };
-        }
+                }
+            },
+            new Category(){ Name = "Menu Item 9", Icon = "Icon" }
+        };
+    }
 
-        private void OnItemInvoked(object sender, NavigationViewItemInvokedEventArgs e)
-        {
-            var clickedItem = e.InvokedItem;
-            var clickedItemContainer = e.InvokedItemContainer;
-        }
+    private void OnItemInvoked(object sender, NavigationViewItemInvokedEventArgs e)
+    {
+        var clickedItem = e.InvokedItem;
+        var clickedItemContainer = e.InvokedItemContainer;
+    }
 
-        private void OnItemExpanding(object sender, NavigationViewItemExpandingEventArgs e)
+    private void OnItemExpanding(object sender, NavigationViewItemExpandingEventArgs e)
+    {
+        var nvib = e.ExpandingItemContainer;
+        if(nvib != null)
         {
-            var nvib = e.ExpandingItemContainer;
-            if(nvib != null)
-            {
-                var name = "Last Expanding: " + nvib.Content;
-                ExpandingItemLabel.Text = name;
-            }
-            else
-            {
-                ExpandingItemLabel.Text = "Last Expanding: ERROR - No container returned!";
-            }
+            var name = "Last Expanding: " + nvib.Content;
+            ExpandingItemLabel.Text = name;
         }
+        else
+        {
+            ExpandingItemLabel.Text = "Last Expanding: ERROR - No container returned!";
+        }
+    }
 
-        private void OnItemCollapsed(object sender, NavigationViewCollapsedEventArgs e)
+    private void OnItemCollapsed(object sender, NavigationViewCollapsedEventArgs e)
+    {
+        var nvib = e.CollapsedItemContainer;
+        if (nvib != null)
         {
-            var nvib = e.CollapsedItemContainer;
-            if (nvib != null)
-            {
-                var name = "Last Collapsed: " + nvib.Content;
-                CollapsedItemLabel.Text = name;
-            }
-            else
-            {
-                CollapsedItemLabel.Text = "Last Collapsed: ERROR - No container returned!";
-            }
+            var name = "Last Collapsed: " + nvib.Content;
+            CollapsedItemLabel.Text = name;
         }
+        else
+        {
+            CollapsedItemLabel.Text = "Last Collapsed: ERROR - No container returned!";
+        }
+    }
+}
 ```
 
 # Remarks
