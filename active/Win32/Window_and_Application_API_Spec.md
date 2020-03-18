@@ -8,6 +8,9 @@ Xaml in UWP has a [Window](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Wi
 
 Note that some existing APIs will also behave differently when running as a Win32 app. For example, the static Window.Current property today returns the Window for the current (calling) thread, but in a non-UWP app it will return null. Similarly the Window.CoreWindow property will be null when not running as UWP.
 
+There is also one API not (yet) present in WinUI: [Window.SetTitleBar](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Window.SetTitleBar). That API relies on a Composition feature that only exists for system Visuals and is not yet supported for WinUI Visuals.
+
+
 # Window class
 
 Window represents a WinUI application window. It can be used in a [UWP](https://docs.microsoft.com/en-us/windows/uwp/get-started/universal-application-platform-guide) app a Win32 app. When run in a UWP app there can only be one instance on a thread.
@@ -114,7 +117,7 @@ Attempting to activate (`new`) a new Window in a UWP app will fail and log a deb
 
 Creating a new Window in a Win32 app creates a new top level hwnd.
 
-## Window.Icon property
+## Window.Icon property **[NEW]**
 Gets or sets a window's icon. For each window, this icon is used in its title bar, its task bar button, and in its ALT+TAB application selection list entry.
 
 > Note: this property is ignored in a UWP app
@@ -191,7 +194,7 @@ Gets the [CoreWindow](https://docs.microsoft.com/uwp/api/Windows.UI.Core.CoreWin
 public CoreWindow CoreWindow { get; }
 ```
 
-## IWindowInterop Interface 
+## IWindowInterop Interface **[NEW]**
 
 This interface is implemented by Window, and in a Win32 app can get used to get the Window's underlying hwnd.
 
@@ -205,7 +208,7 @@ Gets the [CoreDispatcher](https://docs.microsoft.com/uwp/api/Windows.UI.Core.Cor
 public CoreDispatcher Dispatcher { get; }
 ```
 
-## Window.DispatcherQueue property
+## Window.DispatcherQueue property **[NEW]**
 
 Gets the [DispatcherQueue](https://docs.microsoft.com/uwp/api/Windows.System.DispatcherQueue) object for the Window.
 
