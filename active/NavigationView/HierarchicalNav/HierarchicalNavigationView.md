@@ -133,7 +133,13 @@ Declare app navigation hierarchy in markup.
 </muxc:NavigationView>
 ```
 
-## Add items using data binding
+## Add a hierarchy of items using data binding
+
+Add a hierarchy of menu items to the NavigationView by 
+* binding the MenuItemsSource property to the hierarchical data
+* defining the item template to be a NavigationViewMenuItem, with its Content set to be the label of the menu item, and its its MenuItemsSource property bound to the next level of the hierarchy
+
+This example also demonstrates the Expanding and Collapsing events. These events are raised for a menu item with children.
 
 ```xaml
 <DataTemplate x:Key="NavigationViewMenuItem" x:DataType="local:Category">
