@@ -4,14 +4,14 @@ The Xaml [NavigationView](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.C
 
 Currently, NavigationView's MenuItems list allows for displaying a flat list of items in the pane. 
 It's common for apps to want to present users with a hierarchical navigation tree. 
-This feature adds the capability to nest items within the pane by adding MenuItems/MenuItemsSource properties to NavigationMenuItem, matching the existing properties on NavigationMenu. Some of the new APIs are copied from analogous existing APIs on the [TreeView](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView) control.
+This feature adds the capability to nest items within the pane by adding MenuItems/MenuItemsSource properties to NavigationViewItem, matching the existing properties on NavigationView. Some of the new APIs are copied from analogous existing APIs on the [TreeView](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView) control.
 
 # Hierarchy
 You specify the menu items of a NavigationView using either the `MenuItems` property or the `MenuItemsSource` property of NavigationViewItem.
 
 To show a hierarchical list of nested navigation items when using `MenuItems`, each *NavigationViewItem* can contain other NavigationViewItems and organizing elements like item headers and separators. 
 
-To show a hierarchical list when  using `MenuItemsSource`, set the `ItemTemplate` to be a NavigationViewItem, and bind its MenuItemsSource property to the next level of the hierarchy.
+To show a hierarchical list when using `MenuItemsSource`, set the `ItemTemplate` to be a NavigationViewItem, and bind its MenuItemsSource property to the next level of the hierarchy.
 Although NavigationViewItem can contain any number of nested levels, we recommend keeping your app’s navigation hierarchy shallow. 
 We believe two levels is ideal for usability and comprehension.
 
@@ -20,105 +20,9 @@ NavigationView shows hierarchy in all its pane display modes, including Top and 
 *Note:* The following is a comp and will be updated with screenshots before this doc is published.
 ![NavigationView in Left, LeftCompact, and Top modes showing hierarchy](NavigationView_Hierarchy.png)
 
-## Selection
-By default, any item can contain children, be invoked, or be selected.
-There's more detail about the [ItemInvoked](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationview.iteminvoked?view=winui-2.3) and [SelectionChanged](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationview.selectionchanged?view=winui-2.3) events later in this document.
-When providing users with a hierarchical tree of navigation options, you may choose to make parent items non-selectable, for example when your app doesn't have a destination page associated with that parent item.
-To prevent an item from showing the selection indicator when invoked, set its [SelectsOnInvoked](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationviewitem.selectsoninvoked?view=winui-2.3) property to False.
-
-```xaml
-<DataTemplate x:Key="NavigationViewMenuItem" x:DataType="local:Category">
-    <muxc:NavigationViewItem Content="{x:Bind Name}" 
-        MenuItemsSource="{x:Bind Children}"
-        SelectsOnInvoked="{x:Bind IsLeaf}" />
-</DataTemplate>
-
-<muxc:NavigationView x:Name="navview" 
-    MenuItemsSource="{x:Bind categories, Mode=OneWay}" 
-    MenuItemTemplate="{StaticResource NavigationViewMenuItem}">
-   
-</muxcontrols:NavigationView>
-```
-
-```c#
-public class Category
-{
-    public String Name { get; set; }
-    public String Icon { get; set; }
-    public ObservableCollection<Category> Children { get; set; }
-    public bool IsLeaf { get; set; }
-}
-    
-public sealed partial class HierarchicalNavigationViewDataBinding : Page
-{
-    public HierarchicalNavigationViewDataBinding()
-    {
-        this.InitializeComponent();
-           
-        public ObservableCollection<Category> Categories = new ObservableCollection<Category>(){
-            new Category(){
-                Name = "Menu Item 1",
-                Icon = "Icon",
-                Children = new ObservableCollection<Category>() {
-                    new Category(){
-                        Name = "Menu Item 2",
-                        Icon = "Icon",
-                        Children = new ObservableCollection<Category>() {
-                            new Category() { 
-                                Name  = "Menu Item 2", 
-                                Icon = "Icon",
-                                Children = new ObservableCollection<Category>() {
-                                    new Category() { Name  = "Menu Item 3", Icon = "Icon", IsLeaf = true },
-                                    new Category() { Name  = "Menu Item 4", Icon = "Icon", IsLeaf = true }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            new Category(){
-                Name = "Menu Item 5",
-                Icon = "Icon",
-                Children = new ObservableCollection<Category>() {
-                    new Category(){
-                        Name = "Menu Item 6",
-                        Icon = "Icon",
-                        Children = new ObservableCollection<Category>() {
-                            new Category() { Name  = "Menu Item 7", Icon = "Icon", IsLeaf = true },
-                            new Category() { Name  = "Menu Item 8", Icon = "Icon", IsLeaf = true }
-                        }
-                    }
-                }
-            },
-            new Category(){ Name = "Menu Item 9", Icon = "Icon", IsLeaf = true }
-        };
-    }
-}
-```
-
-Selected items will draw their selection indicators along their left edge when in left mode or their bottom edge when in top mode. 
-The selected item may not always remain visible.
-For example, the selected item may be a child node inside a non-expanded subtree.
-In this situation, the first visible ancestor of the selected item will show as selected, and the selection indicator will move as users expand the subtree. 
-The entire navigation view will show no more than one selection indicator.
-
-## Keyboarding
-Users can move focus around the navigation view using their [keyboard](https://docs.microsoft.com/en-us/windows/uwp/design/input/keyboard-interactions). 
-The arrow keys expose "inner navigation" within the pane and follow the interactions provided in [tree view](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/tree-view).
-- **Up arrow** moves focus to the item directly above the item currently in focus
-- **Down arrow** moves focus the item directly below the item currently in focus; note that the items do not need to be visually adjecent, focus will move from the last item in the pane's list to the settings item.
-- **Right arrow**
-  - if the current item is a collapsed parent with children, right arrow expands the item but does not move focus
-  - if the current item is an expanded parent with children, right arrow moves focus to the first child
-  - if the current item is a leaf node, right arrow does nothing
-- **Left arrow** 
-  - if the current item is a collapsed parent with children, left arrow does nothing
-  - if the current item is an expanded parent with children, left arrow collapse the item but does not move focus
-  - if the current item is a leaf node, left arrow moves focus to the current item's parent
-
 # Examples
 
-## Add a hierarchy items in markup
+## Add a hierarchy of items in markup
 Declare app navigation hierarchy in markup.
 
 ```Xaml
@@ -252,6 +156,102 @@ public sealed partial class HierarchicalNavigationViewDataBinding : Page
     }
 }
 ```
+
+## Selection
+By default, any item can contain children, be invoked, or be selected.
+There's more detail about the [ItemInvoked](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationview.iteminvoked?view=winui-2.3) and [SelectionChanged](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationview.selectionchanged?view=winui-2.3) events later in this document.
+When providing users with a hierarchical tree of navigation options, you may choose to make parent items non-selectable, for example when your app doesn't have a destination page associated with that parent item.
+To prevent an item from showing the selection indicator when invoked, set its [SelectsOnInvoked](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationviewitem.selectsoninvoked?view=winui-2.3) property to False.
+
+```xaml
+<DataTemplate x:Key="NavigationViewMenuItem" x:DataType="local:Category">
+    <muxc:NavigationViewItem Content="{x:Bind Name}" 
+        MenuItemsSource="{x:Bind Children}"
+        SelectsOnInvoked="{x:Bind IsLeaf}" />
+</DataTemplate>
+
+<muxc:NavigationView x:Name="navview" 
+    MenuItemsSource="{x:Bind categories, Mode=OneWay}" 
+    MenuItemTemplate="{StaticResource NavigationViewMenuItem}">
+   
+</muxcontrols:NavigationView>
+```
+
+```c#
+public class Category
+{
+    public String Name { get; set; }
+    public String Icon { get; set; }
+    public ObservableCollection<Category> Children { get; set; }
+    public bool IsLeaf { get; set; }
+}
+    
+public sealed partial class HierarchicalNavigationViewDataBinding : Page
+{
+    public HierarchicalNavigationViewDataBinding()
+    {
+        this.InitializeComponent();
+           
+        public ObservableCollection<Category> Categories = new ObservableCollection<Category>(){
+            new Category(){
+                Name = "Menu Item 1",
+                Icon = "Icon",
+                Children = new ObservableCollection<Category>() {
+                    new Category(){
+                        Name = "Menu Item 2",
+                        Icon = "Icon",
+                        Children = new ObservableCollection<Category>() {
+                            new Category() { 
+                                Name  = "Menu Item 2", 
+                                Icon = "Icon",
+                                Children = new ObservableCollection<Category>() {
+                                    new Category() { Name  = "Menu Item 3", Icon = "Icon", IsLeaf = true },
+                                    new Category() { Name  = "Menu Item 4", Icon = "Icon", IsLeaf = true }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            new Category(){
+                Name = "Menu Item 5",
+                Icon = "Icon",
+                Children = new ObservableCollection<Category>() {
+                    new Category(){
+                        Name = "Menu Item 6",
+                        Icon = "Icon",
+                        Children = new ObservableCollection<Category>() {
+                            new Category() { Name  = "Menu Item 7", Icon = "Icon", IsLeaf = true },
+                            new Category() { Name  = "Menu Item 8", Icon = "Icon", IsLeaf = true }
+                        }
+                    }
+                }
+            },
+            new Category(){ Name = "Menu Item 9", Icon = "Icon", IsLeaf = true }
+        };
+    }
+}
+```
+
+Selected items will draw their selection indicators along their left edge when in left mode or their bottom edge when in top mode. 
+The selected item may not always remain visible.
+For example, the selected item may be a child node inside a non-expanded subtree.
+In this situation, the first visible ancestor of the selected item will show as selected, and the selection indicator will move as users expand the subtree. 
+The entire navigation view will show no more than one selection indicator.
+
+## Keyboarding
+Users can move focus around the navigation view using their [keyboard](https://docs.microsoft.com/en-us/windows/uwp/design/input/keyboard-interactions). 
+The arrow keys expose "inner navigation" within the pane and follow the interactions provided in [tree view](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/tree-view).
+- **Up arrow** moves focus to the item directly above the item currently in focus
+- **Down arrow** moves focus the item directly below the item currently in focus; note that the items do not need to be visually adjecent, focus will move from the last item in the pane's list to the settings item.
+- **Right arrow**
+  - if the current item is a collapsed parent with children, right arrow expands the item but does not move focus
+  - if the current item is an expanded parent with children, right arrow moves focus to the first child
+  - if the current item is a leaf node, right arrow does nothing
+- **Left arrow** 
+  - if the current item is a collapsed parent with children, left arrow does nothing
+  - if the current item is an expanded parent with children, left arrow collapse the item but does not move focus
+  - if the current item is a leaf node, left arrow moves focus to the current item's parent
 
 # Remarks
 <!-- Explanation and guidance that doesn't fit into the Examples
