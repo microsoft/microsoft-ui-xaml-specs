@@ -266,7 +266,7 @@ from their name.  These descriptions are what show up
 in IntelliSense. -->
 | API | Description | Notes |
 | - | - | - | 
-| MenuItems property | Gets the collection of menu items displayed as children of the the NavigationMenuItem. | |
+| MenuItems property | Gets the collection of menu items displayed as children of the NavigationViewItem. | |
 | MenuItemsSource property | Gets or sets an object source used to generate the children of the NavigationViewItem | |
 | IsChildSelected property | A descendant item is selected | |
 | IsExpanded property | Gets or sets a value that indicates whether a tree node is expanded. Ignored if there are no menu items. | Analogous to [TreeViewItem.IsExpanded](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeViewItem.IsExpanded) |
