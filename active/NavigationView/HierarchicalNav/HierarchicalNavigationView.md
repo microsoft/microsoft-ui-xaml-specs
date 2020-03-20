@@ -264,7 +264,17 @@ section.  For example, see the Remarks for the MediaPlayerElement
 and member), or at least the ones that aren't obvious
 from their name.  These descriptions are what show up
 in IntelliSense. -->
-
+| API | Description | Notes |
+| - | - | - | 
+| MenuItems property | Gets the collection of menu items displayed as children of the the NavigationMenuItem. | |
+| MenuItemsSource property | Gets or sets an object source used to generate the children of the NavigationViewItem | |
+| IsChildSelected property | A descendant item is selected | |
+| IsExpanded property | Gets or sets a value that indicates whether a tree node is expanded. Ignored if there are no menu items. | Analogous to [TreeViewItem.IsExpanded](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeViewItem.IsExpanded) |
+| HasUnrealizedChildren property | Gets or sets a value that indicates whether the current item has child items that haven't been shown. | Analogous to [TreeViewItem.HasUnrealizedChildren](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeViewItem.HasUnrealizedChildren) |
+| Expand method |  Expands the specified node in the tree. | Analogous to [TreeView.Expand](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView.Expand) |
+| Collapse method |  Collapses the specified node in the tree. | Analogous to [TreeView.Collapse](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView.Collapse) |
+| Expanding event | Occurs when a node in the tree starts to expand. | Analogous to [TreeView.Expanding](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView.Expanding) |
+| Collapsed event | Occurs when a node in the tree is collapsed. |  Analogous to [TreeView.Collapsed](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView.Collapsed) |
 
 # API Details
 ```c++
