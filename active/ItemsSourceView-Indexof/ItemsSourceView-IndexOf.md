@@ -33,7 +33,7 @@ public void ItemInvoked(object sender, RoutedEventArgs e)
   int index = myItemsSourceView.IndexOf(sender as IInspectable); 
 
   // Do something with index, here e.g. :
-  Console.log("Item " + index + " of items source was invoked");
+  Debug.WriteLine( $"Item {index} of items source was invoked");
 }
 
 ```
