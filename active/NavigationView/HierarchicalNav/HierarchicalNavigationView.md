@@ -4,7 +4,7 @@ The Xaml [NavigationView](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.C
 
 Currently, NavigationView's MenuItems list allows for displaying a flat list of items in the pane. 
 It's common for apps to want to present users with a hierarchical navigation tree. 
-This feature adds the capability to nest items within the pane.
+This feature adds the capability to nest items within the pane by adding MenuItems/MenuItemsSource properties to NavigationMenuItem, matching the existing properties on NavigationMenu. Some of the new APIs are copied from analogous existing APIs on the [TreeView](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView) control.
 
 # Hierarchy
 You specify the menu items of a NavigationView using either the `MenuItems` property or the `MenuItemsSource` property of NavigationViewItem.
