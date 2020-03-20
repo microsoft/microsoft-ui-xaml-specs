@@ -8,7 +8,10 @@ This feature adds the capability to nest items within the pane.
 
 # Hierarchy
 You specify the menu items of a NavigationView using either the `MenuItems` property or the `MenuItemsSource` property of NavigationViewItem.
-Each *NavigationViewItem* can contain other NavigationViewItems and organizing elements like item headers and separators. 
+
+To show a hierarchical list of nested navigation items when using `MenuItems`, each *NavigationViewItem* can contain other NavigationViewItems and organizing elements like item headers and separators. 
+
+To show a hierarchical list when  using `MenuItemsSource`, set the `ItemTemplate` to be a NavigationViewItem, and bind its MenuItemsSource property to the next level of the hierarchy.
 Although NavigationViewItem can contain any number of nested levels, we recommend keeping your app’s navigation hierarchy shallow. 
 We believe two levels is ideal for usability and comprehension.
 
