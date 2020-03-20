@@ -118,7 +118,7 @@ The arrow keys expose "inner navigation" within the pane and follow the interact
 
 # Examples
 
-## Add items in markup
+## Add a hierarchy items in markup
 Declare app navigation hierarchy in markup.
 
 ```Xaml
