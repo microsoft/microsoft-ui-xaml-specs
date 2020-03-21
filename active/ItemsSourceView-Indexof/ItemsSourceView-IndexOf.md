@@ -15,21 +15,17 @@ C# example
 ```c#
 /// ************** Behavior ************ ///
 
-var itemsSourceView = new ItemsSourceView()
-{
-  // Initialize
-};
+var items = new List<string>() { "One", "Two" };
+var itemsSourceView = new ItemsSourceView(items);
+var secondItem = itemsSourceView.GetAt(1);
+Assert.AreEqual(1, itemsSourceView.IndexOf(secondItem);
 
-// Get an item
-var myItem = MyItemsSource.GetAt(1);
-
-Assert.AreEqual(1,itemsSourceView.IndexOf(myItem));
 
 /// ****** Use case in event handler ****** ///
 
 public void ItemInvoked(object sender, RoutedEventArgs e)
 {
-  int index = myItemsSourceView.IndexOf(sender as IInspectable); 
+  int index = myItemsSourceView.IndexOf(sender); 
 
   // Do something with index, here e.g. :
   Console.log("Item " + index + " of items source was invoked");
