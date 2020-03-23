@@ -37,8 +37,7 @@ public void ItemInvoked(object sender, RoutedEventArgs e)
 
 # Remarks
 
-The IndexOf function of ItemsSourceView base class throws a winrt hresult_not_implemented exceptions.
-If an element is not present in the collection, the method should return -1.
+If an element is not present in the collection, the method returns -1.
 
 # API Notes
 ItemsSourceView.IndexOf(IInspectable item): Returns index in the items source. If an item is not in the items source, it will return -1.
@@ -57,8 +56,3 @@ unsealed runtimeclass ItemsSourceView: Windows.UI.Xaml.Interop.INotifyCollection
 ```
 
 # Appendix
-<!-- Anything else that you want to write down for posterity, but 
-that isn't necessary to understand the purpose and usage of the API.
-For example, implementation details. -->
-
-When IndexOf of the ItemsSourceView class get's invoked, should we instead of throwing `hresult_not_implemented` return -1 instead?
