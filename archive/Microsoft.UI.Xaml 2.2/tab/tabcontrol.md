@@ -1,3 +1,6 @@
+> This spec is archived and may not be up to date.
+> For up-to-date developer documentation please see: [Guidance Doc](https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/tab-view), [API Doc](https://docs.microsoft.com/uwp/api/microsoft.ui.xaml.controls.tabview?view=winui-2.3)
+
 <!-- The purpose of this spec is to describe a new feature and
 its APIs that make up a new feature in WinUI. -->
 
