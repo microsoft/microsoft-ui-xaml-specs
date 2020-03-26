@@ -40,7 +40,7 @@ public void ItemInvoked(object sender, RoutedEventArgs e)
 If an element is not present in the collection, the method returns -1.
 
 # API Notes
-ItemsSourceView.IndexOf(IInspectable item): Returns index in the items source. If an item is not in the items source, it will return -1.
+ItemsSourceView.IndexOf(IInspectable item): Returns index in the items source. If an item is not in the items source, it will return -1. Null is an acceptable value for IndexOf and calling IndexOf with null will return the index of null in the ItemsSource or -1 if the ItemsSource does not contain null.
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 
