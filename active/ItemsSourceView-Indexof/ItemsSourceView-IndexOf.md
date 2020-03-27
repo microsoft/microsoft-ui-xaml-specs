@@ -41,6 +41,9 @@ If an element is not present in the collection, the method returns -1.
 
 # API Notes
 ItemsSourceView.IndexOf(IInspectable item): Returns index in the items source. If an item is not in the items source, it will return -1. Null is an acceptable value for IndexOf and calling IndexOf with null will return the index of null in the ItemsSource or -1 if the ItemsSource does not contain null.
+
+Note that to use `IndexOf` with pass by value types (e.g. int,float,etc) you need to create the ItemsSourceView with a collection that uses unboxing for values passed to `IndexOf`.
+Otherwise calling `IndexOf` will always return `-1` regardless of the items contained in the collection.
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 
