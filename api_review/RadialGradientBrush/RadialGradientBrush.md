@@ -15,7 +15,7 @@ This brush will ship in the WinUI 2 NuGet/Framework package. Since it can be use
 
 The Xaml RadialGradientBrush will inherit from [XamlCompositionBrushBase](https://docs.microsoft.com/uwp/api/windows.ui.xaml.media.xamlcompositionbrushbase) and use a [CompositionRadialGradientBrush](https://docs.microsoft.com/uwp/api/windows.ui.composition.compositionradialgradientbrush), which is supported on Windows 10 1903 (v10.0.18362+). This seems like a useful model for new brushes going forward for both WinUI 2 and 3, and we aren't too concerned about duplicating some properties from other candidate base classes [GradientBrush](https://docs.microsoft.com/uwp/api/windows.ui.xaml.media.gradientbrush).
 
-The RadialGradientBrush API will more closely mirror the behavior of the Composition API than the WPF API: for example, the gradient origin defaults to center and provides a `GradientOriginOffset` property to specify an offset rather than providing a `GradientOrigin` property.
+The RadialGradientBrush API will more closely mirror the behavior of the Composition API than the WPF API: for example, the gradient origin defaults to center and provides a `GradientOrigin` property to specify an offset rather than providing a `GradientOrigin` property.
 
 Notable inconsistencies with the composition API include:
 1. Usage of [Point](https://docs.microsoft.com/uwp/api/windows.foundation.point) rather than [Vector2](https://docs.microsoft.com/uwp/api/windows.foundation.numerics.vector2)/[float2](https://docs.microsoft.com/windows/win32/numerics_h/float2-structure)
@@ -35,7 +35,7 @@ When this brush is used on pre-1903 versions of Windows, where [CompositionRadia
    * This would require loading additional expensive dependencies which WinUI doesn't currently rely on.
 2. Draw a custom gradient surface, e.g. using a CompositionSurfaceBrush or WriteableBitmap
    * This would require largely reimplementing the complex CompositionRadialGradientBrush.
-3. **Rely on FallbackColor**
+3. **Rely on FallbackColor** (chosen option)
    * Draw a solid color, as specified by the [XamlCompositionBrushBase.FallbackColor](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Media.XamlCompositionBrushBase.FallbackColor) (which RadialGradientBrush will inherit from its base class).
 
 Using FallbackColor follows the precedence of [AcrylicBrush](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Media.AcrylicBrush). And since CompositionRadialGradientBrush should be available downlevel with WinUI 3, this seems like a reasonable approach in the meantime.
@@ -81,7 +81,7 @@ XAML
 </Page>
 ```
 
-This example creates a radial gradient that uses Absolute mapping mode with custom values for `EllipseCenter`, `EllipseRadius` and `GradientOriginOffset`:
+This example creates a radial gradient that uses Absolute mapping mode with custom values for `EllipseCenter`, `EllipseRadius` and `GradientOrigin`:
 
 ![A rectangle filled with an offset radial gradient.](images/OffsetRadialGradientBrush.png)
 
@@ -93,9 +93,9 @@ This example creates a radial gradient that uses Absolute mapping mode with cust
       <Rectangle.Fill>
           <media:RadialGradientBrush
             MappingMode="Absolute"
-            EllipseCenter="50,50"
-            EllipseRadius="100,100"
-            GradientOriginOffset="50,0"
+            EllipseCenter="0.5,0.5"
+            EllipseRadius="1,1"
+            GradientOrigin="0.5,0"
             >
               <GradientStop Color="Yellow" Offset="0.0" />
               <GradientStop Color="Blue" Offset="1" />
@@ -114,11 +114,11 @@ The gradient is drawn within an ellipse that is defined by the `EllipseCenter` a
 
 The colors for the radial gradient are defined by color stops added to the `GradientStops` collection property. Each gradient stop specifies a color and an offset along the gradient.
 
-The gradient origin defaults to center and can be offset using the `GradientOriginOffset` property.
+The gradient origin defaults to center and can be offset using the `GradientOrigin` property.
 
-`MappingMode` defines whether `EllipseCenter`, `EllipseRadius` and `GradientOriginOffset` represent relative or absolute coordinates.
+`MappingMode` defines whether `EllipseCenter`, `EllipseRadius` and `GradientOrigin` represent relative or absolute coordinates.
 
-When `MappingMode` is set to `RelativeToBoundingBox`, the X and Y values of the three properties are treated as relative to the brush's rendered bounds, where `(0,0)` represents the top left and `(1,1)` represents the bottom right of the brush's rendered bounds for the `EllipseCenter` and `EllipseRadius` properties and `(0,0)` represents the center for the `GradientOriginOffset` property.
+When `MappingMode` is set to `RelativeToBoundingBox`, the X and Y values of the three properties are treated as relative to the brush's rendered bounds, where `(0,0)` represents the top left and `(1,1)` represents the bottom right of the brush's rendered bounds for the `EllipseCenter` and `EllipseRadius` properties and `(0,0)` represents the center for the `GradientOrigin` property.
 
 When `MappingMode` is set to `Absolute`, the X and Y values of the three properties are treated as absolute coordinates within the brush's rendered bounds.
 
@@ -140,10 +140,10 @@ Gradient rendering is supported on Windows 10 version 1903 (v10.0.18362.0) and h
 | - | - |
 | EllipseCenter | The center of the ellipse that contains the gradient. The default is `(0.5, 0.5)`. |
 | EllipseRadius | The radius of the ellipse that contains the gradient. The default is `(0.5, 0.5)`. |
-| GradientOriginOffset | The gradient origin's offset from the center of the element. |
+| GradientOrigin | The gradient origin's offset from the center of the element. |
 | GradientStops | A collection of [GradientStop](https://docs.microsoft.com/uwp/api/windows.ui.xaml.media.gradientstop) objects that define the gradient. |
 | InterpolationSpace | The color space used to interpolate the gradient's colors. The default is `Auto`. For supported values, see [CompositionRadialGradientBrush.InterpolationSpace](https://docs.microsoft.com/uwp/api/windows.ui.composition.compositiongradientbrush.interpolationspace#Windows_UI_Composition_CompositionGradientBrush_InterpolationSpace) |
-| MappingMode | Defines whether `EllipseCenter`, `EllipseRadius` and `GradientOriginOffset` represent relative coordinates in the range 0 to 1 or absolute coordinates. The default is `RelativeToBoundingBox`. |
+| MappingMode | Defines whether `EllipseCenter`, `EllipseRadius` and `GradientOrigin` represent relative coordinates in the range 0 to 1 or absolute coordinates. The default is `RelativeToBoundingBox`. |
 | SpreadMethod | Gets or sets the type of spread method that specifies how to draw a gradient that starts or ends inside the bounds of the object to be painted. The default is `Pad`. |
 
 # API Details
@@ -159,7 +159,7 @@ unsealed runtimeclass RadialGradientBrush : Windows.UI.Xaml.Media.XamlCompositio
 
     Windows.Foundation.Point EllipseRadius { get; set; };
 
-    Windows.Foundation.Point GradientOriginOffset { get; set; };
+    Windows.Foundation.Point GradientOrigin { get; set; };
 
     Windows.UI.Xaml.Media.BrushMappingMode MappingMode { get; set; };
 
@@ -171,7 +171,7 @@ unsealed runtimeclass RadialGradientBrush : Windows.UI.Xaml.Media.XamlCompositio
 
     static Windows.UI.Xaml.DependencyProperty EllipseCenterProperty { get; };
     static Windows.UI.Xaml.DependencyProperty EllipseRadiusProperty { get; };
-    static Windows.UI.Xaml.DependencyProperty GradientOriginOffsetProperty { get; };
+    static Windows.UI.Xaml.DependencyProperty GradientOriginProperty { get; };
     static Windows.UI.Xaml.DependencyProperty InterpolationSpaceProperty { get; };
     static Windows.UI.Xaml.DependencyProperty MappingModeProperty { get; };
     static Windows.UI.Xaml.DependencyProperty SpreadMethodProperty { get; };
