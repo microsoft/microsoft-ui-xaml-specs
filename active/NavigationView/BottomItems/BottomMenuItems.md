@@ -64,17 +64,52 @@ out with an explanation either here or in the Examples -->
 
 FooterMenuItems is a list of navigation items similar to the existing MenuItems list.
 The default Settings item will be included as the last item in the FooterMenuItems collection.
-As a result, adding items into FooterMenuItems will have the following default behavior.
+As a result, adding items into FooterMenuItems will by default display them before the Settings item. The Settings item will still be able to be toggled using the `IsSettingsVisible` property.
 
 ## Selection
 When users invoke a navigation item, that item will become selected and show its selection indicator. 
 At most one navigation item will be selected at a given time.
-The selection indicator will animate smoothly between items in the MenuItems list and FooterMenuItems list including Settings.
+The selection indicator will animate smoothly between items in the MenuItems list and FooterMenuItems list including Settings. 
+
+In order to achieve consistent animations and allow for only one navigation item to be selected at a time, all navigation items should be in the same selection model. To achieve this, a large collection that consists of two smaller collections (specifically FooterMenuItems and MenuItems) will be used as the source.
 
 ## Narrator
-Screen readers will announce MenuItems and FooterMenuItems as two separate lists, including position in set.
+Screen readers will announce MenuItems and FooterMenuItems as two separate lists, including position in set. 
+Unlike previous behavior, the Settings item will be announced as a part of the FooterMenuItems list - specifically, its index should be announced relative to the other items in the list. For example, if there are three elements in the FooterMenuItemsList, Settings would be announced as 3 of 3.
 
 ## Keyboarding
+Given the following list, keyboarding actions should be as follows:
+- Main 1
+- Main 2
+
+<!-- -->
+
+- Bottom 1
+- Bottom 2
+- Settings
+
+Users should be able to Tab between these two lists.
+
+If keyboard focus is on Main 2:
+- Up arrow moves focus to Main 1
+- Down arrow moves focus to Bottom 1
+- Tab moves focus to bottom1 (unless an item in the bottom list is selected, in which case focus should go to that item).
+- Home moves focus to Main 1
+- End does nothing
+
+If keyboard focus is on Bottom 1:
+- Up arrow moves focus to Main 2
+- Down arrow moves focus to Bottom 2
+- Tab moves focus to the first focusable item in NavigationView's Header or Content (same behavior as on Settings item today).
+- Home does nothing
+- End moves focus to settings
+
+If keyboard focus is on Settings:
+- Up arrow moves focus to Bottom 2
+- Down arrow does nothing (same as today)
+- Tab moves focus to a Header or Content item (same as today).
+- Home moves focus to Bottom 1
+- End does nothing
 
 
 # API Notes
@@ -86,6 +121,14 @@ isn't the type's default (for example an int-typed property that doesn't default
 
 <!-- Option 2: Put these descriptions in the below API Details section,
 with a "///" comment above the member or type. -->
+
+`public IList<object> FooterMenuItems { get; }`
+
+Gets the list of objects to be used as navigation items in the footer menu.
+
+`public object FooterMenuItemsSource { get; set; }`
+
+Sets or gets the object that represents the navigation items to be used in the footer menu.
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
@@ -103,14 +146,10 @@ unsealed runtimeclass NavigationView : Windows.UI.Xaml.Controls.ContentControl
     [WUXC_VERSION_PREVIEW]
     {
         Windows.Foundation.Collections.IVector<Object> FooterMenuItems{ get; };
+        Object FooterMenuItemsSource { get; set; };
     }
     
     static Windows.UI.Xaml.DependencyProperty FooterMenuItemsProperty{ get; };
-    
+    static Windows.UI.Xaml.DependencyProperty FooterMenuItemsSourceProperty{ get; };
 }
 ```
-
-# Appendix
-<!-- Anything else that you want to write down for posterity, but 
-that isn't necessary to understand the purpose and usage of the API.
-For example, implementation details. -->
