@@ -42,7 +42,7 @@ A TabView with two items, showing only the icons for the item tabs because TabWi
 
 ## TabView.CloseButtonOverlayMode
 
-A TabView where the tab items have a close button that only displays when the mouse is over it.
+A TabView where the unselected tab items have a close button that only displays when the mouse is over it. (The selected tab item always has a close button, regardless of this property value.)
 
 ```XML
 <muxc:TabView CloseButtonOverlayMode="OnPointerOver">
