@@ -42,9 +42,7 @@ If an element is not present in the collection, the method returns -1.
 # API Notes
 ItemsSourceView.IndexOf(IInspectable item): Returns index in the items source. If an item is not in the items source, it will return -1. Null is an acceptable value for IndexOf and calling IndexOf with null will return the index of null in the ItemsSource or -1 if the ItemsSource does not contain null.
 
-If the ItemsSourceView's underlying collection supports [IVector<T>.IndexOf](https://docs.microsoft.com/uwp/api/Windows.Foundation.Collections.IVector-1.IndexOf) or [IVectorView<T>.IndexOf](https://docs.microsoft.com/uwp/api/Windows.Foundation.Collections.IVectorView-1.IndexOf), it will be used and that value returned.
-If the underlying collection only supports [IIterable<T> (IEnumerable in .Net)](https://docs.microsoft.com/uwp/api/Windows.Foundation.Collections.IIterable_T_), then the first matching value from its enumeration will be returned and IndexOf uses object identity.
-Note that for strings and value types, object identity is performed on the boxed value.
+If the ItemsSourceView's underlying collection supports a compatible `IndexOf`, it will be used and that value returned. Otherwise the first matching value from its enumeration will be returned and `IndexOf` uses object identity. Note that for strings and value types, object identity is performed on the boxed value.
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
