@@ -140,7 +140,7 @@ Gradient rendering is supported on Windows 10 version 1903 (v10.0.18362.0) and h
 | - | - |
 | EllipseCenter | The center of the ellipse that contains the gradient. The default is `(0.5, 0.5)`. |
 | EllipseRadius | The radius of the ellipse that contains the gradient. The default is `(0.5, 0.5)`. |
-| GradientOrigin | The gradient origin's offset from the center of the element. The default is `(0.5, 0,5)`.|
+| GradientOrigin | The gradient's origin (relative to the top left corner). The default is `(0.5, 0,5)`.|
 | GradientStops | A collection of [GradientStop](https://docs.microsoft.com/uwp/api/windows.ui.xaml.media.gradientstop) objects that define the gradient. |
 | InterpolationSpace | The color space used to interpolate the gradient's colors. The default is `Auto`. For supported values, see [CompositionRadialGradientBrush.InterpolationSpace](https://docs.microsoft.com/uwp/api/windows.ui.composition.compositiongradientbrush.interpolationspace#Windows_UI_Composition_CompositionGradientBrush_InterpolationSpace) |
 | MappingMode | Defines whether `EllipseCenter`, `EllipseRadius` and `GradientOrigin` represent relative coordinates in the range 0 to 1 or absolute coordinates. The default is `RelativeToBoundingBox`. |
