@@ -14,24 +14,10 @@ Note that if an element is not contained in the items source, the function will 
 C# example
 
 ```c#
-/// ************** Behavior ************ ///
-
 var items = new List<string>() { "One", "Two" };
 var itemsSourceView = new ItemsSourceView(items);
 var secondItem = itemsSourceView.GetAt(1);
-Assert.AreEqual(1, itemsSourceView.IndexOf(secondItem);
-
-
-/// ****** Use case in event handler ****** ///
-
-public void ItemInvoked(object sender, RoutedEventArgs e)
-{
-  int index = myItemsSourceView.IndexOf(sender); 
-
-  // Do something with index, here e.g. :
-  Debug.WriteLine( $"Item {index} of items source was invoked");
-}
-
+Assert.AreEqual(1, itemsSourceView.IndexOf(secondItem));
 ```
 
 
