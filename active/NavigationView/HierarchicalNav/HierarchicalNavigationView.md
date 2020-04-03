@@ -80,45 +80,46 @@ public sealed partial class HierarchicalNavigationViewDataBinding : Page
     public HierarchicalNavigationViewDataBinding()
     {
         this.InitializeComponent();
-           
-        public ObservableCollection<Category> Categories = new ObservableCollection<Category>(){
-            new Category(){
-                Name = "Menu Item 1",
-                Icon = "Icon",
-                Children = new ObservableCollection<Category>() {
-                   new Category(){
-                        Name = "Menu Item 2",
-                        Icon = "Icon",
-                        Children = new ObservableCollection<Category>() {
-                            new Category() { 
-                                Name  = "Menu Item 2", 
-                                Icon = "Icon",
-                                Children = new ObservableCollection<Category>() {
-                                    new Category() { Name  = "Menu Item 3", Icon = "Icon" },
-                                    new Category() { Name  = "Menu Item 4", Icon = "Icon" }
-                                }
+    }  
+    
+    public ObservableCollection<Category> Categories = new ObservableCollection<Category>()
+    {
+        new Category(){
+            Name = "Menu Item 1",
+            Icon = "Icon",
+            Children = new ObservableCollection<Category>() {
+               new Category(){
+                    Name = "Menu Item 2",
+                    Icon = "Icon",
+                    Children = new ObservableCollection<Category>() {
+                        new Category() { 
+                            Name  = "Menu Item 2", 
+                            Icon = "Icon",
+                            Children = new ObservableCollection<Category>() {
+                                new Category() { Name  = "Menu Item 3", Icon = "Icon" },
+                                new Category() { Name  = "Menu Item 4", Icon = "Icon" }
                             }
                         }
                     }
                 }
-            },
-            new Category(){
-                Name = "Menu Item 5",
-                Icon = "Icon",
-                Children = new ObservableCollection<Category>() {
-                    new Category(){
-                        Name = "Menu Item 6",
-                        Icon = "Icon",
-                        Children = new ObservableCollection<Category>() {
-                            new Category() { Name  = "Menu Item 7", Icon = "Icon" },
-                            new Category() { Name  = "Menu Item 8", Icon = "Icon" }
-                        }
+            }
+        },
+        new Category(){
+            Name = "Menu Item 5",
+            Icon = "Icon",
+            Children = new ObservableCollection<Category>() {
+                new Category(){
+                    Name = "Menu Item 6",
+                    Icon = "Icon",
+                    Children = new ObservableCollection<Category>() {
+                        new Category() { Name  = "Menu Item 7", Icon = "Icon" },
+                        new Category() { Name  = "Menu Item 8", Icon = "Icon" }
                     }
                 }
-            },
-            new Category(){ Name = "Menu Item 9", Icon = "Icon" }
-        };
-    }
+            }
+        },
+        new Category(){ Name = "Menu Item 9", Icon = "Icon" }
+    };
 
     private void OnItemInvoked(object sender, NavigationViewItemInvokedEventArgs e)
     {
@@ -129,29 +130,15 @@ public sealed partial class HierarchicalNavigationViewDataBinding : Page
     private void OnItemExpanding(object sender, NavigationViewItemExpandingEventArgs e)
     {
         var nvib = e.ExpandingItemContainer;
-        if(nvib != null)
-        {
-            var name = "Last Expanding: " + nvib.Content;
-            ExpandingItemLabel.Text = name;
-        }
-        else
-        {
-            ExpandingItemLabel.Text = "Last Expanding: ERROR - No container returned!";
-        }
+        var name = "Last Expanding: " + nvib.Content.ToString();
+        ExpandingItemLabel.Text = name;
     }
 
-    private void OnItemCollapsed(object sender, NavigationViewCollapsedEventArgs e)
+    private void OnItemCollapsed(object sender, NavigationViewItemCollapsedEventArgs e)
     {
         var nvib = e.CollapsedItemContainer;
-        if (nvib != null)
-        {
-            var name = "Last Collapsed: " + nvib.Content;
-            CollapsedItemLabel.Text = name;
-        }
-        else
-        {
-            CollapsedItemLabel.Text = "Last Collapsed: ERROR - No container returned!";
-        }
+        var name = "Last Collapsed: " + nvib.Content;
+        CollapsedItemLabel.Text = name;
     }
 }
 ```
@@ -173,7 +160,7 @@ To prevent an item from showing the selection indicator when invoked, set its [S
     MenuItemsSource="{x:Bind categories, Mode=OneWay}" 
     MenuItemTemplate="{StaticResource NavigationViewMenuItem}">
    
-</muxcontrols:NavigationView>
+</muxc:NavigationView>
 ```
 
 ```c#
@@ -190,45 +177,46 @@ public sealed partial class HierarchicalNavigationViewDataBinding : Page
     public HierarchicalNavigationViewDataBinding()
     {
         this.InitializeComponent();
-           
-        public ObservableCollection<Category> Categories = new ObservableCollection<Category>(){
-            new Category(){
-                Name = "Menu Item 1",
-                Icon = "Icon",
-                Children = new ObservableCollection<Category>() {
-                    new Category(){
-                        Name = "Menu Item 2",
-                        Icon = "Icon",
-                        Children = new ObservableCollection<Category>() {
-                            new Category() { 
-                                Name  = "Menu Item 2", 
-                                Icon = "Icon",
-                                Children = new ObservableCollection<Category>() {
-                                    new Category() { Name  = "Menu Item 3", Icon = "Icon", IsLeaf = true },
-                                    new Category() { Name  = "Menu Item 4", Icon = "Icon", IsLeaf = true }
-                                }
+    }      
+    
+    public ObservableCollection<Category> Categories = new ObservableCollection<Category>()
+    {
+        new Category(){
+            Name = "Menu Item 1",
+            Icon = "Icon",
+            Children = new ObservableCollection<Category>() {
+                new Category(){
+                    Name = "Menu Item 2",
+                    Icon = "Icon",
+                    Children = new ObservableCollection<Category>() {
+                        new Category() { 
+                            Name  = "Menu Item 2", 
+                            Icon = "Icon",
+                            Children = new ObservableCollection<Category>() {
+                                new Category() { Name  = "Menu Item 3", Icon = "Icon", IsLeaf = true },
+                                new Category() { Name  = "Menu Item 4", Icon = "Icon", IsLeaf = true }
                             }
                         }
                     }
                 }
-            },
-            new Category(){
-                Name = "Menu Item 5",
-                Icon = "Icon",
-                Children = new ObservableCollection<Category>() {
-                    new Category(){
-                        Name = "Menu Item 6",
-                        Icon = "Icon",
-                        Children = new ObservableCollection<Category>() {
-                            new Category() { Name  = "Menu Item 7", Icon = "Icon", IsLeaf = true },
-                            new Category() { Name  = "Menu Item 8", Icon = "Icon", IsLeaf = true }
-                        }
+            }
+        },
+        new Category(){
+            Name = "Menu Item 5",
+            Icon = "Icon",
+            Children = new ObservableCollection<Category>() {
+                new Category(){
+                    Name = "Menu Item 6",
+                    Icon = "Icon",
+                    Children = new ObservableCollection<Category>() {
+                        new Category() { Name  = "Menu Item 7", Icon = "Icon", IsLeaf = true },
+                        new Category() { Name  = "Menu Item 8", Icon = "Icon", IsLeaf = true }
                     }
                 }
-            },
-            new Category(){ Name = "Menu Item 9", Icon = "Icon", IsLeaf = true }
-        };
-    }
+            }
+        },
+        new Category(){ Name = "Menu Item 9", Icon = "Icon", IsLeaf = true }
+    };
 }
 ```
 
