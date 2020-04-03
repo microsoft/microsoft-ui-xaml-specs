@@ -43,7 +43,7 @@ Declare app navigation hierarchy in markup.
 
 Add a hierarchy of menu items to the NavigationView by 
 * binding the MenuItemsSource property to the hierarchical data
-* defining the item template to be a NavigationViewMenuItem, with its Content set to be the label of the menu item, and its its MenuItemsSource property bound to the next level of the hierarchy
+* defining the item template to be a NavigationViewMenuItem, with its Content set to be the label of the menu item, and its MenuItemsSource property bound to the next level of the hierarchy
 
 This example also demonstrates the Expanding and Collapsing events. These events are raised for a menu item with children.
 
@@ -145,7 +145,7 @@ public sealed partial class HierarchicalNavigationViewDataBinding : Page
 
 ## Selection
 By default, any item can contain children, be invoked, or be selected.
-There's more detail about the [ItemInvoked](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationview.iteminvoked?view=winui-2.3) and [SelectionChanged](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationview.selectionchanged?view=winui-2.3) events later in this document.
+There's more detail about the [ItemInvoked](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationview.iteminvoked?view=winui-2.3) and [SelectionChanged](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationview.selectionchanged?view=winui-2.3) events later in this section.
 When providing users with a hierarchical tree of navigation options, you may choose to make parent items non-selectable, for example when your app doesn't have a destination page associated with that parent item.
 To prevent an item from showing the selection indicator when invoked, set its [SelectsOnInvoked](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationviewitem.selectsoninvoked?view=winui-2.3) property to False.
 
@@ -226,6 +226,9 @@ For example, the selected item may be a child node inside a non-expanded subtree
 In this situation, the first visible ancestor of the selected item will show as selected, and the selection indicator will move as users expand the subtree. 
 The entire navigation view will show no more than one selection indicator.
 
+In both Top and Left modes, clicking the arrows on NavigationViewItems will expand or collapse the subtree. Clicking or tapping 
+_elsewhere_ on the NavigationViewItem will trigger the `ItemInvoked` event, and it will also collapse or expand the subtree.
+
 ## Keyboarding
 Users can move focus around the navigation view using their [keyboard](https://docs.microsoft.com/en-us/windows/uwp/design/input/keyboard-interactions). 
 The arrow keys expose "inner navigation" within the pane and follow the interactions provided in [tree view](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/tree-view).
@@ -260,7 +263,7 @@ in IntelliSense. -->
 | HasUnrealizedChildren property | Gets or sets a value that indicates whether the current item has child items that haven't been shown. | Analogous to [TreeViewItem.HasUnrealizedChildren](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeViewItem.HasUnrealizedChildren) |
 | Expand method |  Expands the specified node in the tree. | Analogous to [TreeView.Expand](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView.Expand) |
 | Collapse method |  Collapses the specified node in the tree. | Analogous to [TreeView.Collapse](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView.Collapse) |
-| Expanding event | Occurs when a node in the tree starts to expand. | Analogous to [TreeView.Expanding](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView.Expanding) |
+| Expanding event | Occurs when a node in the tree starts to expand. | Analogous to [TreeView.Expanding](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView.Expanding). Sets the HasUnrealizedChildren property and fills the nodes as described [here](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/tree-view#fill-a-node-when-its-expanding).|
 | Collapsed event | Occurs when a node in the tree is collapsed. |  Analogous to [TreeView.Collapsed](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView.Collapsed) |
 
 # API Details
