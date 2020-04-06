@@ -17,7 +17,6 @@ We believe two levels is ideal for usability and comprehension.
 NavigationView shows hierarchy in all its pane display modes, including Top and LeftCompact.
 
 *Note:* The following is a comp and will be updated with screenshots before this doc is published.
-![NavigationView in Left, LeftCompact, and Top modes showing hierarchy](NavigationView_Hierarchy.png)
 
 # Examples
 
@@ -30,8 +29,8 @@ Declare app navigation hierarchy in markup.
         <muxc:NavigationViewItem Content="Home" Icon="Home" ToolTipService.ToolTip="Home"/>
         <muxc:NavigationViewItem Content="Collections" Icon="Keyboard" ToolTipService.ToolTip="Collections">
             <muxc:NavigationViewItem.MenuItems>
-                <muxc:NavigationViewItem Content="Bookshelf" Icon="Library" 
-                    ToolTipService.ToolTip="Bookshelf"/>
+                <muxc:NavigationViewItem Content="Notes" Icon="Page" 
+            ToolTipService.ToolTip="Notes"/>
                 <muxc:NavigationViewItem Content="Mail" Icon="Mail" ToolTipService.ToolTip="Mail"/>
             </muxc:NavigationViewItem.MenuItems>
         </muxc:NavigationViewItem>
