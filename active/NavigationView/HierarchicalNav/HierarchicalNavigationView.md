@@ -16,7 +16,7 @@ We believe two levels is ideal for usability and comprehension.
 
 NavigationView shows hierarchy in all its pane display modes, including Top and LeftCompact.
 
-![HierarchicalNavigationView modes](https://microsoft-my.sharepoint-df.com/personal/anawish_microsoft_com/Documents/Pictures/nav-view-screenshots.png)
+![HierarchicalNavigationView modes](nav-view-screenshots.png)
 # Examples
 
 ## Add a hierarchy of items in markup
