@@ -283,7 +283,7 @@ in IntelliSense. -->
 | HasUnrealizedChildren property | Gets or sets a value that indicates whether the current item has child items that haven't been shown. | Analogous to [TreeViewItem.HasUnrealizedChildren](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeViewItem.HasUnrealizedChildren) |
 | Expand method |  Expands the specified node in the tree. | Analogous to [TreeView.Expand](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView.Expand) |
 | Collapse method |  Collapses the specified node in the tree. | Analogous to [TreeView.Collapse](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView.Collapse) |
-| Expanding event | Occurs when a node in the tree starts to expand. | Analogous to [TreeView.Expanding](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView.Expanding). Sets the HasUnrealizedChildren property and fills the nodes as described [here](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/tree-view#fill-a-node-when-its-expanding).|
+| Expanding event | Occurs when a node in the tree starts to expand. | Analogous to [TreeView.Expanding](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView.Expanding). In order to fill in nodes as they're expanding, set the `HasUnrealizedChildren` property to true, and then add the children during this `Expanding` event. See the TreeView example [fill a node when it's expanding](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/tree-view#fill-a-node-when-its-expanding).|
 | Collapsed event | Occurs when a node in the tree is collapsed. |  Analogous to [TreeView.Collapsed](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView.Collapsed) |
 
 # API Details
