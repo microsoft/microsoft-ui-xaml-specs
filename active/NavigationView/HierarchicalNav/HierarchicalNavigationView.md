@@ -141,6 +141,26 @@ public sealed partial class HierarchicalNavigationViewDataBinding : Page
         CollapsedItemLabel.Text = name;
     }
 }
+
+public sealed class NavigationViewItemExpandingEventArgs
+{
+    public NavigationViewItemExpandingEventArgs() {}
+    
+    public object ExpandedItem { get; }
+    public NavigationViewItemBase ExpandedItemContainer { get; }
+    public bool IsSettingsInvoked { get; }
+    public NavigationTransitionInfo RecommendedNavigationTransitionInfo { get; }
+}
+
+public sealed class NavigationViewItemCollapsedEventArgs
+{
+    public NavigationViewItemCollapsedEventArgs() {}
+    
+    public object CollapsedItem { get; }
+    public NavigationViewItemBase CollapsedItemContainer { get; }
+    public bool IsSettingsInvoked { get; }
+    public NavigationTransitionInfo RecommendedNavigationTransitionInfo { get; }
+}
 ```
 
 ## Selection
