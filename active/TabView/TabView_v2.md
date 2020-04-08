@@ -113,7 +113,7 @@ unsealed runtimeclass TabView : Windows.UI.Xaml.Controls.Control
 {
 
     [WUXC_VERSION_PREVIEW]
-    [MUX_DEFAULT_VALUE("winrt::TabViewCloseButtonOverlayMode::Always")]
+    [MUX_DEFAULT_VALUE("winrt::TabViewCloseButtonOverlayMode::Auto")]
     [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
     TabViewCloseButtonOverlayMode CloseButtonOverlayMode{ get; set; };
 
