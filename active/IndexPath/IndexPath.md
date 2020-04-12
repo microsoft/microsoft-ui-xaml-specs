@@ -5,8 +5,7 @@ This can be done with the IndexPath.
 
 # Description
 
-The `IndexPath` class provides indexing of nested collections, for example for a TreeView.
-
+The `IndexPath` class provides indexing of nested collections, for example in a TreeView.
 
 # Examples
 
@@ -20,7 +19,26 @@ var indexPath = IndexPath.CreateFromIndices(new List<int>{ 1, 0, 3 });
 
 ![Sample tree selection](./sample-tree-selection.png)
 
+### Creating IndexPath objects
+New IndexPaths objects can be created using the static `IndexPath.CreateFrom` and `IndexPath.CreateFromIndices` methods:
 
+```csharp
+
+// Points to the third element in a flat collection
+var simplePath = IndexPath.CreateFrom(2);
+
+// This is the same IndexPath as "simplePath"
+var simplePathIndices = IndexPath.CreateFromIndices(new List<int>(){ 2 });
+
+// This will point to the third child of the second element in a nested collection
+var groupedPath = IndexPath.CreateFrom(1,2);
+
+// The following IndexPath is equivalent to "groupedPath"
+var groupedPathIndices = IndexPath.CreateFromIndices(new List<int>(){ 1, 2 });
+
+```
+
+### Comparing two IndexPaths
 Comparing two `IndexPath` objects can be done using the `CompareTo` function:
 
 ```c#
@@ -75,4 +93,4 @@ runtimeclass IndexPath : Windows.Foundation.IStringable
 
 # Appendix
 
-Currently we use an Vector<int> to store those indices. Since we don't have any operations that would modify the size of an IndexPath, that is how many nesting levels it works with, shouldn'twe switch to an array to increase performance?
+Currently we use a `Vector<int>` to store those indices. Since we don't have any operations that would modify the size of an IndexPath, that is how many nesting levels it works with, shouldn't we switch to an array to increase performance?
