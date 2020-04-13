@@ -163,7 +163,6 @@ public sealed class NavigationViewItemCollapsedEventArgs
 
 ## Selection
 By default, any item can contain children, be invoked, or be selected.
-There's more detail about the [ItemInvoked](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationview.iteminvoked?view=winui-2.3) and [SelectionChanged](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationview.selectionchanged?view=winui-2.3) events later in this section.
 When providing users with a hierarchical tree of navigation options, you may choose to make parent items non-selectable, for example when your app doesn't have a destination page associated with that parent item.
 To prevent an item from showing the selection indicator when invoked, set its [SelectsOnInvoked](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationviewitem.selectsoninvoked?view=winui-2.3) property to False.
 
