@@ -65,8 +65,8 @@ Assert.AreEqual(0, baseIndexPathCopy.CompareTo(baseIndexPath));
 
 | Function | Description |
 |-|-|
-|Int32 GetSize()| Returns the size of the IndexPath. |
-|Int32 GetAt(Int32 index)| Returns the index for a given nesting level. |
+|Int32 GetSize()| Returns the number of nesting levels this IndexPath addresses. |
+|Int32 GetAt(Int32 index)| Returns the index for the item in a given nesting level. |
 | Int32 CompareTo(IndexPath other)| Compares the IndexPath to a different IndexPath. If the other IndexPath is behind the current IndexPath, the method returns -1, if the other IndexPath is before the current IndexPath it returns 1. In case of equality this method returns 0. |
 | static IndexPath CreateFrom(Int32 index) | Creates an IndexPath that only consists of the index provided. |
 | static IndexPath CreateFrom(Int32 groupIndex, Int32 itemIndex) | Creates an IndexPath with the given group index and item index for the given group. |
