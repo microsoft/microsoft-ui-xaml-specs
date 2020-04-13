@@ -144,7 +144,7 @@ public sealed class NavigationViewItemExpandingEventArgs
 {
     public NavigationViewItemExpandingEventArgs() {}
     
-    public object ExpandedItem { get; }
+    public object ExpandingItem { get; }
     public NavigationViewItemBase ExpandedItemContainer { get; }
     public bool IsSettingsInvoked { get; }
     public NavigationTransitionInfo RecommendedNavigationTransitionInfo { get; }
