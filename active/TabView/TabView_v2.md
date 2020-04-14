@@ -97,7 +97,7 @@ enum TabViewWidthMode
     Compact = 2,
 };
 
-[WUXC_VERSION_PREVIEW]
+[WUXC_VERSION_MUXONLY]
 [webhosthidden]
 enum TabViewCloseButtonOverlayMode
 {
