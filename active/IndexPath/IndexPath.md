@@ -31,7 +31,7 @@ var simplePath = IndexPath.CreateFrom(2);
 var simplePathIndices = IndexPath.CreateFromIndices(new List<int>(){ 2 });
 
 // This will point to the third child of the second element in a nested collection
-var groupedPath = IndexPath.CreateFrom(1,2);
+var groupedPath = IndexPath.CreateFromGroupAndItemIndex(1,2);
 
 // The following IndexPath is equivalent to "groupedPath"
 var groupedPathIndices = IndexPath.CreateFromIndices(new List<int>(){ 1, 2 });
@@ -44,7 +44,7 @@ Comparing two `IndexPath` objects can be done using the `CompareTo` function:
 ```c#
 var baseIndexPath = IndexPath.CreateFromIndices(new List<int> { 1, 4, 2 });
 
-var shorterPath = IndexPath.CreateFrom(2, 0);
+var shorterPath = IndexPath.CreateFromGroupAndItemIndex(2, 0);
 
 // Since shorterPath takes second element of first nesting, it is "greater" than baseIndexPath
 Assert.AreEqual(1, shorterPath.CompareTo(baseIndexPath));
@@ -69,7 +69,7 @@ Assert.AreEqual(0, baseIndexPathCopy.CompareTo(baseIndexPath));
 |Int32 GetAt(Int32 index)| Returns the index for the item in a given nesting level. |
 | Int32 CompareTo(IndexPath other)| Compares the IndexPath to a different IndexPath. If the other IndexPath is behind the current IndexPath, the method returns -1, if the other IndexPath is before the current IndexPath it returns 1. In case of equality this method returns 0. |
 | static IndexPath CreateFrom(Int32 index) | Creates an IndexPath that only consists of the index provided. |
-| static IndexPath CreateFrom(Int32 groupIndex, Int32 itemIndex) | Creates an IndexPath with the given group index and item index for the given group. |
+| static IndexPath CreateFromGroupAndItemIndex(Int32 groupIndex, Int32 itemIndex) | Creates an IndexPath with the given group index and item index for the given group. |
 | static IndexPath CreateFromIndices(IVector<Int32> indices) | Creates an IndexPath from the given list of integers.
 
 # API Details
@@ -83,10 +83,8 @@ runtimeclass IndexPath : Windows.Foundation.IStringable
     Int32 GetAt(Int32 index);
     Int32 CompareTo(IndexPath other);
 
-    [default_overload] [method_name("CreateFrom")]
     static IndexPath CreateFrom(Int32 index);
-    [method_name("CreateFromGroupAndItemIndex")]
-    static IndexPath CreateFrom(Int32 groupIndex, Int32 itemIndex);
+    static IndexPath CreateFromGroupAndItemIndex(Int32 groupIndex, Int32 itemIndex);
     static IndexPath CreateFromIndices(Windows.Foundation.Collections.IVector<Int32> indices);
 }
 ```
