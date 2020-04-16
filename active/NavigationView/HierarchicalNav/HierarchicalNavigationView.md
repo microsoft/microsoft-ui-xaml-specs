@@ -248,17 +248,32 @@ _elsewhere_ on the NavigationViewItem will trigger the `ItemInvoked` event, and 
 
 ## Keyboarding
 Users can move focus around the navigation view using their [keyboard](https://docs.microsoft.com/en-us/windows/uwp/design/input/keyboard-interactions). 
-The arrow keys expose "inner navigation" within the pane and follow the interactions provided in [tree view](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/tree-view).
-- **Up arrow** moves focus to the item directly above the item currently in focus
-- **Down arrow** moves focus the item directly below the item currently in focus; note that the items do not need to be visually adjecent, focus will move from the last item in the pane's list to the settings item.
-- **Right arrow**
-  - if the current item is a collapsed parent with children, right arrow expands the item but does not move focus
-  - if the current item is an expanded parent with children, right arrow moves focus to the first child
-  - if the current item is a leaf node, right arrow does nothing
-- **Left arrow** 
-  - if the current item is a collapsed parent with children, left arrow does nothing
-  - if the current item is an expanded parent with children, left arrow collapse the item but does not move focus
-  - if the current item is a leaf node, left arrow moves focus to the current item's parent
+The arrow keys expose "inner navigation" within the pane and follow the interactions provided in [tree view](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/tree-view). The key actions change when navigating through the NavigationView vs. its flyout menu, which is displayed in Top and Left-compact modes of HierarchicalNavigationView.
+
+### Up Arrow
+When in Left Nav or Flyout, moves focus to the item directly above the item currently in focus
+When in Top Nav, does nothing
+
+### Down Arrow
+When in Left Nav or Flyout, moves focus the item directly below the item currently in focus; note that the items do not need to be visually adjecent, focus will move from the last item in the pane's list to the settings item.
+When in Top Nav, does nothing
+
+### Right Arrow
+When in Top Nav, moves focus to the item directly to the right of the item currently in focus
+When in Left Nav or Flyout, does nothing
+
+#### Left Arrow
+When in Top Nav, moves focus to the item directly to the left the item currently in focus
+When in Left Nav or Flyout, does nothing
+
+### Space/Enter Key
+Invokes/Selects item
+When in Left Expanded mode and item has children, expands/collapses item and does not change focus
+When in Left Compact/Top mode and item has children, expands children into a flyout and places focus on first item in flyout
+When in flyout and on leaf node, invokes/selects item and closes flyout
+
+### Esc Key
+When in flyout, closes the flyout
 
 # Remarks
 <!-- Explanation and guidance that doesn't fit into the Examples
