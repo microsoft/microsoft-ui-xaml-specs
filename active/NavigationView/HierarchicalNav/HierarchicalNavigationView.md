@@ -140,25 +140,6 @@ public sealed partial class HierarchicalNavigationViewDataBinding : Page
     }
 }
 
-public sealed class NavigationViewItemExpandingEventArgs
-{
-    public NavigationViewItemExpandingEventArgs() {}
-    
-    public object ExpandingItem { get; }
-    public NavigationViewItemBase ExpandedItemContainer { get; }
-    public bool IsSettingsInvoked { get; }
-    public NavigationTransitionInfo RecommendedNavigationTransitionInfo { get; }
-}
-
-public sealed class NavigationViewItemCollapsedEventArgs
-{
-    public NavigationViewItemCollapsedEventArgs() {}
-    
-    public object CollapsedItem { get; }
-    public NavigationViewItemBase CollapsedItemContainer { get; }
-    public bool IsSettingsInvoked { get; }
-    public NavigationTransitionInfo RecommendedNavigationTransitionInfo { get; }
-}
 ```
 
 ## Selection
@@ -297,21 +278,25 @@ in IntelliSense. -->
 | Collapse method |  Collapses the specified node in the tree. | Analogous to [TreeView.Collapse](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView.Collapse) |
 | Expanding event | Occurs when a node in the tree starts to expand. | Analogous to [TreeView.Expanding](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView.Expanding). In order to fill in nodes as they're expanding, set the `HasUnrealizedChildren` property to true, and then add the children during this `Expanding` event. See the TreeView example [fill a node when it's expanding](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/tree-view#fill-a-node-when-its-expanding).|
 | Collapsed event | Occurs when a node in the tree is collapsed. |  Analogous to [TreeView.Collapsed](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TreeView.Collapsed) |
+| NavigationViewItemExpandingEventArgs | Provides event data for NavigationView.Expanding event.  | |
+| NavigationViewItemCollapsedEventArgs | Provides event data for NavigationView.Collapsed event.  | |
 
 # API Details
 ```c++
-[WUXC_VERSION_PREVIEW]
+[WUXC_VERSION_MUXONLY]
 [webhosthidden]
-runtimeclass NavigationViewExpandingEventArgs
+runtimeclass NavigationViewItemExpandingEventArgs
 {
     NavigationViewItemBase ExpandingItemContainer { get; };
+    Object ExpandingItem{ get; };
 }
 
-[WUXC_VERSION_PREVIEW]
+[WUXC_VERSION_MUXONLY]
 [webhosthidden]
-runtimeclass NavigationViewCollapsedEventArgs
+runtimeclass NavigationViewItemCollapsedEventArgs
 {
     NavigationViewItemBase CollapsedItemContainer { get; };
+    Object CollapsedItem{ get; };
 }
 
 [WUXC_VERSION_RS3]
