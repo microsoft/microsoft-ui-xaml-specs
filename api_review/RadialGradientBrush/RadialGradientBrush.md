@@ -81,7 +81,7 @@ XAML
 </Page>
 ```
 
-This example creates a radial gradient that uses Absolute mapping mode with custom values for `EllipseCenter`, `EllipseRadius` and `GradientOrigin`:
+This example creates a radial gradient that uses Absolute mapping mode with custom values for `Center`, `EllipseRadius` and `GradientOrigin`:
 
 ![A rectangle filled with an offset radial gradient.](images/OffsetRadialGradientBrush.png)
 
@@ -93,7 +93,7 @@ This example creates a radial gradient that uses Absolute mapping mode with cust
       <Rectangle.Fill>
           <media:RadialGradientBrush
             MappingMode="Absolute"
-            EllipseCenter="50,50"
+            Center="50,50"
             EllipseRadius="100,100"
             GradientOrigin="100,50"
             >
@@ -110,15 +110,15 @@ This example creates a radial gradient that uses Absolute mapping mode with cust
 
 ## Gradient layout
 
-The gradient is drawn within an ellipse that is defined by the `EllipseCenter` and `EllipseRadius` properties. Colors for the gradient start at the center of the ellipse and end at the radius.
+The gradient is drawn within an ellipse that is defined by the `Center` and `EllipseRadius` properties. Colors for the gradient start at the center of the ellipse and end at the radius.
 
 The colors for the radial gradient are defined by color stops added to the `GradientStops` collection property. Each gradient stop specifies a color and an offset along the gradient.
 
 The gradient origin defaults to center and can be offset using the `GradientOrigin` property.
 
-`MappingMode` defines whether `EllipseCenter`, `EllipseRadius` and `GradientOrigin` represent relative or absolute coordinates.
+`MappingMode` defines whether `Center`, `EllipseRadius` and `GradientOrigin` represent relative or absolute coordinates.
 
-When `MappingMode` is set to `RelativeToBoundingBox`, the X and Y values of the three properties are treated as relative to the brush's rendered bounds, where `(0,0)` represents the top left and `(1,1)` represents the bottom right of the brush's rendered bounds for the `EllipseCenter` and `EllipseRadius` properties and `(0,0)` represents the center for the `GradientOrigin` property.
+When `MappingMode` is set to `RelativeToBoundingBox`, the X and Y values of the three properties are treated as relative to the brush's rendered bounds, where `(0,0)` represents the top left and `(1,1)` represents the bottom right of the brush's rendered bounds for the `Center` and `EllipseRadius` properties and `(0,0)` represents the center for the `GradientOrigin` property.
 
 When `MappingMode` is set to `Absolute`, the X and Y values of the three properties are treated as absolute coordinates within the brush's rendered bounds.
 
@@ -138,12 +138,12 @@ Gradient rendering is supported on Windows 10 version 1903 (v10.0.18362.0) and h
 
 | | |
 | - | - |
-| EllipseCenter | The center of the ellipse that contains the gradient. The default is `(0.5, 0.5)`. |
+| Center | The center of the ellipse that contains the gradient. The default is `(0.5, 0.5)`. |
 | EllipseRadius | The radius of the ellipse that contains the gradient. The default is `(0.5, 0.5)`. |
 | GradientOrigin | The gradient's origin (relative to the top left corner). The default is `(0.5, 0,5)`.|
 | GradientStops | A collection of [GradientStop](https://docs.microsoft.com/uwp/api/windows.ui.xaml.media.gradientstop) objects that define the gradient. |
 | InterpolationSpace | The color space used to interpolate the gradient's colors. The default is `Auto`. For supported values, see [CompositionRadialGradientBrush.InterpolationSpace](https://docs.microsoft.com/uwp/api/windows.ui.composition.compositiongradientbrush.interpolationspace#Windows_UI_Composition_CompositionGradientBrush_InterpolationSpace) |
-| MappingMode | Defines whether `EllipseCenter`, `EllipseRadius` and `GradientOrigin` represent relative coordinates in the range 0 to 1 or absolute coordinates. The default is `RelativeToBoundingBox`. |
+| MappingMode | Defines whether `Center`, `EllipseRadius` and `GradientOrigin` represent relative coordinates in the range 0 to 1 or absolute coordinates. The default is `RelativeToBoundingBox`. |
 | SpreadMethod | Gets or sets the type of spread method that specifies how to draw a gradient that starts or ends inside the bounds of the object to be painted. The default is `Pad`. |
 
 # API Details
