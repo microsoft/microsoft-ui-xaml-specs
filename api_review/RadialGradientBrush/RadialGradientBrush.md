@@ -155,9 +155,11 @@ unsealed runtimeclass RadialGradientBrush : Windows.UI.Xaml.Media.XamlCompositio
 {
     RadialGradientBrush();
 
-    Windows.Foundation.Point EllipseCenter { get; set; };
+    Windows.Foundation.Point Center { get; set; };
 
-    Windows.Foundation.Point EllipseRadius { get; set; };
+    Windows.Foundation.Point RadiusX { get; set; };
+    
+    Windows.Foundation.Point RadiusY { get; set; };
 
     Windows.Foundation.Point GradientOrigin { get; set; };
 
@@ -169,8 +171,9 @@ unsealed runtimeclass RadialGradientBrush : Windows.UI.Xaml.Media.XamlCompositio
 
     Windows.Foundation.Collections.IObservableVector<Windows.UI.Xaml.Media.GradientStop> GradientStops { get; };
 
-    static Windows.UI.Xaml.DependencyProperty EllipseCenterProperty { get; };
-    static Windows.UI.Xaml.DependencyProperty EllipseRadiusProperty { get; };
+    static Windows.UI.Xaml.DependencyProperty CenterProperty { get; };
+    static Windows.UI.Xaml.DependencyProperty RadiusXProperty { get; };
+    static Windows.UI.Xaml.DependencyProperty RadiusYProperty { get; };
     static Windows.UI.Xaml.DependencyProperty GradientOriginProperty { get; };
     static Windows.UI.Xaml.DependencyProperty InterpolationSpaceProperty { get; };
     static Windows.UI.Xaml.DependencyProperty MappingModeProperty { get; };
