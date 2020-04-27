@@ -8,10 +8,6 @@ Although an app developer can place any content into PaneFooter, including other
 
 _Open question:_ Should PaneFooter be deprecated because this new API is a direct replacement?
 
-# Description
-<!-- Use this section to provide a brief description of the feature.
-For an example, see the introduction to the PasswordBox control 
-(http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
 Some apps may choose to visually group navigation items into top-aligned and bottom-aligned lists.
 While this grouping is possible today using navigation view's [PaneFooter](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationview.panefooter?view=winui-2.3) property, the approach has interaction downsides that this feature will correct.
 
@@ -22,6 +18,17 @@ While this grouping is possible today using navigation view's [PaneFooter](https
 By adding FooterMenuItems, we'll unify the [Settings item](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationview.settingsitem?view=winui-2.3) with other navigation items in its immediate proximity.
 As a result, keyboard and Narrator users will feel that the footer list behavior meets their expectations.
 Selection behavior and animations will also feel better integrated into the whole NavigationView control.
+
+# Description 
+<!-- Use this section to provide a brief description of the feature.
+For an example, see the introduction to the PasswordBox control 
+(http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
+
+FooterMenuItems is a list of navigation items similar to the MenuItems list.
+FooterMenuItems allows apps to visually group their navigation items into top-aligned and bottom-aligned or left-aligned and right-aligned groups. 
+The default Settings item will be included as the last item in the FooterMenuItems collection. As a result, adding items into FooterMenuItems will by default display them before the Settings item. The Settings item can still be toggled using the `IsSettingsVisible` property.
+
+By unifying bottom-or-left-aligned navigation items with the Settings item, these items will now be a part of selection, keyboarding, and narrator behavior that applies to the rest of the NavigationView.
 
 
 # Examples
@@ -54,22 +61,46 @@ example code with each description. The general format is:
 ```
 
 
-# Remarks
-<!-- Explanation and guidance that doesn't fit into the Examples section. -->
+# API Notes
+<!-- Option 1: Give a one or two line description of each API (type
+and member), or at least the ones that aren't obvious
+from their name.  These descriptions are what show up
+in IntelliSense. For properties, specify the default value of the property if it
+isn't the type's default (for example an int-typed property that doesn't default to zero.) -->
 
-<!-- APIs should only throw exceptions in exceptional conditions; basically,
-only when there's a bug in the caller, such as argument exception.  But if for some
-reason it's necessary for a caller to catch an exception from an API, call that
-out with an explanation either here or in the Examples -->
+<!-- Option 2: Put these descriptions in the below API Details section,
+with a "///" comment above the member or type. -->
 
-FooterMenuItems is a list of navigation items similar to the existing MenuItems list.
-The default Settings item will be included as the last item in the FooterMenuItems collection.
-As a result, adding items into FooterMenuItems will by default display them before the Settings item. The Settings item will still be able to be toggled using the `IsSettingsVisible` property.
+`public IList<object> FooterMenuItems { get; }`
 
+Gets the list of objects to be used as navigation items in the footer menu.
+
+`public object FooterMenuItemsSource { get; set; }`
+
+Sets or gets the object that represents the navigation items to be used in the footer menu.
+
+# API Details
+<!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
+```c++
+
+[MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
+[MUX_PROPERTY_CHANGED_CALLBACK_METHODNAME("OnPropertyChanged")]
+unsealed runtimeclass NavigationView : Windows.UI.Xaml.Controls.ContentControl
+{
+    {
+        Windows.Foundation.Collections.IVector<Object> FooterMenuItems{ get; };
+        Object FooterMenuItemsSource { get; set; };
+    }
+    
+    static Windows.UI.Xaml.DependencyProperty FooterMenuItemsProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty FooterMenuItemsSourceProperty{ get; };
+}
+```
+# Appendix
 ## Selection
 When users invoke a navigation item, that item will become selected and show its selection indicator. 
-At most one navigation item will be selected at a given time.
-The selection indicator will animate smoothly between items in the MenuItems list and FooterMenuItems list including Settings. 
+At most one navigation item can be selected at a given time.
+The selection indicator will animate smoothly between items in the MenuItems list and FooterMenuItems list including the optional built-in Settings menu item.
 
 In order to achieve consistent animations and allow for only one navigation item to be selected at a time, all navigation items should be in the same selection model. To achieve this, a large collection that consists of two smaller collections (specifically FooterMenuItems and MenuItems) will be used as the source.
 
@@ -110,46 +141,3 @@ If keyboard focus is on Settings:
 - Tab moves focus to a Header or Content item (same as today).
 - Home moves focus to Bottom 1
 - End does nothing
-
-
-# API Notes
-<!-- Option 1: Give a one or two line description of each API (type
-and member), or at least the ones that aren't obvious
-from their name.  These descriptions are what show up
-in IntelliSense. For properties, specify the default value of the property if it
-isn't the type's default (for example an int-typed property that doesn't default to zero.) -->
-
-<!-- Option 2: Put these descriptions in the below API Details section,
-with a "///" comment above the member or type. -->
-
-`public IList<object> FooterMenuItems { get; }`
-
-Gets the list of objects to be used as navigation items in the footer menu.
-
-`public object FooterMenuItemsSource { get; set; }`
-
-Sets or gets the object that represents the navigation items to be used in the footer menu.
-
-# API Details
-<!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
-```c++
-[WUXC_VERSION_RS3]
-[webhosthidden]
-[WUXC_INTERFACE_NAME("INavigationView", f209ce15-391a-42ca-9fc6-f79da65aca32)]
-[WUXC_STATIC_NAME("INavigationViewStatics", 363a86c7-72da-4420-b871-15d9d0d45756)]
-[WUXC_CONSTRUCTOR_NAME("INavigationViewFactory", e50687c1-b7c2-4975-ad7a-5f4fe6a514c9)]
-[MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
-[MUX_PROPERTY_CHANGED_CALLBACK_METHODNAME("OnPropertyChanged")]
-unsealed runtimeclass NavigationView : Windows.UI.Xaml.Controls.ContentControl
-{
-
-    [WUXC_VERSION_PREVIEW]
-    {
-        Windows.Foundation.Collections.IVector<Object> FooterMenuItems{ get; };
-        Object FooterMenuItemsSource { get; set; };
-    }
-    
-    static Windows.UI.Xaml.DependencyProperty FooterMenuItemsProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty FooterMenuItemsSourceProperty{ get; };
-}
-```
