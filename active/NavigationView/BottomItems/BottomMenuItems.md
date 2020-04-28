@@ -21,7 +21,7 @@ While this grouping is possible today using navigation view's [PaneFooter](https
 
 By adding FooterMenuItems, we'll unify the [Settings item](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationview.settingsitem?view=winui-2.3) with other navigation items in its immediate proximity. The menu items that appear at the top or left of the NavigationView will be a part of their own list, and the bottom or right menu items will be a part of their own list, including the Settings item. 
 
-As a result, keyboard and Narrator users will feel that the footer list behavior meets their expectations - narrators will smoothly move from list to list, but specify that the lists are separate.
+As a result, keyboard and assistive technology users will feel that the footer list behavior meets their expectations -  the top and bottom menu items will be specified as two separate lists, but it will be smooth to navigate from one to the other. See more in Accessibility section below.
 Selection behavior and animations will also feel better integrated into the whole NavigationView control, as bottom menu items will participate in the same selection model as top menu items. 
 
 # Description 
@@ -109,11 +109,11 @@ The selection indicator will animate smoothly between items in the MenuItems lis
 
 In order to achieve consistent animations and allow for only one navigation item to be selected at a time, all navigation items should be in the same selection model. To achieve this, a large collection that consists of two smaller collections (specifically FooterMenuItems and MenuItems) will be used as the source.
 
-## Narrator
+## Accessibility
 Screen readers will announce MenuItems and FooterMenuItems as two separate lists, including position in set. 
 Unlike previous behavior, the Settings item will be announced as a part of the FooterMenuItems list - specifically, its index should be announced relative to the other items in the list. For example, if there are three elements in the FooterMenuItemsList, Settings would be announced as 3 of 3.
 
-## Keyboarding
+### Keyboarding
 Given the following list, keyboarding actions should be as follows:
 - Main 1
 - Main 2
