@@ -119,9 +119,9 @@ The gradient origin defaults to center and can be offset using the `GradientOrig
 
 `MappingMode` defines whether `Center`, `RadiusX`, `RadiusY`, and `GradientOrigin` represent relative or absolute coordinates.
 
-When `MappingMode` is set to `RelativeToBoundingBox`, the X and Y values of the three properties are treated as relative to the brush's rendered bounds, where `(0,0)` represents the top left and `(1,1)` represents the bottom right of the brush's rendered bounds for the `Center`, `RadiusX`, and `RadiusY` properties and `(0,0)` represents the center for the `GradientOrigin` property.
+When `MappingMode` is set to `RelativeToBoundingBox`, the X and Y values of the three properties are treated as relative to the element bounds, where `(0,0)` represents the top left and `(1,1)` represents the bottom right of the element bounds for the `Center`, `RadiusX`, and `RadiusY` properties and `(0,0)` represents the center for the `GradientOrigin` property.
 
-When `MappingMode` is set to `Absolute`, the X and Y values of the three properties are treated as absolute coordinates within the brush's rendered bounds.
+When `MappingMode` is set to `Absolute`, the X and Y values of the three properties are treated as absolute coordinates within the element bounds.
 
 ## Windows 10 Version Support
 
