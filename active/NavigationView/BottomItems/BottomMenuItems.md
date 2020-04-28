@@ -2,7 +2,11 @@
 # Background
 Today, [NavigationView](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/navigationview) provides a place in its [Pane](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/navigationview) to show any number of items.
 The primary purpose of these items is to be a list of navigation links within the app that hosts NavigationView, likely as a root element.
-This navigation list is top aligned when NavigationView is shown in one of its left [display modes](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/navigationview#display-modes), and left aligned when NavigationView is in its top [display mode](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/navigationview#display-modes).
+This navigation list is top aligned when NavigationView is shown in one of its left [display modes](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/navigationview#display-modes), and left aligned when NavigationView is in its top [display mode](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/navigationview#display-modes). See NavigationView diagram below for reference:
+
+![NavigationView with labels](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/images/leftnav-anatomy.png)
+
+
 NavigationView provides a built-in [Settings item](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationview.settingsitem?view=winui-2.3), which is always positioned at the bottom or right of the Pane, and a [PaneFooter](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationview.panefooter?view=winui-2.3) area that positions content just before (either above or to the left) of the Settings item.
 Although an app developer can place any content into PaneFooter, including other NavigationViewItems, this content will not participate in the selection model and animations of the primary navigation list and Settings item.
 
@@ -15,9 +19,10 @@ While this grouping is possible today using navigation view's [PaneFooter](https
 
 ![NavigationView in Top display mode showing FooterMenuItems](FooterItems_Top.png)
 
-By adding FooterMenuItems, we'll unify the [Settings item](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationview.settingsitem?view=winui-2.3) with other navigation items in its immediate proximity.
-As a result, keyboard and Narrator users will feel that the footer list behavior meets their expectations.
-Selection behavior and animations will also feel better integrated into the whole NavigationView control.
+By adding FooterMenuItems, we'll unify the [Settings item](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.navigationview.settingsitem?view=winui-2.3) with other navigation items in its immediate proximity. The menu items that appear at the top or left of the NavigationView will be a part of their own list, and the bottom or right menu items will be a part of their own list, including the Settings item. 
+
+As a result, keyboard and Narrator users will feel that the footer list behavior meets their expectations - narrators will smoothly move from list to list, but specify that the lists are separate.
+Selection behavior and animations will also feel better integrated into the whole NavigationView control, as bottom menu items will participate in the same selection model as top menu items. 
 
 # Description 
 <!-- Use this section to provide a brief description of the feature.
