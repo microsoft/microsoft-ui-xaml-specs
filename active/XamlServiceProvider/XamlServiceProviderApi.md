@@ -1,7 +1,7 @@
 
 # Background
 
-_This spec adds a serviceProvider to the existing [MarkupExtension](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Markup.MarkupExtension) class._
+_This spec adds a serviceProvider to the existing [MarkupExtension](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Markup.MarkupExtension) class. ([Proposal](https://github.com/microsoft/microsoft-ui-xaml/issues/741))_
 
 Xaml markup has a [markup extension](https://docs.microsoft.com/en-us/dotnet/desktop-wpf/xaml-services/markup-extensions-overview) feature which is a builder pattern, similar to a .Net StringBuilder. It lets you create, modify, and then retrieve a value.
 
