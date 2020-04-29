@@ -35,7 +35,8 @@ The default Settings item will be included as the last item in the FooterMenuIte
 
 By unifying bottom-or-left-aligned navigation items with the Settings item, these items will now be a part of selection, keyboarding, and narrator behavior that applies to the rest of the NavigationView.
 
-
+Below is an example of a NavigationView with FooterMenuItems, with one of those menu items selected:
+![NavigationView with FooterMenu](footer-menu-mockup.png)
 # Examples
 <!-- Use this section to explain the features of the API, showing
 example code with each description. The general format is: 
@@ -54,12 +55,14 @@ example code with each description. The general format is:
 ```xaml
     <muxc:NavigationView>
         <muxc:NavigationView.MenuItems>
-            <muxc:NavigationViewItem Icon="Save" Content="main1"/>
-            <muxc:NavigationViewItem Icon="Play" Content="main2"/>
+            <muxc:NavigationViewItem Icon="Play" Content="main1"/>
+            <muxc:NavigationViewItem Icon="Save" Content="main2"/>
+            <muxc:NavigationViewItem Icon="Refresh" Content="main2"/>
+            <muxc:NavigationViewItem Icon="Download" Content="main2"/>
         </muxc:NavigationView.MenuItems>
         <muxc:NavigationView.FooterMenuItems>
-            <muxc:NavigationViewItem Icon="Calculator" Content="bottom1" Padding="0,0,12,0"/>
-            <muxc:NavigationViewItem Icon="Calendar" Content="bottom2" Padding="0,0,12,0"/>
+            <muxc:NavigationViewItem Icon="Library" Content="bottom1" Padding="0,0,12,0"/>
+            <muxc:NavigationViewItem Icon="Mail" Content="bottom2" Padding="0,0,12,0"/>
         </muxc:NavigationView.FooterMenuItems>
         
     </muxc:NavigationView>
