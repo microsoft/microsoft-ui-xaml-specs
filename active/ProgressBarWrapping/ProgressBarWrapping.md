@@ -7,7 +7,7 @@ The update in this spec is for a feature to make the bar appear such that the re
 
 ![image](./IndeterminatePB.gif)
 
-The current single rectangle is controlled by two read-only properties, :  
+The current single rectangle is controlled by two read-only properties:  
 `ContainerAnimationStartPosition` and  
 `ContainerAnimationEndPosition`. 
 
@@ -55,9 +55,11 @@ New properties on [ProgressBarTemplateSettings](https://docs.microsoft.com/uwp/a
 
 | API | Note |
 | - | - |
-| ContainerAnimationStartPosition2 | Gets the "From" point of the container animation that animates the ProgressBar. This is intended to be used with the ContainerAnimationEndPosition2 property |
-| ContainerAnimationEndPosition2 | Gets the target "To" point of the container animation that animates the ProgressBar. This is intended to be used with the ContainerAnimationStartPosition2 property|
+| ContainerAnimationStartPosition2 | Gets the "From" point of the second container animation that animates the ProgressBar. This is intended to be used with the ContainerAnimationEndPosition2 property |
+| ContainerAnimationEndPosition2 | Gets the target "To" point of the second container animation that animates the ProgressBar. This is intended to be used with the ContainerAnimationStartPosition2 property|
 
+
+> Note: Update the  doc pages on the existing property pari to say "first".
 
 # API Details
 
