@@ -14,15 +14,12 @@ The current single rectangle is controlled by two read-only properties:
 These are exposed by the ProgressBar's [TemplateSettings](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ProgressBar.TemplateSettings), and consumed by the control template. 
 
 The new APIs are a second pair of these properties to similarly control the second rectangle:  
-`ContainerAnimationStartPosition2` and  
-`ContainerAnimationEndPosition2`
-
-Naming note: the "2" suffix looks like a version indicator, which would be an unusual naming pattern. But it's actually referring to the second rectangle. So it would be better to rename the existing properties with a "1" suffix, similar to [ScaleAnimation.Control1/2](https://docs.microsoft.com/uwp/api/Windows.UI.Core.AnimationMetrics.ScaleAnimation.Control1), but that would be a breaking change to existing API.
-
+`Container2AnimationStartPosition` and  
+`Container2AnimationEndPosition`
 
 # Examples
 
-From the ProgressBar's new built-in control template, the following is used to animate the second rectangle by binding to the `ContainerAnimationStartPosition2` and `ContainerAnimationEndPosition2` properties:
+From the ProgressBar's new built-in control template, the following is used to animate the second rectangle by binding to the `Container2AnimationStartPosition` and `Container2AnimationEndPosition` properties:
 
 ```Xml
 <DoubleAnimationUsingKeyFrames
@@ -31,15 +28,15 @@ From the ProgressBar's new built-in control template, the following is used to a
 
     <SplineDoubleKeyFrame KeyTime="0" 
     Value="{Binding RelativeSource={RelativeSource TemplatedParent},
-Path=TemplateSettings.ContainerAnimationStartPosition2}" 
+Path=TemplateSettings.Container2AnimationStartPosition}" 
     KeySpline="0.4, 0.0, 0.6, 1.0" />
 
     <SplineDoubleKeyFrame KeyTime="0:0:0.75" 
     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, 
-Path=TemplateSettings.ContainerAnimationStartPosition2}" KeySpline="0.4, 0.0, 0.6, 1.0" />
+Path=TemplateSettings.Container2AnimationStartPosition}" KeySpline="0.4, 0.0, 0.6, 1.0" />
 
     <SplineDoubleKeyFrame KeyTime="0:0:2" 
-    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.ContainerAnimationEndPosition2}" KeySpline="0.4, 0.0, 0.6, 1.0" />
+    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.Container2AnimationEndPosition}" KeySpline="0.4, 0.0, 0.6, 1.0" />
 
 </DoubleAnimationUsingKeyFrames>
 ```
@@ -47,7 +44,7 @@ Path=TemplateSettings.ContainerAnimationStartPosition2}" KeySpline="0.4, 0.0, 0.
 
 # Remarks
 
-The `ContainerAnimationStartPosition2` and `ContainerAnimationEndPosition2` are intended to be used together, and can be used with the `ContainerAnimationStartPosition` and `ContainerAnimationEndPosition` properties.
+The `Container2AnimationStartPosition` and `Container2AnimationEndPosition` are intended to be used together, and can be used with the `ContainerAnimationStartPosition` and `ContainerAnimationEndPosition` properties.
 
 # API Notes
 
@@ -55,8 +52,8 @@ New properties on [ProgressBarTemplateSettings](https://docs.microsoft.com/uwp/a
 
 | API | Note |
 | - | - |
-| ContainerAnimationStartPosition2 | Gets the "From" point of the second container animation that animates the ProgressBar. This is intended to be used with the ContainerAnimationEndPosition2 property |
-| ContainerAnimationEndPosition2 | Gets the target "To" point of the second container animation that animates the ProgressBar. This is intended to be used with the ContainerAnimationStartPosition2 property|
+| Container2AnimationStartPosition | Gets the "From" point of the second container animation that animates the ProgressBar. This is intended to be used with the Container2AnimationEndPosition property |
+| Container2AnimationEndPosition | Gets the target "To" point of the second container animation that animates the ProgressBar. This is intended to be used with the Container2AnimationStartPosition property|
 
 
 > Note: Update the  doc pages on the existing property pari to say "first".
@@ -69,11 +66,11 @@ unsealed runtimeclass ProgressBarTemplateSettings : Windows.UI.Xaml.DependencyOb
 {
     ...
 
-    Double ContainerAnimationStartPosition2;
-    static Windows.UI.Xaml.DependencyProperty ContainerAnimationStartPosition2Property{ get; };
+    Double Container2AnimationStartPosition { get; };
+    static Windows.UI.Xaml.DependencyProperty Container2AnimationStartPositionProperty{ get; };
 
-    Double ContainerAnimationEndPosition2;
-    static Windows.UI.Xaml.DependencyProperty ContainerAnimationEndPosition2Property{ get; };
+    Double Container2AnimationEndPosition { get; };
+    static Windows.UI.Xaml.DependencyProperty Container2AnimationEndPositionProperty{ get; };
 
 }
 ```
