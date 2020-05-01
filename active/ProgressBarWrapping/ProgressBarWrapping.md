@@ -5,7 +5,9 @@ The Xaml [ProgressBar](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Cont
 
 The update in this spec is for a feature to make the bar appear such that the rectangle wraps around from one side to the other (when in indetermine mode). This is implemented by having two rectangles, so during the "wrap" what you see is actually a partial rectangle on the right and another partial one on the left:
 
-![image](./IndeterminatePB.gif)
+| Previous | Wrapping |
+| - | - |
+| ![image](./PB1.gif) | ![image](./IndeterminatePB.gif) |
 
 The current single rectangle is controlled by two read-only properties:  
 `ContainerAnimationStartPosition` and  
