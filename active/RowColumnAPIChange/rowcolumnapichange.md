@@ -28,23 +28,23 @@ modifying an existing API. -->
 area, just explanation enough to understand this new API, rather than telling
 the reader "go read 100 pages of background information posted at ...". -->
 
-The current UWP API Reference has `RowDefinition` and `ColumnDefinition` classes, both of which respectively make up `Grid`'s `RowDefinitions` and `ColumnDefinitions` properties. Currently, RowDefinition and ColumnDefinition constructors do not take any arguments. Definition of a ColumnDefinition's `Width` property or a RowDefinition's `Height` property must be done by creating a GridLength object inside the creation of a Row/ColumnDefinition, or on a separate line once the object has been created.
+[Grid](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.grid?view=winrt-18362) has ColumnDefinitions and RowDefinitions properties. The values for these properties are a collection of [ColumnDefinition](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.columndefinition?view=winrt-18362) and [RowDefinition](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.rowdefinition?view=winrt-18362) objects, respectively. Currently, RowDefinition and ColumnDefinition constructors do not take any arguments. Due to this, defining a ColumnDefinition or RowDefinition can be lengthy and unintuitive, with the steps as follows:
+1. Create a Column or RowDefinition object with the blank constructor.
+2. Define a GridLength object with the desired value for the Height or Width property of the Row/ColumnDefinition.
+3. Assign the GridLength object to the Height or Width property of the Row/ColumnDefinition. 
 
-This spec sets out to change that, and therefore sets out to change the following APIs:
+This spec sets out to change that process, and therefore sets out to change the [RowDefinition](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.RowDefinition) and [ColumnDefinition](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.columndefinition) APIs.
 
-[RowDefinition Class](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.RowDefinition)
-
-[ColumnDefinition Class](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.columndefinition)
+This new feature will allow developers to define their column widths and row heights within the column and row definitions themselves, not only making the code-behind easier to write, but making it cleaner and more understandable to read as well. 
 
 # Description
 <!-- Use this section to provide a brief description of the feature.
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
-This new feature will allow developers to define their column widths and row heights within the column and row definitions themselves, not only making the code-behind easier to write, but making it cleaner and more understandable to read as well. 
 
-The planned API change will overload the ColumnDefinition and RowDefinition constructors to take in one or two arguments. The first overloaded constructor for `ColumnDefinition()` will take only a double-type argument called Width (Height for `RowDefinition()`). The second overloaded constructor for ColumnDefinition() will take a double-type argument Width (Height for RowDefinition()) and a [GridUnitType](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.gridlength.gridunittype) argument.
+ColumnDefinition and RowDefinition constructors will be overloaded to take in one or two arguments. The first overloaded constructor for `ColumnDefinition()` will take only a double-type argument called Width (Height for `RowDefinition()`). The second overloaded constructor for ColumnDefinition() will take a double-type argument Width (Height for RowDefinition()) and a [GridUnitType](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.gridlength.gridunittype) argument.
 
-This overloaded constructor takes the same arguments as the [GridLength](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.GridLength) constructor does - a double and a GridUnitType.  RowDefinition's Height property and ColumnDefinition's Width property are both of type GridLength, so with this change GridLength's arguments will be ported over to the ColumnDefinition and RowDefinition constructors directly.
+These overloaded constructors take the same arguments as the [GridLength](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.GridLength) constructor does - a double and a GridUnitType. In turn, feeding these same arguments to a RowDefinition or ColumnDefinition constructor will create a GridLength object and assign it to the ColumnDefinition's Width property or the RowDefinition's Height property behind the scenes. 
 
 # Examples
 <!-- Use this section to explain the features of the API, showing
