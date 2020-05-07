@@ -95,6 +95,10 @@ grid.ColumnDefinitions.Add(new ColumnDefinition(500.0)); // Width="500px"
 only when there's a bug in the caller, such as argument exception.  But if for some
 reason it's necessary for a caller to catch an exception from an API, call that
 out with an explanation either here or in the Examples -->
+If defining a column or row with a GridUnitType of Auto, the value in the Width/Height parameter should be ignored - Auto should override the specified Width/Height value. 
+
+For ColumnDefinitions or RowDefinitions that have `NaN` as their value for Height or Width in their constructor, an error should be thrown.
+
 
 # API Notes
 ColumnDefinition constructor will be overloaded to take a double `pixelWidth` OR take two arguments consisting of a double `width` and a GridUnitType `type`:
