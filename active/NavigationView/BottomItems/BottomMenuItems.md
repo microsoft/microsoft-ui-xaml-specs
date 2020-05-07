@@ -33,7 +33,7 @@ FooterMenuItems is a list of navigation items similar to the MenuItems list.
 FooterMenuItems allows apps to visually group their navigation items into top-aligned and bottom-aligned or left-aligned and right-aligned groups. 
 The default Settings item will be included as the last item in the FooterMenuItems collection. As a result, adding items into FooterMenuItems will by default display them before the Settings item. The Settings item can still be toggled using the `IsSettingsVisible` property.
 
-By unifying bottom-or-left-aligned navigation items with the Settings item, these items will now be a part of selection, keyboarding, and narrator behavior that applies to the rest of the NavigationView.
+By unifying bottom-or-right-aligned navigation items with the Settings item, these items will now be a part of selection, keyboarding, and narrator behavior that applies to the rest of the NavigationView.
 
 Below is an example of a NavigationView with FooterMenuItems, with one of those menu items selected:
 ![NavigationView with FooterMenu](footer-menu-mockup.png)
