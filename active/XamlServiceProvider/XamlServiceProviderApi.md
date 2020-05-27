@@ -33,7 +33,7 @@ This spec is adding a new version of ProvideValue that passes a service provider
 
 # Description
 
-Define a MarkupExtension by subclassing it and overriding a ProvideValue method. This can then be used in Xaml markup: the markup extension can be crated using the "{ }" syntax, and the return value from ProvideValue will be set as the property value.
+A developer defines a custom markup extension by subclassing the MarkupExtension class and overriding the ProvideValue method. This can then be used in Xaml markup: the markup extension can be created using the "{ }" markup expression syntax, and the return value from ProvideValue will be set as the property value.
 
 For example, given this markup extension:
 
@@ -65,7 +65,7 @@ On an en-US machine, this will produce something like:
 
 A markup extension overrides the ProvideValue method, and returns a value from it that the Xaml loader sets as a property value.
 
-There are two versions of ProvideValue, one that passes no parameters and one that passes a service provider. From the service provider, a markup extension implementation can retrieve services the following services:
+There are two versions of ProvideValue, one that passes no parameters and one that passes a service provider. From the service provider, a markup extension implementation can retrieve the following services:
 * `IProvideValueTarget`, which provides information about the type/property the markup extension is being applied to. This aligns with WPF's [IProvideValueTarget](https://docs.microsoft.com/dotnet/api/System.Windows.Markup.IProvideValueTarget).
 * `IRootObjectProvider`, which provides a reference to the root object in the markup. This aligns with WPF's [IRootObjectProvider](https://docs.microsoft.com/dotnet/api/System.Xaml.IRootObjectProvider).
 * `IUriContext` , which provides the base URI of the markup. This aligns with WPF's [IUriContext](https://docs.microsoft.com/dotnet/api/System.Windows.Markup.IUriContext).
@@ -164,17 +164,17 @@ There are two versions of the virtual ProvideValue method, you should only overr
 ## IProvideValueTarget interface
 Provides a target object and property.
 
-Xaml MarkupExtensions offer this interface in the IXamlServiceProvider parameter.  The target object/property are the instance and property identifier that the markup extension is being set on.
+Xaml markup extensions offer this interface in the IXamlServiceProvider parameter.  The target object/property are the instance and property identifier that the markup extension is being set on.
 
 ## IRootObjectProvider interface
-Describes a service that can return the root object of markup being parsed.
+Describes a service that can return the root object of the markup tree being parsed.
 
-Xaml MarkupExtensions offer this interface in the IXamlServiceProvider parameter.  The root object is the root of the markup being loaded.
+Xaml markup extensions offer this interface in the IXamlServiceProvider parameter.  The root object is the root of the markup being loaded.
 
 ## IUriContext interface
-Provided by the Xaml loader to MarkupExtensions to expose the base URI of the markup being loaded
+Provided by the Xaml loader to markup extensions to expose the base URI of the markup being loaded
 
-Xaml MarkupExtensions offer this interface in the IXamlServiceProvider parameter.  The URI is that of the markup file being loaded (the `resourceLocator' value passed to [Application.LoadComponent](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Application.LoadComponent)).
+Xaml markup extensions offer this interface in the IXamlServiceProvider parameter.  The URI is that of the markup file being loaded (the `resourceLocator' value passed to [Application.LoadComponent](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Application.LoadComponent)).
 
 
 
