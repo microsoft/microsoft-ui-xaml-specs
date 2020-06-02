@@ -32,7 +32,7 @@ For an example, see the introduction to the PasswordBox control
 FooterMenuItems is a list of navigation items similar to the MenuItems list.
 FooterMenuItems allows you to visually group navigation items into top- and bottom-aligned or left- and right-aligned groups. 
 
-The default Settings item will be included as the last item in the FooterMenuItems collection. As a result, adding items into FooterMenuItems will by default display them before the Settings item. The Settings item can still be toggled using the `IsSettingsVisible` property.
+The default Settings item will be included as the last item in the FooterMenuItems collection. As a result, adding items into FooterMenuItems will by default display them before the Settings item. The Settings item can still be toggled using the `IsSettingsVisible` property. Note: this is the recommended way to remove the Settings item, although it's possible to remove it manually by removing it from the FooterMenuItems collection itself. 
 
 By unifying bottom-or-right-aligned navigation items with the Settings item, these items will now be a part of selection, keyboarding, and narrator behavior that applies to the rest of the NavigationView.
 
