@@ -39,7 +39,7 @@ Pager control is a customizable pager UI widget with generic events that can be 
 
 **Important APIs:** [PagerControl class](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.pagercontrol)
 
-Pager control can be configured to use a ComboBox, editable TextBox, or numeric Button panel as the core pager control.
+Pager control can be configured to use a ComboBox, editable NumberBox, or numeric Button panel as the core pager control.
 
 ## Is this the right control? 
 
@@ -114,7 +114,7 @@ XAML
 </Grid>
 ```
 
-### Editable TextBox Pager Control
+### Editable NumberBox Pager Control
 
 ![](images/pager-control-editable-textbox.png)
 
@@ -122,7 +122,7 @@ XAML
 ```XAML
 <GridView x:Name="gridView1" ... />
     <controls:PagerControl x:Name="MainPagerControl"
-        DisplayMode="TextBox"
+        DisplayMode="NumberBox"
         NumberOfPages="5"
 	FirstButtonVisibility="None"
         PreviousButtonVisibility="AlwaysVisible"
@@ -164,7 +164,7 @@ enum DisplayMode
 {
     Auto,
     ComboBox,
-    TextBox,
+    NumberBox,
     ButtonPanel,
 };
 
@@ -177,12 +177,17 @@ enum ButtonVisibilityMode
     None,
 };
 
+runtimeclass PagerControlPageChangedEventArgs
+{
+        Integer PreviousPage{get; };
+        Integer CurrentPage{get; }:
+}
+
 runtimeclass PagerControl
 {
     PagerControl();
 
     DisplayMode Display;
-    Windows.UI.Xaml.Style DisplayModeStyle;
     
     Integer NumberOfPages;
     
@@ -201,12 +206,6 @@ runtimeclass PagerControl
     String NextButtonText;
     String LastButtonText;
     
-    Windows.UI.Xaml.Input.ICommand FirstButtonCommand;
-    Windows.UI.Xaml.Input.ICommand PreviousButtonCommand;
-    Windows.UI.Xaml.Input.ICommand NextButtonCommand;
-    Windows.UI.Xaml.Input.ICommand LastButtonCommand;
-    Windows.UI.Xaml.Input.ICommand PagerInputCommand;
-    
     Windows.UI.Xaml.Style FirstButtonStyle;
     Windows.UI.Xaml.Style PreviousButtonStyle;
     Windows.UI.Xaml.Style NextButtonStyle;
@@ -223,7 +222,6 @@ runtimeclass PagerControl
     String SuffixText
 
     static Windows.UI.Xaml.DependencyProperty DisplayProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty DisplayModeStyleProperty{ get; };
     
     static Windows.UI.Xaml.DependencyProperty NumberOfPagesProperty{ get; };
     
@@ -241,12 +239,6 @@ runtimeclass PagerControl
     static Windows.UI.Xaml.DependencyProperty PreviousButtonTextProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty NextButtonTextProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty LastButtonTextProperty{ get; };
-    
-    static Windows.UI.Xaml.DependencyProperty FirstButtonCommandProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty PreviousButtonCommandProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty NextButtonCommandProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty LastButtonCommandProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty PagerInputCommandProperty{ get; };
     
     static Windows.UI.Xaml.DependencyProperty FirstButtonStyleProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty PreviousButtonStyleProperty{ get; };
