@@ -160,7 +160,7 @@ with a "///" comment above the member or type. -->
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 
 ```c++ 
-enum DisplayMode
+enum PagerDisplayMode
 {
     Auto,
     ComboBox,
@@ -179,15 +179,14 @@ enum ButtonVisibilityMode
 
 runtimeclass PagerControlPageChangedEventArgs
 {
-        Integer PreviousPage{get; };
-        Integer CurrentPage{get; }:
+    Integer CurrentPage{get; }:
 }
 
 runtimeclass PagerControl
 {
     PagerControl();
 
-    DisplayMode Display;
+    PagerDisplayMode Display;
     
     Integer NumberOfPages;
     
@@ -195,6 +194,12 @@ runtimeclass PagerControl
     ButtonVisibilityMode PreviousButtonVisibility;
     ButtonVisibilityMode NextButtonVisibility;
     ButtonVisibilityMode LastButtonVisibility;
+
+    FirstButtonCommand="FirstButtonPressedEvent"
+    PreviousButtonCommand="PreviousButtonPressedEvent"
+    NextButtonCommand="NextButtonPressedEvent"
+    LastButtonCommand="LastButtonPressedEvent"
+    PagerInputCommand="PagerInputEvent"
     
     IconSource FirstButtonGlyph;
     IconSource PreviousButtonGlyph;
@@ -205,6 +210,12 @@ runtimeclass PagerControl
     String PreviousButtonText;
     String NextButtonText;
     String LastButtonText;
+
+    Windows.UI.Xaml.Input.ICommand FirstButtonCommand;
+    Windows.UI.Xaml.Input.ICommand PreviousButtonCommand;
+    Windows.UI.Xaml.Input.ICommand NextButtonCommand;
+    Windows.UI.Xaml.Input.ICommand LastButtonCommand;
+    Windows.UI.Xaml.Input.ICommand PagerInputCommand;
     
     Windows.UI.Xaml.Style FirstButtonStyle;
     Windows.UI.Xaml.Style PreviousButtonStyle;
@@ -219,7 +230,9 @@ runtimeclass PagerControl
     Integer EllipsisMaxAfter;
     
     String PrefixText;
-    String SuffixText
+    String SuffixText;
+
+    event Windows.Foundation.TypedEventHandler<PagerControl, PagerControlPageChangedEventArgs> PageChanged;
 
     static Windows.UI.Xaml.DependencyProperty DisplayProperty{ get; };
     
@@ -239,6 +252,12 @@ runtimeclass PagerControl
     static Windows.UI.Xaml.DependencyProperty PreviousButtonTextProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty NextButtonTextProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty LastButtonTextProperty{ get; };
+
+    static Windows.UI.Xaml.DependencyProperty FirstButtonCommandProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty PreviousButtonCommandProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty NextButtonCommandProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty LastButtonCommandProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty PagerInputCommandProperty{ get; };
     
     static Windows.UI.Xaml.DependencyProperty FirstButtonStyleProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty PreviousButtonStyleProperty{ get; };
