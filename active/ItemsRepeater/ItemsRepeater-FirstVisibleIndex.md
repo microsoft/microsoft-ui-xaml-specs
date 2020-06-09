@@ -94,8 +94,8 @@ public int FirstVisibleIndex { get; }
 
 public int LastVisibleIndex { get; }
 
-public object RealizedItems { get; }
-// **The ItemsRepeater ItemsSource property accepts arguments of type object, so this property follows suit. See open questions below.**
+public IEnumerable<UIElement> RealizedItems { get; }
+// RealizedItems is an *unsorted* IEnumerable object.
 ```
 
 # API Details
@@ -109,7 +109,7 @@ unsealed runtimeclass ItemsRepeater : Windows.UI.Xaml.FrameworkElement
 
     Int32 FirstVisibleIndex { get; set; }
     Int32 LastVisibleIndex { get; set; }
-    Object RealizedItems { get; set; }
+    Windows.Foundation.Collections.IEnumerable<Windows.UI.Xaml.UIElement> RealizedItems { get; set; }
 
     // ...
 }
