@@ -29,6 +29,8 @@ modifying an existing API. -->
 area, just explanation enough to understand this new API, rather than telling
 the reader "go read 100 pages of background information posted at ...". -->
 
+The absence of a standard UI pager control, last seen as DataPager in Silverlight, has been a pain point in both WPF and UWP that has forced a variety of unfavorable workarounds for developers. Inclusion of this control in UWP would resolve an ecosystem gap and enable developers to efficiently deliver UI paging experiences in their applications. Through XAML Islands, it may also provide an opportunity to benefit WPF developers working with DataGrid or ListView. The scope of this proposal is not provide a data paging solution at this time but to start with UI paging as a foundation on top of which data paging may be later integrated.
+
 
 ## Description
 <!-- Use this section to provide a brief description of the feature.
@@ -43,7 +45,7 @@ Pager control can be configured to use a ComboBox, editable NumberBox, or numeri
 
 ## Is this the right control? 
 
-Use a **PagerControl** control create an accessible navigation interface for views that have multiple pages to display.
+Use a **PagerControl** to create an accessible navigation interface for views that have multiple pages to display.
 
 ## Examples
 <!-- Use this section to explain the features of the API, showing
@@ -137,6 +139,10 @@ XAML
 </Grid>
 ```
 
+## Adding a PagerControl to Your Application
+
+Here is the XAML to show how to add the PagerControl to your application. It can be added on the page as shown below, or can be used in the template of the layout view you prefer to use. PagerControl is added to the template for DataGrid and ItemsRepeater in WinUI 2.x and will be added to ListView and GridView in WinUI 3. 
+
 
 ## Remarks
 <!-- Explanation and guidance that doesn't fit into the Examples section. -->
@@ -155,6 +161,19 @@ isn't the type's default (for example an int-typed property that doesn't default
 
 <!-- Option 2: Put these descriptions in the below API Details section,
 with a "///" comment above the member or type. -->
+
+### Visual Components
+
+ | Component |  Notes |
+|:---:|:---|
+| DisplayMode | * Used to set either a button panel (default) or an editable ComboBox as the indexing component. <br> * When set to be a button panel, the number of visible indices can be specified. <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760354-23671280-fc79-11e8-804b-71b5b84a80f5.png) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![image](https://user-images.githubusercontent.com/16964652/49760373-2eba3e00-fc79-11e8-8304-12d7b6ee2c89.png) |
+| LastButton | * Button displaying text and/or glyph indicating that the user may navigate to the last index. <br> * Automatically disabled when at last index. <br> * Can be set to not be visible when at the last index.  <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760392-3a0d6980-fc79-11e8-8d96-a811cee1c759.png) |
+| FirstButton | * Button displaying text and/or glyph indicating that the user may navigate to the first index. <br> * Automatically disabled when at first index. <br> * Can be set to not be visible when at the first index.  <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760409-485b8580-fc79-11e8-9545-a580f6016f6c.png) |
+| NextButton | * Button displaying text and/or glyph indicating that the user may navigate to the next index. <br> * Automatically disabled when at last index. <br> * Can be set to not be visible when at the last index. <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760426-54474780-fc79-11e8-9446-ee2886941a24.png) |
+| PreviousButton | * Button displaying text and/or glyph indicating that the user may navigate to the previous index. <br> * Automatically disabled when at first index. <br> * Can be set to not be visible when at the first index.  <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760443-62956380-fc79-11e8-8f93-562a92fde666.png) |
+| Ellipsis | * Button, often reading "...", used between indexes and before or after the first/last index to indicate an accessible but omitted range of indexes. <br> * MaxBefore and MaxAfter properties can be used to set  how many indices appear between the current page and the ellipsis before/after it. <br> * Visibility of the first/last index can be disabled. <br> * Only visible when using button panel as the display mode.  <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760513-85277c80-fc79-11e8-926e-3453ea29b0a3.png) |
+| PrefixText | * Text displayed before the editable ComboBox indexing component. <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760540-93759880-fc79-11e8-9c4f-3c3222b95a13.png) |
+| NumberOfPages | * When a total number of indices (N) is given, this suffix string will appear after the editable ComboBox indexing component and read "of N". Localization will put "N" where it should be in a given language. <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760557-9a9ca680-fc79-11e8-943f-3425d993fdeb.png) |
 
 ## API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
@@ -280,23 +299,25 @@ runtimeclass PagerControl
 that isn't necessary to understand the purpose and usage of the API.
 For example, implementation details. -->
 
-### Visual Components
-
- | Component |  Notes |
-|:---:|:---|
-| DisplayMode | * Used to set either a button panel (default) or an editable ComboBox as the indexing component. <br> * When set to be a button panel, the number of visible indices can be specified. <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760354-23671280-fc79-11e8-804b-71b5b84a80f5.png) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![image](https://user-images.githubusercontent.com/16964652/49760373-2eba3e00-fc79-11e8-8304-12d7b6ee2c89.png) |
-| LastButton | * Button displaying text and/or glyph indicating that the user may navigate to the last index. <br> * Automatically disabled when at last index. <br> * Can be set to not be visible when at the last index.  <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760392-3a0d6980-fc79-11e8-8d96-a811cee1c759.png) |
-| FirstButton | * Button displaying text and/or glyph indicating that the user may navigate to the first index. <br> * Automatically disabled when at first index. <br> * Can be set to not be visible when at the first index.  <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760409-485b8580-fc79-11e8-9545-a580f6016f6c.png) |
-| NextButton | * Button displaying text and/or glyph indicating that the user may navigate to the next index. <br> * Automatically disabled when at last index. <br> * Can be set to not be visible when at the last index. <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760426-54474780-fc79-11e8-9446-ee2886941a24.png) |
-| PreviousButton | * Button displaying text and/or glyph indicating that the user may navigate to the previous index. <br> * Automatically disabled when at first index. <br> * Can be set to not be visible when at the first index.  <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760443-62956380-fc79-11e8-8f93-562a92fde666.png) |
-| Ellipsis | * Button, often reading "...", used between indexes and before or after the first/last index to indicate an accessible but omitted range of indexes. <br> * MaxBefore and MaxAfter properties can be used to set  how many indices appear between the current page and the ellipsis before/after it. <br> * Visibility of the first/last index can be disabled. <br> * Only visible when using button panel as the display mode.  <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760513-85277c80-fc79-11e8-926e-3453ea29b0a3.png) |
-| PrefixText | * Text displayed before the editable ComboBox indexing component. <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760540-93759880-fc79-11e8-9c4f-3c3222b95a13.png) |
-| NumberOfPages | * When a total number of indices (N) is given, this suffix string will appear after the editable ComboBox indexing component and read "of N". Localization will put "N" where it should be in a given language. <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760557-9a9ca680-fc79-11e8-943f-3425d993fdeb.png) |
-
 ### Accessibility
+
+## UI AUtomation Patterns 
+
+UI pager will use the button control type for the first, last, next, and previous buttons. Button will also be used for the number panel display mode. The combo box control type will be used for comboBox display mode and edit will be used for the NumberBox mode. 
+
+## Keyboard Navigation and Narrator 
 
 | State | Action | Narrator |
 |:---|:---|:---|
 | UI pager is first focused on by tabbing | Focus defaults to the next page button if available (current page otherwise) after announcing accessible name of UI pager. | “Page selector. Next page is N." |
-| UI pager is tabbed through | Tab Button: <br> Will go through all actionable items in order without regard to groups. <br> <br> Arrow keys: <br> Will be able to explore groups in the specified directions. Pressing the down arrow key at the bottom of the ComboBox will wrap the user to the top. <br> <br> Escape: <br> Will escape UI pager. <br> <br> Enter and Spacebar: <br> Will select the component focused on. <br> <br> Home: <br> Will move focus to "go back" elements. In the ComboBox, it will jump the user to the first index. <br> <br> End: <br> Will move focus to "go forward" elements. In the ComboBox, it will jump the user to the last index. | Narrator will announce an accessible name of the visual component. Ex:<br><br> “first page button” <br><br> “previous page button” <br><br> “1st page” <br><br> “current page” <br><br> "page selection drop down menu: current page is 1” |
+| UI pager is tabbed through | Tab Button: <br> Will go through all actionable items in order without regard to groups. <br> <br> Arrow keys: <br>Will be able to explore groups in the specified directions. When focus is on CombBox, the up and down arrows will let the end user navigate through the individual items. Pressing the down arrow key at the bottom of the ComboBox will wrap the end user to the top. <br> <br> Escape: <br> Will escape UI pager. In the ComboBox, it will close the box and if a value was selected, it will be reset to the original value. <br> <br> Enter and Spacebar: <br> Will select the component focused on. <br> <br> Home: <br> Will move focus to "go back" elements. In the ComboBox, it will jump the user to the first index. <br> <br> End: <br> Will move focus to "go forward" elements. In the ComboBox, it will jump the user to the last index. | Narrator will announce an accessible name of the visual component. Ex:<br><br> “first page button” <br><br> “previous page button” <br><br> “1st page” <br><br> “current page” <br><br> "page selection drop down menu: current page is 1” |
+
+## GamePad 
+
+| State | Action |
+|:---|:---|
+| UI pager receives focus| Focus defaults to the next page button if available (current page otherwise) |
+| UI pager is navigated through | D-Pad: <br> Will go through all actionable items in order without regard to groups. <br> <br> D-Pad: <br>Will be able to explore groups in the specified directions. When focus is on CombBox, the up and down arrows will let the end user navigate through the individual items. Pressing the down arrow key at the bottom of the ComboBox will wrap the end user to the top. <br> <br> B Button: <br> Will escape UI pager. In the ComboBox, it will close the box and if a value was selected, it will be reset to the original value. <br> <br> A Button: <br> Will select the component focused on. <br> <br> |
+
+### Data and Intellegence Metrics 
 
