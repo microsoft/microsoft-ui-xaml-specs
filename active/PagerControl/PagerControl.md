@@ -299,25 +299,25 @@ runtimeclass PagerControl
 that isn't necessary to understand the purpose and usage of the API.
 For example, implementation details. -->
 
-### Accessibility
+## Accessibility
 
-## UI AUtomation Patterns 
+### UI AUtomation Patterns 
 
 UI pager will use the button control type for the first, last, next, and previous buttons. Button will also be used for the number panel display mode. The combo box control type will be used for comboBox display mode and edit will be used for the NumberBox mode. 
 
-## Keyboard Navigation and Narrator 
+### Keyboard Navigation and Narrator 
 
 | State | Action | Narrator |
 |:---|:---|:---|
 | UI pager is first focused on by tabbing | Focus defaults to the next page button if available (current page otherwise) after announcing accessible name of UI pager. | “Page selector. Next page is N." |
 | UI pager is tabbed through | Tab Button: <br> Will go through all actionable items in order without regard to groups. <br> <br> Arrow keys: <br>Will be able to explore groups in the specified directions. When focus is on CombBox, the up and down arrows will let the end user navigate through the individual items. Pressing the down arrow key at the bottom of the ComboBox will wrap the end user to the top. <br> <br> Escape: <br> Will escape UI pager. In the ComboBox, it will close the box and if a value was selected, it will be reset to the original value. <br> <br> Enter and Spacebar: <br> Will select the component focused on. <br> <br> Home: <br> Will move focus to "go back" elements. In the ComboBox, it will jump the user to the first index. <br> <br> End: <br> Will move focus to "go forward" elements. In the ComboBox, it will jump the user to the last index. | Narrator will announce an accessible name of the visual component. Ex:<br><br> “first page button” <br><br> “previous page button” <br><br> “1st page” <br><br> “current page” <br><br> "page selection drop down menu: current page is 1” |
 
-## GamePad 
+### GamePad 
 
 | State | Action |
 |:---|:---|
 | UI pager receives focus| Focus defaults to the next page button if available (current page otherwise) |
 | UI pager is navigated through | D-Pad: <br> Will go through all actionable items in order without regard to groups. <br> <br> D-Pad: <br>Will be able to explore groups in the specified directions. When focus is on CombBox, the up and down arrows will let the end user navigate through the individual items. Pressing the down arrow key at the bottom of the ComboBox will wrap the end user to the top. <br> <br> B Button: <br> Will escape UI pager. In the ComboBox, it will close the box and if a value was selected, it will be reset to the original value. <br> <br> A Button: <br> Will select the component focused on. <br> <br> |
 
-### Data and Intellegence Metrics 
+## Data and Intellegence Metrics 
 
