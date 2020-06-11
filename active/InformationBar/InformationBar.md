@@ -34,15 +34,15 @@ the reader "go read 100 pages of background information posted at ...". -->
 
 # Description
 
-An InfoBar is a persistent, actionable, app-wide, notification intended for displaying critical status messages that impact app perception or user experience.
+A StatusBanner is a persistent, actionable, app-wide, notification intended for displaying critical status messages that impact app perception or user experience.
 
 
 
 
 ## Is this the right control?
-Use an InfoBar control when a user needs to acknowledge or take action on a message. By default the notification will remain in the content area until dismissed by the user.
+Use an StatusBanner control when a user needs to acknowledge or take action on a message. By default the notification will remain in the content area until dismissed by the user.
 
-Do not use an InfoBar control to confirm or respond to a user action, for transient alerts, or for non-essential messages.
+Do not use an StatusBanner control to confirm or respond to a user action, for transient alerts, or for non-essential messages.
 
 ### Scenarios
 Common scenarios that **directly** impact app perception or experience ⚠
@@ -97,20 +97,16 @@ example code with each description. The general format is:
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 > Note here about how it will eventually be two styles, starting with one: bar
 
-A status banner can be of one of two visual modes with several configurations in each.
+A status banner can have several configurations, here are some common ones.
 
-A status banner can show non-dismissable notifications in the **toast** visual mode when a critical status affects the functionality of the application.
+When a status banner is conveying information of a common criticality, it can define a Type to use consistent Fluent styling for it's identifiers.
+![TODO](images/Warning_DefaultClose.jpg)
 
-[A sketch of a status banner with a title of, Internet Disconnected, without a dismiss button](images/InternetDisconnectedToast.png)
+If a call to action is needed, a status banner can have customizable action and close buttons.
+![TODO](images/Critical_CustomButtons.jpg)
 
-When the user can take action to resolve a status, a status banner can include an action button and appear at the top of the content pane as an app-wide **bar**.
-
-*echo in your room img*
-
-For informational statuses, a status banner in the **toast** visual mode can be dismissed by the user and include hyperlinks to direct the user to further information.
-
-*now recording img*
-
+The status banner can also be customized with XAML Content to include hyperlinks, extra buttons, and other UI elements.
+![TODO](images/Information_CustomContent.jpg)
 
 
 ## Create a status banner 
@@ -143,9 +139,9 @@ public MainPage()
 }
 ```
 
-Here is the visual representation with of status banner in the page.
+Here is the visual representation of the status banner in the page.
 
-<!-- TODO: Insert a 'warning' status banner with title, message, and close button--> [img]
+![TODO](images/Warning_DefaultClose.jpg)
 
 <!--## Pop-up status banner 
 In some app scenarios, an app-wide bar does not fit for functional or aesthetic reasons. If a status banner is defined independent of another control, the visual layout will default to a to a toast with the same visual components as the aforementioned bar. The status banner will display relative to the edges of the xaml root and by default will be located in the bottom right corner of the application.
@@ -162,6 +158,25 @@ XAML
 </controls:StatusBanner>
 ```
 [A sketch of a sample application with a status banner as a toast in the bottom right of the content area. The status banner's title is "No Internet" and it's message is "Reconnect to save your work"](images/No_Internet_Toast.png) -->
+
+## Banner types: styling
+The type of the status banner can be set via the Type property to automatically set a consistent accent color and icon dependent on the criticality of the notification.
+
+Preset color and icon combos, TBD in collaboration w/ design:
+- Critical: Fluent red (#D13438) & ErrorBadge (EEA39)
+- Warning: Fluent orange (#FF8C00) & Error (E783)
+- Informational: Theme accent or Fluent blue (#0078D7) & Info (E946)
+- Success: Fluent green (#107C10) & StatusCircleCheckmark (F13E)
+- Default if no type is set: Fluent gray (#6979E) & no icon
+
+TBD: Should these be part of light-weight styling to be set across app? Like data validation? Or separate?
+
+Status banner in default styling
+![TODO](images/Default_Default.jpg)
+
+Status banner in success styling
+![TODO](images/Success_DefaultClose.jpg)
+
 
 ## Programmatic dismiss in status banner
 A status banner can be dismissed by the user via the close button or programmatically. If the notification is required to be in view until the status is resolved you can set the IsProgrammaticDismissal property to true to remove the default dismiss button. 
@@ -181,21 +196,7 @@ XAML
     </StackPanel.Resources>
 </StackPanel>
 ```
-<!-- TODO: Insert img of 'warning' status banner with title and message--> [img]
-
-## Banner types: styling
-The type of the status banner can be set via the Type property to automatically set a consistent accent color and icon dependent on the criticality of the notification.
-
-Preset color and icon combos, TBD in collaboration w/ design:
-- Critical: Fluent red (#D13438) & ErrorBadge (EEA39)
-- Warning: Fluent orange (#FF8C00) & Error (E783)
-- Informational: Theme accent or Fluent blue (#0078D7) & Info (E946)
-- Success: Fluent green (#107C10) & StatusCircleCheckmark (F13E)
-- Default if no type is set: Fluent gray (#6979E) & no icon
-
-TBD: Should these be part of light-weight styling to be set across app? Like data validation? Or separate?
-
-<!-- TODO: Insert img of success & default bar examples for right now, the others are throughout the document--> [img]
+![TODO](images/Warning_ProgrammaticClose.jpg)
 
 ## Custom styling: accent color and icon
 Outside of the pre-defined banner types, the AccentColor and IconSource properties can be set to customize the styling. 
@@ -208,20 +209,22 @@ Alongside color, a custom icon can appear left of the Title and Message in the s
 
 XAML
 ```XAML
-<StackPanel x:Name="ContentArea" Content="Document" />
-
-<controls:StatusBanner x:Name="ConnectionErrorBanner"
-    AccentColor="#800000"
-    Title="No Internet"
-    Message="Reconnect to save your work.">
-    <controls:StatusBanner.IconSource>
-        <controls:SymbolIconSource Symbol="NetworkOffline" />
-    </controls:StatusBanner.IconSource>
-</controls:StatusBanner>
+<StackPanel x:Name="ContentArea" Content="Document">
+    <StackPanel.Resources>
+        <controls:StatusBanner x:Name="ConnectionErrorBanner"
+            AccentColor="#800000"
+            Title="No Internet"
+            Message="Reconnect to save your work.">
+            <controls:StatusBanner.IconSource>
+                <controls:SymbolIconSource Symbol="NetworkOffline" />
+            </controls:StatusBanner.IconSource>
+        </controls:StatusBanner>
+    </StackPanel.Resources>
+</StackPanel>
 ```
 
 
-[A sketch of a sample application with a status banner as a bar in the top of the content area. The status banner's title is "No Internet" and it's message is "Reconnect to save your work". It has a maroon accent color and a "Network Offline" icon.](images/No_Internet_Bar.png)
+![A sketch of a sample application with a status banner as a bar in the top of the content area. The status banner's title is "No Internet" and it's message is "Reconnect to save your work". It has a maroon accent color and a "Network Offline" icon.](images/Critical_Color.jpg)
 
 ## Add buttons
 By default, an 'X' close button will appear as the right most component in the bar. To customize this button a The close button can be customized with the CloseButtonContent property, in which case the Action button & CloseButtonContent customization
@@ -231,42 +234,46 @@ An additional action button can be added by setting the ActionButtonContent and 
 
 XAML
 ```XAML
-<StackPanel x:Name="ContentArea" Content="Document" />
-
-<controls:StatusBanner x:Name="ConnectionErrorBanner"
-    Type="Critical"
-    Title="No Internet"
-    Message="Reconnect to save your work."
-    ActionButtonContent="Open Network Settings"
-    ActionButtonCommand="RedirectToNetworkSettings"
-    CloseButtonContent="Dismiss">
-    <controls:StatusBanner.IconSource>
-        <controls:SymbolIconSource Symbol="NetworkOffline" />
-    </controls:StatusBanner.IconSource>
-</controls:StatusBanner>
+<StackPanel x:Name="ContentArea" Content="Document">
+    <StackPanel.Resources>
+        <controls:StatusBanner x:Name="ConnectionErrorBanner"
+            Type="Critical"
+            Title="No Internet"
+            Message="Reconnect to save your work."
+            ActionButtonContent="Reconnect"
+            ActionButtonCommand="RedirectToNetworkSettings"
+            CloseButtonContent="Dismiss">
+            <controls:StatusBanner.IconSource>
+                <controls:SymbolIconSource Symbol="NetworkOffline" />
+            </controls:StatusBanner.IconSource>
+        </controls:StatusBanner>
+    </StackPanel.Resources>
+</StackPanel>
 ```
 
-<!-- TODO: Insert img of Internet connectivity example w/ buttons--> [img]
+![TODO](images/Critical_CustomButtons.jpg)
 
 ## Custom content
 "Content can be added to a teaching tip using the Content property. If there is more content to show than what the size of a teaching tip will allow, a scrollbar will be automatically enabled to allow a user to scroll the content area."
 
 XAML
 ```XAML
-<StackPanel x:Name="ContentArea" Content="Document" />
-
-<controls:StatusBanner x:Name="RecentUpdateBanner"
-    Type="Informational"
-    Title="Update Complete!"
-    Message="You've been updated to the latest version --">    
-        // Is there a way to ensure this Hyperlink control can be inline with the Message when set in the Content?
-        <HyperlinkButton
-            Content="Release Notes"
-            NavigateUri="https://www.microsoft.com/app/releasenotes" />
-</controls:StatusBanner>
+<StackPanel x:Name="ContentArea" Content="Document">
+    <StackPanel.Resources>
+        <controls:StatusBanner x:Name="RecentUpdateBanner"
+            Type="Informational"
+            Title="Update Complete!"
+            Message="You've been updated to the latest version --">    
+                // Is there a way to ensure this Hyperlink control can be inline with the Message when set in the Content?
+                <HyperlinkButton
+                    Content="Notes"
+                    NavigateUri="https://www.microsoft.com/app/releasenotes" />
+        </controls:StatusBanner>
+    </StackPanel.Resources>
+</StackPanel>
 ```
 
-<!-- TODO: Insert img of informational 'Update available' with hyperlink to view release notes--> [img]
+![TODO](images/Information_CustomContent.jpg)
 
 ## Message wrapping behavior
 TBD: define message wrapping behavior
@@ -281,11 +288,10 @@ TBD: define updating behavior
 
 ## Multiple status banners
 TBD: define stacking behavior
-- Visual appearance for each mode
-- Recommendation for max number to appear of each mode at a Timed
 - Do they stack top to bottom or vice versa?
-  - For toast mode, does placement 
-- What is the behavior 
+- Is it a collection that can get added to and expanded with each new banner? Or is the space for banners predefined and the banners will compress/use a scroll bar to fit?
+- Visual appearance for each mode
+- Recommendation for max number to appear of each mode at a time
 
 ## (Toast exclusive property) Preferred Placement
 TBD after the first (bar) mode is mostly defined.
@@ -295,12 +301,13 @@ TBD after the first (bar) mode is mostly defined.
 - If PreferredPlacement property is defined for banners in bar mode what happens?
 
 ## What mode of status banner should I use?
-TBD after the first (bar) mode is mostly defined. 
+TBD after the first (bar) mode is mostly defined.
 
 
 # Remarks
 ## Recommendations
 TBD
+- Dark mode guidances
 ## Anti-patterns
 TBD
 - Is there a limit to how often a status banner can appear/disappear from view?
@@ -359,13 +366,10 @@ For example, implementation details. -->
 | Action button | - Optional <br> - Additional action buttons may be added through custom XAML content in the Message
 | Content | - Can be customizable to include text, hyperlinks, and any other XAML content <br> - Appears between the Title/Message and any Action or Close buttons
 
-TBD: Same as TeachingTip at the moment
 ## Behavioral Components
-
+TBD: Same as TeachingTip at the moment
  | Property | Notes |
 |:---:|:---|
-| Opening | * A tip is shown by setting its IsOpen property to true. <br> * Tips will animate on opening. <br> * When a tip does not have enough available window space to fully show in any location [see Placement], it will not open and will instead overwrite IsOpen to false. |
-| Closing | There are three ways a tip can close: The program sets the IsOpen property to false, the user invokes the Close button, or the tip closes due to light dismiss. Use the TeachingTipCloseReason to determine which case has occurred. Closing can be prevented by setting the Cancel property to true. You can use a deferral to respond asynchronously to the event. |
-| Placement | * Placement modes for targeted teaching tips will follow the precedent of Flyout. Full placement mode will be replaced by Center which positions Tail at the center of the element. <br> * Placement modes for non-targeted tips will include each side, corner, and center of the application window. <br> * The following properties are not preferred in tip placement: <br> &nbsp;&nbsp;&nbsp;&nbsp; * There is not enough space for the tip to show without clipping. <br> &nbsp;&nbsp;&nbsp;&nbsp; * The target is not large enough to maintain the tip's alignment and the Tail's 12px margin from the edge of the tip. <br> &nbsp;&nbsp;&nbsp;&nbsp; * The target element is too large to maintain edge alignment while keeping the Tail centered on the target. |
-| Motion | * Tips have built in open and close animations that can be customizable using Storyboards.|
-| Out of Window Bounds | * Tips can escape window bounds on newer OS versions via the ShouldConstrainToRootBounds property.  When this property is set to false, the tip uses screen boundaries instead of window boundaries during its placement algorithm. |
+| Opening | * A status banner is shown by setting its IsOpen property to true. <br> * Status banners will animate on opening. <br> * When a status banner does not have enough available window space to fully show in any location [see Placement], it will not open and will instead overwrite IsOpen to false. |
+| Closing | There are two ways a status banner can close: The program sets the IsOpen property to false, the user invokes the Close button. Use the StatusBannerCloseReason to determine which case has occurred. Closing can be prevented by setting the Cancel property to true. You can use a deferral to respond asynchronously to the event. |
+| Motion | * Status banners have built in open and close animations that can be customizable using Storyboards.|
