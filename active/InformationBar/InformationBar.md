@@ -42,7 +42,7 @@ A StatusBanner is a persistent, actionable, app-wide, notification intended for 
 ## Is this the right control?
 Use an StatusBanner control when a user needs to acknowledge or take action on a message. By default the notification will remain in the content area until dismissed by the user.
 
-Do not use an StatusBanner control to confirm or respond to a user action, for transient alerts, or for non-essential messages.
+Do not use an StatusBanner control to confirm or respond directly to a user action, for transient alerts, or for non-essential messages.
 
 ### Scenarios
 Common scenarios that **directly** impact app perception or experience ⚠
@@ -160,7 +160,7 @@ XAML
 [A sketch of a sample application with a status banner as a toast in the bottom right of the content area. The status banner's title is "No Internet" and it's message is "Reconnect to save your work"](images/No_Internet_Toast.png) -->
 
 ## Banner types: consistent styling
-The type of the status banner can be set via the Type property to automatically set a consistent accent color and icon dependent on the criticality of the notification.
+The type of the status banner can be set via the Type property to automatically set a consistent status color and icon dependent on the criticality of the notification.
 
 Preset color and icon combos, TBD in collaboration w/ design:
 - Critical: Fluent red (#D13438) & ErrorBadge (EEA39)
@@ -198,10 +198,10 @@ XAML
 ```
 ![TODO](images/Warning_ProgrammaticClose.jpg)
 
-## Custom styling: accent color and icon
-Outside of the pre-defined banner types, the AccentColor and IconSource properties can be set to customize the styling. 
+## Custom styling: status color and icon
+Outside of the pre-defined banner types, the StatusColor and IconSource properties can be set to customize the styling. 
 
-A color can be set via the AccentColor property with a hex code, i.e. #800000 for maroon. 
+A color can be set via the StatusColor property with a hex code, i.e. #800000 for maroon. 
 TBD: should other color definition methods be supported like RGB? Are there already Fluent aliases for many hex codes?
 
 
@@ -212,7 +212,7 @@ XAML
 <StackPanel x:Name="ContentArea" Content="Document">
     <StackPanel.Resources>
         <controls:StatusBanner x:Name="ConnectionErrorBanner"
-            AccentColor="#800000"
+            StatusColor="#800000"
             Title="No Internet"
             Message="Reconnect to save your work.">
             <controls:StatusBanner.IconSource>
@@ -294,6 +294,9 @@ TBD: define stacking behavior
 - Visual appearance for each mode
 - Recommendation for max number to appear of each mode at a time
 
+## Canceling and deferring close
+TBD: define event behavior, similar to TeachingTip?
+
 ## (Toast exclusive property) Preferred Placement
 TBD after the first (bar) mode is mostly defined.
 - Same as non-targeted teaching tip placement modes?
@@ -304,11 +307,24 @@ TBD after the first (bar) mode is mostly defined.
 ## What mode of status banner should I use?
 TBD after the first (bar) mode is mostly defined.
 
+# Inputs and Accessibility
+## UI Automation patterns
+TBD?
+
+## Keyboard Navigation
+TBD
+
+## Narrator
+TBD
+
+## Gamepad
+TBD
 
 # Remarks
 ## Recommendations
 TBD
 - Dark mode guidances
+- Conveying meaning via color AND icon for accessibility
 ## Anti-patterns
 TBD
 - Is there a limit to how often a status banner can appear/disappear from view?
@@ -335,7 +351,7 @@ with a "///" comment above the member or type. -->
 
 | Name | Description |
 |:-:|:--|
-| Type | Gets or sets a value that indicates the accent color and icon to style the status banner |
+| Type | Gets or sets a value that indicates the  color and icon to style the status banner |
 
 ### Events    
 TBD: Same as Teaching Tip at the moment
@@ -361,7 +377,7 @@ For example, implementation details. -->
 | Container | - Specific details TBD
 | Title | - Semi-bolded <br> - Recommended to be 50 characters or less
 | Message | - Text wrapping behavior TBD <br> - Recommended to be 512 characters or less 
-| AccentColor | - Defined by either the Type of the status banner or by hex code
+| StatusColor | - Defined by either the Type of the status banner or by hex code
 | Icon | - Defined by either the Type of the status banner or by IconSource <br>
 | Close button | - Will appear as 'X' by default <br> - Can be customized as a button <br> - Can be removed via IsProgrammaticDismissal
 | Action button | - Optional <br> - Additional action buttons may be added through custom XAML content in the Message
@@ -374,3 +390,6 @@ TBD: Same as TeachingTip at the moment
 | Opening | * A status banner is shown by setting its IsOpen property to true. <br> * Status banners will animate on opening. <br> * When a status banner does not have enough available window space to fully show in any location [see Placement], it will not open and will instead overwrite IsOpen to false. |
 | Closing | There are two ways a status banner can close: The program sets the IsOpen property to false, the user invokes the Close button. Use the StatusBannerCloseReason to determine which case has occurred. Closing can be prevented by setting the Cancel property to true. You can use a deferral to respond asynchronously to the event. |
 | Motion | * Status banners have built in open and close animations that can be customizable using Storyboards.|
+
+## Data and Intelligence Metrics
+TBD
