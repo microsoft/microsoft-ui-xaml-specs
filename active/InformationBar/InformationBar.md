@@ -97,9 +97,9 @@ example code with each description. The general format is:
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 > Note here about how it will eventually be two styles, starting with one: bar
 
-A status banner can have several configurations, here are some common ones.
+A status banner can have several configurations, here are some notable ones.
 
-When a status banner is conveying information of a common criticality, it can define a Type to use consistent Fluent styling for it's identifiers.
+When a status banner is conveying information of a common criticality, a banner can be set to have one of many Types to use consistent Fluent styling for it's identifiers.
 ![TODO](images/Warning_DefaultClose.jpg)
 
 If a call to action is needed, a status banner can have customizable action and close buttons.
@@ -110,7 +110,7 @@ The status banner can also be customized with XAML Content to include hyperlinks
 
 
 ## Create a status banner 
-The XAML below describes a bar-style status banner with the default styling for a critical notification. A status banner can be created anywhere in the element tree or code behind. In this example, the banner is located in a ResourceDictionary, expanding to fill the width of the stack panel, like a bar.
+The XAML below describes a bar-style status banner with the default styling for a critical notification. A status banner can be created anywhere in the element tree or code behind (Toast TBD). In this example, the banner is located in a ResourceDictionary, expanding to fill the width of the stack panel, like a bar.
 
 XAML
 ```XAML
@@ -159,7 +159,7 @@ XAML
 ```
 [A sketch of a sample application with a status banner as a toast in the bottom right of the content area. The status banner's title is "No Internet" and it's message is "Reconnect to save your work"](images/No_Internet_Toast.png) -->
 
-## Banner types: styling
+## Banner types: consistent styling
 The type of the status banner can be set via the Type property to automatically set a consistent accent color and icon dependent on the criticality of the notification.
 
 Preset color and icon combos, TBD in collaboration w/ design:
@@ -227,7 +227,7 @@ XAML
 ![A sketch of a sample application with a status banner as a bar in the top of the content area. The status banner's title is "No Internet" and it's message is "Reconnect to save your work". It has a maroon accent color and a "Network Offline" icon.](images/Critical_Color.jpg)
 
 ## Add buttons
-By default, an 'X' close button will appear as the right most component in the bar. To customize this button a The close button can be customized with the CloseButtonContent property, in which case the Action button & CloseButtonContent customization
+By default, an 'X' close button will appear as the right most component in the bar. The close button can be customized with the CloseButtonContent property.
 
 An additional action button can be added by setting the ActionButtonContent and ActionButtonCommand properties. Additional action buttons can be added via custom content.
 <!-- TODO: add link to custom content header in 'content' -->
@@ -254,8 +254,9 @@ XAML
 ![TODO](images/Critical_CustomButtons.jpg)
 
 ## Custom content
-"Content can be added to a teaching tip using the Content property. If there is more content to show than what the size of a teaching tip will allow, a scrollbar will be automatically enabled to allow a user to scroll the content area."
+TBD: Same as Teaching Tip at the moment
 
+Content can be added to a status banner using the Content property. If there is more content to show than what the size of a status banner will allow, a scrollbar will be automatically enabled to allow a user to scroll the content area.
 XAML
 ```XAML
 <StackPanel x:Name="ContentArea" Content="Document">
