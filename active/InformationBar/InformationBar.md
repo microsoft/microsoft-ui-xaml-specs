@@ -212,12 +212,14 @@ XAML
 <StackPanel x:Name="ContentArea" Content="Document">
     <StackPanel.Resources>
         <controls:StatusBanner x:Name="ConnectionErrorBanner"
-            StatusColor="#800000"
             Title="No Internet"
             Message="Reconnect to save your work.">
             <controls:StatusBanner.IconSource>
                 <controls:SymbolIconSource Symbol="NetworkOffline" />
             </controls:StatusBanner.IconSource>
+            <controls:StatusBanner.StatusColor>
+                <Color x:Key="Maroon">#800000</Color>
+            </controls:StatusBanner.StatusColor>
         </controls:StatusBanner>
     </StackPanel.Resources>
 </StackPanel>
@@ -263,12 +265,12 @@ XAML
     <StackPanel.Resources>
         <controls:StatusBanner x:Name="RecentUpdateBanner"
             Type="Informational"
-            Title="Update Complete!"
-            Message="You've been updated to the latest version --">    
-                // Is there a way to ensure this Hyperlink control can be inline with the Message when set in the Content?
-                <HyperlinkButton
-                    Content="Notes"
-                    NavigateUri="https://www.microsoft.com/app/releasenotes" />
+            Title="Update Complete!"  
+                <TextBlock Text="You've been updated to the latest version &#8211;>
+                    <Hyperlink
+                        Content="Notes"
+                        NavigateUri="https://www.microsoft.com/app/releasenotes" />
+                </TextBlock>
         </controls:StatusBanner>
     </StackPanel.Resources>
 </StackPanel>
