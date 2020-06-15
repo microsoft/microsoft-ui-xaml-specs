@@ -99,7 +99,7 @@ example code with each description. The general format is:
 
 A status banner can have several configurations, here are some notable ones.
 
-When a status banner is conveying information of a common criticality, a banner can be set to have one of many Types to use consistent Fluent styling for it's identifiers.
+When a status banner is conveying information of a common criticality, a banner can be set to have one of many BannerTypes to use consistent Fluent styling for it's identifiers.
 ![TODO](images/Warning_DefaultClose.jpg)
 
 If a call to action is needed, a status banner can have customizable action and close buttons.
@@ -113,11 +113,11 @@ The status banner can also be customized with XAML Content to include hyperlinks
 The XAML below describes a bar-style status banner with the default styling for a critical notification. A status banner can be created anywhere in the element tree or code behind (Toast TBD). In this example, the banner is located in a ResourceDictionary, expanding to fill the width of the stack panel, like a bar.
 
 XAML
-```XAML
+```xml
 <StackPanel x:Name="ContentArea" Content="Document">
     <StackPanel.Resources>
         <controls:StatusBanner x:Name="UnsuccessfulSaveBanner"
-            Type="Warning"
+            BannerType="Warning"
             Title="Error while saving"
             Message="Your document was unable to be saved.">
         </controls:StatusBanner>
@@ -147,11 +147,11 @@ Here is the visual representation of the status banner in the page.
 In some app scenarios, an app-wide bar does not fit for functional or aesthetic reasons. If a status banner is defined independent of another control, the visual layout will default to a to a toast with the same visual components as the aforementioned bar. The status banner will display relative to the edges of the xaml root and by default will be located in the bottom right corner of the application.
 
 XAML
-```XAML
+```c#
 <StackPanel x:Name="ContentArea" Content="Document" />
 
 <controls:StatusBanner x:Name="ConnectionErrorBanner"
-    Type="Critical"
+    BannerType="Critical"
     Icon="NetworkOffline"
     Title="No Internet"
     Message="Reconnect to save your work.">
@@ -160,14 +160,15 @@ XAML
 [A sketch of a sample application with a status banner as a toast in the bottom right of the content area. The status banner's title is "No Internet" and it's message is "Reconnect to save your work"](images/No_Internet_Toast.png) -->
 
 ## Banner types: consistent styling
-The type of the status banner can be set via the Type property to automatically set a consistent status color and icon dependent on the criticality of the notification.
+The type of the status banner can be set via the BannerType property to automatically set a consistent status color and icon dependent on the criticality of the notification.
 
 Preset color and icon combos, TBD in collaboration w/ design:
 - Critical: Fluent red (#D13438) & ErrorBadge (EEA39)
 - Warning: Fluent orange (#FF8C00) & Error (E783)
 - Informational: Theme accent or Fluent blue (#0078D7) & Info (E946)
 - Success: Fluent green (#107C10) & StatusCircleCheckmark (F13E)
-- Default if no type is set: Fluent gray (#6979E) & no icon
+- Default if BannerType isn't set: Fluent gray (#6979E) & no icon
+- TBD: Should there be a 'None' for no icon or color? How else could that scenario be possible?
 
 TBD: Should these be part of light-weight styling to be set across app? Like data validation? Or separate?
 
@@ -184,11 +185,11 @@ A status banner can be dismissed by the user via the close button or programmati
  > Note: Include a message highlighting the risks with removing a close button. How it can be very intrusive and a back-up removal should be included.
 
 XAML
-```XAML
+```xml
 <StackPanel x:Name="ContentArea" Content="Document">
     <StackPanel.Resources>
         <controls:StatusBanner x:Name="UnsuccessfulSaveBanner"
-            Type="Warning"
+            BannerType="Warning"
             Title="Error while saving"
             Message="Your document was unable to be saved."
             IsProgrammaticDismiss="True">
@@ -208,7 +209,7 @@ TBD: should other color definition methods be supported like RGB? Are there alre
 Alongside color, a custom icon can appear left of the Title and Message in the status banner. If a default styling is chosen, most styles have an associated icon already defined. This icon can be removed or added as a custom icon using the IconSource property. Recommended icon sizes include (TBD)px.
 
 XAML
-```XAML
+```xml
 <StackPanel x:Name="ContentArea" Content="Document">
     <StackPanel.Resources>
         <controls:StatusBanner x:Name="ConnectionErrorBanner"
@@ -235,11 +236,11 @@ An additional action button can be added by setting the ActionButtonContent and 
 <!-- TODO: add link to custom content header in 'content' -->
 
 XAML
-```XAML
+```xml
 <StackPanel x:Name="ContentArea" Content="Document">
     <StackPanel.Resources>
         <controls:StatusBanner x:Name="ConnectionErrorBanner"
-            Type="Critical"
+            BannerType="Critical"
             Title="No Internet"
             Message="Reconnect to save your work."
             ActionButtonContent="Reconnect"
@@ -260,11 +261,11 @@ TBD: Same as Teaching Tip at the moment
 
 Content can be added to a status banner using the Content property. If there is more content to show than what the size of a status banner will allow, a scrollbar will be automatically enabled to allow a user to scroll the content area.
 XAML
-```XAML
+```xml
 <StackPanel x:Name="ContentArea" Content="Document">
     <StackPanel.Resources>
         <controls:StatusBanner x:Name="RecentUpdateBanner"
-            Type="Informational"
+            BannerType="Informational"
             Title="Update Complete!"  
                 <TextBlock Text="You've been updated to the latest version &#8211;>
                     <Hyperlink
@@ -281,7 +282,7 @@ XAML
 ## Message wrapping behavior
 TBD: define message wrapping behavior
 - A "too long" message depends on width of container and message area.
-- Truncation with expansion symbol? Or longer bar to accommodate? Or scroll bar?
+- Truncation with expansion symbol? Or taller bar to accommodate?
 
 ## Updating a status banner
 TBD: define updating behavior
@@ -353,7 +354,9 @@ with a "///" comment above the member or type. -->
 
 | Name | Description |
 |:-:|:--|
-| Type | Gets or sets a value that indicates the  color and icon to style the status banner |
+| BannerType | Gets or sets a value that indicates the  color and icon to style the status banner |
+| ShowCloseButton| Gets or sets a boolean that indicates whether a close button will appear
+
 
 ### Events    
 TBD: Same as Teaching Tip at the moment
@@ -366,7 +369,136 @@ TBD: Same as Teaching Tip at the moment
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
+```c++ 
+// TODO: investigate and develop
+enum StatusBannerCloseReason
+{
+    CloseButton,
+    Programmatic,
+};
 
+enum StatusBannerType
+{
+    Critical,
+    Warning,
+    Informational,
+    Success,
+}
+
+// TODO: For toast mode only
+/*enum StatusBannerPlacementMode
+{
+    Auto,
+    Top,
+    TopRight,
+    TopLeft,
+    Right, 
+    RightTop,
+    RightBottom,
+    Bottom,
+    BottomRight,
+    BottomLeft,
+    Left, 
+    LeftTop,
+    TopBottom,
+    Center,
+};*/
+
+
+runtimeclass StatusBannerClosedEventArgs
+{
+    StatusBannerCloseReason Reason{ get; };
+};
+
+runtimeclass StatusBannerClosingEventArgs
+{
+    StatusBannerCloseReason Reason{ get; };
+    Boolean Cancel;
+    Windows.Foundation.Deferral GetDeferral();
+};
+
+// TODO: is there anything else needed in TemplateSettings?
+unsealed runtimeclass StatusBannerTemplateSettings : Windows.UI.Xaml.DependencyObject
+{
+    StatusBannerTemplateSettings();
+
+    // TODO: what do these highlight margins define?
+    Windows.UI.Xaml.Thickness TopRightHighlightMargin;
+    Windows.UI.Xaml.Thickness TopLeftHighlightMargin;
+
+    Windows.UI.Xaml.Controls.IconElement IconElement;
+
+    static Windows.UI.Xaml.DependencyProperty TopRightHighlightMarginProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty TopLeftHighlightMarginProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty IconElementProperty{ get; };
+}
+
+unsealed runtimeclass StatusBanner : Windows.UI.Xaml.Controls.ContentControl
+{
+    StatusBanner();
+
+    String Title;
+    String Message;
+
+    Boolean IsOpen;
+    Boolean ShowCloseButton;
+
+    Object ActionButtonContent;
+    Windows.UI.Xaml.Style ActionButtonStyle;
+    Windows.UI.Xaml.Input.ICommand ActionButtonCommand;
+    Object ActionButtonCommandParameter;
+
+    Object CloseButtonContent;
+    Windows.UI.Xaml.Style CloseButtonStyle;
+    Windows.UI.Xaml.Input.ICommand CloseButtonCommand;
+    Object CloseButtonCommandParameter;
+
+    // TODO: investigate & develop
+    Boolean ShouldConstrainToRootBounds;
+
+    /*  Needed for toast mode only
+    Windows.UI.Xaml.Thickness PlacementMargin;
+    StatusBannerPlacementMode PreferredPlacement; */
+
+    StatusBannerType BannerType;
+    Color StatusColor;
+    IconSource IconSource;
+
+    StatusBannerTemplateSettings TemplateSettings{ get; };
+
+    event Windows.Foundation.TypedEventHandler<StatusBanner, Object> ActionButtonClick;
+    event Windows.Foundation.TypedEventHandler<StatusBanner, Object> CloseButtonClick;
+    event Windows.Foundation.TypedEventHandler<StatusBanner, StatusBannerClosingEventArgs> Closing;
+    event Windows.Foundation.TypedEventHandler<StatusBanner, StatusBannerClosedEventArgs> Closed;
+
+    static Windows.UI.Xaml.DependencyProperty IsOpenProperty{ get; };
+
+    static Windows.UI.Xaml.DependencyProperty TitleProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty MessageProperty{ get; };
+
+    static Windows.UI.Xaml.DependencyProperty ActionButtonContentProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty ActionButtonStyleProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty ActionButtonCommandProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty ActionButtonCommandParameterProperty{ get; };
+
+    static Windows.UI.Xaml.DependencyProperty CloseButtonContentProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty CloseButtonStyleProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty CloseButtonCommandProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty CloseButtonCommandParameterProperty{ get; };
+
+    // TODO: investigate & develop
+    static Windows.UI.Xaml.DependencyProperty ShouldConstrainToRootBounds{ get; };
+    /* Needed for toast mode only
+    static Windows.UI.Xaml.DependencyProperty PlacementMarginProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty PreferredPlacementProperty{ get; };*/
+
+    static Windows.UI.Xaml.DependencyProperty BannerTypeProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty StatusColorProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty IconSourceProperty{ get; };
+
+    static Windows.UI.Xaml.DependencyProperty TemplateSettingsProperty{ get; };
+}
+```
 # Appendix
 <!-- Anything else that you want to write down for posterity, but 
 that isn't necessary to understand the purpose and usage of the API.
@@ -379,8 +511,8 @@ For example, implementation details. -->
 | Container | - Specific details TBD
 | Title | - Semi-bolded <br> - Recommended to be 50 characters or less
 | Message | - Text wrapping behavior TBD <br> - Recommended to be 512 characters or less 
-| StatusColor | - Defined by either the Type of the status banner or by hex code
-| Icon | - Defined by either the Type of the status banner or by IconSource <br>
+| StatusColor | - Defined by either the BannerType or by hex code
+| Icon | - Defined by either the BannerType or by IconSource <br>
 | Close button | - Will appear as 'X' by default <br> - Can be customized as a button <br> - Can be removed via IsProgrammaticDismissal
 | Action button | - Optional <br> - Additional action buttons may be added through custom XAML content in the Message
 | Content | - Can be customizable to include text, hyperlinks, and any other XAML content <br> - Appears between the Title/Message and any Action or Close buttons
