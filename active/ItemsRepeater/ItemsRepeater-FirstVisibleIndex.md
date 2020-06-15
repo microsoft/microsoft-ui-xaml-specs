@@ -29,21 +29,20 @@ the reader "go read 100 pages of background information posted at ...". -->
 
 [ItemsRepeater](https://docs.microsoft.com/uwp/api/microsoft.ui.xaml.controls.itemsrepeater?view=winui-2.4) is a flexible layout control that allows you to easily display collections of items complete with custom layouts, animations, styling, and more. Currently, there is no built-in way to access which items are visible or realized in the viewport of the ItemsRepeater. This inhibits lots of interaction-based UIs and puts lots of extra work on the developer to manually determine which items are visible. 
 
-In contiguous layouts, all visible items inside of the ItemsRepeater's viewport will appear between the first and last visible index. Since ItemsRepeater allows for custom layouts, it's common to have non-contiguous layouts, such as layouts where each item has an unpredictably different height or width. In these cases, the visible items are often non-contiguous in terms of their indices. For these cases, knowing the first visible index and last visible index won't be helpful, and the best way to determine what's visible is to have a list of all currently realized/visible items. 
+ItemsRepeater does independent scrolling, and requires a buffer area that holds non-visible items and runs layout processes on them before they become visible/scrolled onto. This buffer area size is configurable via the [HorizontalCacheLength](https://docs.microsoft.com/uwp/api/microsoft.ui.xaml.controls.itemsrepeater.horizontalcachelength?view=winui-2.4) and [VerticalCacheLength](https://docs.microsoft.com/uwp/api/microsoft.ui.xaml.controls.itemsrepeater.verticalcachelength?view=winui-2.4) properties. 
 
-The [ListView](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.listview?view=winrt-19041) and [GridView](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.gridview?view=winrt-19041) controls already have properties to access the indices of their first and last visible items in the form of the [FirstVisibleIndex](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.itemswrapgrid.firstvisibleindex?view=winrt-19041#Windows_UI_Xaml_Controls_ItemsWrapGrid_FirstVisibleIndex) and [LastVisibleIndex](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.itemswrapgrid.lastvisibleindex?view=winrt-19041) properties on their respective base panels, [ItemsStackPanel](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.itemsstackpanel?view=winrt-19041) and [ItemsWrapGrid](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ItemsWrapGrid?redirectedfrom=MSDN&view=winrt-19041#Windows_UI_Xaml_Controls_ItemsWrapGrid_FirstVisibleIndex). 
+The [ListView](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.listview?view=winrt-19041) and [GridView](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.gridview?view=winrt-19041) controls  have properties to access the indices of their first and last visible items in the form of the [FirstVisibleIndex](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.itemswrapgrid.firstvisibleindex?view=winrt-19041#Windows_UI_Xaml_Controls_ItemsWrapGrid_FirstVisibleIndex) and [LastVisibleIndex](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.itemswrapgrid.lastvisibleindex?view=winrt-19041) properties on their respective base panels, [ItemsStackPanel](https://docs.microsoft.com/uwp/api/windows.ui.xaml.controls.itemsstackpanel?view=winrt-19041) and [ItemsWrapGrid](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ItemsWrapGrid?redirectedfrom=MSDN&view=winrt-19041#Windows_UI_Xaml_Controls_ItemsWrapGrid_FirstVisibleIndex). These properties allow you to access all currently visible items. 
 
 # Description
 <!-- Use this section to provide a brief description of the feature.
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
 
-FirstVisibleIndex, LastVisibleIndex,and RealizedItems are properties of ItemsRepeater that give you access to which indices of items within an ItemsRepeater are currently visible on the screen.
+`RealizedItems` and `VisibleItems` are properties that give you access to all realized or visible items within an ItemsRepeater. These two properties both return lists of [UIElement](https://docs.microsoft.com/uwp/api/windows.ui.xaml.uielement?view=winrt-19041) objects that make up the ItemsRepeater. 
 
-The `FirstVisibleIndex` property returns the lowest index of the currently visible indices, which is the first visible index. The `LastVisibleIndex` property returns the highest index of the currently visible indices, which is the last visible index. For contiguous scenarios/layouts, all items with indices between the first and last visible index are currently visible on the screen. For non-contiguous layouts, the items with indices between the first and last visible indices are not guaranteed to be visible on the screen.
+Realized items includes all items that are currently visible and all items that are in the cache/buffer area. The size of these buffer areas are configurable via the [HorizontalCacheLength](https://docs.microsoft.com/uwp/api/microsoft.ui.xaml.controls.itemsrepeater.horizontalcachelength?view=winui-2.4) and [VerticalCacheLength](https://docs.microsoft.com/uwp/api/microsoft.ui.xaml.controls.itemsrepeater.verticalcachelength?view=winui-2.4) properties
 
-
-The `RealizedItems` property returns all items within the ItemsRepeater that are currently realized. ItemsRepeater has a buffer area outside of the visible area to ensure smooth scrolling, which is configurable through the [HorizontalCacheLength](https://docs.microsoft.com/uwp/api/microsoft.ui.xaml.controls.itemsrepeater.horizontalcachelength?view=winui-2.4#Microsoft_UI_Xaml_Controls_ItemsRepeater_HorizontalCacheLength) and [VerticalCacheLength](https://docs.microsoft.com/uwp/api/microsoft.ui.xaml.controls.itemsrepeater.verticalcachelength?view=winui-2.4#Microsoft_UI_Xaml_Controls_ItemsRepeater_VerticalCacheLength) properties. Realized items include all items visible on the screen and any items currently inside this buffer area.  
+Visible items refers to all items that are visible in the ItemsRepeater, whether they are fully or partially visible.
 
 # Examples
 <!-- Use this section to explain the features of the API, showing
@@ -60,28 +59,24 @@ example code with each description. The general format is:
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 
 ```csharp
-// Check if an item is currently visible in a contiguous layout.
+/* Example 1: Check if a specific item is visible by the user. If visible, inform the user that they've scrolled to the bottom of the list. */
+int repeater_length = repeater.ItemsSource.Count;
 
-int item_index = repeater.GetIndexFromElement(item);
-if (item_index > repeater.FirstVisibleIndex && item_index < repeater.LastVisibleIndex){
-    //item is visible, perform necessary actions
+foreach (Grid item in repeater.VisibleItems){
+  if (repeater.GetElementIndex(item) == repeater_length - 1){
+    myTextBlock.Text = "No more elements to display.";
+  }
 }
 
-// In a non-contiguous layout, change the background color of any items that have been seen by the user (i.e. they're visible on the screen). This example applies well to messaging scenarios where the styling is changed for messages that have been read/seen.
+/* Example 2: Change the background color of any items that have been seen by the user (i.e. they're visible on the screen). This example applies well to messaging scenarios where the styling is changed for messages that have been read/seen.
+
+By using the RealizedItems property, any item that becomes visible while scrolling will have this changed background color.  */ 
 
 foreach(StackPanel message in repeater.RealizedItems){
   // each item has a DataTemplate with a StackPanel root element 
   message.Background = "Red";
 }
 ```
-
-# Remarks
-<!-- Explanation and guidance that doesn't fit into the Examples section. -->
-
-<!-- APIs should only throw exceptions in exceptional conditions; basically,
-only when there's a bug in the caller, such as argument exception.  But if for some
-reason it's necessary for a caller to catch an exception from an API, call that
-out with an explanation either here or in the Examples -->
 
 # API Notes
 <!-- Option 1: Give a one or two line description of each API (type
@@ -93,12 +88,12 @@ isn't the type's default (for example an int-typed property that doesn't default
 <!-- Option 2: Put these descriptions in the below API Details section,
 with a "///" comment above the member or type. -->
 ```csharp
-public int FirstVisibleIndex { get; }
-
-public int LastVisibleIndex { get; }
 
 public IEnumerable<UIElement> RealizedItems { get; }
-// RealizedItems is an *unsorted* IEnumerable object.
+public IEnumerable<UIElement> VisibleItems { get; }
+
+// RealizedItems and VisibleItems are *unsorted* IEnumerable objects.
+
 ```
 
 # API Details
@@ -109,10 +104,9 @@ unsealed runtimeclass ItemsRepeater : Windows.UI.Xaml.FrameworkElement
     ItemsRepeater();
 
     // ...
-
-    Int32 FirstVisibleIndex { get; }
-    Int32 LastVisibleIndex { get; }
     Windows.Foundation.Collections.IEnumerable<Windows.UI.Xaml.UIElement> RealizedItems { get; }
+
+    Windows.Foundation.Collections.IEnumerable<Windows.UI.Xaml.UIElement> VisibleItems { get; }
 
     // ...
 }
@@ -122,6 +116,3 @@ unsealed runtimeclass ItemsRepeater : Windows.UI.Xaml.FrameworkElement
 <!-- Anything else that you want to write down for posterity, but 
 that isn't necessary to understand the purpose and usage of the API.
 For example, implementation details.  -->
-
-# Open Questions
-- Should the RealizedItems property return an IEnumerable<object> or List<object>? Or should it simply return an object to match the ItemsSource property?
