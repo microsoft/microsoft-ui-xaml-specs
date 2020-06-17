@@ -13,7 +13,13 @@ and why to use this API. -->
 # Background
 > This spec corresponds to [issue 913](https://github.com/microsoft/microsoft-ui-xaml/issues/913) on the WinUI repo.
 
-Users should be informed about status changes that occur on an app level (Teaching tips are specifically built for informing users of nonessential options that would improve their experience – there should be a overarching UWP UI element to inform users about essential changes too.)
+Users should be informed about essential status changes that occur on an app level.
+These status changes affect the app as a whole and can be either critical or informational.
+Critical status changes like lost internet connectivity are directly impactful to app functionality while informational status changes like an update has completed and been applied are indirectly impactful to app functionality.
+These notifications and corresponding information should be presented in a consistent, predictable, and relevant way to the user depending on the specific scenario.
+
+Currently, Teaching Tip, Content Dialog, and customizations of other flyouts and dialogs exist as options to show these notifications. 
+Due to their design intentions, intrusiveness, or features they are not sufficient for displaying notifications at an app-wide level.
 
 
 <!-- Use this section to provide background context for the new API(s) 
@@ -34,30 +40,33 @@ the reader "go read 100 pages of background information posted at ...". -->
 
 # Description
 
-A StatusBanner is a persistent, actionable, app-wide, notification intended for displaying critical status messages that impact app perception or user experience.
+A StatusBanner is a persistent, actionable, app-wide notification intended for displaying critical or informational status messages that impact app perception or user experience.
 
 
 
 
 ## Is this the right control?
-Use an StatusBanner control when a user needs to acknowledge or take action on a message. By default the notification will remain in the content area until dismissed by the user.
+Use an StatusBanner control when a user needs to be informed of, acknowledge, or take action on a message. By default the notification will remain in the content area until dismissed by the user but will not necessarily break user flow.
 
 Do not use an StatusBanner control to confirm or respond directly to a user action, for transient alerts, or for non-essential messages.
 
 ### Scenarios
-Common scenarios that **directly** impact app perception or experience ⚠
+Use a StatusBanner that dismiss via the user or when the status is resolved for scenarios that **directly** impact app perception or experience ⚠
 
 - Internet connectivity lost
+- Error while saving a document when triggered automatically, not related to specific user action
 - No microphone plugged in when attempting to record
 - Can't connect to your phone
 - The subscription to the application is expired
 
-Common scenarios that **indirectly** impact app perception or experience ℹ
+Use a StatusBanner that dismiss via the user or a timer for scenarios that **indirectly** impact app perception or experience ℹ
 
 - A call has begun recording
-- The subscription to the application is close to expiring
-- The application in an altered, compatibility mode
+- Update applied with link to 'Release Notes'
 - The terms of service have been updated
+- An app-wide backup has successfully, asynchronously completed
+- The subscription to the application is close to expiring
+
 
 <!-- 
 Control	| Intrusiveness	|	Information Severity	|	Modality	|	Scope	|	Invocation	|	Dismissal	|	User Action
