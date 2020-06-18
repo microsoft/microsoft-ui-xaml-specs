@@ -108,7 +108,7 @@ example code with each description. The general format is:
 
 <!-- As an example of this section, see the Examples section for the PasswordBox control 
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
-> Note: In this version of the specification, only a single LayoutMode is implied. In the future, more documentation will be added on a second LayoutMode. The LayoutMode property will change the visual layout of the components, not the functionality. The current LayoutMode shown is "Bar", where the components are vertically aligned in a single plane. The second LayoutMode, "Card" or "Toast", will look more similar to a system notification in it's component layout, details TBD.
+> Note: In this version of the specification, only a single LayoutMode is implied. In the future, more documentation will be added on a second LayoutMode. The LayoutMode property will change the visual layout of the components, not the functionality. The current LayoutMode shown is "InformationBar", where the components are vertically aligned in a single plane. The second LayoutMode, "Toast", will look more similar to a system notification in it's component layout, details TBD.
 
 A status banner can have several configurations, here are some notable ones.
 
@@ -292,37 +292,43 @@ XAML
 
 ![TODO](images/Information_CustomContent.jpg)
 
-## Message wrapping behavior
-TBD: define message wrapping behavior
-- A "too long" message depends on width of container and message area.
-- Truncation with expansion symbol? Or taller bar to accommodate?
+## Content wrapping
+By default, the text set in the Message property will wrap vertically in the control underneath the other visual components. 
+If the height of the status banner is explicitly set, a scroll bar (TODO: learn why Teaching Tip is implemented in this way) will be added for users to view the content.
+
+TODO: example & sketch
+
+TBD: define content wrapping behavior
 - Behavior for custom content? Squishing together vs a new line or truncation? How should this be handled?
 
+## Multiple status banners
+For status banners in the InfoBar mode, developers should manually position their banners in their layout control as intended.
+The app will decide on stacking behavior.
+
+TODO: example & sketch
+
+However, if multiple status banners in the Toast mode need to be displayed, developers should use a NotificationHost to handle them. 
+A NotificationHost wrapper control (TBD) will handle behavior related to multiple notifications of a specific class on screen at once.
+Instead of leaving stacking behavior up to the individual controls, a NotificationHost will manage behavior like:
+
+- Positioning in page
+- Animation in/out
+- Margins between controls
+- Stacking order, right to left, top to bottom, etc.
+
+TODO: Create NotificationHost proposal. This proposal is not within the scope of this spec, but helps to clarify positioning and stacking behavior questions/approaches in regards to this control.
+
 ## Updating a status banner
-TBD: define updating behavior
+TBD: define updating behavior, should this exist?
 - What properties can be updated?
 - Is there an animation to occur?
 - How is dismissal handled?
 
-## Multiple status banners
-TBD: define stacking behavior
-- Do they stack top to bottom or vice versa?
-- Is it a collection that can get added to and expanded with each new banner? Or is the space for banners predefined and the banners will compress/use a scroll bar to fit?
-- Visual appearance for each mode
-- Recommendation for max number to appear of each mode at a time
-
 ## Canceling and deferring close
 TBD: define event behavior, similar to TeachingTip?
 
-## (Toast exclusive property) Preferred Placement
-TBD after the first (bar) mode is mostly defined.
-- Same as non-targeted teaching tip placement modes?
-    - 9 options -- four corners, four edges, center
-        - Officially 13 options to allow aliases for corners (BottomRight == RightBottom)
-- If PreferredPlacement property is defined for banners in bar mode what happens?
-
 ## What mode of status banner should I use?
-TBD after the first (bar) mode is mostly defined.
+TBD after the first (InfoBar) mode is mostly defined.
 
 # Inputs and Accessibility
 ## UI Automation patterns
@@ -423,26 +429,6 @@ enum StatusBannerType
     Success,
 }
 
-// TODO: For toast mode only
-/*enum StatusBannerPlacementMode
-{
-    Auto,
-    Top,
-    TopRight,
-    TopLeft,
-    Right, 
-    RightTop,
-    RightBottom,
-    Bottom,
-    BottomRight,
-    BottomLeft,
-    Left, 
-    LeftTop,
-    TopBottom,
-    Center,
-};*/
-
-
 runtimeclass StatusBannerClosedEventArgs
 {
     StatusBannerCloseReason Reason{ get; };
@@ -491,13 +477,6 @@ unsealed runtimeclass StatusBanner : Windows.UI.Xaml.Controls.ContentControl
     Windows.UI.Xaml.Input.ICommand CloseButtonCommand;
     Object CloseButtonCommandParameter;
 
-    // TODO: investigate & develop
-    Boolean ShouldConstrainToRootBounds;
-
-    /*  Needed for toast mode only
-    Windows.UI.Xaml.Thickness PlacementMargin;
-    StatusBannerPlacementMode PreferredPlacement; */
-
     StatusBannerType Severity;
     Color StatusColor;
     IconSource IconSource;
@@ -524,12 +503,6 @@ unsealed runtimeclass StatusBanner : Windows.UI.Xaml.Controls.ContentControl
     static Windows.UI.Xaml.DependencyProperty CloseButtonCommandProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty CloseButtonCommandParameterProperty{ get; };
 
-    // TODO: investigate & develop
-    static Windows.UI.Xaml.DependencyProperty ShouldConstrainToRootBounds{ get; };
-    /* Needed for toast mode only
-    static Windows.UI.Xaml.DependencyProperty PlacementMarginProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty PreferredPlacementProperty{ get; };*/
-
     static Windows.UI.Xaml.DependencyProperty BannerTypeProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty StatusColorProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty IconSourceProperty{ get; };
@@ -549,7 +522,7 @@ For example, implementation details. -->
 | Container | - Specific details TBD
 | Title | - Semi-bolded <br> - Recommended to be 50 characters or less
 | Message | - Text wrapping behavior TBD <br> - Recommended to be 512 characters or less 
-| StatusColor | - Defined by either the Severity or by hex code
+| StatusColor | - Defined by either the Severity or by setting a custom Color
 | Icon | - Defined by either the Severity or by IconSource <br>
 | Close button | - Will appear as 'X' by default <br> - Can be customized as a button <br> - Can be removed via IsProgrammaticDismissal
 | Action button | - Optional <br> - Additional action buttons may be added through custom XAML content in the Message
@@ -564,7 +537,7 @@ TBD: Same as TeachingTip at the moment
 | Motion | * Status banners have built in open and close animations that can be customizable using Storyboards.|
 
 ## Data and Intelligence Metrics
-Ideas from ryandemo:
+Recommendations from ryandemo:
 - How many buttons included correlated to criticality of status message
 - Track popularity of each layout mode
 - Average length of time the banners display on screen until dismissal, correlated to criticality
