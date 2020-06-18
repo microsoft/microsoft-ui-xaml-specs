@@ -60,22 +60,25 @@ example code with each description. The general format is:
 
 ```csharp
 /* Example 1: Check if a specific item is visible by the user. If visible, inform the user that they've scrolled to the bottom of the list. */
-int repeater_length = repeater.ItemsSource.Count;
+
+int repeater_length = repeater.ItemsSourceView.Count;
 
 foreach (Grid item in repeater.VisibleItems){
+  // Check to see if the last item of the list is visible.
   if (repeater.GetElementIndex(item) == repeater_length - 1){
+    // If so, we've reached the end of the list.
     myTextBlock.Text = "No more elements to display.";
   }
 }
 
-/* Example 2: Change the background color of any items that have been seen by the user (i.e. they're visible on the screen). This example applies well to messaging scenarios where the styling is changed for messages that have been read/seen.
-
-By using the RealizedItems property, any item that becomes visible while scrolling will have this changed background color.  */ 
-
-foreach(StackPanel message in repeater.RealizedItems){
-  // each item has a DataTemplate with a StackPanel root element 
-  message.Background = "Red";
+/* Example 2: Get the list of realized items and mark in the source collection that the item has been realized. */
+int item_idx = 0;
+foreach (Grid item in repeater.RealizedItems){
+  item_idx = repeater.GetElementIndex(item);
+  // IsRealized is a custom attribute created for objects that are a part of the repeater's ItemsSource. 
+  repeater.ItemsSourceView[item_idx].IsRealized = true; 
 }
+
 ```
 
 # API Notes
