@@ -18,8 +18,8 @@ These status changes affect the app as a whole and can be either critical or inf
 Critical status changes like lost internet connectivity are directly impactful to app functionality while informational status changes like an update has completed and been applied are indirectly impactful to app functionality.
 These notifications and corresponding information should be presented in a consistent, predictable, and relevant way to the user depending on the specific scenario.
 
-Currently, Teaching Tip, Content Dialog, and customizations of other flyouts and dialogs exist as options to show these notifications. 
-Due to their design intentions, intrusiveness, or features they are not sufficient for displaying notifications at an app-wide level.
+Currently, Teaching Tip, Content Dialog, and customizations of other flyouts and dialogs exist as options to show these notifications but these controls were not specifically designed to handle app-wide status change notifications. 
+Due to their visual layouts, inherent intrusiveness, or available features they are not sufficient for displaying notifications at an app-wide level.
 
 
 <!-- Use this section to provide background context for the new API(s) 
@@ -41,9 +41,6 @@ the reader "go read 100 pages of background information posted at ...". -->
 # Description
 
 A StatusBanner is a persistent, actionable, app-wide notification intended for displaying critical or informational status messages that impact app perception or user experience.
-
-
-
 
 ## Is this the right control?
 Use an StatusBanner control when a user needs to be informed of, acknowledge, or take action on a message. By default the notification will remain in the content area until dismissed by the user but will not necessarily break user flow.
@@ -75,14 +72,15 @@ InfoBar ⚠	|	Medium	|	High	|	Non-blocking	|	Global	|	Programmatic	|	Programmati
 InfoBar ℹ	|	Medium	|	Medium	|	Non-blocking	|	Global	|	Programmatic	|	Manual	|	Acknowledge/Dismiss -->
 
 ### When should a different control be used?
+
 There are some scenarios where a Content Dialog, Flyout, or Teaching Tip may be more appropriate to use.
 
 - For scenarios where a persistent notification is not needed, i.e. displaying information in context of a specific UI element, a [Flyout](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/flyouts) is a better option. 
-- For scenarios where the application is confirming a user action or is showing information the user ***must*** read, use a [Content Dialog](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/dialogs).
+- For scenarios where the application is confirming a user action, showing information the user ***must*** read, use a [Content Dialog](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/dialogs).
+  - Additionally, if a status change to the app is so severe that it needs to block all further ability for the user to interact with the app, use a Content Dialog.
 - For scenarios where the application is informing the user of a new feature or walking through its use, a [Teaching Tip](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/teaching-tip) is a better option.
 
 For more info about choosing the right notification control, see the [Dialogs and Flyouts](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/) article.
- 
 <!-- 
 Control |	Intrusiveness |	Information Severity |	Modality |	Scope	Invocation |	Dismissal |	Potential User Action
 |- | - | -| -| -| - | - | - |
@@ -96,8 +94,8 @@ Teaching Tip |	Medium |	Low |	Blocking |	Global/Contextual |	User-triggered |	Ma
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
 
-
 # Examples
+
 <!-- Use this section to explain the features of the API, showing
 example code with each description. The general format is: 
   feature explanation,
@@ -123,8 +121,8 @@ If a call to action is needed, a status banner can have customizable action and 
 The status banner can also be customized with XAML Content to include hyperlinks, extra buttons, and other UI elements.
 ![TODO](images/Information_CustomContent.jpg)
 
+## Create a status banner
 
-## Create a status banner 
 The XAML below describes a bar-style status banner with the default styling for a critical notification. A status banner can be created anywhere in the element tree or code behind (Toast TBD). In this example, the banner is located in a ResourceDictionary, expanding to fill the width of the stack panel, like a bar.
 
 XAML
@@ -132,7 +130,7 @@ XAML
 <StackPanel x:Name="ContentArea" Content="Document">
     <StackPanel.Resources>
         <controls:StatusBanner x:Name="UnsuccessfulSaveBanner"
-            BannerType="Warning"
+            Severity="Warning"
             Title="Error while saving"
             Message="Your document was unable to be saved.">
         </controls:StatusBanner>
@@ -166,7 +164,7 @@ XAML
 <StackPanel x:Name="ContentArea" Content="Document" />
 
 <controls:StatusBanner x:Name="ConnectionErrorBanner"
-    BannerType="Critical"
+    Severity="Critical"
     Icon="NetworkOffline"
     Title="No Internet"
     Message="Reconnect to save your work.">
@@ -175,14 +173,14 @@ XAML
 [A sketch of a sample application with a status banner as a toast in the bottom right of the content area. The status banner's title is "No Internet" and it's message is "Reconnect to save your work"](images/No_Internet_Toast.png) -->
 
 ## Banner types: consistent styling
-The type of the status banner can be set via the BannerType property to automatically set a consistent status color and icon dependent on the criticality of the notification.
+The type of the status banner can be set via the Severity property to automatically set a consistent status color and icon dependent on the criticality of the notification.
 
 Preset color and icon combos, TBD in collaboration w/ design:
 - Critical: Fluent red (#D13438) & ErrorBadge (EEA39)
 - Warning: Fluent orange (#FF8C00) & Error (E783)
 - Informational: Theme accent or Fluent blue (#0078D7) & Info (E946)
 - Success: Fluent green (#107C10) & StatusCircleCheckmark (F13E)
-- Default if BannerType isn't set: Fluent gray (#6979E) & no icon
+- Default if Severity isn't set: Fluent gray (#6979E) & no icon
 - TBD: Should there be a 'None' for no icon or color? How else could that scenario be possible?
 
 TBD: Should these be part of light-weight styling to be set across app? Like data validation? Or separate?
@@ -195,7 +193,8 @@ Status banner in success styling
 
 
 ## Programmatic dismiss in status banner
-A status banner can be dismissed by the user via the close button or programmatically. If the notification is required to be in view until the status is resolved you can set the IsProgrammaticDismissal property to true to remove the default dismiss button. 
+A status banner can be dismissed by the user via the close button or programmatically. If the notification is required to be in view until the status is resolved and you would like to remove the close button from view, you can set the ShowCloseButton property to false.
+By default, the close button will appear as an 'X' and the ShowCloseButton property is therefore set to true.
 
  > Note: Include a message highlighting the risks with removing a close button. How it can be very intrusive and a back-up removal should be included.
 
@@ -204,10 +203,10 @@ XAML
 <StackPanel x:Name="ContentArea" Content="Document">
     <StackPanel.Resources>
         <controls:StatusBanner x:Name="UnsuccessfulSaveBanner"
-            BannerType="Warning"
+            Severity="Warning"
             Title="Error while saving"
             Message="Your document was unable to be saved."
-            IsProgrammaticDismiss="True">
+            ShowCloseButton="False">
         </controls:StatusBanner>
     </StackPanel.Resources>
 </StackPanel>
@@ -255,7 +254,7 @@ XAML
 <StackPanel x:Name="ContentArea" Content="Document">
     <StackPanel.Resources>
         <controls:StatusBanner x:Name="ConnectionErrorBanner"
-            BannerType="Critical"
+            Severity="Critical"
             Title="No Internet"
             Message="Reconnect to save your work."
             ActionButtonContent="Reconnect"
@@ -272,15 +271,14 @@ XAML
 ![TODO](images/Critical_CustomButtons.jpg)
 
 ## Custom content
-TBD: Same as Teaching Tip at the moment
-
 Content can be added to a status banner using the Content property. If there is more content to show than what the size of a status banner will allow, a scrollbar will be automatically enabled to allow a user to scroll the content area.
+
 XAML
 ```xml
 <StackPanel x:Name="ContentArea" Content="Document">
     <StackPanel.Resources>
         <controls:StatusBanner x:Name="RecentUpdateBanner"
-            BannerType="Informational"
+            Severity="Informational"
             Title="Update Complete!"  
                 <TextBlock Text="You've been updated to the latest version &#8211;>
                     <Hyperlink
@@ -298,6 +296,7 @@ XAML
 TBD: define message wrapping behavior
 - A "too long" message depends on width of container and message area.
 - Truncation with expansion symbol? Or taller bar to accommodate?
+- Behavior for custom content? Squishing together vs a new line or truncation? How should this be handled?
 
 ## Updating a status banner
 TBD: define updating behavior
@@ -343,6 +342,19 @@ TBD
 TBD
 - Dark mode guidances
 - Conveying meaning via color AND icon for accessibility
+
+When to show a status banner?
+
+Current opinion: When the state of the application is different from normal, expected functionality
+- Patterns for critical notifications (i.e. internet connectivity is required for the application to function)
+    - A critical status banner should remain in view until the connection is restored if the app's functionality is very limited without this feature working.
+    - A critical status banner appears ("Internet connectivity lost") and can be dismissed by the user.
+        - However, if the internet is reconnected and the user had previously dismissed the banner, the banner should update to "Internet is reconnected" Success banner to inform the user the functionality of the application is restored.
+        - Additionally, if the internet is reconnected and the banner is still on the screen, the banner should merely disappear from view.
+    
+- Patterns for informational notifications, users should **always** have the option to dismiss informational banners, even if they are intended to disappear after # seconds. 
+    - If the app is performing a long task in the background that can then require further user action (i.e. backing up a drive or scanning for viruses) then a status banner for "Success" could appear.
+    - TBD: App update recommendations
 ## Anti-patterns
 TBD
 - Is there a limit to how often a status banner can appear/disappear from view?
@@ -369,7 +381,7 @@ with a "///" comment above the member or type. -->
 
 | Name | Description |
 |:-:|:--|
-| BannerType | Gets or sets a value that indicates the  color and icon to style the status banner |
+| Severity | Gets or sets a value that indicates the  color and icon to style the status banner |
 | ShowCloseButton| Gets or sets a boolean that indicates whether a close button will appear
 
 
@@ -382,9 +394,20 @@ TBD: Same as Teaching Tip at the moment
 | Closed | Occurs after the status banner is closed. |
 | Closing |Occurs just before the status banner begins to close. |
 
+# Detailed Design
+
+TBD: Include screenshots of specific designs as the next iteration after the paper mockups.
+Includes specifics like:
+
+- Default sizing of banners (px)
+- Exact colors for the different severity levels
+- Exact width of color area (px)
+- Margins, padding, etc.
+- Text info; font, color, boldness, etc.
+
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
-```c++ 
+```c++
 // TODO: investigate and develop
 enum StatusBannerCloseReason
 {
@@ -475,7 +498,7 @@ unsealed runtimeclass StatusBanner : Windows.UI.Xaml.Controls.ContentControl
     Windows.UI.Xaml.Thickness PlacementMargin;
     StatusBannerPlacementMode PreferredPlacement; */
 
-    StatusBannerType BannerType;
+    StatusBannerType Severity;
     Color StatusColor;
     IconSource IconSource;
 
@@ -526,8 +549,8 @@ For example, implementation details. -->
 | Container | - Specific details TBD
 | Title | - Semi-bolded <br> - Recommended to be 50 characters or less
 | Message | - Text wrapping behavior TBD <br> - Recommended to be 512 characters or less 
-| StatusColor | - Defined by either the BannerType or by hex code
-| Icon | - Defined by either the BannerType or by IconSource <br>
+| StatusColor | - Defined by either the Severity or by hex code
+| Icon | - Defined by either the Severity or by IconSource <br>
 | Close button | - Will appear as 'X' by default <br> - Can be customized as a button <br> - Can be removed via IsProgrammaticDismissal
 | Action button | - Optional <br> - Additional action buttons may be added through custom XAML content in the Message
 | Content | - Can be customizable to include text, hyperlinks, and any other XAML content <br> - Appears between the Title/Message and any Action or Close buttons
@@ -541,4 +564,9 @@ TBD: Same as TeachingTip at the moment
 | Motion | * Status banners have built in open and close animations that can be customizable using Storyboards.|
 
 ## Data and Intelligence Metrics
-TBD
+Ideas from ryandemo:
+- How many buttons included correlated to criticality of status message
+- Track popularity of each layout mode
+- Average length of time the banners display on screen until dismissal, correlated to criticality
+- How often color and/or icon customization Occurs
+- How often multiple status banners appear at once and the typical distribution
