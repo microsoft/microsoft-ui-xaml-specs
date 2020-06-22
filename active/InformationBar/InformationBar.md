@@ -128,13 +128,11 @@ The XAML below describes a bar-style status banner with the default styling for 
 XAML
 ```xml
 <StackPanel x:Name="ContentArea" Content="Document">
-    <StackPanel.Resources>
-        <controls:StatusBanner x:Name="UnsuccessfulSaveBanner"
-            Severity="Warning"
-            Title="Error while saving"
-            Message="Your document was unable to be saved.">
-        </controls:StatusBanner>
-    </StackPanel.Resources>
+    <controls:StatusBanner x:Name="UnsuccessfulSaveBanner"
+        Severity="Warning"
+        Title="Error while saving"
+        Message="Your document was unable to be saved.">
+    </controls:StatusBanner>
 </StackPanel>
 ```
 
@@ -201,14 +199,12 @@ By default, the close button will appear as an 'X' and the ShowCloseButton prope
 XAML
 ```xml
 <StackPanel x:Name="ContentArea" Content="Document">
-    <StackPanel.Resources>
-        <controls:StatusBanner x:Name="UnsuccessfulSaveBanner"
-            Severity="Warning"
-            Title="Error while saving"
-            Message="Your document was unable to be saved."
-            ShowCloseButton="False">
-        </controls:StatusBanner>
-    </StackPanel.Resources>
+    <controls:StatusBanner x:Name="UnsuccessfulSaveBanner"
+        Severity="Warning"
+        Title="Error while saving"
+        Message="Your document was unable to be saved."
+        ShowCloseButton="False">
+    </controls:StatusBanner>
 </StackPanel>
 ```
 ![TODO](images/Warning_ProgrammaticClose.jpg)
@@ -225,18 +221,16 @@ Alongside color, a custom icon can appear left of the Title and Message in the s
 XAML
 ```xml
 <StackPanel x:Name="ContentArea" Content="Document">
-    <StackPanel.Resources>
-        <controls:StatusBanner x:Name="ConnectionErrorBanner"
-            Title="No Internet"
-            Message="Reconnect to save your work.">
-            <controls:StatusBanner.IconSource>
-                <controls:SymbolIconSource Symbol="NetworkOffline" />
-            </controls:StatusBanner.IconSource>
-            <controls:StatusBanner.StatusColor>
-                <Color x:Key="Maroon">#800000</Color>
-            </controls:StatusBanner.StatusColor>
-        </controls:StatusBanner>
-    </StackPanel.Resources>
+    <controls:StatusBanner x:Name="ConnectionErrorBanner"
+        Title="No Internet"
+        Message="Reconnect to save your work.">
+        <controls:StatusBanner.IconSource>
+            <controls:SymbolIconSource Symbol="NetworkOffline" />
+        </controls:StatusBanner.IconSource>
+        <controls:StatusBanner.StatusColor>
+            <Color x:Key="Maroon">#800000</Color>
+        </controls:StatusBanner.StatusColor>
+    </controls:StatusBanner>
 </StackPanel>
 ```
 
@@ -252,19 +246,17 @@ An additional action button can be added by setting the ActionButtonContent and 
 XAML
 ```xml
 <StackPanel x:Name="ContentArea" Content="Document">
-    <StackPanel.Resources>
-        <controls:StatusBanner x:Name="ConnectionErrorBanner"
-            Severity="Critical"
-            Title="No Internet"
-            Message="Reconnect to save your work."
-            ActionButtonContent="Reconnect"
-            ActionButtonCommand="RedirectToNetworkSettings"
-            CloseButtonContent="Dismiss">
-            <controls:StatusBanner.IconSource>
-                <controls:SymbolIconSource Symbol="NetworkOffline" />
-            </controls:StatusBanner.IconSource>
-        </controls:StatusBanner>
-    </StackPanel.Resources>
+    <controls:StatusBanner x:Name="ConnectionErrorBanner"
+        Severity="Critical"
+        Title="No Internet"
+        Message="Reconnect to save your work."
+        ActionButtonContent="Reconnect"
+        ActionButtonCommand="RedirectToNetworkSettings"
+        CloseButtonContent="Dismiss">
+        <controls:StatusBanner.IconSource>
+            <controls:SymbolIconSource Symbol="NetworkOffline" />
+        </controls:StatusBanner.IconSource>
+    </controls:StatusBanner>
 </StackPanel>
 ```
 
@@ -276,17 +268,15 @@ Content can be added to a status banner using the Content property. If there is 
 XAML
 ```xml
 <StackPanel x:Name="ContentArea" Content="Document">
-    <StackPanel.Resources>
-        <controls:StatusBanner x:Name="RecentUpdateBanner"
-            Severity="Informational"
-            Title="Update Complete!"  
-                <TextBlock Text="You've been updated to the latest version &#8211;>
-                    <Hyperlink
-                        Content="Notes"
-                        NavigateUri="https://www.microsoft.com/app/releasenotes" />
-                </TextBlock>
-        </controls:StatusBanner>
-    </StackPanel.Resources>
+    <controls:StatusBanner x:Name="RecentUpdateBanner"
+        Severity="Informational"
+        Title="Update Complete!"  
+            <TextBlock Text="You've been updated to the latest version &#8211;">
+                <Hyperlink
+                    Content="Notes"
+                    NavigateUri="https://www.microsoft.com/app/releasenotes" />
+            </TextBlock>
+    </controls:StatusBanner>
 </StackPanel>
 ```
 
