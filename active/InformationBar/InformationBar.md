@@ -40,15 +40,15 @@ the reader "go read 100 pages of background information posted at ...". -->
 
 # Description
 
-A StatusBanner is a persistent, actionable, app-wide notification intended for displaying critical or informational status messages that impact app perception or user experience.
+An AppNotification is a persistent, actionable, app-wide notification intended for displaying critical or informational status messages that impact app perception or user experience.
 
 ## Is this the right control?
-Use an StatusBanner control when a user needs to be informed of, acknowledge, or take action on a message. By default the notification will remain in the content area until dismissed by the user but will not necessarily break user flow.
+Use an AppNotification control when a user needs to be informed of, acknowledge, or take action on a message. By default the notification will remain in the content area until dismissed by the user but will not necessarily break user flow.
 
-Do not use an StatusBanner control to confirm or respond directly to a user action, for transient alerts, or for non-essential messages.
+Do not use an AppNotification control to confirm or respond directly to a user action, for transient alerts, or for non-essential messages.
 
 ### Scenarios
-Use a StatusBanner that dismiss via the user or when the status is resolved for scenarios that **directly** impact app perception or experience ⚠
+Use an AppNotification that dismiss via the user or when the status is resolved for scenarios that **directly** impact app perception or experience ⚠
 
 - Internet connectivity lost
 - Error while saving a document when triggered automatically, not related to specific user action
@@ -56,7 +56,7 @@ Use a StatusBanner that dismiss via the user or when the status is resolved for 
 - Can't connect to your phone
 - The subscription to the application is expired
 
-Use a StatusBanner that dismiss via the user or a timer for scenarios that **indirectly** impact app perception or experience ℹ
+Use an AppNotification that dismiss via the user or a timer for scenarios that **indirectly** impact app perception or experience ℹ
 
 - A call has begun recording
 - Update applied with link to 'Release Notes'
@@ -110,29 +110,29 @@ example code with each description. The general format is:
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 > Note: In this version of the specification, only a single LayoutMode is implied. In the future, more documentation will be added on a second LayoutMode. The LayoutMode property will change the visual layout of the components, not the functionality. The current LayoutMode shown is "InformationBar", where the components are vertically aligned in a single plane. The second LayoutMode, "Toast", will look more similar to a system notification in it's component layout, details TBD.
 
-A status banner can have several configurations, here are some notable ones.
+An app notification can have several configurations, here are some notable ones.
 
-When a status banner is conveying information of a common criticality, a banner can be set to have one of many BannerTypes to use consistent Fluent styling for it's identifiers.
+When an app notification is conveying information of a common criticality, a notification can be set to have one of many NotificationTypes to use consistent Fluent styling for it's identifiers.
 ![TODO](images/Warning_DefaultClose.jpg)
 
-If a call to action is needed, a status banner can have customizable action and close buttons.
+If a call to action is needed, an app notification can have customizable action and close buttons.
 ![TODO](images/Critical_CustomButtons.jpg)
 
-The status banner can also be customized with XAML Content to include hyperlinks, extra buttons, and other UI elements.
+The app notification can also be customized with XAML Content to include hyperlinks, extra buttons, and other UI elements.
 ![TODO](images/Information_CustomContent.jpg)
 
-## Create a status banner
+## Create an app notification
 
-The XAML below describes a bar-style status banner with the default styling for a critical notification. A status banner can be created anywhere in the element tree or code behind (Toast TBD). In this example, the banner is located in a ResourceDictionary, expanding to fill the width of the stack panel, like a bar.
+The XAML below describes a bar-style app notification with the default styling for a critical notification. An app notification can be created anywhere in the element tree or code behind (Toast TBD). In this example, the notification is located in a ResourceDictionary, expanding to fill the width of the stack panel, like a bar.
 
 XAML
 ```xml
 <StackPanel x:Name="ContentArea" Content="Document">
-    <controls:StatusBanner x:Name="UnsuccessfulSaveBanner"
+    <controls:AppNotification x:Name="UnsuccessfulSaveNotification"
         Severity="Warning"
         Title="Error while saving"
         Message="Your document was unable to be saved.">
-    </controls:StatusBanner>
+    </controls:AppNotification>
 </StackPanel>
 ```
 
@@ -144,34 +144,34 @@ public MainPage()
 
     if(!SaveSuccessful())
     {
-        UnsuccessfulSaveBanner.IsOpen = true;
-        SetHaveDisplayedErrorBanner();
+        UnsuccessfulSaveNotification.IsOpen = true;
+        SetHaveDisplayedErrorNotification();
     }
 }
 ```
 
-Here is the visual representation of the status banner in the page.
+Here is the visual representation of the app notification in the page.
 
 ![TODO](images/Warning_DefaultClose.jpg)
 
-<!--## Pop-up status banner 
-In some app scenarios, an app-wide bar does not fit for functional or aesthetic reasons. If a status banner is defined independent of another control, the visual layout will default to a to a toast with the same visual components as the aforementioned bar. The status banner will display relative to the edges of the xaml root and by default will be located in the bottom right corner of the application.
+<!--## Pop-up app notification 
+In some app scenarios, an app-wide bar does not fit for functional or aesthetic reasons. If an app notification is defined independent of another control, the visual layout will default to a to a toast with the same visual components as the aforementioned bar. The app notification will display relative to the edges of the xaml root and by default will be located in the bottom right corner of the application.
 
 XAML
 ```c#
 <StackPanel x:Name="ContentArea" Content="Document" />
 
-<controls:StatusBanner x:Name="ConnectionErrorBanner"
+<controls:AppNotification x:Name="ConnectionErrorNotification"
     Severity="Critical"
     Icon="NetworkOffline"
     Title="No Internet"
     Message="Reconnect to save your work.">
-</controls:StatusBanner>
+</controls:AppNotification>
 ```
-[A sketch of a sample application with a status banner as a toast in the bottom right of the content area. The status banner's title is "No Internet" and it's message is "Reconnect to save your work"](images/No_Internet_Toast.png) -->
+[A sketch of a sample application with an app notification as a toast in the bottom right of the content area. The app notification's title is "No Internet" and it's message is "Reconnect to save your work"](images/No_Internet_Toast.png) -->
 
-## Banner types: consistent styling
-The type of the status banner can be set via the Severity property to automatically set a consistent status color and icon dependent on the criticality of the notification.
+## Notification types: consistent styling
+The type of the app notification can be set via the Severity property to automatically set a consistent status color and icon dependent on the criticality of the notification.
 
 Preset color and icon combos, TBD in collaboration w/ design:
 - Critical: Fluent red (#D13438) & ErrorBadge (EEA39)
@@ -183,15 +183,15 @@ Preset color and icon combos, TBD in collaboration w/ design:
 
 TBD: Should these be part of light-weight styling to be set across app? Like data validation? Or separate?
 
-Status banner in default styling
+App notification in default styling
 ![TODO](images/Default_Default.jpg)
 
-Status banner in success styling
+App notification in success styling
 ![TODO](images/Success_DefaultClose.jpg)
 
 
-## Programmatic dismiss in status banner
-A status banner can be dismissed by the user via the close button or programmatically. If the notification is required to be in view until the status is resolved and you would like to remove the close button from view, you can set the ShowCloseButton property to false.
+## Programmatic dismiss in app notification
+An app notification can be dismissed by the user via the close button or programmatically. If the notification is required to be in view until the status is resolved and you would like to remove the close button from view, you can set the ShowCloseButton property to false.
 By default, the close button will appear as an 'X' and the ShowCloseButton property is therefore set to true.
 
  > Note: Include a message highlighting the risks with removing a close button. How it can be very intrusive and a back-up removal should be included.
@@ -199,43 +199,43 @@ By default, the close button will appear as an 'X' and the ShowCloseButton prope
 XAML
 ```xml
 <StackPanel x:Name="ContentArea" Content="Document">
-    <controls:StatusBanner x:Name="UnsuccessfulSaveBanner"
+    <controls:AppNotification x:Name="UnsuccessfulSaveNotification"
         Severity="Warning"
         Title="Error while saving"
         Message="Your document was unable to be saved."
         ShowCloseButton="False">
-    </controls:StatusBanner>
+    </controls:AppNotification>
 </StackPanel>
 ```
 ![TODO](images/Warning_ProgrammaticClose.jpg)
 
 ## Custom styling: status color and icon
-Outside of the pre-defined banner types, the StatusColor and IconSource properties can be set to customize the styling. 
+Outside of the pre-defined notification types, the StatusColor and IconSource properties can be set to customize the styling. 
 
 A color can be set via the StatusColor property with a hex code, i.e. #800000 for maroon. 
 TBD: should other color definition methods be supported like RGB? Are there already Fluent aliases for many hex codes?
 
 
-Alongside color, a custom icon can appear left of the Title and Message in the status banner. If a default styling is chosen, most styles have an associated icon already defined. This icon can be removed or added as a custom icon using the IconSource property. Recommended icon sizes include (TBD)px.
+Alongside color, a custom icon can appear left of the Title and Message in the app notification. If a default styling is chosen, most styles have an associated icon already defined. This icon can be removed or added as a custom icon using the IconSource property. Recommended icon sizes include (TBD)px.
 
 XAML
 ```xml
 <StackPanel x:Name="ContentArea" Content="Document">
-    <controls:StatusBanner x:Name="ConnectionErrorBanner"
+    <controls:AppNotification x:Name="ConnectionErrorNotification"
         Title="No Internet"
         Message="Reconnect to save your work.">
-        <controls:StatusBanner.IconSource>
+        <controls:AppNotification.IconSource>
             <controls:SymbolIconSource Symbol="NetworkOffline" />
-        </controls:StatusBanner.IconSource>
-        <controls:StatusBanner.StatusColor>
+        </controls:AppNotification.IconSource>
+        <controls:AppNotification.StatusColor>
             <Color x:Key="Maroon">#800000</Color>
-        </controls:StatusBanner.StatusColor>
-    </controls:StatusBanner>
+        </controls:AppNotification.StatusColor>
+    </controls:AppNotification>
 </StackPanel>
 ```
 
 
-![A sketch of a sample application with a status banner as a bar in the top of the content area. The status banner's title is "No Internet" and it's message is "Reconnect to save your work". It has a maroon accent color and a "Network Offline" icon.](images/Critical_Color.jpg)
+![A sketch of a sample application with an app notification as a bar in the top of the content area. The app notification's title is "No Internet" and it's message is "Reconnect to save your work". It has a maroon accent color and a "Network Offline" icon.](images/Critical_Color.jpg)
 
 ## Add buttons
 By default, an 'X' close button will appear as the right most component in the bar. The close button can be customized with the CloseButtonContent property.
@@ -246,29 +246,29 @@ An additional action button can be added by setting the ActionButtonContent and 
 XAML
 ```xml
 <StackPanel x:Name="ContentArea" Content="Document">
-    <controls:StatusBanner x:Name="ConnectionErrorBanner"
+    <controls:AppNotification x:Name="ConnectionErrorNotification"
         Severity="Critical"
         Title="No Internet"
         Message="Reconnect to save your work."
         ActionButtonContent="Reconnect"
         ActionButtonCommand="RedirectToNetworkSettings"
         CloseButtonContent="Dismiss">
-        <controls:StatusBanner.IconSource>
+        <controls:AppNotification.IconSource>
             <controls:SymbolIconSource Symbol="NetworkOffline" />
-        </controls:StatusBanner.IconSource>
-    </controls:StatusBanner>
+        </controls:AppNotification.IconSource>
+    </controls:AppNotification>
 </StackPanel>
 ```
 
 ![TODO](images/Critical_CustomButtons.jpg)
 
 ## Custom content
-Content can be added to a status banner using the Content property. If there is more content to show than what the size of a status banner will allow, a scrollbar will be automatically enabled to allow a user to scroll the content area.
+Content can be added to an app notification using the Content property. If there is more content to show than what the size of an app notification will allow, a scrollbar will be automatically enabled to allow a user to scroll the content area.
 
 XAML
 ```xml
 <StackPanel x:Name="ContentArea" Content="Document">
-    <controls:StatusBanner x:Name="RecentUpdateBanner"
+    <controls:AppNotification x:Name="RecentUpdateNotification"
         Severity="Informational"
         Title="Update Complete!"  
             <TextBlock Text="You've been updated to the latest version &#8211;">
@@ -276,7 +276,7 @@ XAML
                     Content="Notes"
                     NavigateUri="https://www.microsoft.com/app/releasenotes" />
             </TextBlock>
-    </controls:StatusBanner>
+    </controls:AppNotification>
 </StackPanel>
 ```
 
@@ -284,31 +284,93 @@ XAML
 
 ## Content wrapping
 By default, the text set in the Message property will wrap vertically in the control underneath the other visual components. 
-If the height of the status banner is explicitly set, a scroll bar (TODO: learn why Teaching Tip is implemented in this way) will be added for users to view the content.
+If the height of the app notification is explicitly set, a scroll bar (TODO: learn why Teaching Tip is implemented in this way) will be added for users to view the content.
 
-TODO: example & sketch
+XAML
+```xml
+<StackPanel x:Name="ContentArea" Content="Document">
+    <controls:AppNotification x:Name="DefaultCriticalNotification"
+        Severity="Critical"
+        Title="Message Title"  
+        Message="This message is very long, so long in fact it needs to wrap to a second line in the notification">
+    </controls:AppNotification>
+</StackPanel>
+```
+
+![TODO](images/Critical_Wrapping.jpg)
 
 TBD: define content wrapping behavior
 - Behavior for custom content? Squishing together vs a new line or truncation? How should this be handled?
 
-## Multiple status banners
-For status banners in the InfoBar mode, developers should manually position their banners in their layout control as intended.
-The app will decide on stacking behavior.
+## Multiple app notifications
+For applications where multiple notifications may appear on the page at once, there are two main ways they can be displayed; inline or as an overlay.
+ - **Overlay**: The notifications will appear on top of other app content, like a pop-up, in a toast visual layout.
+ - **Inline**: The notifications will be inline with the other UI elements on the page and push other content if necessary in an app-wide bar visual layout.
 
-TODO: example & sketch
-
-However, if multiple status banners in the Toast mode need to be displayed, developers should use a NotificationHost to handle them. 
+### Overlay
+However, if multiple app notifications in the Toast mode need to be displayed, developers should use a NotificationHost to handle them. 
 A NotificationHost wrapper control (TBD) will handle behavior related to multiple notifications of a specific class on screen at once.
 Instead of leaving stacking behavior up to the individual controls, a NotificationHost will manage behavior like:
+
+XAML
+```xml
+<StackPanel x:Name="ContentArea" Content="Document">
+    <controls:NotificationGroup DisplayMode="Overlay">
+        <controls:AppNotification x:Name="ConnectionErrorNotification"
+            Title="No Internet"
+            Message="Reconnect to save your work.">
+            <controls:AppNotification.IconSource>
+                <controls:SymbolIconSource Symbol="NetworkOffline" />
+            </controls:AppNotification.IconSource>
+        </controls:AppNotification>
+        <controls:AppNotification x:Name="UpdateCompletedNotification"
+            Severity="Informational"
+            Title="Update complete"
+            Message="The application has recently been updated.">
+        </controls:AppNotification>
+    </controls:NotificationGroup>
+</StackPanel>
+```
+
+![TODO](images/MultipleToasts.jpg)
 
 - Positioning in page
 - Animation in/out
 - Margins between controls
 - Stacking order, right to left, top to bottom, etc.
 
-TODO: Create NotificationHost proposal. This proposal is not within the scope of this spec, but helps to clarify positioning and stacking behavior questions/approaches in regards to this control.
 
-## Updating a status banner
+
+### Inline
+To display multiple inline, app-wide InfoBar style notifications, you can manually position your notifications in a layout control as preferred and leave the stacking/positioning behavior up to the default behavior of the parent layout control..
+
+Additionally, you can use the NotificationGroup control with DisplayMode set to "Inline" to manage stacking direction and re-positioning. 
+By default, the notifications will stack vertically where the most recent notification will appear at the bottom of the stack. There will be no intro or exit animation.
+
+XAML
+```xml
+<StackPanel x:Name="ContentArea" Content="Document">
+    <controls:NotificationGroup DisplayMode="Inline">
+        <controls:AppNotification x:Name="ConnectionErrorNotification"
+            Title="No Internet"
+            Message="Reconnect to save your work.">
+            <controls:AppNotification.IconSource>
+                <controls:SymbolIconSource Symbol="NetworkOffline" />
+            </controls:AppNotification.IconSource>
+        </controls:AppNotification>
+        <controls:AppNotification x:Name="UnsuccessfulSaveNotification"
+            Severity="Warning"
+            Title="Error while saving"
+            Message="Your document was unable to be saved.">
+        </controls:AppNotification>
+    </controls:NotificationGroup>
+</StackPanel>
+```
+
+![TODO](images/MultipleInfoBars.jpg)
+
+
+## Updating an app notification
 TBD: define updating behavior, should this exist?
 - What properties can be updated?
 - Is there an animation to occur?
@@ -317,7 +379,7 @@ TBD: define updating behavior, should this exist?
 ## Canceling and deferring close
 TBD: define event behavior, similar to TeachingTip?
 
-## What mode of status banner should I use?
+## What mode of app notification should I use?
 TBD after the first (InfoBar) mode is mostly defined.
 
 # Inputs and Accessibility
@@ -339,23 +401,23 @@ TBD
 - Dark mode guidances
 - Conveying meaning via color AND icon for accessibility
 
-When to show a status banner?
+When to show an app notification?
 
 Current opinion: When the state of the application is different from normal, expected functionality
 - Patterns for critical notifications (i.e. internet connectivity is required for the application to function)
-    - A critical status banner should remain in view until the connection is restored if the app's functionality is very limited without this feature working.
-    - A critical status banner appears ("Internet connectivity lost") and can be dismissed by the user.
-        - However, if the internet is reconnected and the user had previously dismissed the banner, the banner should update to "Internet is reconnected" Success banner to inform the user the functionality of the application is restored.
-        - Additionally, if the internet is reconnected and the banner is still on the screen, the banner should merely disappear from view.
+    - A critical app notification should remain in view until the connection is restored if the app's functionality is very limited without this feature working.
+    - A critical app notification appears ("Internet connectivity lost") and can be dismissed by the user.
+        - However, if the internet is reconnected and the user had previously dismissed the notification, the notification should update to "Internet is reconnected" Success notification to inform the user the functionality of the application is restored.
+        - Additionally, if the internet is reconnected and the notification is still on the screen, the notification should merely disappear from view.
     
-- Patterns for informational notifications, users should **always** have the option to dismiss informational banners, even if they are intended to disappear after # seconds. 
-    - If the app is performing a long task in the background that can then require further user action (i.e. backing up a drive or scanning for viruses) then a status banner for "Success" could appear.
+- Patterns for informational notifications, users should **always** have the option to dismiss informational notifications, even if they are intended to disappear after # seconds. 
+    - If the app is performing a long task in the background that can then require further user action (i.e. backing up a drive or scanning for viruses) then an app notification for "Success" could appear.
     - TBD: App update recommendations
 ## Anti-patterns
 TBD
-- Is there a limit to how often a status banner can appear/disappear from view?
-  - Prevent "flashing" banner bars
-- Only *one* status banner should appear for every scenario 
+- Is there a limit to how often an app notification can appear/disappear from view?
+  - Prevent "flashing" notification bars
+- Only *one* app notification should appear for every scenario 
 <!-- Explanation and guidance that doesn't fit into the Examples section. -->
 
 <!-- APIs should only throw exceptions in exceptional conditions; basically,
@@ -377,7 +439,7 @@ with a "///" comment above the member or type. -->
 
 | Name | Description |
 |:-:|:--|
-| Severity | Gets or sets a value that indicates the  color and icon to style the status banner |
+| Severity | Gets or sets a value that indicates the  color and icon to style the app notification |
 | ShowCloseButton| Gets or sets a boolean that indicates whether a close button will appear
 
 
@@ -387,15 +449,15 @@ TBD: Same as Teaching Tip at the moment
 |:-:|:--|
 | ActionButtonClick | Occurs after the action button has been tapped. |
 | CloseButtonClick | Occurs after the close button has been tapped. |
-| Closed | Occurs after the status banner is closed. |
-| Closing |Occurs just before the status banner begins to close. |
+| Closed | Occurs after the app notification is closed. |
+| Closing |Occurs just before the app notification begins to close. |
 
 # Detailed Design
 
 TBD: Include screenshots of specific designs as the next iteration after the paper mockups.
 Includes specifics like:
 
-- Default sizing of banners (px)
+- Default sizing of notifications (px)
 - Exact colors for the different severity levels
 - Exact width of color area (px)
 - Margins, padding, etc.
@@ -405,13 +467,13 @@ Includes specifics like:
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 ```c++
 // TODO: investigate and develop
-enum StatusBannerCloseReason
+enum AppNotificationCloseReason
 {
     CloseButton,
     Programmatic,
 };
 
-enum StatusBannerType
+enum NotificationType
 {
     Critical,
     Warning,
@@ -419,22 +481,22 @@ enum StatusBannerType
     Success,
 }
 
-runtimeclass StatusBannerClosedEventArgs
+runtimeclass AppNotificationClosedEventArgs
 {
-    StatusBannerCloseReason Reason{ get; };
+    AppNotificationCloseReason Reason{ get; };
 };
 
-runtimeclass StatusBannerClosingEventArgs
+runtimeclass AppNotificationClosingEventArgs
 {
-    StatusBannerCloseReason Reason{ get; };
+    AppNotificationCloseReason Reason{ get; };
     Boolean Cancel;
     Windows.Foundation.Deferral GetDeferral();
 };
 
 // TODO: is there anything else needed in TemplateSettings?
-unsealed runtimeclass StatusBannerTemplateSettings : Windows.UI.Xaml.DependencyObject
+unsealed runtimeclass AppNotificationTemplateSettings : Windows.UI.Xaml.DependencyObject
 {
-    StatusBannerTemplateSettings();
+    AppNotificationTemplateSettings();
 
     // TODO: what do these highlight margins define?
     Windows.UI.Xaml.Thickness TopRightHighlightMargin;
@@ -447,9 +509,9 @@ unsealed runtimeclass StatusBannerTemplateSettings : Windows.UI.Xaml.DependencyO
     static Windows.UI.Xaml.DependencyProperty IconElementProperty{ get; };
 }
 
-unsealed runtimeclass StatusBanner : Windows.UI.Xaml.Controls.ContentControl
+unsealed runtimeclass AppNotification : Windows.UI.Xaml.Controls.ContentControl
 {
-    StatusBanner();
+    AppNotification();
 
     String Title;
     String Message;
@@ -467,16 +529,16 @@ unsealed runtimeclass StatusBanner : Windows.UI.Xaml.Controls.ContentControl
     Windows.UI.Xaml.Input.ICommand CloseButtonCommand;
     Object CloseButtonCommandParameter;
 
-    StatusBannerType Severity;
+    NotificationType Severity;
     Color StatusColor;
     IconSource IconSource;
 
-    StatusBannerTemplateSettings TemplateSettings{ get; };
+    AppNotificationTemplateSettings TemplateSettings{ get; };
 
-    event Windows.Foundation.TypedEventHandler<StatusBanner, Object> ActionButtonClick;
-    event Windows.Foundation.TypedEventHandler<StatusBanner, Object> CloseButtonClick;
-    event Windows.Foundation.TypedEventHandler<StatusBanner, StatusBannerClosingEventArgs> Closing;
-    event Windows.Foundation.TypedEventHandler<StatusBanner, StatusBannerClosedEventArgs> Closed;
+    event Windows.Foundation.TypedEventHandler<AppNotification, Object> ActionButtonClick;
+    event Windows.Foundation.TypedEventHandler<AppNotification, Object> CloseButtonClick;
+    event Windows.Foundation.TypedEventHandler<AppNotification, AppNotificationClosingEventArgs> Closing;
+    event Windows.Foundation.TypedEventHandler<AppNotification, AppNotificationClosedEventArgs> Closed;
 
     static Windows.UI.Xaml.DependencyProperty IsOpenProperty{ get; };
 
@@ -493,7 +555,7 @@ unsealed runtimeclass StatusBanner : Windows.UI.Xaml.Controls.ContentControl
     static Windows.UI.Xaml.DependencyProperty CloseButtonCommandProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty CloseButtonCommandParameterProperty{ get; };
 
-    static Windows.UI.Xaml.DependencyProperty BannerTypeProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty NotificationTypeProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty StatusColorProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty IconSourceProperty{ get; };
 
@@ -504,6 +566,15 @@ unsealed runtimeclass StatusBanner : Windows.UI.Xaml.Controls.ContentControl
 <!-- Anything else that you want to write down for posterity, but 
 that isn't necessary to understand the purpose and usage of the API.
 For example, implementation details. -->
+### Design References
+
+InfoBar wrapping examples
+
+Toast mockups from @mdtauk
+
+Toast layout examples
+
+
 
 ### Visual Components
 
@@ -519,17 +590,16 @@ For example, implementation details. -->
 | Content | - Can be customizable to include text, hyperlinks, and any other XAML content <br> - Appears between the Title/Message and any Action or Close buttons
 
 ## Behavioral Components
-TBD: Same as TeachingTip at the moment
  | Property | Notes |
 |:---:|:---|
-| Opening | * A status banner is shown by setting its IsOpen property to true. <br> * Status banners will animate on opening. <br> * When a status banner does not have enough available window space to fully show in any location [see Placement], it will not open and will instead overwrite IsOpen to false. |
-| Closing | There are two ways a status banner can close: The program sets the IsOpen property to false, the user invokes the Close button. Use the StatusBannerCloseReason to determine which case has occurred. Closing can be prevented by setting the Cancel property to true. You can use a deferral to respond asynchronously to the event. |
-| Motion | * Status banners have built in open and close animations that can be customizable using Storyboards.|
+| Opening | * an app notification is shown by setting its IsOpen property to true. <br> * App notifications will animate on opening. <br> * When an app notification does not have enough available window space to fully show in any location [see Placement], it will not open and will instead overwrite IsOpen to false. |
+| Closing | There are two ways an app notification can close: The program sets the IsOpen property to false, the user invokes the Close button. Use the AppNotificationCloseReason to determine which case has occurred. Closing can be prevented by setting the Cancel property to true. You can use a deferral to respond asynchronously to the event. |
+| Motion | * App notifications have built in open and close animations that can be customizable using Storyboards.|
 
 ## Data and Intelligence Metrics
 Recommendations from ryandemo:
 - How many buttons included correlated to criticality of status message
 - Track popularity of each layout mode
-- Average length of time the banners display on screen until dismissal, correlated to criticality
+- Average length of time the notifications display on screen until dismissal, correlated to criticality
 - How often color and/or icon customization Occurs
-- How often multiple status banners appear at once and the typical distribution
+- How often multiple app notifications appear at once and the typical distribution
