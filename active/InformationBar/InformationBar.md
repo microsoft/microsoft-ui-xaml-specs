@@ -571,8 +571,10 @@ For example, implementation details. -->
 InfoBar wrapping examples
 ![TODO](images/Wrapped_Infobars.jpg)
 
-Toast mockups from @mdtauk
+Toast mockups and animations from @mdtauk
 ![TODO](images\Toast_Mockups_mdtauk.png)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/De_hIhy5FnI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/cGTtDNjTyq4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Toast layout examples
 ![TODO](images/Toast_Examples.jpg)
