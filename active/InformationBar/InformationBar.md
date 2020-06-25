@@ -332,7 +332,7 @@ XAML
 </StackPanel>
 ```
 
-![TODO](images/MultipleToasts.jpg)
+![TODO](images/Multiple_Toasts.jpg)
 
 - Positioning in page
 - Animation in/out
@@ -367,7 +367,7 @@ XAML
 </StackPanel>
 ```
 
-![TODO](images/MultipleInfoBars.jpg)
+![TODO](images/Multiple_InfoBars.jpg)
 
 
 ## Updating an app notification
@@ -569,11 +569,13 @@ For example, implementation details. -->
 ### Design References
 
 InfoBar wrapping examples
+![TODO](images/Wrapped_Infobars.jpg)
 
 Toast mockups from @mdtauk
+![TODO](images\Toast_Mockups_mdtauk.png)
 
 Toast layout examples
-
+![TODO](images/Toast_Examples.jpg)
 
 
 ### Visual Components
