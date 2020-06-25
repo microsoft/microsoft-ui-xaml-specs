@@ -573,7 +573,7 @@ Toast mockups and animations from @mdtauk
 [Status Banner Animate In](https://youtu.be/De_hIhy5FnI)
 
 [Status Banner Enter, Update, Exit](https://www.youtube.com/watch?v=cGTtDNjTyq4)
-![Toast mockups](images\Toast_Mockups_mdtauk.png)
+![Toast mockups](images/Toast_Mockups_mdtauk.png)
 
 Toast layout examples
 ![Toast layout](images/Toast_Examples.jpg)
