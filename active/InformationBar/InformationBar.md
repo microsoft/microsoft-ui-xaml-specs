@@ -299,9 +299,6 @@ XAML
 
 ![TODO](images/Critical_Wrapping.jpg)
 
-TBD: define content wrapping behavior
-- Behavior for custom content? Squishing together vs a new line or truncation? How should this be handled?
-
 ## Multiple app notifications
 For applications where multiple notifications may appear on the page at once, there are two main ways they can be displayed; inline or as an overlay.
  - **Overlay**: The notifications will appear on top of other app content, like a pop-up, in a toast visual layout.
@@ -569,15 +566,17 @@ For example, implementation details. -->
 ### Design References
 
 InfoBar wrapping examples
-![TODO](images/Wrapped_Infobars.jpg)
+![InfoBar wrapping examples](images/Wrapped_Infobars.jpg)
 
 Toast mockups and animations from @mdtauk
-![TODO](images\Toast_Mockups_mdtauk.png)
-<iframe width="560" height="315" src="https://www.youtube.com/embed/De_hIhy5FnI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/cGTtDNjTyq4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+[Status Banner Animate In](https://youtu.be/De_hIhy5FnI)
+
+[Status Banner Enter, Update, Exit](https://www.youtube.com/watch?v=cGTtDNjTyq4)
+![Toast mockups](images\Toast_Mockups_mdtauk.png)
 
 Toast layout examples
-![TODO](images/Toast_Examples.jpg)
+![Toast layout](images/Toast_Examples.jpg)
 
 
 ### Visual Components
