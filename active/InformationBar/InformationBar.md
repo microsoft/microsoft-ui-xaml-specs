@@ -566,7 +566,7 @@ For example, implementation details. -->
 ### Design References
 
 InfoBar wrapping examples
-![InfoBar wrapping examples](images/Wrapped_Infobars.jpg)
+![InfoBar wrapping examples](images/Wrapped_InfoBars.jpg)
 
 Toast mockups and animations from @mdtauk
 
