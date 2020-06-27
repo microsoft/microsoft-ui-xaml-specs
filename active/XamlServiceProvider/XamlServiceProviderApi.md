@@ -5,12 +5,12 @@ _This spec adds a serviceProvider to the existing [MarkupExtension](https://docs
 
 Xaml markup has a [markup extension](https://docs.microsoft.com/en-us/dotnet/desktop-wpf/xaml-services/markup-extensions-overview) feature which is a builder pattern, similar to a .Net StringBuilder. It lets you create, modify, and then retrieve a value.
 
-When you write a custom markup extension (see the Description section below), you override the `ProvideValue` method to return the built value. The ProvideValue method is different in  Xaml (WinUI) than it is in WPF, because WPF passes an extra [IServiceProvider](http://msdn.microsoft.com/library/System.IServiceProvider) parameter:
+When you write a custom markup extension (see the Description section below), you override the `ProvideValue` method to return the built value. The ProvideValue method is different in WinUI than it is in WPF, because WPF passes an extra [IServiceProvider](http://msdn.microsoft.com/library/System.IServiceProvider) parameter:
 
-Xaml:
+WinUI:
 
 ```cs
-protected override object ProvideValue(IServiceProvider serviceProvider)
+protected override object ProvideValue()
 {
     return DateTime.Now.ToString(Format);
 }
@@ -29,7 +29,7 @@ The service provider can be used, for example, to discover the property being as
 
 This spec is adding a new version of ProvideValue that passes a service provider.
 
-> To do: This is defining an IXamlServiceProvider, can/should this project in .Net to [System.IServiceProvider](http://msdn.microsoft.com/library/System.IServiceProvider)?
+> To do: Add an Issue to cs/winrt to project IServiceProvider to .Net5 as [System.IServiceProvider](http://msdn.microsoft.com/library/System.IServiceProvider)?
 
 # Description
 
@@ -69,6 +69,7 @@ There are two versions of ProvideValue, one that passes no parameters and one th
 * `IProvideValueTarget`, which provides information about the type/property the markup extension is being applied to. This aligns with WPF's [IProvideValueTarget](https://docs.microsoft.com/dotnet/api/System.Windows.Markup.IProvideValueTarget).
 * `IRootObjectProvider`, which provides a reference to the root object in the markup. This aligns with WPF's [IRootObjectProvider](https://docs.microsoft.com/dotnet/api/System.Xaml.IRootObjectProvider).
 * `IUriContext` , which provides the base URI of the markup. This aligns with WPF's [IUriContext](https://docs.microsoft.com/dotnet/api/System.Windows.Markup.IUriContext).
+* `IXamlTypeResolver`, which binds a Xaml markup name to a type. This aligns with WPF's [IXamlTypeResolver](https://docs.microsoft.com/en-us/dotnet/api/system.windows.markup.ixamltyperesolver).
 
 
 
