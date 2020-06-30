@@ -3,7 +3,7 @@
 
 _This spec adds a serviceProvider to the existing [MarkupExtension](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Markup.MarkupExtension) class. ([Proposal](https://github.com/microsoft/microsoft-ui-xaml/issues/741))_
 
-Xaml markup has a [markup extension](https://docs.microsoft.com/en-us/dotnet/desktop-wpf/xaml-services/markup-extensions-overview) feature which is a builder pattern, similar to a .Net StringBuilder. It lets you create, modify, and then retrieve a value.
+Xaml markup has a [markup extension](https://docs.microsoft.com/en-us/dotnet/desktop-wpf/xaml-services/markup-extensions-overview) feature which is a builder pattern, similar to a .Net StringBuilder. A markup extension lets you create, modify, and then retrieve a value, and the Xaml loader knows how to use it.
 
 When you write a custom markup extension (see the Description section below), you override the `ProvideValue` method to return the built value. The ProvideValue method is different in WinUI than it is in WPF, because WPF passes an extra [IServiceProvider](http://msdn.microsoft.com/library/System.IServiceProvider) parameter:
 
@@ -27,11 +27,11 @@ protected override object ProvideValue(IServiceProvider serviceProvider)
 
 The service provider can be used, for example, to discover the property being assigned to.
 
-This spec is adding a new version of ProvideValue that passes a service provider.
+This spec is adding a new version of ProvideValue that passes a similar service provider.
 
 > To do: Add an Issue to cs/winrt to project IServiceProvider to .Net5 as [System.IServiceProvider](http://msdn.microsoft.com/library/System.IServiceProvider)?
 
-# Description
+## How markup extensions work in Xaml markup
 
 A developer defines a custom markup extension by subclassing the MarkupExtension class and overriding the ProvideValue method. This can then be used in Xaml markup: the markup extension can be created using the "{ }" markup expression syntax, and the return value from ProvideValue will be set as the property value.
 
@@ -61,23 +61,11 @@ On an en-US machine, this will produce something like:
  
 ![MarkupExtension sample](MESample.png)
 
-## MarkupExtension.ProvideValue virtual method
-
-A markup extension overrides the ProvideValue method, and returns a value from it that the Xaml loader sets as a property value.
-
-There are two versions of ProvideValue, one that passes no parameters and one that passes a service provider. From the service provider, a markup extension implementation can retrieve the following services:
-* `IProvideValueTarget`, which provides information about the type/property the markup extension is being applied to. This aligns with WPF's [IProvideValueTarget](https://docs.microsoft.com/dotnet/api/System.Windows.Markup.IProvideValueTarget).
-* `IRootObjectProvider`, which provides a reference to the root object in the markup. This aligns with WPF's [IRootObjectProvider](https://docs.microsoft.com/dotnet/api/System.Xaml.IRootObjectProvider).
-* `IUriContext` , which provides the base URI of the markup. This aligns with WPF's [IUriContext](https://docs.microsoft.com/dotnet/api/System.Windows.Markup.IUriContext).
-* `IXamlTypeResolver`, which binds a Xaml markup name to a type. This aligns with WPF's [IXamlTypeResolver](https://docs.microsoft.com/en-us/dotnet/api/system.windows.markup.ixamltyperesolver).
-
-
-
 # Examples
 
 ## IProvideValueTarget
 
-The following example shows a custom markup extension whose provided value changes based on the specific property being targeted by the custom markup extension. In this case, the developer wants something that will automatically use an AcrylicBrush for the [Control.Background](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Control.Background) or [Border.Background](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Border.Background) properties, but uses a [SolidColorBrush](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Media.SolidColorBrush) for all other properties.
+The following example shows a custom markup extension whose provided value changes based on the specific property being targeted by the custom markup extension. In this case, the developer wants something that will automatically use an AcrylicBrush for the [Control.Background](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Control.Background) or [Border.Background](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Border.Background) properties, but uses a [SolidColorBrush](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Media.SolidColorBrush) for all other properties. The ProvideValue implementation deterimines what value to return by using the IProvideValueTarget it gets from the IXamlServiceProvider parameter passed to ProvideValue.
 
 ```cs
 public class BrushSelectorExtension : MarkupExtension
@@ -121,7 +109,9 @@ public class BrushSelectorExtension : MarkupExtension
 
 > Some more realistic example?
 
-For example, with this markup extension:
+The following example shows a custom markup extension that returns a string describing the object at the root of the markup. It does this by getting the IRootObjectProvider from the IXamlServiceProvider parameter passed to ProvideValue.
+
+With this markup extension:
 
 ```cs
 public class TestMarkupExtension : MarkupExtension
@@ -137,7 +127,7 @@ public class TestMarkupExtension : MarkupExtension
 the TextBlock in this markup will display “App1.MainPage”:
 
 ```xml
-<Page x:Class="App52.MainPage"
+<Page x:Class="App1.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:App52"
@@ -154,6 +144,16 @@ the TextBlock in this markup will display “App1.MainPage”:
 > Todo
 
 # API Notes/Remarks
+
+## MarkupExtension.ProvideValue virtual method
+
+A markup extension overrides the ProvideValue method, and returns a value from it that the Xaml loader sets as a property value.
+
+There are two versions of ProvideValue, the existing one that passes no parameters and one the new one that passes a service provider. From the service provider, a markup extension implementation can retrieve the following services:
+* `IProvideValueTarget`, which provides information about the type/property the markup extension is being applied to. This aligns with WPF's [IProvideValueTarget](https://docs.microsoft.com/dotnet/api/System.Windows.Markup.IProvideValueTarget).
+* `IRootObjectProvider`, which provides a reference to the root object in the markup. This aligns with WPF's [IRootObjectProvider](https://docs.microsoft.com/dotnet/api/System.Xaml.IRootObjectProvider).
+* `IUriContext` , which provides the base URI of the markup. This aligns with WPF's [IUriContext](https://docs.microsoft.com/dotnet/api/System.Windows.Markup.IUriContext).
+* `IXamlTypeResolver`, which binds a Xaml markup name to a type. This aligns with WPF's [IXamlTypeResolver](https://docs.microsoft.com/en-us/dotnet/api/system.windows.markup.ixamltyperesolver).
 
 ## IXamlServiceProvider interface
 Gets the service object of the specified type.
@@ -175,12 +175,12 @@ Xaml markup extensions offer this interface in the IXamlServiceProvider paramete
 ## IUriContext interface
 Provided by the Xaml loader to markup extensions to expose the base URI of the markup being loaded
 
-Xaml markup extensions offer this interface in the IXamlServiceProvider parameter.  The URI is that of the markup file being loaded (the `resourceLocator' value passed to [Application.LoadComponent](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Application.LoadComponent)).
-
+Xaml markup extensions offer this interface in the IXamlServiceProvider parameter.  The URI is that of the markup file being loaded (the `resourceLocator` value passed to [Application.LoadComponent](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Application.LoadComponent)).
 
 
 # API Details
 
+```cs
 namespace Microsoft.UI.Xaml
 {
     interface IXamlServiceProvider 
@@ -246,7 +246,7 @@ namespace Microsoft.UI.Xaml.Markup
         Windows.UI.Xaml.Interop.TypeName DeclaringType{ get; };
     };
 }
-
+```
 
 
 # Appendix
