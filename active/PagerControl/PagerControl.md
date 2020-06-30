@@ -41,11 +41,11 @@ Pager control is a customizable pager UI widget with generic events that can be 
 
 **Important APIs:** [PagerControl class](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.pagercontrol)
 
-Pager control can be configured to use a ComboBox, editable NumberBox, or numeric Button panel as the core pager control.
+Pager control can be configured to use a ComboBox, NumberBox, or numeric Button panel as the core pager control.
 
 ## Is this the right control? 
 
-Use a **PagerControl** to create an accessible navigation interface for views that have multiple pages to display. If you have more than 7 pages worth of data, we suggest using the combo box or number box display mode instead of the number panel. This will provide a better user experience and a smoother keyboarding experience. 
+Use a **PagerControl** to create an accessible navigation interface for views that have multiple pages to display. 
 
 ## Examples
 <!-- Use this section to explain the features of the API, showing
@@ -249,6 +249,7 @@ runtimeclass PagerControl
     Boolean EllipsisShowFirstAndLast;
     Integer EllipsisMaxBefore;
     Integer EllipsisMaxAfter;
+    Integer SelectedIndex;
     
     String PrefixText;
     String SuffixText;
@@ -290,6 +291,7 @@ runtimeclass PagerControl
     static Windows.UI.Xaml.DependencyProperty EllipsisShowFirstAndLastProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty EllipsisMaxBeforeProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty EllipsisMaxAfterProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty SelectedIndexProperty{get; };
     
     static Windows.UI.Xaml.DependencyProperty PrefixTextProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty SuffixTextProperty{ get; };
