@@ -303,7 +303,7 @@ For example, implementation details. -->
 
 ## Accessibility
 
-### UI AUtomation Patterns 
+### UI Automation Patterns 
 
 ### Keyboarding
 
