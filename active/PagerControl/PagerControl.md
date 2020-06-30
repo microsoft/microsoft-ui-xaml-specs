@@ -29,7 +29,7 @@ modifying an existing API. -->
 area, just explanation enough to understand this new API, rather than telling
 the reader "go read 100 pages of background information posted at ...". -->
 
-The absence of a standard UI pager control, last seen as DataPager in Silverlight, has been a pain point in both WPF and UWP that has forced a variety of unfavorable workarounds for developers. Inclusion of this control in UWP would resolve an ecosystem gap and enable developers to efficiently deliver UI paging experiences in their applications. Through XAML Islands, it may also provide an opportunity to benefit WPF developers working with DataGrid or ListView. The scope of this proposal is not provide a data paging solution at this time but to start with UI paging as a foundation on top of which data paging may be later integrated.
+The absence of a standard UI pager control, last seen as DataPager in Silverlight, has been a pain point in both WPF and UWP that has forced a variety of unfavorable workarounds for developers. Inclusion of this control in UWP would resolve an ecosystem gap and enable developers to efficiently deliver UI paging experiences in their applications. Through XAML Islands, it may also provide an opportunity to benefit WPF developers working with DataGrid or ListView. The scope of this proposal is not to provide a data paging solution at this time, but to start with UI paging as a foundation on top of which data paging may be later integrated.
 
 
 ## Description
@@ -45,7 +45,7 @@ Pager control can be configured to use a ComboBox, editable NumberBox, or numeri
 
 ## Is this the right control? 
 
-Use a **PagerControl** to create an accessible navigation interface for views that have multiple pages to display.
+Use a **PagerControl** to create an accessible navigation interface for views that have multiple pages to display. If you have more than 7 pages worth of data, we suggest using the combo box or number box display mode instead of the number panel. This will provide a better user experience and a smoother keyboarding experience. 
 
 ## Examples
 <!-- Use this section to explain the features of the API, showing
@@ -61,7 +61,7 @@ example code with each description. The general format is:
 <!-- As an example of this section, see the Examples section for the PasswordBox control 
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 
-A pager control can have several configurations, including these notable ones.
+A pager control can have several configurations, including these notable ones. 
 
 ### ComboBox Pager Control
 
@@ -70,7 +70,7 @@ A pager control can have several configurations, including these notable ones.
 XAML
 ```XAML
 <GridView x:Name="gridView1" ... />
-    <controls:PagerControl x:Name="MainPagerControl"
+<controls:PagerControl x:Name="MainPagerControl"
         DisplayMode="ComboBox"
 	NumberOfPages="10"
         FirstButtonVisibility="None"
@@ -96,7 +96,7 @@ XAML
 XAML
 ```XAML
 <GridView x:Name="gridView1" ... />
-    <controls:PagerControl x:Name="MainPagerControl"
+<controls:PagerControl x:Name="MainPagerControl"
         DisplayMode="NumericalButtonPanel"
 	NumberOfPages="10"
         FirstButtonVisibility="AlwaysVisible"
@@ -123,7 +123,7 @@ XAML
 XAML
 ```XAML
 <GridView x:Name="gridView1" ... />
-    <controls:PagerControl x:Name="MainPagerControl"
+<controls:PagerControl x:Name="MainPagerControl"
         DisplayMode="NumberBox"
         NumberOfPages="5"
 	FirstButtonVisibility="None"
@@ -141,7 +141,9 @@ XAML
 
 ## Adding a PagerControl to Your Application
 
-Here is the XAML to show how to add the PagerControl to your application. It can be added on the page as shown below, or can be used in the template of the layout view you prefer to use. PagerControl is added to the template for DataGrid and ItemsRepeater in WinUI 2.x and will be added to ListView and GridView in WinUI 3. 
+Here is an example for how to add the PagerControl to your application. It can be added on the page as shown below, or can be used in the template of the layout view you prefer to use. PagerControl is added to the template for DataGrid and ItemsRepeater in WinUI 2.x and will be added to ListView and GridView in WinUI 3. 
+
+(Insert XAML and code behind example here. This will also be added to the XAML controls gallery.)
 
 
 ## Remarks
@@ -166,12 +168,12 @@ with a "///" comment above the member or type. -->
 
  | Component |  Notes |
 |:---:|:---|
-| DisplayMode | * Used to set either a button panel (default) or an editable ComboBox as the indexing component. <br> * When set to be a button panel, the number of visible indices can be specified. <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760354-23671280-fc79-11e8-804b-71b5b84a80f5.png) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![image](https://user-images.githubusercontent.com/16964652/49760373-2eba3e00-fc79-11e8-8304-12d7b6ee2c89.png) |
+| DisplayMode | * Used to set a button panel, editable ComboBox (default), or NumberBox, as the indexing component. <br> * When set to be a button panel, the number of visible indices can be specified. <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760354-23671280-fc79-11e8-804b-71b5b84a80f5.png) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![image](https://user-images.githubusercontent.com/16964652/49760373-2eba3e00-fc79-11e8-8304-12d7b6ee2c89.png) |
 | LastButton | * Button displaying text and/or glyph indicating that the user may navigate to the last index. <br> * Automatically disabled when at last index. <br> * Can be set to not be visible when at the last index.  <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760392-3a0d6980-fc79-11e8-8d96-a811cee1c759.png) |
 | FirstButton | * Button displaying text and/or glyph indicating that the user may navigate to the first index. <br> * Automatically disabled when at first index. <br> * Can be set to not be visible when at the first index.  <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760409-485b8580-fc79-11e8-9545-a580f6016f6c.png) |
 | NextButton | * Button displaying text and/or glyph indicating that the user may navigate to the next index. <br> * Automatically disabled when at last index. <br> * Can be set to not be visible when at the last index. <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760426-54474780-fc79-11e8-9446-ee2886941a24.png) |
 | PreviousButton | * Button displaying text and/or glyph indicating that the user may navigate to the previous index. <br> * Automatically disabled when at first index. <br> * Can be set to not be visible when at the first index.  <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760443-62956380-fc79-11e8-8f93-562a92fde666.png) |
-| Ellipsis | * Button, often reading "...", used between indexes and before or after the first/last index to indicate an accessible but omitted range of indexes. <br> * MaxBefore and MaxAfter properties can be used to set  how many indices appear between the current page and the ellipsis before/after it. <br> * Visibility of the first/last index can be disabled. <br> * Only visible when using button panel as the display mode.  <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760513-85277c80-fc79-11e8-926e-3453ea29b0a3.png) |
+| Ellipsis | * Inactive Button, often reading "...", used between indexes and before or after the first/last index to indicate an accessible but omitted range of indexes. <br> * MaxBefore and MaxAfter properties can be used to set  how many indices appear between the current page and the ellipsis before/after it. <br> * Visibility of the first/last index can be disabled. <br> * Only visible when using button panel as the display mode.  <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760513-85277c80-fc79-11e8-926e-3453ea29b0a3.png) |
 | PrefixText | * Text displayed before the editable ComboBox indexing component. <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760540-93759880-fc79-11e8-9c4f-3c3222b95a13.png) |
 | NumberOfPages | * When a total number of indices (N) is given, this suffix string will appear after the editable ComboBox indexing component and read "of N". Localization will put "N" where it should be in a given language. <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760557-9a9ca680-fc79-11e8-943f-3425d993fdeb.png) |
 
@@ -303,21 +305,50 @@ For example, implementation details. -->
 
 ### UI AUtomation Patterns 
 
-UI pager will use the button control type for the first, last, next, and previous buttons. Button will also be used for the number panel display mode. The combo box control type will be used for comboBox display mode and edit will be used for the NumberBox mode. 
+### Keyboarding
 
-### Keyboard Navigation and Narrator 
+* End users should be able to tab to focus on the control. 
+* Left and right arrows will navigate between the items in the control. 
+* Page up and page down buttons should advance the focused index by a large amount (the amount can be configured by the developer).  
+        * An example is if the user is interacting with the number panel mode and the focus is on the page 2 button, when the user hits page down, the focus will move to the page 12 button (if page 12 exists) or the last page button. 
+* Home/escape keys should move focus from an individual item back to the entire control.
+* (Combo box mode only) If the end user is focused on the combo box, the user can hit enter to expand the drop down menu.
+* (Combo box mode only) If the end user is focused on the combo box and the drop down is expanded, the home/escape key should collapse the drop down menu and have focus remain on the combo box. 
+* (Combo box mode only) Alt + down shortcut should expand the drop down menu 
+* (Combo box mode only) Alt + up shortcut should collapse the drop down menu
+* (Number box mode only) Up and down arrows should increase or decrease the value in the number box by 1. 
 
-| State | Action | Narrator |
-|:---|:---|:---|
-| UI pager is first focused on by tabbing | Focus defaults to the next page button if available (current page otherwise) after announcing accessible name of UI pager. | “Page selector. Next page is N." |
-| UI pager is tabbed through | Tab Button: <br> Will go through all actionable items in order without regard to groups. <br> <br> Arrow keys: <br>Will be able to explore groups in the specified directions. When focus is on CombBox, the up and down arrows will let the end user navigate through the individual items. Pressing the down arrow key at the bottom of the ComboBox will wrap the end user to the top. <br> <br> Escape: <br> Will escape UI pager. In the ComboBox, it will close the box and if a value was selected, it will be reset to the original value. <br> <br> Enter and Spacebar: <br> Will select the component focused on. <br> <br> Home: <br> Will move focus to "go back" elements. In the ComboBox, it will jump the user to the first index. <br> <br> End: <br> Will move focus to "go forward" elements. In the ComboBox, it will jump the user to the last index. | Narrator will announce an accessible name of the visual component. Ex:<br><br> “first page button” <br><br> “previous page button” <br><br> “1st page” <br><br> “current page” <br><br> "page selection drop down menu: current page is 1” |
-
-### GamePad 
-
-| State | Action |
-|:---|:---|
-| UI pager receives focus| Focus defaults to the next page button if available (current page otherwise) |
-| UI pager is navigated through | D-Pad: <br> Will go through all actionable items in order without regard to groups. <br> <br> D-Pad: <br>Will be able to explore groups in the specified directions. When focus is on CombBox, the up and down arrows will let the end user navigate through the individual items. Pressing the down arrow key at the bottom of the ComboBox will wrap the end user to the top. <br> <br> B Button: <br> Will escape UI pager. In the ComboBox, it will close the box and if a value was selected, it will be reset to the original value. <br> <br> A Button: <br> Will select the component focused on. <br> <br> |
+### Narrator
+* Should be added as a navigation landmark. 
+* When the focus is on the control, narrator will announce _____. 
+* When the focus is on the first, last, previous, or next button narrator will announce "first page", "last page", "next page", or "previous page". 
+        * If the buttons have text properties set by the developer, narrator will announce that text instead of the default announcement. 
+* When the focus is on a number button, narrator will announce " page x". 
+* Combo box and number box modes will use the default narrator announcements for combo box and number box. 
 
 ## Data and Intellegence Metrics 
+
+Adoption and validation of the control in the community
+* Measurement: Use telemetry to determine how many first and third party developers are using the control in preview. 
+* Measurement: Count of posts providing feedback to us through Github and Discord. 
+
+Questions that can be answered through telemetry metrics to help focus future features and improvements: 
+
+Which display mode is the most commonly used? 
+* Measurement: Count of how many applications include the pager control type broken out by display mode.
+
+Which layout view is this control being used with the most?  
+ * Help drive improvements for keyboarding and to detemine which layout views we should focus on adding pager control to first. I'm not sure if this is something that can be measured. 
+
+How often are developers using this control with an indefinite number of pages?
+* Measurement: Count of how many applications include the pager control type and have the NumberOfPages property empty. 
+
+
+## Open Questions 
+
+* I need help understanding how to choose what automation control type could be used for a control like this. Can it be a combination of control types?
+* Can the default behavior for combo box and number box be added to pager control? Does anything special need to happen in order to get that functionality?
+* I'm not sure what narrator should announce when focus is on the control. 
+* Accessibility suggested that this control should be added as a navigation landmark. Does the team agree with that suggestion?
+* It would be cool to measure which layout view is most commonly used with the pager control, is that possible to measure using telemetry?
 
