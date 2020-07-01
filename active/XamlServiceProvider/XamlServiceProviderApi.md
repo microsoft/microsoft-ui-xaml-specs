@@ -104,7 +104,6 @@ public class BrushSelectorExtension : MarkupExtension
 </StackPanel>
 ```
 
-
 ## IRootObjectProvider
 
 > Some more realistic example?
@@ -141,7 +140,42 @@ the TextBlock in this markup will display “App1.MainPage”:
 
 ## IUriContext 
 
-> Todo
+The following example shows a custom markup extension that converts a relative URI to an absolute URI. It does this by getting the IUriContext from the IXamlServiceProvider parameter passed in to ProvideValue. IUriContext provides the URI of the markup being loaded, for example this could be "ms-appx:///MainPage.xaml".
+
+This markup extension enables the following markup, where a property requires an absolute URI:
+
+```xml
+<SomeControl AbsoluteUri="{RelativeUriResolver 'image.jpg'}"
+```
+
+```cs
+public class RelativeUriResolver : MarkupExtension
+{
+    public RelativeUriResolver(Uri uri)
+    {
+        SourceUri = uri;
+    }
+    public Uri SourceUri { get; set; }
+    protected override object ProvideValue(IXamlServiceProvider provider)
+    {
+        if(SourceUri == null || SourceUri.IsAbsoluteUri)
+        {
+            return SourceUri;
+        }
+
+        var uriContext = provider.GetService(typeof(IUriContext)) as IUriContext;
+        if (uriContext != null || uriContext.BaseUri != null)
+        {
+            if (Uri.TryCreate(uriContext.BaseUri, "foo.img", out var uri2))
+            {
+                return uri2;
+            }
+        }
+
+        return SourceUri;
+    }
+}
+```
 
 # API Notes/Remarks
 
@@ -173,10 +207,9 @@ Describes a service that can return the root object of the markup tree being par
 Xaml markup extensions offer this interface in the IXamlServiceProvider parameter.  The root object is the root of the markup being loaded.
 
 ## IUriContext interface
-Provided by the Xaml loader to markup extensions to expose the base URI of the markup being loaded
+Provided by the Xaml loader to markup extensions to expose the base URI of the markup being loaded (in the BaseUri property)
 
-Xaml markup extensions offer this interface in the IXamlServiceProvider parameter.  The URI is that of the markup file being loaded (the `resourceLocator` value passed to [Application.LoadComponent](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Application.LoadComponent)).
-
+Xaml markup extensions offer this interface in the IXamlServiceProvider parameter.  The URI is that of the markup file being loaded (the `resourceLocator` value passed to [Application.LoadComponent](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Application.LoadComponent)). The BaseUri property could be null.
 
 # API Details
 
@@ -199,7 +232,6 @@ namespace Microsoft.UI.Xaml.Markup
         // ** New **    
         overridable Object ProvideValue(Microsoft.UI.Xaml.IXamlServiceProvider serviceProvider);
     };
-
 
     interface IProvideValueTarget 
     {
@@ -224,18 +256,12 @@ namespace Microsoft.UI.Xaml.Markup
 
     unsealed runtimeclass MarkupExtension
     {
-        [method_name("CreateInstance")] MarkupExtension();
+        MarkupExtension();
     
-        [contract(Windows.Foundation.UniversalApiContract, 5)]
-        [overridable_name("Windows.UI.Xaml.Markup.IMarkupExtensionOverrides", 393779bf-b9c0-4ffb-a57f-58e7356e425f)]
-        {
-            overridable Object ProvideValue();
-        }
-    
-        [contract(Windows.Foundation.UniversalApiContract, 8)]
-        {
-            overridable Object ProvideValue(Windows.UI.Xaml.IXamlServiceProvider serviceProvider);
-        }
+        overridable Object ProvideValue();
+
+        // New
+        overridable Object ProvideValue(Windows.UI.Xaml.IXamlServiceProvider serviceProvider);
     };
 
     runtimeclass ProvideValueTargetProperty
@@ -248,5 +274,6 @@ namespace Microsoft.UI.Xaml.Markup
 }
 ```
 
-
 # Appendix
+
+
