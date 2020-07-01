@@ -12,7 +12,7 @@ WinUI:
 ```cs
 protected override object ProvideValue()
 {
-    return DateTime.Now.ToString(Format);
+    return ...
 }
 ```
 
@@ -21,7 +21,7 @@ WPF:
 ```cs
 protected override object ProvideValue(IServiceProvider serviceProvider)
 {
-    return DateTime.Now.ToString(Format);
+    return ...
 }
 ```
 
@@ -31,7 +31,7 @@ This spec is adding a new version of ProvideValue that passes a similar service 
 
 > To do: Add an Issue to cs/winrt to project IServiceProvider to .Net5 as [System.IServiceProvider](http://msdn.microsoft.com/library/System.IServiceProvider)?
 
-## How markup extensions work in Xaml markup
+## How markup extensions are used in Xaml markup
 
 A developer defines a custom markup extension by subclassing the MarkupExtension class and overriding the ProvideValue method. This can then be used in Xaml markup: the markup extension can be created using the "{ }" markup expression syntax, and the return value from ProvideValue will be set as the property value.
 
@@ -145,22 +145,22 @@ the TextBlock in this markup will display “App1.MainPage”:
 
 # API Notes/Remarks
 
-## MarkupExtension.ProvideValue virtual method
+## MarkupExtension.ProvideValue(IXamlServiceProvider) virtual method
 
-A markup extension overrides the ProvideValue method, and returns a value from it that the Xaml loader sets as a property value.
+When implemented in a derived class, returns an object that is provided as the value of the target property for this markup extension.
 
-There are two versions of ProvideValue, the existing one that passes no parameters and one the new one that passes a service provider. From the service provider, a markup extension implementation can retrieve the following services:
+**Remarks**
+
+The IXamlServiceProvider argument can be used to retrieve the following services:
 * `IProvideValueTarget`, which provides information about the type/property the markup extension is being applied to. This aligns with WPF's [IProvideValueTarget](https://docs.microsoft.com/dotnet/api/System.Windows.Markup.IProvideValueTarget).
 * `IRootObjectProvider`, which provides a reference to the root object in the markup. This aligns with WPF's [IRootObjectProvider](https://docs.microsoft.com/dotnet/api/System.Xaml.IRootObjectProvider).
 * `IUriContext` , which provides the base URI of the markup. This aligns with WPF's [IUriContext](https://docs.microsoft.com/dotnet/api/System.Windows.Markup.IUriContext).
 * `IXamlTypeResolver`, which binds a Xaml markup name to a type. This aligns with WPF's [IXamlTypeResolver](https://docs.microsoft.com/en-us/dotnet/api/system.windows.markup.ixamltyperesolver).
 
+There are two overloads of the virtual ProvideValue method, with/without the IXamlServiceProvider parameter. During Xaml markup loading, ProvideValue(IXamlServiceProvider) is called. Its virtual implementatiohn calls ProvideValue(). So not overriding ProvideValue(IXamlServiceProvider), or calling the base implementation of it, calls ProvideValue().
+
 ## IXamlServiceProvider interface
 Gets the service object of the specified type.
-
-There are two versions of the virtual ProvideValue method, you should only override one.
-
-> Issue: how do we know which version has been overridden? We have the same scenario with [DataTemplateSelector.SelectTemplateCore](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.DataTemplateSelector.SelectTemplateCore). Proposal: the virtual (base) version of the parameterless override returns an internal sentinal value, and is called first.
 
 ## IProvideValueTarget interface
 Provides a target object and property.
