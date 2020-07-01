@@ -380,23 +380,83 @@ TBD: define event behavior, similar to TeachingTip?
 TBD after the first (InfoBar) mode is mostly defined.
 
 # Inputs and Accessibility
-## UI Automation patterns
-TBD?
+## UI Automation Patterns 
 
-## Keyboard Navigation
-TBD
+AppNotification will *alternate between Pane for persistent TeachingTips and Window for light-dismiss enabled TeachingTips* with IScrollProvider for the (conditionally) scrollable content area within the notification. 
+
+AppNotification will implement a custom "notification" Landmark.
+
+Thoughts/Questions
+- A grouping of notifications in an AppNotifications host would use IItemContainerProvider for the control pattern interface, right?
+ - Outside of the scope of this accessibility review, but what is your opinion of a host control for these notifications? Starting to worry about scope creep :)
+- If there were no host control, would there be different control patterns or interfaces to use to support pop-up or inline behavior? Or is IScrollProvider fine?
+- Is the custom landmark a dev implementation note?
+- Teaching Tip alternates between Pane and Window for persistent and light-dismiss notifications, what is this in reference to? I notice the Window control pattern has a provider interface but not Pane.
+- Do we need to implement a OnCreateAutomationPeer? What does that entail?
+
+## Keyboard Navigation 
+
+Thoughts/Questions
+- Do you think there should be custom keyboarding behavior if there is a grouping control?
+
+| State | Action |
+|:---|:---|
+| Notification appears | No action is needed invoke the notification. |
+| Notification receives focus | F6: <br> AppNotification will be added to F6 region navigation stops so that F6 may be used to focus into and out of the notification. <br><br> Tab: <br> If Narrator is active, AppNotification will automatically be added to the top of Narrator navigation stops thanks to its UI Automation Pattern(s), similar to popups or ContentDialog, and can be accessed via tabbing. |
+| Notification is tabbed through | Tab Button: <br> Will go through all actionable items, regardless of group, in order. When tab is pressed on the last element in the notification, focus will cycle to the first element in the notification.  <br> <br> Left + Right Arrow Keys: <br> Can be used to navigate between the footer Action and Close buttons if both are present. <br><br> Escape: <br> Will result in closing the notification. |
+| Notification is dismissed | 1. X Button is pressed. <br> 2. Close Button is pressed. <br> 3. Action Button is pressed. <br><br> * Tab increments focus to the next element but does not close the notification. |
 
 ## Narrator
-TBD
+
+AppNotification will leverage the existing APIs used by Windows Notifications.
+
+Thoughts/Questions:
+- If there was a custom control to handle grouping of multiple controls, then that behavior could be expressed in Narrator with phrases like "AppNotification 'Info', x of n" similar to RadioButtons.
+
+| State | Action |
+|:---|:---|
+| Notification appears | Narrator will say "Click Up to move to new in-app notification from" + App Name + Notification Contents | 
+| Notification receives focus | Ctrl + Narrator + Up arrow: <br> Will move focus to tip and Narrator will read the element in focus. |
+| Notification is tabbed through | Tab Button: <br> Will navigate through all actionable items, regardless of group, in order. When tab is pressed on the last element in the notification, focus will cycle to the first element in the notification.  <br> <br> Swipe (for touch screen devices): <br> Will navigate through all actionable items, regardless of group, in order. When Swiping on the last element in the notification, focus will move to Narrator's fullscreen invisible Close Button and the user may double tap the screen to close the window. Swiping again will move focus out of the tip. <br><br> Left + Right Arrow Keys: <br> Can be used to navigate between the footer Action and Close buttons if both are present. <br><br> Escape: <br> Will result in closing the tip. |
+| Notification is dismissed | 1. Header Close Button is invoked. <br> 2. Footer Close Button is invoked. <br> 3. Action Button is invoked. <br> 4. Swipe (for touch screen devices) moves focus to Narrator's fullscreen invisible Close Button and the user double taps the screen to close the window. * Tab increments focus to the next element but does not close the tip. |
 
 ## Gamepad
-TBD
+
+Thoughts/Questions:
+- Should this section be included currently?
+
+| State | Action |
+|:---|:---|
+| Notification appears | No action is needed invoke the notification. |
+| Notification receives focus | Spatial navigation: <br> Spatial navigation may be used to access tip. Guidance will be added to advise proper design consideration for tip accessibility and testing for gamepad. |
+| Notification is navigated | Spatial navigation: <br> Will spatially navigate focus across actionable items (without respect to group).  <br> <br> A Button: <br> Will interact with the item in focus, such as "press" the action or close button. <br><br> B Button: <br> Will result in closing the tip. |
+| Notification is dismissed | 1. Header "X" Close Button is pressed. <br> 2. Footer Close Button is pressed. <br> 3. Action Button is pressed. <br> 4. B Button returns focus to the element previously in focus. |
+
+# Globalization and Localization
+Thoughts/Questions:
+- This section is not in some other specs, what should be included here specifically for this/a control?
+## Color and Icon
+When customizing the color and icon outside of the preset Severity levels, keep in mind user expectations for the connotations from the set of standard icons and colors.
+
+Please view the UX guidance for [Standard Icons](https://docs.microsoft.com/en-us/windows/win32/uxguide/vis-std-icons) and [Color](https://docs.microsoft.com/en-us/windows/win32/uxguide/vis-color) to ensure your message is communicated clearly.
+### Severity
+ Avoid setting the Severity property for a notification that does not match the information communicated in the Title, Message, or custom content.
+ 
+ The accompanying information should aim to communicate the following to use that Severity.
+ - Error: An error or problem that has occurred.
+ - Warning: A condition that might cause a problem in the future.
+ - Information: Useful information.
+
+Icons and color should not be the only UI components signifying meaning for your notification. Text in the notification's Title and/or Message should be included for accessibility reasons.
+
+## Message 
+- Titles or messages translated to other languages may vary greatly in length.
+- For custom content, avoid positioning based on message length or other UI elements in a specific language.
 
 # Remarks
 ## Recommendations
-TBD
 - Dark mode guidances
-- Conveying meaning via color AND icon for accessibility
+- Popup for toast notifications, StackPanel for inline notifications
 
 When to show an app notification?
 
