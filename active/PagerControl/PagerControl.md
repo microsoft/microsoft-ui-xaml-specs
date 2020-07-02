@@ -37,7 +37,7 @@ The absence of a standard WinUI pager control, last seen in Xaml as DataPager in
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
 
-Pager control is a customizable pager UI widget with generic events that can be configured to navigate pages for several view controls.
+Use PagerControl to provide the user with a way to page through large content. This can be configured to navigate pages for several view controls.
 
 **Important APIs:** [PagerControl class](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.pagercontrol)
 
