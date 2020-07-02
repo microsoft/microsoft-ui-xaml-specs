@@ -29,7 +29,7 @@ modifying an existing API. -->
 area, just explanation enough to understand this new API, rather than telling
 the reader "go read 100 pages of background information posted at ...". -->
 
-The absence of a standard UI pager control, last seen as DataPager in Silverlight, has been a pain point in both WPF and UWP that has forced a variety of unfavorable workarounds for developers. Inclusion of this control in UWP would resolve an ecosystem gap and enable developers to efficiently deliver UI paging experiences in their applications. Through XAML Islands, it may also provide an opportunity to benefit WPF developers working with DataGrid or ListView. The scope of this proposal is not to provide a data paging solution at this time, but to start with UI paging as a foundation on top of which data paging may be later integrated.
+The absence of a standard WinUI pager control, last seen in Xaml as DataPager in Silverlight, has been a pain point in both WPF and UWP that has forced a variety of unfavorable workarounds for developers. Inclusion of this control in UWP would resolve an ecosystem gap and enable developers to efficiently deliver UI paging experiences in their applications. Through XAML Islands, it may also provide an opportunity to benefit WPF developers working with DataGrid or ListView. The scope of this proposal is not to provide a data paging solution at this time, but to start with UI paging as a foundation on top of which data paging may be later integrated.
 
 
 ## Description
@@ -353,4 +353,3 @@ How often are developers using this control with an indefinite number of pages?
 * I'm not sure what narrator should announce when focus is on the control. 
 * Accessibility suggested that this control should be added as a navigation landmark. Does the team agree with that suggestion?
 * It would be cool to measure which layout view is most commonly used with the pager control, is that possible to measure using telemetry?
-
