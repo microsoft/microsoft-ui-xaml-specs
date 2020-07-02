@@ -3,9 +3,9 @@
 
 _This spec adds a serviceProvider to the existing [MarkupExtension](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Markup.MarkupExtension) class. ([Proposal](https://github.com/microsoft/microsoft-ui-xaml/issues/741))_
 
-Xaml markup has a [markup extension](https://docs.microsoft.com/en-us/dotnet/desktop-wpf/xaml-services/markup-extensions-overview) feature which is a builder pattern, similar to a .Net StringBuilder. A markup extension lets you create, modify, and then retrieve a value, and the Xaml loader knows how to use it.
+Xaml markup has a [markup extension](https://docs.microsoft.com/en-us/dotnet/desktop-wpf/xaml-services/markup-extensions-overview) feature which lets you define a builder which is called by the Xaml loader.
 
-When you write a custom markup extension (see the Description section below), you override the `ProvideValue` method to return the built value. The ProvideValue method is different in WinUI than it is in WPF, because WPF passes an extra [IServiceProvider](http://msdn.microsoft.com/library/System.IServiceProvider) parameter:
+When you write a custom markup extension, you override the `ProvideValue` method to return the built value (see the next section for an example). The ProvideValue method is different in WinUI than it is in WPF, because WPF passes an extra [IServiceProvider](http://msdn.microsoft.com/library/System.IServiceProvider) parameter:
 
 WinUI:
 
@@ -27,13 +27,13 @@ protected override object ProvideValue(IServiceProvider serviceProvider)
 
 The service provider can be used, for example, to discover the property being assigned to.
 
-This spec is adding a new version of ProvideValue that passes a similar service provider.
+This spec is adding a new version of ProvideValue to WinUI that passes a similar service provider.
 
 > To do: Add an Issue to cs/winrt to project IServiceProvider to .Net5 as [System.IServiceProvider](http://msdn.microsoft.com/library/System.IServiceProvider)?
 
 ## How markup extensions are used in Xaml markup
 
-A developer defines a custom markup extension by subclassing the MarkupExtension class and overriding the ProvideValue method. This can then be used in Xaml markup: the markup extension can be created using the "{ }" markup expression syntax, and the return value from ProvideValue will be set as the property value.
+A developer defines a custom markup extension by subclassing the [MarkupExtension](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Markup.MarkupExtension) class and overriding the ProvideValue method. This can then be used in Xaml markup: the markup extension can be created using the "{ }" markup expression syntax, and the return value from ProvideValue will be set as the property value.
 
 For example, given this markup extension:
 
@@ -140,7 +140,7 @@ the TextBlock in this markup will display “App1.MainPage”:
 
 ## IUriContext 
 
-The following example shows a custom markup extension that converts a relative URI to an absolute URI. It does this by getting the IUriContext from the IXamlServiceProvider parameter passed in to ProvideValue. IUriContext provides the URI of the markup being loaded, for example this could be "ms-appx:///MainPage.xaml".
+The following example shows a custom markup extension that converts a relative URI to an absolute URI. It does this by getting the IUriContext from the IXamlServiceProvider parameter passed in to ProvideValue. IUriContext provides the URI of the markup being loaded.
 
 This markup extension enables the following markup, where a property requires an absolute URI:
 
@@ -166,9 +166,11 @@ public class RelativeUriResolver : MarkupExtension
         var uriContext = provider.GetService(typeof(IUriContext)) as IUriContext;
         if (uriContext != null || uriContext.BaseUri != null)
         {
-            if (Uri.TryCreate(uriContext.BaseUri, "foo.img", out var uri2))
+            // For example this will calculate "ms-appx:///Controls/ColorPicker.xaml" + "colorImage.jpg" to 
+            // "ms-appx:///Controls/colorImage.jpg"
+            if (Uri.TryCreate(uriContext.BaseUri, SourceUri, out var absoluteUri))
             {
-                return uri2;
+                return absoluteUri;
             }
         }
 
@@ -202,12 +204,12 @@ Provides a target object and property.
 Xaml markup extensions offer this interface in the IXamlServiceProvider parameter.  The target object/property are the instance and property identifier that the markup extension is being set on.
 
 ## IRootObjectProvider interface
-Describes a service that can return the root object of the markup tree being parsed.
+Provides a root object
 
 Xaml markup extensions offer this interface in the IXamlServiceProvider parameter.  The root object is the root of the markup being loaded.
 
 ## IUriContext interface
-Provided by the Xaml loader to markup extensions to expose the base URI of the markup being loaded (in the BaseUri property)
+Provides a URI
 
 Xaml markup extensions offer this interface in the IXamlServiceProvider parameter.  The URI is that of the markup file being loaded (the `resourceLocator` value passed to [Application.LoadComponent](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Application.LoadComponent)). The BaseUri property could be null.
 
@@ -224,15 +226,6 @@ namespace Microsoft.UI.Xaml
 
 namespace Microsoft.UI.Xaml.Markup
 {
-
-    unsealed runtimeclass MarkupExtension
-    {
-        overridable Object ProvideValue();
-
-        // ** New **    
-        overridable Object ProvideValue(Microsoft.UI.Xaml.IXamlServiceProvider serviceProvider);
-    };
-
     interface IProvideValueTarget 
     {
         Object TargetObject{ get; };
@@ -256,7 +249,7 @@ namespace Microsoft.UI.Xaml.Markup
 
     unsealed runtimeclass MarkupExtension
     {
-        MarkupExtension();
+        protected MarkupExtension();
     
         overridable Object ProvideValue();
 
