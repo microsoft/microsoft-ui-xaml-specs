@@ -1,21 +1,10 @@
 
-<!-- The purpose of this spec is to describe a new feature and
-its APIs that make up a new feature in WinUI. -->
-
-<!-- There are two audiences for the spec. The first are people
-that want to evaluate and give feedback on the API, as part of
-the submission process.  When it's complete
-it will be incorporated into the public documentation at
-docs.microsoft.com (http://docs.microsoft.com/uwp/toolkits/winui/).
-Hopefully we'll be able to copy it mostly verbatim.
-So the second audience is everyone that reads there to learn how
-and why to use this API. -->
 
 # Background
-The proposal for this feature can be found [here.](https://github.com/microsoft/microsoft-ui-xaml/issues/673) The existing API documentation for Grid can be found [here.](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.grid)
+_The proposal for this feature can be found [here.](https://github.com/microsoft/microsoft-ui-xaml/issues/673) The existing API documentation for Grid can be found [here.](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.grid)_
 
+The Xaml Grid  is one of the most widely used panels, yet it has a noticeably long and repetitive syntax which leads to a tough learning curve for new developers. Currently, to create a Grid, developers must define each row height and column width on separate lines:
 
-Grid is one of the most widely used controls, yet it has a noticeably long and repetitive syntax which leads to a tough learning curve for new developers. Currently, to create a Grid, developers must define each row height and column width on separate lines:
 ```xml
 <Grid>
     <Grid.ColumnDefinitions>
@@ -35,62 +24,104 @@ Grid is one of the most widely used controls, yet it has a noticeably long and r
 </Grid>
 ```
 
-This code creates multiple ColumnDefinition objects and RowDefinitions objects and adds them to the Grid's ColumnDefinitions and RowDefinitions collections, respectively. ColumnDefinitions and RowDefinitions are read-only properties of Grid, and the syntax shown above is currently the only way to update these properties. Due to their read-only nature, existing typeconverters cannot be used with these properties. 
+This code creates multiple ColumnDefinition objects and RowDefinitions objects and adds them to the Grid's ColumnDefinitions and RowDefinitions collections, respectively.  This is currently the only way to set these properties in markup.
 
-The existing syntax supports functionality such as:
-- Declaring max/min height or width
+The new APIs in this spec allow for this equivalent syntax:
+
 ```xml
-<Grid MaxHeight="600" MaxWidth="600">
-  ...
-</Grid>
+<Grid ColumnDefinitions="1*, 2*, Auto, *, 300" RowDefinitions="1*, Auto, 25, 14, 20" />
 ```
 
-- Data binding for row/height values:
-```xml
-<Grid>
-  <Grid.RowDefinitions>
-    <RowDefinition Height="{x:Bind sampleDataValue}" />
-    ...
-  </Grid.RowDefinitions>
-</Grid>
-```
-Grid's usability, intuitiveness, and developer satsifaction will be improved upon by utilizing a more succinct syntax, as will be described throughout this spec. With Grid as the inspiration, other collection-type properties will be able to take advantage of a more succinct syntax as well and see the same benefits.
-<!-- Use this section to provide background context for the new API(s) 
-in this spec. -->
-
-<!-- This section and the appendix are the only sections that likely
-do not get copied to docs.microsoft.com; they're just an aid to reading this spec. -->
-
-<!-- If you're modifying an existing API, included a link here to the
-existing page(s) -->
-
-<!-- For example, this section is a place to explain why you're adding this API rather than
-modifying an existing API. -->
-
-<!-- For example, this is a place to provide a brief explanation of some dependent
-area, just explanation enough to understand this new API, rather than telling
-the reader "go read 100 pages of background information posted at ...". -->
-
+This new syntax is enabled by a new Xaml language feature and associated APIs that can be used on any collection-typed property, and updates to Grid to use these APIs.
 
 # Description
-<!-- Use this section to provide a brief description of the feature.
-For an example, see the introduction to the PasswordBox control 
-(http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
-A new XAML language feature that allows the initialization of collection-type properties (including read-only properties) using element attribute syntax. We will also be assigning properties within Grid to make sure that this syntax works properly specifically for Grid's use cases.
+
+A new XAML language feature that allows the initialization of collection-type properties (including read-only properties) using Xaml attribute syntax. We will also be assigning properties within Grid to make sure that this syntax works properly specifically for Grid's use cases.
+
+Currently when you write Xaml markup such as
+
+```xml
+<Grid ColumnDefinitions="Auto, *">
+```
+
+the Xaml loader tries to convert the string "Auto, *" into a [ColumnDefinitionCollection](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ColumnDefinitionCollection) object, as that's the type of the [Grid.ColumnDefinitions](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Grid.ColumnDefinitions) property. That fails because there is no such conversion available. (And it wouldn't help if there was, because the property is read-only.)
+
+But the Xaml syntax rules now support this scenario by recognizing that the target property is a collection type, and treating the attribute value as a comma-separated list. The items of the collection are of type [ColumnDefinition](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ColumnDefinition), so a check is made to see if strings can be converted to ColumnDefinition instances. Since they can, the Xaml loader creates those instances and adds them to the collection.
+
+| Do we have documentation that explains what exactly a "collection" is?
+
+In order for a ColumnDefinition (or RowDefinition) to be created from a string there is a second new Xaml syntax rule: if a type can't be created from string, but type's [[ContentProperty](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Markup.ContentPropertyAttribute)] property can, the type is created and the property set.
+
+A backgrounder on the "content property", this isn't literally a property named "content" (although it is sometimes). This is essentially the default property of a class, and is marked with the [ContentProperty] attribute. For example, 
+
+For example the [SolidColorBrush](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Media.SolidColorBrush) looks like this in C#:
+
+```cs
+[ContentProperty(Name = "Color")]
+public sealed class SolidColorBrush : Brush
+{
+    ...
+    public Color Color { get; set; }
+}
+```
+
+Because Color is marked as the [ContentProperty], you can write this short-hand Xaml
+
+```xml
+<SolidColorBrush>Red</SolidColorBrush>
+```
+
+in addition to this more verbose syntax that works for any property, including the [ContentProperty]:
+
+```xml
+<SolidColorBrush>
+    <SolidColorBrush.Color>
+        Red
+    </SolidColorBrush.Color>
+</SolidColorBrush>
+```
+
+Back to Grid, with the new syntax feature and with ColumnDefinition.Width now marked as the [ContentProperty]:
+
+```cs
+[ContentProperty(Name = "Width")]
+public sealed class ColumnDefinition : DependencyObject
+{
+        public GridLength Width { get; set; }
+}
+```
+
+you can now write
+
+```xml
+<ColumnDefinition>Auto</ColumnDefinition>
+```
+
+(There's already a converter to create a GridLength from a string.)
+
+Putting that all together, with the original example:
+
+<Grid ColumnDefinitions="Auto, *">
+
+Two ColumnDefinition objects are created and added to the ColumnDefinitions collection property. The first has its Width set to GridLength.Auto, the second has it's Width set to 1 GridUnitType.Star.
+
+More formally:
+
+| This is where we should have syntax details like escaping and quoting
 
 1. When the parser encounters an element attribute that is assigning to a collection-type property, it recognizes that initialization of a collection from a string is being requested. 
+
+| What if the target property is settable and the type is createable from string? For example [Polyline.Points](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Shapes.Polyline.Points).
 
 2. The parser tokenizes the attribute value (a comma-delimited string) into a series of substrings, each of which represents the initialization value of a single element of the collection.
 
 3. The parser will perform the usual "initialize an instance of a type from a string" operation, using the assigned ContentProperty with the string as an argument to create the object. See Section 6.6.4. Value Creation from Attribute Text in the [MS-XAML Spec](http://download.microsoft.com/download/0/a/6/0a6f7755-9af5-448b-907d-13985accf53e/[MS-XAML].pdf) for more details. 
 
-<t/> NOTE: If the property being assigned to already has a value, i.e. its collection already has items in it, the intialized instances will be appended to the existing collection. If the collection is null, a new collection will be created with the initialized items. 
-
-In terms of Grid, this means that the ColumnDefinitions and RowDefinitions properties are able to be defined by providing a comma-delimited string of ColumnDefinitions (Width values) and a comma-delimited string of RowDefinitions (Height values), respectively. 
-In order to support this language feature in Grid, a mechanism is needed that allows ColumnDefinition and RowDefinition objects to be createable from their Width/Height properties, respectively. To achieve this, the content property of ColumnDefinition is set to the Width property, and the content property of RowDefinition is set to the Height property.This will be used to make the new syntax (see below) fully functional.
+4. If the property being assigned to already has a value, i.e. its collection already has items in it, the intialized instances will be appended to the existing collection. If the collection is null, a new collection will be created with the initialized items. 
 
 
 # Examples
+
 ### New succinct syntax
 The code below has the same functionality as the code shown above with the original syntax. It creates a grid and defines five different rows and columns, each with their own specific height/width, and adds them to the Grid. 
 ```xml
@@ -270,11 +301,12 @@ runtimeclass RowDefinition : Windows.UI.Xaml.DependencyObject
 ```
 
 # Appendix
-<!-- Anything else that you want to write down for posterity, but 
-that isn't necessary to understand the purpose and usage of the API.
-For example, implementation details. -->
 
-### Syntax Considerations and Rationale
+## Alternatives
+
+
+
+## Syntax Considerations and Rationale
 In developing the syntax, the team considered developer familiarty and patterns as much as possible to ensure that the Grid learning curve could be decreased. One of the considerations was how similar the syntax should be to JSON, as that's a popular notation style that often addresses the same problems that XAML does. 
 
 JSON defines their arrays as: ```"words" : ["apple", "banana", "cherry"]```
@@ -288,18 +320,18 @@ The syntax that we chose encloses strings individually in quotes, as JSON does, 
 This uses a comma as a delimiter, but also allows strings to have commas within them. For these reasons, we chose to use the syntax in which a collection can be delimited by commas but have more complex values be encased within single quotes.
 
 
-### Release Details
+## Release Details
 The xmlns will not be updated for this XAML language feature addition, i.e. there will be no formal update to the XAML language. Visual Studio, however, will have to be updated to accept the new syntax structure. This feature will be released with WinUI and not with the XAML SDK.
 
-### Tooling/Visual Studio Considerations
+## Tooling/Visual Studio Considerations
 The Designer is able to tell when an element is createable from string, and this language feature will make it so all collection-type properties are createable from string (if that string is formatted as a comma-separated list). So, the Designer will recognize that a collection-type property is assigned to a string, check if it is assignable from string, and then attempt to treat the string as a comma-separated list, similar to the way the XAML Parser works. 
 
 For the new syntax to work for Grid specifically, the Designer will not have any extra issues, as it will be able to query for a content property and create the appropriate ColumnDefinition or RowDefinition. 
 
 In terms of usage of this new XAML language feature in Visual Studio, VS needs a way to recognize the current XAML version that the developer is using. This will be likely be done by accessing metadata or accessing an attached features.xml file - the VS team is still in discussion as to which method will be used, but the overall cost is not high. 
 
-### Data and Intelligence Metrics
-#### P0: Feature Key Performance Indictors
+## Data and Intelligence Metrics
+### P0: Feature Key Performance Indictors
 * Syntax has increased developer/consumer satisfaction
     * KPI: At least 80% of new apps released to Windows store after release of feature are using the new syntax, and 50% of developers express a positive reaction to this change.
     * Measurement: XAML Survey if available or survey through XAML discussions/other relevant channel.
@@ -310,7 +342,7 @@ In terms of usage of this new XAML language feature in Visual Studio, VS needs a
     * Measurement: Number of *new* commenters on this thread (i.e. made their first WinUI Github comment/contribution on this thread), and how many of them went on to be active on other WinUI or Microsoft threads.
     * Measurement: Number of the commenters from this thread went on to create other issues after this one was resolved (beleiving that their voices would be heard!).
 
-#### P1: Feature Performance Indictators
+### P1: Feature Performance Indictators
 * Syntax has decreased Grid's learning curve
     * KPI: A slight increase (<5%) of apps released to the Windows store were created by new developers
     * Measurement: How many apps using this new syntax were created by new/first-time developers
