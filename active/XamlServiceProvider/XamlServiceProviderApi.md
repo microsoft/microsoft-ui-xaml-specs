@@ -27,7 +27,7 @@ protected override object ProvideValue(IServiceProvider serviceProvider)
 
 The service provider can be used, for example, to discover the property being assigned to.
 
-This spec is adding a new version of ProvideValue to WinUI that passes a similar service provider.
+This spec is adding a new version of ProvideValue to WinUI that passes a similar service provider. All the APIs match WPF, except where WPF uses the System.IServiceProvider, WinUI will use Microsoft.UI.Xaml.Markup.IXamlServiceProvider.
 
 > To do: Add an Issue to cs/winrt to project IServiceProvider to .Net5 as [System.IServiceProvider](http://msdn.microsoft.com/library/System.IServiceProvider)?
 
