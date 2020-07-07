@@ -154,6 +154,10 @@ only when there's a bug in the caller, such as argument exception.  But if for s
 reason it's necessary for a caller to catch an exception from an API, call that
 out with an explanation either here or in the Examples -->
 
+### Adding a PagerControl to Your Application
+
+Here is the XAML to show how to add the PagerControl to your application. It can be added on the page as shown below, or can be used in the template of the layout view you prefer to use. PagerControl is added to the template for DataGrid and ItemsRepeater in WinUI 2.x and will be added to ListView and GridView in WinUI 3. 
+
 ## API Notes
 <!-- Option 1: Give a one or two line description of each API (type
 and member), or at least the ones that aren't obvious
@@ -163,6 +167,25 @@ isn't the type's default (for example an int-typed property that doesn't default
 
 <!-- Option 2: Put these descriptions in the below API Details section,
 with a "///" comment above the member or type. -->
+| Name | Description|
+|:---:|:---|
+| PagerDisplayMode | Enum that contains 4 values (Auto, ComboBox, NumberBox, ButtonPanel) that the developer can change to fit their scenario. When auto is selected, the display mode will be ComboBox. The control will default to auto. 
+| NumberOfPages | Sets the max number of pages the index control will iterate through. 
+| ButtonVisibilityMode | Enum (Auto, AlwaysVisible, HiddenOnLast, None) that allows the app developer to hide or show the first, last, next, and previous buttons. When auto is selected, the visibility mode will be AlwaysVisible. The control will default to auto.  
+Button Commands
+| First, Previous, Next, and Last ButtonCommand | Specially handle the button pressed event for when the end user selects the first button. 
+| First, Previous, Next, and Last ButtonGlyph | Give the developer the option to customize the control by changing the glyph for the first button. 
+| First, Previous, Next, and Last ButtonText | Give the developer the option to customize the control by changing the text for the first button. 
+| NumberOfIndicesShowing | Determine the number of indices showing in the number panel display mode. If the max number of pages is 10 but the number of indices is 5, the number panel will show 1,2,3,4,5 and when the user selects next, the indices will be 2,3,4,5,6. 
+| EllipsisEnabled | Boolean to display the ellipses for the buttonpanel display mode. 
+| EllipsisShowFirstAndLast | Boolean to display the first and last index of a buttonpanel if the ellipsis is enabled. 
+| EllipsisMaxBefore | How many indices are shown before the ellipses. 
+| EllipsisMaxAfter | How may indices are shown after the ellipses. 
+| SelectedIndex | The index that is currently selected. By default this value will be 1. 
+| PrefixText | Developer can change the prefix text for the combobox display mode option. 
+| SuffixText | Developer can change the suffix text for the combobox display mode option. 
+| SelectedIndex| The index that the user has navigated to and is currently viewing. 
+| PagerControlPageChangedEvent | Event that is fired when the end user selects a button from the number panel, any of the 4 directional buttons, or selects an option from the combobox or enters a number in the numberbox. This event will return the index number that the end user selected. If the end user enters a number greter than the number of pages this event will return the last page. If the end user enters a number less than 1 the event will return 1. 
 
 ### Visual Components
 
@@ -173,7 +196,7 @@ with a "///" comment above the member or type. -->
 | FirstButton | * Button displaying text and/or glyph indicating that the user may navigate to the first index. <br> * Automatically disabled when at first index. <br> * Can be set to not be visible when at the first index.  <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760409-485b8580-fc79-11e8-9545-a580f6016f6c.png) |
 | NextButton | * Button displaying text and/or glyph indicating that the user may navigate to the next index. <br> * Automatically disabled when at last index. <br> * Can be set to not be visible when at the last index. <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760426-54474780-fc79-11e8-9446-ee2886941a24.png) |
 | PreviousButton | * Button displaying text and/or glyph indicating that the user may navigate to the previous index. <br> * Automatically disabled when at first index. <br> * Can be set to not be visible when at the first index.  <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760443-62956380-fc79-11e8-8f93-562a92fde666.png) |
-| Ellipsis | * Inactive Button, often reading "...", used between indexes and before or after the first/last index to indicate an accessible but omitted range of indexes. <br> * MaxBefore and MaxAfter properties can be used to set  how many indices appear between the current page and the ellipsis before/after it. <br> * Visibility of the first/last index can be disabled. <br> * Only visible when using button panel as the display mode.  <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760513-85277c80-fc79-11e8-926e-3453ea29b0a3.png) |
+| Ellipsis | * Button, often reading "...", used between indexes and before or after the first/last index to indicate an accessible but omitted range of indexes. <br> * MaxBefore and MaxAfter properties can be used to set  how many indices appear between the current page and the ellipsis before/after it. <br> * Visibility of the first/last index can be disabled. <br> <br> * Only visible when using button panel as the display mode.  <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760513-85277c80-fc79-11e8-926e-3453ea29b0a3.png) |
 | PrefixText | * Text displayed before the editable ComboBox indexing component. <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760540-93759880-fc79-11e8-9c4f-3c3222b95a13.png) |
 | NumberOfPages | * When a total number of indices (N) is given, this suffix string will appear after the editable ComboBox indexing component and read "of N". Localization will put "N" where it should be in a given language. <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760557-9a9ca680-fc79-11e8-943f-3425d993fdeb.png) |
 
@@ -188,7 +211,6 @@ enum PagerDisplayMode
     NumberBox,
     ButtonPanel,
 };
-
 
 enum ButtonVisibilityMode
 {
@@ -308,25 +330,29 @@ For example, implementation details. -->
 ### UI Automation Patterns 
 
 ### Keyboarding
-
-* End users should be able to tab to focus on the control. 
+* Pager Control should be added as a navigation landmark. 
+* End users should be able to tab to put focus on the control. 
 * Left and right arrows will navigate between the items in the control. 
-* Page up and page down buttons should advance the focused index by a large amount (the amount can be configured by the developer).  
-        * An example is if the user is interacting with the number panel mode and the focus is on the page 2 button, when the user hits page down, the focus will move to the page 12 button (if page 12 exists) or the last page button. 
 * Home/escape keys should move focus from an individual item back to the entire control.
-* (Combo box mode only) If the end user is focused on the combo box, the user can hit enter to expand the drop down menu.
-* (Combo box mode only) If the end user is focused on the combo box and the drop down is expanded, the home/escape key should collapse the drop down menu and have focus remain on the combo box. 
-* (Combo box mode only) Alt + down shortcut should expand the drop down menu 
-* (Combo box mode only) Alt + up shortcut should collapse the drop down menu
-* (Number box mode only) Up and down arrows should increase or decrease the value in the number box by 1. 
+
+Accessibility for Combo Box Only
+* If the end user is focused on the combo box, the user can hit enter to expand the drop down menu.
+* If the end user is focused on the combo box and the drop down is expanded, the home/escape key should collapse the drop down menu and have focus remain on the combo box. 
+* If the end user has expanded the drop down list, the PgUp and PgDn buttons should move focus to the first and last items in the list.
+* Alt + down shortcut should expand the drop down menu.
+* Alt + up shortcut should collapse the drop down menu.
+
+Keyboarding for Number Box Only
+* Up and down arrows should increase or decrease the value in the box by 1. 
+* PgUp and PgDown arrows will increase or decrease the value in the box by x. The developer will be able to set the amount the value will increase or decrease by.  
 
 ### Narrator
-* Should be added as a navigation landmark. 
-* When the focus is on the control, narrator will announce _____. 
+* When the focus is on the control, narrator will announce "pager control". 
 * When the focus is on the first, last, previous, or next button narrator will announce "first page", "last page", "next page", or "previous page". 
         * If the buttons have text properties set by the developer, narrator will announce that text instead of the default announcement. 
-* When the focus is on a number button, narrator will announce " page x". 
-* Combo box and number box modes will use the default narrator announcements for combo box and number box. 
+* When the focus is on a number button, narrator will announce "page x". 
+* Combo box and number box modes will use the default narrator announcements for combo box and number box when the user puts focus on them. 
+* When the user enters a value in to the number box, narrator will announce the number entered. 
 
 ## Data and Intellegence Metrics 
 
@@ -335,7 +361,6 @@ Adoption and validation of the control in the community
 * Measurement: Count of posts providing feedback to us through Github and Discord. 
 
 Questions that can be answered through telemetry metrics to help focus future features and improvements: 
-
 Which display mode is the most commonly used? 
 * Measurement: Count of how many applications include the pager control type broken out by display mode.
 
@@ -347,10 +372,10 @@ How often are developers using this control with an indefinite number of pages?
 
 
 ## Open Questions 
-
 * I need help understanding how to choose what automation control type could be used for a control like this. Can it be a combination of control types?
 * Can the default behavior for combo box and number box be added to pager control? Does anything special need to happen in order to get that functionality?
-* I'm not sure what narrator should announce when focus is on the control. 
 * Accessibility suggested that this control should be added as a navigation landmark. Does the team agree with that suggestion?
 * It would be cool to measure which layout view is most commonly used with the pager control, is that possible to measure using telemetry?
+
+
 
