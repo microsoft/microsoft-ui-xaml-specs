@@ -335,14 +335,14 @@ For example, implementation details. -->
 * Left and right arrows will navigate between the items in the control. 
 * Home/escape keys should move focus from an individual item back to the entire control.
 
-Accessibility for Combo Box Only
+#### Accessibility for Combo Box Only
 * If the end user is focused on the combo box, the user can hit enter to expand the drop down menu.
 * If the end user is focused on the combo box and the drop down is expanded, the home/escape key should collapse the drop down menu and have focus remain on the combo box. 
 * If the end user has expanded the drop down list, the PgUp and PgDn buttons should move focus to the first and last items in the list.
 * Alt + down shortcut should expand the drop down menu.
 * Alt + up shortcut should collapse the drop down menu.
 
-Keyboarding for Number Box Only
+#### Keyboarding for Number Box Only
 * Up and down arrows should increase or decrease the value in the box by 1. 
 * PgUp and PgDown arrows will increase or decrease the value in the box by x. The developer will be able to set the amount the value will increase or decrease by.  
 
