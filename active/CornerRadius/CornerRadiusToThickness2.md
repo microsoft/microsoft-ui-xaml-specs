@@ -43,7 +43,7 @@ For consistency it's useful to be able to build a Thickness out of components of
 * FilterLeftFromBottomLeft,
 * FilterLeftFromTopLeft,
 
-The CornerRadiusFilterConverter is also updated with a new property -- Multiplier -- which is applied during the converstion. For example, setting this to -1 negates the value.
+The CornerRadiusFilterConverter is also updated with a new property -- Multiplier -- which is applied during the conversion. For example, setting this to -1 negates the value.
 
 # Examples
 
