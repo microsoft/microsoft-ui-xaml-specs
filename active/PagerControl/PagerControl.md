@@ -13,6 +13,8 @@ So the second audience is everyone that reads there to learn how
 and why to use this API. -->
 
 ## Background
+
+A UI pager is a common control that lets a user page through a long list, rather than scroll or pan. A common experience is to provide preview/next buttons, and a way to jump to a specific page.
 <!-- Use this section to provide background context for the new API(s) 
 in this spec. -->
 
@@ -376,6 +378,5 @@ How often are developers using this control with an indefinite number of pages?
 * Can the default behavior for combo box and number box be added to pager control? Does anything special need to happen in order to get that functionality?
 * Accessibility suggested that this control should be added as a navigation landmark. Does the team agree with that suggestion?
 * It would be cool to measure which layout view is most commonly used with the pager control, is that possible to measure using telemetry?
-
 
 
