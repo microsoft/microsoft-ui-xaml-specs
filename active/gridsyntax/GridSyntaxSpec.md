@@ -1,7 +1,7 @@
 
 
 # Background
-_This proposal adds a new short-hand Xaml syntax that will make it much easier to define a Grid in Xaml makrup. The proposal for this feature can be found [here.](https://github.com/microsoft/microsoft-ui-xaml/issues/673) The existing API documentation for Grid can be found [here.](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.grid)_
+_This adds a new short-hand Xaml syntax feature that makes it much easier to define a Grid in Xaml makrup. The proposal for this feature can be found [here.](https://github.com/microsoft/microsoft-ui-xaml/issues/673) The existing API documentation for Grid can be found [here.](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.grid)_
 
 The Xaml Grid  is one of the most widely used panels, yet it has a noticeably long and repetitive syntax in markup, which leads to a tough learning curve for new developers. Currently, to create a Grid, developers must define each row height and column width with separate XML tags:
 
@@ -36,9 +36,9 @@ This new syntax is enabled by a new Xaml language feature and associated APIs th
 
 # Description
 
-This spec introduces a new XAML language feature that allows the initialization of collection-type properties (including read-only properties) using Xaml attribute syntax. We will also be updating the Grid APIs to make sure that this syntax works properly specifically for Grid's use cases.
+We've introduced a new XAML language feature that allows the initialization of collection-type properties (including read-only properties) using Xaml attribute syntax. We've also updated the Grid APIs to make sure that this syntax works properly in particular for Grid's use cases.
 
-Today a Grid initialization in Xaml markup looks like this, with a lot of XML tags:
+Grid initialization in Xaml markup has always required a lot of XML:
 
 ```xml
 <Grid>
@@ -49,24 +49,23 @@ Today a Grid initialization in Xaml markup looks like this, with a lot of XML ta
 </Grid>
 ```
 
-You can now accomplish the same thing with this syntax:
+You can now accomplish the same thing in a single tag:
 
 ```xml
 <Grid ColumnDefinitions="Auto, *">
 ```
 
-Before this change, if you write that Xaml markup, the  Xaml loader tries to convert the string `Auto, *` into a [ColumnDefinitionCollection](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ColumnDefinitionCollection) object, as that's the type of the [Grid.ColumnDefinitions](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Grid.ColumnDefinitions) property. That fails because there is no such conversion available. (And it wouldn't help if there was, because the property is read-only.)
+Before this change, if you write that shorter Xaml markup, the  Xaml loader would try to convert the string `Auto, *` into a [ColumnDefinitionCollection](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ColumnDefinitionCollection) object, as that's the type of the [Grid.ColumnDefinitions](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Grid.ColumnDefinitions) property. That fails because there is no such conversion available. (And it wouldn't help if there was, because the property is read-only.)
 
-But the Xaml syntax rules now support this scenario by recognizing that the target property is a collection type, and that there's no conversion from string available, and so treating the attribute value as a comma-separated list of collection items. The items of the collection are of type [ColumnDefinition](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ColumnDefinition), so a check is made to see if strings can be converted to ColumnDefinition instances. Since they can, the Xaml loader creates those instances and adds them to the collection.
+But the Xaml syntax rules now support this scenario by recognizing that the target property is a collection type, and that there's no conversion from string available, and then by treating the attribute value as a comma-separated list of collection items. The items of the collection are of type [ColumnDefinition](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ColumnDefinition), so a check is made to see if strings can be converted to ColumnDefinition instances. Since they can, the Xaml loader creates those instances and adds them to the collection.
 
-| Do we have documentation that explains what exactly a "collection" is?
+| Do we have documentation that explains what exactly a "collection" is? Can't remember if it's just IVector, or if it has more rules like the C# initialization syntax.
 
-## ContentProperty background
+## Role of the [ContentProperty] attribute
 
 In order for a ColumnDefinition (or RowDefinition) to be created from a string there is a second new Xaml syntax rule: if a type can't be created from string, but the type's [[ContentProperty](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Markup.ContentPropertyAttribute)] property can, the type is created and the property set.
 
-
-About the "content property", this isn't literally a property named "content" (although it can be and [is sometimes](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ContentControl.Content)). This is essentially the default property of a class, and is marked with the [ContentProperty] attribute.
+About this "content property", it's not literally a property named "content" (although it can be and [is sometimes](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ContentControl.Content)). This is essentially the default property of a class, and is marked with the [ContentProperty] attribute.
 
 For example the [SolidColorBrush](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Media.SolidColorBrush) is defined roughly like this (in C# terms):
 
@@ -79,13 +78,13 @@ public sealed class SolidColorBrush : Brush
 }
 ```
 
-Because [SolidColorBrush.Color](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Media.SolidColorBrush.Color) is marked as the [ContentProperty] (and because a Color can be created from a string), you can write this short-hand Xaml
+Because [SolidColorBrush.Color](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Media.SolidColorBrush.Color) is marked as the [ContentProperty] (and because a Color can be created from a string), you've always been able to write this short-hand Xaml:
 
 ```xml
 <SolidColorBrush>Red</SolidColorBrush>
 ```
 
-If it weren't for the [ContentProperty] on SolidColorBrush, you'd have to use the full syntax (and that's still valid to use if you prefer):
+If it weren't for the [ContentProperty] on SolidColorBrush, you'd have to use the equivalent full syntax (and that's still valid to use if you prefer):
 
 ```xml
 <SolidColorBrush>
@@ -119,25 +118,25 @@ Putting that all together, back to the original goal:
 
 <Grid ColumnDefinitions="Auto, *">
 
-Two ColumnDefinition objects are created and added to the ColumnDefinitions collection property. The first has its Width set to GridLength.Auto, the second has it's Width set to 1 GridUnitType.Star.
+Two ColumnDefinition objects are created and added to the ColumnDefinitions collection property, which is ready-only but defaults to an empty collection. The first item has its Width set to GridLength.Auto, the second has it's Width set to 1 GridUnitType.Star.
 
 
 ## Special characters and escaping
 
-The XML attribute value is interpreted as a comma-separated list, which creates a problem if you want to use a comma an item value. You can solve this using quotes, for example, this creates two items:
+The XML attribute value is interpreted as a comma-separated list of items, which creates a problem if you want to use a comma an item value. You can solve this using quotes, for example, this initializes a collection with two items:
 
 ```xml
 <WordWheel Words = " 'Hello, world', 'how is the weather?' " />
 ```
 
-(Xaml markup extensions have the same issue and the same rule. In general the syntax rules follow those of markup extensions.)
+(Xaml markup extensions have the same command issue and the same quote syntax. In general the syntax rules follow those of markup extensions.)
 
 Alternatively you can use a backslash as an escape character before the comma:
 
 ```xml
 Words = " I weigh 90\,7 KG    "
 ```
-| todo: handle "How's the weather?" case
+| todo: handle apostrophe in "How's the weather?" case
 
 Note that here, like everywhere in XML, we're using "opposite quotes" (whichever kind of quote you use to delineate the attribute value, don't use it _in_ the attribute value, except as an entity). So these are equvalent:
 
@@ -164,7 +163,7 @@ That rule still applies, so the following is an error:
 //Warning: Incorrect syntax
 <Grid ColumnDefinitions="Auto,*,Auto">
     <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="**" />
+          <ColumnDefinition Width="*" />
           <ColumnDefinition Width="Auto" />
           <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
@@ -198,19 +197,17 @@ The code below shows an example of how the syntax could be used for a property t
 ```
 
 ### CalendarView
-Current Syntax to populate SelectedDates collection:
 
-```xml
-calendarView1.SelectedDates.Add(new DateTime(1977, 1, 5));
-calendarView1.SelectedDates.Add(new DateTime(1997, 6, 19));
-```
-New, equally functional syntax using proposed XAML language feature:
+Initialize the selected dates on a calendar:
+
 ```xml 
 <CalendarView SelectedDates="'1/5/1977', '6/19/1997'" />
 ```
 
 ### ListView
-Current Syntax to populate ListView Items collection:
+
+Previous syntax to populate ListView Items collection (which still works):
+
 ```xml
 <ListView>
     <ListView.Items>
@@ -220,7 +217,8 @@ Current Syntax to populate ListView Items collection:
 </ListView>
 ```
 
-New, equally functional syntax using proposed XAML language feature:
+New syntax:
+
 ```xml 
 <ListView Items="'Hello', 'world'" />
 ```
@@ -228,15 +226,15 @@ New, equally functional syntax using proposed XAML language feature:
 
 # Examples
 
-| Spec note: all of the syntax details are in the above Discussion section. The examples here are intended for the Grid docs (either API pages or How-To pages).
+| Spec note: all of the syntax details are in the above Discussion section. The examples here are intended for the Grid docs.
 
 ## Grid with basic rows and definitions
 
 This example creates a grid, defines five different rows and columns (each with their own specific height/width), and adds them to the Grid. 
 
 ```xml
-<Grid ColumnDefinitions="1*, 2*, Auto, *, 300"
-      RowDefinitions="1*, Auto, 25, 14, 20">
+<Grid ColumnDefinitions="1*, 2*, Auto, *, 300" RowDefinitions="1*, Auto, 25, 14, 20">
+    <!-- ... -->
 </Grid>
 ```
 
@@ -266,12 +264,7 @@ This example is equivalent to the previous one, except one column has a minimum 
 
 # Remarks
 
-## Syntax Details and Corner Cases
-The new succinct syntax is formed by assigning a collection of values to a read-only collection-type property. This collection of values is encased between a set of quotes. String values, as well as any other more complex types that may require commas within it (i.e. Point objects, sets), are encased between a set of opposite quotes. This ensures that string values may contain commas, and Points, sets, or any other kind of nested collection object may be supported.
-
-
 # API Details
-<!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 
 ## ColumnDefinition API
 
