@@ -1,6 +1,6 @@
 
 # Background
-_This spec adds a Cursor property to the Xaml [UIElement](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.UIElement) class_
+_This spec adds a ProtectedCursor property to the Xaml [UIElement](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.UIElement) class_
 
 Today in a WinUI app you can set the cursor by setting [CoreWindow.PointerCursor](https://docs.microsoft.com/uwp/api/Windows.UI.Core.CoreWindow.PointerCursor). 
 
