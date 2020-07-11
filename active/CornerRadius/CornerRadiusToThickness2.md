@@ -72,6 +72,22 @@ This converter can then be used elsewhere in Xaml:
 
 # API Notes
 
+## CornerRadiusToThicknessConverter.Multiplier property
+
+Type: [Thickness](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Thickness)
+
+Multiplied to the value in the target Thickness. Defaults to (1,1,1,1)
+
+This multiplier is a Thickness with left/top/right/bottom values, which are applied to the matching fields in the target. Note that in Xaml markup you can specify a single number and it's set to all 4 fields. For example the following sets the Multipler to (-1, -1, -1, -1):
+
+```xml
+Multipler = '-1'
+```
+
+## CornerRadiusToThicknessConverterKind enum    
+
+**New values:**
+
 | | |
 | - | - |
 | FilterTopFromTopLeft | Sets top from the top left corner |
@@ -83,9 +99,36 @@ This converter can then be used elsewhere in Xaml:
 | FilterLeftFromBottomLeft | Sets the left from the bottom left corner |
 | FilterLeftFromTopLeft | Sets the left from the top left corner |
 
+**Existing values:**
+
+| | |
+| - | - |
+| FilterLeftAndRightFromBottom | |
+| FilterLeftAndRightFromTop | |
+| FilterTopAndBottomFromLeft | |
+| FilterTopAndBottomFromRight | |
+
+https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.Primitives.CornerRadiusToThicknessConverterKind
+
+
 # API Details
 
 ```cs
+
+[webhosthidden]
+[default_interface]
+runtimeclass CornerRadiusToThicknessConverter : Windows.UI.Xaml.DependencyObject, Windows.UI.Xaml.Data.IValueConverter
+{
+    CornerRadiusToThicknessConverter();
+
+    CornerRadiusToThicknessConverterKind  ConversionKind{ get; set; };
+    static Windows.UI.Xaml.DependencyProperty ConversionKindProperty{ get; };
+
+    // ** New **
+    Thickness Multiplier{ get; set; };
+    static Windows.UI.Xaml.DependencyProperty MultiplierProperty{ get; };
+};
+
 [webhosthidden]
 enum CornerRadiusToThicknessConverterKind
 {
