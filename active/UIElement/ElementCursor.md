@@ -25,23 +25,16 @@ Note that even if a child of the element marks a pointer event Handled ([Pointer
 
 # Examples
 
-The following shows a custom Button control that has a Help cursor
+The following shows a custom Button control that has a Help cursor.
 
 ```cs
 public class HelpButton : Button
 {
-    CoreCursor _helpCursor = new CoreCursor(CoreCursorType.Help, 0);
-    protected override void OnPointerEntered(PointerRoutedEventArgs e)
+    public HelpButton()
     {
-        this.ProtectedCursor = _helpCursor;
-    }
-
-    protected override void OnPointerExited(PointerRoutedEventArgs e)
-    {
-        this.ProtectedCursor = null;
+        this.ProtectedCursor = new CoreCursor(CoreCursorType.Help, 0);
     }
 }
-
 ```
 
 # API Details
