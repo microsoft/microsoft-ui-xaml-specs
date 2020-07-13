@@ -1,5 +1,3 @@
-> See comments in Markdown for how to use this spec template
-
 
 # Background
 
