@@ -379,6 +379,22 @@ TBD: define event behavior, similar to TeachingTip?
 ## What mode of app notification should I use?
 TBD after the first (InfoBar) mode is mostly defined.
 
+Floating mode default behavior:
+
+- Bottom right corner Placement/Positioning
+  - Even on page resize, will appear and scale, what about windowing?
+- Resizing: Length in "em's", xaml's version so that width will potentially resize for different resolutions
+  - What are specifics? What does Teaching Tip do?
+
+- P2 Stacking: most recent notification in bottom right, older notification pushes up vertically
+    - Implementation via host behind the scenes so the user automatically gets "bottom right" positioning
+      - Static "host" to add/remove notifications from stack
+      - When InfoBarFloating1.isOpen is set to true --> NotificationHost.Add(InfoBarFloating1):
+        - Expected behavior: Add InfoBarFloating1 to list of notifications open, move other notifications to be in correct position in stack if they exist.
+      - When InfoBarFloating2.isOpen is set to false --> NotificationHost.Remove(InfoBarFloating2)
+        - Expected behavior: Remove from list, reposition other notifications if they're there
+
+
 # Inputs and Accessibility
 ## UI Automation Patterns 
 
@@ -510,7 +526,6 @@ with a "///" comment above the member or type. -->
 
 | Name | Description |
 |:-:|:--|
-| DisplayMode | TBD
 | Truncation | TBD
 | Severity | Gets or sets a value that indicates the  color and icon to style the app notification |
 | ShowCloseButton| Gets or sets a boolean that indicates whether a close button will appear
@@ -563,6 +578,11 @@ runtimeclass AppNotificationClosingEventArgs
     AppNotificationCloseReason Reason{ get; };
     Boolean Cancel;
     Windows.Foundation.Deferral GetDeferral();
+};
+
+runtimeclass AppNotificationDisplayModeArgs
+{
+
 };
 
 // TODO: will add post-implementation
