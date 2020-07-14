@@ -1,9 +1,9 @@
 
 
 # Background
-_This adds a new short-hand Xaml syntax feature that makes it much easier to define a Grid in Xaml makrup. The proposal for this feature can be found [here.](https://github.com/microsoft/microsoft-ui-xaml/issues/673) The existing API documentation for Grid can be found [here.](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.grid)_
+_This adds a new short-hand Xaml syntax feature that makes it much easier to define a Grid in Xaml markup. The proposal for this feature can be found [here.](https://github.com/microsoft/microsoft-ui-xaml/issues/673) The existing API documentation for Grid can be found [here.](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.grid)_
 
-_This file is an [updated copy](./GridSyntaxSpec.md), split off to make all of the lines commentable in PR. But this will merged back when complete._
+_This file is an [updated copy](./GridSyntaxSpec.md), split off to make all of the lines commentable in PR. But this will be merged back when complete._
 
 The Xaml Grid  is one of the most widely used panels, yet it has a noticeably long and repetitive syntax in markup, which leads to a tough learning curve for new developers. Currently, to create a Grid, developers must define each row height and column width with separate XML tags:
 
@@ -38,7 +38,7 @@ This new syntax is enabled by a new Xaml language feature and associated APIs th
 
 # Description
 
-We've introduced a new XAML language feature that allows the initialization of collection-type properties (including read-only properties) using Xaml attribute syntax. We've also updated the Grid APIs to make sure that this syntax works properly in particular for Grid's use cases.
+We've introduced a new Xaml language feature that allows the initialization of collection-type properties (including read-only properties) using Xaml attribute syntax. We've also updated the Grid APIs to make sure that this syntax works properly in particular for Grid's use cases.
 
 Grid initialization in Xaml markup has always required a lot of XML:
 
@@ -60,8 +60,6 @@ You can now accomplish the same thing in a single tag:
 Before this change, if you write that shorter Xaml markup, the  Xaml loader would try to convert the string `Auto, *` into a [ColumnDefinitionCollection](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ColumnDefinitionCollection) object, as that's the type of the [Grid.ColumnDefinitions](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Grid.ColumnDefinitions) property. That fails because there is no such conversion available. (And it wouldn't help if there was, because the property is read-only.)
 
 But the Xaml syntax rules now support this scenario by recognizing that the target property is a collection type, and that there's no conversion from string available, and then by treating the attribute value as a comma-separated list of collection items. The items of the collection are of type [ColumnDefinition](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ColumnDefinition), so a check is made to see if strings can be converted to ColumnDefinition instances. Since they can, the Xaml loader creates those instances and adds them to the collection.
-
-| Do we have documentation that explains what exactly a "collection" is? Can't remember if it's just IVector, or if it has more rules like the C# initialization syntax.
 
 ## Role of the [ContentProperty] attribute
 
@@ -118,9 +116,11 @@ you can now write
 
 Putting that all together, back to the original goal:
 
+```xml
 <Grid ColumnDefinitions="Auto, *">
+```
 
-Two ColumnDefinition objects are created and added to the ColumnDefinitions collection property, which is ready-only but defaults to an empty collection. The first item has its Width set to GridLength.Auto, the second has it's Width set to 1 GridUnitType.Star.
+Two ColumnDefinition objects are created and added to the Grid's ColumnDefinitions collection property, which is read-only but defaults to an empty collection. The first item has its Width set to GridLength.Auto, the second has its Width set to 1 GridUnitType.Star.
 
 
 ## Special characters and escaping
@@ -131,20 +131,25 @@ The XML attribute value is interpreted as a comma-separated list of items, which
 <WordWheel Words = " 'Hello, world', 'how is the weather?' " />
 ```
 
-(Xaml markup extensions have the same command issue and the same quote syntax. In general the syntax rules follow those of markup extensions.)
+(Xaml markup extensions have the same comma issue and the same quote syntax. In general the syntax rules follow those of markup extensions.)
 
 Alternatively you can use a backslash as an escape character before the comma:
 
 ```xml
 Words = " I weigh 90\,7 KG    "
 ```
-| todo: handle apostrophe in "How's the weather?" case
 
 Note that here, like everywhere in XML, we're using "opposite quotes" (whichever kind of quote you use to delineate the attribute value, don't use it _in_ the attribute value, except as an entity). So these are equvalent:
 
 ```xml
 Words = " 'Hello', 'world' "
 Words = ' "Hello", "world" '
+```
+
+And if you want to have an opposite quote in an item value, it too can be escaped:
+
+```xml
+Words = " 'How\'s the weather', 'It\'s sunny'  "
 ```
 
 ## Don't mix syntaxes
@@ -189,6 +194,12 @@ The code below shows an example of how the syntax could be used for a property t
 
 ```xml
 <ColorWheel Colors="Red, Green, Blue"/>
+```
+
+### PointCollection
+
+```xml
+<Polygon Points = " '0,0', '0,1', '1,1'   ">
 ```
 
 ### CalendarView
@@ -272,7 +283,7 @@ This example is equivalent to the previous one, except one column has a minimum 
 
 ## ColumnDefinition API
 
-```csharp
+```cs
 [webhosthidden]
 
 // vvv
@@ -294,7 +305,7 @@ runtimeclass ColumnDefinition : Windows.UI.Xaml.DependencyObject
 
 ## RowDefinition API
 
-```csharp
+```cs
 [webhosthidden]
 
 // vvv
@@ -319,13 +330,13 @@ runtimeclass RowDefinition : Windows.UI.Xaml.DependencyObject
 ## Alternatives
 
 ## Syntax Considerations and Rationale
-In developing the syntax, the team considered developer familiarty and patterns as much as possible to ensure that the Grid learning curve could be decreased. One of the considerations was how similar the syntax should be to JSON, as that's a popular notation style that often addresses the same problems that XAML does. 
+In developing the syntax, the team considered developer familiarty and patterns as much as possible to ensure that the Grid learning curve could be decreased. One of the considerations was how similar the syntax should be to JSON, as that's a popular notation style that often addresses the same problems that Xaml does. 
 
 JSON defines their arrays as: ```"words" : ["apple", "banana", "cherry"]```
 
-XAML defines a collection-typed property as: ```<Words="'Apple', 'Banana', 'Cherry'"/>```
+Xaml defines a collection-typed property as: ```<Words="'Apple', 'Banana', 'Cherry'"/>```
 
-The syntax that we chose encloses strings individually in quotes, as JSON does, but it does so in a way that is more consistent with existing XAML style and XAML functions. An example of this syntax used elsewhere in XAML is for the x:Bind syntax:
+The syntax that we chose encloses strings individually in quotes, as JSON does, but it does so in a way that is more consistent with existing Xaml style and Xaml functions. An example of this syntax used elsewhere in Xaml is for the x:Bind syntax:
 
 ```xml <TextBlock Text="{x:Bind VM.MyText, FallbackValue='Hello, world', Mode=TwoWay}" />```
 
@@ -333,20 +344,16 @@ This uses a comma as a delimiter, but also allows strings to have commas within 
 
 
 ## Release Details
-The xmlns will not be updated for this XAML language feature addition, i.e. there will be no formal update to the XAML language. Visual Studio, however, will have to be updated to accept the new syntax structure. This feature will be released with WinUI and not with the XAML SDK.
+The xmlns will not be updated for this Xaml language feature addition, i.e. there will be no formal update to the Xaml language. Visual Studio, however, will have to be updated to accept the new syntax structure. This feature will be released with WinUI and not with the Xaml SDK.
 
 ## Tooling/Visual Studio Considerations
-The Designer is able to tell when an element is createable from string, and this language feature will make it so all collection-type properties are createable from string (if that string is formatted as a comma-separated list). So, the Designer will recognize that a collection-type property is assigned to a string, check if it is assignable from string, and then attempt to treat the string as a comma-separated list, similar to the way the XAML Parser works. 
-
-For the new syntax to work for Grid specifically, the Designer will not have any extra issues, as it will be able to query for a content property and create the appropriate ColumnDefinition or RowDefinition. 
-
-In terms of usage of this new XAML language feature in Visual Studio, VS needs a way to recognize the current XAML version that the developer is using. This will be likely be done by accessing metadata or accessing an attached features.xml file - the VS team is still in discussion as to which method will be used, but the overall cost is not high. 
+In terms of usage of this new Xaml language feature in Visual Studio, VS needs a way to recognize the current Xaml version that the developer is using. This will be likely be done by accessing metadata or accessing an attached features.xml file - the VS team is still in discussion as to which method will be used, but the overall cost is not high. 
 
 ## Data and Intelligence Metrics
 ### P0: Feature Key Performance Indictors
 * Syntax has increased developer/consumer satisfaction
     * KPI: At least 80% of new apps released to Windows store after release of feature are using the new syntax, and 50% of developers express a positive reaction to this change.
-    * Measurement: XAML Survey if available or survey through XAML discussions/other relevant channel.
+    * Measurement: Xaml Survey if available or survey through Xaml discussions/other relevant channel.
     * Measurement: How many times Grid has been implemented using the new syntax in published Windows apps.
     
 * Implementation of syntax change has strengthened brand loyalty among customers/developers by assuring customers/developers that their voices are being heard and their quality of life is being considered
@@ -359,10 +366,3 @@ In terms of usage of this new XAML language feature in Visual Studio, VS needs a
     * KPI: A slight increase (<5%) of apps released to the Windows store were created by new developers
     * Measurement: How many apps using this new syntax were created by new/first-time developers
 
-# Open Questions
-- Is this a read-only property, or does it work for any type of property, including read-only?
-- What are the important tooling details that should be included for implementation? Some previous concerns to think about..
-    - Parser/designer understanding coldefs and rowdefs
-    - Should be easier since we are implementing without a type converter (using content property assignment instead). Will we face any challenges in the CreateFromString side? i.e. would we be creating unvalidateable attributes?
-    - Need the ability to see what XAML version developer is using
-- Finalized decision (maybe just need a refresher on this): How are we sending out this update - updating xmlns, formal update to XAML language, ms-xaml spec update?
