@@ -108,7 +108,7 @@ example code with each description. The general format is:
 
 <!-- As an example of this section, see the Examples section for the PasswordBox control 
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
-> Note: In this version of the specification, only a single LayoutMode is implied. In the future, more documentation will be added on a second LayoutMode. The LayoutMode property will change the visual layout of the components, not the functionality. The current LayoutMode shown is "InformationBar", where the components are vertically aligned in a single plane. The second LayoutMode, "Toast", will look more similar to a system notification in it's component layout, details TBD.
+> Note: In this version of the specification, only a single DisplayMode is implied. In the future, more documentation will be added on a second DisplayMode. The DisplayMode property will change the visual layout of the components, not the functionality. The current LayoutMode shown is "Docked", for scenarios where the InfoBar will be inline with other UI elements and take up layout space. The second DisplayMode, "Floating", is intended for scenarios where the InfoBar is on top of other content as in a PopUp or overlay. More details TBD.
 
 An app notification can have several configurations, here are some notable ones.
 
@@ -123,7 +123,7 @@ The app notification can also be customized with XAML Content to include hyperli
 
 ## Create an app notification
 
-The XAML below describes a bar-style app notification with the default styling for a critical notification. An app notification can be created anywhere in the element tree or code behind (Toast TBD). In this example, the notification is located in a ResourceDictionary, expanding to fill the width of the stack panel, like a bar.
+The XAML below describes an inline app notification with the default styling for a critical notification. An app notification can be created anywhere in the element tree or code behind. In this example, the notification is located in a ResourceDictionary, expanding to fill the width of the stack panel.
 
 XAML
 ```xml
@@ -170,16 +170,20 @@ XAML
 ```
 [A sketch of a sample application with an app notification as a toast in the bottom right of the content area. The app notification's title is "No Internet" and it's message is "Reconnect to save your work"](images/No_Internet_Toast.png) -->
 
+## Select a DisplayMode
+TBD
+- Different visually only
+- Example of pop-up code here
+
 ## Notification types: consistent styling
 The type of the app notification can be set via the Severity property to automatically set a consistent status color and icon dependent on the criticality of the notification.
 
-Preset color and icon combos, TBD in collaboration w/ design:
-- Critical: Fluent red (#D13438) & ErrorBadge (EEA39)
-- Warning: Fluent orange (#FF8C00) & Error (E783)
-- Informational: Theme accent or Fluent blue (#0078D7) & Info (E946)
-- Success: Fluent green (#107C10) & Completed (E930)
-- Default if Severity isn't set: Fluent gray (#6979E) & no icon
-- TBD: Should there be a 'None' for no icon or color? How else could that scenario be possible?
+Preset color and icon settings are as follows:
+- Error: Red (#FDE7E9/#442726) & ErrorBadge (EEA39)
+- Warning: Yellow-orange (#FFF4CE/#433519) & Error (E783)
+- Information: Blue (#D8F1FF/) & Info (E946)
+- Success: Green (#DFF6DD/#393D1B) & Completed (E930)
+- Default: Gray (#F2F2F2/#2B2B2B) & no icon
 
 TBD: Should these be part of light-weight styling to be set across app? Like data validation? Or separate?
 
@@ -299,79 +303,6 @@ XAML
 
 ![TODO](images/Critical_Wrapping.jpg)
 
-## Multiple app notifications
-For applications where multiple notifications may appear on the page at once, there are two main ways they can be displayed; inline or as an overlay.
- - **Overlay**: The notifications will appear on top of other app content, like a pop-up, in a toast visual layout.
- - **Inline**: The notifications will be inline with the other UI elements on the page and push other content if necessary in an app-wide bar visual layout.
-
-### Overlay
-However, if multiple app notifications in the Toast mode need to be displayed, developers should use a NotificationHost to handle them. 
-A NotificationHost wrapper control (TBD) will handle behavior related to multiple notifications of a specific class on screen at once.
-Instead of leaving stacking behavior up to the individual controls, a NotificationHost will manage behavior like:
-
-XAML
-```xml
-<StackPanel x:Name="ContentArea" Content="Document">
-    <controls:NotificationGroup DisplayMode="Overlay">
-        <controls:AppNotification x:Name="ConnectionErrorNotification"
-            Title="No Internet"
-            Message="Reconnect to save your work.">
-            <controls:AppNotification.IconSource>
-                <controls:SymbolIconSource Symbol="NetworkOffline" />
-            </controls:AppNotification.IconSource>
-        </controls:AppNotification>
-        <controls:AppNotification x:Name="UpdateCompletedNotification"
-            Severity="Informational"
-            Title="Update complete"
-            Message="The application has recently been updated.">
-        </controls:AppNotification>
-    </controls:NotificationGroup>
-</StackPanel>
-```
-
-![TODO](images/Multiple_Toasts.jpg)
-
-- Positioning in page
-- Animation in/out
-- Margins between controls
-- Stacking order, right to left, top to bottom, etc.
-
-
-
-### Inline
-To display multiple inline, app-wide InfoBar style notifications, you can manually position your notifications in a layout control as preferred and leave the stacking/positioning behavior up to the default behavior of the parent layout control..
-
-Additionally, you can use the NotificationGroup control with DisplayMode set to "Inline" to manage stacking direction and re-positioning. 
-By default, the notifications will stack vertically where the most recent notification will appear at the bottom of the stack. There will be no intro or exit animation.
-
-XAML
-```xml
-<StackPanel x:Name="ContentArea" Content="Document">
-    <controls:NotificationGroup DisplayMode="Inline">
-        <controls:AppNotification x:Name="ConnectionErrorNotification"
-            Title="No Internet"
-            Message="Reconnect to save your work.">
-            <controls:AppNotification.IconSource>
-                <controls:SymbolIconSource Symbol="NetworkOffline" />
-            </controls:AppNotification.IconSource>
-        </controls:AppNotification>
-        <controls:AppNotification x:Name="UnsuccessfulSaveNotification"
-            Severity="Warning"
-            Title="Error while saving"
-            Message="Your document was unable to be saved.">
-        </controls:AppNotification>
-    </controls:NotificationGroup>
-</StackPanel>
-```
-
-![TODO](images/Multiple_InfoBars.jpg)
-
-
-## Updating an app notification
-TBD: define updating behavior, should this exist? V2??
-- What properties can be updated?
-- Is there an animation to occur?
-- How is dismissal handled?
 
 ## Canceling and deferring close
 TBD: define event behavior, similar to TeachingTip?
@@ -485,10 +416,9 @@ Please view the guidance for [Adjust layout and fonts, and support RTL](https://
 - RTL, LTR --> icon does not mirror unless there's directionality. 
   - sort of automatic, but mention, will follow standard mirroring behavior
 # Remarks
-## Recommendations
-- Popup for toast notifications, StackPanel for inline notifications
+## Usage Recommendations
 
-When to show an app notification?
+### When to show an app notification?
 
 Current opinion: When the state of the application is different from normal, expected functionality
 - Patterns for critical notifications (i.e. internet connectivity is required for the application to function)
@@ -500,11 +430,16 @@ Current opinion: When the state of the application is different from normal, exp
 - Patterns for informational notifications, users should **always** have the option to dismiss informational notifications, even if they are intended to disappear after # seconds. 
     - If the app is performing a long task in the background that can then require further user action (i.e. backing up a drive or scanning for viruses) then an app notification for "Success" could appear.
     - TBD: App update recommendations
-## Anti-patterns
-TBD
-- Is there a limit to how often an app notification can appear/disappear from view?
-  - Prevent "flashing" notification bars
-- Only *one* app notification should appear for every scenario 
+
+### When to use the different DisplayModes?
+#### Docked
+- Recommended to use when you want the InfoBar to be inline with other UI elements
+- When the InfoBar is intended to be added to layout controls like StackPanels, Grids, etc.
+#### Floating
+- Recommended to use when you want the InfoBar to be on top of other UI elements
+- When the InfoBar is inteded to be added to pop-up controls like PopUp or Flyout
+- Visual affordances include a border shadow and rounded borders to support overlay scenarios
+
 <!-- Explanation and guidance that doesn't fit into the Examples section. -->
 
 <!-- APIs should only throw exceptions in exceptional conditions; basically,
@@ -526,7 +461,6 @@ with a "///" comment above the member or type. -->
 
 | Name | Description |
 |:-:|:--|
-| Truncation | TBD
 | Severity | Gets or sets a value that indicates the  color and icon to style the app notification |
 | ShowCloseButton| Gets or sets a boolean that indicates whether a close button will appear
 
@@ -553,7 +487,6 @@ Includes specifics like:
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 ```c++
-// TODO: investigate and develop
 enum AppNotificationCloseReason
 {
     CloseButton,
@@ -610,6 +543,7 @@ unsealed runtimeclass AppNotification : Windows.UI.Xaml.Controls.ContentControl
 
     String Title;
     String Message;
+    Hyperlink Hyperlink;
 
     Boolean IsOpen;
     Boolean ShowCloseButton;
@@ -681,20 +615,21 @@ Toast layout examples
 
  | Component |  Notes |
 |:---:|:---|
-| Container | - Specific details TBD
-| Title | - Semi-bolded <br> - Recommended to be 50 characters or less
-| Message | - Text wrapping behavior TBD <br> - Recommended to be 512 characters or less 
+| Container | - For docked InfoBars, we recommend to place in a layout control where the InfoBar can expand horizontally to the width of the content area. <br> - For floating InfoBar, the default maximum height and widths are ###px and ###px but can be overwritten via the MaxHeight and MaxWidth properties
+| Title | - Semi-bolded and appears left of the Icon <br> - Recommended to be 50 characters or less
+| Message | - Will appear to the right of the Title in single-height notifications, otherwise will be on a new line <br> - Recommended to be 512 characters or less
+| Hyperlink | - Will appear to the right of the Message in single-height notifications, otherwise will be on a new line <br> - TBD: Color of the hyperlink will adapt to user theme and Severity level of control.
 | StatusColor | - Defined by either the Severity or by setting a custom Color
 | Icon | - Defined by either the Severity or by IconSource <br>
-| Close button | - Will appear as 'X' by default <br> - Can be customized as a button <br> - Can be removed via IsProgrammaticDismissal
-| Action button | - Optional <br> - Additional action buttons may be added through custom XAML content in the Message
+| Close button | - Will appear as 'X' by default <br> - Can be customized as a button by setting the CloseButtonContent property <br> - Can be removed via IsProgrammaticDismissal
+| Action button | - Optional <br> - Additional action buttons may be added through custom XAML content
 | Content | - Can be customizable to include text, hyperlinks, and any other XAML content <br> - Appears between the Title/Message and any Action or Close buttons
 
 ## Behavioral Components
  | Property | Notes |
 |:---:|:---|
-| Opening | * an app notification is shown by setting its IsOpen property to true. <br> * App notifications will animate on opening. <br> * When an app notification does not have enough available window space to fully show in any location [see Placement], it will not open and will instead overwrite IsOpen to false. |
-| Closing | There are two ways an app notification can close: The program sets the IsOpen property to false, the user invokes the Close button. Use the AppNotificationCloseReason to determine which case has occurred. Closing can be prevented by setting the Cancel property to true. You can use a deferral to respond asynchronously to the event. |
+| Opening | * An app notification is shown by setting its IsOpen property to true. <br> * App notifications will animate on opening. |
+| Closing | There are two ways an app notification can close: <br>- The program sets the IsOpen property to false <br> - The user invokes the Close button. <br> Use the AppNotificationCloseReason to determine which case has occurred. <br> Closing can be prevented by setting the Cancel property to true. You can use a deferral to respond asynchronously to the event. |
 | Motion | * App notifications have built in open and close animations that can be customizable using Storyboards.|
 
 ## Data and Intelligence Metrics
@@ -704,3 +639,10 @@ Recommendations from ryandemo:
 - Average length of time the notifications display on screen until dismissal, correlated to criticality
 - How often color and/or icon customization Occurs
 - How often multiple app notifications appear at once and the typical distribution
+
+## Cut Features from InfoBar v1
+- Built-in support for floating notifications
+  - Options to show the InfoBar as a PopUp with simple positioning properties
+- Positioning and re-positioning for multiple notifications
+  - i.e. providing a built-in way to support a group of notifications in the bottom right corner
+- Truncation option with a chevron to allow the user to expand and collapse an InfoBar with multiple lines of content.
