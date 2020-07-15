@@ -14,7 +14,7 @@ This isn't a pattern we have today. The proposal here is to name them *Cursor* (
 
 # Description
 
-**UIElement.ProtectedCorsor** (type: [CoreCursor](https://docs.microsoft.com/uwp/api/Windows.UI.Core.CoreCursor))  
+**UIElement.ProtectedCursor** (type: [CoreCursor](https://docs.microsoft.com/uwp/api/Windows.UI.Core.CoreCursor))  
 Set this property to change the cursor when the pointer is over this element.
 
 A pointer is 'over' an element if it hit-tests to the element or a child element. A related example of this is the [ButtonBase.IsPointerOver](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Primitives.ButtonBase.IsPointerOver) property.
