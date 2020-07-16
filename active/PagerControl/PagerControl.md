@@ -30,13 +30,13 @@ A pager control is a UI component that can be added to different layout views (L
 
 This control can be configured to use three different display modes shown below:
 
-ComboBox Mode
+### ComboBox Mode
 ![](images/pager_control_combo.jpg)
 
-NumberBox Mode
+### NumberBox Mode
 ![](images/pager_control_number.jpg)
 
-ButtonPanel Mode 
+### ButtonPanel Mode 
 ![](images/pager_control_button.jpg)
 
 For more info about choosing the right display mode, see the pager control guidance page.
@@ -154,20 +154,20 @@ isn't the type's default (for example an int-typed property that doesn't default
 <!-- Option 2: Put these descriptions in the below API Details section,
 with a "///" comment above the member or type. -->
 | Name | Description| Default | 
-|:---:|:---|
-| PagerDisplayMode | Enum that contains 4 values (Auto, ComboBox, NumberBox, ButtonPanel) that the developer can change to fit their scenario. When Auto is selected, the display mode will be ComboBox. The control will default to auto. | Auto 
-| NumberOfPages | Sets the max number of pages the index control will iterate through. | 10 
-| ButtonVisibilityMode | Enum (Auto, AlwaysVisible, HiddenOnEdge, None) that allows the app developer to hide or show the four edge buttons. HiddenOnEdge will remove the appropriate buttons if the selected page is the last or first page. When the last page is selected, the next and last buttons will be disabled and same when the first page is selected for the first and previous page. When Auto is selected, the visibility mode will be AlwaysVisible. | Auto
+|:---:|:---:| :---|
+| PagerDisplayMode | Enum that contains 4 values (Auto, ComboBox, NumberBox, ButtonPanel) that the developer can change to fit their scenario. When Auto is selected, the display mode will be ComboBox. The control will default to auto. | Auto |
+| NumberOfPages | Sets the max number of pages the index control will iterate through. | 10 |
+| ButtonVisibilityMode | Enum (Auto, AlwaysVisible, HiddenOnEdge, None) that allows the app developer to hide or show the four edge buttons. HiddenOnEdge will remove the appropriate buttons if the selected page is the last or first page. When the last page is selected, the next and last buttons will be disabled and same when the first page is selected for the first and previous page. When Auto is selected, the visibility mode will be AlwaysVisible. | Auto |
 | First, Previous, Next, and Last ButtonCommand | Specially handle the button pressed event for when the end user selects the first button. | 
 | First, Previous, Next, and Last ButtonGlyph | Give the developer the option to customize the control by changing the glyph for the first button. | First: (waiting for design input) Previous: ChevronLeft Next: ChevronRight Last: (waiting for design input)
 | First, Previous, Next, and Last ButtonText | Give the developer the option to customize the control by changing the text for the buttons.| 
-| NumberOfIndicesShowing | Determine the number of indices showing in the number panel display mode. If the max number of pages is 10 but the number of indices is 5, the number panel will show 1,2,3,4,5 and when the user selects next, the indices will be 2,3,4,5,6. | 7 
-| EllipsisAreEnabled | Boolean to display the ellipsis for the buttonpanel display mode. | True
+| NumberOfIndicesShowing | Determine the number of indices showing in the number panel display mode. If the max number of pages is 10 but the number of indices is 5, the number panel will show 1,2,3,4,5 and when the user selects next, the indices will be 2,3,4,5,6. | 7 |
+| EllipsisAreEnabled | Boolean to display the ellipsis for the buttonpanel display mode. | True |
 | EllipsisShowFirstAndLast | Boolean to display the first and last index of a buttonpanel if the ellipsis is enabled. |True
-| SelectedIndex | The index that is currently selected. | 0
-| PrefixText | Developer can change the prefix text for the combobox display mode option. | "Page"
-| SuffixText | Developer can change the suffix text for the combobox display mode option. | "of (NumberofPages)". If NumberOfPages is infinite, display nothing
-| PagerControlPageChangedEvent | Event that is fired when the end user selects a button from the number panel, any of the 4 directional buttons, or selects an option from the combobox or enters a number in the numberbox. This event will return the index number that the end user selected. If the end user enters a number greter than the number of pages this event will return the last page. If the end user enters a number less than 1 the event will return 1. |
+| SelectedIndex | The index that is currently selected. | 0 |
+| PrefixText | Developer can change the prefix text for the combobox display mode option. | "Page" |
+| SuffixText | Developer can change the suffix text for the combobox display mode option. | "of (NumberofPages)". If NumberOfPages is infinite, display nothing |
+| PagerControlPageChangedEvent | Event that is fired when the end user selects a button from the number panel, any of the 4 directional buttons, or selects an option from the combobox or enters a number in the numberbox. This event will return the index number that the end user selected. If the end user enters a number greter than the number of pages this event will return the last page. If the end user enters a number less than 1 the event will return 1. | |
 
 ### Design Components and Functionality
 
