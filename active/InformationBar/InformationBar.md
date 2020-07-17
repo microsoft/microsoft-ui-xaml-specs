@@ -195,8 +195,8 @@ App notification in success styling
 
 
 ## Programmatic dismiss in app notification
-An app notification can be dismissed by the user via the close button or programmatically. If the notification is required to be in view until the status is resolved and you would like to remove the close button from view, you can set the ShowCloseButton property to false.
-By default, the close button will appear as an 'X' and the ShowCloseButton property is therefore set to true.
+An app notification can be dismissed by the user via the close button or programmatically. If the notification is required to be in view until the status is resolved and you would like to remove the close button from view, you can set the IsCloseButtonVisible property to false.
+By default, the close button will appear as an 'X' and the IsCloseButtonVisible property is therefore set to true.
 
  > Note: Include a message highlighting the risks with removing a close button. How it can be very intrusive and a back-up removal should be included.
 
@@ -207,7 +207,7 @@ XAML
         Severity="Warning"
         Title="Error while saving"
         Message="Your document was unable to be saved."
-        ShowCloseButton="False">
+        IsCloseButtonVisible="False">
     </controls:AppNotification>
 </StackPanel>
 ```
@@ -462,7 +462,7 @@ with a "///" comment above the member or type. -->
 | Name | Description |
 |:-:|:--|
 | Severity | Gets or sets a value that indicates the  color and icon to style the app notification |
-| ShowCloseButton| Gets or sets a boolean that indicates whether a close button will appear
+| IsCloseButtonVisible| Gets or sets a boolean that indicates whether a close button will appear
 
 
 ### Events  
@@ -523,7 +523,6 @@ unsealed runtimeclass AppNotificationTemplateSettings : Windows.UI.Xaml.Dependen
 {
     AppNotificationTemplateSettings();
 
-    // TODO: what do these highlight margins define?
     Windows.UI.Xaml.Thickness TopRightHighlightMargin;
     Windows.UI.Xaml.Thickness TopLeftHighlightMargin;
 
@@ -546,7 +545,7 @@ unsealed runtimeclass AppNotification : Windows.UI.Xaml.Controls.ContentControl
     Hyperlink Hyperlink;
 
     Boolean IsOpen;
-    Boolean ShowCloseButton;
+    Boolean IsCloseButtonVisible;
 
     Object ActionButtonContent;
     Windows.UI.Xaml.Style ActionButtonStyle;
