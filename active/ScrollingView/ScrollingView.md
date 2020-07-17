@@ -1416,6 +1416,12 @@ When set to Always, the `ScrollingView` pretends there is a zoomable outer scrol
 
 When set to Never, the `ScrollingView` pretends there is no zoomable outer scroller and overzooms.
 
+
+### ScrollingView.CurrentAnchor property
+
+Gets the most recently chosen UIElement for scroll anchoring after a layout pass, or null.
+
+
 ### ScrollingView.HorizontalAnchorRatio (and VerticalAnchorRatio) property
 
 Gets or sets ratio within the viewport where the anchor element is selected. Defaults to zero.
@@ -1852,6 +1858,7 @@ unsealed runtimeclass Microsoft.UI.Xaml.Controls.ScrollingView :
     ScrollingView();
 
     Windows.UI.Xaml.UIElement Content { get; set; };
+    Windows.UI.Xaml.UIElement CurrentAnchor { get; };
     Windows.UI.Composition.CompositionPropertySet ExpressionAnimationSources { get; };
     Double HorizontalOffset { get; };
     Double VerticalOffset { get; };
