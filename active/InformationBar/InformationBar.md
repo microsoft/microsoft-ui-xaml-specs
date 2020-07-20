@@ -644,4 +644,5 @@ Recommendations from ryandemo:
   - Options to show the InfoBar as a PopUp with simple positioning properties
 - Positioning and re-positioning for multiple notifications
   - i.e. providing a built-in way to support a group of notifications in the bottom right corner
-- Truncation option with a chevron to allow the user to expand and collapse an InfoBar with multiple lines of content.
+
+Potentially, truncation option with a chevron to allow the user to expand and collapse an InfoBar with multiple lines of content. TBD
