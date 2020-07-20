@@ -40,15 +40,15 @@ the reader "go read 100 pages of background information posted at ...". -->
 
 # Description
 
-An AppNotification is a persistent, actionable, app-wide notification intended for displaying critical or informational status messages that impact app perception or user experience.
+An InfoBar is a persistent, actionable, app-wide notification intended for displaying critical or informational status messages that impact app perception or user experience.
 
 ## Is this the right control?
-Use an AppNotification control when a user needs to be informed of, acknowledge, or take action on a message. By default the notification will remain in the content area until dismissed by the user but will not necessarily break user flow.
+Use an InfoBar control when a user needs to be informed of, acknowledge, or take action on a message. By default the notification will remain in the content area until dismissed by the user but will not necessarily break user flow.
 
-Do not use an AppNotification control to confirm or respond directly to a user action, for transient alerts, or for non-essential messages.
+Do not use an InfoBar control to confirm or respond directly to a user action, for transient alerts, or for non-essential messages.
 
 ### Scenarios
-Use an AppNotification that dismiss via the user or when the status is resolved for scenarios that **directly** impact app perception or experience ⚠
+Use an InfoBar that dismiss via the user or when the status is resolved for scenarios that **directly** impact app perception or experience ⚠
 
 - Internet connectivity lost
 - Error while saving a document when triggered automatically, not related to specific user action
@@ -56,7 +56,7 @@ Use an AppNotification that dismiss via the user or when the status is resolved 
 - Can't connect to your phone
 - The subscription to the application is expired
 
-Use an AppNotification that dismiss via the user or a timer for scenarios that **indirectly** impact app perception or experience ℹ
+Use an InfoBar that dismiss via the user or a timer for scenarios that **indirectly** impact app perception or experience ℹ
 
 - A call has begun recording
 - Update applied with link to 'Release Notes'
@@ -110,29 +110,29 @@ example code with each description. The general format is:
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 > Note: In this version of the specification, only a single DisplayMode is implied. In the future, more documentation will be added on a second DisplayMode. The DisplayMode property will change the visual layout of the components, not the functionality. The current LayoutMode shown is "Docked", for scenarios where the InfoBar will be inline with other UI elements and take up layout space. The second DisplayMode, "Floating", is intended for scenarios where the InfoBar is on top of other content as in a PopUp or overlay. More details TBD.
 
-An app notification can have several configurations, here are some notable ones.
+An information bar can have several configurations, here are some notable ones.
 
-When an app notification is conveying information of a common criticality, a notification can be set to have one of many NotificationTypes to use consistent Fluent styling for it's identifiers.
+When an information bar is conveying information of a common criticality, a notification can be set to have one of many NotificationTypes to use consistent Fluent styling for it's identifiers.
 ![Sketch of an InfoBar in a Warning state with a close button and message](images/Warning_DefaultClose.jpg)
 
-If a call to action is needed, an app notification can have customizable action and close buttons.
+If a call to action is needed, an information bar can have customizable action and close buttons.
 ![Sketch of an InfoBar in an Error state with a reconnect and close button and message](images/Critical_CustomButtons.jpg)
 
-The app notification can also be customized with XAML Content to include hyperlinks, extra buttons, and other UI elements.
+The information bar can also be customized with XAML Content to include hyperlinks, extra buttons, and other UI elements.
 ![Sketch of an InfoBar in a default state with a close button, message, and hyperlink](images/Information_CustomContent.jpg)
 
-## Create an app notification
+## Create an InfoBar
 
-The XAML below describes an inline app notification with the default styling for a critical notification. An app notification can be created anywhere in the element tree or code behind. In this example, the notification is located in a ResourceDictionary, expanding to fill the width of the stack panel.
+The XAML below describes an inline InfoBar with the default styling for a critical notification. An information bar can be created anywhere in the element tree or code behind. In this example, the notification is located in a ResourceDictionary, expanding to fill the width of the stack panel.
 
 XAML
 ```xml
 <StackPanel x:Name="ContentArea" Content="Document">
-    <controls:AppNotification x:Name="UnsuccessfulSaveNotification"
+    <controls:InfoBar x:Name="UnsuccessfulSaveNotification"
         Severity="Warning"
         Title="Error while saving"
         Message="Your document was unable to be saved.">
-    </controls:AppNotification>
+    </controls:InfoBar>
 </StackPanel>
 ```
 
@@ -150,25 +150,25 @@ public MainPage()
 }
 ```
 
-Here is the visual representation of the app notification in the page.
+Here is the visual representation of the information bar in the page.
 
 ![A sketch of an InfoBar in a Warning state with a close button and a message](images/Warning_DefaultClose.jpg)
 
-<!--## Pop-up app notification 
-In some app scenarios, an app-wide bar does not fit for functional or aesthetic reasons. If an app notification is defined independent of another control, the visual layout will default to a to a toast with the same visual components as the aforementioned bar. The app notification will display relative to the edges of the xaml root and by default will be located in the bottom right corner of the application.
+<!--## Pop-up information bar 
+In some app scenarios, an app-wide bar does not fit for functional or aesthetic reasons. If an information bar is defined independent of another control, the visual layout will default to a to a toast with the same visual components as the aforementioned bar. The information bar will display relative to the edges of the xaml root and by default will be located in the bottom right corner of the application.
 
 XAML
 ```c#
 <StackPanel x:Name="ContentArea" Content="Document" />
 
-<controls:AppNotification x:Name="ConnectionErrorNotification"
+<controls:InfoBar x:Name="ConnectionErrorNotification"
     Severity="Critical"
     Icon="NetworkOffline"
     Title="No Internet"
     Message="Reconnect to save your work.">
-</controls:AppNotification>
+</controls:InfoBar>
 ```
-[A sketch of a sample application with an app notification as a toast in the bottom right of the content area. The app notification's title is "No Internet" and it's message is "Reconnect to save your work"](images/No_Internet_Toast.png) -->
+[A sketch of a sample application with an InfoBar as a toast in the bottom right of the content area. The InfoBar's title is "No Internet" and it's message is "Reconnect to save your work"](images/No_Internet_Toast.png) -->
 
 ## Select a DisplayMode
 TODO (PM): summary and mockup
@@ -176,7 +176,7 @@ TODO (PM): summary and mockup
 - Example of pop-up code here (Code snippet TODO (Dev))
 
 ## Notification types: consistent styling
-The type of the app notification can be set via the Severity property to automatically set a consistent status color and icon dependent on the criticality of the notification.
+The type of the info bar can be set via the Severity property to automatically set a consistent status color and icon dependent on the criticality of the notification.
 
 Preset color and icon settings are as follows:
 - Error: Red (#FDE7E9/#442726) & ErrorBadge (EEA39)
@@ -184,15 +184,15 @@ Preset color and icon settings are as follows:
 - Success: Green (#DFF6DD/#393D1B) & Completed (E930)
 - Default: Gray (#F2F2F2/#2B2B2B) & no icon
 
-App notification in default styling
+Info bar in default styling
 ![Sketch of an InfoBar in a default state and message](images/Default_Default.jpg)
 
-App notification in success styling
+Info bar in success styling
 ![Sketch of an InfoBar in a success state and message](images/Success_DefaultClose.jpg)
 
 
-## Programmatic dismiss in app notification
-An app notification can be dismissed by the user via the close button or programmatically. If the notification is required to be in view until the status is resolved and you would like to remove the close button from view, you can set the IsCloseButtonVisible property to false.
+## Programmatic dismiss in info bar
+An info bar can be dismissed by the user via the close button or programmatically. If the notification is required to be in view until the status is resolved and you would like to remove the close button from view, you can set the IsCloseButtonVisible property to false.
 By default, the close button will appear as an 'X' and the IsCloseButtonVisible property is therefore set to true.
 
  > Note: Include a message highlighting the risks with removing a close button. How it can be very intrusive and a back-up removal should be included.
@@ -200,12 +200,12 @@ By default, the close button will appear as an 'X' and the IsCloseButtonVisible 
 XAML
 ```xml
 <StackPanel x:Name="ContentArea" Content="Document">
-    <controls:AppNotification x:Name="UnsuccessfulSaveNotification"
+    <controls:InfoBar x:Name="UnsuccessfulSaveNotification"
         Severity="Warning"
         Title="Error while saving"
         Message="Your document was unable to be saved."
         IsCloseButtonVisible="False">
-    </controls:AppNotification>
+    </controls:InfoBar>
 </StackPanel>
 ```
 ![Sketch of an InfoBar in a Warning state with no close button](images/Warning_ProgrammaticClose.jpg)
@@ -215,26 +215,26 @@ Outside of the pre-defined notification types, the StatusColor and IconSource pr
 
 A custom background color can be set via the StatusColor property and will override the color set by a Severity if it is defined. Please keep in mind content readability and accessibility when setting your own color.
 
-Alongside color, a custom icon can appear left of the Title and Message in the app notification. If a default styling is chosen, most styles have an associated icon already defined. This icon can be removed or added as a custom icon using the IconSource property. Recommended icon sizes include (TBD)px.
+Alongside color, a custom icon can appear left of the Title and Message in the InfoBar. If a default styling is chosen, most styles have an associated icon already defined. This icon can be removed or added as a custom icon using the IconSource property. Recommended icon sizes include (TBD)px.
 
 XAML
 ```xml
 <StackPanel x:Name="ContentArea" Content="Document">
-    <controls:AppNotification x:Name="ConnectionErrorNotification"
+    <controls:InfoBar x:Name="ConnectionErrorNotification"
         Title="No Internet"
         Message="Reconnect to save your work.">
-        <controls:AppNotification.IconSource>
+        <controls:InfoBar.IconSource>
             <controls:SymbolIconSource Symbol="NetworkOffline" />
-        </controls:AppNotification.IconSource>
-        <controls:AppNotification.StatusColor>
+        </controls:InfoBar.IconSource>
+        <controls:InfoBar.StatusColor>
             <Color x:Key="Maroon">#800000</Color>
-        </controls:AppNotification.StatusColor>
-    </controls:AppNotification>
+        </controls:InfoBar.StatusColor>
+    </controls:InfoBar>
 </StackPanel>
 ```
 
 
-![A sketch of a sample application with an app notification as a bar in the top of the content area. The app notification's title is "No Internet" and it's message is "Reconnect to save your work". It has a maroon accent color and a "Network Offline" icon.](images/Critical_Color.jpg)
+![A sketch of a sample application with an InfoBar in the top of the content area. The notification's title is "No Internet" and it's message is "Reconnect to save your work". It has a maroon accent color and a "Network Offline" icon.](images/Critical_Color.jpg)
 
 ## Add buttons
 By default, an 'X' close button will appear as the right most component in the bar. The close button can be customized with the CloseButtonContent property.
@@ -244,29 +244,29 @@ An additional action button can be added by setting the ActionButtonContent and 
 XAML
 ```xml
 <StackPanel x:Name="ContentArea" Content="Document">
-    <controls:AppNotification x:Name="ConnectionErrorNotification"
+    <controls:InfoBar x:Name="ConnectionErrorNotification"
         Severity="Critical"
         Title="No Internet"
         Message="Reconnect to save your work."
         ActionButtonContent="Reconnect"
         ActionButtonCommand="RedirectToNetworkSettings"
         CloseButtonContent="Dismiss">
-        <controls:AppNotification.IconSource>
+        <controls:InfoBar.IconSource>
             <controls:SymbolIconSource Symbol="NetworkOffline" />
-        </controls:AppNotification.IconSource>
-    </controls:AppNotification>
+        </controls:InfoBar.IconSource>
+    </controls:InfoBar>
 </StackPanel>
 ```
 
 ![A sketch of an InfoBar in an Error state with an action and close button](images/Critical_CustomButtons.jpg)
 
 ## Custom content
-Content can be added to an app notification using the Content property. If there is more content to show than what the size of an app notification will allow, a scrollbar will be automatically enabled to allow a user to scroll the content area.
+Content can be added to an InfoBar using the Content property. If there is more content to show than what the size of an InfoBar will allow, a scrollbar will be automatically enabled to allow a user to scroll the content area.
 
 XAML
 ```xml
 <StackPanel x:Name="ContentArea" Content="Document">
-    <controls:AppNotification x:Name="RecentUpdateNotification"
+    <controls:InfoBar x:Name="RecentUpdateNotification"
         Severity="Informational"
         Title="Update Complete!"  
             <TextBlock Text="You've been updated to the latest version &#8211;">
@@ -274,7 +274,7 @@ XAML
                     Content="Notes"
                     NavigateUri="https://www.microsoft.com/app/releasenotes" />
             </TextBlock>
-    </controls:AppNotification>
+    </controls:InfoBar>
 </StackPanel>
 ```
 
@@ -282,16 +282,16 @@ XAML
 
 ## Content wrapping
 By default, the text set in the Message property will wrap vertically in the control underneath the other visual components. 
-If the height of the app notification is explicitly set, a scroll bar will be added for users to view the content.
+If the height of the InfoBar is explicitly set, a scroll bar will be added for users to view the content.
 
 XAML
 ```xml
 <StackPanel x:Name="ContentArea" Content="Document">
-    <controls:AppNotification x:Name="DefaultCriticalNotification"
+    <controls:InfoBar x:Name="DefaultCriticalNotification"
         Severity="Critical"
         Title="Message Title"  
         Message="This message is very long, so long in fact it needs to wrap to a second line in the notification">
-    </controls:AppNotification>
+    </controls:InfoBar>
 </StackPanel>
 ```
 
@@ -322,23 +322,23 @@ public void InfoBar_Closing(InfoBar sender, InfoBarClosingEventArgs args)
 # Inputs and Accessibility
 ## UI Automation Patterns 
 
-AppNotification will alternate between Pane for inline notifications and Window for overlay notifications with IScrollProvider for the (conditionally) scrollable content area within the notification. 
+InfoBar will alternate between Pane for inline notifications and Window for overlay notifications with IScrollProvider for the (conditionally) scrollable content area within the notification. 
 
-AppNotification will implement a custom "notification" Landmark.
+InfoBar will implement a custom "notification" Landmark.
 
 
 ### Keyboard Navigation 
 
 | State | Action |
 |:---|:---|
-| Notification appears | No action is needed invoke the notification. <br><br> Enter: If notification is docked, AppNotification can receive focus with enter. |
-| Notification receives focus | F6: <br> AppNotification will be added to F6 region navigation stops so that F6 may be used to focus into and out of the notification. <br><br> Tab: <br> If Narrator is active, AppNotification will automatically be added to the top of Narrator navigation stops thanks to its UI Automation Pattern(s), similar to popups or ContentDialog, and can be accessed via tabbing. <br><br> Enter: <br> If Narrator is not active, pressing enter will focus in and out of the AppNotification after navigating to it via tabbing.|
+| Notification appears | No action is needed invoke the notification. <br><br> Enter: If notification is docked, InfoBar can receive focus with enter. |
+| Notification receives focus | F6: <br> InfoBar will be added to F6 region navigation stops so that F6 may be used to focus into and out of the notification. <br><br> Tab: <br> If Narrator is active, InfoBar will automatically be added to the top of Narrator navigation stops thanks to its UI Automation Pattern(s), similar to popups or ContentDialog, and can be accessed via tabbing. <br><br> Enter: <br> If Narrator is not active, pressing enter will focus in and out of the InfoBar after navigating to it via tabbing.|
 | Notification is tabbed through | Tab Button: <br> Will go through all actionable items, regardless of group, in order. When tab is pressed on the last element in the notification, focus will cycle to the first element in the notification.  <br> <br> Left + Right Arrow Keys: <br> Can be used to navigate between the footer Action and Close buttons if both are present. <br><br> Escape: <br> Will result in closing the notification. |
 | Notification is dismissed | 1. X Button is pressed. <br> 2. Close Button is pressed. <br> 3. Action Button is pressed. <br><br> * Tab increments focus to the next element but does not close the notification. |
 
 ### Narrator
 
-AppNotification will leverage the existing APIs used by Windows Notifications.
+InfoBar will leverage the existing APIs used by Windows Notifications.
 
 | State | Action |
 |:---|:---|
@@ -358,7 +358,7 @@ AppNotification will leverage the existing APIs used by Windows Notifications.
 
 ## Enter and Exit Usability
 ### Flashing notifications
-The AppNotification should not appear and disappear from view in less than a second to prevent flashing on the screen. Avoid flashing visuals for people with photosensitivities. 
+The InfoBar should not appear and disappear from view in less than a second to prevent flashing on the screen. Avoid flashing visuals for people with photosensitivities. 
 
 For notifications that automatically enter and exit the view via an app status condition, we recommend you include logic in your application to prevent a notification from appearing or disappearing rapidly or multiple times in a row. However, in general, this control should be used for long-lived status messages.
 
@@ -401,18 +401,18 @@ Please view the guidance for [Adjust layout and fonts, and support RTL](https://
 # Remarks
 ## Usage Recommendations
 
-### When to show an app notification?
+### When to show an information bar?
 
 TODO (PM): transcribe to sentences out of bullet points
 Current opinion: When the state of the application is different from normal, expected functionality
 - Patterns for critical notifications (i.e. internet connectivity is required for the application to function)
-    - A critical app notification should remain in view until the connection is restored if the app's functionality is very limited without this feature working.
-    - A critical app notification appears ("Internet connectivity lost") and can be dismissed by the user.
+    - A critical information bar should remain in view until the connection is restored if the app's functionality is very limited without this feature working.
+    - A critical information bar appears ("Internet connectivity lost") and can be dismissed by the user.
         - However, if the internet is reconnected and the user had previously dismissed the notification, the notification should update to "Internet is reconnected" Success notification to inform the user the functionality of the application is restored.
         - Additionally, if the internet is reconnected and the notification is still on the screen, the notification should merely disappear from view.
     
 - Patterns for informational notifications, users should **always** have the option to dismiss informational notifications, even if they are intended to disappear after # seconds. 
-    - If the app is performing a long task in the background that can then require further user action (i.e. backing up a drive or scanning for viruses) then an app notification for "Success" could appear.
+    - If the app is performing a long task in the background that can then require further user action (i.e. backing up a drive or scanning for viruses) then an information bar for "Success" could appear.
     - TBD: App update recommendations
 
 ### When to use the different DisplayModes?
@@ -445,7 +445,7 @@ with a "///" comment above the member or type. -->
 
 | Name | Description |
 |:-:|:--|
-| Severity | Gets or sets a value that indicates the  color and icon to style the app notification |
+| Severity | Gets or sets a value that indicates the  color and icon to style the InfoBar |
 | IsCloseButtonVisible| Gets or sets a boolean that indicates whether a close button will appear
 
 
@@ -454,8 +454,8 @@ with a "///" comment above the member or type. -->
 |:-:|:--|
 | ActionButtonClick | Occurs after the action button has been tapped. |
 | CloseButtonClick | Occurs after the close button has been tapped. |
-| Closed | Occurs after the app notification is closed. |
-| Closing |Occurs just before the app notification begins to close. |
+| Closed | Occurs after the information bar is closed. |
+| Closing |Occurs just before the information bar begins to close. |
 
 # Detailed Design
 
@@ -471,7 +471,7 @@ Includes specifics like:
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 ```c++
-enum AppNotificationCloseReason
+enum InfoBarCloseReason
 {
     CloseButton,
     Programmatic,
@@ -485,27 +485,27 @@ enum NotificationType
     Success,
 }
 
-runtimeclass AppNotificationClosedEventArgs
+runtimeclass InfoBarClosedEventArgs
 {
-    AppNotificationCloseReason Reason{ get; };
+    InfoBarCloseReason Reason{ get; };
 };
 
-runtimeclass AppNotificationClosingEventArgs
+runtimeclass InfoBarClosingEventArgs
 {
-    AppNotificationCloseReason Reason{ get; };
+    InfoBarCloseReason Reason{ get; };
     Boolean Cancel;
     Windows.Foundation.Deferral GetDeferral();
 };
 
-runtimeclass AppNotificationDisplayModeArgs
+runtimeclass InfoBarDisplayModeArgs
 {
 
 };
 
 // TODO (Dev/PM): will add post-implementation 
-unsealed runtimeclass AppNotificationTemplateSettings : Windows.UI.Xaml.DependencyObject
+unsealed runtimeclass InfoBarTemplateSettings : Windows.UI.Xaml.DependencyObject
 {
-    AppNotificationTemplateSettings();
+    InfoBarTemplateSettings();
 
     Windows.UI.Xaml.Thickness TopRightHighlightMargin;
     Windows.UI.Xaml.Thickness TopLeftHighlightMargin;
@@ -520,9 +520,9 @@ unsealed runtimeclass AppNotificationTemplateSettings : Windows.UI.Xaml.Dependen
     static TBD ActualStatusColor;
 }
 
-unsealed runtimeclass AppNotification : Windows.UI.Xaml.Controls.ContentControl
+unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
 {
-    AppNotification();
+    InfoBar();
 
     String Title;
     String Message;
@@ -545,12 +545,12 @@ unsealed runtimeclass AppNotification : Windows.UI.Xaml.Controls.ContentControl
     Color StatusColor;
     IconSource IconSource;
 
-    AppNotificationTemplateSettings TemplateSettings{ get; };
+    InfoBarTemplateSettings TemplateSettings{ get; };
 
-    event Windows.Foundation.TypedEventHandler<AppNotification, Object> ActionButtonClick;
-    event Windows.Foundation.TypedEventHandler<AppNotification, Object> CloseButtonClick;
-    event Windows.Foundation.TypedEventHandler<AppNotification, AppNotificationClosingEventArgs> Closing;
-    event Windows.Foundation.TypedEventHandler<AppNotification, AppNotificationClosedEventArgs> Closed;
+    event Windows.Foundation.TypedEventHandler<InfoBar, Object> ActionButtonClick;
+    event Windows.Foundation.TypedEventHandler<InfoBar, Object> CloseButtonClick;
+    event Windows.Foundation.TypedEventHandler<InfoBar, InfoBarClosingEventArgs> Closing;
+    event Windows.Foundation.TypedEventHandler<InfoBar, InfoBarClosedEventArgs> Closed;
 
     static Windows.UI.Xaml.DependencyProperty IsOpenProperty{ get; };
 
@@ -611,9 +611,9 @@ Toast layout examples
 ## Behavioral Components
  | Property | Notes |
 |:---:|:---|
-| Opening | * An app notification is shown by setting its IsOpen property to true. <br> * App notifications will animate on opening. |
-| Closing | There are two ways an app notification can close: <br>- The program sets the IsOpen property to false <br> - The user invokes the Close button. <br> Use the AppNotificationCloseReason to determine which case has occurred. <br> Closing can be prevented by setting the Cancel property to true. You can use a deferral to respond asynchronously to the event. |
-| Motion | * App notifications have built in open and close animations that can be customizable using Storyboards.|
+| Opening | * An information bar is shown by setting its IsOpen property to true. <br> * InfoBarss will animate on opening. |
+| Closing | There are two ways an information bar can close: <br>- The program sets the IsOpen property to false <br> - The user invokes the Close button. <br> Use the InfoBarCloseReason to determine which case has occurred. <br> Closing can be prevented by setting the Cancel property to true. You can use a deferral to respond asynchronously to the event. |
+| Motion | * Information bars have built in open and close animations that can be customizable using Storyboards.|
 
 ## Data and Intelligence Metrics
 Recommendations from ryandemo:
@@ -621,7 +621,7 @@ Recommendations from ryandemo:
 - Track popularity of each layout mode
 - Average length of time the notifications display on screen until dismissal, correlated to criticality
 - How often color and/or icon customization Occurs
-- How often multiple app notifications appear at once and the typical distribution
+- How often multiple information bars appear at once and the typical distribution
 
 ## Cut Features from InfoBar v1
 - Built-in support for floating notifications
