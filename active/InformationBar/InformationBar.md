@@ -113,13 +113,13 @@ example code with each description. The general format is:
 An app notification can have several configurations, here are some notable ones.
 
 When an app notification is conveying information of a common criticality, a notification can be set to have one of many NotificationTypes to use consistent Fluent styling for it's identifiers.
-![TODO](images/Warning_DefaultClose.jpg)
+![Sketch of an InfoBar in a Warning state with a close button and message](images/Warning_DefaultClose.jpg)
 
 If a call to action is needed, an app notification can have customizable action and close buttons.
-![TODO](images/Critical_CustomButtons.jpg)
+![Sketch of an InfoBar in an Error state with a reconnect and close button and message](images/Critical_CustomButtons.jpg)
 
 The app notification can also be customized with XAML Content to include hyperlinks, extra buttons, and other UI elements.
-![TODO](images/Information_CustomContent.jpg)
+![Sketch of an InfoBar in a default state with a close button, message, and hyperlink](images/Information_CustomContent.jpg)
 
 ## Create an app notification
 
@@ -152,7 +152,7 @@ public MainPage()
 
 Here is the visual representation of the app notification in the page.
 
-![TODO](images/Warning_DefaultClose.jpg)
+![A sketch of an InfoBar in a Warning state with a close button and a message](images/Warning_DefaultClose.jpg)
 
 <!--## Pop-up app notification 
 In some app scenarios, an app-wide bar does not fit for functional or aesthetic reasons. If an app notification is defined independent of another control, the visual layout will default to a to a toast with the same visual components as the aforementioned bar. The app notification will display relative to the edges of the xaml root and by default will be located in the bottom right corner of the application.
@@ -171,9 +171,9 @@ XAML
 [A sketch of a sample application with an app notification as a toast in the bottom right of the content area. The app notification's title is "No Internet" and it's message is "Reconnect to save your work"](images/No_Internet_Toast.png) -->
 
 ## Select a DisplayMode
-TBD
+TODO (PM): summary and mockup
 - Different visually only
-- Example of pop-up code here
+- Example of pop-up code here (Code snippet TODO (Dev))
 
 ## Notification types: consistent styling
 The type of the app notification can be set via the Severity property to automatically set a consistent status color and icon dependent on the criticality of the notification.
@@ -181,17 +181,14 @@ The type of the app notification can be set via the Severity property to automat
 Preset color and icon settings are as follows:
 - Error: Red (#FDE7E9/#442726) & ErrorBadge (EEA39)
 - Warning: Yellow-orange (#FFF4CE/#433519) & Error (E783)
-- Information: Blue (#D8F1FF/) & Info (E946)
 - Success: Green (#DFF6DD/#393D1B) & Completed (E930)
 - Default: Gray (#F2F2F2/#2B2B2B) & no icon
 
-TBD: Should these be part of light-weight styling to be set across app? Like data validation? Or separate?
-
 App notification in default styling
-![TODO](images/Default_Default.jpg)
+![Sketch of an InfoBar in a default state and message](images/Default_Default.jpg)
 
 App notification in success styling
-![TODO](images/Success_DefaultClose.jpg)
+![Sketch of an InfoBar in a success state and message](images/Success_DefaultClose.jpg)
 
 
 ## Programmatic dismiss in app notification
@@ -211,14 +208,12 @@ XAML
     </controls:AppNotification>
 </StackPanel>
 ```
-![TODO](images/Warning_ProgrammaticClose.jpg)
+![Sketch of an InfoBar in a Warning state with no close button](images/Warning_ProgrammaticClose.jpg)
 
 ## Custom styling: status color and icon
 Outside of the pre-defined notification types, the StatusColor and IconSource properties can be set to customize the styling. 
 
-A color can be set via the StatusColor property with a hex code, i.e. #800000 for maroon. 
-TBD: should other color definition methods be supported like RGB? Are there already Fluent aliases for many hex codes?
-
+A custom background color can be set via the StatusColor property and will override the color set by a Severity if it is defined. Please keep in mind content readability and accessibility when setting your own color.
 
 Alongside color, a custom icon can appear left of the Title and Message in the app notification. If a default styling is chosen, most styles have an associated icon already defined. This icon can be removed or added as a custom icon using the IconSource property. Recommended icon sizes include (TBD)px.
 
@@ -245,7 +240,6 @@ XAML
 By default, an 'X' close button will appear as the right most component in the bar. The close button can be customized with the CloseButtonContent property.
 
 An additional action button can be added by setting the ActionButtonContent and ActionButtonCommand properties. Additional action buttons can be added via custom content.
-<!-- TODO: add link to custom content header in 'content' -->
 
 XAML
 ```xml
@@ -264,7 +258,7 @@ XAML
 </StackPanel>
 ```
 
-![TODO](images/Critical_CustomButtons.jpg)
+![A sketch of an InfoBar in an Error state with an action and close button](images/Critical_CustomButtons.jpg)
 
 ## Custom content
 Content can be added to an app notification using the Content property. If there is more content to show than what the size of an app notification will allow, a scrollbar will be automatically enabled to allow a user to scroll the content area.
@@ -284,11 +278,11 @@ XAML
 </StackPanel>
 ```
 
-![TODO](images/Information_CustomContent.jpg)
+![A sketch of an InfoBar in its default state with a hyperlink and message](images/Information_CustomContent.jpg)
 
 ## Content wrapping
 By default, the text set in the Message property will wrap vertically in the control underneath the other visual components. 
-If the height of the app notification is explicitly set, a scroll bar (TODO: learn why Teaching Tip is implemented in this way) will be added for users to view the content.
+If the height of the app notification is explicitly set, a scroll bar will be added for users to view the content.
 
 XAML
 ```xml
@@ -301,30 +295,29 @@ XAML
 </StackPanel>
 ```
 
-![TODO](images/Critical_Wrapping.jpg)
+![A sketch of an InfoBar in its default state with a very long message](images/Critical_Wrapping.jpg)
 
 
 ## Canceling and deferring close
-TBD: define event behavior, similar to TeachingTip?
+The Closing event can be used to cancel and/or defer the close of an InfoBar. This can be used to keep the InfoBar open or allow time for an action or custom animation to occur. When the closing of an InfoBar is canceled, IsOpen will go back to true, however, it will stay false during the deferral. A programmatic close can also be canceled.
 
-## What mode of app notification should I use?
-TBD after the first (InfoBar) mode is mostly defined.
-
-Floating mode default behavior:
-
-- Bottom right corner Placement/Positioning
-  - Even on page resize, will appear and scale, what about windowing?
-- Resizing: Length in "em's", xaml's version so that width will potentially resize for different resolutions
-  - What are specifics? What does Teaching Tip do?
-
-- P2 Stacking: most recent notification in bottom right, older notification pushes up vertically
-    - Implementation via host behind the scenes so the user automatically gets "bottom right" positioning
-      - Static "host" to add/remove notifications from stack
-      - When InfoBarFloating1.isOpen is set to true --> NotificationHost.Add(InfoBarFloating1):
-        - Expected behavior: Add InfoBarFloating1 to list of notifications open, move other notifications to be in correct position in stack if they exist.
-      - When InfoBarFloating2.isOpen is set to false --> NotificationHost.Remove(InfoBarFloating2)
-        - Expected behavior: Remove from list, reposition other notifications if they're there
-
+XAML
+```xml
+<controls:InfoBar x:Name="UpdateAvailable"
+    Title="Update Available"
+    Message="Please close this tip to apply required security updates to this application"
+    Closing="InfoBar_Closing>
+</controls:InfoBar>
+```
+C#
+```C#
+// TODO (Dev): need an example code snippet where closing is deferred with args.Cancel = true;
+public void InfoBar_Closing(InfoBar sender, InfoBarClosingEventArgs args)
+{
+    // if scenario failed
+    args.Cancel = true;
+}
+```
 
 # Inputs and Accessibility
 ## UI Automation Patterns 
@@ -333,13 +326,6 @@ AppNotification will alternate between Pane for inline notifications and Window 
 
 AppNotification will implement a custom "notification" Landmark.
 
-Thoughts/Questions
-- If there were no host control, would there be different control patterns or interfaces to use to support pop-up or inline behavior? Or is IScrollProvider fine?
-- Is the custom landmark a dev implementation note?
-  - Check in w/ teaching tip for its model. Notification grouping. Confusion about landmarks currently.
-  - After tab, a keyboard shortcut to go to a group of control. Group has landmark itself, not individual ones.
-- Do we need to implement a OnCreateAutomationPeer? What does that entail?
-  - dev + Yulia question
 
 ### Keyboard Navigation 
 
@@ -376,7 +362,7 @@ The AppNotification should not appear and disappear from view in less than a sec
 
 For notifications that automatically enter and exit the view via an app status condition, we recommend you include logic in your application to prevent a notification from appearing or disappearing rapidly or multiple times in a row. However, in general, this control should be used for long-lived status messages.
 
-Code snippet example?
+TODO (Dev): Code snippet example?
 ### Inline notifications offsetting content
 For notifications that are inline with other UI content, keep in mind how the rest of the page will responsively react to the addition of the element.
 
@@ -411,15 +397,13 @@ We recommend you avoid positioning based on message length or other UI elements 
 The notification will follow standard mirroring behavior when localized to/from languages that are right to left (RTL) or left to right (LTR). The icon will not mirror unless there is directionality. 
 
 Please view the guidance for [Adjust layout and fonts, and support RTL](https://docs.microsoft.com/en-us/windows/uwp/design/globalizing/adjust-layout-and-fonts--and-support-rtl) for more information about text localization in your notification.
-- Titles or messages translated to other languages may vary greatly in length.
-- For custom content, avoid positioning based on message length or other UI elements in a specific language.
-- RTL, LTR --> icon does not mirror unless there's directionality. 
-  - sort of automatic, but mention, will follow standard mirroring behavior
+
 # Remarks
 ## Usage Recommendations
 
 ### When to show an app notification?
 
+TODO (PM): transcribe to sentences out of bullet points
 Current opinion: When the state of the application is different from normal, expected functionality
 - Patterns for critical notifications (i.e. internet connectivity is required for the application to function)
     - A critical app notification should remain in view until the connection is restored if the app's functionality is very limited without this feature working.
@@ -518,7 +502,7 @@ runtimeclass AppNotificationDisplayModeArgs
 
 };
 
-// TODO: will add post-implementation
+// TODO (Dev/PM): will add post-implementation 
 unsealed runtimeclass AppNotificationTemplateSettings : Windows.UI.Xaml.DependencyObject
 {
     AppNotificationTemplateSettings();
@@ -542,7 +526,7 @@ unsealed runtimeclass AppNotification : Windows.UI.Xaml.Controls.ContentControl
 
     String Title;
     String Message;
-    Hyperlink Hyperlink;
+    Windows.UI.Xaml.Documents.Hyperlink Hyperlink;
 
     Boolean IsOpen;
     Boolean IsCloseButtonVisible;
@@ -644,5 +628,6 @@ Recommendations from ryandemo:
   - Options to show the InfoBar as a PopUp with simple positioning properties
 - Positioning and re-positioning for multiple notifications
   - i.e. providing a built-in way to support a group of notifications in the bottom right corner
+- Support for a two-button layout, a single action and a single close right-aligned. This would be a secondary option to the single left-aligned action button and right-aligned 'X' to close button.
 
 Potentially, truncation option with a chevron to allow the user to expand and collapse an InfoBar with multiple lines of content. TBD
