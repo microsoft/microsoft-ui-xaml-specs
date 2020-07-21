@@ -16,7 +16,6 @@ Important APIs: [ProgressBar](https://docs.microsoft.com/en-us/uwp/api/windows.u
  By default, the progress ring will display an indeterminate spinner that continuously animates until the control is no longer visible. You can change the behavior to dislpay a determinate ring that fills in based on the value you provide. 
 
 # Examples
-[Please see this table of current ProgressBar and ProgressRing modes and states.](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/kathyang/progress-styles/active/progress-styles/progress-styles-tables.md)
 
 The following examples show how to use the IsIndeterminate property to change the mode of the ProgressRing and the Value property to change the proportionate amount indicated. 
 
@@ -26,7 +25,7 @@ The following examples show how to use the IsIndeterminate property to change th
 <ProgressRing IsActive="True" Height="100" Width="100"/>
 ```
 
-![](images/ProgressRing-indeterminate.PNG)
+![](images/ProgressRing-indeterminate.jpg)
 ## Determinate ProgressRing
 
 ```xml
@@ -35,14 +34,6 @@ The following examples show how to use the IsIndeterminate property to change th
 ![](images/ProgressRing-determinate.PNG)
 
 Setting a Value on an Indeterminate ProgressRing should display as though there is no Value.
-
-### Minimum and Maximum
-
-ProgressRing should indicate progress based on the Value, relative to the Minimum and Maximum.
-
-| Properties | Image |
-|:--|:-:|
-| Minimum=10, Maximum=18, and Value=16| ![](images/ProgressRing-determinate.PNG) | 
 
 
 # API Notes
@@ -56,15 +47,15 @@ isn't the type's default (for example an int-typed property that doesn't default
 with a "///" comment above the member or type. -->
 ProgressRing can now be used in scenarios where progress is determinate or indeterminates. With this additional capability, the determinate ProgressRing does not represent a "hung" state where the user cannot interact with the app. Previously, guidance recommended that ProgressRing only be used when the user cannot continue to interact with the app, but this is no longer the only use case and ProgressRing can be used in scenarios where user interaction can continue while the ring is spinning.
 
-Below are properties being added to ProgressRing. The IsIndeterminate property of ProgressRing will default to True for back compatability.
+Below are properties being added to ProgressRing. The IsIndeterminate property of ProgressRing will default to True for backwards compatability.
 
 |Name | Type | Description | Default | 
 |:--|:-:|:-:|:-:|
 | IsIndeterminate | boolean | Gets or sets a value that indicates whether the progress ring reports generic progress with a repeating pattern (indeterminate progress) or reports progress based on the Value property (determinate progress) | True | 
 | IsActive | boolean | Gets or sets a value that indicates whether the progress ring is being displayed to the end user. If IsActive is false, the ProgressRing is not shown, but space is reserved for it in the UI layout. To not reserve space for it, set its Visibility property to Collapsed. | True |
 | Value | double | Gets or sets the current setting of the range control, which may be coerced. The value ranges from 0 to 100. | 0 | 
-| DeterminateSource | IAnimatedVisualSource | Gets or sets the Lottie animation file used for the determinate state of the ring. | N/A | 
-| IndeterminateSource | IAnimatedVisualSource | Gets or sets the Lottie animation file used for the indeterminate state of the ring. | N/A | 
+| DeterminateSource | AnimatedVisualSource | Gets or sets the Lottie animation file used for the determinate state of the ring. | N/A | 
+| IndeterminateSource | AnimatedVisualSource | Gets or sets the Lottie animation file used for the indeterminate state of the ring. | N/A | 
 | ValueChanged | event | Event that occurs when the range value changes. | N/A | 
 
 # API Details
@@ -78,9 +69,9 @@ Unsealed runtimeclass ProgressRing : Microsoft.UI.Xaml.Controls.Control.RangeBas
     Double  StrokeThickness;
 
     IAnimatedVisualSource DeterminateSource{ get; set; };
-    IAnimatedVisualSource IndeterminateSource{get; set; };
+    IAnimatedVisualSource IndeterminateSource{ get; set; };
 
-    ProgressRingTemplateSettings TemplateSettings{get; };
+    ProgressRingTemplateSettings TemplateSettings{ get; };
  
     static Microsoft.UI.Xaml.DependencyProperty IsActiveProperty{ get; set};
     static Microsoft.UI.Xaml.DependencyProperty IsIndeterminateProperty{  get; };
