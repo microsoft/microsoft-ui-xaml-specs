@@ -15,7 +15,7 @@ This isn't a pattern we have today. The proposal here is to name them *Cursor* (
 # Description
 
 **UIElement.ProtectedCursor** (type: [CoreCursor](https://docs.microsoft.com/uwp/api/Windows.UI.Core.CoreCursor))  
-Gets or sets the cursor that displays when the mouse pointer is over this element. Defaults to null, indicating no change to the cursor.
+Gets or sets the cursor that displays when the  pointer is over this element. Defaults to null, indicating no change to the cursor.
 
 If a parent and descendant element both have this property set, and the pointer is over the descendent, the descendant's value is used and the parent's value is ignored.
 
