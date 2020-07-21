@@ -60,13 +60,14 @@ Below are properties being added to ProgressRing. The IsIndeterminate property o
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
+```xaml
 Unsealed runtimeclass ProgressRing : Microsoft.UI.Xaml.Controls.Control.RangeBase
 {
     ProgressRing();
  
     Boolean IsActive;
     Boolean IsIndeterminate; 
-    Double  StrokeThickness;
+    Double Value; 
 
     IAnimatedVisualSource DeterminateSource{ get; set; };
     IAnimatedVisualSource IndeterminateSource{ get; set; };
@@ -78,7 +79,7 @@ Unsealed runtimeclass ProgressRing : Microsoft.UI.Xaml.Controls.Control.RangeBas
     static Mircorsoft.UI.Xaml.DependencyProperty DeterminateSourceProperty{ get; };
     static Microsoft.UI.Xaml.IndeterminateSourceProperty{ get; };
 }
-
+```
 
 
 # Appendix
