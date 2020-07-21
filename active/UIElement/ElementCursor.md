@@ -46,7 +46,7 @@ public class HelpButton : Button
 unsealed runtimeclass UIElement : Microsoft.UI.Xaml.DependencyObject
 {
   // ...
-  Windows.UI.Core.CoreCursorType ProtectedCursor;
+  Windows.UI.Core.CoreCursor ProtectedCursor;
 }
 ```
 
