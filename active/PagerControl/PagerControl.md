@@ -1,17 +1,5 @@
 # Pager control
 
-<!-- The purpose of this spec is to describe a new feature and
-its APIs that make up a new feature in WinUI. -->
-
-<!-- There are two audiences for the spec. The first are people
-that want to evaluate and give feedback on the API, as part of
-the submission process.  When it's complete
-it will be incorporated into the public documentation at
-docs.microsoft.com (http://docs.microsoft.com/uwp/toolkits/winui/).
-Hopefully we'll be able to copy it mostly verbatim.
-So the second audience is everyone that reads there to learn how
-and why to use this API. -->
-
 ## Background
 
 A UI pager is a common control that lets a user page through a long list, rather than scroll or pan. A common experience is to provide preview/next buttons, and a way to jump to a specific page.
@@ -43,22 +31,9 @@ For more info about choosing the right display mode, see the pager control guida
 
 ## Is this the right control? 
 
-Use a **PagerControl** to create a navigation iterface for an end user to page through content instead of scrolling or panning through the content in a single view. Scrolling through all content in a single view can make it harder for the end user to find specific information and it can lead to performance issues if the view needs to constantly update with new data. **PagerControl** can be used as an alternate solution so the user can consume a subset of the content without needing to scroll. They can then page through the rest of the content to find what they are looking for. 
+Use a **PagerControl** to create a navigation interface for an end user to page through content instead of scrolling or panning through the content in a single view. Scrolling through all content in a single view can make it harder for the end user to find specific information and it can lead to performance issues if the view needs to constantly update with new data. **PagerControl** can be used as an alternate solution so the user can consume a subset of the content without needing to scroll. They can then page through the rest of the content to find what they are looking for. 
 
 ## Examples
-<!-- Use this section to explain the features of the API, showing
-example code with each description. The general format is: 
-  feature explanation,
-  example code
-  feature explanation,
-  example code
-  etc.-->
-  
-<!-- Code samples should be in C# and/or C++/WinRT -->
-
-<!-- As an example of this section, see the Examples section for the PasswordBox control 
-(https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
-
 The pager control has three different display modes and each display mode has configurable components within them. The examples below show the default configurations for each mode.
 
 ### ComboBox Display Mode
@@ -99,10 +74,10 @@ XAML
 <controls:PagerControl x:Name="MainPagerControl"
         DisplayMode="NumericalButtonPanel"
 	NumberOfPages="10"
-        FirstButtonVisibility="AlwaysVisible"
+        FirstButtonVisibility="None"
         PreviousButtonVisibility="AlwaysVisible"
         NextButtonVisibility="AlwaysVisible"
-        LastButtonVisibility="AlwaysVisible"
+        LastButtonVisibility="None"
         FirstButtonCommand="FirstButtonPressedEvent"
         PreviousButtonCommand="PreviousButtonPressedEvent"
         NextButtonCommand="NextButtonPressedEvent"
@@ -145,14 +120,6 @@ Here is an example of how to add the PagerControl to your application. It can be
 (Insert XAML and code behind example here. This will also be added to the XAML controls gallery.)
 
 ## API Notes
-<!-- Option 1: Give a one or two line description of each API (type
-and member), or at least the ones that aren't obvious
-from their name.  These descriptions are what show up
-in IntelliSense. For properties, specify the default value of the property if it
-isn't the type's default (for example an int-typed property that doesn't default to zero.) -->
-
-<!-- Option 2: Put these descriptions in the below API Details section,
-with a "///" comment above the member or type. -->
 | Name | Description| Default | 
 |:---:|:---:| :---|
 | PagerDisplayMode | Enum that contains 4 values (Auto, ComboBox, NumberBox, ButtonPanel) that the developer can change to fit their scenario. When Auto is selected, the display mode will be ComboBox. The control will default to auto. | Auto |
@@ -193,7 +160,7 @@ enum PagerDisplayMode
     ButtonPanel,
 };
 
-enum ButtonVisibilityMode
+enum PagerButtonVisibilityBehavior
 {
     Auto,
     AlwaysVisible,
@@ -214,26 +181,16 @@ runtimeclass PagerControl
     
     Integer NumberOfPages;
     
-    ButtonVisibilityMode FirstButtonVisibility;
-    ButtonVisibilityMode PreviousButtonVisibility;
-    ButtonVisibilityMode NextButtonVisibility;
-    ButtonVisibilityMode LastButtonVisibility;
+    PagerButtonVisibilityBehavior FirstButtonVisibility;
+    PagerButtonVisibilityBehavior PreviousButtonVisibility;
+    PagerButtonVisibilityBehavior NextButtonVisibility;
+    PagerButtonVisibilityBehavior LastButtonVisibility;
 
     FirstButtonCommand="FirstButtonPressedEvent"
     PreviousButtonCommand="PreviousButtonPressedEvent"
     NextButtonCommand="NextButtonPressedEvent"
     LastButtonCommand="LastButtonPressedEvent"
     PagerInputCommand="PagerInputEvent"
-    
-    IconSource FirstButtonGlyph;
-    IconSource PreviousButtonGlyph;
-    IconSource NextButtonGlyph;
-    IconSource LastButtonGlyph;
-    
-    String FirstButtonText;
-    String PreviousButtonText;
-    String NextButtonText;
-    String LastButtonText;
 
     Windows.UI.Xaml.Input.ICommand FirstButtonCommand;
     Windows.UI.Xaml.Input.ICommand PreviousButtonCommand;
@@ -264,16 +221,6 @@ runtimeclass PagerControl
     static Windows.UI.Xaml.DependencyProperty PreviousButtonVisibilityProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty NextButtonVisibilityProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty LastButtonVisibilityProperty{ get; };
-    
-    static Windows.UI.Xaml.DependencyProperty FirstButtonGlyphProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty PreviousButtonGlyphProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty NextButtonGlyphProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty LastButtonGlyphProperty{ get; };
-    
-    static Windows.UI.Xaml.DependencyProperty FirstButtonTextProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty PreviousButtonTextProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty NextButtonTextProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty LastButtonTextProperty{ get; };
 
     static Windows.UI.Xaml.DependencyProperty FirstButtonCommandProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty PreviousButtonCommandProperty{ get; };
