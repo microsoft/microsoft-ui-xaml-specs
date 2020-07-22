@@ -182,7 +182,7 @@ Preset color and icon settings are as follows:
 - Error: Red (#FDE7E9/#442726) & ErrorBadge (EEA39)
 - Warning: Yellow-orange (#FFF4CE/#433519) & Error (E783)
 - Success: Green (#DFF6DD/#393D1B) & Completed (E930)
-- Default: Gray (#F2F2F2/#2B2B2B) & no icon
+- Default: Gray (#F2F2F2/#2B2B2B) & Info (E946)
 
 Info bar in default styling
 ![Sketch of an InfoBar in a default state and message](images/Default_Default.jpg)
@@ -239,7 +239,7 @@ XAML
 ## Add buttons
 By default, an 'X' close button will appear as the right most component in the bar. The close button can be customized with the CloseButtonContent property.
 
-An additional action button can be added by setting the ActionButtonContent and ActionButtonCommand properties. Additional action buttons can be added via custom content.
+An additional action button can be added by setting the ActionButtonContent and ActionButtonCommand properties. There is also built-in support for hyperlink buttons to ensure text contrast remains accessible with the various background colors. Additional action buttons can be added via custom content.
 
 XAML
 ```xml
