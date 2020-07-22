@@ -239,7 +239,7 @@ XAML
 ## Add buttons
 By default, an 'X' close button will appear as the right most component in the bar. The close button can be customized with the CloseButtonContent property.
 
-An additional action button can be added by setting the ActionButtonContent and ActionButtonCommand properties. There is also built-in support for hyperlink buttons to ensure text contrast remains accessible with the various background colors. Additional action buttons can be added via custom content.
+An additional action button can be added by setting the ActionButtonContent and ActionButtonCommand properties. There is also built-in support for a single hyperlink button to ensure text contrast remains accessible with the various background colors. We recommend that only a single action button or hyperlink button is set. Additional action buttons and hyperlinks can be added via custom content.
 
 XAML
 ```xml
@@ -479,9 +479,9 @@ enum InfoBarCloseReason
 
 enum NotificationType
 {
-    Critical,
+    Default,
     Warning,
-    Informational,
+    Error,
     Success,
 }
 
@@ -494,13 +494,12 @@ runtimeclass InfoBarClosingEventArgs
 {
     InfoBarCloseReason Reason{ get; };
     Boolean Cancel;
-    Windows.Foundation.Deferral GetDeferral();
 };
 
-runtimeclass InfoBarDisplayModeArgs
+runtimeclass CloseButtonClickEventArgs
 {
-
-};
+    Boolean IsHandled;
+}
 
 // TODO (Dev/PM): will add post-implementation 
 unsealed runtimeclass InfoBarTemplateSettings : Windows.UI.Xaml.DependencyObject
@@ -526,10 +525,10 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
 
     String Title;
     String Message;
-    Windows.UI.Xaml.Documents.Hyperlink Hyperlink;
 
     Boolean IsOpen;
     Boolean IsCloseButtonVisible;
+    Boolean ShowCloseButton;
 
     Object ActionButtonContent;
     Windows.UI.Xaml.Style ActionButtonStyle;
@@ -541,6 +540,11 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
     Windows.UI.Xaml.Input.ICommand CloseButtonCommand;
     Object CloseButtonCommandParameter;
 
+    Object HyperlinkButtonContent;
+    Windows.UI.Xaml.Style HyperlinkButtonStyle
+    Windows.UI.Xaml.Input.ICommand HyperlinkButtonStyle;
+    Object HyperlinkButtonCommandParameter;
+
     NotificationType Severity;
     Color StatusColor;
     IconSource IconSource;
@@ -549,6 +553,7 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
 
     event Windows.Foundation.TypedEventHandler<InfoBar, Object> ActionButtonClick;
     event Windows.Foundation.TypedEventHandler<InfoBar, Object> CloseButtonClick;
+    event Windows.Foundation.TypedEventHandler<InfoBar, Object> HyperlinkButtonClick;
     event Windows.Foundation.TypedEventHandler<InfoBar, InfoBarClosingEventArgs> Closing;
     event Windows.Foundation.TypedEventHandler<InfoBar, InfoBarClosedEventArgs> Closed;
 
@@ -566,6 +571,11 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
     static Windows.UI.Xaml.DependencyProperty CloseButtonStyleProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty CloseButtonCommandProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty CloseButtonCommandParameterProperty{ get; };
+
+    static Windows.UI.Xaml.DependencyProperty HyperlinkButtonContentProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty HyperlinkButtonStyleProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty HyperlinkButtonCommandProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty HyperlinkButtonCommandParameterProperty{ get; }; 
 
     static Windows.UI.Xaml.DependencyProperty NotificationTypeProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty StatusColorProperty{ get; };
@@ -623,11 +633,11 @@ Recommendations from ryandemo:
 - How often color and/or icon customization Occurs
 - How often multiple information bars appear at once and the typical distribution
 
-## Cut Features from InfoBar v1
+## Intended features for InfoBar v2
 - Built-in support for floating notifications
   - Options to show the InfoBar as a PopUp with simple positioning properties
 - Positioning and re-positioning for multiple notifications
   - i.e. providing a built-in way to support a group of notifications in the bottom right corner
-- Support for a two-button layout, a single action and a single close right-aligned. This would be a secondary option to the single left-aligned action button and right-aligned 'X' to close button.
+- 
 
 Potentially, truncation option with a chevron to allow the user to expand and collapse an InfoBar with multiple lines of content. TBD
