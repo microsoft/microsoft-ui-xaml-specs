@@ -1,15 +1,3 @@
-<!-- The purpose of this spec is to describe a new feature and
-its APIs that make up a new feature in WinUI. -->
-
-<!-- There are two audiences for the spec. The first are people
-that want to evaluate and give feedback on the API, as part of
-the submission process.  When it's complete
-it will be incorporated into the public documentation at
-docs.microsoft.com (http://docs.microsoft.com/uwp/toolkits/winui/).
-Hopefully we'll be able to copy it mostly verbatim.
-So the second audience is everyone that reads there to learn how
-and why to use this API. -->
-
 # Background
 > This spec corresponds to [issue 913](https://github.com/microsoft/microsoft-ui-xaml/issues/913) on the WinUI repo.
 
@@ -20,23 +8,6 @@ These notifications and corresponding information should be presented in a consi
 
 Currently, Teaching Tip, Content Dialog, and customizations of other flyouts and dialogs exist as options to show these notifications but these controls were not specifically designed to handle app-wide status change notifications. 
 Due to their visual layouts, inherent intrusiveness, or available features they are not sufficient for displaying notifications at an app-wide level.
-
-
-<!-- Use this section to provide background context for the new API(s) 
-in this spec. -->
-
-<!-- This section and the appendix are the only sections that likely
-do not get copied to docs.microsoft.com; they're just an aid to reading this spec. -->
-
-<!-- If you're modifying an existing API, included a link here to the
-existing page(s) -->
-
-<!-- For example, this section is a place to explain why you're adding this API rather than
-modifying an existing API. -->
-
-<!-- For example, this is a place to provide a brief explanation of some dependent
-area, just explanation enough to understand this new API, rather than telling
-the reader "go read 100 pages of background information posted at ...". -->
 
 # Description
 
@@ -60,16 +31,10 @@ Use an InfoBar that dismiss via the user or a timer for scenarios that **indirec
 
 - A call has begun recording
 - Update applied with link to 'Release Notes'
-- The terms of service have been updated
+- The terms of service have been updated and require acknowledgement
 - An app-wide backup has successfully, asynchronously completed
 - The subscription to the application is close to expiring
 
-
-<!-- 
-Control	| Intrusiveness	|	Information Severity	|	Modality	|	Scope	|	Invocation	|	Dismissal	|	User Action
-| -	| -	| -	| -	| -	| -	| -	| -	|
-InfoBar ⚠	|	Medium	|	High	|	Non-blocking	|	Global	|	Programmatic	|	Programmatic	|	Acknowledge/View
-InfoBar ℹ	|	Medium	|	Medium	|	Non-blocking	|	Global	|	Programmatic	|	Manual	|	Acknowledge/Dismiss -->
 
 ### When should a different control be used?
 
@@ -81,33 +46,9 @@ There are some scenarios where a Content Dialog, Flyout, or Teaching Tip may be 
 - For scenarios where the application is informing the user of a new feature or walking through its use, a [Teaching Tip](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/teaching-tip) is a better option.
 
 For more info about choosing the right notification control, see the [Dialogs and Flyouts](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/) article.
-<!-- 
-Control |	Intrusiveness |	Information Severity |	Modality |	Scope	Invocation |	Dismissal |	Potential User Action
-|- | - | -| -| -| - | - | - |
-Content Dialog |	High |	High |	Blocking |	Global |	User-triggered |	Manual |	Interact/Retreat
-InfoBar |	Medium |	High/Medium |	Non-blocking |	Global |	Programmatic |	Manual  or Programmatic |	Interact/View
-Flyouts |	Medium |	Medium |	Non-blocking |	Contextual |	User-triggered |	Light-dismiss |	Interact/View
-Teaching Tip |	Medium |	Low |	Blocking |	Global/Contextual |	User-triggered |	Manual or Light-Dismiss |	Interact/Acknowledge/View
-(Toast) |	Low |	Low |	Non-blocking |	Global |	Programmatic or user-triggered |	Timed |	Interact/View -->
-
-<!-- Use this section to provide a brief description of the feature.
-For an example, see the introduction to the PasswordBox control 
-(http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
 
 # Examples
 
-<!-- Use this section to explain the features of the API, showing
-example code with each description. The general format is: 
-  feature explanation,
-  example code
-  feature explanation,
-  example code
-  etc.-->
-  
-<!-- Code samples should be in C# and/or C++/WinRT -->
-
-<!-- As an example of this section, see the Examples section for the PasswordBox control 
-(https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 > Note: In this version of the specification, only a single DisplayMode is implied. In the future, more documentation will be added on a second DisplayMode. The DisplayMode property will change the visual layout of the components, not the functionality. The current LayoutMode shown is "Docked", for scenarios where the InfoBar will be inline with other UI elements and take up layout space. The second DisplayMode, "Floating", is intended for scenarios where the InfoBar is on top of other content as in a PopUp or overlay. More details TBD.
 
 An information bar can have several configurations, here are some notable ones.
@@ -421,25 +362,11 @@ Current opinion: When the state of the application is different from normal, exp
 - When the InfoBar is intended to be added to layout controls like StackPanels, Grids, etc.
 #### Floating
 - Recommended to use when you want the InfoBar to be on top of other UI elements
-- When the InfoBar is inteded to be added to pop-up controls like PopUp or Flyout
+- When the InfoBar is intended to be added to pop-up controls like PopUp or Flyout
 - Visual affordances include a border shadow and rounded borders to support overlay scenarios
 
-<!-- Explanation and guidance that doesn't fit into the Examples section. -->
-
-<!-- APIs should only throw exceptions in exceptional conditions; basically,
-only when there's a bug in the caller, such as argument exception.  But if for some
-reason it's necessary for a caller to catch an exception from an API, call that
-out with an explanation either here or in the Examples -->
 
 # API Notes
-<!-- Option 1: Give a one or two line description of each API (type
-and member), or at least the ones that aren't obvious
-from their name.  These descriptions are what show up
-in IntelliSense. For properties, specify the default value of the property if it
-isn't the type's default (for example an int-typed property that doesn't default to zero.) -->
-
-<!-- Option 2: Put these descriptions in the below API Details section,
-with a "///" comment above the member or type. -->
 
 ### Notable Properties  
 
@@ -469,7 +396,7 @@ Includes specifics like:
 - Text info; font, color, boldness, etc.
 
 # API Details
-<!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
+
 ```c++
 enum InfoBarCloseReason
 {
@@ -585,9 +512,7 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
 }
 ```
 # Appendix
-<!-- Anything else that you want to write down for posterity, but 
-that isn't necessary to understand the purpose and usage of the API.
-For example, implementation details. -->
+
 ### Design References
 
 InfoBar wrapping examples
@@ -638,6 +563,4 @@ Recommendations from ryandemo:
   - Options to show the InfoBar as a PopUp with simple positioning properties
 - Positioning and re-positioning for multiple notifications
   - i.e. providing a built-in way to support a group of notifications in the bottom right corner
-- 
-
-Potentially, truncation option with a chevron to allow the user to expand and collapse an InfoBar with multiple lines of content. TBD
+- Truncation option that allows the user to expand and collapse an InfoBar with multiple lines of content
