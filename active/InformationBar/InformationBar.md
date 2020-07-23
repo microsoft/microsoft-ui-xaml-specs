@@ -325,10 +325,10 @@ Please view the UX guidance for [Standard Icons](https://docs.microsoft.com/en-u
  The accompanying information should aim to communicate the following to use that Severity.
  - Error: An error or problem that has occurred.
  - Warning: A condition that might cause a problem in the future.
- - Information: Useful information.
+ - Success: A long-running and/or background task has completed
+ - Default: Useful information.
 
 Icons and color should not be the only UI components signifying meaning for your notification. Text in the notification's Title and/or Message should be included to display information.
-
 
 ## Message 
 
@@ -343,18 +343,23 @@ Please view the guidance for [Adjust layout and fonts, and support RTL](https://
 ## Usage Recommendations
 
 ### When to show an information bar?
+An InfoBar should be shown when the state of the application is different from typical, expected functionality or when the user **needs** to acknowledge or potentially react to the presented information.
 
-TODO (PM): transcribe to sentences out of bullet points
-Current opinion: When the state of the application is different from normal, expected functionality
-- Patterns for critical notifications (i.e. internet connectivity is required for the application to function)
-    - A critical information bar should remain in view until the connection is restored if the app's functionality is very limited without this feature working.
-    - A critical information bar appears ("Internet connectivity lost") and can be dismissed by the user.
-        - However, if the internet is reconnected and the user had previously dismissed the notification, the notification should update to "Internet is reconnected" Success notification to inform the user the functionality of the application is restored.
-        - Additionally, if the internet is reconnected and the notification is still on the screen, the notification should merely disappear from view.
-    
-- Patterns for informational notifications, users should **always** have the option to dismiss informational notifications, even if they are intended to disappear after # seconds. 
-    - If the app is performing a long task in the background that can then require further user action (i.e. backing up a drive or scanning for viruses) then an information bar for "Success" could appear.
-    - TBD: App update recommendations
+Recommended patterns for critical notifications where the application is in a negatively altered state
+  - Example: Internet connectivity is required for the application to function and is not present
+    - A critical information bar should remain in view until the connection is restored if most functionality is unavailable.
+    - If some app functionality is possible, a critical information bar should appear and able to be dismissed by the user.
+    - If/when the internet is restored the existing notification should update if it exists, and a new one should be created if the previous one had been dismissed. THe new/updated success-styled InfoBar should inform the user that "Internet is reconnected" so that they are aware app functionality is restored.
+    - Example: The user's subscription to your application has expired and many features are deactivated
+      - A critical information bar could remain in view with a potential action button to resubscribe.
+      - Another option is to allow the user to dismiss a default-style InfoBar depending on how vital a subscription is to your application.
+Recommended patterns for informational notifications where the user needs to view or react to essential information
+ - Example: Terms and Conditions of the application have been updated and need to be acknowledged for continued use
+   - A default information bar could appear notifying the user the T&C have updated and link to the contents. The user acknowledges these updated T&C through dismissing the notification.
+ - Example: A virus scan that was running in the background of your application has completed
+  - A success-styled information bar could appear notifying the user the scan has completed and direct them to view the results.
+
+ Note: Users should **always** have the option to dismiss informational notifications.
 
 ### When to use the different DisplayModes?
 #### Docked
