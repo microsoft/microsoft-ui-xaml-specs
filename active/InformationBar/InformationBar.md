@@ -98,22 +98,6 @@ Here is the visual representation of the information bar in the page.
 ![A sketch of an InfoBar in a Warning state with a close button and a message](images/Warning_DefaultClose.jpg)
 ![Mockup of an InfoBar with an icon, title, and message on one line](images/Docked_SingleLineIconTitle.png)
 
-<!--## Pop-up information bar 
-In some app scenarios, an app-wide bar does not fit for functional or aesthetic reasons. If an information bar is defined independent of another control, the visual layout will default to a to a toast with the same visual components as the aforementioned bar. The information bar will display relative to the edges of the xaml root and by default will be located in the bottom right corner of the application.
-
-XAML
-```c#
-<StackPanel x:Name="ContentArea" Content="Document" />
-
-<controls:InfoBar x:Name="ConnectionErrorNotification"
-    Severity="Critical"
-    Icon="NetworkOffline"
-    Title="No Internet"
-    Message="Reconnect to save your work.">
-</controls:InfoBar>
-```
-[A sketch of a sample application with an InfoBar as a toast in the bottom right of the content area. The InfoBar's title is "No Internet" and it's message is "Reconnect to save your work"](images/No_Internet_Toast.png) -->
-
 ## Select a DisplayMode
 TODO (PM): summary and mockup
 - Different visually only
@@ -285,7 +269,7 @@ InfoBar will leverage the existing APIs used by Windows Notifications.
 |:---|:---|
 | Notification appears | Narrator will say "Click Up to move to new information from" + App Name + Notification Contents | 
 | Notification receives focus | Ctrl + Narrator + Up arrow: <br> Will move focus to notification and Narrator will read the element in focus. |
-| Notification is tabbed through | Tab Button: <br> Will navigate through all actionable items, regardless of group, in order. When tab is pressed on the last element in the notification, focus will cycle to the first element in the notification.  <br> <br> Swipe (for touch screen devices): <br> Will navigate through all actionable items, regardless of group, in order. When Swiping on the last element in the notification, focus will move to Narrator's fullscreen invisible Close Button and the user may double tap the screen to close the window. Swiping again will move focus out of the notification. <br><br> Left + Right Arrow Keys: <br> Can be used to navigate between the footer Action and Close buttons if both are present. <br><br> Escape: <br> Will not close the InfoBar and will instead bubble up to the parent components. |
+| Notification is tabbed through | Tab Button: <br> Will navigate through all actionable items, regardless of group, in order. When tab is pressed on the last element in the notification, focus will cycle to the first element in the notification.  <br> <br> Swipe (for touch screen devices): <br> Will navigate through all actionable items, regardless of group, in order. When Swiping on the last element in the notification, focus will move to Narrator's fullscreen invisible Close Button and the user may double tap the screen to close the window. Swiping again will move focus out of the notification. <br><br> Left + Right Arrow Keys: <br> Can be used to navigate between the footer Action/Hyperlink and Close buttons if both are present. <br><br> Escape: <br> Will not close the InfoBar and will instead bubble up to the parent components. |
 | Notification is dismissed | 1. Header Close Button is invoked. <br> 2. Action Button is invoked. <br> 3. Swipe (for touch screen devices) moves focus to Narrator's fullscreen invisible Close Button and the user double taps the screen to close the window. * Tab increments focus to the next element but does not close the notification. |
 
 ### Gamepad
@@ -293,7 +277,7 @@ InfoBar will leverage the existing APIs used by Windows Notifications.
 | State | Action |
 |:---|:---|
 | Notification appears | No action is needed invoke the notification. |
-| Notification receives focus | Spatial navigation: <br> Spatial navigation may be used to access the InfoBar. Guidance will be added to advise proper design consideration for notification accessibility and testing for gamepad. |
+| Notification receives focus | Spatial navigation: <br> Spatial navigation may be used to access the InfoBar. Guidance will be added to advise proper design consideration for InfoBar accessibility and testing for gamepad. |
 | Notification is navigated | Spatial navigation: <br> Will spatially navigate focus across actionable items (without respect to group).  <br> <br> A Button: <br> Will interact with the item in focus, such as "press" the action or close button. <br><br> B Button: <br> Will not close the InfoBar and will instead bubble up to the parent components. |
 | Notification is dismissed | 1. Header "X" Close Button is pressed. <br> 2. Action Button is pressed. <br> 3. B Button returns focus to the element previously in focus. |
 
@@ -361,16 +345,6 @@ Recommended patterns for informational notifications where the user needs to vie
    - A success-styled information bar could appear notifying the user the scan has completed and direct them to view the results.
 
  Note: Users should **always** have the option to dismiss informational notifications.
-
-### When to use the different DisplayModes?
-#### Docked
-- Recommended to use when you want the InfoBar to be inline with other UI elements
-- When the InfoBar is intended to be added to layout controls like StackPanels, Grids, etc.
-#### Floating
-- Recommended to use when you want the InfoBar to be on top of other UI elements
-- When the InfoBar is intended to be added to pop-up controls like PopUp or Flyout
-- Visual affordances include a border shadow and rounded borders to support overlay scenarios
-
 
 # API Notes
 
@@ -525,7 +499,7 @@ UI Elements for InfoBar
 
  | Component |  Notes |
 |:---:|:---|
-| Container | - For docked InfoBars, we recommend to place in a layout control where the InfoBar can expand horizontally to the width of the content area. <br> - For floating InfoBar, the default maximum height and widths are ###px and ###px but can be overwritten via the MaxHeight and MaxWidth properties
+| Container | - We recommend to place InfoBars in a layout control where the control can expand horizontally to the width of the content area.
 | Title | - Semi-bolded and appears left of the Icon <br> - Recommended to be 50 characters or less
 | Message | - Will appear to the right of the Title in single-height notifications, otherwise will be on a new line <br> - Recommended to be 512 characters or less
 | Hyperlink | - Will appear to the right of the Message in single-height notifications, otherwise will be on a new line <br> - TBD: Color of the hyperlink will adapt to user theme and Severity level of control.
