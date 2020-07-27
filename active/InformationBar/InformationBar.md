@@ -98,11 +98,6 @@ Here is the visual representation of the information bar in the page.
 ![A sketch of an InfoBar in a Warning state with a close button and a message](images/Warning_DefaultClose.jpg)
 ![Mockup of an InfoBar with an icon, title, and message on one line](images/Docked_SingleLineIconTitle.png)
 
-## Select a DisplayMode
-TODO (PM): summary and mockup
-- Different visually only
-- Example of pop-up code here (Code snippet TODO (Dev))
-
 ## Notification types: consistent styling
 The type of the info bar can be set via the Severity property to automatically set a consistent status color and icon dependent on the criticality of the notification.
 
@@ -236,7 +231,6 @@ XAML
 ```
 C#
 ```C#
-// TODO (Dev): need an example code snippet where closing is deferred with args.Cancel = true;
 public void InfoBar_Closing(InfoBar sender, InfoBarClosingEventArgs args)
 {
     // if scenario failed
@@ -247,7 +241,7 @@ public void InfoBar_Closing(InfoBar sender, InfoBarClosingEventArgs args)
 # Inputs and Accessibility
 ## UI Automation Patterns 
 
-InfoBar will alternate between Pane for inline notifications and Window for overlay notifications with IScrollProvider for the (conditionally) scrollable content area within the notification. 
+InfoBar will be Pane for inline notifications with IScrollProvider for the (conditionally) scrollable content area within the notification. 
 
 InfoBar will implement a custom "information" Landmark.
 
@@ -287,7 +281,6 @@ The InfoBar should not appear and disappear from view rapidly to prevent flashin
 
 For notifications that automatically enter and exit the view via an app status condition, we recommend you include logic in your application to prevent a notification from appearing or disappearing rapidly or multiple times in a row. However, in general, this control should be used for long-lived status messages.
 
-TODO (Dev): Code snippet example?
 ### Inline notifications offsetting content
 For notifications that are inline with other UI content, keep in mind how the rest of the page will responsively react to the addition of the element.
 
@@ -408,7 +401,7 @@ runtimeclass CloseButtonClickEventArgs
     Boolean IsHandled;
 }
 
-// TODO (Dev/PM): will add post-implementation 
+// will edit post prototype implementation
 unsealed runtimeclass InfoBarTemplateSettings : Windows.UI.Xaml.DependencyObject
 {
     InfoBarTemplateSettings();
