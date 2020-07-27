@@ -273,8 +273,8 @@ InfoBar will implement a custom "information" Landmark.
 | State | Action |
 |:---|:---|
 | Notification appears | No action is needed invoke the notification. <br><br> Enter: If notification is docked, InfoBar can receive focus with enter. |
-| Notification receives focus | F6: <br> InfoBar will be added to F6 region navigation stops so that F6 may be used to focus into and out of the notification. <br><br> Tab: <br> If Narrator is active, InfoBar will automatically be added to the top of Narrator navigation stops thanks to its UI Automation Pattern(s), similar to popups or ContentDialog, and can be accessed via tabbing. <br><br> Enter: <br> If Narrator is not active, pressing enter will focus in and out of the InfoBar after navigating to it via tabbing.|
-| Notification is tabbed through | Tab Button: <br> Will go through all actionable items, regardless of group, in order. When tab is pressed on the last element in the notification, focus will cycle to the first element in the notification.  <br> <br> Left + Right Arrow Keys: <br> Can be used to navigate between the footer Action and Close buttons if both are present. <br><br> Escape: <br> Will result in closing the notification. |
+| Notification receives focus | Tab: <br> If Narrator is active, InfoBar will automatically be added to the top of Narrator navigation stops thanks to its UI Automation Pattern(s), similar to popups or ContentDialog, and can be accessed via tabbing. <br><br> Enter: <br> If Narrator is not active, pressing enter will focus in and out of the InfoBar after navigating to it via tabbing.|
+| Notification is tabbed through | Tab Button: <br> Will go through all actionable items, regardless of group, in order. When tab is pressed on the last element in the notification, focus will cycle to the first element in the notification.  <br> <br> Left + Right Arrow Keys: <br> Can be used to navigate between the footer Action and Close buttons if both are present. <br><br> Escape: <br> Will not close the InfoBar and will instead bubble up to the parent components. |
 | Notification is dismissed | 1. X Button is pressed. <br> 2. Action Button is pressed. <br><br> * Tab increments focus to the next element but does not close the notification. |
 
 ### Narrator
@@ -283,9 +283,9 @@ InfoBar will leverage the existing APIs used by Windows Notifications.
 
 | State | Action |
 |:---|:---|
-| Notification appears | Narrator will say "Click Up to move to new in-app notification from" + App Name + Notification Contents | 
+| Notification appears | Narrator will say "Click Up to move to new information from" + App Name + Notification Contents | 
 | Notification receives focus | Ctrl + Narrator + Up arrow: <br> Will move focus to notification and Narrator will read the element in focus. |
-| Notification is tabbed through | Tab Button: <br> Will navigate through all actionable items, regardless of group, in order. When tab is pressed on the last element in the notification, focus will cycle to the first element in the notification.  <br> <br> Swipe (for touch screen devices): <br> Will navigate through all actionable items, regardless of group, in order. When Swiping on the last element in the notification, focus will move to Narrator's fullscreen invisible Close Button and the user may double tap the screen to close the window. Swiping again will move focus out of the notification. <br><br> Left + Right Arrow Keys: <br> Can be used to navigate between the footer Action and Close buttons if both are present. <br><br> Escape: <br> Will result in closing the notification. |
+| Notification is tabbed through | Tab Button: <br> Will navigate through all actionable items, regardless of group, in order. When tab is pressed on the last element in the notification, focus will cycle to the first element in the notification.  <br> <br> Swipe (for touch screen devices): <br> Will navigate through all actionable items, regardless of group, in order. When Swiping on the last element in the notification, focus will move to Narrator's fullscreen invisible Close Button and the user may double tap the screen to close the window. Swiping again will move focus out of the notification. <br><br> Left + Right Arrow Keys: <br> Can be used to navigate between the footer Action and Close buttons if both are present. <br><br> Escape: <br> Will not close the InfoBar and will instead bubble up to the parent components. |
 | Notification is dismissed | 1. Header Close Button is invoked. <br> 2. Action Button is invoked. <br> 3. Swipe (for touch screen devices) moves focus to Narrator's fullscreen invisible Close Button and the user double taps the screen to close the window. * Tab increments focus to the next element but does not close the notification. |
 
 ### Gamepad
@@ -293,13 +293,13 @@ InfoBar will leverage the existing APIs used by Windows Notifications.
 | State | Action |
 |:---|:---|
 | Notification appears | No action is needed invoke the notification. |
-| Notification receives focus | Spatial navigation: <br> Spatial navigation may be used to access the. Guidance will be added to advise proper design consideration for notification accessibility and testing for gamepad. |
-| Notification is navigated | Spatial navigation: <br> Will spatially navigate focus across actionable items (without respect to group).  <br> <br> A Button: <br> Will interact with the item in focus, such as "press" the action or close button. <br><br> B Button: <br> Will result in closing the notification. |
+| Notification receives focus | Spatial navigation: <br> Spatial navigation may be used to access the InfoBar. Guidance will be added to advise proper design consideration for notification accessibility and testing for gamepad. |
+| Notification is navigated | Spatial navigation: <br> Will spatially navigate focus across actionable items (without respect to group).  <br> <br> A Button: <br> Will interact with the item in focus, such as "press" the action or close button. <br><br> B Button: <br> Will not close the InfoBar and will instead bubble up to the parent components. |
 | Notification is dismissed | 1. Header "X" Close Button is pressed. <br> 2. Action Button is pressed. <br> 3. B Button returns focus to the element previously in focus. |
 
 ## Enter and Exit Usability
 ### Flashing notifications
-The InfoBar should not appear and disappear from view in less than a second to prevent flashing on the screen. Avoid flashing visuals for people with photosensitivities. 
+The InfoBar should not appear and disappear from view rapidly to prevent flashing on the screen. Avoid flashing visuals for people with photosensitivities. 
 
 For notifications that automatically enter and exit the view via an app status condition, we recommend you include logic in your application to prevent a notification from appearing or disappearing rapidly or multiple times in a row. However, in general, this control should be used for long-lived status messages.
 
