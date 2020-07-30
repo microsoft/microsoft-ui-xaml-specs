@@ -118,8 +118,8 @@ public class TestMarkupExtension : MarkupExtension
 {
     public override object ProvideValue(IXamlServiceProvider serviceProvider)
     {
-        var target = serviceProvider.GetService(typeof(IRootObjectProvider)) as IRootObjectProvider;
-        return target.RootObject.ToString();
+        var rootObjectProvider = (IRootObjectProvider)serviceProvider.GetService(typeof(IRootObjectProvider));
+        return rootObjectProvider.RootObject.ToString();
     }
 }
 ```
@@ -194,7 +194,7 @@ The IXamlServiceProvider argument can be used to retrieve the following services
 * `IUriContext` , which provides the base URI of the markup. This aligns with WPF's [IUriContext](https://docs.microsoft.com/dotnet/api/System.Windows.Markup.IUriContext).
 * `IXamlTypeResolver`, which binds a Xaml markup name to a type. This aligns with WPF's [IXamlTypeResolver](https://docs.microsoft.com/en-us/dotnet/api/system.windows.markup.ixamltyperesolver).
 
-There are two overloads of the virtual ProvideValue method, with/without the IXamlServiceProvider parameter. During Xaml markup loading, ProvideValue(IXamlServiceProvider) is called. Its virtual implementation calls ProvideValue(). So not overriding ProvideValue(IXamlServiceProvider), or calling the base implementation of it, calls ProvideValue().
+There are two overloads of the virtual ProvideValue method, with/without the IXamlServiceProvider parameter, you should only override one. The Xaml loader only calls the one-parameter version, as should any other caller. Its virtual implementation calls the zero-parameter version. So not overriding ProvideValue(IXamlServiceProvider), or calling the base implementation of it, calls ProvideValue().
 
 ## IXamlServiceProvider interface
 Gets the service object of the specified type.
