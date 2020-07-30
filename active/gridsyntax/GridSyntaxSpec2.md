@@ -330,7 +330,7 @@ runtimeclass RowDefinition : Windows.UI.Xaml.DependencyObject
 ## Alternatives
 
 ## Syntax Considerations and Rationale
-In developing the syntax, the team considered developer familiarty and patterns as much as possible to ensure that the Grid learning curve could be decreased. One of the considerations was how similar the syntax should be to JSON, as that's a popular notation style that often addresses the same problems that Xaml does. 
+In developing the syntax, the team considered developer familiarity and patterns as much as possible to ensure that the Grid learning curve could be decreased. One of the considerations was how similar the syntax should be to JSON, as that's a popular notation style that often addresses the same problems that Xaml does. 
 
 JSON defines their arrays as: ```"words" : ["apple", "banana", "cherry"]```
 
@@ -338,7 +338,9 @@ Xaml defines a collection-typed property as: ```<Words="'Apple', 'Banana', 'Cher
 
 The syntax that we chose encloses strings individually in quotes, as JSON does, but it does so in a way that is more consistent with existing Xaml style and Xaml functions. An example of this syntax used elsewhere in Xaml is for the x:Bind syntax:
 
-```xml <TextBlock Text="{x:Bind VM.MyText, FallbackValue='Hello, world', Mode=TwoWay}" />```
+```xml 
+<TextBlock Text="{x:Bind VM.MyText, FallbackValue='Hello, world', Mode=TwoWay}" />
+```
 
 This uses a comma as a delimiter, but also allows strings to have commas within them. For these reasons, we chose to use the syntax in which a collection can be delimited by commas but have more complex values be encased within single quotes.
 
