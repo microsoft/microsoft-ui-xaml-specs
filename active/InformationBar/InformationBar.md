@@ -166,14 +166,24 @@ XAML
         Message="Your document was unable to be saved."
         ActionButtonContent="Button"
         ActionButtonCommand="RedirectToNetworkSettings">
-        <controls:InfoBar.IconSource>
-            <controls:SymbolIconSource Symbol="NetworkOffline" />
-        </controls:InfoBar.IconSource>
     </controls:InfoBar>
 </StackPanel>
 ```
 
 ![A mockup of an InfoBar with a single line message and an action button](images/Docked_SingleLineIconTitleButton.png)
+
+XAML
+```xml
+<StackPanel x:Name="ContentArea" Content="Document">
+    <controls:InfoBar x:Name="ConnectionErrorNotification"
+        Title="Error while saving"
+        Message="Lorem ipsum long message">
+        <controls:InfoBar.HyperlinkButtonContent
+            Content="www.microsoft.com" 
+            NavigateUri="http://www.microsoft.com"/>
+    </controls:InfoBar>
+</StackPanel>
+```
 ![A mockup of an InfoBar with a message expanding multiple lines and a hyperlink](images/Docked_MultiLineIconTitleHyperlink.png)
 
 ## Custom content
@@ -438,10 +448,8 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
     Windows.UI.Xaml.Input.ICommand CloseButtonCommand;
     Object CloseButtonCommandParameter;
 
-    Object HyperlinkButtonContent;
+    Windows.Ui.Xaml.Controls.HyperlinkButton HyperlinkButtonContent;
     Windows.UI.Xaml.Style HyperlinkButtonStyle
-    Windows.UI.Xaml.Input.ICommand HyperlinkButtonStyle;
-    Object HyperlinkButtonCommandParameter;
 
     NotificationType Severity;
     Color StatusColor;
@@ -470,8 +478,6 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
 
     static Windows.UI.Xaml.DependencyProperty HyperlinkButtonContentProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty HyperlinkButtonStyleProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty HyperlinkButtonCommandProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty HyperlinkButtonCommandParameterProperty{ get; }; 
 
     static Windows.UI.Xaml.DependencyProperty NotificationTypeProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty StatusColorProperty{ get; };
