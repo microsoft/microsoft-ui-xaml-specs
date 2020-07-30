@@ -29,7 +29,7 @@ The service provider can be used, for example, to discover the property being as
 
 This spec is adding a new version of ProvideValue to WinUI that passes a similar service provider. All the APIs match WPF, except where WPF uses the System.IServiceProvider, WinUI will use Microsoft.UI.Xaml.Markup.IXamlServiceProvider.
 
-> To do: Add an Issue to cs/winrt to project IServiceProvider to .Net5 as [System.IServiceProvider](http://msdn.microsoft.com/library/System.IServiceProvider)?
+> To do: Add an Issue to cs/winrt to project IXamlServiceProvider to .Net5 as [System.IServiceProvider](http://msdn.microsoft.com/library/System.IServiceProvider)?
 
 ## How markup extensions are used in Xaml markup
 
@@ -61,6 +61,8 @@ On an en-US machine, this will produce something like:
  
 ![MarkupExtension sample](MESample.png)
 
+Note: if the markup extension type is named with the suffix "Extension", it can be used in Xaml markup with or without the suffix.
+
 # Examples
 
 ## IProvideValueTarget
@@ -74,10 +76,9 @@ public class BrushSelectorExtension : MarkupExtension
 
     protected override object ProvideValue(IXamlServiceProvider serviceProvider)
     {
-        Brush brushToReturn = new SolidColorBrush() { Color = Color }; ;
+        Brush brushToReturn = new SolidColorBrush() { Color = this.Color };
 
-        var provideValueTarget = serviceProvider.GetService(typeof(IProvideValueTarget))
-            as IProvideValueTarget;
+        var provideValueTarget = (IProvideValueTarget) serviceProvider.GetService(typeof(IProvideValueTarget));
         if (provideValueTarget.TargetProperty is ProvideValueTargetProperty targetProperty)
         {
             if (targetProperty.Name == "Background"
@@ -123,7 +124,7 @@ public class TestMarkupExtension : MarkupExtension
 }
 ```
 
-the TextBlock in this markup will display “App1.MainPage”:
+the TextBlock in this markup will display "App1.MainPage":
 
 ```xml
 <Page x:Class="App1.MainPage"
@@ -193,7 +194,7 @@ The IXamlServiceProvider argument can be used to retrieve the following services
 * `IUriContext` , which provides the base URI of the markup. This aligns with WPF's [IUriContext](https://docs.microsoft.com/dotnet/api/System.Windows.Markup.IUriContext).
 * `IXamlTypeResolver`, which binds a Xaml markup name to a type. This aligns with WPF's [IXamlTypeResolver](https://docs.microsoft.com/en-us/dotnet/api/system.windows.markup.ixamltyperesolver).
 
-There are two overloads of the virtual ProvideValue method, with/without the IXamlServiceProvider parameter. During Xaml markup loading, ProvideValue(IXamlServiceProvider) is called. Its virtual implementatiohn calls ProvideValue(). So not overriding ProvideValue(IXamlServiceProvider), or calling the base implementation of it, calls ProvideValue().
+There are two overloads of the virtual ProvideValue method, with/without the IXamlServiceProvider parameter. During Xaml markup loading, ProvideValue(IXamlServiceProvider) is called. Its virtual implementation calls ProvideValue(). So not overriding ProvideValue(IXamlServiceProvider), or calling the base implementation of it, calls ProvideValue().
 
 ## IXamlServiceProvider interface
 Gets the service object of the specified type.
