@@ -178,9 +178,11 @@ XAML
     <controls:InfoBar x:Name="ConnectionErrorNotification"
         Title="Error while saving"
         Message="Lorem ipsum long message">
-        <controls:InfoBar.HyperlinkButtonContent
-            Content="www.microsoft.com" 
-            NavigateUri="http://www.microsoft.com"/>
+        <controls:InfoBar.HyperlinkButtonContent>
+            <HyperlinkButton
+                Content="www.microsoft.com" 
+                NavigateUri="http://www.microsoft.com"/>
+        <controls:InfoBar.HyperlinkButtonContent/>
     </controls:InfoBar>
 </StackPanel>
 ```
@@ -249,12 +251,14 @@ public void InfoBar_Closing(InfoBar sender, InfoBarClosingEventArgs args)
 ```
 
 # Inputs and Accessibility
+
 ## UI Automation Patterns 
 
 InfoBar will be Pane for inline notifications with IScrollProvider for the (conditionally) scrollable content area within the notification. 
 
 InfoBar will implement a custom "information" Landmark.
 
+TBA: Varying behavior based on Severity. For example, InfoBars in the Critical or Warning state will interrupt the user while InfoBars in the Default or Success state will not.
 
 ### Keyboard Navigation 
 
@@ -449,7 +453,7 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
     Object CloseButtonCommandParameter;
 
     Windows.Ui.Xaml.Controls.HyperlinkButton HyperlinkButtonContent;
-    Windows.UI.Xaml.Style HyperlinkButtonStyle
+    Windows.UI.Xaml.Style HyperlinkButtonStyle;
 
     NotificationType Severity;
     Color StatusColor;
