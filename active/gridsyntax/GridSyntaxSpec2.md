@@ -59,11 +59,12 @@ You can now accomplish the same thing in a single tag:
 
 Before this change, if you write that shorter Xaml markup, the  Xaml loader would try to convert the string `Auto, *` into a [ColumnDefinitionCollection](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ColumnDefinitionCollection) object, as that's the type of the [Grid.ColumnDefinitions](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Grid.ColumnDefinitions) property. That fails because there is no such conversion available. (And it wouldn't help if there was, because the property is read-only.)
 
-But the Xaml syntax rules now support this scenario by recognizing that the target property is a collection type, and that there's no conversion from string available, and then by treating the attribute value as a comma-separated list of collection items. The items of the collection are of type [ColumnDefinition](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ColumnDefinition), so a check is made to see if strings can be converted to ColumnDefinition instances. Since they can, the Xaml loader creates those instances and adds them to the collection.
+But the Xaml syntax rules now support this scenario by recognizing that the target property is a collection type, and that there's no conversion from string available, and then by treating the attribute value as a comma-separated list of collection items. The items of the collection are of type [ColumnDefinition](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ColumnDefinition), so a check is made to see if strings can be converted to ColumnDefinition instances. Xaml rules indicate that if the type can be created from string, create it. A second Xaml rule states that if it cannot be created directly from string but has a [[Content Property](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Markup.ContentPropertyAttribute)] attribute, create a default instance of the original type and and set the specified property to a value created from the string.
+
 
 ## Role of the [ContentProperty] attribute
 
-In order for a ColumnDefinition (or RowDefinition) to be created from a string there is a second new Xaml syntax rule: if a type can't be created from string, but the type's [[ContentProperty](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Markup.ContentPropertyAttribute)] property can, the type is created and the property set.
+In order for a ColumnDefinition (or RowDefinition) to be created from a string, these types need to have a content property that is createable from string.
 
 About this "content property", it's not literally a property named "content" (although it can be and [is sometimes](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ContentControl.Content)). This is essentially the default property of a class, and is marked with the [ContentProperty] attribute.
 
@@ -351,20 +352,4 @@ The xmlns will not be updated for this Xaml language feature addition, i.e. ther
 ## Tooling/Visual Studio Considerations
 In terms of usage of this new Xaml language feature in Visual Studio, VS needs a way to recognize the current Xaml version that the developer is using. This will be likely be done by accessing metadata or accessing an attached features.xml file - the VS team is still in discussion as to which method will be used, but the overall cost is not high. 
 
-## Data and Intelligence Metrics
-### P0: Feature Key Performance Indictors
-* Syntax has increased developer/consumer satisfaction
-    * KPI: At least 80% of new apps released to Windows store after release of feature are using the new syntax, and 50% of developers express a positive reaction to this change.
-    * Measurement: Xaml Survey if available or survey through Xaml discussions/other relevant channel.
-    * Measurement: How many times Grid has been implemented using the new syntax in published Windows apps.
-    
-* Implementation of syntax change has strengthened brand loyalty among customers/developers by assuring customers/developers that their voices are being heard and their quality of life is being considered
-    * KPI: Multiple new commenters on this thread have gone to be active on other threads, and all experienced commenters from this thread have gone on to create at least one other thread or issue on the WinUI repo. 
-    * Measurement: Number of *new* commenters on this thread (i.e. made their first WinUI Github comment/contribution on this thread), and how many of them went on to be active on other WinUI or Microsoft threads.
-    * Measurement: Number of the commenters from this thread went on to create other issues after this one was resolved (beleiving that their voices would be heard!).
-
-### P1: Feature Performance Indictators
-* Syntax has decreased Grid's learning curve
-    * KPI: A slight increase (<5%) of apps released to the Windows store were created by new developers
-    * Measurement: How many apps using this new syntax were created by new/first-time developers
 
