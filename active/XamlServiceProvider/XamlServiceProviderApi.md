@@ -106,34 +106,40 @@ public class BrushSelectorExtension : MarkupExtension
 
 ## IRootObjectProvider
 
-> Some more realistic example?
-
-The following example shows a custom markup extension that returns a string describing the object at the root of the markup. It does this by getting the IRootObjectProvider from the IXamlServiceProvider parameter passed to ProvideValue.
+The following example shows a custom markup extension that is similar to x:Bind but is dynamic, using .Net reflection to get the value of a property at the root of the markup.
 
 With this markup extension:
 
 ```cs
-public class TestMarkupExtension : MarkupExtension
+public class DynamicBindExtension : MarkupExtension
 {
+    public DynamicBindExtension(string propertyName)
+    {
+        _propertyName = propertyName;
+    }
+    string _propertyName;
+
     public override object ProvideValue(IXamlServiceProvider serviceProvider)
     {
-        var target = serviceProvider.GetService(typeof(IRootObjectProvider)) as IRootObjectProvider;
-        return target.RootObject.ToString();
+        var root = ((IRootObjectProvider)serviceProvider.GetService(typeof(IRootObjectProvider))).RootObject;
+        var info = root.GetType().GetProperty(_propertyName);
+        return info.GetValue(root);
     }
 }
 ```
 
-the TextBlock in this markup will display “App1.MainPage”:
+the TextBlock in this markup will display "Page tag":
 
 ```xml
-<Page x:Class="App1.MainPage"
+<Page Tag='Page tag'
+    x:Class="App1.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:App52"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
 
     <Grid>
-        <TextBlock Text="{local:TestMarkupExtension}" />
+        <TextBlock Text="{local:DynamicBind Tag}" />
     </Grid>
 </Page>
 ```
