@@ -38,7 +38,7 @@ This new syntax is enabled by a new Xaml language feature and associated APIs th
 
 # Description
 
-We've introduced a new Xaml language feature that allows the initialization of collection-type properties (including read-only properties) using Xaml attribute syntax. We've also updated the Grid APIs to make sure that this syntax works properly in particular for Grid's use cases.
+We've introduced a pair of new Xaml language features that allows the initialization of collection-type properties (including read-only properties) using Xaml attribute syntax. We've also updated the Grid APIs to make sure that this syntax works properly in particular for Grid's use cases.
 
 Grid initialization in Xaml markup has always required a lot of XML:
 
@@ -51,53 +51,58 @@ Grid initialization in Xaml markup has always required a lot of XML:
 </Grid>
 ```
 
-You can now accomplish the same thing in a single tag:
+With a couple of changes to Xaml syntax and a change Grid, you can now accomplish the same thing in a single tag:
 
 ```xml
 <Grid ColumnDefinitions="Auto, *">
 ```
 
-Before this change, if you write that shorter Xaml markup, the  Xaml loader would try to convert the string `Auto, *` into a [ColumnDefinitionCollection](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ColumnDefinitionCollection) object, as that's the type of the [Grid.ColumnDefinitions](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Grid.ColumnDefinitions) property. That fails because there is no such conversion available. (And it wouldn't help if there was, because the property is read-only.)
+## Collection property values as comma-separated lists
 
-But the Xaml syntax rules now support this scenario by recognizing that the target property is a collection type, and that there's no conversion from string available, and then by treating the attribute value as a comma-separated list of collection items. The items of the collection are of type [ColumnDefinition](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ColumnDefinition), so a check is made to see if strings can be converted to ColumnDefinition instances. Xaml rules indicate that if the type can be created from string, create it. A second Xaml rule states that if it cannot be created directly from string but has a [[Content Property](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Markup.ContentPropertyAttribute)] attribute, create a default instance of the original type and and set the specified property to a value created from the string.
+Before these changes, if you write that shorter Xaml markup, the  Xaml loader would try to convert the string `Auto, *` into a [ColumnDefinitionCollection](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ColumnDefinitionCollection) object, as that's the type of the [Grid.ColumnDefinitions](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Grid.ColumnDefinitions) property. That fails because there is no such conversion available. (And it wouldn't help if there was, because the property is read-only.)
 
+A new Xaml syntax rule now takes a next step though and recognizes that the target property is a collection type, and then treats the attribute value as a comma-separated list of collection items. The items of the collection are of type [ColumnDefinition](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ColumnDefinition), so a check is made to see if strings can be converted to ColumnDefinition instances. 
 
-## Role of the [ContentProperty] attribute
+But it can't.
 
-In order for a ColumnDefinition (or RowDefinition) to be created from a string, these types need to have a content property that is createable from string.
+## Making better use of the [ContentProperty] attribute
 
-About this "content property", it's not literally a property named "content" (although it can be and [is sometimes](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ContentControl.Content)). This is essentially the default property of a class, and is marked with the [ContentProperty] attribute.
+But there's a second new Xaml syntax rule to allow ColumnDefinition (or RowDefinition) to be created from a string: if a type can't be created from string, but the type's [[ContentProperty](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Markup.ContentPropertyAttribute)] property can, the type is created and the property is set.
 
-For example the [SolidColorBrush](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Media.SolidColorBrush) is defined roughly like this (in C# terms):
+About this "content property", it's not literally a property named "content"  (although it can be and [is sometimes](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ContentControl.Content)). This is essentially the default property of a class, and is marked with the [ContentProperty] attribute.
+
+For example, the [TextBlock](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.TextBlock) class is defined roughly like this (in C# terms):
 
 ```cs
-[ContentProperty(Name = "Color")]
-public sealed class SolidColorBrush : Brush
+[ContentProperty(Name = "Text")]
+public sealed class TextBlock : FrameworkElement
 {
     ...
-    public Color Color { get; set; }
+    public string Text { get; set; }
 }
 ```
 
-Because [SolidColorBrush.Color](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Media.SolidColorBrush.Color) is marked as the [ContentProperty] (and because a Color can be created from a string), you've always been able to write this short-hand Xaml:
+Because [TextBlock.Text](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.TextBlock.Text) is marked as the [ContentProperty], and is settable from string, you've always been able to write this short-hand Xaml:
 
 ```xml
-<SolidColorBrush>Red</SolidColorBrush>
+<TextBlock>Hello world</TextBlock>
 ```
 
-If it weren't for the [ContentProperty] on SolidColorBrush, you'd have to use the equivalent full syntax (and that's still valid to use if you prefer):
+If it weren't for the [ContentProperty] on TextBlock, you'd have to use the equivalent full syntax (and that's still valid to use if you prefer):
 
 ```xml
-<SolidColorBrush>
-    <SolidColorBrush.Color>
-        Red
-    </SolidColorBrush.Color>
-</SolidColorBrush>
+<TextBlock>
+    <TextBlock.Text>
+        Hello world
+    </TextBlock.Text>
+</TextBlock>
 ```
+
+That previously only worked though if a string could be _cast_ to the content property's type. Since TextBlock.Text is a string, obviously it can. The new syntax says that the type need only be _creatable_ from string. We'll see an example of that in a moment with Grid.
 
 ## Making things work for Grid
 
-Back to Grid, with the new syntax feature and with ColumnDefinition.Width now marked as the [ContentProperty]:
+Back to Grid, ColumnDefinition.Width is now marked as the [ContentProperty]:
 
 ```cs
 [ContentProperty(Name = "Width")]
@@ -107,21 +112,25 @@ public sealed class ColumnDefinition : DependencyObject
 }
 ```
 
-you can now write
+You can't assign a string to ColumnDefinition.Width, because Width isn't a string or object, it's a GridLength. But there is a converter that can create a GridLength from a string, for example this has always worked:
+ 
+```xml
+<GridLength>Auto</GridLength>
+```
+
+So now that ColumnDefinition.Width is the [ContentProperty], and Width (a GridLength) is creatable from string, you can now write:
 
 ```xml
 <ColumnDefinition>Auto</ColumnDefinition>
 ```
 
-(There's already a converter to create a GridLength from a string.)
-
-Putting that all together, back to the original goal:
+Putting that all together, back to the original goal, you can write:
 
 ```xml
 <Grid ColumnDefinitions="Auto, *">
 ```
 
-Two ColumnDefinition objects are created and added to the Grid's ColumnDefinitions collection property, which is read-only but defaults to an empty collection. The first item has its Width set to GridLength.Auto, the second has its Width set to 1 GridUnitType.Star.
+This creates two ColumnDefinition objects and adds them to the Grid's ColumnDefinitions collection property, which is read-only but defaults to an empty collection. The first item has its Width set to GridLength.Auto, the second has its Width set to 1 GridUnitType.Star.
 
 
 ## Special characters and escaping
