@@ -139,7 +139,7 @@ Alternatively you can use a backslash as an escape character before the comma:
 Words = " I weigh 90\,7 KG    "
 ```
 
-Note that here, like everywhere in XML, we're using "opposite quotes" (whichever kind of quote you use to delineate the attribute value, don't use it _in_ the attribute value, except as an entity). So these are equvalent:
+Note that here, like everywhere in XML, we're using "opposite quotes" (whichever kind of quote you use to delineate the attribute value, don't use it _in_ the attribute value, except as an entity). So these are equivalent:
 
 ```xml
 Words = " 'Hello', 'world' "
@@ -361,7 +361,7 @@ In terms of usage of this new Xaml language feature in Visual Studio, VS needs a
     * Measurement: Number of *new* commenters on this thread (i.e. made their first WinUI Github comment/contribution on this thread), and how many of them went on to be active on other WinUI or Microsoft threads.
     * Measurement: Number of the commenters from this thread went on to create other issues after this one was resolved (beleiving that their voices would be heard!).
 
-### P1: Feature Performance Indictators
+### P1: Feature Performance Indicators
 * Syntax has decreased Grid's learning curve
     * KPI: A slight increase (<5%) of apps released to the Windows store were created by new developers
     * Measurement: How many apps using this new syntax were created by new/first-time developers
