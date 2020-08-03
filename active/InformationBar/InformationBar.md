@@ -490,6 +490,17 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
     static Windows.UI.Xaml.DependencyProperty TemplateSettingsProperty{ get; };
 }
 ```
+
+## Theme Resources
+| Name | Description |
+|:-:|:--|
+|InfoBarSeverityCriticalStatusColor | Sets the status color of the InfoBar when in the Critical severity. |
+|InfoBarSeverityWarningStatusColor | Sets the status color of the InfoBar when in the Warning severity. |
+|InfoBarSeverityInformationalStatusColor | Sets the status color of the InfoBar when in the Informational severity. |
+|InfoBarSeveritySuccessStatusColor | Sets the status color of the InfoBar when in the Success severity. |
+|InfoBarSeverityDefaultStatusColor | Sets the status color of the InfoBar when in the Default severity. |
+|InfoBarHyperlinkButtonColor | Sets the hyperlink button text color. <br> - Note: This is set to keep hyperlinks accessible on the variously colored backgrounds defined by the severity status colors.
+
 # Appendix
 
 ### Design References
