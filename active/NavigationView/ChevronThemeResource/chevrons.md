@@ -1,7 +1,15 @@
-I customer requested the ability to change the default size of the chevrons in hierarchical NavigationView using lightweight styling. 
+# Background
+
+A customer requested the ability to change the default size of the chevrons in hierarchical NavigationView using lightweight styling. 
 Today, the sizes are hardcoded and require retemplating to modify. 
 
+Here's what the chevrons look like today.
 
+As you can see from the screenshots, the hierarchical items' chevrons use two different sizes depending on layout, left or top. 
+To simplify the lightweight styling story and reduce the number of new resources, there's a suggestion to **unify on a single chevron size**.
+
+In addition, there's a difference in visual treatment between the heirarchical items' chevrons and the overflow More button's chevrons when in top mode.
+The difference feels deliberate because the behaviors of these items are different: the items' chevrons are a seporate hit target while the more chevron is part of the more button's hit target.
 
 
 
@@ -18,22 +26,7 @@ Hopefully we'll be able to copy it mostly verbatim.
 So the second audience is everyone that reads there to learn how
 and why to use this API. -->
 
-# Background
-<!-- Use this section to provide background context for the new API(s) 
-in this spec. -->
 
-<!-- This section and the appendix are the only sections that likely
-do not get copied to docs.microsoft.com; they're just an aid to reading this spec. -->
-
-<!-- If you're modifying an existing API, included a link here to the
-existing page(s) -->
-
-<!-- For example, this section is a place to explain why you're adding this API rather than
-modifying an existing API. -->
-
-<!-- For example, this is a place to provide a brief explanation of some dependent
-area, just explanation enough to understand this new API, rather than telling
-the reader "go read 100 pages of background information posted at ...". -->
 
 
 # Description
