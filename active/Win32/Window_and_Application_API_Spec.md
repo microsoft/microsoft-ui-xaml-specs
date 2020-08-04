@@ -1,25 +1,27 @@
 # Window and Application API updates 
 
-This spec describes updates to the XAML Window and Application APIs to enable them to support Win32 apps in addition to UWP.
+This spec describes updates to the XAML Window and Application APIs to enable them to support Desktop apps in addition to UWP.
 
 # Background
 
 Xaml in UWP has a [Window](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Window) class which wraps a [CoreWindow](https://docs.microsoft.com/uwp/api/Windows.UI.Core.CoreWindow), and an [Application](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Application) class which wraps a [CoreApplication](https://docs.microsoft.com/uwp/api/Windows.ApplicationModel.Core.CoreApplication). For WinUI 3 this is being expanded to not require a CoreWindow or CoreApplication; Window can use an hwnd and Application can run a message pump. This spec has the API additions to Application and Window to support this.
 
-Note that some existing APIs will also behave differently when running as a Win32 app. For example, the static Window.Current property today returns the Window for the current (calling) thread, but in a non-UWP app it will return null. Similarly the Window.CoreWindow property will be null when not running as UWP.
+Note that some existing APIs will also behave differently when running as a Desktop app. For example, the static Window.Current property today returns the Window for the current (calling) thread, but in a non-UWP app it will return null. Similarly the Window.CoreWindow property will be null when not running as UWP.
 
 There is also one API not (yet) present in WinUI: [Window.SetTitleBar](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Window.SetTitleBar). That API relies on a Composition feature that only exists for system Visuals and is not yet supported for WinUI Visuals.
 
 
-# Window class
+# Examples and API Notes
 
-Window represents a WinUI application window. It can be used in a [UWP](https://docs.microsoft.com/en-us/windows/uwp/get-started/universal-application-platform-guide) app a Win32 app. When run in a UWP app there can only be one instance on a thread.
+## Window class
 
-### Window Examples
+Window represents a WinUI application window. It can be used in a [UWP](https://docs.microsoft.com/en-us/windows/uwp/get-started/universal-application-platform-guide) app or a Desktop app. When run in a UWP app there can only be one instance on a thread.
+
+### Examples
 
 > Spec note: The only new API in this set of examples is the Window constructor. Shown here is the general description for the class, so that we can see it in full context. But none of the behavior for UWP apps is changed.
 
-Set the content of a window and give it keyboard focus.
+Set the content of a given window and give it keyboard focus.
 
 ```CS
 void InitializeAndActivateWindow(Window window)
@@ -29,16 +31,16 @@ void InitializeAndActivateWindow(Window window)
 }
 ```
 
-In a UWP app the read-only [Window.Current](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Window.Current) property returns the Window for the current thread (a thread has at most one Window and it's created automatically on each UI thread). This property returns null on a non UI thread or in a Win32 app.
+In a UWP app the read-only [Window.Current](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Window.Current) property returns the Window for the current thread. (A thread has at most one Window and it's created automatically on each UI thread.) This property returns null on a non UI thread or in a Desktop app.
 
-The following sets the content of the Window in a UWP app and gives it keyboard focus.
+The following sets the content of the calling thread's Window in a UWP app and gives it keyboard focus.
 
 ```CS
 Window.Current.Content = new TextBlock() { Text = "Hello" };
 Window.Current.Activate();
 ```
 
-In a Win32 app you create each Window, and you can create more than one Window on a thread.
+In a Desktop app you create each Window, and you can create more than one Window on a thread.
 
 ```CS
 Window window = new Window();
@@ -92,7 +94,7 @@ _ = CoreApplication.CreateNewView().DispatcherQueue.TryEnqueue(() =>
 });
 ```
 
-To create a new Window on a new thread in a Win32 app, create the thread first:
+To create a new Window on a new thread in a Desktop app, create the thread first:
 
 ```CS
 Thread thread = new Thread(() =>
@@ -115,7 +117,13 @@ Attempting to activate (`new`) a new Window in a UWP app will fail and log a deb
 
 > Implementation note: This will use [RoOriginateError](https://docs.microsoft.com/en-us/windows/win32/api/roerrorapi/nf-roerrorapi-rooriginateerror) to show an explanatory message in the debugger.
 
-Creating a new Window in a Win32 app creates a new top level hwnd.
+Creating a new Window in a Desktop app creates a new top level hwnd.
+
+## IWindowNative Interface **[NEW]**
+
+This interface is implemented by Window, and in a Desktop app can be used to get the Window's underlying hwnd.
+
+> Issue: need sample here
 
 ## Window.Icon property **[NEW]**
 Gets or sets a window's icon. For each window, this icon is used in its title bar, its task bar button, and in its ALT+TAB application selection list entry.
@@ -135,8 +143,6 @@ public ImageSource Icon { get; set; }
 </Window>
 ```
 
-### Property value
-ImageSource: An ImageSource object that represents the icon
 
 
 ## Window.Title property **[NEW]**
@@ -158,11 +164,11 @@ public string Title { get; set; }
 </Window>
 ```
 
-#### Remarks
+### Remarks
 
 In a UWP app, this property is a wrapper for [ApplicationView.Title](https://docs.microsoft.com/uwp/api/Windows.UI.ViewManagement.ApplicationView.Title), which is ignored if [AppWindowTitleBar.ExtendsContentIntoTitleBar](https://docs.microsoft.com/uwp/api/Windows.UI.WindowManagement.AppWindowTitleBar.ExtendsContentIntoTitleBar) is set to true.
 
-In a Win32 app this is a wrapper for [SetWindowText](https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowtexta).
+In a Desktop app this is a wrapper for [SetWindowText](https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowtexta).
 
 ## Window.Current property
 
@@ -183,26 +189,19 @@ Occurs when the window has closed.
 
 ### Remarks
 
-If this was the last window to be closed for the app, the Suspending event will be raised. For a Win32 app, the application will end.
+If this was the last window to be closed for the app, the Suspending event will be raised. For a Desktop app, the application will end.
 
 
 ## Window.CoreWindow property: 
 
-Gets the [CoreWindow](https://docs.microsoft.com/uwp/api/Windows.UI.Core.CoreWindow) associated with this Window. In a Win32 app this is always null.
+Gets the [CoreWindow](https://docs.microsoft.com/uwp/api/Windows.UI.Core.CoreWindow) associated with this Window. In a Desktop app this is always null.
 
 ```CS
 public CoreWindow CoreWindow { get; }
 ```
 
-## IWindowInterop Interface **[NEW]**
-
-This interface is implemented by Window, and in a Win32 app can get used to get the Window's underlying hwnd.
-
-> Issue: need sample here
-
-
 ## Window.Dispatcher property
-Gets the [CoreDispatcher](https://docs.microsoft.com/uwp/api/Windows.UI.Core.CoreDispatcher) object for the Window when called from a UWP app. Returns null when called from a Win32 app.
+Gets the [CoreDispatcher](https://docs.microsoft.com/uwp/api/Windows.UI.Core.CoreDispatcher) object for the Window when called from a UWP app. Returns null when called from a Desktop app.
 
 ```CS
 public CoreDispatcher Dispatcher { get; }
@@ -216,7 +215,6 @@ Gets the [DispatcherQueue](https://docs.microsoft.com/uwp/api/Windows.System.Dis
 public DispatcherQueue DispatcherQueue { get; }
 ```
 
-
 ## Window.Compositor property
 
 Gets the Compositor for this Window. This allows to access to the Visual Layer (the layer where the XAML framework sits) and use WinRT compositor APIs inside of the Window. 
@@ -224,12 +222,10 @@ Gets the Compositor for this Window. This allows to access to the Visual Layer (
 ```CS
 public Microsoft.UI.Composition.Compositor Compositor { get; }
 ```
+
 ### Remarks
 There is one Compositor per thread, that means that all the Windows in the same thread share the same Compositor.
 
-
-
-# Window event args
 
 ## WindowActivatedEventArgs class
 Namespace: Microsoft.UI.Xaml
@@ -299,24 +295,33 @@ Contains the argument returned by a window size change event.
     ```
 
 
-# Application class
+## Application class
 Namespace: Microsoft.UI.Xaml
 
-Application represents a WinUI application. It can be used in a [UWP](https://docs.microsoft.com/en-us/windows/uwp/get-started/universal-application-platform-guide) application or in a Win32 application. An application is started by calling the Application.Start method.
+| Application is not new to this spec, what is new are the following remarks
 
-```CS
-public class Application:IClosable
-```
+### Remarks
 
-```XML
-<Application />
- ```
+The following events and virtual methods are not invoked when running in a Desktop app:
+
+* void overridable OnActivated(IActivatedEventArgs args)
+* void overridable OnBackgroundActivated (BackgroundActivatedEventArgs)
+* void overridable OnCachedFileUpdaterActivated (CachedFileUpdaterActivatedEventArgs)
+* void overridable OnFileActivated (FileActivatedEventArgs)
+* void overridable OnFileOpenPickerActivated (FileOpenPickerActivatedEventArgs)
+* void overridable OnFileSavePickerActivated (FileSavePickerActivatedEventArgs)
+* void overridable OnSearchActivated (SearchActivatedEventArgs)
+* void overridable OnShareTargetActivated (ShareTargetActivatedEventArgs)
+* EnteredBackgroundEventHandler EnteredBackground;
+* LeavingBackgroundEventHandler LeavingBackground;
+* EventHandler&lt;Object&gt; Resuming
+
 
 ## Application.Start method
 
 Provides the entry point and requests initialization of the application. Use the callback to instantiate the Application class.
 
-In a Win32 app this will run a message pump internally, and not return until the application shuts down. In a UWP app it will return immediately.
+In a Desktop app this will run a message pump internally, and not return until the application shuts down. In a UWP app it will return immediately.
 
 
 ## Application.OnLaunched(LaunchActivatedEventArgs) method
@@ -331,7 +336,7 @@ protected virtual void OnLaunched(LaunchActivatedEventArgs args)
 
 ### Examples
 
-In a Win32 app, use OnLaunched to create the main window and pass it the first command line argument.
+In a Desktop app, use OnLaunched to create the main window and pass it the first command line argument.
 
 ```CS
 protected override void OnLaunched(MUX.LaunchActivatedEventArgs e)
@@ -372,7 +377,7 @@ protected override void OnLaunched(LaunchActivatedEventArgs e)
 
 Gets or sets whether a UWP app supports mouse mode, which emulates pointer interaction experiences with non-pointer input devices such as an Xbox gamepad or remote control. (All nested elements inherit this behavior.)
 
-> Note: this property is ignored in a Win32 app
+> Note: this property is ignored in a Desktop app
 
 ## Application.OnWindowCreated(WindowCreatedEventArgs) method
 Invoked when the application creates a window.
@@ -406,18 +411,4 @@ Provides event information when an app is launched.
     ```CS
     public Windows.ApplicationModel.Activation.LaunchActivatedEventArgs UWPLaunchActivatedEventArgs { get; };
     ```
-
-## Application events not raised in Win32 app
-
-- void overridable OnActivated(IActivatedEventArgs args)
-- void overridable OnBackgroundActivated (BackgroundActivatedEventArgs)
-- void overridable OnCachedFileUpdaterActivated (CachedFileUpdaterActivatedEventArgs)
-- void overridable OnFileActivated (FileActivatedEventArgs)
-- void overridable OnFileOpenPickerActivated (FileOpenPickerActivatedEventArgs)
-- void overridable OnFileSavePickerActivated (FileSavePickerActivatedEventArgs)
-- void overridable OnSearchActivated (SearchActivatedEventArgs)
-- void overridable OnShareTargetActivated (ShareTargetActivatedEventArgs)
-- EnteredBackgroundEventHandler EnteredBackground;
-- LeavingBackgroundEventHandler LeavingBackground;
-- EventHandler<Object> Resuming;
 
