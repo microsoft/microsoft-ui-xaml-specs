@@ -18,4 +18,4 @@ There's a customer proposal that I hope to receive design feedback on: **increas
 ![Proposed nav view chevron design](https://user-images.githubusercontent.com/1398851/86917107-e0a34000-c124-11ea-97a8-098a4f63f370.png)
 
 # Proposed fix
-The recommendation from design is to replace the More button, both work and chevron, with an ellipsis glyph. We should use the same button treatment as the overflow button in CommandBar.
+The recommendation from design is to replace the More button, both text and chevron, with an ellipsis glyph. We should use the same button treatment as the overflow button in CommandBar.
