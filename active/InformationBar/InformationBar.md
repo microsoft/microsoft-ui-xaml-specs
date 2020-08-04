@@ -51,7 +51,7 @@ For more info about choosing the right notification control, see the [Dialogs an
 
 An information bar can have several configurations, here are some notable ones.
 
-When an information bar is conveying information of a common criticality, a notification can be set to have one of many NotificationTypes to use consistent Fluent styling for it's identifiers.
+When an information bar is conveying information of a common severity, like displaying an error or warning, a notification can be set to have one of many NotificationTypes to use consistent Fluent styling for it's identifiers.
 ![Sketch of an InfoBar in a Warning state with a close button and message](images/Warning_DefaultClose.jpg)
 ![Mockup of an InfoBar with an icon, title, and message on one line](images/Docked_SingleLineIconTitle.png)
 
@@ -66,7 +66,7 @@ Mockup with custom XAML content to be added.
 
 ## Create an InfoBar
 
-The XAML below describes an inline InfoBar with the default styling for a critical notification. An information bar can be created anywhere in the element tree or code behind. In this example, the notification is located in a ResourceDictionary, expanding to fill the width of the stack panel.
+The XAML below describes an inline InfoBar with the default styling for an error  notification. An information bar can be created anywhere in the element tree or code behind. In this example, the notification is located in a ResourceDictionary, expanding to fill the width of the stack panel.
 
 XAML
 ```xml
@@ -99,7 +99,7 @@ Here is the visual representation of the information bar in the page.
 ![Mockup of an InfoBar with an icon, title, and message on one line](images/Docked_SingleLineIconTitle.png)
 
 ## Notification types: consistent styling
-The type of the info bar can be set via the Severity property to automatically set a consistent status color and icon dependent on the criticality of the notification.
+The type of the information bar can be set via the Severity property to automatically set a consistent status color, icon, and assistive technology settings dependent on the criticality of the notification.
 
 Mockups in various Severities to be added.
 ![Mockup of InfoBar with no content in different Severity colors and icons for light mode](images/Docked_ToolkitSeverity.png)
@@ -217,7 +217,7 @@ XAML
 ```xml
 <StackPanel x:Name="ContentArea" Content="Document">
     <controls:InfoBar x:Name="DefaultCriticalNotification"
-        Severity="Critical"
+        Severity="Error"
         Title="Message Title"  
         Message="This message is very long, so long in fact it needs to wrap to a second line in the notification">
     </controls:InfoBar>
@@ -258,8 +258,6 @@ InfoBar will be Pane for inline notifications with IScrollProvider for the (cond
 
 InfoBar will implement a custom "information" Landmark.
 
-TBA: Varying behavior based on Severity. For example, InfoBars in the Critical or Warning state will interrupt the user while InfoBars in the Default or Success state will not.
-
 ### Keyboard Navigation 
 
 | State | Action |
@@ -269,10 +267,19 @@ TBA: Varying behavior based on Severity. For example, InfoBars in the Critical o
 | Notification is tabbed through | Tab Button: <br> Will go through all actionable items, regardless of group, in order. When tab is pressed on the last element in the notification, focus will cycle to the first element in the notification.  <br> <br> Left + Right Arrow Keys: <br> Can be used to navigate between the footer Action and Close buttons if both are present. <br><br> Escape: <br> Will not close the InfoBar and will instead bubble up to the parent components. |
 | Notification is dismissed | 1. X Button is pressed. <br> 2. Action Button is pressed. <br><br> * Tab increments focus to the next element but does not close the notification. |
 
-### Narrator
+### Assistive Technologies
 
-InfoBar will leverage the existing APIs used by Windows Notifications.
+InfoBar will leverage the existing APIs used by Windows Notifications. View [NotificationKind](https://docs.microsoft.com/en-us/windows/win32/api/uiautomationcore/ne-uiautomationcore-notificationkind) and [NotificationProcessing ](https://docs.microsoft.com/en-us/windows/win32/api/uiautomationcore/ne-uiautomationcore-notificationprocessing) docs for more information.
 
+The behavior of the InfoBar will change for assistive technologies like Narrator depending on the Severity set by the developer. As Error and Warning InfoBars are intended to be used for scenarios that directly impact app experience they should interrupt the user more than InfoBars that are informational.
+| Severity | NotificationKind | NotificationProcessing | Behavior |
+|:---|:---| :---| :---|
+| Error | NotificationKind_ItemAdded |NotificationProcessing_ImportantMostRecent| Narrator will say "Click Up to move to new information from" + App Name + Notification Contents |
+| Warning | NotificationKind_ItemAdded |NotificationProcessing_ImportantMostRecent| Narrator will say "Click Up to move to new information from" + App Name + Notification Contents |
+| Success | NotificationKind_ActionCompleted |NotificationProcessing_MostRecent| ???
+| Default | NotificationKind_ItemAdded |NotificationProcessing_CurrentThenMostRecent | ???
+
+#### Narrator
 | State | Action |
 |:---|:---|
 | Notification appears | Narrator will say "Click Up to move to new information from" + App Name + Notification Contents | 
@@ -336,13 +343,13 @@ Please view the guidance for [Adjust layout and fonts, and support RTL](https://
 ### When to show an information bar?
 An InfoBar should be shown when the state of the application is different from typical, expected functionality or when the user **needs** to acknowledge or potentially react to the presented information.
 
-Recommended patterns for critical notifications where the application is in a negatively altered state
+Recommended patterns for error notifications where the application is in a negatively altered state
   - Example: Internet connectivity is required for the application to function and is not present
-    - A critical information bar should remain in view until the connection is restored if most functionality is unavailable.
-    - If some app functionality is possible, a critical information bar should appear and able to be dismissed by the user.
+    - An error information bar should remain in view until the connection is restored if most functionality is unavailable.
+    - If some app functionality is possible, an error information bar should appear and able to be dismissed by the user.
     - If/when the internet is restored the existing notification should update if it exists, and a new one should be created if the previous one had been dismissed. THe new/updated success-styled InfoBar should inform the user that "Internet is reconnected" so that they are aware app functionality is restored.
   - Example: The user's subscription to your application has expired and many features are deactivated
-    - A critical information bar could remain in view with a potential action button to resubscribe.
+    - An error information bar could remain in view with a potential action button to resubscribe.
     - Another option is to allow the user to dismiss a default-style InfoBar depending on how vital a subscription is to your application.
 
 Recommended patterns for informational notifications where the user needs to view or react to essential information
@@ -494,9 +501,8 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
 ## Theme Resources
 | Name | Description |
 |:-:|:--|
-|InfoBarSeverityCriticalStatusColor | Sets the status color of the InfoBar when in the Critical severity. |
+|InfoBarSeverityErrorStatusColor | Sets the status color of the InfoBar when in the Error severity. |
 |InfoBarSeverityWarningStatusColor | Sets the status color of the InfoBar when in the Warning severity. |
-|InfoBarSeverityInformationalStatusColor | Sets the status color of the InfoBar when in the Informational severity. |
 |InfoBarSeveritySuccessStatusColor | Sets the status color of the InfoBar when in the Success severity. |
 |InfoBarSeverityDefaultStatusColor | Sets the status color of the InfoBar when in the Default severity. |
 |InfoBarHyperlinkButtonColor | Sets the hyperlink button text color. <br> - Note: This is set to keep hyperlinks accessible on the variously colored backgrounds defined by the severity status colors.
@@ -532,9 +538,9 @@ UI Elements for InfoBar
 
 ## Data and Intelligence Metrics
 Recommendations from ryandemo:
-- How many buttons included correlated to criticality of status message
+- How many buttons included correlated to severity of status message
 - Track popularity of each layout mode
-- Average length of time the notifications display on screen until dismissal, correlated to criticality
+- Average length of time the notifications display on screen until dismissal, correlated to severity
 - How often color and/or icon customization Occurs
 - How often multiple information bars appear at once and the typical distribution
 
