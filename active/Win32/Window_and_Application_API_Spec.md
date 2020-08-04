@@ -102,14 +102,16 @@ Thread thread = new Thread(() =>
     Window window = new Window();
     window.Content = new TextBlock() { Text = "Hello" };
     window.Activate();
-    window.Closed += (sender1, e1) => w.Dispatcher.InvokeShutdown();
+    window.Closed += (sender1, e1) => w.DispatcherQueue.InvokeShutdown();
 
-    System.Windows.Threading.Dispatcher.Run(); // Issue: There should be a Window.Run()?
+    System.Windows.Threading.DispatcherQueue.Run(); // Issue: There should be a Window.Run()?
 
 });
 thread.SetApartmentState(ApartmentState.STA);
 thread.Start(); 
 ```
+
+| Issue: need to address setting the DispatcherQueue.
 
 ### Remarks
 
