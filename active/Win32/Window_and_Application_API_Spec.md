@@ -104,9 +104,10 @@ Thread thread = new Thread(() =>
     window.Activate();
     window.Closed += (sender1, e1) => w.DispatcherQueue.InvokeShutdown();
 
-    System.Windows.Threading.DispatcherQueue.Run(); // Issue: There should be a Window.Run()?
-
+    // This is a new API, there will be a separate spec
+    DispatcherQueueSyncContext.SetForCurrentThread();
 });
+
 thread.SetApartmentState(ApartmentState.STA);
 thread.Start(); 
 ```
@@ -328,7 +329,7 @@ In a Desktop app this will run a message pump internally, and not return until t
 
 ## Application.OnLaunched(LaunchActivatedEventArgs) method
 
-Invoked when the application is launched. Override this method to perform application initialization and to display initial content in the associated Window (UWP apps) or create a new Window (Win32 apps).
+Invoked when the application is launched. Override this method to perform application initialization and to display initial content in the associated Window (UWP apps) or create a new Window (Desktop apps).
 
 > This method is typically created automatically when a project is created. You can then modify it or remove it.
 
@@ -392,7 +393,7 @@ args: Event data for the event. The WindowCreatedEventArgs contains the Window o
 
 ### Remarks
 - **UWP**: This method is called once for the creation of the main window, once for each hosted window, and once each time CreateNewView is called. 
-- **Win32**: This method is called every time a Window object is created.
+- **Desktop**: This method is called every time a Window object is created.
 
 
 ## XamlLaunchActivatedEventArgs class
