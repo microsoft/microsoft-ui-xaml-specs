@@ -395,7 +395,7 @@ args: Event data for the event. The WindowCreatedEventArgs contains the Window o
 - **Win32**: This method is called every time a Window object is created.
 
 
-## LaunchActivatedEventArgs class
+## XamlLaunchActivatedEventArgs class
 
 Namespace: Microsoft.UI.Xaml.Application
 
@@ -405,12 +405,79 @@ Provides event information when an app is launched.
 
 ### Properties
 
-- Arguments: Gets the arguments that are passed to the app during its launch.
+- Arguments: Gets the arguments that are passed to the app during its launch. In a UWP app, this is equivalent to LaunchActivatedEventArgs.Arguments.
     ```CS
     public String Arguments { get; };
     ```
-- LaunchActivatedEventArgs: Gets the LaunchActivatedEventArgs from UWP. This property gets Null in Win32.
+- LaunchActivatedEventArgs: Gets the LaunchActivatedEventArgs from UWP. This property is null in a Desktop app.
     ```CS
     public Windows.ApplicationModel.Activation.LaunchActivatedEventArgs UWPLaunchActivatedEventArgs { get; };
     ```
+
+# API Details
+
+## Window class
+Microsoft.UI.Xaml namespace
+
+```cs
+    [contract(Microsoft.UI.Xaml.WinUIContract, 1)]
+    [webhosthidden]
+    [contentproperty("Content")]
+    unsealed runtimeclass Window
+    {
+        ...
+
+        String Title;
+        ImageSource Icon;
+        Microsoft.System.DispatcherQueue DispatcherQueue{ get; };
+    };
+
+```
+
+## IWindowNative (COM) interface
+
+```cs
+[
+    object,
+    uuid( EECDBF0E-BAE9-4CB6-A68E-9598E1CB57BB ),
+    local,
+    pointer_default(unique)
+]
+interface IWindowNative: IUnknown
+{
+    [propget] HRESULT WindowHandle([out, retval] HWND* hWnd);
+};
+```
+
+## Application class
+Microsoft.UI.Xaml namespace
+
+```cs
+    [webhosthidden]
+    unsealed runtimeclass Application
+    {
+        ...
+
+        // This matches Windows.UI.Xaml.Application except for the new event args type
+        overridable void OnLaunched(XamlLaunchActivatedEventArgs args);
+    };
+```
+
+
+## Event args
+
+```cs
+[webhosthidden]
+runtimeclass XamlLaunchActivatedEventArgs
+{
+    String Arguments{ get; };
+    Windows.ApplicationModel.Activation.LaunchActivatedEventArgs UWPLaunchActivatedEventArgs{ get; };
+};
+```
+
+# Appendix
+
+Changes in this spec from Preview2:
+* Rename LaunchActivatedEventArgs to XamlLaunchActivatedEventArgs
+* New Icon property
 
