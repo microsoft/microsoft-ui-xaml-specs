@@ -349,7 +349,8 @@ protected override void OnLaunched(MUX.LaunchActivatedEventArgs e)
      if(e.Arguments != null)
      {
         string[] arguments = e.Arguments.Split(' ');
-        window.FileName = arguments[0]
+	// Assuming MainWindow' has a public property called FileName 
+        window.FileName = arguments[0];
      }	
 
      window.Activate();
@@ -366,7 +367,8 @@ protected override void OnLaunched(LaunchActivatedEventArgs e)
      if(e.Arguments != null)
      {
         string[] arguments = e.Arguments.Split(' ');
-        page.FileName = arguments[0]
+	// Assuming MainWindow' has a public property called FileName 
+        page.FileName = arguments[0];
      }	
 
     Window.Current.Content = page;
