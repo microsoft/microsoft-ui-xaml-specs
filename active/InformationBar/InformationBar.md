@@ -53,7 +53,7 @@ For more info about choosing the right notification control, see the [Dialogs an
 
 An information bar can have several configurations, here are some notable ones.
 
-When an information bar is conveying information of a common severity, like displaying an error or warning, a notification can be set to have one of many NotificationTypes to use consistent Fluent styling for it's identifiers.
+When an InfoBar is conveying information of a common severity, like displaying an error or warning, it can be set to have one of many severity levels to use consistent Fluent styling for it's identifiers.
 ![A mockup of an InfoBar in a Warning state with a close button and a message](images/Warning_NoButton.png)
 
 If a call to action is needed, an information bar can have customizable action or hyperlink buttons.
@@ -98,7 +98,7 @@ Here is the visual representation of the information bar in the page.
 
 ![A mockup of an InfoBar in a Warning state with a close button and a message](images/Warning_NoButton.png)
 
-## Notification types: consistent styling
+## Using pre-defined severity levels
 The type of the information bar can be set via the Severity property to automatically set a consistent status color, icon, and assistive technology settings dependent on the criticality of the notification.
 
 Mockups in various Severities to be added.
@@ -125,11 +125,11 @@ XAML
 ![Mockup of an InfoBar in a Critical state with no close button](images/Critical_IconNoClose.png)
 
 ## Custom styling: status color and icon
-Outside of the pre-defined notification types, the StatusColor and IconSource properties can be set to customize the styling. 
+Outside of the pre-defined severity levels, the StatusColor and IconSource properties can be set to customize the icon and background color. The info bar will retain the assistive technology settings of the severity defined, or default if none was defined.
 
-A custom background color can be set via the StatusColor property and will override the color set by a Severity if it is defined. Please keep in mind content readability and accessibility when setting your own color.
+A custom background color can be set via the StatusColor property and will override the color set by Severity. Please keep in mind content readability and accessibility when setting your own color.
 
-Alongside color, a custom icon can appear left of the Title and Message in the InfoBar. If a default styling is chosen, most styles have an associated icon already defined. This icon can be removed or added as a custom icon using the IconSource property. Recommended icon sizes include (TBD)px.
+Alongside color, a custom icon can appear left of the Title and Message in the InfoBar. If a default styling is chosen, most styles have an associated icon already defined. This icon can be removed or added as a custom icon using the IconSource property. The recommended icon size is 20px.
 
 XAML
 ```xml
@@ -151,23 +151,19 @@ XAML
 ## Add buttons
 By default, an 'X' close button will appear as the right most component in the bar.
 
-An additional action button can be added by setting the ActionButtonContent and ActionButtonCommand properties. There is also built-in support for a single hyperlink button to ensure text contrast remains accessible with the various background colors. We recommend that only a single action button or hyperlink button is set. Additional action buttons and hyperlinks can be added via custom content.
+An additional action button can be added by setting the ActionButtonContent and ActionButtonCommand properties. There is also built-in support for a single hyperlink button to ensure text contrast remains accessible with the various background colors. We recommend that only a single action button or hyperlink button is set. Outside of these, additional action buttons and hyperlinks can be added via custom content.
 
 XAML
 ```xml
-<Grid>
-    <!--Other UI content -->
-    <StackPanel x:Name="ContentArea">
-        <controls:InfoBar x:Name="UnsuccessfulSaveNotification"
-            Severity="Warning"
-            Title="Error while saving"
-            Message="Your document was unable to be saved."
-            ActionButtonContent="Try again"
-            ActionButtonCommand="SaveDocuments">
-        </controls:InfoBar>
-    </StackPanel>
-    <!--Other UI content -->
-<Grid>
+<StackPanel x:Name="ContentArea">
+    <controls:InfoBar x:Name="UnsuccessfulSaveNotification"
+        Severity="Warning"
+        Title="Error while saving"
+        Message="Your document was unable to be saved."
+        ActionButtonContent="Try again"
+        ActionButtonCommand="SaveDocuments">
+    </controls:InfoBar>
+</StackPanel>
 ```
 
 ![A mockup of an InfoBar with a single line message and an action button](images/Warning_Button.png)
@@ -190,7 +186,7 @@ XAML
 ![A mockup of an InfoBar with a message expanding multiple lines and a hyperlink](images/Docked_MultiLineIconTitleHyperlink.png)
 
 ## Custom content
-Content can be added to an InfoBar using the Content property. If there is more content to show than what the size of an InfoBar will allow, a scrollbar will be automatically enabled to allow a user to scroll the content area.
+Content can be added to an InfoBar using the Content property. It will appear below the message and above the action or hyperlink buttons if defined. The InfoBar will expand to fit the content defined.
 
 XAML
 ```xml
@@ -209,8 +205,7 @@ XAML
 Mockup with custom content to be added.
 
 ## Content wrapping
-By default, the text set in the Message property will wrap vertically in the control underneath the other visual components. 
-If the height of the InfoBar is explicitly set, a scroll bar will be added for users to view the content.
+By default, the text set in the Message property will wrap vertically in the control underneath the other visual components.
 
 XAML
 ```xml
@@ -244,8 +239,11 @@ C#
 ```C#
 public void InfoBar_Closing(InfoBar sender, InfoBarClosingEventArgs args)
 {
-    // if scenario failed
-    args.Cancel = true;
+    if (args.Reason == InfoBarCloseReason.CloseButton) {
+        // if scenario failed
+        args.Cancel = true;
+    }
+    
 }
 ```
 
@@ -253,9 +251,7 @@ public void InfoBar_Closing(InfoBar sender, InfoBarClosingEventArgs args)
 
 ## UI Automation Patterns 
 
-InfoBar will be Pane for inline notifications with IScrollProvider for the (conditionally) scrollable content area within the notification. 
-
-InfoBar will implement a custom "information" Landmark.
+InfoBar will use a Pane for inline notifications and will implement a custom "information" Landmark.
 
 ### Keyboard Navigation 
 
@@ -365,7 +361,7 @@ Recommended patterns for informational notifications where the user needs to vie
 
 | Name | Description |
 |:-:|:--|
-| Severity | Gets or sets a value that indicates the  color and icon to style the InfoBar |
+| Severity | Gets or sets a value that indicates the  color and icon to style the InfoBar. It will also define the assistive technology settings. |
 | ShowCloseButton| Gets or sets a boolean that indicates whether a close button will appear
 
 
@@ -397,7 +393,7 @@ enum InfoBarCloseReason
     Programmatic,
 };
 
-enum NotificationType
+enum InfoBarSeverity
 {
     Default,
     Warning,
@@ -454,7 +450,7 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
     Windows.Ui.Xaml.Controls.HyperlinkButton HyperlinkButtonContent;
     Windows.UI.Xaml.Style HyperlinkButtonStyle;
 
-    NotificationType Severity;
+    InfoBarSeverity Severity;
     Color StatusColor;
     IconSource IconSource;
 
@@ -482,7 +478,7 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
     static Windows.UI.Xaml.DependencyProperty HyperlinkButtonContentProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty HyperlinkButtonStyleProperty{ get; };
 
-    static Windows.UI.Xaml.DependencyProperty NotificationTypeProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty InfoBarSeverityProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty StatusColorProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty IconSourceProperty{ get; };
 
