@@ -12,7 +12,7 @@ The absence of a standard WinUI pager control, last seen in Xaml as DataPager in
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
 
-A pager control is a UI component that can be added to different layout views (ListView, GridView, ItemsRepeater, or DataGrid) to provide a standard UI interaction for pagination.
+A pager control is a UI component that can be added to your UI to provide a standard interaction for pagination with a layout view (ListView, GridView, ItemsRepeater, DataGrid, etc.) 
 
 **Important APIs:** [PagerControl class](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.pagercontrol)
 
@@ -34,10 +34,10 @@ For more info about choosing the right display mode, see the pager control guida
 Use a **PagerControl** to create a navigation interface for an end user to page through content instead of scrolling or panning through the content in a single view. Scrolling through all content in a single view can make it harder for the end user to find specific information and it can lead to performance issues if the view needs to constantly update with new data. **PagerControl** can be used as an alternate solution so the user can consume a subset of the content without needing to scroll. They can then page through the rest of the content to find what they are looking for. 
 
 ## Examples
-The pager control has three different display modes and each display mode has configurable components within them. The examples below show the default configurations for each mode.
+The pager control has three different display modes and each display mode has configurable components within them. The examples below show the default configurations for each mode. 
 
 ### ComboBox Display Mode
-This is the mode that is selected by default. The Prefix and Suffix properties are specific to the combo box and number box modes. They will be ignored if the button panel mode is chosen as the display. 
+The Prefix and Suffix properties are specific to the combo box and number box modes. They will be ignored if the button panel mode is chosen as the display. 
 
 ![](images/pager-control-combobox.png)
 
@@ -113,6 +113,8 @@ XAML
 </Grid>
 ```
 
+You can choose to customize the look of the pager control by hiding or showing the first, previous, next, and last buttons and changing the prefix and suffix text i nthe combo box and number box modes. 
+
 ## Adding a PagerControl to Your Application
 
 Here is an example of how to add the PagerControl to your application. It can be added on the page as shown below, or can be used in the template of the layout view you prefer to use. PagerControl is added to the template for DataGrid and ItemsRepeater in WinUI 2.x and will be added to ListView and GridView in WinUI 3. 
@@ -171,6 +173,7 @@ enum PagerButtonVisibilityBehavior
 runtimeclass PagerControlPageChangedEventArgs
 {
     Integer CurrentPage{get; };
+    Integer PreviousPage{get; };
 }
 
 runtimeclass PagerControl
@@ -248,7 +251,7 @@ runtimeclass PagerControl
 that isn't necessary to understand the purpose and usage of the API.
 For example, implementation details. -->
 
-Here are some end user stories for why a developer would want to choose one display mode over the others: 
+Here are some end user scenarios for why a developer would want to choose one display mode over the others: 
 
 Button Panel
 * Max wants to search a clothing store's inventory to find a new pair of blue tennis shoes. He searches for blue tennis shoes on the site and is presented with the list of search results. He then scans through the images and descriptions on the first page and does not find anything he likes. He then navigates to the next page and continues searching until he finds the blue tennis shoes he is looking for. 
@@ -262,6 +265,8 @@ Any Display Mode
 ## Accessibility
 
 ### UI Automation Patterns 
+* ComboBox and NumberBox will use the control patterns already assigned to them. The pager control will use the selection provider pattern and the individual buttons will use selection item provider. 
+* Reasoning: I did not choose the invoke control pattern because the documentation says that an element can disappear from the automation tree immediately upon being invoked. I don’t want this to happen because once the end user selects a button, an event needs to be fired to notify which page needs to be displayed. 
 
 ### Keyboarding
 * Pager Control should be added as a navigation landmark. 
@@ -276,6 +281,16 @@ Any Display Mode
 * When the focus is on a number button, narrator will announce "page x of y". 
 * Combo box and number box modes will use the default narrator announcements for combo box and number box when the user puts focus on them. 
 * When the user enters a value in to the number box, narrator will announce the number entered. 
+
+### GamePad 
+* Pager Control will not have engagement. The internal components (ComboBox and NumberBox) will keep their current engagement and accessibility features for game pad. 
+* The user can use the right and left arrow keys to navigate between the buttons and use the A button to select an item. 
+* Guidance will be added for app developers that are targeting Xbox applications to not place items to the left or right of the pager control. 
+        * Text added to guidance: “If you are developing an application that will target Xbox, we recommend not placing any UI elements to the left or right of the pager control so the end user does not have to navigate through the pager control in order to reach the next UI element.” 
+
+### Localization
+* The numbers will follow standard behavior when localized to/from a language that uses a numeral system that differs from Western Arabic. 
+* The prefix and suffix text will follow standard mirroring behavior when localized to/from languages that are RTL or LTR. 
 
 ## Data and Intellegence Metrics 
 
@@ -295,8 +310,8 @@ How often are developers using this control with an indefinite number of pages?
 
 
 ## Open Questions 
-* I need help understanding how to choose what automation control type could be used for a control like this. Can it be a combination of control types?
 * It would be cool to measure which layout view is most commonly used with the pager control, is that possible to measure using telemetry?
-
+* Is there a shortcut we can add to make it easier to move to the next and previous page? Maybe utilize the left and right bumper?
+* How does narrator handle localization? In the “page x of y” scenario how would that work if we switch from LTR to RTL?
 
 
