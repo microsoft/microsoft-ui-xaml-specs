@@ -11,10 +11,12 @@ Due to their visual layouts, inherent intrusiveness, or available features they 
 
 # Description
 
-An InfoBar is a persistent, actionable, app-wide notification intended for displaying critical or informational status messages that impact app perception or user experience.
+An InfoBar is a persistent, actionable, app-wide notification intended for displaying critical and/or actionable information that impact app perception or user experience.
 
 ## Is this the right control?
 Use an InfoBar control when a user needs to be informed of, acknowledge, or take action on a message. By default the notification will remain in the content area until dismissed by the user but will not necessarily break user flow.
+
+An InfoBar will take up space in your layout and behave like any other child elements. It will not cover up other content or float on top of it.
 
 Do not use an InfoBar control to confirm or respond directly to a user action, for transient alerts, or for non-essential messages.
 
@@ -43,7 +45,7 @@ There are some scenarios where a Content Dialog, Flyout, or Teaching Tip may be 
 - For scenarios where a persistent notification is not needed, i.e. displaying information in context of a specific UI element, a [Flyout](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/flyouts) is a better option. 
 - For scenarios where the application is confirming a user action, showing information the user ***must*** read, use a [Content Dialog](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/dialogs).
   - Additionally, if a status change to the app is so severe that it needs to block all further ability for the user to interact with the app, use a Content Dialog.
-- For scenarios where the application is informing the user of a new feature or walking through its use, a [Teaching Tip](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/teaching-tip) is a better option.
+- For scenarios where a notification is a transient teaching moment, a [Teaching Tip](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/teaching-tip) is a better option.
 
 For more info about choosing the right notification control, see the [Dialogs and Flyouts](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/) article.
 
@@ -52,17 +54,13 @@ For more info about choosing the right notification control, see the [Dialogs an
 An information bar can have several configurations, here are some notable ones.
 
 When an information bar is conveying information of a common severity, like displaying an error or warning, a notification can be set to have one of many NotificationTypes to use consistent Fluent styling for it's identifiers.
-![Sketch of an InfoBar in a Warning state with a close button and message](images/Warning_DefaultClose.jpg)
-![Mockup of an InfoBar with an icon, title, and message on one line](images/Docked_SingleLineIconTitle.png)
+![A mockup of an InfoBar in a Warning state with a close button and a message](images/Warning_NoButton.png)
 
 If a call to action is needed, an information bar can have customizable action or hyperlink buttons.
-![A mockup of an InfoBar with a single line message and an action button](images/Docked_SingleLineIconTitleButton.png)
+![A mockup of an InfoBar](images/Default_MessageHyperlink.png)
 
 The information bar can also be customized with its optional properties and with XAML Content to include extra buttons and other UI elements.
-![Sketch of an InfoBar in a default state with a close button, message, and hyperlink](images/Information_CustomContent.jpg)
-![Mockup of an InfoBar with a multiline message and no title](images/Docked_MultiLineNoTitle.png)
-
-Mockup with custom XAML content to be added.
+![A mockup of an InfoBar with custom status color and content](images/Custom_IconColor.png)
 
 ## Create an InfoBar
 
@@ -70,15 +68,18 @@ The XAML below describes an inline InfoBar with the default styling for an error
 
 XAML
 ```xml
-<StackPanel x:Name="ContentArea" Content="Document">
-    <controls:InfoBar x:Name="UnsuccessfulSaveNotification"
-        Severity="Warning"
-        Title="Error while saving"
-        Message="Your document was unable to be saved.">
-    </controls:InfoBar>
-</StackPanel>
+<Grid>
+    <!--Other UI content -->
+    <StackPanel x:Name="ContentArea">
+        <controls:InfoBar x:Name="UnsuccessfulSaveNotification"
+            Severity="Warning"
+            Title="Error while saving"
+            Message="Your document was unable to be saved.">
+        </controls:InfoBar>
+    </StackPanel>
+    <!--Other UI content -->
+<Grid>
 ```
-
 C#
 ```C#
 public MainPage()
@@ -95,8 +96,7 @@ public MainPage()
 
 Here is the visual representation of the information bar in the page.
 
-![A sketch of an InfoBar in a Warning state with a close button and a message](images/Warning_DefaultClose.jpg)
-![Mockup of an InfoBar with an icon, title, and message on one line](images/Docked_SingleLineIconTitle.png)
+![A mockup of an InfoBar in a Warning state with a close button and a message](images/Warning_NoButton.png)
 
 ## Notification types: consistent styling
 The type of the information bar can be set via the Severity property to automatically set a consistent status color, icon, and assistive technology settings dependent on the criticality of the notification.
@@ -107,23 +107,22 @@ Mockups in various Severities to be added.
 ![Mockup of InfoBar with no content in different Severity colors and icons for dark mode](images/Docked_ToolkitSeverityDark.png)
 
 ## Programmatic dismiss in info bar
-An info bar can be dismissed by the user via the close button or programmatically. If the notification is required to be in view until the status is resolved and you would like to remove the close button from view, you can set the IsCloseButtonVisible property to false.
-By default, the close button will appear as an 'X' and the IsCloseButtonVisible property is therefore set to true.
+An info bar can be dismissed by the user via the close button or programmatically. If the notification is required to be in view until the status is resolved and you would like to remove the close button from view, you can set the ShowCloseButton property to false.
+By default, the close button will appear as an 'X' and the ShowCloseButton property is therefore set to true.
 
 
 XAML
 ```xml
-<StackPanel x:Name="ContentArea" Content="Document">
-    <controls:InfoBar x:Name="UnsuccessfulSaveNotification"
-        Severity="Warning"
-        Title="Error while saving"
-        Message="Your document was unable to be saved."
-        IsCloseButtonVisible="False">
+<StackPanel x:Name="ContentArea">
+    <controls:InfoBar x:Name="NoInternetNotification"
+        Severity="Critical"
+        Title="No Internet"
+        Message="Reconnect to continue working."
+        ShowCloseButton="False">
     </controls:InfoBar>
 </StackPanel>
 ```
-![Sketch of an InfoBar in a Warning state with no close button](images/Warning_ProgrammaticClose.jpg)
-Mockup with no close button to be added.
+![Mockup of an InfoBar in a Critical state with no close button](images/Critical_IconNoClose.png)
 
 ## Custom styling: status color and icon
 Outside of the pre-defined notification types, the StatusColor and IconSource properties can be set to customize the styling. 
@@ -134,24 +133,20 @@ Alongside color, a custom icon can appear left of the Title and Message in the I
 
 XAML
 ```xml
-<StackPanel x:Name="ContentArea" Content="Document">
-    <controls:InfoBar x:Name="ConnectionErrorNotification"
-        Title="No Internet"
-        Message="Reconnect to save your work.">
+<StackPanel x:Name="ContentArea">
+    <controls:InfoBar x:Name="NewPhotosNotification"
+        StatusColor="#7AC142"
+        Title="New Photos From Cloud"
+        Message="Sync your latest photos to the Cloud"
+        ActionButtonContent="Upload">
         <controls:InfoBar.IconSource>
-            <controls:SymbolIconSource Symbol="NetworkOffline" />
+            <SymbolIconSource Symbol="Camera" />
         </controls:InfoBar.IconSource>
-        <controls:InfoBar.StatusColor>
-            <Color x:Key="Maroon">#800000</Color>
-        </controls:InfoBar.StatusColor>
     </controls:InfoBar>
 </StackPanel>
 ```
 
-
-![A sketch of a sample application with an InfoBar in the top of the content area. The notification's title is "No Internet" and it's message is "Reconnect to save your work". It has a maroon accent color and a "Network Offline" icon.](images/Critical_Color.jpg)
-
-Mockup with custom background color and icon to be added.
+![A mockup of an InfoBar in the top of the content area. The notification's title is "New Photos From Cloud" and it's message is "Sync your latest photos to the Cloud". It has a bright green accent color and a "Camera" icon.](images/Custom_IconColor.png)
 
 ## Add buttons
 By default, an 'X' close button will appear as the right most component in the bar.
@@ -160,21 +155,26 @@ An additional action button can be added by setting the ActionButtonContent and 
 
 XAML
 ```xml
-<StackPanel x:Name="ContentArea" Content="Document">
-    <controls:InfoBar x:Name="ConnectionErrorNotification"
-        Title="Error while saving"
-        Message="Your document was unable to be saved."
-        ActionButtonContent="Button"
-        ActionButtonCommand="RedirectToNetworkSettings">
-    </controls:InfoBar>
-</StackPanel>
+<Grid>
+    <!--Other UI content -->
+    <StackPanel x:Name="ContentArea">
+        <controls:InfoBar x:Name="UnsuccessfulSaveNotification"
+            Severity="Warning"
+            Title="Error while saving"
+            Message="Your document was unable to be saved."
+            ActionButtonContent="Try again"
+            ActionButtonCommand="SaveDocuments">
+        </controls:InfoBar>
+    </StackPanel>
+    <!--Other UI content -->
+<Grid>
 ```
 
-![A mockup of an InfoBar with a single line message and an action button](images/Docked_SingleLineIconTitleButton.png)
+![A mockup of an InfoBar with a single line message and an action button](images/Warning_Button.png)
 
 XAML
 ```xml
-<StackPanel x:Name="ContentArea" Content="Document">
+<StackPanel x:Name="ContentArea">
     <controls:InfoBar x:Name="ConnectionErrorNotification"
         Title="Error while saving"
         Message="Lorem ipsum long message">
@@ -186,6 +186,7 @@ XAML
     </controls:InfoBar>
 </StackPanel>
 ```
+![A mockup of an InfoBar with a single line message and hyperlink](images/Default_MessageHyperlink.png)
 ![A mockup of an InfoBar with a message expanding multiple lines and a hyperlink](images/Docked_MultiLineIconTitleHyperlink.png)
 
 ## Custom content
@@ -193,15 +194,13 @@ Content can be added to an InfoBar using the Content property. If there is more 
 
 XAML
 ```xml
-<StackPanel x:Name="ContentArea" Content="Document">
-    <controls:InfoBar x:Name="RecentUpdateNotification"
-        Severity="Informational"
+<StackPanel x:Name="ContentArea">
+    <controls:InfoBar x:Name="TermsAndConditionsNotification"
         Title="Update Complete!"  
-            <TextBlock Text="You've been updated to the latest version &#8211;">
-                <Hyperlink
-                    Content="Notes"
-                    NavigateUri="https://www.microsoft.com/app/releasenotes" />
-            </TextBlock>
+        Message="Before you can proceed you must read and accept the new Terms and Conditions.">
+        <controls:InfoBar.HyperlinkButtonContent>
+            <HyperlinkButton Content="Read here" NavigateUri="www.microsoft.com"/>
+        </controls:InfoBar.HyperlinkButtonContent>
     </controls:InfoBar>
 </StackPanel>
 ```
@@ -215,7 +214,7 @@ If the height of the InfoBar is explicitly set, a scroll bar will be added for u
 
 XAML
 ```xml
-<StackPanel x:Name="ContentArea" Content="Document">
+<StackPanel x:Name="ContentArea">
     <controls:InfoBar x:Name="DefaultCriticalNotification"
         Severity="Error"
         Title="Message Title"  
@@ -238,7 +237,7 @@ XAML
 <controls:InfoBar x:Name="UpdateAvailable"
     Title="Update Available"
     Message="Please close this tip to apply required security updates to this application"
-    Closing="InfoBar_Closing>
+    Closing="InfoBar_Closing">
 </controls:InfoBar>
 ```
 C#
@@ -313,7 +312,7 @@ If the notification appears or disappears rapidly, especially in succession, the
 ## Color and Icon
 When customizing the color and icon outside of the preset Severity levels, keep in mind user expectations for the connotations from the set of standard icons and colors.
 
-Additionally, the preset Severity colors have already been designed for theme changes, high-contrast mode, color confusion accessibility, and contrast with foreground colors. We recommend to use these colors when possible and to include custom logic in your application to adapt to the various color states and accessibility.
+Additionally, the preset Severity colors have already been designed for theme changes, high-contrast mode, color confusion accessibility, and contrast with foreground colors. We recommend to use these colors when possible and to include custom logic in your application to adapt to the various color states and accessibility features.
 
 Please view the UX guidance for [Standard Icons](https://docs.microsoft.com/en-us/windows/win32/uxguide/vis-std-icons) and [Color](https://docs.microsoft.com/en-us/windows/win32/uxguide/vis-color) to ensure your message is communicated clearly and accessible to users.
 
@@ -323,8 +322,8 @@ Please view the UX guidance for [Standard Icons](https://docs.microsoft.com/en-u
  The accompanying information should aim to communicate the following to use that Severity.
  - Error: An error or problem that has occurred.
  - Warning: A condition that might cause a problem in the future.
- - Success: A long-running and/or background task has completed
- - Default: Useful information.
+ - Success: A long-running and/or background task has completed.
+ - Default: General information that requires the user's attention.
 
 Icons and color should not be the only UI components signifying meaning for your notification. Text in the notification's Title and/or Message should be included to display information.
 
@@ -367,7 +366,7 @@ Recommended patterns for informational notifications where the user needs to vie
 | Name | Description |
 |:-:|:--|
 | Severity | Gets or sets a value that indicates the  color and icon to style the InfoBar |
-| IsCloseButtonVisible| Gets or sets a boolean that indicates whether a close button will appear
+| ShowCloseButton| Gets or sets a boolean that indicates whether a close button will appear
 
 
 ### Events  
@@ -422,20 +421,14 @@ runtimeclass CloseButtonClickEventArgs
     Boolean IsHandled;
 }
 
-// will edit post prototype implementation
+// will edit/add to post prototype implementation
 unsealed runtimeclass InfoBarTemplateSettings : Windows.UI.Xaml.DependencyObject
 {
     InfoBarTemplateSettings();
 
-    Windows.UI.Xaml.Thickness TopRightHighlightMargin;
-    Windows.UI.Xaml.Thickness TopLeftHighlightMargin;
-
     Windows.UI.Xaml.Controls.IconElement IconElement;
-
     TBD ActualStatusColor; 
 
-    static Windows.UI.Xaml.DependencyProperty TopRightHighlightMarginProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty TopLeftHighlightMarginProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty IconElementProperty{ get; };
     static TBD ActualStatusColor;
 }
@@ -448,7 +441,6 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
     String Message;
 
     Boolean IsOpen;
-    Boolean IsCloseButtonVisible;
     Boolean ShowCloseButton;
 
     Object ActionButtonContent;
