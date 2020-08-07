@@ -132,8 +132,10 @@ protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs e)
    m_window = new MainWindow();
    m_window.Activate();
    
-   //Get the HWND of the Window
-   IntPtr HWND = ((IWindowNative)(object)m_window).WindowHandle;
+   // AS is an extension method in the WinRT.CastExtensions class. 
+   // The WinRT namespace is needed to use the extension method.
+   var windowNative = m_window.As<IWindowNative>();
+   IntPtr HWND = windowNative.WindowHandle;
    ...
 }
 
