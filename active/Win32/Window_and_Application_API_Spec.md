@@ -4,7 +4,7 @@ This spec describes updates to the XAML Window and Application APIs to enable th
 
 # Background
 
-Xaml in UWP has a [Window](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Window) class which wraps a [CoreWindow](https://docs.microsoft.com/uwp/api/Windows.UI.Core.CoreWindow), and an [Application](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Application) class which wraps a [CoreApplication](https://docs.microsoft.com/uwp/api/Windows.ApplicationModel.Core.CoreApplication). For WinUI 3 this is being expanded to not require a CoreWindow or CoreApplication; Window can use an hwnd and Application can run a message pump. This spec has the API additions to Application and Window to support this.
+XAML in UWP has a [Window](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Window) class which wraps a [CoreWindow](https://docs.microsoft.com/uwp/api/Windows.UI.Core.CoreWindow), and an [Application](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Application) class which wraps a [CoreApplication](https://docs.microsoft.com/uwp/api/Windows.ApplicationModel.Core.CoreApplication). For WinUI 3 this is being expanded to not require a CoreWindow or CoreApplication; Window can use an HWND and Application can run a message pump. This spec has the API additions to Application and Window to support this.
 
 Note that some existing APIs will also behave differently when running as a Desktop app. For example, the static Window.Current property today returns the Window for the current (calling) thread, but in a non-UWP app it will return null. Similarly the Window.CoreWindow property will be null when not running as UWP.
 
@@ -120,33 +120,31 @@ Attempting to activate (`new`) a new Window in a UWP app will fail and log a deb
 
 > Implementation note: This will use [RoOriginateError](https://docs.microsoft.com/en-us/windows/win32/api/roerrorapi/nf-roerrorapi-rooriginateerror) to show an explanatory message in the debugger.
 
-Creating a new Window in a Desktop app creates a new top level hwnd.
+Creating a new Window in a Desktop app creates a new top level HWND.
 
 ## IWindowNative Interface **[NEW]**
 
-This interface is implemented by Window, and in a Desktop app can be used to get the Window's underlying hwnd.
-
-> Issue: need sample here
-
-## Window.Icon property **[NEW]**
-Gets or sets a window's icon. For each window, this icon is used in its title bar, its task bar button, and in its ALT+TAB application selection list entry.
-
-> Note: this property is ignored in a UWP app
+This interface is implemented by Window, and in a Desktop app can be used to get the Window's underlying HWND.
 
 ```CS
-public ImageSource Icon { get; set; }
+protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs e)
+{
+   m_window = new MainWindow();
+   m_window.Activate();
+   
+   //Get the HWND of the Window
+   IntPtr HWND = ((IWindowNative)(object)m_window).WindowHandle;
+   ...
+}
+
+[ComImport]
+[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+[Guid("EECDBF0E-BAE9-4CB6-A68E-9598E1CB57BB")]
+internal interface IWindowNative
+{
+   IntPtr WindowHandle { get; }
+}
 ```
-
-```XML
-<Window
-  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  x:Class="Sample.MainWindow"
-  Icon="WinUI3Icon.ico">
-</Window>
-```
-
-
 
 ## Window.Title property **[NEW]**
 Get or set a string to display on the Title. 
@@ -235,7 +233,7 @@ Namespace: Microsoft.UI.Xaml
 
 > Issue: should rename these to avoid collision.
 
-> Spec note: this is a new Xaml version of the existing Windows.UI.Core.[WindowActivatedEventArgs](https://docs.microsoft.com/uwp/api/Windows.UI.Core.WindowActivatedEventArgs).
+> Spec note: this is a new XAML version of the existing Windows.UI.Core.[WindowActivatedEventArgs](https://docs.microsoft.com/uwp/api/Windows.UI.Core.WindowActivatedEventArgs).
 
 Contains the windows activation state information returned by the Window.Activated event.
 
@@ -281,7 +279,7 @@ public class VisibilityChangedEventArgs
 ## WindowSizeChangedEventArgs class
 Namespace: Microsoft.UI.Xaml
 
-> Spec note: this is a new Xaml version of the existing Windows.UI.Core.[WindowSizeChangedEventArgs](https://docs.microsoft.com/uwp/api/Windows.UI.Core.WindowSizeChangedEventArgs).
+> Spec note: this is a new XAML version of the existing Windows.UI.Core.[WindowSizeChangedEventArgs](https://docs.microsoft.com/uwp/api/Windows.UI.Core.WindowSizeChangedEventArgs).
 
 Contains the argument returned by a window size change event.
 
@@ -404,7 +402,7 @@ Namespace: Microsoft.UI.Xaml.Application
 
 Provides event information when an app is launched.
 
-> Spec note: this is a new Xaml version of the existing Windows.ApplicationModel.Activation.[LaunchActivatedEventArgs](https://docs.microsoft.com/uwp/api/Windows.ApplicationModel.Activation.LaunchActivatedEventArgs).
+> Spec note: this is a new XAML version of the existing Windows.ApplicationModel.Activation.[LaunchActivatedEventArgs](https://docs.microsoft.com/uwp/api/Windows.ApplicationModel.Activation.LaunchActivatedEventArgs).
 
 ### Properties
 
