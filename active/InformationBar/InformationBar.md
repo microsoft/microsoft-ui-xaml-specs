@@ -64,7 +64,9 @@ The information bar can also be customized with its optional properties and with
 
 ## Create an InfoBar
 
-The XAML below describes an inline InfoBar with the default styling for an error  notification. An information bar can be created anywhere in the element tree or code behind. In this example, the notification is located in a ResourceDictionary, expanding to fill the width of the stack panel.
+The XAML below describes an inline InfoBar with the default styling for an error  notification. An information bar can be created anywhere in the element tree or code behind. In this example the InfoBar expands to fill the width of the StackPanel layout control it resides in.
+
+By default, the InfoBar will not be visible. Set the IsOpen property to true in the XAML or code behind to display the information.
 
 XAML
 ```xml
@@ -107,8 +109,8 @@ Mockups in various Severities to be added.
 ![Mockup of InfoBar with no content in different Severity colors and icons for dark mode](images/Docked_ToolkitSeverityDark.png)
 
 ## Programmatic dismiss in info bar
-An info bar can be dismissed by the user via the close button or programmatically. If the notification is required to be in view until the status is resolved and you would like to remove the close button from view, you can set the ShowCloseButton property to false.
-By default, the close button will appear as an 'X' and the ShowCloseButton property is therefore set to true.
+An info bar can be dismissed by the user via the close button or programmatically. If the notification is required to be in view until the status is resolved and you would like to remove the close button from view, you can set the IsCloseButtonVisible property to false.
+By default, the close button will appear as an 'X' and the IsCloseButtonVisible property is therefore set to true.
 
 
 XAML
@@ -118,27 +120,29 @@ XAML
         Severity="Critical"
         Title="No Internet"
         Message="Reconnect to continue working."
-        ShowCloseButton="False">
+        IsCloseButtonVisible="False">
     </controls:InfoBar>
 </StackPanel>
 ```
 ![Mockup of an InfoBar in a Critical state with no close button](images/Critical_IconNoClose.png)
 
 ## Custom styling: status color and icon
-Outside of the pre-defined severity levels, the StatusColor and IconSource properties can be set to customize the icon and background color. The info bar will retain the assistive technology settings of the severity defined, or default if none was defined.
+Outside of the pre-defined severity levels, the Background and IconSource properties can be set to customize the icon and background color. The info bar will retain the assistive technology settings of the severity defined, or default if none was defined.
 
-A custom background color can be set via the StatusColor property and will override the color set by Severity. Please keep in mind content readability and accessibility when setting your own color.
+A custom background color can be set via the standard Background property and will override the color set by Severity. Please keep in mind content readability and accessibility when setting your own color.
 
-Alongside color, a custom icon can appear left of the Title and Message in the InfoBar. If a default styling is chosen, most styles have an associated icon already defined. This icon can be removed or added as a custom icon using the IconSource property. The recommended icon size is 20px.
+A custom icon can be set via the IconSource property left of the Title and Message in the InfoBar. By default, an icon will be visible. This icon can be removed by setting the IsIconVisible property to false. For custom icons, the recommended icon size is 20px.
 
 XAML
 ```xml
 <StackPanel x:Name="ContentArea">
     <controls:InfoBar x:Name="NewPhotosNotification"
-        StatusColor="#7AC142"
         Title="New Photos From Cloud"
         Message="Sync your latest photos to the Cloud"
         ActionButtonContent="Upload">
+        <controls:InfoBar.Background>
+            <SolidColorBrush Color="#FF557EB9"/>
+        </controls:InfoBar.Background>
         <controls:InfoBar.IconSource>
             <SymbolIconSource Symbol="Camera" />
         </controls:InfoBar.IconSource>
@@ -257,10 +261,10 @@ InfoBar will use a Pane for inline notifications and will implement a custom "in
 
 | State | Action |
 |:---|:---|
-| Notification appears | No action is needed invoke the notification. <br><br> Enter: If notification is docked, InfoBar can receive focus with enter. |
-| Notification receives focus | Tab: <br> If Narrator is active, InfoBar will automatically be added to the top of Narrator navigation stops thanks to its UI Automation Pattern(s), similar to popups or ContentDialog, and can be accessed via tabbing. <br><br> Enter: <br> If Narrator is not active, pressing enter will focus in and out of the InfoBar after navigating to it via tabbing.|
-| Notification is tabbed through | Tab Button: <br> Will go through all actionable items, regardless of group, in order. When tab is pressed on the last element in the notification, focus will cycle to the first element in the notification.  <br> <br> Left + Right Arrow Keys: <br> Can be used to navigate between the footer Action and Close buttons if both are present. <br><br> Escape: <br> Will not close the InfoBar and will instead bubble up to the parent components. |
-| Notification is dismissed | 1. X Button is pressed. <br> 2. Action Button is pressed. <br><br> * Tab increments focus to the next element but does not close the notification. |
+| Notification appears | No action is needed invoke the notification. |
+| Notification receives focus | Tab: <br> If Narrator is active and is an Error or Warning severity, InfoBar will automatically be added to the top of Narrator navigation stops and can be accessed via tabbing. <br><br> Enter: <br> If Narrator is not active or the InfoBar is less urgent, pressing enter will focus in and out of the InfoBar after navigating to it via tabbing.|
+| Notification is tabbed through | Tab Button: <br> Will go through all actionable items in order. When tab is pressed on the last element in the InfoBar, focus will cycle to the first element in the bar.  <br> <br> Left + Right Arrow Keys: <br> Can be used to navigate between the Action and Close buttons if both are present. <br><br> Escape: <br> Will not close the InfoBar and will instead bubble up the command to the parent components. |
+| Notification is dismissed | 1. X Button is pressed. <br> 2. Action Button is pressed. <br><br> -Tab increments focus to the next element but does not close the notification. |
 
 ### Assistive Technologies
 
@@ -361,8 +365,9 @@ Recommended patterns for informational notifications where the user needs to vie
 
 | Name | Description |
 |:-:|:--|
+| IsOpen| Gets or sets a value that determines the visibility of the InfoBar. By default, is set to false. |
 | Severity | Gets or sets a value that indicates the  color and icon to style the InfoBar. It will also define the assistive technology settings. |
-| ShowCloseButton| Gets or sets a boolean that indicates whether a close button will appear
+| IsCloseButtonVisible| Gets or sets a boolean that indicates whether a close button will appear
 
 
 ### Events  
@@ -421,12 +426,6 @@ runtimeclass CloseButtonClickEventArgs
 unsealed runtimeclass InfoBarTemplateSettings : Windows.UI.Xaml.DependencyObject
 {
     InfoBarTemplateSettings();
-
-    Windows.UI.Xaml.Controls.IconElement IconElement;
-    TBD ActualStatusColor; 
-
-    static Windows.UI.Xaml.DependencyProperty IconElementProperty{ get; };
-    static TBD ActualStatusColor;
 }
 
 unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
@@ -437,7 +436,8 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
     String Message;
 
     Boolean IsOpen;
-    Boolean ShowCloseButton;
+    Boolean IsCloseButtonVisible;
+    Boolean IsIconVisible;
 
     Object ActionButtonContent;
     Windows.UI.Xaml.Style ActionButtonStyle;
@@ -448,10 +448,8 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
     Object CloseButtonCommandParameter;
 
     Windows.Ui.Xaml.Controls.HyperlinkButton HyperlinkButtonContent;
-    Windows.UI.Xaml.Style HyperlinkButtonStyle;
 
     InfoBarSeverity Severity;
-    Color StatusColor;
     IconSource IconSource;
 
     InfoBarTemplateSettings TemplateSettings{ get; };
@@ -463,6 +461,8 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
     event Windows.Foundation.TypedEventHandler<InfoBar, InfoBarClosedEventArgs> Closed;
 
     static Windows.UI.Xaml.DependencyProperty IsOpenProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty IsCloseButtonVisibleProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty IsIconVisibleProperty{ get; };
 
     static Windows.UI.Xaml.DependencyProperty TitleProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty MessageProperty{ get; };
@@ -476,10 +476,8 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
     static Windows.UI.Xaml.DependencyProperty CloseButtonCommandParameterProperty{ get; };
 
     static Windows.UI.Xaml.DependencyProperty HyperlinkButtonContentProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty HyperlinkButtonStyleProperty{ get; };
 
     static Windows.UI.Xaml.DependencyProperty InfoBarSeverityProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty StatusColorProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty IconSourceProperty{ get; };
 
     static Windows.UI.Xaml.DependencyProperty TemplateSettingsProperty{ get; };
@@ -511,7 +509,6 @@ UI Elements for InfoBar
 | Title | - Semi-bolded and appears left of the Icon <br> - Recommended to be 50 characters or less
 | Message | - Will appear to the right of the Title in single-height notifications, otherwise will be on a new line <br> - Recommended to be 512 characters or less
 | Hyperlink | - Will appear to the right of the Message in single-height notifications, otherwise will be on a new line <br> - TBD: Color of the hyperlink will adapt to user theme and Severity level of control.
-| StatusColor | - Defined by either the Severity or by setting a custom Color
 | Icon | - Defined by either the Severity or by IconSource <br>
 | Close button | - Will appear as 'X' by default <br> - Can be removed via IsProgrammaticDismissal
 | Action button | - Optional <br> - Additional action buttons may be added through custom XAML content
