@@ -79,6 +79,17 @@ foreach (Grid item in repeater.RealizedItems){
   repeater.ItemsSourceView[item_idx].IsRealized = true; 
 }
 
+/* Example 3: Find the item with the first visible index and change its color */
+
+int firstVisibleIndex = int.MaxValue;
+
+foreach (Grid item in repeater.VisbleItems){
+  int index = repeater.GetElementIndex(item);
+  firstVisibleIndex = Math.Min(index, firstVisibleIndex);
+}
+
+Grid firstVisibleItem = repeater.TryGetElement(firstVisibleIndex) as Grid;
+firstVisibleItem.Background = "Light Green";
 ```
 
 # API Notes
