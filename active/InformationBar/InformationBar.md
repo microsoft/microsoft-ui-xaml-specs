@@ -255,57 +255,56 @@ public void InfoBar_Closing(InfoBar sender, InfoBarClosingEventArgs args)
 
 ## UI Automation Patterns 
 
-InfoBar will use a Pane for inline notifications and will implement a custom "information" Landmark.
+InfoBar will use a Pane control pattern for inline notifications and will implement a custom "information" Landmark.
 
 ### Keyboard Navigation 
-
-| State | Action |
-|:---|:---|
-| Notification appears | No action is needed invoke the notification. |
-| Notification receives focus | Tab: <br> If Narrator is active and is an Error or Warning severity, InfoBar will automatically be added to the top of Narrator navigation stops and can be accessed via tabbing. <br><br> Enter: <br> If Narrator is not active or the InfoBar is less urgent, pressing enter will focus in and out of the InfoBar after navigating to it via tabbing.|
-| Notification is tabbed through | Tab Button: <br> Will go through all actionable items in order. When tab is pressed on the last element in the InfoBar, focus will cycle to the first element in the bar.  <br> <br> Left + Right Arrow Keys: <br> Can be used to navigate between the Action and Close buttons if both are present. <br><br> Escape: <br> Will not close the InfoBar and will instead bubble up the command to the parent components. |
-| Notification is dismissed | 1. X Button is pressed. <br> 2. Action Button is pressed. <br><br> -Tab increments focus to the next element but does not close the notification. |
-
-### Assistive Technologies
-
-InfoBar will leverage the existing APIs used by Windows Notifications. View [NotificationKind](https://docs.microsoft.com/en-us/windows/win32/api/uiautomationcore/ne-uiautomationcore-notificationkind) and [NotificationProcessing ](https://docs.microsoft.com/en-us/windows/win32/api/uiautomationcore/ne-uiautomationcore-notificationprocessing) docs for more information.
-
-The behavior of the InfoBar will change for assistive technologies like Narrator depending on the Severity set by the developer. As Error and Warning InfoBars are intended to be used for scenarios that directly impact app experience they should interrupt the user more than InfoBars that are informational.
-| Severity | NotificationKind | NotificationProcessing | Behavior |
-|:---|:---| :---| :---|
-| Error | NotificationKind_ItemAdded |NotificationProcessing_ImportantMostRecent| Narrator will say "Click Up to move to new information from" + App Name + Notification Contents |
-| Warning | NotificationKind_ItemAdded |NotificationProcessing_ImportantMostRecent| Narrator will say "Click Up to move to new information from" + App Name + Notification Contents |
-| Success | NotificationKind_ActionCompleted |NotificationProcessing_MostRecent| ???
-| Default | NotificationKind_ItemAdded |NotificationProcessing_CurrentThenMostRecent | ???
-
-#### Narrator
-| State | Action |
-|:---|:---|
-| Notification appears | Narrator will say "Click Up to move to new information from" + App Name + Notification Contents | 
-| Notification receives focus | Ctrl + Narrator + Up arrow: <br> Will move focus to notification and Narrator will read the element in focus. |
-| Notification is tabbed through | Tab Button: <br> Will navigate through all actionable items, regardless of group, in order. When tab is pressed on the last element in the notification, focus will cycle to the first element in the notification.  <br> <br> Swipe (for touch screen devices): <br> Will navigate through all actionable items, regardless of group, in order. When Swiping on the last element in the notification, focus will move to Narrator's fullscreen invisible Close Button and the user may double tap the screen to close the window. Swiping again will move focus out of the notification. <br><br> Left + Right Arrow Keys: <br> Can be used to navigate between the footer Action/Hyperlink and Close buttons if both are present. <br><br> Escape: <br> Will not close the InfoBar and will instead bubble up to the parent components. |
-| Notification is dismissed | 1. Header Close Button is invoked. <br> 2. Action Button is invoked. <br> 3. Swipe (for touch screen devices) moves focus to Narrator's fullscreen invisible Close Button and the user double taps the screen to close the window. * Tab increments focus to the next element but does not close the notification. |
+- No action is needed to invoke the InfoBar
+- After navigating to the control via tabbing, the user can focus into the InfoBar with the enter key
+- Once focused, tabbing will iterate through all actionable items in the control in order. When tab is pressed on the last element in the InfoBar, focus will cycle to the first element.
+  - A user can also use the left and right arrow keys to navigate between the available buttons
+- To close the InfoBar the action or close button needs to be pressed.
+  - Note: Escape will not close the InfoBar and will instead bubble up the command to the parent components. 
 
 ### Gamepad
 
-| State | Action |
-|:---|:---|
-| Notification appears | No action is needed invoke the notification. |
-| Notification receives focus | Spatial navigation: <br> Spatial navigation may be used to access the InfoBar. Guidance will be added to advise proper design consideration for InfoBar accessibility and testing for gamepad. |
-| Notification is navigated | Spatial navigation: <br> Will spatially navigate focus across actionable items (without respect to group).  <br> <br> A Button: <br> Will interact with the item in focus, such as "press" the action or close button. <br><br> B Button: <br> Will not close the InfoBar and will instead bubble up to the parent components. |
-| Notification is dismissed | 1. Header "X" Close Button is pressed. <br> 2. Action Button is pressed. <br> 3. B Button returns focus to the element previously in focus. |
+- After navigating to the control via spatial navigation, the user can focus into the InfoBar with the 'A' button
+- Once focused in the InfoBar control, spatial navigation will iterate focus across the actionable items.
+- The 'A' button will interact with the item in focus, such as "press" the action or close buttons
+- The InfoBar can be closed via pressing the 'X' close button, pressing the action button, or the 'B' button which will return focus to the element previously in focus or the InfoBar as a singular component. 
+### Assistive Technologies
+
+InfoBar will leverage the existing APIs used by Windows Notifications. 
+
+The behavior of the InfoBar will change for assistive technologies like Narrator depending on the Severity set by the developer. As Error and Warning InfoBars are intended to be used for scenarios that directly impact app experience they should interrupt the user more than InfoBars that are informational. View [NotificationProcessing ](https://docs.microsoft.com/en-us/windows/win32/api/uiautomationcore/ne-uiautomationcore-notificationprocessing) docs for more information on the varied intended behavior.
+
+| Severity |  NotificationProcessing | Behavior in Narrator|
+|:--- | :---| :---|
+| Error | NotificationProcessing_ImportantAll| Add new item to the end of the queue. It doesn’t matter the source, what is currently speaking or any other items in the queue queued with a higher priority than normal text. <br><br> This will cause it to get spoken after the current utterance/string finishes. Meaning it won't interrupt the speech but it will queue itself next to be spoken, ahead of anything already queued. <br><br> Focus and keyboard will NOT interrupt or flush, pressing control will silence and flush all |
+| Warning | NotificationProcessing_ImportantAll| See above |
+| Success | Processing_All| Add new item to the end of the queue. <br><br> Will be added to the end of the queue meaning all existing queued text will need to be spoken before this text will be spoken. <br><br>Focus, keyboard and control will silence/flush them all
+| Default | Processing_All | See above
+
+#### Narrator
+
+- Entry behavior for InfoBars based on Severity:
+  - Error and Warning: The most recently alerted InfoBar will take priority over other queued content and Narrator will say "Click up to move to new information from" + App Name + Notification Contents. 
+    - The InfoBar message will not be silenced via keyboarding or focus.
+  - Default and Success: The InfoBar will appear to the user after the current queued content is iterated through and Narrator will then say "Click up to move to new information from" + App Name + Notification Contents. 
+    - The InfoBar message can be easily silenced via keyboarding, focus change, or the control key. However, a user can also navigate to the InfoBar via tabbing if silenced.
+- For all InfoBars, Ctrl + Narrator + Up arrow will move focus to the InfoBar after the user is notified and read the element in focus.
+- For touch screen devices, swiping will navigate through all actionable items, regardless of group, in order. When Swiping on the last element in the notification, focus will move to Narrator's fullscreen invisible Close Button and the user may double tap the screen to close the window. Swiping again will move focus out of the notification.
 
 ## Enter and Exit Usability
-### Flashing notifications
-The InfoBar should not appear and disappear from view rapidly to prevent flashing on the screen. Avoid flashing visuals for people with photosensitivities. 
+### Flashing content
+The InfoBar should not appear and disappear from view rapidly to prevent flashing on the screen. Avoid flashing visuals for people with photosensitivities and to improve the usability of your application.
 
-For notifications that automatically enter and exit the view via an app status condition, we recommend you include logic in your application to prevent a notification from appearing or disappearing rapidly or multiple times in a row. However, in general, this control should be used for long-lived status messages.
+For InfoBars that automatically enter and exit the view via an app status condition, we recommend you include logic in your application to prevent content from appearing or disappearing rapidly or multiple times in a row. However, in general, this control should be used for long-lived status messages.
 
-### Inline notifications offsetting content
-For notifications that are inline with other UI content, keep in mind how the rest of the page will responsively react to the addition of the element.
+### Inline messages offsetting content
+For InfoBars that are inline with other UI content, keep in mind how the rest of the page will responsively react to the addition of the element.
 
-Notifications with a substantial height could dramatically alter the layout of the other elements on the page. 
-If the notification appears or disappears rapidly, especially in succession, the user may be confused with the changing visual state.
+Messages with a substantial height could dramatically alter the layout of the other elements on the page. 
+If the InfoBar appears or disappears rapidly, especially in succession, the user may be confused with the changing visual state.
 
 # Globalization and Localization
 
