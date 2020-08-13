@@ -131,7 +131,6 @@ Here is an example of how to add the PagerControl to your application. It can be
 | First, Previous, Next, and Last ButtonGlyph | Give the developer the option to customize the control by changing the glyph for the first button. | First: (waiting for design input) Previous: ChevronLeft Next: ChevronRight Last: (waiting for design input)
 | First, Previous, Next, and Last ButtonText | Give the developer the option to customize the control by changing the text for the buttons.| 
 | NumberOfIndicesShowing | Determine the number of indices showing in the number panel display mode. If the max number of pages is 10 but the number of indices is 5, the number panel will show 1,2,3,4,5 and when the user selects next, the indices will be 2,3,4,5,6. | 7 |
-| EllipsisAreEnabled | Boolean to display the ellipsis for the buttonpanel display mode. | True |
 | EllipsisShowFirstAndLast | Boolean to display the first and last index of a buttonpanel if the ellipsis is enabled. |True
 | SelectedIndex | The index that is currently selected. | 0 |
 | PrefixText | Developer can change the prefix text for the combobox display mode option. | "Page" |
@@ -206,8 +205,6 @@ runtimeclass PagerControl
     Windows.UI.Xaml.Style NextButtonStyle;
     Windows.UI.Xaml.Style LastButtonStyle;
     
-    Integer NumberOfIndicesShowing;
-    Boolean EllipsisAreEnabled;
     Boolean EllipsisShowFirstAndLast;
     Integer SelectedIndex;
     
@@ -236,8 +233,6 @@ runtimeclass PagerControl
     static Windows.UI.Xaml.DependencyProperty NextButtonStyleProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty LastButtonStyleProperty{ get; };
 
-    static Windows.UI.Xaml.DependencyProperty NumberOfIndicesShowingProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty EllipsisAreEnabledProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty EllipsisShowFirstAndLastProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty SelectedIndexProperty{get; };
     
