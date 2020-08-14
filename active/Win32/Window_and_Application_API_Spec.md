@@ -174,7 +174,7 @@ protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs ar
     m_window = new MainWindow();
     //Assuming TitleBar never is null
     m_window.TitleBar.ExtendViewIntoTitleBar = true;
-    m_window.TitleBar.SetTitleBar(m_window.CustomTitleBar);
+    m_window.SetTitleBar(m_window.CustomTitleBar);
 
     m_window.TitleBar.IsVisibleChanged += TitleBar_IsVisibleChanged;
     m_window.TitleBar.LayoutMetricsChanged += TitleBar_LayoutMetricsChanged;
