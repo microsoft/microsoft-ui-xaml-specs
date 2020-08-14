@@ -8,8 +8,6 @@ XAML in UWP has a [Window](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Wi
 
 Note that some existing APIs will also behave differently when running as a Desktop app. For example, the static Window.Current property today returns the Window for the current (calling) thread, but in a non-UWP app it will return null. Similarly the Window.CoreWindow property will be null when not running as UWP.
 
-There is also one API not (yet) present in WinUI: [Window.SetTitleBar](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Window.SetTitleBar). That API relies on a Composition feature that only exists for system Visuals and is not yet supported for WinUI Visuals.
-
 
 # Examples and API Notes
 
@@ -121,6 +119,88 @@ Attempting to activate (`new`) a new Window in a UWP app will fail and log a deb
 > Implementation note: This will use [RoOriginateError](https://docs.microsoft.com/en-us/windows/win32/api/roerrorapi/nf-roerrorapi-rooriginateerror) to show an explanatory message in the debugger.
 
 Creating a new Window in a Desktop app creates a new top level HWND.
+
+**Setting an UIElement as Window TitleBar**
+
+SetTitleBar makes a UIElement interact with the system as if it’s the title bar. For example, a user can move the window by dragging the XAML UIElement, or invoke the window context menu by right-clicking it.
+
+As a consequence the app no longer receives pointer input when the user interacts with the target UIElement or its children using touch, mouse, or pen. Although the UIElement stils receive keyboard input.
+
+Only one UIElement can act as Title bar, so the last set wins. To use multiple objects, developers need to wrap them in a container element (e.g. a Panel like a Grid)
+
+This method is typically used within the TitleBar's ExtendViewIntoTitleBar property set to true in order to hide the default system title bar. However, even when the default system title bar is not hidden, SetTitleBar can be used to make additional regions in your app behave like the title bar.
+
+> Window.SetTitleBar in UWP relies on a Composition feature that only exists for system Visuals and is not yet supported for WinUI Visuals yet.
+
+## The Windows.UI.Xaml.Window.TitleBar class **[NEW]**
+
+Enables an app to define a custom title bar that displays in the app's window.
+This is wrap of CoreApplicationViewTitleBar for UWP and a new implementation for Win32.
+
+The MUX.Window object contains a TitleBar object that is instanciated when creating the MUX.Window object.
+
+### Methods
+- ExtendViewIntoTitleBar: Extending the view into the title bar do not impact on the Window buttons (Minimize, Maximice, and Close), the buttons will still there. 
+
+    > Implementation details: This is a wrap of the CoreApplicationViewTitleBar.ExtendViewIntoTitleBar for UWP and it's used for Win32 to remove the Title bar from the Non-Client area when the property is true. 
+
+
+### Properties
+- Height: Gets the height of the title bar.
+
+- IsVisible: Gets a value that specifies whether this title bar is visible. For example, this property is false when the app is in full-screen mode.
+
+- SystemOverlayLeftInset: Gets the width of the system-reserved region of the upper-left corner of the app window. This region is reserved when the current language is a right-to-left language.
+
+- SystemOverlayRightInset: Gets the width of the system-reserved region of the upper-right corner of the app window. This region is reserved when the current language is a left-to-right language.
+
+### Events
+
+- IsVisibleChanged: Occurs when the visibility of the title bar (indicated by the IsVisible property) changes.
+
+- LayoutMetricsChanged: Occurs when the title bar needs to respond to size changes. The most common trigger for this event is when the app window moves to a screen that has a different DPI. Use this event to verify and update the positioning of UI elements that depend on the title bar's size.
+
+### Example of a Custom Title Bar
+
+Apps must update the visual content and layout of the target UIElement in response to title bar changes, like visibility and size. For example, when the user chooses to display your app in full-screen mode.
+
+```CS
+
+//Asumming MainWindow has a CustomTitleBar public property which is a UserControl, and this UserControl also has some public properties for customization
+private Window m_window;
+
+protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+{
+    m_window = new MainWindow();
+    //Assuming TitleBar never is null
+    m_window.TitleBar.ExtendViewIntoTitleBar = true;
+    m_window.TitleBar.SetTitleBar(m_window.CustomTitleBar);
+
+    m_window.TitleBar.IsVisibleChanged += TitleBar_IsVisibleChanged;
+    m_window.TitleBar.LayoutMetricsChanged += TitleBar_LayoutMetricsChanged;
+
+    m_window.Activate();
+}
+
+private void TitleBar_IsVisibleChanged(Microsoft.UI.Xaml.TitleBar sender, object args)
+{
+    if (TitleBar != null)
+    {
+        m_window.CustomTitleBar.Visibility = sender.IsVisible ? Visibility.Visible : Visibility.Collapsed;
+    }
+}
+
+private void TitleBar_LayoutMetricsChanged(Microsoft.UI.Xaml.TitleBar sender, object args)
+{
+    if (TitleBar != null)
+    {
+        m_window.CustomTitleBar.Height = sender.Height;
+        m_window.CustomTitleBar.LeftColumn.Width = new GridLength(sender.SystemOverlayLeftInset);
+        m_window.CustomTitleBar.RightColumn.Width = new GridLength(sender.SystemOverlayRightInset);
+
+    }
+}
+```
 
 ## IWindowNative Interface **[NEW]**
 
@@ -435,6 +515,13 @@ Microsoft.UI.Xaml namespace
         Microsoft.System.DispatcherQueue DispatcherQueue{ get; };
     };
 
+```
+
+## TitleBar class
+Microsoft.UI.Xaml.Window namespace
+
+```cs
+TBD
 ```
 
 ## IWindowNative (COM) interface
