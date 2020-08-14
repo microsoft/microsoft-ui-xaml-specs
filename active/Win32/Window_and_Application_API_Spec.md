@@ -132,7 +132,7 @@ This method is typically used within the TitleBar's ExtendViewIntoTitleBar prope
 
 > Window.SetTitleBar in UWP relies on a Composition feature that only exists for system Visuals and is not yet supported for WinUI Visuals yet.
 
-## The Windows.UI.Xaml.Window.TitleBar class **[NEW]**
+## The Microsft.UI.Xaml.Window.TitleBar class **[NEW]**
 
 Enables an app to define a custom title bar that displays in the app's window.
 This is wrap of CoreApplicationViewTitleBar for UWP and a new implementation for Win32.
