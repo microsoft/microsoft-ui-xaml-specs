@@ -24,8 +24,8 @@ The following examples show how to use the IsIndeterminate property to change th
 ```xml
 <ProgressRing IsActive="True" Height="100" Width="100"/>
 ```
-
 ![](images/ProgressRing-indeterminate.jpg)
+
 ## Determinate ProgressRing
 
 ```xml
@@ -47,7 +47,7 @@ isn't the type's default (for example an int-typed property that doesn't default
 with a "///" comment above the member or type. -->
 ProgressRing can now be used in scenarios where progress is determinate or indeterminate. With this additional capability, the determinate ProgressRing does not represent a "hung" state where the end user cannot interact with the app. 
 
-Previously, guidance recommended that ProgressRing only be used when the user cannot continue to interact with the app, but this is no longer the only use case and ProgressRing can be used in scenarios where user interaction can continue while the ring is spinning. An example of this would be when a video or image is loading and a progress ring is displayed while the media is loading but the end user can still interact with other UI elements on the page while they wait for the media to load.
+Previously, guidance recommended that ProgressRing only be used when the user cannot continue to interact with the app, but this is no longer the only use case and ProgressRing can be used in scenarios where user interaction can continue while the ring is spinning. An example of this would be when a video is loading on a page and a progress ring is displayed while the media is loading. The end user can still interact with other UI elements on the page while they wait for the media to load.
 
 Below are properties being added to ProgressRing. The IsIndeterminate property of ProgressRing will default to True for backwards compatability.
 
