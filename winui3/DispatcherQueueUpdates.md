@@ -1,0 +1,115 @@
+
+# DispatcherQueue updates for WinUI3
+
+# Background
+
+.NET has an abstract API to post to a thread:
+[SynchronizationContext](https://docs.microsoft.com/dotnet/api/System.Threading.SynchronizationContext).
+Calling the [SynchronizationContext.Post](https://docs.microsoft.com/dotnet/api/System.Threading.SynchronizationContext.Post) method
+runs a delegate on whatever thread the context is associated with. 
+You can get the current thread's context using the static 
+[SynchronizationContext.Current](https://docs.microsoft.com/dotnet/api/System.Threading.SynchronizationContext.Current)
+property.
+
+For example, the c# `await` keyword and `co_await` in c++/winrt work by capturing the Current sync context, 
+then posting back to it in the async operation's completion handler.
+
+SynchronizationContext can be subclassed and customized, for example using WPF's
+[DispatcherSynchronizationContext](https://docs.microsoft.com/dotnet/api/System.Windows.Threading.DispatcherSynchronizationContext)
+posts to the WPF [Dispatcher](https://docs.microsoft.com/dotnet/api/System.Windows.Threading.Dispatcher).
+
+In .NET Native (UWP apps) and .NET Framework, there's always a SynchronizationContext on a thread, a default
+one if it's not been overridden (by calling 
+[SynchronizationContext.SetSynchronizationContext](https://docs.microsoft.com/dotnet/api/System.Threading.SynchronizationContext.SetSynchronizationContext)). 
+And that default sync context understands when a thread has a 
+[CoreDispatcher](https://docs.microsoft.com/uwp/api/Windows.UI.Core.CoreDispatcher)
+or [DispatcherQueue](https://docs.microsoft.com/uwp/api/Windows.System.DispatcherQueue)
+associated with it. So by default, the .NET Native/Framework sync context works automatically on the UI
+thread of a UWP app, as well as any thread that has a DispatcherQueue running on it
+(a DispatcherQueue can be set on a thread using the
+[DispatcherQueueController.CreateOnDedicatedThread](https://docs.microsoft.com/uwp/api/Windows.System.DispatcherQueueController.CreateOnDedicatedThread)
+method or [CreateDispatcherQueueController](https://docs.microsoft.com/en-us/windows/win32/api/dispatcherqueue/nf-dispatcherqueue-createdispatcherqueuecontroller)
+function).
+
+In .NET5, however, there is no default SynchronizationContext, and no built-in understanding of
+CoreDispatcher or DispatcherQueue. 
+
+This spec adds this functionality for to WinUI3 to work with SynchronizationContext, by defining a subclass of it:
+`DispatcherQueueSynchronizationContext`. This can be set as a thread's SynchronizatonContext, and when posted to
+will post to the DispatcherQueue. Note that this is a .NET API, not a WinRT API.
+
+Also described here is a WinRT method to create a DispatcherQueue, providing an alternative to the current COM API.
+
+All of these APIs are for WinUI3/Renuion, not being added to the OS.
+
+# Description
+
+## DispatcherQueueSynchronizationContext
+
+Use the `DispatcherQueueSynchronizationContext` to queue work to another thread, either
+synchronously or asynchronously, that has an associated 
+[DispatcherQueue](https://docs.microsoft.com/uwp/api/Windows.System.DispatcherQueue).
+See the base class
+[SynchronizationContext](https://docs.microsoft.com/dotnet/api/System.Threading.SynchronizationContext)
+for more information on how to use a SynchronizationContext.
+
+> Note that this class is only available to .NET5 or above applications.
+
+## DispatcherQueueController.CreateOnCurrentThread
+
+
+
+
+# Examples
+
+This example shows a thread creating a DispatcherQueue, setting it onto the current thread,
+setting a SynchronizationContext onto the current thread that uses that DispatcherQueue,
+and then goes into a message pump.
+
+```cs
+static void Run()
+{
+    DispatcherQueueController.CreateOnCurrentThread();
+    DispatcherQueueSyncronizationContext.SetForCurrentThread();
+
+    ProcessEvents();
+}
+
+void ProcessEvents()
+{
+    // Message pump
+    while(true)
+    {
+        // GetMessage
+        // DispatchMessage
+    }
+}
+```
+
+# API Details
+
+## DispatcherQueueSynchronizationContext
+
+```cs
+namespace Microsoft.System
+{
+    public class DispatcherQueueSynchronizationContext : SynchronizationContext
+    {
+        public static void SetForCurrentThread();
+    }
+}
+```
+
+## DispatcherQueueController
+
+```cs
+runtimeclass DispatcherQueueController
+{
+    // Existing members
+    // ...
+      static DispatcherQueueController CreateOnCurrentThread();
+
+}
+```
+
+# Appendix
