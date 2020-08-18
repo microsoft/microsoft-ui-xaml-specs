@@ -117,7 +117,7 @@ XAML
                 NumberOfPages="10"
                 FirstButtonVisibility="AlwaysVisible"
                 PreviousButtonVisibility="AlwaysVisible"
-                NextButtonVisibility="HiddenOnLast"
+                NextButtonVisibility="HiddenOnEdge"
                 LastButtonVisibility="None"
                 Prefix="Page"
                 Suffix="of 10"/>
