@@ -127,12 +127,7 @@ Only one UIElement can act as Title bar, so the last set wins. To use multiple o
 
 This method is typically used within the **new** Window's ExtendContentIntoTitleBar property set to true in order to hide the default system title bar. However, even when the default system title bar is not hidden, SetTitleBar can be used to make additional regions in your app behave like the title bar. Extending the content into the title bar do not impact on the Window buttons (Minimize, Maximize, and Close); the buttons will be still there. 
 
-### Remarks
-
-Window.SetTitleBar in UWP relies on a Composition feature that only exists for system Visuals and is not yet supported for WinUI Visuals yet.
-    
-> **Implementation note**: This is a wrap of the CoreApplicationViewTitleBar.ExtendViewIntoTitleBar for UWP and it's used for Win32 to remove the Title bar from the Non-Client area when the property is true. 
-
+### Example
 ```CS
 
 //Asumming MainWindow has a CustomTitleBar public property which is a UserControl, and this UserControl also has some public properties for customization
@@ -146,9 +141,18 @@ protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs ar
     m_window.ExtendContentIntoTitleBar = true;
     m_window.SetTitleBar(m_window.CustomTitleBar);
 
-m_window.Activate();
+    m_window.Activate();
 }
 ```
+
+
+### Remarks
+
+Window.SetTitleBar in UWP relies on a Composition feature that only exists for system Visuals and is not yet supported for WinUI Visuals yet.
+    
+> **Implementation note**: This is a wrap of the CoreApplicationViewTitleBar.ExtendViewIntoTitleBar for UWP and it's used for Win32 to remove the Title bar from the Non-Client area when the property is true. 
+
+
 
 ## IWindowNative Interface **[NEW]**
 
