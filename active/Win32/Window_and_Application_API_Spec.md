@@ -8,9 +8,6 @@ XAML in UWP has a [Window](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Wi
 
 Note that some existing APIs will also behave differently when running as a Desktop app. For example, the static Window.Current property today returns the Window for the current (calling) thread, but in a non-UWP app it will return null. Similarly the Window.CoreWindow property will be null when not running as UWP.
 
-There is also one API not (yet) present in WinUI: [Window.SetTitleBar](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Window.SetTitleBar). That API relies on a Composition feature that only exists for system Visuals and is not yet supported for WinUI Visuals.
-
-
 # Examples and API Notes
 
 ## Window class
@@ -50,7 +47,7 @@ window.Activate();
 
 You can also define a new Window in markup:
 
-| Spec note: no <Window.Content> tag is required because Window.Content is updating to become the [ContentPropertyAttribute](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Markup.ContentPropertyAttribute).
+| **Spec note**: no <Window.Content> tag is required because Window.Content is updating to become the [ContentPropertyAttribute](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Markup.ContentPropertyAttribute).
 
 ```XML
 <Window 
@@ -118,9 +115,40 @@ thread.Start();
 
 Attempting to activate (`new`) a new Window in a UWP app will fail and log a debug message.
 
-> Implementation note: This will use [RoOriginateError](https://docs.microsoft.com/en-us/windows/win32/api/roerrorapi/nf-roerrorapi-rooriginateerror) to show an explanatory message in the debugger.
+> **Implementation note:** This will use [RoOriginateError](https://docs.microsoft.com/en-us/windows/win32/api/roerrorapi/nf-roerrorapi-rooriginateerror) to show an explanatory message in the debugger.
 
 Creating a new Window in a Desktop app creates a new top level HWND.
+
+### Custom Window's title bar 
+
+SetTitleBar makes a UIElement interact with the system as if it’s the title bar. For example, a user can move the window by dragging the XAML UIElement, or invoke the window context menu by right-clicking it. As a consequence the app no longer receives pointer input when the user interacts with the target UIElement or its children using touch, mouse, or pen. Although the UIElement stils receive keyboard input.
+
+Only one UIElement can act as Title bar, so the last set wins. To use multiple objects, developers need to wrap them in a container element (e.g. a Panel like a Grid)
+
+This method is typically used within the **new** Window's ExtendContentIntoTitleBar property set to true in order to hide the default system title bar. However, even when the default system title bar is not hidden, SetTitleBar can be used to make additional regions in your app behave like the title bar. Extending the content into the title bar do not impact on the Window buttons (Minimize, Maximize, and Close); the buttons will be still there. 
+
+Here there is an example:
+
+```CS
+
+//Asumming MainWindow has a CustomTitleBar public property which is a UserControl, and this UserControl also has some public properties for customization
+private Window m_window;
+
+protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+{
+    m_window = new MainWindow();
+
+    //Assuming TitleBar never is null
+    m_window.ExtendContentIntoTitleBar = true;
+    m_window.SetTitleBar(m_window.CustomTitleBar);
+
+    m_window.Activate();
+}
+```
+
+| **Spec note**: Window.SetTitleBar in UWP relies on a Composition feature that only exists for system Visuals and is not yet supported for WinUI Visuals yet.  
+| **Implementation note**: This will be a wrap of the CoreApplicationViewTitleBar.ExtendViewIntoTitleBar for UWP. In Win32 will remove the Title bar from the Non-Client area when the property is true. 
+
 
 ## IWindowNative Interface **[NEW]**
 
@@ -169,9 +197,9 @@ public string Title { get; set; }
 
 ### Remarks
 
-In a UWP app, this property is a wrapper for [ApplicationView.Title](https://docs.microsoft.com/uwp/api/Windows.UI.ViewManagement.ApplicationView.Title), which is ignored if [AppWindowTitleBar.ExtendsContentIntoTitleBar](https://docs.microsoft.com/uwp/api/Windows.UI.WindowManagement.AppWindowTitleBar.ExtendsContentIntoTitleBar) is set to true.
+- In a UWP app, this property is a wrapper for [ApplicationView.Title](https://docs.microsoft.com/uwp/api/Windows.UI.ViewManagement.ApplicationView.Title), which is ignored if [AppWindowTitleBar.ExtendsContentIntoTitleBar](https://docs.microsoft.com/uwp/api/Windows.UI.WindowManagement.AppWindowTitleBar.ExtendsContentIntoTitleBar) is set to true. 
 
-In a Desktop app this is a wrapper for [SetWindowText](https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowtexta).
+- In a Desktop app this is a wrapper for [SetWindowText](https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowtexta).
 
 ## Window.Current property
 
@@ -185,7 +213,6 @@ public static Window Current { get; }
 
 The value of this property depends on the thread from which it is called. If called from a UI thread of a UWP app, the value is the Window instance for that thread. On any other thread, the value is null.
 
-
 ## Window.Closed event
 
 Occurs when the window has closed.
@@ -193,7 +220,6 @@ Occurs when the window has closed.
 ### Remarks
 
 If this was the last window to be closed for the app, the Suspending event will be raised. For a Desktop app, the application will end.
-
 
 ## Window.CoreWindow property: 
 
@@ -227,8 +253,8 @@ public Microsoft.UI.Composition.Compositor Compositor { get; }
 ```
 
 ### Remarks
-There is one Compositor per thread, that means that all the Windows in the same thread share the same Compositor.
 
+There is one Compositor per thread, that means that all the Windows in the same thread share the same Compositor.
 
 ## WindowActivatedEventArgs class
 Namespace: Microsoft.UI.Xaml
@@ -296,7 +322,6 @@ Contains the argument returned by a window size change event.
     ```CS
     public Size Size { get; } 
     ```
-
 
 ## Application class
 Namespace: Microsoft.UI.Xaml
@@ -433,6 +458,7 @@ Microsoft.UI.Xaml namespace
         String Title;
         ImageSource Icon;
         Microsoft.System.DispatcherQueue DispatcherQueue{ get; };
+	Boolean ExtendContentIntoTitleBar { get; set;}	
     };
 
 ```
