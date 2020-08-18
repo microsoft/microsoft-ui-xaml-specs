@@ -53,11 +53,23 @@ See the base class
 [SynchronizationContext](https://docs.microsoft.com/dotnet/api/System.Threading.SynchronizationContext)
 for more information on how to use a SynchronizationContext.
 
-> Note that this class is only available to .NET5 or above applications.
+### API Notes
+
+Note that this class is only available to .NET5 or above applications.
+
+The Send method is not supported and throws a NotSupportedException.
 
 ## DispatcherQueueController.CreateOnCurrentThread
 
+Creates a [DispatcherQueueController](https://docs.microsoft.com/uwp/api/Windows.System.DispatcherQueueController) 
+on the caller's thread. Use the created DispatcherQueueController to create and manage the 
+lifetime of a 
+[DispatcherQueue](https://docs.microsoft.com/uwp/api/Windows.System.DispatcherQueue)
+to run queued tasks in priority order on the Dispatcher queue's thread.
 
+### API Notes
+
+See also [CreateDispatcherQueueController](https://docs.microsoft.com/en-us/windows/win32/api/dispatcherqueue/nf-dispatcherqueue-createdispatcherqueuecontroller)
 
 
 # Examples
