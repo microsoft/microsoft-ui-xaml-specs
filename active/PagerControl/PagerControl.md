@@ -328,7 +328,7 @@ How often are developers using this control with an indefinite number of pages?
 * Should the combo box mode be an editable combo box? My worry with making it an editable combo box is the validity of having the number box mode. Would it hurt to have both editable combo box and number box as options?
 * I use the terms index and page throughout this document and the APIs. The APIs are all index while the documentation is mostly using page. Should I update the APIs to use page instead of index?
 * There are certain APIs that are specific to one of the three display modes and they will be ignored if the display mode chosen does not support those APIs. Is that something that needs to be reconsidered so it does not cause confusion for the developers?
-* The enum for the edge button visibility has the four values Auto, AlwaysVisible, HiddenOnLast, and None. Do those names make sense and translate to the enteneded behavior? Does the enum name make sense?
+* The enum for the edge button visibility has the four values Auto, AlwaysVisible, HiddenOnEdge, and None. Do those names make sense and translate to the intended behavior? Does the enum name make sense?
 * The ButtonPanelShowFirstAndLast property will show or hide both the first and last page in the numerical button panel. Should this API be split in to two so the developer can show or hide the first and last button individually?
 * Is there a shortcut we can add to make it easier to move to the next and previous page? Maybe utilize the left and right bumper?
 * How does narrator handle localization? In the “page x of y” scenario how would that work if we switch from LTR to RTL?
