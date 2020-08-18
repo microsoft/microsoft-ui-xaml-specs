@@ -219,7 +219,9 @@ The value of this property depends on the thread from which it is called. If cal
 
 Occurs when the window has closed.
 
-> **Remarks:** If this was the last window to be closed for the app, the Suspending event will be raised. For a Desktop app, the application will end.
+### Remarks
+
+If this was the last window to be closed for the app, the Suspending event will be raised. For a Desktop app, the application will end.
 
 
 ## Window.CoreWindow property: 
