@@ -8,7 +8,6 @@ XAML in UWP has a [Window](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Wi
 
 Note that some existing APIs will also behave differently when running as a Desktop app. For example, the static Window.Current property today returns the Window for the current (calling) thread, but in a non-UWP app it will return null. Similarly the Window.CoreWindow property will be null when not running as UWP.
 
-
 # Examples and API Notes
 
 ## Window class
@@ -214,7 +213,6 @@ public static Window Current { get; }
 
 The value of this property depends on the thread from which it is called. If called from a UI thread of a UWP app, the value is the Window instance for that thread. On any other thread, the value is null.
 
-
 ## Window.Closed event
 
 Occurs when the window has closed.
@@ -222,7 +220,6 @@ Occurs when the window has closed.
 ### Remarks
 
 If this was the last window to be closed for the app, the Suspending event will be raised. For a Desktop app, the application will end.
-
 
 ## Window.CoreWindow property: 
 
@@ -258,7 +255,6 @@ public Microsoft.UI.Composition.Compositor Compositor { get; }
 ### Remarks
 
 There is one Compositor per thread, that means that all the Windows in the same thread share the same Compositor.
-
 
 ## WindowActivatedEventArgs class
 Namespace: Microsoft.UI.Xaml
@@ -326,7 +322,6 @@ Contains the argument returned by a window size change event.
     ```CS
     public Size Size { get; } 
     ```
-
 
 ## Application class
 Namespace: Microsoft.UI.Xaml
