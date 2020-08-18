@@ -457,8 +457,8 @@ Microsoft.UI.Xaml namespace
 
         String Title;
         ImageSource Icon;
-        Microsoft.System.DispatcherQueue DispatcherQueue{ get; };
-	Boolean ExtendContentIntoTitleBar { get; set;}	
+       	Microsoft.System.DispatcherQueue DispatcherQueue{ get; };
+        Boolean ExtendContentIntoTitleBar { get; set;}	
     };
 
 ```
