@@ -152,7 +152,7 @@ C#
 
 ## API Notes
 | Name | Description| Default | 
-|:---:|:---:| :---|
+|:---:|:---|:---|
 | PagerDisplayMode | Enum that contains 4 values (Auto, ComboBox, NumberBox, ButtonPanel) to represent the look of the pager control. When Auto is selected, the display mode will be ComboBox if the NumberOfPages property is less than 11 otherwise it will be NumberBox. | Auto |
 | PagerButtonVisibilityBehavior | Enum that contains 4 values (Auto, AlwaysVisible, HiddenOnEdge, None) that allows the app developer to hide or show the four edge buttons. HiddenOnEdge will remove the appropriate buttons if the selected page is the last or first page. When the last page is selected, the next and last buttons will be disabled and same when the first page is selected for the first and previous page. When Auto is selected, the visibility mode will be AlwaysVisible. | Auto |
 | NumberOfPages | Sets the max number of pages the index control will iterate through. The default will represent an infinite page range. | -1 |
@@ -199,7 +199,7 @@ runtimeclass PagerControlPageChangedEventArgs
 {
     Integer NewIndex{get; };
     Integer PreviousIndex{get; };
-}
+};
 
 runtimeclass PagerControl
 {
