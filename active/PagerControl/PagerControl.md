@@ -86,7 +86,7 @@ XAML
 </Grid>
 ```
 
-Below is the XAML for how to add the numerical button panel display mode. This mode is not part of the auto mode and needs to be explicitly set. The prefix and suffix properties do not apply to this mode so they will be ignored if they are set. The EllipsisShowFirstAndLast property is specific to this mode and controls if the button panel will always show the first and last page. This will also display ellipsis before the last page and after the first page to indicate that there are pages between the page numbers being shown and the last page. They will automatically be hidden if the pages being shown are close to the beggining or end of the page range. 
+Below is the XAML for how to add the numerical button panel display mode. This mode is not part of the auto mode and needs to be explicitly set. The prefix and suffix properties do not apply to this mode so they will be ignored if they are set. The ButtonPanelShowFirstAndLast property is specific to this mode and controls if the button panel will always show the first and last page. This will also display ellipsis before the last page and after the first page to indicate that there are pages between the page numbers being shown and the last page. They will automatically be hidden if the pages being shown are close to the beggining or end of the page range. 
 
 XAML
 ```XAML
