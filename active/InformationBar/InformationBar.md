@@ -14,13 +14,13 @@ Due to their visual layouts, inherent intrusiveness, or available features they 
 An InfoBar is a persistent, actionable, app-wide notification intended for displaying critical and/or actionable information that impact app perception or user experience.
 
 ## Is this the right control?
-Use an InfoBar control when a user needs to be informed of, acknowledge, or take action on a message. By default the notification will remain in the content area until dismissed by the user but will not necessarily break user flow.
+Use an InfoBar control when a user should be informed of, acknowledge, or take action on a message. By default the notification will remain in the content area until dismissed by the user but will not necessarily break user flow.
 
 An InfoBar will take up space in your layout and behave like any other child elements. It will not cover up other content or float on top of it.
 
-Do not use an InfoBar control to confirm or respond directly to a user action, for transient alerts, or for non-essential messages.
+Do not use an InfoBar control to confirm or respond directly to a user action, for time-sensitive alerts, or for non-essential messages.
 
-### Scenarios
+### Remarks
 Use an InfoBar that dismiss via the user or when the status is resolved for scenarios that **directly** impact app perception or experience ⚠
 
 - Internet connectivity lost
@@ -38,33 +38,33 @@ Use an InfoBar that dismiss via the user or a timer for scenarios that **indirec
 - The subscription to the application is close to expiring
 
 
-### When should a different control be used?
+#### When should a different control be used?
 
-There are some scenarios where a Content Dialog, Flyout, or Teaching Tip may be more appropriate to use.
+There are some scenarios where a ContentDialog, Flyout, or TeachingTip may be more appropriate to use.
 
-- For scenarios where a persistent notification is not needed, i.e. displaying information in context of a specific UI element, a [Flyout](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/flyouts) is a better option. 
-- For scenarios where the application is confirming a user action, showing information the user ***must*** read, use a [Content Dialog](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/dialogs).
-  - Additionally, if a status change to the app is so severe that it needs to block all further ability for the user to interact with the app, use a Content Dialog.
-- For scenarios where a notification is a transient teaching moment, a [Teaching Tip](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/teaching-tip) is a better option.
+- For scenarios where a persistent notification is not needed, e.g. displaying information in context of a specific UI element, a [Flyout](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/flyouts) is a better option. 
+- For scenarios where the application is confirming a user action, showing information the user ***must*** read, use a [ContentDialog](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/dialogs).
+  - Additionally, if a status change to the app is so severe that it needs to block all further ability for the user to interact with the app, use a ContentDialog.
+- For scenarios where a notification is a transient teaching moment, a [TeachingTip](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/teaching-tip) is a better option.
 
 For more info about choosing the right notification control, see the [Dialogs and Flyouts](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/) article.
 
 # Examples
 
-An information bar can have several configurations, here are some notable ones.
+An info bar can have several configurations, here are some notable ones.
 
-When an InfoBar is conveying information of a common severity, like displaying an error or warning, it can be set to have one of many severity levels to use consistent Fluent styling for it's identifiers.
+When an InfoBar is conveying information of a common severity, like displaying an error or warning, it can be set to have one of many severity levels to use consistent [Fluent](https://docs.microsoft.com/en-us/windows/apps/fluent-design-system) styling for it's identifiers.
 ![A mockup of an InfoBar in a Warning state with a close button and a message](images/Warning_NoButton.png)
 
-If a call to action is needed, an information bar can have customizable action or hyperlink buttons.
+If a call to action is needed, an info bar can have customizable action or hyperlink buttons.
 ![A mockup of an InfoBar](images/Default_MessageHyperlink.png)
 
-The information bar can also be customized with its optional properties and with XAML Content to include extra buttons and other UI elements.
+The info bar can also be customized with its optional properties and with XAML Content to include extra buttons and other UI elements.
 ![A mockup of an InfoBar with custom status color and content](images/Custom_IconColor.png)
 
 ## Create an InfoBar
 
-The XAML below describes an inline InfoBar with the default styling for an error  notification. An information bar can be created anywhere in the element tree or code behind. In this example the InfoBar expands to fill the width of the StackPanel layout control it resides in.
+The XAML below describes an inline InfoBar with the default styling for an error  notification. An info bar can be created anywhere in the element tree or code behind. In this example the InfoBar expands to fill the width of the StackPanel layout control it resides in.
 
 By default, the InfoBar will not be visible. Set the IsOpen property to true in the XAML or code behind to display the information.
 
@@ -91,17 +91,16 @@ public MainPage()
     if(!SaveSuccessful())
     {
         UnsuccessfulSaveNotification.IsOpen = true;
-        SetHaveDisplayedErrorNotification();
     }
 }
 ```
 
-Here is the visual representation of the information bar in the page.
+Here is the visual representation of the info bar in the page.
 
 ![A mockup of an InfoBar in a Warning state with a close button and a message](images/Warning_NoButton.png)
 
 ## Using pre-defined severity levels
-The type of the information bar can be set via the Severity property to automatically set a consistent status color, icon, and assistive technology settings dependent on the criticality of the notification.
+The type of the info bar can be set via the Severity property to automatically set a consistent status color, icon, and assistive technology settings dependent on the criticality of the notification.
 
 Mockups in various Severities to be added.
 ![Mockup of InfoBar with no content in different Severity colors and icons for light mode](images/Docked_ToolkitSeverity.png)
@@ -131,7 +130,7 @@ Outside of the pre-defined severity levels, the Background and IconSource proper
 
 A custom background color can be set via the standard Background property and will override the color set by Severity. Please keep in mind content readability and accessibility when setting your own color.
 
-A custom icon can be set via the IconSource property left of the Title and Message in the InfoBar. By default, an icon will be visible. This icon can be removed by setting the IsIconVisible property to false. For custom icons, the recommended icon size is 20px.
+A custom icon can be set via the IconSource property. By default, an icon will be visible. This icon can be removed by setting the IsIconVisible property to false. For custom icons, the recommended icon size is 20px.
 
 XAML
 ```xml
@@ -139,13 +138,9 @@ XAML
     <controls:InfoBar x:Name="NewPhotosNotification"
         Title="New Photos From Cloud"
         Message="Sync your latest photos to the Cloud"
-        ActionButtonContent="Upload">
-        <controls:InfoBar.Background>
-            <SolidColorBrush Color="#FF557EB9"/>
-        </controls:InfoBar.Background>
-        <controls:InfoBar.IconSource>
-            <SymbolIconSource Symbol="Camera" />
-        </controls:InfoBar.IconSource>
+        ActionButtonContent="Upload"
+        Background="#FF557EB9"
+        IconSource="Camera">
     </controls:InfoBar>
 </StackPanel>
 ```
@@ -165,7 +160,7 @@ XAML
         Title="Error while saving"
         Message="Your document was unable to be saved."
         ActionButtonContent="Try again"
-        ActionButtonCommand="SaveDocuments">
+        ActionButtonCommand="{x:Bind SaveDocuments}">
     </controls:InfoBar>
 </StackPanel>
 ```
@@ -338,23 +333,23 @@ Please view the guidance for [Adjust layout and fonts, and support RTL](https://
 # Remarks
 ## Usage Recommendations
 
-### When to show an information bar?
+### When to show an info bar?
 An InfoBar should be shown when the state of the application is different from typical, expected functionality or when the user **needs** to acknowledge or potentially react to the presented information.
 
 Recommended patterns for error notifications where the application is in a negatively altered state
   - Example: Internet connectivity is required for the application to function and is not present
-    - An error information bar should remain in view until the connection is restored if most functionality is unavailable.
-    - If some app functionality is possible, an error information bar should appear and able to be dismissed by the user.
+    - An error info bar should remain in view until the connection is restored if most functionality is unavailable.
+    - If some app functionality is possible, an error info bar should appear and able to be dismissed by the user.
     - If/when the internet is restored the existing notification should update if it exists, and a new one should be created if the previous one had been dismissed. THe new/updated success-styled InfoBar should inform the user that "Internet is reconnected" so that they are aware app functionality is restored.
   - Example: The user's subscription to your application has expired and many features are deactivated
-    - An error information bar could remain in view with a potential action button to resubscribe.
+    - An error info bar could remain in view with a potential action button to resubscribe.
     - Another option is to allow the user to dismiss a default-style InfoBar depending on how vital a subscription is to your application.
 
 Recommended patterns for informational notifications where the user needs to view or react to essential information
  - Example: Terms and Conditions of the application have been updated and need to be acknowledged for continued use
-   - A default information bar could appear notifying the user the T&C have updated and link to the contents. The user acknowledges these updated T&C through dismissing the notification.
+   - A default info bar could appear notifying the user the T&C have updated and link to the contents. The user acknowledges these updated T&C through dismissing the notification.
  - Example: A virus scan that was running in the background of your application has completed
-   - A success-styled information bar could appear notifying the user the scan has completed and direct them to view the results.
+   - A success-styled info bar could appear notifying the user the scan has completed and direct them to view the results.
 
  Note: Users should **always** have the option to dismiss informational notifications.
 
@@ -374,8 +369,8 @@ Recommended patterns for informational notifications where the user needs to vie
 |:-:|:--|
 | ActionButtonClick | Occurs after the action button has been tapped. |
 | CloseButtonClick | Occurs after the close button has been tapped. |
-| Closed | Occurs after the information bar is closed. |
-| Closing |Occurs just before the information bar begins to close. |
+| Closed | Occurs after the info bar is closed. |
+| Closing |Occurs just before the info bar begins to close. |
 
 # Detailed Design
 
@@ -414,12 +409,8 @@ runtimeclass InfoBarClosingEventArgs
 {
     InfoBarCloseReason Reason{ get; };
     Boolean Cancel;
+    Windows.Foundation.Deferral GetDeferral();
 };
-
-runtimeclass CloseButtonClickEventArgs
-{
-    Boolean IsHandled;
-}
 
 // will edit/add to post prototype implementation
 unsealed runtimeclass InfoBarTemplateSettings : Windows.UI.Xaml.DependencyObject
@@ -443,6 +434,7 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
     Windows.UI.Xaml.Input.ICommand ActionButtonCommand;
     Object ActionButtonCommandParameter;
 
+    Windows.UI.Xaml.Style CloseButtonStyle;
     Windows.UI.Xaml.Input.ICommand CloseButtonCommand;
     Object CloseButtonCommandParameter;
 
@@ -471,6 +463,7 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
     static Windows.UI.Xaml.DependencyProperty ActionButtonCommandProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty ActionButtonCommandParameterProperty{ get; };
 
+    static Windows.UI.Xaml.DependencyProperty CloseButtonStyleProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty CloseButtonCommandProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty CloseButtonCommandParameterProperty{ get; };
 
@@ -516,9 +509,9 @@ UI Elements for InfoBar
 ## Behavioral Components
  | Property | Notes |
 |:---:|:---|
-| Opening | - An information bar is shown by setting its IsOpen property to true. |
-| Closing | There are two ways an information bar can close: <br>- The program sets the IsOpen property to false <br> - The user invokes the Close button. <br> Use the InfoBarCloseReason to determine which case has occurred. <br> Closing can be prevented by setting the Cancel property to true. You can use a deferral to respond asynchronously to the event. |
-| Motion | - Information bars have built in open and close animations that can be customizable using Storyboards.|
+| Opening | - An info bar is shown by setting its IsOpen property to true. |
+| Closing | There are two ways an info bar can close: <br>- The program sets the IsOpen property to false <br> - The user invokes the Close button. <br> Use the InfoBarCloseReason to determine which case has occurred. <br> Closing can be prevented by setting the Cancel property to true. You can use a deferral to respond asynchronously to the event. |
+| Motion | - Info bars have built in open and close animations that can be customizable using Storyboards.|
 
 ## Data and Intelligence Metrics
 Recommendations from ryandemo:
@@ -526,11 +519,11 @@ Recommendations from ryandemo:
 - Track popularity of each layout mode
 - Average length of time the notifications display on screen until dismissal, correlated to severity
 - How often color and/or icon customization Occurs
-- How often multiple information bars appear at once and the typical distribution
+- How often multiple info bars appear at once and the typical distribution
 
 ## Intended features for InfoBar v2
 - Built-in support for floating notifications, DisplayMode property to switch between "Docked" (current) and "Floating" mode
   - Options to show the InfoBar as a PopUp with simple positioning properties
 - Positioning and re-positioning for multiple notifications
-  - i.e. providing a built-in way to support a group of notifications in the bottom right corner
+  - e.g. providing a built-in way to support a group of notifications in the bottom right corner
 - Truncation option that allows the user to expand and collapse an InfoBar with multiple lines of content
