@@ -117,6 +117,8 @@ namespace Microsoft.System
 }
 ```
 
+> Issue: What DLL is this in? (the DLL name doesn't matter for WinRT APIs, but this is a managed API)
+
 ## DispatcherQueueController
 
 ```cs
