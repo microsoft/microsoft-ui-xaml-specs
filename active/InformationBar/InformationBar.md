@@ -254,18 +254,17 @@ InfoBar will use a Pane control pattern for inline notifications and will implem
 
 ### Keyboard Navigation 
 - No action is needed to invoke the InfoBar
-- After navigating to the control via tabbing, the user can focus into the InfoBar with the enter key
-- Once focused, tabbing will iterate through all actionable items in the control in order. When tab is pressed on the last element in the InfoBar, focus will cycle to the first element.
+- After navigating to the control via tabbing, the user is automatically focused into the control once navigating to the first actionable item.
+- Once focused, tabbing will iterate through all actionable items in the control in order. When tab is pressed on the last element in the InfoBar, focus will continue throughout the page.
   - A user can also use the left and right arrow keys to navigate between the available buttons
 - To close the InfoBar the action or close button needs to be pressed.
-  - Note: Escape will not close the InfoBar and will instead bubble up the command to the parent components. 
+  - Note: Escape will not close the InfoBar and will instead bubble up the command to the parent components.
 
 ### Gamepad
 
-- After navigating to the control via spatial navigation, the user can focus into the InfoBar with the 'A' button
-- Once focused in the InfoBar control, spatial navigation will iterate focus across the actionable items.
+- The actionable items in the control can be navigated to via spatial navigation.
 - The 'A' button will interact with the item in focus, such as "press" the action or close buttons
-- The InfoBar can be closed via pressing the 'X' close button, pressing the action button, or the 'B' button which will return focus to the element previously in focus or the InfoBar as a singular component. 
+- The InfoBar can be closed via pressing the 'X' close button, pressing the action button, or the 'B' button which will return focus to the element previously in focus.
 ### Assistive Technologies
 
 InfoBar will leverage the existing APIs used by Windows Notifications. 
@@ -286,7 +285,8 @@ The behavior of the InfoBar will change for assistive technologies like Narrator
     - The InfoBar message will not be silenced via keyboarding or focus.
   - Default and Success: The InfoBar will appear to the user after the current queued content is iterated through and Narrator will then say "Click up to move to new information from" + App Name + Notification Contents. 
     - The InfoBar message can be easily silenced via keyboarding, focus change, or the control key. However, a user can also navigate to the InfoBar via tabbing if silenced.
-- For all InfoBars, Ctrl + Narrator + Up arrow will move focus to the InfoBar after the user is notified and read the element in focus.
+- For all InfoBars, Ctrl + Narrator + Up arrow will move focus to the first actionable item in the InfoBar after the user is notified and read the element in focus.
+- A user can press F6 to navigate to the first actionable item in the InfoBar.
 - For touch screen devices, swiping will navigate through all actionable items, regardless of group, in order. When Swiping on the last element in the notification, focus will move to Narrator's fullscreen invisible Close Button and the user may double tap the screen to close the window. Swiping again will move focus out of the notification.
 
 ## Enter and Exit Usability
@@ -326,7 +326,7 @@ Icons and color should not be the only UI components signifying meaning for your
 Text in your notification will not be a constant length in all languages. For the Title and Message property this may impact whether your notification will expand to a second line. 
 We recommend you avoid positioning based on message length or other UI elements set to a specific language.
 
-The notification will follow standard mirroring behavior when localized to/from languages that are right to left (RTL) or left to right (LTR). The icon will not mirror unless there is directionality. 
+The notification will follow standard mirroring behavior when localized to/from languages that are right to left (RTL) or left to right (LTR). The icon will only mirror if there is directionality.
 
 Please view the guidance for [Adjust layout and fonts, and support RTL](https://docs.microsoft.com/en-us/windows/uwp/design/globalizing/adjust-layout-and-fonts--and-support-rtl) for more information about text localization in your notification.
 
@@ -501,6 +501,7 @@ Recommendations from ryandemo:
 - Average length of time the notifications display on screen until dismissal, correlated to severity
 - How often color and/or icon customization Occurs
 - How often multiple info bars appear at once and the typical distribution
+- F6 usage
 
 ## Intended features for InfoBar v2
 - Built-in support for floating notifications, DisplayMode property to switch between "Docked" (current) and "Floating" mode
