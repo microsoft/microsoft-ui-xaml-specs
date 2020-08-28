@@ -108,18 +108,18 @@ Mockups in various Severities to be added.
 ![Mockup of InfoBar with no content in different Severity colors and icons for dark mode](images/Docked_ToolkitSeverityDark.png)
 
 ## Programmatic dismiss in info bar
-An info bar can be dismissed by the user via the close button or programmatically. If the notification is required to be in view until the status is resolved and you would like to remove the close button from view, you can set the IsCloseButtonVisible property to false.
-By default, the close button will appear as an 'X' and the IsCloseButtonVisible property is therefore set to true.
+An info bar can be dismissed by the user via the close button or programmatically. If the notification is required to be in view until the status is resolved and you would like to remove the ability for the user to dismiss the info bar, you can set the IsUserDismissable property to false.
+By default, the close button will appear as an 'X' and the IsUserDismissable property is therefore set to true.
 
 
 XAML
 ```xml
 <StackPanel x:Name="ContentArea">
     <controls:InfoBar x:Name="NoInternetNotification"
-        Severity="Critical"
+        Severity="Error"
         Title="No Internet"
         Message="Reconnect to continue working."
-        IsCloseButtonVisible="False">
+        IsUserDismissable="False">
     </controls:InfoBar>
 </StackPanel>
 ```
@@ -138,19 +138,21 @@ XAML
     <controls:InfoBar x:Name="NewPhotosNotification"
         Title="New Photos From Cloud"
         Message="Sync your latest photos to the Cloud"
-        ActionButtonContent="Upload"
         Background="#FF557EB9"
         IconSource="Camera">
+        <controls:InfoBar.ActionButton>
+            <Button Content="Upload" Command="{x:Bind UploadPhoto}"/>
+        </controls:InfoBar.ActionButton>
     </controls:InfoBar>
 </StackPanel>
 ```
 
 ![A mockup of an InfoBar in the top of the content area. The notification's title is "New Photos From Cloud" and it's message is "Sync your latest photos to the Cloud". It has a bright green accent color and a "Camera" icon.](images/Custom_IconColor.png)
 
-## Add buttons
+## Add an action button
 By default, an 'X' close button will appear as the right most component in the bar.
 
-An additional action button can be added by setting the ActionButtonContent and ActionButtonCommand properties. There is also built-in support for a single hyperlink button to ensure text contrast remains accessible with the various background colors. We recommend that only a single action button or hyperlink button is set. Outside of these, additional action buttons and hyperlinks can be added via custom content.
+An additional action button can be added by defining your own button that inherits [ButtonBase](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.Primitives.ButtonBase) and setting it in the ActionButton property. Custom styling will be applied to action buttons of type Button and HyperlinkButton for consistency and accessibility. Outside of the ActionButton, additional action buttons can be added via custom content and will appear below the message.
 
 XAML
 ```xml
@@ -158,9 +160,10 @@ XAML
     <controls:InfoBar x:Name="UnsuccessfulSaveNotification"
         Severity="Warning"
         Title="Error while saving"
-        Message="Your document was unable to be saved."
-        ActionButtonContent="Try again"
-        ActionButtonCommand="{x:Bind SaveDocuments}">
+        Message="Your document was unable to be saved.">
+        <controls:InfoBar.ActionButton>
+            <Button Content="Try Again" Command="{x:Bind SaveDocuments}"/>
+        </controls:InfoBar.ActionButton>
     </controls:InfoBar>
 </StackPanel>
 ```
@@ -173,11 +176,11 @@ XAML
     <controls:InfoBar x:Name="ConnectionErrorNotification"
         Title="Error while saving"
         Message="Lorem ipsum long message">
-        <controls:InfoBar.HyperlinkButtonContent>
+        <controls:InfoBar.ActionButton>
             <HyperlinkButton
                 Content="www.microsoft.com" 
                 NavigateUri="http://www.microsoft.com"/>
-        <controls:InfoBar.HyperlinkButtonContent/>
+        <controls:InfoBar.ActionButton/>
     </controls:InfoBar>
 </StackPanel>
 ```
@@ -185,23 +188,23 @@ XAML
 ![A mockup of an InfoBar with a message expanding multiple lines and a hyperlink](images/Docked_MultiLineIconTitleHyperlink.png)
 
 ## Custom content
-Content can be added to an InfoBar using the Content property. It will appear below the message and above the action or hyperlink buttons if defined. The InfoBar will expand to fit the content defined.
+Content can be added to an InfoBar using the Content property. It will appear below the message and above the action or hyperlink buttons if defined and multiline. The InfoBar will expand to fit the content defined.
 
 XAML
 ```xml
 <StackPanel x:Name="ContentArea">
     <controls:InfoBar x:Name="TermsAndConditionsNotification"
-        Title="Update Complete!"  
-        Message="Before you can proceed you must read and accept the new Terms and Conditions.">
-        <controls:InfoBar.HyperlinkButtonContent>
-            <HyperlinkButton Content="Read here" NavigateUri="www.microsoft.com"/>
-        </controls:InfoBar.HyperlinkButtonContent>
+        Title="Backup in progress"  
+        Message="Your documents are being saved to the cloud">
+        <controls:InfoBar.Content>
+            <ProgressBar IsIndeterminate="True"/>
+        </controls:InfoBar.Content>
     </controls:InfoBar>
 </StackPanel>
 ```
 
-![A sketch of an InfoBar in its default state with a hyperlink and message](images/Information_CustomContent.jpg)
-Mockup with custom content to be added.
+![A mockup of an InfoBar in its default state with an indeterminate progress bar](images/Default_CustomContent.gif)
+
 
 ## Content wrapping
 By default, the text set in the Message property will wrap vertically in the control underneath the other visual components.
@@ -209,7 +212,7 @@ By default, the text set in the Message property will wrap vertically in the con
 XAML
 ```xml
 <StackPanel x:Name="ContentArea">
-    <controls:InfoBar x:Name="DefaultCriticalNotification"
+    <controls:InfoBar x:Name="DefaultErrorNotification"
         Severity="Error"
         Title="Message Title"  
         Message="This message is very long, so long in fact it needs to wrap to a second line in the notification">
@@ -217,11 +220,8 @@ XAML
 </StackPanel>
 ```
 
-![A sketch of an InfoBar in its default state with a very long message](images/Critical_Wrapping.jpg)
-
 ![A mockup of a multiline message InfoBar](images/Docked_MultiLineIconTitle.png)
 ![A mockup of a multiline title and message InfoBar](images/Docked_MultiLineLongTitle.png)
-
 
 ## Canceling and deferring close
 The Closing event can be used to cancel and/or defer the close of an InfoBar. This can be used to keep the InfoBar open or allow time for an action or custom animation to occur. When the closing of an InfoBar is canceled, IsOpen will go back to true, however, it will stay false during the deferral. A programmatic close can also be canceled.
@@ -361,43 +361,32 @@ Recommended patterns for informational notifications where the user needs to vie
 |:-:|:--|
 | IsOpen| Gets or sets a value that determines the visibility of the InfoBar. By default, is set to false. |
 | Severity | Gets or sets a value that indicates the  color and icon to style the InfoBar. It will also define the assistive technology settings. |
-| IsCloseButtonVisible| Gets or sets a boolean that indicates whether a close button will appear
+| IsUserDismissable| Gets or sets a boolean that indicates whether the user will be able to dismiss the InfoBar.
 
 
 ### Events  
 | Name | Description |
 |:-:|:--|
-| ActionButtonClick | Occurs after the action button has been tapped. |
 | CloseButtonClick | Occurs after the close button has been tapped. |
 | Closed | Occurs after the info bar is closed. |
 | Closing |Occurs just before the info bar begins to close. |
 
-# Detailed Design
-
-TBD: Include screenshots of specific designs as the next iteration after the paper mockups.
-Includes specifics like:
-
-- Default sizing of notifications (px)
-- Exact colors for the different severity levels
-- Exact width of color area (px)
-- Margins, padding, etc.
-- Text info; font, color, boldness, etc.
 
 # API Details
 
 ```c++
 enum InfoBarCloseReason
 {
-    CloseButton,
-    Programmatic,
+    CloseButton = 0,
+    Programmatic = 1,
 };
 
 enum InfoBarSeverity
 {
-    Default,
-    Warning,
-    Error,
-    Success,
+    Error = 0,
+    Warning = 1,
+    Success = 2,
+    Default = 3,
 }
 
 runtimeclass InfoBarClosedEventArgs
@@ -412,10 +401,12 @@ runtimeclass InfoBarClosingEventArgs
     Windows.Foundation.Deferral GetDeferral();
 };
 
-// will edit/add to post prototype implementation
 unsealed runtimeclass InfoBarTemplateSettings : Windows.UI.Xaml.DependencyObject
 {
     InfoBarTemplateSettings();
+    Windows.UI.Xaml.Controls.IconElement IconElement;
+
+    static Windows.UI.Xaml.DependencyProperty IconElementProperty{ get; };
 }
 
 unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
@@ -426,52 +417,39 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
     String Message;
 
     Boolean IsOpen;
-    Boolean IsCloseButtonVisible;
+    Boolean IsUserDismissable;
     Boolean IsIconVisible;
 
-    Object ActionButtonContent;
-    Windows.UI.Xaml.Style ActionButtonStyle;
-    Windows.UI.Xaml.Input.ICommand ActionButtonCommand;
-    Object ActionButtonCommandParameter;
+    Windows.UI.Xaml.Controls.Primitives.ButtonBase ActionButton;
 
     Windows.UI.Xaml.Style CloseButtonStyle;
     Windows.UI.Xaml.Input.ICommand CloseButtonCommand;
     Object CloseButtonCommandParameter;
 
-    Windows.Ui.Xaml.Controls.HyperlinkButton HyperlinkButtonContent;
-
     InfoBarSeverity Severity;
     IconSource IconSource;
 
     InfoBarTemplateSettings TemplateSettings{ get; };
+    Object Content{ get; set; };
+    Windows.UI.Xaml.DataTemplate ContentTemplate{ get; set; };
 
-    event Windows.Foundation.TypedEventHandler<InfoBar, Object> ActionButtonClick;
     event Windows.Foundation.TypedEventHandler<InfoBar, Object> CloseButtonClick;
-    event Windows.Foundation.TypedEventHandler<InfoBar, Object> HyperlinkButtonClick;
     event Windows.Foundation.TypedEventHandler<InfoBar, InfoBarClosingEventArgs> Closing;
     event Windows.Foundation.TypedEventHandler<InfoBar, InfoBarClosedEventArgs> Closed;
 
     static Windows.UI.Xaml.DependencyProperty IsOpenProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty IsCloseButtonVisibleProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty IsIconVisibleProperty{ get; };
-
     static Windows.UI.Xaml.DependencyProperty TitleProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty MessageProperty{ get; };
-
-    static Windows.UI.Xaml.DependencyProperty ActionButtonContentProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty ActionButtonStyleProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty ActionButtonCommandProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty ActionButtonCommandParameterProperty{ get; };
-
+    static Windows.UI.Xaml.DependencyProperty SeverityProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty IconSourceProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty IsIconVisibleProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty IsUserDismissableProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty CloseButtonStyleProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty CloseButtonCommandProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty CloseButtonCommandParameterProperty{ get; };
-
-    static Windows.UI.Xaml.DependencyProperty HyperlinkButtonContentProperty{ get; };
-
-    static Windows.UI.Xaml.DependencyProperty InfoBarSeverityProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty IconSourceProperty{ get; };
-
+    static Windows.UI.Xaml.DependencyProperty ActionButton{ get; };
+    static Windows.UI.Xaml.DependencyProperty ContentProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty ContentTemplateProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty TemplateSettingsProperty{ get; };
 }
 ```
@@ -479,11 +457,15 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
 ## Theme Resources
 | Name | Description |
 |:-:|:--|
-|InfoBarSeverityErrorStatusColor | Sets the status color of the InfoBar when in the Error severity. |
-|InfoBarSeverityWarningStatusColor | Sets the status color of the InfoBar when in the Warning severity. |
-|InfoBarSeveritySuccessStatusColor | Sets the status color of the InfoBar when in the Success severity. |
-|InfoBarSeverityDefaultStatusColor | Sets the status color of the InfoBar when in the Default severity. |
-|InfoBarHyperlinkButtonColor | Sets the hyperlink button text color. <br> - Note: This is set to keep hyperlinks accessible on the variously colored backgrounds defined by the severity status colors.
+|InfoBarSeverityErrorBackground | Sets the background color of the InfoBar when in the Error severity. |
+|InfoBarSeverityWarningBackground | Sets the background color of the InfoBar when in the Warning severity. |
+|InfoBarSeveritySuccessBackground | Sets the background color of the InfoBar when in the Success severity. |
+|InfoBarSeverityDefaultBackground | Sets the background color of the InfoBar when in the Default severity. |
+|InfoBarHyperlinkForeground | Sets the hyperlink button text color. <br> - Note: This is set to keep hyperlinks accessible on the variously colored backgrounds defined by the severity background colors.
+|InfoBarFontSize | Sets the text font size of the InfoBar.
+|InfoBarMinHeight | Sets the minimum height of the InfoBar.
+|InfoBarCloseButtonSize | Sets the close button area size of the InfoBar.
+|InfoBarCloseButtonGlyphSize | Sets the close button glyph size of the InfoBar.
 
 # Appendix
 
@@ -498,12 +480,12 @@ UI Elements for InfoBar
  | Component |  Notes |
 |:---:|:---|
 | Container | - We recommend to place InfoBars in a layout control where the control can expand horizontally to the width of the content area.
-| Title | - Semi-bolded and appears left of the Icon <br> - Recommended to be 50 characters or less
-| Message | - Will appear to the right of the Title in single-height notifications, otherwise will be on a new line <br> - Recommended to be 512 characters or less
-| Hyperlink | - Will appear to the right of the Message in single-height notifications, otherwise will be on a new line <br> - TBD: Color of the hyperlink will adapt to user theme and Severity level of control.
 | Icon | - Defined by either the Severity or by IconSource <br>
+| Title | - Semi-bolded and appears right of the Icon <br> - Recommended to be 50 characters or less
+| Message | - Will appear to the right of the Title in single-height notifications, otherwise will be on a new line <br> - Recommended to be 512 characters or less
+| Hyperlink | - Will appear to the right of the Message in single-height notifications, otherwise will be on a new line
 | Close button | - Will appear as 'X' by default <br> - Can be removed via IsProgrammaticDismissal
-| Action button | - Optional <br> - Additional action buttons may be added through custom XAML content
+| Action button |  - Additional action buttons may be added through custom XAML content
 | Content | - Can be customizable to include text, hyperlinks, and any other XAML content <br> - Appears between the Title/Message and any Action or Close buttons
 
 ## Behavioral Components
@@ -511,7 +493,6 @@ UI Elements for InfoBar
 |:---:|:---|
 | Opening | - An info bar is shown by setting its IsOpen property to true. |
 | Closing | There are two ways an info bar can close: <br>- The program sets the IsOpen property to false <br> - The user invokes the Close button. <br> Use the InfoBarCloseReason to determine which case has occurred. <br> Closing can be prevented by setting the Cancel property to true. You can use a deferral to respond asynchronously to the event. |
-| Motion | - Info bars have built in open and close animations that can be customizable using Storyboards.|
 
 ## Data and Intelligence Metrics
 Recommendations from ryandemo:
@@ -527,3 +508,4 @@ Recommendations from ryandemo:
 - Positioning and re-positioning for multiple notifications
   - e.g. providing a built-in way to support a group of notifications in the bottom right corner
 - Truncation option that allows the user to expand and collapse an InfoBar with multiple lines of content
+- Potentially, an ActionContentArea to insert custom content in the same horizontal space as the other UI elements.
