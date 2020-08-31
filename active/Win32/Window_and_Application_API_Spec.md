@@ -6,7 +6,9 @@ This spec describes updates to the XAML Window and Application APIs to enable th
 
 XAML in UWP has a [Window](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Window) class which wraps a [CoreWindow](https://docs.microsoft.com/uwp/api/Windows.UI.Core.CoreWindow), and an [Application](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Application) class which wraps a [CoreApplication](https://docs.microsoft.com/uwp/api/Windows.ApplicationModel.Core.CoreApplication). For WinUI 3 this is being expanded to not require a CoreWindow or CoreApplication; Window can use an HWND and Application can run a message pump. This spec has the API additions to Application and Window to support this.
 
-Note that some existing APIs will also behave differently when running as a Desktop app. For example, the static Window.Current property today returns the Window for the current (calling) thread, but in a non-UWP app it will return null. Similarly the Window.CoreWindow property will be null when not running as UWP.
+Note that some existing APIs will also behave differently when running as a Desktop app. 
+For example, the static Window.Current property today returns the Window for the current (calling) thread, 
+but in a non-UWP app it will return null. Similarly the Window.CoreWindow property will be null when not running as UWP.
 
 > **Spec note**: Some of the APIs here are new, others have new behavior for WinUI3.
 None of the behavior for UWP apps changes.
@@ -31,7 +33,8 @@ void InitializeAndActivateWindow(Window window)
 ```
 
 In a UWP app the read-only [Window.Current](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Window.Current) 
-property returns the Window for the current thread. (A thread has at most one Window and it's created automatically on each UI thread.) 
+property returns the Window for the current thread. 
+(A thread has at most one Window and it's created automatically on each UI thread.) 
 This property returns null on a non UI thread or in a Desktop app.
 
 The following sets the content of the calling thread's Window in a UWP app and gives it keyboard focus.
@@ -80,11 +83,15 @@ window.Activate();
 
 ```
 
-> **Spec note**: no <Window.Content> tag is required because Window.Content is updating to become the [ContentPropertyAttribute](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Markup.ContentPropertyAttribute).
+> **Spec note**: no <Window.Content> tag is required because Window.Content is updating to become the
+[ContentPropertyAttribute](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Markup.ContentPropertyAttribute).
 
-In a UWP app the main thread already has a Window on it, which you can retrieve using the static [Window.Current](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Window.Current) 
-property. You can create additional windows by creating additional [CoreApplicationViews](https://docs.microsoft.com/uwp/api/Windows.ApplicationModel.Core.CoreApplicationView), 
-which are always created on a new thread, and which automatically create the following for the new thread: [ApplicationView](https://docs.microsoft.com/uwp/api/Windows.UI.ViewManagement.ApplicationView), 
+In a UWP app the main thread already has a Window on it, which you can retrieve using the static 
+[Window.Current](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Window.Current) 
+property. You can create additional windows by creating additional 
+[CoreApplicationViews](https://docs.microsoft.com/uwp/api/Windows.ApplicationModel.Core.CoreApplicationView), 
+which are always created on a new thread, and which automatically create the following for the new thread: 
+[ApplicationView](https://docs.microsoft.com/uwp/api/Windows.UI.ViewManagement.ApplicationView), 
 [CoreWindow](https://docs.microsoft.com/uwp/api/Windows.UI.Core.CoreWindow), 
 and [Window](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Window).
 
