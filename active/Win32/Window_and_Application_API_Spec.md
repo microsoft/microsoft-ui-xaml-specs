@@ -4,13 +4,17 @@ This spec describes updates to the XAML Window and Application APIs to enable th
 
 # Background
 
-XAML in UWP has a [Window](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Window) class which wraps a [CoreWindow](https://docs.microsoft.com/uwp/api/Windows.UI.Core.CoreWindow), and an [Application](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Application) class which wraps a [CoreApplication](https://docs.microsoft.com/uwp/api/Windows.ApplicationModel.Core.CoreApplication). For WinUI 3 this is being expanded to not require a CoreWindow or CoreApplication; Window can use an HWND and Application can run a message pump. This spec has the API additions to Application and Window to support this.
+XAML in UWP has a [Window](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Window) 
+class which wraps a [CoreWindow](https://docs.microsoft.com/uwp/api/Windows.UI.Core.CoreWindow), 
+and an [Application](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Application) 
+class which wraps a [CoreApplication](https://docs.microsoft.com/uwp/api/Windows.ApplicationModel.Core.CoreApplication). 
+For WinUI 3 this is being expanded to not require a CoreWindow or CoreApplication; Window can use an HWND, and Application can run a message pump. This spec has the API additions to Application and Window to support this.
 
 Note that some existing APIs will also behave differently when running as a Desktop app. 
 For example, the static Window.Current property today returns the Window for the current (calling) thread, 
 but in a non-UWP app it will return null. Similarly the Window.CoreWindow property will be null when not running as UWP.
 
-> **Spec note**: Some of the APIs here are new, others have new behavior for WinUI3.
+> **Spec note**: Some of the APIs here are new, others have new behavior for WinUI3 when running in a Desktop app.
 None of the behavior for UWP apps changes.
 
 # Examples and API Notes
@@ -20,9 +24,17 @@ None of the behavior for UWP apps changes.
 Window represents a WinUI application window. It can be used in a [UWP](https://docs.microsoft.com/en-us/windows/uwp/get-started/universal-application-platform-guide) 
 app or a Desktop app. When run in a UWP app there can only be one instance on a thread.
 
-### Examples
+### Remarks
 
-Set the content of a given window and give it keyboard focus.
+Attempting to activate (`new`) a new Window in a UWP app will fail and log a debug message.
+
+> **Implementation note:** This will use [RoOriginateError](https://docs.microsoft.com/en-us/windows/win32/api/roerrorapi/nf-roerrorapi-rooriginateerror) 
+to show an explanatory message in the debugger.
+
+Creating a new Window in a Desktop app creates a new top level HWND.
+
+### Example: Set the content of a given window and give it keyboard focus.
+
 
 ```CS
 void InitializeAndActivateWindow(Window window)
@@ -43,6 +55,8 @@ The following sets the content of the calling thread's Window in a UWP app and g
 Window.Current.Content = new TextBlock() { Text = "Hello" };
 Window.Current.Activate();
 ```
+
+### Example: Create a new window
 
 In a Desktop app you create each Window, and you can create more than one Window on a thread.
 
@@ -128,21 +142,13 @@ thread.Start();
 
 > **Spec note:** The DispatcherQueueSyncronizationContext is a new API [described here](https://github.com/microsoft/microsoft-ui-xaml-specs/pull/97)
 
-### Remarks
-
-Attempting to activate (`new`) a new Window in a UWP app will fail and log a debug message.
-
-> **Implementation note:** This will use [RoOriginateError](https://docs.microsoft.com/en-us/windows/win32/api/roerrorapi/nf-roerrorapi-rooriginateerror) 
-to show an explanatory message in the debugger.
-
-Creating a new Window in a Desktop app creates a new top level HWND.
-
 ## Window.ExtendsContentIntoTitleBar **[New]**
 
 Gets or sets a value that specifies whether the content of the window should extend into the title bar area.
 
 Setting this property to true causes the built-in title bar to be removed. 
-In a UWP app this only effects rendering, it does not affect pointer (such as mouse) behavior. 
+
+Setting this property only effects rendering, it does not affect pointer (such as mouse) behavior. 
 For example, you can still use the mouse to click down in that area and drag the window around 
 the desktop. To change that behavior use the [Window.SetTitleBar](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Window.SetTitleBar)
 API.
@@ -154,13 +160,17 @@ API.
 Makes a XAML element interact with the system as if it’s the title bar.
 
 For example, a user can move the window by dragging the XAML UIElement, 
-or invoke the window context menu by right-clicking it. As a consequence the app no longer 
-receives pointer input when the user interacts with the target UIElement or its children using touch, mouse, or pen. Although the UIElement still receive keyboard input.
+or a user can invoke the window context menu by right-clicking it. As a consequence the app no longer
+receives pointer input when the user interacts with the target UIElement or its children using touch, mouse, or pen. 
+Although the UIElement does still receive keyboard input.
 
 Only one UIElement can act as Title bar, so the last set wins. To use multiple objects, 
-developers need to wrap them in a container element (e.g. a Panel like a Grid)
+you need to wrap them in a container element (e.g. a Panel like a Grid).
 
-This method is typically used within the **new** Window's ExtendContentIntoTitleBar property 
+The rectangular area occupied by the element acts as the title bar for pointer purposes,
+even if the element is blocked by another element.
+
+This method is typically used with the Window's ExtendContentIntoTitleBar property 
 set to true in order to hide the default system title bar.
 However, even when the default system title bar is not hidden, SetTitleBar can be used to make 
 additional regions in your app behave like the title bar.
@@ -199,7 +209,7 @@ protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs ar
 }
 ```
 
-> **Spec note**: Window.SetTitleBar in UWP relies on a Composition feature that only exists for 
+> **Implementation note**: Window.SetTitleBar in UWP relies on a Composition feature that only exists for 
 system Visuals and is not yet supported for WinUI Visuals yet.  
 
 > **Implementation note**: This will be a wrap of the CoreApplicationViewTitleBar.ExtendViewIntoTitleBar
@@ -295,6 +305,11 @@ Gets the [CoreDispatcher](https://docs.microsoft.com/uwp/api/Windows.UI.Core.Cor
 public CoreDispatcher Dispatcher { get; }
 ```
 
+When running as a Desktop app, this property will be null.
+
+Most members of the Window class can only be accessed when running on the thread the object was
+created on. This property, though, can be called from any thread.
+
 ## Window.DispatcherQueue property **[NEW]**
 
 Gets the [DispatcherQueue](https://docs.microsoft.com/uwp/api/Windows.System.DispatcherQueue) object for the Window.
@@ -303,19 +318,8 @@ Gets the [DispatcherQueue](https://docs.microsoft.com/uwp/api/Windows.System.Dis
 public DispatcherQueue DispatcherQueue { get; }
 ```
 
-## Window.Compositor property
-
-Gets the Compositor for this Window. This allows to access to the Visual Layer 
-(the layer where the XAML framework sits) and use WinRT compositor APIs inside of the Window. 
-
-```CS
-public Microsoft.UI.Composition.Compositor Compositor { get; }
-```
-
-### Remarks
-
-There is one Compositor per thread, that means that all the Windows in the same thread share 
-the same Compositor.
+Most members of the Window class can only be accessed when running on the thread the object was
+created on. This property, though, can be called from any thread.
 
 ## WindowActivatedEventArgs class
 Namespace: Microsoft.UI.Xaml
@@ -485,6 +489,7 @@ Invoked when the application creates a window.
 ```CS
 protected virtual void OnWindowCreated(WindowCreatedEventArgs args)
 ```
+
 ### Parameters
 args: Event data for the event. The WindowCreatedEventArgs contains the Window object.
 
