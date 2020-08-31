@@ -6,10 +6,18 @@ These status changes affect the app as a whole and can be either critical or inf
 Critical status changes like lost internet connectivity are directly impactful to app functionality while informational status changes like an update has completed and been applied are indirectly impactful to app functionality.
 These notifications and corresponding information should be presented in a consistent, predictable, and relevant way to the user depending on the specific scenario.
 
-Currently, Teaching Tip, Content Dialog, and customizations of other flyouts and dialogs exist as options to show these notifications but these controls were not specifically designed to handle app-wide status change notifications. 
+For example the "Error while saving" message in this sample app:
+
+![initial example](images/initial-example.jpg)
+
+Currently, [TeachingTip](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TeachingTip), 
+[ContentDialog](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ContentDialog), 
+and customizations of other [Flyouts](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Flyout) and dialogs exist as options to show these notifications but these controls were not specifically designed to handle app-wide status change notifications. 
 Due to their visual layouts, inherent intrusiveness, or available features they are not sufficient for displaying notifications at an app-wide level.
 
-# Description
+This spec introduces an InfoBar WinUI (Xaml) control that an app can use for these kinds of messages.
+
+# InfoBar Class
 
 An InfoBar is a persistent, actionable, app-wide notification intended for displaying critical and/or actionable information that impact app perception or user experience.
 
