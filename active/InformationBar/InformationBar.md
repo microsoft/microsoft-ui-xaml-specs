@@ -28,8 +28,8 @@ An InfoBar will take up space in your layout and behave like any other child ele
 
 Do not use an InfoBar control to confirm or respond directly to a user action, for time-sensitive alerts, or for non-essential messages.
 
-### Remarks
-Use an InfoBar that dismiss via the user or when the status is resolved for scenarios that **directly** impact app perception or experience ⚠
+## Remarks
+Use an InfoBar that dismisses via the user or when the status is resolved for scenarios that **directly** impact app perception or experience ⚠
 
 - Internet connectivity lost
 - Error while saving a document when triggered automatically, not related to specific user action
@@ -37,7 +37,7 @@ Use an InfoBar that dismiss via the user or when the status is resolved for scen
 - Can't connect to your phone
 - The subscription to the application is expired
 
-Use an InfoBar that dismiss via the user or a timer for scenarios that **indirectly** impact app perception or experience ℹ
+Use an InfoBar that dismisses via the user or a timer for scenarios that **indirectly** impacts app perception or experience ℹ
 
 - A call has begun recording
 - Update applied with link to 'Release Notes'
@@ -46,9 +46,11 @@ Use an InfoBar that dismiss via the user or a timer for scenarios that **indirec
 - The subscription to the application is close to expiring
 
 
-#### When should a different control be used?
+## When should a different control be used?
 
-There are some scenarios where a ContentDialog, Flyout, or TeachingTip may be more appropriate to use.
+There are some scenarios where a [ContentDialog](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ContentDialog), 
+[Flyout](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Flyout), or 
+[TeachingTip](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TeachingTip) may be more appropriate to use.
 
 - For scenarios where a persistent notification is not needed, e.g. displaying information in context of a specific UI element, a [Flyout](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/flyouts) is a better option. 
 - For scenarios where the application is confirming a user action, showing information the user ***must*** read, use a [ContentDialog](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/dialogs).
@@ -62,12 +64,15 @@ For more info about choosing the right notification control, see the [Dialogs an
 An info bar can have several configurations, here are some notable ones.
 
 When an InfoBar is conveying information of a common severity, like displaying an error or warning, it can be set to have one of many severity levels to use consistent [Fluent](https://docs.microsoft.com/en-us/windows/apps/fluent-design-system) styling for it's identifiers.
+
 ![A mockup of an InfoBar in a Warning state with a close button and a message](images/Warning_NoButton.png)
 
 If a call to action is needed, an info bar can have customizable action or hyperlink buttons.
+
 ![A mockup of an InfoBar](images/Default_MessageHyperlink.png)
 
-The info bar can also be customized with its optional properties and with XAML Content to include extra buttons and other UI elements.
+The info bar can also be customized with its optional properties and with XAML content to include extra buttons and other UI elements.
+
 ![A mockup of an InfoBar with custom status color and content](images/Custom_IconColor.png)
 
 ## Create an InfoBar
@@ -111,12 +116,13 @@ Here is the visual representation of the info bar in the page.
 The type of the info bar can be set via the Severity property to automatically set a consistent status color, icon, and assistive technology settings dependent on the criticality of the notification.
 
 Mockups in various Severities to be added.
+
 ![Mockup of InfoBar with no content in different Severity colors and icons for light mode](images/Docked_ToolkitSeverity.png)
 
 ![Mockup of InfoBar with no content in different Severity colors and icons for dark mode](images/Docked_ToolkitSeverityDark.png)
 
-## Programmatic dismiss in info bar
-An info bar can be dismissed by the user via the close button or programmatically. If the notification is required to be in view until the status is resolved and you would like to remove the ability for the user to dismiss the info bar, you can set the IsUserDismissable property to false.
+## Programmatic dismiss in InfoBar
+An InfoBar can be dismissed by the user via the close button or programmatically. If the notification is required to be in view until the status is resolved and you would like to remove the ability for the user to dismiss the info bar, you can set the IsUserDismissable property to false.
 By default, the close button will appear as an 'X' and the IsUserDismissable property is therefore set to true.
 
 
@@ -134,7 +140,7 @@ XAML
 ![Mockup of an InfoBar in a Critical state with no close button](images/Critical_IconNoClose.png)
 
 ## Custom styling: status color and icon
-Outside of the pre-defined severity levels, the Background and IconSource properties can be set to customize the icon and background color. The info bar will retain the assistive technology settings of the severity defined, or default if none was defined.
+Outside of the pre-defined severity levels, the Background and IconSource properties can be set to customize the icon and background color. The InfoBar will retain the assistive technology settings of the severity defined, or default if none was defined.
 
 A custom background color can be set via the standard Background property and will override the color set by Severity. Please keep in mind content readability and accessibility when setting your own color.
 
@@ -160,7 +166,9 @@ XAML
 ## Add an action button
 By default, an 'X' close button will appear as the right most component in the bar.
 
-An additional action button can be added by defining your own button that inherits [ButtonBase](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.Primitives.ButtonBase) and setting it in the ActionButton property. Custom styling will be applied to action buttons of type Button and HyperlinkButton for consistency and accessibility. Outside of the ActionButton, additional action buttons can be added via custom content and will appear below the message.
+An additional action button can be added by defining your own button that inherits [ButtonBase](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.Primitives.ButtonBase) and setting it in the ActionButton property. Custom styling will be applied to action buttons of type [Button](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Button) 
+and [HyperlinkButton](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.HyperlinkButton) 
+for consistency and accessibility. Outside of the ActionButton property, additional action buttons can be added via custom content and will appear below the message.
 
 XAML
 ```xml
@@ -229,6 +237,7 @@ XAML
 ```
 
 ![A mockup of a multiline message InfoBar](images/Docked_MultiLineIconTitle.png)
+
 ![A mockup of a multiline title and message InfoBar](images/Docked_MultiLineLongTitle.png)
 
 ## Canceling and deferring close
