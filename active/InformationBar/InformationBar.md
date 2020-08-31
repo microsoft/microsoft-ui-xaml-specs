@@ -15,11 +15,12 @@ Currently, [TeachingTip](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Co
 and customizations of other [Flyouts](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Flyout) and dialogs exist as options to show these notifications but these controls were not specifically designed to handle app-wide status change notifications. 
 Due to their visual layouts, inherent intrusiveness, or available features they are not sufficient for displaying notifications at an app-wide level.
 
+This spec introduces an InfoBar API to ...
 This spec introduces an InfoBar WinUI (Xaml) control that an app can use for these kinds of messages.
 
 # InfoBar Class
 
-An InfoBar is a persistent, actionable, app-wide notification intended for displaying critical and/or actionable information that impact app perception or user experience.
+Represents an informational control that is visible but does not interfere with the user. 
 
 ## Is this the right control?
 Use an InfoBar control when a user should be informed of, acknowledge, or take action on a message. By default the notification will remain in the content area until dismissed by the user but will not necessarily break user flow.
