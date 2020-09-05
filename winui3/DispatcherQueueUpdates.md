@@ -159,3 +159,15 @@ runtimeclass DispatcherQueueController
 
 _This is a proposal to make the sync context automatic on all threads_
 
+For the DispatcherQueueSynchronizationContext to be associated on a thread, something
+somewhere needs to set it. In the example here the thread is created in c# and the sync
+context is immediately set. But what if you have a c++ app creating a UI thread and
+it's running a c# component?
+
+A possible solution:
+* Add a static event named something like DispatcherQueue.AttachedToThread
+which is raised whenever a DQ is put onto a thread (and raised on that thread).
+* In DispatcherQueueSynchronizationContext, add [module initialization code](https://github.com/dotnet/csharplang/issues/2608)
+that registers for this event.
+* In the handler, call SetSynchronizationContext (after checking that there isn't one already set).
+
