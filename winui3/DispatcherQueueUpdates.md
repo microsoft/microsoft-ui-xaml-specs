@@ -74,14 +74,38 @@ See also [CreateDispatcherQueueController](https://docs.microsoft.com/en-us/wind
 
 # Examples
 
+## Creating a new thread controlled by a DispatcherQueue
+
+Create a new thread and run a Window on it.
+
+> Note that this sample requires WinUI3 running in a Desktop app
+
+```cs
+var controller = DispatcherQueueController.CreateOnDedicatedThread();
+
+_ = controller.DispatcherQueue.TryEnqueue(() =>
+{
+    var syncContext = new DispatcherQueueSyncronizationContext();
+    SynchronizationContext.SetSynchronizationContext(syncContext);
+
+    var window = new Window();
+    window.Content = new TextBlock() { Text = "Hello" };
+    window.Activate();
+});
+```
+
+## Creating a DispatcherQueue for the current thread
+
 This example shows a thread ensuring it has a DispatcherQueue, setting a Synchronization
 context onto the thread that uses that queue, and then goes into a message pump.
+
+> In a WinUI you typically don't need to write this code for the initial UI thread, as it's
+automatically generated.
 
 ```cs
 static void Run()
 {
     // Ensure we have a DispatcherQueue on this thread. 
-    // For example in a WinUI app, one is created automatically.
     if(DispatcherQueue.GetForCurrentThread() == null)
     {
         DispatcherQueueController.CreateOnCurrentThread();
@@ -132,3 +156,6 @@ runtimeclass DispatcherQueueController
 ```
 
 # Appendix
+
+_This is a proposal to make the sync context automatic on all threads_
+
