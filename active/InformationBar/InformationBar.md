@@ -29,7 +29,7 @@ An InfoBar will take up space in your layout and behave like any other child ele
 Do not use an InfoBar control to confirm or respond directly to a user action, for time-sensitive alerts, or for non-essential messages.
 
 ## Remarks
-Use an InfoBar that is dismissed by the user or when the status is resolved for scenarios that **directly** impact app perception or experience ⚠
+Use an InfoBar that is dismissed by the user or when the status is resolved for scenarios that **directly** impact app perception or experience
 
 - Internet connectivity lost
 - Error while saving a document when triggered automatically, not related to specific user action
@@ -37,7 +37,7 @@ Use an InfoBar that is dismissed by the user or when the status is resolved for 
 - Can't connect to your phone
 - The subscription to the application is expired
 
-Use an InfoBar that is dismissed by the user for scenarios that **indirectly** impacts app perception or experience ℹ
+Use an InfoBar that is dismissed by the user for scenarios that **indirectly** impact app perception or experience
 
 - A call has begun recording
 - Update applied with link to 'Release Notes'
@@ -65,21 +65,14 @@ For more info about choosing the right notification control, see the [Dialogs an
 
 The XAML below describes an inline InfoBar with the default styling for an informational notification. An info bar can be created anywhere in the element tree or code behind. In this example the InfoBar expands to fill the width of the StackPanel layout control it resides in.
 
-By default, the InfoBar will not be visible. Set the IsOpen property to true in the XAML or code behind to display the information.
+By default, the InfoBar will not be visible. Set the IsOpen property to true in the XAML or code behind to display the InfoBar.
 
 XAML
 ```xml
-<Grid>
-    <!--Other UI content -->
-    <StackPanel x:Name="ContentArea">
-        <controls:InfoBar x:Name="UnsuccessfulSaveNotification"
-            Severity="Warning"
-            Title="Error while saving"
-            Message="Your document was unable to be saved.">
-        </controls:InfoBar>
-    </StackPanel>
-    <!--Other UI content -->
-<Grid>
+<controls:InfoBar x:Name="UpdateAvailableNotification"
+    Title="Update available."
+    Message="Restart the application to apply the latest update.">
+</controls:InfoBar>
 ```
 C#
 ```C#
@@ -87,32 +80,26 @@ public MainPage()
 {
     this.InitializeComponent();
 
-    if(!SaveSuccessful())
+    if(IsUpdateAvailable())
     {
-        UnsuccessfulSaveNotification.IsOpen = true;
+        UpdateAvailableNotification.IsOpen = true;
     }
 }
 ```
 
-Here is the visual representation of the info bar in the page.
-
-TBD
+![A mockup of an InfoBar in the default state with a close button and a message](images/Default_TitleMessage.png)
 
 ## Using pre-defined severity levels
-The type of the info bar can be set via the Severity property to automatically set a consistent status color, icon, and assistive technology settings dependent on the criticality of the notification.
-
+The type of the info bar can be set via the Severity property to automatically set a consistent status color, icon, and assistive technology settings dependent on the criticality of the notification. If no Severity is set, the default informational styling is applied.
 
 XAML
 ```xml
-<StackPanel x:Name="ContentArea">
-    <controls:InfoBar x:Name="UnsuccessfulSaveNotification"
-        Severity="Warning"
-        Title="Error while saving"
-        Message="Your document was unable to be saved.">
-    </controls:InfoBar>
-</StackPanel>
+<controls:InfoBar x:Name="SubscriptionExpiringNotification"
+    Severity="Warning"
+    Title="Your subscription is expiring in 3 days"
+    Message="Renew your subscription to keep all functionality" />
 ```
-![A mockup of an InfoBar in a Warning state with a close button and a message](images/Warning_NoButton.png)
+![A mockup of an InfoBar in a Warning state with a close button and a message](images/Warning_TitleMessage.png)
 
 ## Programmatic dismiss in InfoBar
 An InfoBar can be dismissed by the user via the close button or programmatically. If the notification is required to be in view until the status is resolved and you would like to remove the ability for the user to dismiss the info bar, you can set the IsUserDismissable property to false.
@@ -121,18 +108,15 @@ By default, the close button will appear as an 'X' and the IsUserDismissable pro
 
 XAML
 ```xml
-<StackPanel x:Name="ContentArea">
-    <controls:InfoBar x:Name="NoInternetNotification"
-        Severity="Error"
-        Title="No Internet"
-        Message="Reconnect to continue working."
-        IsUserDismissable="False">
-    </controls:InfoBar>
-</StackPanel>
+<controls:InfoBar x:Name="NoInternetNotification"
+    Severity="Error"
+    Title="No Internet"
+    Message="Reconnect to continue working."
+    IsUserDismissable="False" />
 ```
-![Mockup of an InfoBar in a Critical state with no close button](images/Critical_IconNoClose.png)
+![Mockup of an InfoBar in an Error state with no close button](images/Error_NoClose.png)
 
-## Custom styling: status color and icon
+## Customization: Background color and icon
 Outside of the pre-defined severity levels, the Background and IconSource properties can be set to customize the icon and background color. The InfoBar will retain the assistive technology settings of the severity defined, or default if none was defined.
 
 A custom background color can be set via the standard Background property and will override the color set by Severity. Please keep in mind content readability and accessibility when setting your own color.
@@ -141,20 +125,17 @@ A custom icon can be set via the IconSource property. By default, an icon will b
 
 XAML
 ```xml
-<StackPanel x:Name="ContentArea">
-    <controls:InfoBar x:Name="NewPhotosNotification"
-        Title="New Photos From Cloud"
-        Message="Sync your latest photos to the Cloud"
-        Background="#FF557EB9"
-        IconSource="Camera">
-        <controls:InfoBar.ActionButton>
-            <Button Content="Upload" Command="{x:Bind UploadPhoto}"/>
-        </controls:InfoBar.ActionButton>
-    </controls:InfoBar>
-</StackPanel>
+<controls:InfoBar x:Name="CallRecordingNotification"
+    Title="Recording started"
+    Message="Your call has begun recording."
+    Background="{StaticResource LavenderBackgroundBrush}">
+    <controls:InfoBar.IconSource>
+        <controls:SymbolIconSource Symbol="Phone" />
+    </controls:InfoBar.IconSource>
+</controls:InfoBar>
 ```
 
-![A mockup of an InfoBar in the top of the content area. The notification's title is "New Photos From Cloud" and it's message is "Sync your latest photos to the Cloud". It has a bright green accent color and a "Camera" icon.](images/Custom_IconColor.png)
+![A mockup of an InfoBar in the default state with a custom background color and icon](images/Custom_IconColor.png)
 
 ## Add an action button
 By default, an 'X' close button will appear as the right most component in the bar.
@@ -163,71 +144,60 @@ An additional action button can be added by defining your own button that inheri
 and [HyperlinkButton](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.HyperlinkButton) 
 for consistency and accessibility. Outside of the ActionButton property, additional action buttons can be added via custom content and will appear below the message.
 
-XAML
 ```xml
-<StackPanel x:Name="ContentArea">
-    <controls:InfoBar x:Name="UnsuccessfulSaveNotification"
-        Severity="Warning"
-        Title="Error while saving"
-        Message="Your document was unable to be saved.">
-        <controls:InfoBar.ActionButton>
-            <Button Content="Try Again" Command="{x:Bind SaveDocuments}"/>
-        </controls:InfoBar.ActionButton>
-    </controls:InfoBar>
-</StackPanel>
+<controls:InfoBar x:Name="NoInternetNotification"
+    Severity="Error"
+    Title="No Internet"
+    Message="Reconnect to continue working.">
+    <controls:InfoBar.ActionButton>
+        <Button Content="Network Settings"/>
+    </controls:InfoBar.ActionButton>
+</controls:InfoBar>
 ```
 
-![A mockup of an InfoBar with a single line message and an action button](images/Warning_Button.png)
+![A mockup of an InfoBar with a single line message and an action button](images/Error_ActionButton.png)
 
 XAML
 ```xml
-<StackPanel x:Name="ContentArea">
-    <controls:InfoBar x:Name="ConnectionErrorNotification"
-        Title="Error while saving"
-        Message="Lorem ipsum long message">
-        <controls:InfoBar.ActionButton>
-            <HyperlinkButton
-                Content="www.microsoft.com" 
-                NavigateUri="http://www.microsoft.com"/>
-        <controls:InfoBar.ActionButton/>
-    </controls:InfoBar>
-</StackPanel>
+<controls:InfoBar x:Name="TermsAndConditionsUpdatedNotification"
+    Title="Terms and Conditions Updated"
+    Message="Dismissal of this message implies agreement to the updated Terms and Conditions. Please view the changes on our website.">
+    <controls:InfoBar.ActionButton>
+        <HyperlinkButton
+            Content="Terms and Conditions Sep 2020" 
+            NavigateUri="http://www.microsoft.com"/>
+    <controls:InfoBar.ActionButton/>
+</controls:InfoBar>
 ```
-![A mockup of an InfoBar with a single line message and hyperlink](images/Default_MessageHyperlink.png)
-![A mockup of an InfoBar with a message expanding multiple lines and a hyperlink](images/Docked_MultiLineIconTitleHyperlink.png)
+![A mockup of an InfoBar with a message expanding multiple lines and a hyperlink](images/Default_Hyperlink.png)
 
 ## Content wrapping
-The text set in the Message property will wrap vertically in the control underneath the other visual components if the control is no longer able to expand horizontally. The action button will also wrap in its own line.
+The text set in the Message property will automatically wrap vertically in the control underneath the other visual components if the control is no longer able to expand horizontally. The action button will also wrap in its own line.
 
 XAML
 ```xml
-<StackPanel x:Name="ContentArea">
-    <controls:InfoBar x:Name="DefaultErrorNotification"
-        Severity="Error"
-        Title="Message Title"  
-        Message="This message is very long, so long in fact it needs to wrap to a second line in the notification">
-    </controls:InfoBar>
-</StackPanel>
+<controls:InfoBar x:Name="BackupCompleteNotification"
+    Severity="Success"
+    Title="Backup complete: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."  
+    Message="All documents were uploaded successfully. Ultrices sagittis orci a scelerisque. Aliquet risus feugiat in ante metus dictum at tempor commodo. Auctor augue mauris augue neque gravida." />
 ```
 
-![A mockup of a multiline message InfoBar](images/Docked_MultiLineIconTitle.png)
+![A mockup of a multiline title and message InfoBar](images/Success_ContentWrapping.png)
 
-![A mockup of a multiline title and message InfoBar](images/Docked_MultiLineLongTitle.png)
 
 ## Custom content
 XAML content can be added to an InfoBar using the Content property. It will appear in its own line below the rest of the control content. The InfoBar will expand to fit the content defined.
 
 XAML
 ```xml
-<StackPanel x:Name="ContentArea">
-    <controls:InfoBar x:Name="TermsAndConditionsNotification"
-        Title="Backup in progress"  
-        Message="Your documents are being saved to the cloud">
-        <controls:InfoBar.Content>
-            <ProgressBar IsIndeterminate="True"/>
-        </controls:InfoBar.Content>
-    </controls:InfoBar>
-</StackPanel>
+<controls:InfoBar x:Name="BackupInProgressNotification"
+    Title="Backup in progress"  
+    Message="Your documents are being saved to the cloud"
+    IsUserDismissable="False">
+    <controls:InfoBar.Content>
+        <ProgressBar IsIndeterminate="True" Margin="0,0,0,6"/>
+    </controls:InfoBar.Content>
+</controls:InfoBar>
 ```
 
 ![A mockup of an InfoBar in its default state with an indeterminate progress bar](images/Default_CustomContent.gif)
@@ -264,7 +234,7 @@ The behavior of the InfoBar will change for assistive technologies like Narrator
 | Success | Processing_All| Add new item to the end of the queue. <br><br> Will be added to the end of the queue meaning all existing queued text will need to be spoken before this text will be spoken. <br><br>Focus, keyboard and control will silence/flush them all
 | Default | Processing_All | See above
 
-#### Narrator
+#### Screen readers
 
 - Entry behavior for InfoBars based on Severity:
   - Error and Warning: The most recently alerted InfoBar will take priority over other queued content and Narrator will say "Click up to move to new information from" + App Name + Notification Contents. 
