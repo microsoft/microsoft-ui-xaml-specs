@@ -251,6 +251,9 @@ The InfoBar should not appear and disappear from view rapidly to prevent flashin
 
 For InfoBars that automatically enter and exit the view via an app status condition, we recommend you include logic in your application to prevent content from appearing or disappearing rapidly or multiple times in a row. However, in general, this control should be used for long-lived status messages.
 
+### Updating the InfoBar
+Once the control is open, any changes made to the various properties like updating the message or Severity will not raise a notification event. If you would like to inform users that use screen readers of the InfoBar's updated content we recommend you close and re-open the control to trigger the event.
+
 ### Inline messages offsetting content
 For InfoBars that are inline with other UI content, keep in mind how the rest of the page will responsively react to the addition of the element.
 
@@ -391,12 +394,9 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
 ### Notable Theme Resources
 | Name | Description |
 |:-:|:--|
-|InfoBarSeverityErrorBackgroundBrush | Sets the background brush of the InfoBar when in the Error severity. |
-|InfoBarSeverityWarningBackgroundBrush | Sets the background brush of the InfoBar when in the Warning severity. |
-|InfoBarSeveritySuccessBackgroundBrush | Sets the background brush of the InfoBar when in the Success severity. |
-|InfoBarSeverityDefaultBackgroundBrush | Sets the background brush of the InfoBar when in the Default severity. |
 |InfoBarHyperlinkForeground | Sets the hyperlink button text color. <br> - Note: This is set to keep hyperlinks accessible on the variously colored backgrounds defined by the severity background colors.
 |InfoBarCloseButtonStyle | Sets the close button style of the InfoBar and contains the following properties: <br> - Width <br> - Height <br> - VerticalAlignment <br> - Background <br> - Margin <br> - CornerRadius
+|InfoBarIconFontSize | Sets the icon size of the InfoBar. <br> - Note: Custom icons set via the IconSource property will not resize to 20px unless they are in the standard symbol set.
 
 ### All Theme Resources
 - InfoBarSeverityErrorBackgroundBrush
@@ -463,7 +463,7 @@ UI Elements for InfoBar
 | Closing | There are two ways an info bar can close: <br>- The program sets the IsOpen property to false <br> - The user invokes the Close button. <br> Use the InfoBarCloseReason to determine which case has occurred. <br> Closing can be prevented by setting the Cancel property to true. You can use a deferral to respond asynchronously to the event. |
 
 ### Canceling and deferring close
-The Closing event can be used to cancel and/or defer the close of an InfoBar. This can be used to keep the InfoBar open or allow time for an action or custom animation to occur. When the closing of an InfoBar is canceled, IsOpen will go back to true, however, it will stay false during the deferral. A programmatic close can also be canceled.
+The Closing event can be used to cancel and/or defer the close of an InfoBar. This can be used to keep the InfoBar open or allow time for a custom action to occur. When the closing of an InfoBar is canceled, IsOpen will go back to true, however, it will stay false during the deferral. A programmatic close can also be canceled.
 
 XAML
 ```xml
@@ -484,6 +484,7 @@ public void InfoBar_Closing(InfoBar sender, InfoBarClosingEventArgs args)
     
 }
 ```
+
 ## Data and Intelligence Metrics
 - Developer validation
   - Number of apps using InfoBar to ensure the feature has received enough feedback before release, 2+.
