@@ -227,7 +227,7 @@ InfoBar will leverage the existing APIs used by Windows Notifications.
 
 The behavior of the InfoBar will change for assistive technologies like Narrator depending on the Severity set by the developer. As Error and Warning InfoBars are intended to be used for scenarios that directly impact app experience they should interrupt the user more than InfoBars that are informational. View [NotificationProcessing ](https://docs.microsoft.com/en-us/windows/win32/api/uiautomationcore/ne-uiautomationcore-notificationprocessing) docs for more information on the varied intended behavior.
 
-| Severity |  NotificationProcessing | Behavior in Narrator|
+| Severity |  NotificationProcessing | Behavior in Screen Readers|
 |:--- | :---| :---|
 | Error | NotificationProcessing_ImportantAll| Add new item to the end of the queue. It doesn’t matter the source, what is currently speaking or any other items in the queue queued with a higher priority than normal text. <br><br> This will cause it to get spoken after the current utterance/string finishes. Meaning it won't interrupt the speech but it will queue itself next to be spoken, ahead of anything already queued. <br><br> Focus and keyboard will NOT interrupt or flush, pressing control will silence and flush all |
 | Warning | NotificationProcessing_ImportantAll| See above |
@@ -237,13 +237,13 @@ The behavior of the InfoBar will change for assistive technologies like Narrator
 #### Screen readers
 
 - Entry behavior for InfoBars based on Severity:
-  - Error and Warning: The most recently alerted InfoBar will take priority over other queued content and Narrator will say "Click up to move to new information from" + App Name + Notification Contents. 
+  - Error and Warning: The most recently alerted InfoBar will take priority over other queued content and screen readers will say "Click up to move to new information from" + App Name + Notification Contents. 
     - The InfoBar message will not be silenced via keyboarding or focus.
-  - Default and Success: The InfoBar will appear to the user after the current queued content is iterated through and Narrator will then say "Click up to move to new information from" + App Name + Notification Contents. 
+  - Default and Success: The InfoBar will appear to the user after the current queued content is iterated through and screen readers will then say "Click up to move to new information from" + App Name + Notification Contents. 
     - The InfoBar message can be easily silenced via keyboarding, focus change, or the control key. However, a user can also navigate to the InfoBar via tabbing if silenced.
 - For all InfoBars, Ctrl + Narrator + Up arrow will move focus to the first actionable item in the InfoBar after the user is notified and read the element in focus.
 - A user can press F6 to navigate to the first actionable item in the InfoBar.
-- For touch screen devices, swiping will navigate through all actionable items, regardless of group, in order. When Swiping on the last element in the notification, focus will move to Narrator's fullscreen invisible Close Button and the user may double tap the screen to close the window. Swiping again will move focus out of the notification.
+- For touch screen devices, swiping will navigate through all actionable items, regardless of group, in order. When Swiping on the last element in the notification, focus will move to the screen readers's fullscreen invisible Close Button and the user may double tap the screen to close the window. Swiping again will move focus out of the notification.
 
 ## Enter and Exit Usability
 ### Flashing content
@@ -388,17 +388,53 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
 ```
 
 ## Theme Resources
+### Notable Theme Resources
 | Name | Description |
 |:-:|:--|
-|InfoBarSeverityErrorBackground | Sets the background color of the InfoBar when in the Error severity. |
-|InfoBarSeverityWarningBackground | Sets the background color of the InfoBar when in the Warning severity. |
-|InfoBarSeveritySuccessBackground | Sets the background color of the InfoBar when in the Success severity. |
-|InfoBarSeverityDefaultBackground | Sets the background color of the InfoBar when in the Default severity. |
+|InfoBarSeverityErrorBackgroundBrush | Sets the background brush of the InfoBar when in the Error severity. |
+|InfoBarSeverityWarningBackgroundBrush | Sets the background brush of the InfoBar when in the Warning severity. |
+|InfoBarSeveritySuccessBackgroundBrush | Sets the background brush of the InfoBar when in the Success severity. |
+|InfoBarSeverityDefaultBackgroundBrush | Sets the background brush of the InfoBar when in the Default severity. |
 |InfoBarHyperlinkForeground | Sets the hyperlink button text color. <br> - Note: This is set to keep hyperlinks accessible on the variously colored backgrounds defined by the severity background colors.
-|InfoBarFontSize | Sets the text font size of the InfoBar.
-|InfoBarMinHeight | Sets the minimum height of the InfoBar.
-|InfoBarCloseButtonSize | Sets the close button area size of the InfoBar.
-|InfoBarCloseButtonGlyphSize | Sets the close button glyph size of the InfoBar.
+|InfoBarCloseButtonStyle | Sets the close button style of the InfoBar and contains the following properties: <br> - Width <br> - Height <br> - VerticalAlignment <br> - Background <br> - Margin <br> - CornerRadius
+
+### All Theme Resources
+- InfoBarSeverityErrorBackgroundBrush
+- InfoBarSeverityWarningBackgroundBrush
+- InfoBarSeveritySuccessBackgroundBrush
+- InfoBarSeverityDefaultBackgroundBrush
+- InfoBarHyperlinkForeground
+- InfoBarBorderBrush
+- InfoBarBorderThickness
+- InfoBarTitleFontSize
+- InfoBarTitleFontWeight
+- InfoBarMessageFontSize
+- InfoBarMessageFontWeight
+- InfoBarMinHeight
+- InfoBarCloseButtonSize
+- InfoBarCloseButtonGlyphSize
+- InfoBarDefaultIconGlyph
+- InfoBarCriticalIconGlyph
+- InfoBarWarningIconGlyph
+- InfoBarSuccessIconGlyph
+- InfoBarContentRootPadding
+- InfoBarIconMargin
+- InfoBarIconFontSize
+- InfoBarTitleHorizontalLayoutMargin
+- InfoBarTitleVerticalLayoutMargin
+- InfoBarMessageHorizontalLayoutMargin
+- InfoBarMessageVerticalLayoutMargin
+- InfoBarActionHorizontalLayoutMargin
+- InfoBarActionVerticalLayoutMargin
+- InfoBarActionButtonMinWidth
+- InfoBarActionButtonHeight
+- InfoBarActionButtonPadding
+- InfoBarActionButtonCornerRadius
+- InfoBarHyperlinkButtonFontSize
+- InfoBarHyperlinkButtonHeight
+- InfoBarHyperlinkButtonPadding
+- InfoBarCloseButtonSymbol
+- InfoBarCloseButtonStyle
 
 # Appendix
 
@@ -449,13 +485,13 @@ public void InfoBar_Closing(InfoBar sender, InfoBarClosingEventArgs args)
 }
 ```
 ## Data and Intelligence Metrics
-Recommendations from ryandemo:
-- How many buttons included correlated to severity of status message
-- Track popularity of each layout mode
-- Average length of time the notifications display on screen until dismissal, correlated to severity
-- How often color and/or icon customization Occurs
-- How often multiple info bars appear at once and the typical distribution
-- F6 usage
+- Developer validation
+  - Number of apps using InfoBar to ensure the feature has received enough feedback before release, 2+.
+- Usage metrics
+  - How long an InfoBar stays on screen for until dismissed, correlated to the Severity level to influence future usage guidance.
+  - How often F6 is used to navigate to an InfoBar to track feature usage.
+  - How often color and/or icon customization occurs to investigate other Severity types.
+  - How often multiple InfoBars are on-screen at once, correlated to the Severity levels set to influence future usage guidance.
 
 ## Features in consideration for InfoBar v2
 - Built-in support for floating notifications, DisplayMode property to switch between "Docked" (current) and "Floating" mode
