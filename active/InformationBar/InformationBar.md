@@ -155,7 +155,7 @@ for consistency and accessibility. Outside of the ActionButton property, additio
 </controls:InfoBar>
 ```
 
-![A mockup of an InfoBar with a single line message and an action button](images/Error_ActionButton.png)
+![A mockup of an InfoBar in the Error state with a single line message and an action button](images/Error_ActionButton.png)
 
 XAML
 ```xml
@@ -182,7 +182,7 @@ XAML
     Message="All documents were uploaded successfully. Ultrices sagittis orci a scelerisque. Aliquet risus feugiat in ante metus dictum at tempor commodo. Auctor augue mauris augue neque gravida." />
 ```
 
-![A mockup of a multiline title and message InfoBar](images/Success_ContentWrapping.png)
+![A mockup of an InfoBar in the Success state multiline title and message InfoBar](images/Success_ContentWrapping.png)
 
 
 ## Custom content
