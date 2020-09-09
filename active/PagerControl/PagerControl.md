@@ -4,7 +4,7 @@
 
 A UI pager is a common control that lets a user page through content, rather than scroll or pan. A common experience is to provide preview/next buttons, and a way to jump to a specific page.
 
-The absence of a standard WinUI pager control, last seen in Xaml as DataPager in Silverlight, has been a pain point in both WPF and UWP that has forced a variety of unfavorable workarounds for developers. Inclusion of this control in UWP would resolve an ecosystem gap and enable developers to efficiently deliver UI paging experiences in their applications. Through XAML Islands, it may also provide an opportunity to benefit WPF developers working with DataGrid or ListView. The scope of this control is not to provide a data paging solution at this time, but to start with UI paging as a foundation on top of which data paging may be later integrated.
+The absence of a standard WinUI pager control, last seen in Xaml as DataPager in Silverlight, has been a pain point in both WPF and WinUI that has forced a variety of unfavorable workarounds for developers. Inclusion of this control in WinUI would resolve an ecosystem gap and enable developers to efficiently deliver UI paging experiences in their applications. Through [XAML Islands](https://docs.microsoft.com/en-us/windows/apps/desktop/modernize/xaml-islands), it may also provide an opportunity to benefit WPF and WinForms developers working with DataGrid or ListView. The scope of this control is not to provide a data paging solution at this time, but to start with UI paging as a foundation on top of which data paging may be later integrated.
 
 
 ## Description
@@ -304,5 +304,4 @@ How often are developers using this control with an indefinite number of pages?
 
 ## Open Questions 
 * How does narrator handle localization? In the “page x of y” scenario how would that work if we switch from LTR to RTL?
-
 
