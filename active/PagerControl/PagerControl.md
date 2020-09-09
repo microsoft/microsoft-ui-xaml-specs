@@ -8,9 +8,6 @@ The absence of a standard WinUI pager control, last seen in Xaml as DataPager in
 
 
 ## Description
-<!-- Use this section to provide a brief description of the feature.
-For an example, see the introduction to the PasswordBox control 
-(http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
 
 A pager control is a UI component that provides a standard interaction for pagination with a layout view (ListView, GridView, ItemsRepeater, DataGrid, etc.). A pager control is independent of the layout views and does not control any of the data being displayed in the layout view. 
 
@@ -72,17 +69,15 @@ Here is the XAML for how to add a pager control to your application using the au
 XAML
 ```XAML
 <Grid>
-        <!-- DataGrid Layout -->
-        <controls:PagerControl x:Name="MainPagerControl"
-                DisplayMode="Auto"
+        <controls:DataGrid x:Name="dataGrid" 
+                Height="600" Margin="12"
+                AutoGenerateColumns="True"
+                ItemsSource="{x:Bind MyViewModel.Items}" />  
+        <muxc:PagerControl x:Name="mainPagerControl"
                 NumberOfPages="10"
                 FirstButtonVisibility="None"
-                PreviousButtonVisibility="AlwaysVisible"
-                NextButtonVisibility="AlwaysVisible"
-                LastButtonVisibility="None"
-                Prefix="Page"
-                Suffix="of 10"/>
-        </controls:PagerControl>
+                LastButtonVisibility="None"/>
+        </muxc:PagerControl>
 </Grid>
 ```
 
@@ -91,16 +86,17 @@ Below is the XAML for how to add the numerical button panel display mode. This m
 XAML
 ```XAML
 <Grid>
-        <!-- ListView Layout -->
-        <controls:PagerControl x:Name="MainPagerControl"
+         <controls:DataGrid x:Name="dataGrid" 
+                Height="600" Margin="12"
+                AutoGenerateColumns="True"
+                ItemsSource="{x:Bind MyViewModel.Items}" /> 
+        <muxc:PagerControl x:Name="MainPagerControl"
                 DisplayMode="NumericalButtonPanel"
 	        NumberOfPages="10"
                 FirstButtonVisibility="None"
-                PreviousButtonVisibility="AlwaysVisible"
-                NextButtonVisibility="AlwaysVisible"
                 LastButtonVisibility="None"
 	        EllipsisShowFirstAndLast="True">
-	</controls:PagerControl>
+	</muxc:PagerControl>
 </Grid>
 ```
 
@@ -111,17 +107,16 @@ You can customize the visibility of each of the edge buttons (the first, previou
 XAML
 ```XAML
 <Grid>
-        <!-- ListView Layout -->
-        <controls:PagerControl x:Name="MainPagerControl"
+        <controls:DataGrid x:Name="dataGrid" 
+                Height="600" Margin="12"
+                AutoGenerateColumns="True"
+                ItemsSource="{x:Bind MyViewModel.Items}" /> 
+        <muxc:PagerControl x:Name="MainPagerControl"
                 DisplayMode="ComboBox"
                 NumberOfPages="10"
-                FirstButtonVisibility="AlwaysVisible"
-                PreviousButtonVisibility="AlwaysVisible"
                 NextButtonVisibility="HiddenOnEdge"
-                LastButtonVisibility="None"
-                Prefix="Page"
-                Suffix="of 10"/>
-        </controls:PagerControl>
+                LastButtonVisibility="None"/>
+        </muxc:PagerControl>
 </Grid>
 ```
 
@@ -129,26 +124,6 @@ XAML
 
 When a user interacts with the pager control and selects an edge button or page number, the page changed event will be fired. This event will provide the index the user is coming from (previousPage) and the index the user is navigating to (currentPage). Below is a code example of how to handle this event. 
 
-XAML
-```XAML
-<Grid>
-        <!-- DataGrid Layout -->
-        <controls:PagerControl x:Name="MainPagerControl"
-                DisplayMode="Auto"
-                NumberOfPages="10"
-                FirstButtonVisibility="None"
-                PreviousButtonVisibility="AlwaysVisible"
-                NextButtonVisibility="AlwaysVisible"
-                LastButtonVisibility="None"
-                Prefix="Page"
-                Suffix="of 10"/>
-        </controls:PagerControl>
-</Grid>
-```
-C#
-(insert code sample)
-```C#
-```
 
 ## API Notes
 | Name | Description| Default | 
@@ -158,10 +133,10 @@ C#
 | NumberOfPages | Sets the max number of pages the index control will iterate through. The default will represent an infinite page range. | -1 |
 | First, Previous, Next, and Last ButtonCommand | Specially handle the button pressed event for when the end user selects the buttons. | N/A |
 | First, Previous, Next, and Last Style | Give the developer the option to customize the style by changing the text or glyph for the edge buttons.| N/A |
-| ButtonPanelShowFirstAndLast | Boolean to display the ellipses and the first and last index of the numerical button panel display mode. | True |
-| SelectedIndex | The index that is currently selected. It will default to the first index. | 0 |
-| PrefixText | Developer can change the prefix text for the combobox and number box display mode options. | "Page" |
-| SuffixText | Developer can change the suffix text for the combobox and number box display mode options. | "of (NumberofPages)". If NumberOfPages is infinite, display nothing |
+| ButtonPanelShowFirstAndLast | Note: This property only applies to the button panel display mode.Boolean to display the ellipses and the first and last index of the numerical button panel display mode. | True |
+| SelectedIndex | The 0 based index that is currently selected. It will default to the first index. | 0 |
+| PrefixText | Note: This property only applies to the combo box and number box display modes. Developer can change the prefix text for the combobox and number box display mode options. | "Page" |
+| SuffixText | Note: This property only applies to the combo box and number box display modes. Developer can change the suffix text for the combobox and number box display mode options. | "of (NumberofPages)". If NumberOfPages is infinite, display nothing |
 | PagerControlPageChangedEvent | Event that is fired when the end user selects a button from the number panel, any of the 4 directional buttons, or selects an option from the combobox or enters a number in the numberbox. This event will return the index number that the end user selected. If the end user enters a number greter than the number of pages this event will return the last page. If the end user enters a number less than 1 the event will return 1. | N/A |
 
 ### Design Components and Functionality
@@ -187,32 +162,31 @@ enum PagerDisplayMode
     ButtonPanel,
 };
 
-enum PagerButtonVisibilityBehavior
+enum PagerButtonVisibility
 {
-    Auto,
-    AlwaysVisible,
+    Visible,
     HiddenOnEdge,
     None,
 };
 
-runtimeclass PagerControlPageChangedEventArgs
+runtimeclass PagerControlSelectedIndexChangedEventArgs
 {
-    Integer NewIndex{get; };
-    Integer PreviousIndex{get; };
+    Integer NewPageIndex{get; };
+    Integer PreviousPageIndex{get; };
 };
 
 runtimeclass PagerControl
 {
     PagerControl();
 
-    PagerDisplayMode Display;
+    PagerDisplayMode DisplayMode;
     
     Integer NumberOfPages;
     
-    PagerButtonVisibilityBehavior FirstButtonVisibility;
-    PagerButtonVisibilityBehavior PreviousButtonVisibility;
-    PagerButtonVisibilityBehavior NextButtonVisibility;
-    PagerButtonVisibilityBehavior LastButtonVisibility;
+    PagerButtonVisibility FirstButtonVisibility;
+    PagerButtonVisibility PreviousButtonVisibility;
+    PagerButtonVisibility NextButtonVisibility;
+    PagerButtonVisibility LastButtonVisibility;
 
     FirstButtonCommand="FirstButtonPressedEvent"
     PreviousButtonCommand="PreviousButtonPressedEvent"
@@ -231,15 +205,16 @@ runtimeclass PagerControl
     Windows.UI.Xaml.Style NextButtonStyle;
     Windows.UI.Xaml.Style LastButtonStyle;
     
-    Boolean ButtonPanelShowFirstAndLast;
-    Integer SelectedIndex;
+    Boolean ButtonPanelAlwaysDisplayFirstPageIndex;
+    Boolean ButtonPanelAlwaysDisplayLastPageIndex;
+    Integer SelectedPageIndex;
     
     String PrefixText;
     String SuffixText;
 
-    event Windows.Foundation.TypedEventHandler<PagerControl, PagerControlPageChangedEventArgs> PageChanged;
+    event Windows.Foundation.TypedEventHandler<PagerControl, PagerControlPageChangedEventArgs> SelectedIndexChanged;
 
-    static Windows.UI.Xaml.DependencyProperty DisplayProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty DisplayModeProperty{ get; };
     
     static Windows.UI.Xaml.DependencyProperty NumberOfPagesProperty{ get; };
     
@@ -259,8 +234,9 @@ runtimeclass PagerControl
     static Windows.UI.Xaml.DependencyProperty NextButtonStyleProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty LastButtonStyleProperty{ get; };
 
-    static Windows.UI.Xaml.DependencyProperty ButtonPanelShowFirstAndLastProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty SelectedIndexProperty{get; };
+    static Windows.UI.Xaml.DependencyProperty ButtonPanelAlwaysDisplayFirstPageIndexProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty ButtonPanelAlwaysDisplayLastPageIndexProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty SelectedPageIndexProperty{get; };
     
     static Windows.UI.Xaml.DependencyProperty PrefixTextProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty SuffixTextProperty{ get; };
@@ -283,8 +259,10 @@ Any Display Mode
 ## Accessibility
 
 ### UI Automation Patterns 
-* ComboBox and NumberBox will use the control patterns already assigned to them. The pager control will use the selection provider pattern and the individual buttons will use selection item provider. 
-      * Reasoning: I did not choose the invoke control pattern because the documentation says that an element can disappear from the automation tree immediately upon being invoked. I don’t want this to happen because once the end user selects a button, an event needs to be fired to notify which page needs to be displayed. 
+* ComboBox and NumberBox will use the control patterns already assigned to them. 
+        * ComboBox and NumberBox will need to have automation names so Narrator can read "Page 5" instead of just "5". 
+* The control will implement the ISelectionItemProvider interface so narrator can tell if a given item is currently selected or not. Similar to RadioButton. 
+* The button panel display mode will need to have the PosotionInSet/SizeOfSet properties so Narrator can read "page x of y". 
 
 ### Keyboarding
 * Pager Control should be added as a navigation landmark. 
@@ -325,12 +303,6 @@ How often are developers using this control with an indefinite number of pages?
 
 
 ## Open Questions 
-* Should the combo box mode be an editable combo box? My worry with making it an editable combo box is the validity of having the number box mode. Would it hurt to have both editable combo box and number box as options?
-* I use the terms index and page throughout this document and the APIs. The APIs are all index while the documentation is mostly using page. Should I update the APIs to use page instead of index?
-* There are certain APIs that are specific to one of the three display modes and they will be ignored if the display mode chosen does not support those APIs. Is that something that needs to be reconsidered so it does not cause confusion for the developers?
-* The enum for the edge button visibility has the four values Auto, AlwaysVisible, HiddenOnEdge, and None. Do those names make sense and translate to the intended behavior? Does the enum name make sense?
-* The ButtonPanelShowFirstAndLast property will show or hide both the first and last page in the numerical button panel. Should this API be split in to two so the developer can show or hide the first and last button individually?
-* Is there a shortcut we can add to make it easier to move to the next and previous page? Maybe utilize the left and right bumper?
 * How does narrator handle localization? In the “page x of y” scenario how would that work if we switch from LTR to RTL?
 
 
