@@ -205,8 +205,7 @@ runtimeclass PagerControl
     Windows.UI.Xaml.Style NextButtonStyle;
     Windows.UI.Xaml.Style LastButtonStyle;
     
-    Boolean ButtonPanelAlwaysDisplayFirstPageIndex;
-    Boolean ButtonPanelAlwaysDisplayLastPageIndex;
+    Boolean ButtonPanelAlwaysShowFirstLastPageIndex;
     Integer SelectedPageIndex;
     
     String PrefixText;
@@ -234,8 +233,7 @@ runtimeclass PagerControl
     static Windows.UI.Xaml.DependencyProperty NextButtonStyleProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty LastButtonStyleProperty{ get; };
 
-    static Windows.UI.Xaml.DependencyProperty ButtonPanelAlwaysDisplayFirstPageIndexProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty ButtonPanelAlwaysDisplayLastPageIndexProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty ButtonPanelAlwaysShowFirstLastPageIndexProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty SelectedPageIndexProperty{get; };
     
     static Windows.UI.Xaml.DependencyProperty PrefixTextProperty{ get; };
