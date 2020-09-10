@@ -3,6 +3,8 @@
 
 # Background
 
+## .NET SynchronizationContext and WinUI3 DispatcherQueue
+
 .NET has an abstract API to post to a thread:
 [SynchronizationContext](https://docs.microsoft.com/dotnet/api/System.Threading.SynchronizationContext).
 Calling the [SynchronizationContext.Post](https://docs.microsoft.com/dotnet/api/System.Threading.SynchronizationContext.Post) method
@@ -38,7 +40,15 @@ This spec adds this functionality for WinUI3 to work with SynchronizationContext
 `DispatcherQueueSynchronizationContext`. This can be set as a thread's SynchronizatonContext, and when posted to
 will post to the underlying DispatcherQueue. Note that this is a .NET API, not a WinRT API.
 
-Also described here is a WinRT method to create a DispatcherQueue, providing an alternative to the current COM API.
+## Additional background
+
+Two additional new APIs described in this spec:
+* A WinRT method to create a DispatcherQueue -- `DispatcherQueueController.CreateOnCurrentThread` -- 
+providing an alternative to the current C-style API [CreateDispatcherQueueController](https://docs.microsoft.com/en-us/windows/win32/api/dispatcherqueue/nf-dispatcherqueue-createdispatcherqueuecontroller)
+* A new Xaml property -- `DependencyObject.DispatcherQueue` -- equivalent to the existing
+[DependencyObject.Dispatcher](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.DependencyObject.Dispatcher)
+property, but of type [DispatcherQueue](https://docs.microsoft.com/uwp/api/Windows.System.DispatcherQueue)
+rather than its predecessor type [CoreDispatcher](https://docs.microsoft.com/uwp/api/Windows.UI.Core.CoreDispatcher).
 
 All of these APIs are for WinUI3/Renuion, not being added to the OS.
 
@@ -51,8 +61,6 @@ which has an associated [DispatcherQueue](https://docs.microsoft.com/uwp/api/Win
 See the base class
 [SynchronizationContext](https://docs.microsoft.com/dotnet/api/System.Threading.SynchronizationContext)
 for more information on how to use a SynchronizationContext.
-
-### Remarks
 
 This class is only available to .NET5 or above applications.
 
@@ -70,6 +78,12 @@ You can use [DispatcherQueue.GetForCurrentThread](https://docs.microsoft.com/uwp
 to see if this is the case.
 
 See also [CreateDispatcherQueueController](https://docs.microsoft.com/en-us/windows/win32/api/dispatcherqueue/nf-dispatcherqueue-createdispatcherqueuecontroller)
+
+## DependencyObject.DispatcherQueue
+
+Gets the DispatcherQueue that this object is associated with. 
+The DispatcherQueue represents a facility that can access the DependencyObject 
+on the UI thread even if the code is initiated by a non-UI thread.
 
 
 # Examples
@@ -128,6 +142,35 @@ void ProcessEvents()
 }
 ```
 
+## Using DependencyObject.DispatcherQueue to get to a UI thread
+
+```cs
+void ProcessDataInBackground()
+{
+    // Running on the UI thread
+    Task.Run(() =>
+    {
+        // Running on a worker thread
+        int itemsProcessed = 0;
+        while (this._dataLeftToProcess)
+        {
+            itemsProcessed += ProcessData(1000);
+            this.DispatcherQueue.TryEnqueue( () =>
+            {
+                // Running on the UI thread
+                this.StatusTextBlock.Text = itemsProcessed.ToString();
+            });
+        }
+    });
+}
+
+bool _dataLeftToProcess = false;
+int ProcessData(int countToProcess)
+{
+    // ...
+}
+```
+
 # API Details
 
 ## DispatcherQueueSynchronizationContext
@@ -155,19 +198,12 @@ runtimeclass DispatcherQueueController
 }
 ```
 
-# Appendix
+## DependencyObject.DispatcherQueue
 
-_This is a proposal to make the sync context automatic on all threads_
-
-For the DispatcherQueueSynchronizationContext to be associated on a thread, something
-somewhere needs to set it. In the example here the thread is created in c# and the sync
-context is immediately set. But what if you have a c++ app creating a UI thread and
-it's running a c# component?
-
-A possible solution:
-* Add a static event named something like DispatcherQueue.AttachedToThread
-which is raised whenever a DQ is put onto a thread (and raised on that thread).
-* In DispatcherQueueSynchronizationContext, add [module initialization code](https://github.com/dotnet/csharplang/issues/2608)
-that registers for this event.
-* In the handler, call SetSynchronizationContext (after checking that there isn't one already set).
-
+```cs
+[webhosthidden]
+unsealed runtimeclass DependencyObject
+{
+    ...
+    Microsoft.System.DispatcherQueue DispatcherQueue{ get; };
+};```
