@@ -166,6 +166,8 @@ An additional action button can be added by defining your own button that inheri
 and [HyperlinkButton](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.HyperlinkButton) 
 for consistency and accessibility. Outside of the ActionButton property, additional action buttons can be added via custom content and will appear below the message.
 
+
+XAML
 ```xml
 <controls:InfoBar x:Name="NoInternetNotification"
     Severity="Error"
@@ -474,6 +476,8 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
 
 ## Design References
 UI Elements for InfoBar
+
+
 ![Toolkit page for InfoBar UI elements](images/Docked_Toolkit.png)
 
 ### Visual Components
@@ -518,13 +522,20 @@ public void InfoBar_Closing(InfoBar sender, InfoBarClosingEventArgs args)
 ```
 
 ## Data and Intelligence Metrics
-- Developer validation
-  - Number of apps using InfoBar to ensure the feature has received enough feedback before release, 2+.
-- Usage metrics
-  - How long an InfoBar stays on screen for until dismissed, correlated to the Severity level to influence future usage guidance.
-  - How often F6 is used to navigate to an InfoBar to track feature usage.
-  - How often color and/or icon customization occurs to investigate other Severity types.
-  - How often multiple InfoBars are on-screen at once, correlated to the Severity levels set to influence future usage guidance.
+Feature has received enough feedback to exit preview
+- Two or more preview or production applications are using InfoBar in prerelease and providing experience feedback.
+- Multiple applications are using InfoBar, measured via the occurence of the InfoBar type via telemetry and user engagement.
+
+
+The feature's guidance and intended usage is consistent with design expectations
+- Evaluate how long an InfoBar is displayed before dismissed correlated to the set Severity level to influence future usage guidance. 
+  - Measured by the time delta between InfoBar.IsOpen = true/false via telemetry
+- Evaluate how often F6 is used to navigate to an InfoBar to track feature usage.
+  - Measured by the number of times F6 is used to navigate to an InfoBar's action button or close button via telemetry
+- Evaluate how often color and/or icon customization occurs to investigate other built-in Severity types.
+  - Measured by the number of times the IconSource and/or Background property is set via telemetry.
+- Evaluate how often multiple InfoBars are on-screen at once, correlated to the set Severity level to influence future usage guidance.
+  - Measured by the number of InfoBar's defined in a single application and whether isOpen is set to true on both of them at the same time. (Stretch metric)
 
 ## Features in consideration for InfoBar v2
 - Built-in support for floating notifications, DisplayMode property to switch between "Docked" (current) and "Floating" mode
