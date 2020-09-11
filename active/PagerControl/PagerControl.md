@@ -120,10 +120,110 @@ XAML
 </Grid>
 ```
 
-### Handling a page change event
+### Code Example
 
-When a user interacts with the pager control and selects an edge button or page number, the page changed event will be fired. This event will provide the index the user is coming from (previousPage) and the index the user is navigating to (currentPage). Below is a code example of how to handle this event. 
+Below is a code sample for how to use the pager control with a data grid and how to handle the page changed event. Since this control is only a UI component, the data managment still needs to be handled through code. This example also shows how to set the number of pages property and manage what images need to be shown to the user when they select a specific page number. 
 
+When a user interacts with the pager control and selects an edge button or page number, the page changed event will fire. This event will provide the index the user is coming from (PreviousPageIndex) and the index the user is navigating to (NewPageIndex). 
+
+XAML
+```XAML
+<Page
+    x:Class="WindowsGallaryApp.Samples.DataGridSamplePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WindowsGallaryApp.Samples"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <CollectionViewSource x:Name="imagesCVS" />
+        <DataTemplate x:Key="ImageTemplate" x:DataType="data:CustomImage">
+            <Image Stretch="UniformToFill" Source="{x:Bind ImageLocation}"
+                   Width="190" Height="130" />
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0"
+                   Text="Image Gallery - DataGrid"
+                   Margin="10,0,0,0"
+                   Style="{ThemeResource TitleTextBlockStyle}"/>
+        <controls:DataGrid Grid.Row="1" 
+                           ItemsSource="{x:Bind imagesCVS.View, Mode=OneWay}"
+                           AutoGenerateColumns="True"
+                           AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"/>
+        <data:Pager x:Name="MainPager" Grid.Row="2" PageChanged="Pager_PageChanged" PagerDisplayMode="ButtonPanel"/>
+    </Grid>
+</Page>
+```
+
+C#
+```C#
+        private List<CustomImage> imageList = new List<CustomImage>();
+        private int imagesPerPage = 25;
+
+        public DataGridSamplePage()
+        {
+            this.InitializeComponent();
+            imagesCVS.Source = new ObservableCollection<CustomImage>();
+            Loaded += ListViewSamplePage_Loaded;
+        }
+
+        private async void ListViewSamplePage_Loaded(object sender, RoutedEventArgs e)
+        {
+            imageList = await CustomImage.GenerateImages();
+            MainPager.NumberOfPages = (int)Math.Ceiling((double)imageList.Count / imagesPerPage);
+            UpdateCollection(MainPager.SelectedIndex);
+        }
+
+        private void UpdateCollection(int pageIndex = 0)
+        {
+            List<CustomImage> images = GetPageImages(pageIndex);
+            ((ObservableCollection<CustomImage>)imagesCVS.Source)?.Clear();
+            foreach (CustomImage c in images)
+            {
+                ((ObservableCollection<CustomImage>)imagesCVS.Source)?.Add(c);
+            };
+        }
+
+        private List<CustomImage> GetPageImages(int pageIndex)
+        {
+            if ((pageIndex + 1) * imagesPerPage > imageList.Count)
+            {
+                return imageList.GetRange(pageIndex * imagesPerPage, imageList.Count - (pageIndex * imagesPerPage));
+            }
+
+            return imageList.GetRange(pageIndex * imagesPerPage, imagesPerPage);
+        }
+
+        private void Pager_PageChanged(Pager sender, PageChangedEventArgs args)
+        {
+            if (imageList.Count == 0)
+            {
+                return;
+            }
+
+            UpdateCollection(args.NewPageIndex);
+        }
+
+        private void DataGrid_AutoGeneratingColumn(object sender, Microsoft.Toolkit.Uwp.UI.Controls.DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if (e.PropertyName == "ImageLocation")
+            {
+                e.Cancel = true;
+            }
+        }
+```
 
 ## API Notes
 | Name | Description| Default | 
@@ -133,7 +233,7 @@ When a user interacts with the pager control and selects an edge button or page 
 | NumberOfPages | Sets the max number of pages the index control will iterate through. The default will represent an infinite page range. | -1 |
 | First, Previous, Next, and Last ButtonCommand | Specially handle the button pressed event for when the end user selects the buttons. | N/A |
 | First, Previous, Next, and Last Style | Give the developer the option to customize the style by changing the text or glyph for the edge buttons.| N/A |
-| ButtonPanelShowFirstAndLast | Note: This property only applies to the button panel display mode.Boolean to display the ellipses and the first and last index of the numerical button panel display mode. | True |
+| ButtonPanelAlwaysShowFirstAndLastPage | Note: This property only applies to the button panel display mode.Boolean to display the ellipses and the first and last index of the numerical button panel display mode. | True |
 | SelectedIndex | The 0 based index that is currently selected. It will default to the first index. | 0 |
 | PrefixText | Note: This property only applies to the combo box and number box display modes. Developer can change the prefix text for the combobox and number box display mode options. | "Page" |
 | SuffixText | Note: This property only applies to the combo box and number box display modes. Developer can change the suffix text for the combobox and number box display mode options. | "of (NumberofPages)". If NumberOfPages is infinite, display nothing |
@@ -205,7 +305,7 @@ runtimeclass PagerControl
     Windows.UI.Xaml.Style NextButtonStyle;
     Windows.UI.Xaml.Style LastButtonStyle;
     
-    Boolean ButtonPanelAlwaysShowFirstLastPageIndex;
+    Boolean ButtonPanelAlwaysShowFirstAndLastPageIndex;
     Integer SelectedPageIndex;
     
     String PrefixText;
