@@ -378,7 +378,3 @@ Which display mode is the most commonly used?
 How often are developers using this control with an indefinite number of pages?
 * Measurement: Count of how many applications include the pager control type and have the NumberOfPages property empty.
 
-
-## Open Questions 
-* How does narrator handle localization? In the “page x of y” scenario how would that work if we switch from LTR to RTL?
-
