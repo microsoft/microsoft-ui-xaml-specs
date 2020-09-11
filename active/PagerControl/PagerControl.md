@@ -142,7 +142,7 @@ XAML
 
     <Page.Resources>
         <CollectionViewSource x:Name="imagesCVS" />
-        <DataTemplate x:Key="ImageTemplate" x:DataType="data:CustomImage">
+        <DataTemplate x:Key="ImageTemplate" x:DataType="CustomImage">
             <Image Stretch="UniformToFill" Source="{x:Bind ImageLocation}"
                    Width="190" Height="130" />
         </DataTemplate>
@@ -162,66 +162,45 @@ XAML
                            ItemsSource="{x:Bind imagesCVS.View, Mode=OneWay}"
                            AutoGenerateColumns="True"
                            AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"/>
-        <data:Pager x:Name="MainPager" Grid.Row="2" PageChanged="Pager_PageChanged" PagerDisplayMode="ButtonPanel"/>
+        <data:Pager x:Name="Pager" Grid.Row="2" PageChanged="Pager_PageChanged" PagerDisplayMode="ButtonPanel"/>
     </Grid>
 </Page>
 ```
 
 C#
 ```C#
-        private List<CustomImage> imageList = new List<CustomImage>();
+        private List<CustomImage> imageList;
         private int imagesPerPage = 25;
 
         public DataGridSamplePage()
         {
-            this.InitializeComponent();
-            imagesCVS.Source = new ObservableCollection<CustomImage>();
-            Loaded += ListViewSamplePage_Loaded;
+                this.InitializeComponent();
+                Loaded += OnPageLoaded;
         }
 
-        private async void ListViewSamplePage_Loaded(object sender, RoutedEventArgs e)
+        private async void OnPageLoaded(object sender, RoutedEventArgs e)
         {
-            imageList = await CustomImage.GenerateImages();
-            MainPager.NumberOfPages = (int)Math.Ceiling((double)imageList.Count / imagesPerPage);
-            UpdateCollection(MainPager.SelectedIndex);
-        }
-
-        private void UpdateCollection(int pageIndex = 0)
-        {
-            List<CustomImage> images = GetPageImages(pageIndex);
-            ((ObservableCollection<CustomImage>)imagesCVS.Source)?.Clear();
-            foreach (CustomImage c in images)
-            {
-                ((ObservableCollection<CustomImage>)imagesCVS.Source)?.Add(c);
-            };
+                imageList = await GetImageList();
+                Pager.NumberOfPages = (int)Math.Ceiling((double)imageList.Count / imagesPerPage);
+                imageCVS.Source = GetPageImages(Pager.SelectedIndex);
         }
 
         private List<CustomImage> GetPageImages(int pageIndex)
         {
-            if ((pageIndex + 1) * imagesPerPage > imageList.Count)
-            {
-                return imageList.GetRange(pageIndex * imagesPerPage, imageList.Count - (pageIndex * imagesPerPage));
-            }
+                if ((pageIndex + 1) * imagesPerPage > imageList.Count)
+                {
+                        return imageList.GetRange(pageIndex * imagesPerPage, imageList.Count - (pageIndex * imagesPerPage));
+                }
 
-            return imageList.GetRange(pageIndex * imagesPerPage, imagesPerPage);
+                return imageList.GetRange(pageIndex * imagesPerPage, imagesPerPage);
         }
 
         private void Pager_PageChanged(Pager sender, PageChangedEventArgs args)
         {
-            if (imageList.Count == 0)
-            {
-                return;
-            }
-
-            UpdateCollection(args.NewPageIndex);
-        }
-
-        private void DataGrid_AutoGeneratingColumn(object sender, Microsoft.Toolkit.Uwp.UI.Controls.DataGridAutoGeneratingColumnEventArgs e)
-        {
-            if (e.PropertyName == "ImageLocation")
-            {
-                e.Cancel = true;
-            }
+                if (imageList.Count > 0)
+                {
+                        imageCVS.Source = GetPageImages(args.NewPageIndex);
+                }
         }
 ```
 
