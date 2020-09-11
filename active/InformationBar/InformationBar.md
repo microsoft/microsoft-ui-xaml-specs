@@ -435,42 +435,44 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
 |InfoBarIconFontSize | Sets the icon size of the InfoBar. <br> - Note: Custom icons set via the IconSource property will not resize to 20px unless they are in the standard symbol set.
 
 ### All Theme Resources
-- InfoBarSeverityErrorBackgroundBrush
-- InfoBarSeverityWarningBackgroundBrush
-- InfoBarSeveritySuccessBackgroundBrush
-- InfoBarSeverityDefaultBackgroundBrush
-- InfoBarHyperlinkForeground
-- InfoBarBorderBrush
-- InfoBarBorderThickness
-- InfoBarTitleFontSize
-- InfoBarTitleFontWeight
-- InfoBarMessageFontSize
-- InfoBarMessageFontWeight
-- InfoBarMinHeight
-- InfoBarCloseButtonSize
-- InfoBarCloseButtonGlyphSize
-- InfoBarDefaultIconGlyph
-- InfoBarCriticalIconGlyph
-- InfoBarWarningIconGlyph
-- InfoBarSuccessIconGlyph
-- InfoBarContentRootPadding
-- InfoBarIconMargin
-- InfoBarIconFontSize
-- InfoBarTitleHorizontalLayoutMargin
-- InfoBarTitleVerticalLayoutMargin
-- InfoBarMessageHorizontalLayoutMargin
-- InfoBarMessageVerticalLayoutMargin
-- InfoBarActionHorizontalLayoutMargin
-- InfoBarActionVerticalLayoutMargin
-- InfoBarActionButtonMinWidth
-- InfoBarActionButtonHeight
-- InfoBarActionButtonPadding
-- InfoBarActionButtonCornerRadius
-- InfoBarHyperlinkButtonFontSize
-- InfoBarHyperlinkButtonHeight
-- InfoBarHyperlinkButtonPadding
-- InfoBarCloseButtonSymbol
-- InfoBarCloseButtonStyle
+| Resource Key | Description |
+|:-:|:--|
+| InfoBarSeverityErrorBackgroundBrush | Error Severity background color 
+| InfoBarSeverityWarningBackgroundBrush | Warning Severity background color 
+| InfoBarSeveritySuccessBackgroundBrush | Success Severity background color 
+| InfoBarSeverityDefaultBackgroundBrush | Default Severity background color 
+| InfoBarHyperlinkForeground | Hyperlink button text color
+| InfoBarBorderBrush | Border color
+| InfoBarBorderThickness | Border thickness
+| InfoBarTitleFontSize | Title text font size 
+| InfoBarTitleFontWeight | Title text font weight
+| InfoBarMessageFontSize | Message text font size
+| InfoBarMessageFontWeight | Message text font weight
+| InfoBarMinHeight | Minimum height of InfoBar
+| InfoBarCloseButtonSize | Close button size
+| InfoBarCloseButtonGlyphSize | Close button glyph size
+| InfoBarDefaultIconGlyph | Default Severity icon glyph
+| InfoBarErrorIconGlyph | Error Severity icon glyph
+| InfoBarWarningIconGlyph | Warning Severity icon glyph
+| InfoBarSuccessIconGlyph | Success Severity icon glyph
+| InfoBarContentRootPadding | Padding thickness for Content property
+| InfoBarIconMargin | Icon margin thickness
+| InfoBarIconFontSize | Icon font size
+| InfoBarTitleHorizontalLayoutMargin | Horizontal, single-line, layout title margin thickness
+| InfoBarTitleVerticalLayoutMargin | Vertical, multiline, layout title margin thickness
+| InfoBarMessageHorizontalLayoutMargin | Horizontal, single-line, layout message margin thickness
+| InfoBarMessageVerticalLayoutMargin | Vertical, multiline, layout message margin thickness
+| InfoBarActionHorizontalLayoutMargin | Horizontal, single-line, layout action button margin thickness
+| InfoBarActionVerticalLayoutMargin | Vertical, multiline, layout action button margin thickness
+| InfoBarActionButtonMinWidth | Action button minimum width
+| InfoBarActionButtonHeight | Action button height
+| InfoBarActionButtonPadding | Action button padding thickness
+| InfoBarActionButtonCornerRadius | Action button corner radius
+| InfoBarHyperlinkButtonFontSize | Hyperlink button font size
+| InfoBarHyperlinkButtonHeight | Hyperlink button height
+| InfoBarHyperlinkButtonPadding | Hyperlink button padding thickness
+| InfoBarCloseButtonSymbol | Close button symbol glyph
+| InfoBarCloseButtonStyle | Close button style
 
 # Appendix
 
