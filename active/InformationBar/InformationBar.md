@@ -4,19 +4,23 @@
 
 Users should be informed about essential status changes that occur on an app level.
 These status changes affect the app as a whole and can be either critical or informational.
-Critical status changes like lost internet connectivity are directly impactful to app functionality while informational status changes like an update has completed and been applied are indirectly impactful to app functionality.
-These notifications and corresponding information should be presented in a consistent, predictable, and relevant way to the user depending on the specific scenario.
+Critical status changes like lost internet connectivity are directly impactful to app functionality while
+informational status changes like an update has completed and been applied are indirectly impactful to app functionality.
+These notifications and corresponding information should be presented in a consistent, predictable, and relevant
+way to the user depending on the specific scenario.
 
 
 For example the "Error while saving" message in this sample app:
-
 
 ![initial example](images/initial-example.jpg)
 
 Currently, [TeachingTip](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TeachingTip), 
 [ContentDialog](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ContentDialog), 
-and customizations of other [Flyouts](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Flyout) and dialogs exist as options to show these notifications but these controls were not specifically designed to handle app-wide status change notifications. 
-Due to their visual layouts, inherent intrusiveness, or available features they are not sufficient for displaying notifications at an app-wide level.
+and customizations of other [Flyouts](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Flyout) 
+and dialogs exist as options to show these notifications but these controls were not specifically designed 
+to handle app-wide status change notifications. 
+Due to their visual layouts, inherent intrusiveness, or available features they are not
+sufficient for displaying notifications at an app-wide level.
 
 
 This spec introduces an InfoBar WinUI (Xaml) control that an app can use for these kinds of messages.
@@ -27,17 +31,19 @@ Represents an informational control that is visible but does not interfere with 
 
 
 ## Is this the right control?
-Use an InfoBar control when a user should be informed of, acknowledge, or take action on a message. By default the notification will remain in the content area until dismissed by the user but will not necessarily break user flow.
+Use an InfoBar control when a user should be informed of, acknowledge, or take action on a message. 
+By default the notification will remain in the content area until dismissed by the user 
+but will not necessarily break user flow.
 
+An InfoBar will take up space in your layout and behave like any other child elements. 
+It will not cover up other content or float on top of it.
 
-An InfoBar will take up space in your layout and behave like any other child elements. It will not cover up other content or float on top of it.
-
-
-Do not use an InfoBar control to confirm or respond directly to a user action, for time-sensitive alerts, or for non-essential messages.
-
+Do not use an InfoBar control to confirm or respond directly to a user action, for time-sensitive alerts, 
+or for non-essential messages.
 
 ## Remarks
-Use an InfoBar that is dismissed by the user or when the status is resolved for scenarios that **directly** impact app perception or experience
+Use an InfoBar that is dismissed by the user or when the status is resolved for scenarios 
+that **directly** impact app perception or experience
 
 
 Here are some examples:
@@ -50,7 +56,6 @@ Here are some examples:
 
 Use an InfoBar that is dismissed by the user for scenarios that **indirectly** impact app perception or experience
 
-
 Here are some examples:
 - A call has begun recording
 - Update applied with link to 'Release Notes'
@@ -58,30 +63,39 @@ Here are some examples:
 - An app-wide backup has successfully, asynchronously completed
 - The subscription to the application is close to expiring
 
-
 ## When should a different control be used?
 
 There are some scenarios where a [ContentDialog](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ContentDialog), 
 [Flyout](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Flyout), or 
 [TeachingTip](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.TeachingTip) may be more appropriate to use.
 
-
-- For scenarios where a persistent notification is not needed, e.g. displaying information in context of a specific UI element, a [Flyout](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/flyouts) is a better option. 
-- For scenarios where the application is confirming a user action, showing information the user ***must*** read, use a [ContentDialog](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/dialogs).
+- For scenarios where a persistent notification is not needed, e.g. displaying information in context of 
+a specific UI element, a 
+[Flyout](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/flyouts) 
+is a better option. 
+- For scenarios where the application is confirming a user action, showing information the user ***must*** read, use a
+[ContentDialog](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/dialogs).
   - Additionally, if a status change to the app is so severe that it needs to block all further ability for the user to interact with the app, use a ContentDialog.
-- For scenarios where a notification is a transient teaching moment, a [TeachingTip](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/teaching-tip) is a better option.
+- For scenarios where a notification is a transient teaching moment, a 
+[TeachingTip](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/teaching-tip) 
+is a better option.
 
 
-For more info about choosing the right notification control, see the [Dialogs and Flyouts](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/) article.
+For more info about choosing the right notification control, see the 
+[Dialogs and Flyouts](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/dialogs-and-flyouts/)
+article.
 
 
 # Examples
 
 ## Create an InfoBar
-The XAML below describes an inline InfoBar with the default styling for an informational notification. An info bar can be created anywhere in the element tree or code behind and will expand to fill the width of the layout control it resides in.
+The XAML below describes an inline InfoBar with the default styling for an informational notification. 
+An info bar can be created anywhere in the element tree or code behind and will expand 
+to fill the width of the layout control it resides in.
 
 
-By default, the InfoBar will not be visible. Set the IsOpen property to true in the XAML or code behind to display the InfoBar.
+By default, the InfoBar will not be visible. Set the IsOpen property to true in the XAML or code behind
+to display the InfoBar.
 
 
 XAML
@@ -120,7 +134,9 @@ XAML
 ![A mockup of an InfoBar in a Warning state with a close button and a message](images/Warning_TitleMessage.png)
 
 ## Programmatic dismiss in InfoBar
-An InfoBar can be dismissed by the user via the close button or programmatically. If the notification is required to be in view until the status is resolved and you would like to remove the ability for the user to dismiss the info bar, you can set the IsUserDismissable property to false.
+An InfoBar can be dismissed by the user via the close button or programmatically. 
+If the notification is required to be in view until the status is resolved and you would like to remove 
+the ability for the user to dismiss the info bar, you can set the IsUserDismissable property to false.
 
 
 By default, the close button will appear as an 'X' and the IsUserDismissable property is therefore set to true.
@@ -137,13 +153,18 @@ XAML
 ![Mockup of an InfoBar in an Error state with no close button](images/Error_NoClose.png)
 
 ## Customization: Background color and icon
-Outside of the pre-defined severity levels, the Background and IconSource properties can be set to customize the icon and background color. The InfoBar will retain the assistive technology settings of the severity defined, or default if none was defined.
+Outside of the pre-defined severity levels, the Background and IconSource properties can be set 
+to customize the icon and background color. The InfoBar will retain the assistive technology settings of 
+the severity defined, or default if none was defined.
 
 
-A custom background color can be set via the standard Background property and will override the color set by Severity. Please keep in mind content readability and accessibility when setting your own color.
+A custom background color can be set via the standard Background property and will override the color set by Severity.
+Please keep in mind content readability and accessibility when setting your own color.
 
 
-A custom icon can be set via the IconSource property. By default, an icon will be visible. This icon can be removed by setting the IsIconVisible property to false. For custom icons, the recommended icon size is 20px.
+A custom icon can be set via the IconSource property. By default, an icon will be visible. 
+This icon can be removed by setting the IsIconVisible property to false. 
+For custom icons, the recommended icon size is 20px.
 
 
 XAML
@@ -162,9 +183,13 @@ XAML
 
 ## Add an action button
 
-An additional action button can be added by defining your own button that inherits [ButtonBase](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.Primitives.ButtonBase) and setting it in the ActionButton property. Custom styling will be applied to action buttons of type [Button](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Button) 
+An additional action button can be added by defining your own button that inherits 
+[ButtonBase](https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Xaml.Controls.Primitives.ButtonBase) 
+and setting it in the ActionButton property. Custom styling will be applied to action buttons of type 
+[Button](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Button) 
 and [HyperlinkButton](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.HyperlinkButton) 
-for consistency and accessibility. Outside of the ActionButton property, additional action buttons can be added via custom content and will appear below the message.
+for consistency and accessibility. Outside of the ActionButton property, 
+additional action buttons can be added via custom content and will appear below the message.
 
 
 XAML
@@ -196,7 +221,9 @@ XAML
 ![A mockup of an InfoBar with a message expanding multiple lines and a hyperlink](images/Default_Hyperlink.png)
 
 ## Content wrapping
-The text set in the Message property will automatically wrap vertically in the control underneath the other visual components if the control is no longer able to expand horizontally. The action button will also wrap in its own line.
+The text set in the Message property will automatically wrap vertically in the control 
+underneath the other visual components if the control is no longer able to expand horizontally. 
+The action button will also wrap in its own line.
 
 
 XAML
@@ -211,7 +238,9 @@ XAML
 
 
 ## Custom content
-XAML content can be added to an InfoBar using the Content property. It will appear in its own line below the rest of the control content. The InfoBar will expand to fit the content defined.
+XAML content can be added to an InfoBar using the Content property. 
+It will appear in its own line below the rest of the control content. 
+The InfoBar will expand to fit the content defined.
 
 
 XAML
@@ -253,8 +282,10 @@ InfoBar will use a Pane control pattern for inline notifications and will implem
 
 ### Keyboard Navigation 
 - No action is needed to invoke the InfoBar
-- After navigating to the control via tabbing, the user is automatically focused into the control once navigating to the first actionable item.
-- Once focused, tabbing will iterate through all actionable items in the control in order. When tab is pressed on the last element in the InfoBar, focus will continue throughout the page.
+- After navigating to the control via tabbing, 
+the user is automatically focused into the control once navigating to the first actionable item.
+- Once focused, tabbing will iterate through all actionable items in the control in order. 
+When tab is pressed on the last element in the InfoBar, focus will continue throughout the page.
   - A user can also use the left and right arrow keys to navigate between the available buttons
 - To close the InfoBar the action or close button needs to be pressed.
   - Note: Escape will not close the InfoBar and will instead bubble up the command to the parent components.
@@ -266,8 +297,12 @@ InfoBar will use a Pane control pattern for inline notifications and will implem
 ### Assistive Technologies
 InfoBar will leverage the existing APIs used by Windows Notifications. 
 
-
-The behavior of the InfoBar will change for assistive technologies like Narrator depending on the Severity set by the developer. As Error and Warning InfoBars are intended to be used for scenarios that directly impact app experience they should interrupt the user more than InfoBars that are informational. View [NotificationProcessing ](https://docs.microsoft.com/en-us/windows/win32/api/uiautomationcore/ne-uiautomationcore-notificationprocessing) docs for more information on the varied intended behavior.
+The behavior of the InfoBar will change for assistive technologies like Narrator 
+depending on the Severity set by the developer. As Error and Warning InfoBars are intended to be used 
+for scenarios that directly impact app experience they should interrupt the user more than InfoBars 
+that are informational. 
+View [NotificationProcessing ](https://docs.microsoft.com/en-us/windows/win32/api/uiautomationcore/ne-uiautomationcore-notificationprocessing) 
+docs for more information on the varied intended behavior.
 
 
 | Severity |  NotificationProcessing | Behavior in Screen Readers|
@@ -292,34 +327,49 @@ The behavior of the InfoBar will change for assistive technologies like Narrator
 The InfoBar should not appear and disappear from view rapidly to prevent flashing on the screen. Avoid flashing visuals for people with photosensitivities and to improve the usability of your application.
 
 
-For InfoBars that automatically enter and exit the view via an app status condition, we recommend you include logic in your application to prevent content from appearing or disappearing rapidly or multiple times in a row. However, in general, this control should be used for long-lived status messages.
+For InfoBars that automatically enter and exit the view via an app status condition, 
+we recommend you include logic in your application to prevent content from appearing or disappearing rapidly 
+or multiple times in a row. However, in general, this control should be used for long-lived status messages.
 
 
 ### Updating the InfoBar
-Once the control is open, any changes made to the various properties like updating the message or Severity will not raise a notification event. If you would like to inform users that use screen readers of the InfoBar's updated content we recommend you close and re-open the control to trigger the event.
+Once the control is open, any changes made to the various properties like updating the message 
+or Severity will not raise a notification event. If you would like to inform users that use screen readers of 
+the InfoBar's updated content we recommend you close and re-open the control to trigger the event.
 
 
 ### Inline messages offsetting content
-For InfoBars that are inline with other UI content, keep in mind how the rest of the page will responsively react to the addition of the element.
+For InfoBars that are inline with other UI content, keep in mind how the rest of the page will 
+responsively react to the addition of the element.
 
 
-InfoBars with a substantial height could dramatically alter the layout of the other elements on the page. If the InfoBar appears or disappears rapidly, especially in succession, the user may be confused with the changing visual state.
+InfoBars with a substantial height could dramatically alter the layout of the other elements on the page. 
+If the InfoBar appears or disappears rapidly, especially in succession, 
+the user may be confused with the changing visual state.
 
 
 # Globalization and Localization
 
 ## Color and Icon
-When customizing the color and icon outside of the preset Severity levels, keep in mind user expectations for the connotations from the set of standard icons and colors.
+When customizing the color and icon outside of the preset Severity levels, 
+keep in mind user expectations for the connotations from the set of standard icons and colors.
 
 
-Additionally, the preset Severity colors have already been designed for theme changes, high-contrast mode, color confusion accessibility, and contrast with foreground colors. We recommend to use these colors when possible and to include custom logic in your application to adapt to the various color states and accessibility features.
+Additionally, the preset Severity colors have already been designed for theme changes, 
+high-contrast mode, color confusion accessibility, and contrast with foreground colors. 
+We recommend to use these colors when possible and to include custom logic in your application to
+adapt to the various color states and accessibility features.
 
 
-Please view the UX guidance for [Standard Icons](https://docs.microsoft.com/en-us/windows/win32/uxguide/vis-std-icons) and [Color](https://docs.microsoft.com/en-us/windows/win32/uxguide/vis-color) to ensure your message is communicated clearly and accessible to users.
+Please view the UX guidance for
+[Standard Icons](https://docs.microsoft.com/en-us/windows/win32/uxguide/vis-std-icons) 
+and [Color](https://docs.microsoft.com/en-us/windows/win32/uxguide/vis-color) 
+to ensure your message is communicated clearly and accessible to users.
 
 
 ### Severity
- Avoid setting the Severity property for a notification that does not match the information communicated in the Title, Message, or custom content.
+ Avoid setting the Severity property for a notification that does not match the information communicated in 
+ the Title, Message, or custom content.
  
 
  The accompanying information should aim to communicate the following to use that Severity.
@@ -328,19 +378,21 @@ Please view the UX guidance for [Standard Icons](https://docs.microsoft.com/en-u
  - Success: A long-running and/or background task has completed.
  - Default: General information that requires the user's attention.
 
-Icons and color should not be the only UI components signifying meaning for your notification. Text in the notification's Title and/or Message should be included to display information.
+Icons and color should not be the only UI components signifying meaning for your notification. 
+Text in the notification's Title and/or Message should be included to display information.
 
 
 ## Message 
 
-Text in your notification will not be a constant length in all languages. For the Title and Message property this may impact whether your notification will expand to a second line. 
+Text in your notification will not be a constant length in all languages. For the Title and Message property 
+this may impact whether your notification will expand to a second line. 
 We recommend you avoid positioning based on message length or other UI elements set to a specific language.
-
 
 The notification will follow standard mirroring behavior when localized to/from languages that are right to left (RTL) or left to right (LTR). The icon will only mirror if there is directionality.
 
-
-Please view the guidance for [Adjust layout and fonts, and support RTL](https://docs.microsoft.com/en-us/windows/uwp/design/globalizing/adjust-layout-and-fonts--and-support-rtl) for more information about text localization in your notification.
+Please view the guidance for 
+[Adjust layout and fonts, and support RTL](https://docs.microsoft.com/en-us/windows/uwp/design/globalizing/adjust-layout-and-fonts--and-support-rtl) 
+for more information about text localization in your notification.
 
 
 # API Notes
@@ -519,7 +571,10 @@ UI Elements for InfoBar
 | Closing | There are two ways an info bar can close: <br>- The program sets the IsOpen property to false <br> - The user invokes the Close button. <br> Use the InfoBarCloseReason to determine which case has occurred. <br> Closing can be prevented by setting the Cancel property to true. You can use a deferral to respond asynchronously to the event. |
 
 ### Canceling and deferring close
-The Closing event can be used to cancel and/or defer the close of an InfoBar. This can be used to keep the InfoBar open or allow time for a custom action to occur. When the closing of an InfoBar is canceled, IsOpen will go back to true, however, it will stay false during the deferral. A programmatic close can also be canceled.
+The Closing event can be used to cancel and/or defer the close of an InfoBar. 
+This can be used to keep the InfoBar open or allow time for a custom action to occur. 
+When the closing of an InfoBar is canceled, IsOpen will go back to true, however, 
+it will stay false during the deferral. A programmatic close can also be canceled.
 
 
 XAML
