@@ -228,6 +228,23 @@ XAML
 
 ![A mockup of an InfoBar in its default state with an indeterminate progress bar](images/Default_CustomContent.gif)
 
+## Lightweight styling
+
+You can modify the default Style and ControlTemplate to give the control a unique appearance. 
+For more info, see the 
+[Light-weight styling section](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/xaml-styles#lightweight-styling)
+of the 
+[Styling controls](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/xaml-styles)
+article.
+
+For example, the following causes the title bar font size to be 22pt on a Page's InfoBars:
+
+```xml
+<Page.Resources>
+    <x:Double x:Key="InfoBarTitleFontSize">22</x:Double>
+</Page.Resources>
+```
+
 # Inputs and Accessibility
 
 ## UI Automation Patterns 
@@ -427,6 +444,7 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
 ```
 
 ## Theme Resources
+
 ### Notable Theme Resources
 | Name | Description |
 |:-:|:--|
@@ -473,6 +491,7 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
 | InfoBarHyperlinkButtonPadding | Hyperlink button padding thickness
 | InfoBarCloseButtonSymbol | Close button symbol glyph
 | InfoBarCloseButtonStyle | Close button style
+
 
 # Appendix
 
