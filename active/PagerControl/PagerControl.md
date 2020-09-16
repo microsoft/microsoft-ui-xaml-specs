@@ -63,19 +63,20 @@ A pager control has three different display modes and each display mode has conf
 ![](images/pager-control-numerical-button-panel.png)
 
 A pager control does not require you to provide a max number of pages to the control. 
-If the max number of pages is unknown, here is what each display mode will look like. 
+If the max number of pages is unknown, the suffix text for the combo box and 
+number box modes will be removed and the last page the numerical button panel will not be shown. 
 
 ### ComboBox Display Mode
 
-(add comps)
+![](images/pager-control-combobox-no-max.png)
 
 ### Pager Control Editable NumberBox Display Mode 
 
-(add comps)
+![](images/pager-control-editable-textbox-no-max.png)
 
 ### Pager Control Numerical Button Panel Display Mode
 
-(add comps)
+![](images/pager-control-numerical-button-panel-no-max.png)
 
 You can choose to customize the look of a pager control by changing 
 the visibility of the first, previous, next, and last buttons. 
@@ -205,7 +206,7 @@ C#
 | Name | Description| Default | 
 |:---:|:---|:---|
 | PagerDisplayMode | Enum that contains 4 values (Auto, ComboBox, NumberBox, ButtonPanel) to represent the look of the pager control. When Auto is selected, the display mode will be ComboBox if the NumberOfPages property is less than 11 otherwise it will be NumberBox. | Auto |
-| PagerButtonVisibilityBehavior | Enum that contains 4 values (Auto, AlwaysVisible, HiddenOnEdge, None) that allows the app developer to hide or show the four edge buttons. HiddenOnEdge will remove the appropriate buttons if the selected page is the last or first page. When the last page is selected, the next and last buttons will be disabled and same when the first page is selected for the first and previous page. When Auto is selected, the visibility mode will be AlwaysVisible. | Auto |
+| PagerButtonVisibilityBehavior | Enum that contains 4 values (Visible, HiddenOnEdge, Hidden) that allows the app developer to hide or show the four edge buttons. HiddenOnEdge will remove the appropriate buttons if the selected page is the last or first page. When the last page is selected, the next and last buttons will be disabled and same when the first page is selected for the first and previous page. When Auto is selected, the visibility mode will be AlwaysVisible. | Visible |
 | NumberOfPages | Sets the max number of pages the index control will iterate through. The default will represent an infinite page range. | -1 |
 | First, Previous, Next, and Last ButtonCommand | Specially handle the button pressed event for when the end user selects the buttons. | N/A |
 | First, Previous, Next, and Last Style | Give the developer the option to customize the style by changing the text or glyph for the edge buttons.| N/A |
@@ -242,7 +243,7 @@ enum PagerButtonVisibility
 {
     Visible,
     HiddenOnEdge,
-    None,
+    Hidden,
 };
 
 runtimeclass PagerControlSelectedIndexChangedEventArgs
