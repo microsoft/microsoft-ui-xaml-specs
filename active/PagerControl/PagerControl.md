@@ -86,7 +86,7 @@ When the last page is selected, the next and last buttons will be disabled
 and same when the first page is selected for the first and previous page. 
 The prefix and suffix text can also be customized to display a string you provide. 
 
-## Creating a pager control 
+## Creating a Pager Control 
 
 Here is the XAML for how to add a pager control to your application using the auto display mode. 
 Auto will choose to use the combo box mode if the NumberOfPages property 
@@ -124,7 +124,7 @@ XAML
 </Grid>
 ```
 
-### Customize edge buttons
+### Customize Edge Buttons
 
 You can customize the visibility of each of the edge buttons (the first, previous, next, and last) 
 by setting their visibility properties. 
@@ -177,29 +177,29 @@ XAML
 ```
 C#
 ```CSharp
-    public sealed partial class DataGridSamplePage : Page
-    {
+public sealed partial class DataGridSamplePage : Page
+{
         private const int imagesPerPage = 25;
 
         public DataGridSamplePage()
         {
-            this.InitializeComponent();
+                this.InitializeComponent();
         }
-    
+
         private async void OnPageLoaded(object sender, RoutedEventArgs e)
         {
-            pager.NumberOfPages = await ImageGenerator.GetNumberOfPages(imagesPerPage);
-            dataGrid.ItemsSource = await ImageGenerator.GetImagesInPage(0, imagesPerPage);
-            progressRing.Visibility = "Collapsed";
-            progressRing.IsActive = false;
+                pager.NumberOfPages = await ImageGenerator.GetNumberOfPages(imagesPerPage);
+                dataGrid.ItemsSource = await ImageGenerator.GetImagesInPage(0, imagesPerPage);
+                progressRing.Visibility = "Collapsed";
+                progressRing.IsActive = false;
         }
         private async void OnPageChanged(Pager sender, PageChangedEventArgs args)
         {
-            dataGrid.ItemsSource = await ImageGenerator.GetImagesInPage(args.CurrentPage, imagesPerPage);
-            progressRing.Visibility = "Visible";
-            progressRing.IsActive = true; 
+                dataGrid.ItemsSource = await ImageGenerator.GetImagesInPage(args.CurrentPage, imagesPerPage);
+                progressRing.Visibility = "Visible";
+                progressRing.IsActive = true; 
         }
-    }
+}
 ```
 
 # API Notes
