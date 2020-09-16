@@ -1,15 +1,26 @@
 # Pager control
 
-## Background
+# Background
 
-A UI pager is a common control that lets a user page through content, rather than scroll or pan. A common experience is to provide preview/next buttons, and a way to jump to a specific page.
+A UI pager is a common control that lets a user page through content, rather than scroll or pan. 
+A common experience is to provide preview/next buttons, and a way to jump to a specific page.
 
-The absence of a standard WinUI pager control, last seen in Xaml as DataPager in Silverlight, has been a pain point in both WPF and WinUI that has forced a variety of unfavorable workarounds for developers. Inclusion of this control in WinUI would resolve an ecosystem gap and enable developers to efficiently deliver UI paging experiences in their applications. Through [XAML Islands](https://docs.microsoft.com/en-us/windows/apps/desktop/modernize/xaml-islands), it may also provide an opportunity to benefit WPF and WinForms developers working with DataGrid or ListView. The scope of this control is not to provide a data paging solution at this time, but to start with UI paging as a foundation on top of which data paging may be later integrated.
+The absence of a standard WinUI pager control, last seen in Xaml as DataPager in Silverlight, has 
+been a pain point in both WPF and WinUI that has forced a variety of unfavorable workarounds for developers. 
+Inclusion of this control in WinUI would resolve an ecosystem gap and enable developers to 
+efficiently deliver UI paging experiences in their applications. 
+Through [XAML Islands](https://docs.microsoft.com/en-us/windows/apps/desktop/modernize/xaml-islands), it 
+may also provide an opportunity to benefit WPF and WinForms developers working with DataGrid or ListView. 
+The scope of this control is not to provide a data paging solution at this time, but to start with 
+UI paging as a foundation on top of which data paging may be later integrated.
 
 
-## Description
+# Description
 
-A pager control is a UI component that provides a standard interaction for pagination with a layout view (ListView, GridView, ItemsRepeater, DataGrid, etc.). A pager control is independent of the layout views and does not control any of the data being displayed in the layout view. 
+A pager control is a UI component that provides a standard interaction for pagination 
+with a layout view (ListView, GridView, ItemsRepeater, DataGrid, etc.). 
+A pager control is independent of the layout views and does not control any of the
+ data being displayed in the layout view. 
 
 **Important APIs:** [PagerControl class](https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.pagercontrol)
 
@@ -26,11 +37,16 @@ This control can be configured to use one of three different display modes shown
 
 ## Is this the right control? 
 
-Use a **PagerControl** to create a navigation interface for an end user to page through content instead of scrolling or panning. 
+Use a **PagerControl** to create a navigation interface for an end user to page 
+through content instead of scrolling or panning. 
 
-Scrolling through all content in a single view can make it harder for the end user to find specific information and it can lead to performance issues when the content needs to be refreshed. **PagerControl** can be used as an alternate solution so the user can consume a subset of the content without needing to scroll. They can then page through the rest of the content to find what they are looking for. 
+Scrolling through all content in a single view can make it harder for the end user 
+to find specific information and it can lead to performance issues when the content needs to be refreshed. 
+**PagerControl** can be used as an alternate solution so the user 
+can consume a subset of the content without needing to scroll. 
+They can then page through the rest of the content to find what they are looking for. 
 
-## Examples
+# Examples
 
 A pager control has three different display modes and each display mode has configurable components within them. 
 
@@ -46,7 +62,8 @@ A pager control has three different display modes and each display mode has conf
 
 ![](images/pager-control-numerical-button-panel.png)
 
-A pager control does not require you to provide a max number of pages to the control. If the max number of pages is unknown, here is what each display mode will look like. 
+A pager control does not require you to provide a max number of pages to the control. 
+If the max number of pages is unknown, here is what each display mode will look like. 
 
 ### ComboBox Display Mode
 
@@ -60,39 +77,45 @@ A pager control does not require you to provide a max number of pages to the con
 
 (add comps)
 
-You can choose to customize the look of a pager control by changing the visibility of the first, previous, next, and last buttons. They can be configured to always be visible, hidden, or hidden when the selected index is the first or last page in the range. When the last page is selected, the next and last buttons will be disabled and same when the first page is selected for the first and previous page. The prefix and suffix text can also be customized to display a string you provide. 
+You can choose to customize the look of a pager control by changing 
+the visibility of the first, previous, next, and last buttons. 
+They can be configured to always be visible, hidden, or hidden 
+when the selected index is the first or last page in the range. 
+When the last page is selected, the next and last buttons will be disabled 
+and same when the first page is selected for the first and previous page. 
+The prefix and suffix text can also be customized to display a string you provide. 
 
 ## Creating a pager control 
 
-Here is the XAML for how to add a pager control to your application using the auto display mode. Auto will choose to use the combo box mode if the NumberOfPages property is less than 11 and will show the number box mode if it is greater than 11. In this example, combo box will be chosen. 
+Here is the XAML for how to add a pager control to your application using the auto display mode. 
+Auto will choose to use the combo box mode if the NumberOfPages property 
+is less than 11 and will show the number box mode if it is greater than 11. 
+In this example, combo box will be chosen. 
 
 XAML
 ```XAML
-<Grid>
-        <controls:DataGrid x:Name="dataGrid" 
-                Height="600" Margin="12"
-                AutoGenerateColumns="True"
-                ItemsSource="{x:Bind MyViewModel.Items}" />  
+<Grid> 
         <muxc:PagerControl x:Name="mainPagerControl"
-                NumberOfPages="10"
                 FirstButtonVisibility="None"
                 LastButtonVisibility="None"/>
         </muxc:PagerControl>
 </Grid>
 ```
 
-Below is the XAML for how to add the numerical button panel display mode. This mode is not part of the auto mode and needs to be explicitly set. The prefix and suffix properties do not apply to this mode so they will be ignored if they are set. The ButtonPanelShowFirstAndLast property is specific to this mode and controls if the button panel will always show the first and last page. This will also display ellipsis before the last page and after the first page to indicate that there are pages between the page numbers being shown and the last page. They will automatically be hidden if the pages being shown are close to the beggining or end of the page range. 
+Below is the XAML for how to add the numerical button panel display mode. 
+This mode is not part of the auto mode and needs to be explicitly set. 
+The prefix and suffix properties do not apply to this mode so they will be ignored if they are set. 
+The ButtonPanelShowFirstAndLast property is specific to this mode and 
+controls if the button panel will always show the first and last page. 
+This will also display ellipsis before the last page and after the first page 
+to indicate that there are pages between the page numbers being shown and the last page. 
+They will automatically be hidden if the pages being shown are close to the beggining or end of the page range. 
 
 XAML
 ```XAML
 <Grid>
-         <controls:DataGrid x:Name="dataGrid" 
-                Height="600" Margin="12"
-                AutoGenerateColumns="True"
-                ItemsSource="{x:Bind MyViewModel.Items}" /> 
         <muxc:PagerControl x:Name="MainPagerControl"
                 DisplayMode="NumericalButtonPanel"
-	        NumberOfPages="10"
                 FirstButtonVisibility="None"
                 LastButtonVisibility="None"
 	        EllipsisShowFirstAndLast="True">
@@ -102,18 +125,17 @@ XAML
 
 ### Customize edge buttons
 
-You can customize the visibility of each of the edge buttons (the first, previous, next, and last) by setting their visibility properties. In this example, the first and previous buttons will always be visible while the next button will be hidden when the last page is selected. The last button will be hidden. By default, all buttons will be set to AlwaysVisible.
+You can customize the visibility of each of the edge buttons (the first, previous, next, and last) 
+by setting their visibility properties. 
+In this example, the first and previous buttons will always be visible 
+while the next button will be hidden when the last page is selected. 
+The last button will be hidden. By default, all buttons will be set to AlwaysVisible.
 
 XAML
 ```XAML
 <Grid>
-        <controls:DataGrid x:Name="dataGrid" 
-                Height="600" Margin="12"
-                AutoGenerateColumns="True"
-                ItemsSource="{x:Bind MyViewModel.Items}" /> 
         <muxc:PagerControl x:Name="MainPagerControl"
                 DisplayMode="ComboBox"
-                NumberOfPages="10"
                 NextButtonVisibility="HiddenOnEdge"
                 LastButtonVisibility="None"/>
         </muxc:PagerControl>
@@ -122,9 +144,13 @@ XAML
 
 ### Code Example
 
-Below is a code sample for how to use the pager control with a data grid and how to handle the page changed event. Since this control is only a UI component, the data managment still needs to be handled through code. This example also shows how to set the number of pages property and manage what images need to be shown to the user when they select a specific page number. 
+Below is a code sample for how to use the pager control with a data grid and how to handle the page changed event. 
+Since this control is only a UI component, the data managment still needs to be handled through code. 
+This example also shows how to set the number of pages property and manage what images 
+need to be shown to the user when they select a specific page number. 
 
-When a user interacts with the pager control and selects an edge button or page number, the page changed event will fire. This event will provide the index the user is coming from (PreviousPageIndex) and the index the user is navigating to (NewPageIndex). 
+When a user interacts with the pager control and selects an edge button or page number, the page changed event will fire. 
+This event will provide the index the user is coming from (PreviousPageIndex) and the index the user is navigating to (NewPageIndex). 
 
 XAML
 ```XAML
@@ -132,79 +158,50 @@ XAML
     x:Class="WindowsGallaryApp.Samples.DataGridSamplePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:WindowsGallaryApp.Samples"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    <Page.Resources>
-        <CollectionViewSource x:Name="imagesCVS" />
-        <DataTemplate x:Key="ImageTemplate" x:DataType="CustomImage">
-            <Image Stretch="UniformToFill" Source="{x:Bind ImageLocation}"
-                   Width="190" Height="130" />
-        </DataTemplate>
-    </Page.Resources>
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="OnPageLoaded">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0"
-                   Text="Image Gallery - DataGrid"
-                   Margin="10,0,0,0"
-                   Style="{ThemeResource TitleTextBlockStyle}"/>
-        <controls:DataGrid Grid.Row="1" 
-                           ItemsSource="{x:Bind imagesCVS.View, Mode=OneWay}"
-                           AutoGenerateColumns="True"
-                           AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"/>
-        <data:Pager x:Name="Pager" Grid.Row="2" PageChanged="Pager_PageChanged" PagerDisplayMode="ButtonPanel"/>
+        <controls:DataGrid x:Name="dataGrid" AutoGenerateColumns="True"/>
+        <muxc:ProgressRing x:Name="progressRing" Visibility="Collapsed" IsActive="false">
+        <muxc:Pager x:Name="pager" Grid.Row="1" PageChanged="OnPageChanged" PagerDisplayMode="NumberPanel"/>
     </Grid>
 </Page>
 ```
-
 C#
-```C#
-        private List<CustomImage> imageList;
-        private int imagesPerPage = 25;
+```CSharp
+    public sealed partial class DataGridSamplePage : Page
+    {
+        private const int imagesPerPage = 25;
 
         public DataGridSamplePage()
         {
-                this.InitializeComponent();
-                Loaded += OnPageLoaded;
+            this.InitializeComponent();
         }
-
+    
         private async void OnPageLoaded(object sender, RoutedEventArgs e)
         {
-                imageList = await GetImageList();
-                Pager.NumberOfPages = (int)Math.Ceiling((double)imageList.Count / imagesPerPage);
-                imageCVS.Source = GetPageImages(Pager.SelectedIndex);
+            pager.NumberOfPages = await ImageGenerator.GetNumberOfPages(imagesPerPage);
+            dataGrid.ItemsSource = await ImageGenerator.GetImagesInPage(0, imagesPerPage);
+            progressRing.Visibility = "Collapsed";
+            progressRing.IsActive = false;
         }
-
-        private List<CustomImage> GetPageImages(int pageIndex)
+        private async void OnPageChanged(Pager sender, PageChangedEventArgs args)
         {
-                if ((pageIndex + 1) * imagesPerPage > imageList.Count)
-                {
-                        return imageList.GetRange(pageIndex * imagesPerPage, imageList.Count - (pageIndex * imagesPerPage));
-                }
-
-                return imageList.GetRange(pageIndex * imagesPerPage, imagesPerPage);
+            dataGrid.ItemsSource = await ImageGenerator.GetImagesInPage(args.CurrentPage, imagesPerPage);
+            progressRing.Visibility = "Visible";
+            progressRing.IsActive = true; 
         }
-
-        private void Pager_PageChanged(Pager sender, PageChangedEventArgs args)
-        {
-                if (imageList.Count > 0)
-                {
-                        imageCVS.Source = GetPageImages(args.NewPageIndex);
-                }
-        }
+    }
 ```
 
-## API Notes
+# API Notes
 | Name | Description| Default | 
 |:---:|:---|:---|
 | PagerDisplayMode | Enum that contains 4 values (Auto, ComboBox, NumberBox, ButtonPanel) to represent the look of the pager control. When Auto is selected, the display mode will be ComboBox if the NumberOfPages property is less than 11 otherwise it will be NumberBox. | Auto |
@@ -218,7 +215,7 @@ C#
 | SuffixText | Note: This property only applies to the combo box and number box display modes. Developer can change the suffix text for the combobox and number box display mode options. | "of (NumberofPages)". If NumberOfPages is infinite, display nothing |
 | PagerControlPageChangedEvent | Event that is fired when the end user selects a button from the number panel, any of the 4 directional buttons, or selects an option from the combobox or enters a number in the numberbox. This event will return the index number that the end user selected. If the end user enters a number greter than the number of pages this event will return the last page. If the end user enters a number less than 1 the event will return 1. | N/A |
 
-### Design Components and Functionality
+# Design Components and Functionality
 
  | Component |  Notes |
 |:---:|:---|
@@ -230,7 +227,7 @@ C#
 | PrefixText | * Text displayed before the ComboBox or NumberBox indexing component. <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760540-93759880-fc79-11e8-9c4f-3c3222b95a13.png) |
 | SuffixText | * When a total number of indices (N) is given, this suffix string will appear after the ComboBox indexing component or NumberBox component and read "of N". Localization will put "N" where it should be in a given language. <br><br> ![image](https://user-images.githubusercontent.com/16964652/49760557-9a9ca680-fc79-11e8-943f-3425d993fdeb.png) |
 
-## API Details
+# API Details
 
 ```c++ 
 enum PagerDisplayMode
@@ -320,20 +317,27 @@ runtimeclass PagerControl
 }
 ```
 
-## Appendix
+# Appendix
 
 Here are some end user scenarios for why a developer would want to choose one display mode over the others: 
 
 Button Panel
-* Max wants to search a clothing store's inventory to find a new pair of blue tennis shoes. He searches for blue tennis shoes on the site and is presented with the list of search results. He then scans through the images and descriptions on the first page and does not find anything he likes. He then navigates to the next page and continues searching until he finds the blue tennis shoes he is looking for. 
+* Max wants to search a clothing store's inventory to find a new pair of blue tennis shoes. 
+He searches for blue tennis shoes on the site and is presented with the list of search results.
+ He then scans through the images and descriptions on the first page and does not find anything he likes. 
+ He then navigates to the next page and continues searching until he finds the blue tennis shoes he is looking for. 
 
 Combo Box/Number Box
-* Jill opens an application that displays the produce inventory for her grocery store. She sorts her list of results alphabetically and wants to navigate to the page that has the results starting with "L". She knows that what she is looking for is on one of the pages in the middle and wants to navigate there from the list of pages. From there, she can go to the next or previous page to find where the items starting with "L" are. 
+* Jill opens an application that displays the produce inventory for her grocery store. 
+She sorts her list of results alphabetically and wants to navigate to the page that has the results starting with "L". 
+She knows that what she is looking for is on one of the pages in the middle and wants to navigate there from the list of pages. 
+From there, she can go to the next or previous page to find where the items starting with "L" are. 
 
 Any Display Mode
-* Samanatha opens up an application for the first time and is presented with a tutorial window to show her how to use the application. She needs to move through each page of the tutorial sequentially in order to continue using the application. 
+* Samanatha opens up an application for the first time and is presented with a tutorial window to show her how to use the application. 
+She needs to move through each page of the tutorial sequentially in order to continue using the application. 
 
-## Accessibility
+# Accessibility
 
 ### UI Automation Patterns 
 * ComboBox and NumberBox will use the control patterns already assigned to them. 
@@ -365,7 +369,7 @@ Any Display Mode
 * The numbers will follow standard behavior when localized to/from a language that uses a numeral system that differs from Western Arabic. 
 * The prefix and suffix text will follow standard mirroring behavior when localized to/from languages that are RTL or LTR. 
 
-## Data and Intellegence Metrics 
+# Data and Intellegence Metrics 
 
 Adoption and validation of the control in the community
 * Measurement: Use telemetry to determine how many first and third party developers are using the control in preview. 
