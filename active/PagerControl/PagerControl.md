@@ -90,13 +90,13 @@ The prefix and suffix text can also be customized to display a string you provid
 
 Here is the XAML for how to add a pager control to your application using the auto display mode. 
 Auto will choose to use the combo box mode if the NumberOfPages property 
-is less than 11 and will show the number box mode if it is greater than 11. 
+is less than 100 and will otherwise show the number box mode. If you would like to use the muerical button panel, that will need to be explicilty set in the DisplayMode property.  
 In this example, combo box will be chosen. 
 
 XAML
 ```XAML
 <Grid> 
-        <muxc:PagerControl x:Name="mainPagerControl"
+        <muxc:PagerControl x:Name="pager"
                 FirstButtonVisibility="None"
                 LastButtonVisibility="None"/>
         </muxc:PagerControl>
@@ -115,7 +115,7 @@ They will automatically be hidden if the pages being shown are close to the begg
 XAML
 ```XAML
 <Grid>
-        <muxc:PagerControl x:Name="MainPagerControl"
+        <muxc:PagerControl x:Name="pager"
                 DisplayMode="NumericalButtonPanel"
                 FirstButtonVisibility="None"
                 LastButtonVisibility="None"
@@ -135,7 +135,7 @@ The last button will be hidden. By default, all buttons will be set to AlwaysVis
 XAML
 ```XAML
 <Grid>
-        <muxc:PagerControl x:Name="MainPagerControl"
+        <muxc:PagerControl x:Name="pager"
                 DisplayMode="ComboBox"
                 NextButtonVisibility="HiddenOnEdge"
                 LastButtonVisibility="None"/>
@@ -230,7 +230,7 @@ public sealed partial class DataGridSamplePage : Page
 
 # API Details
 
-```c++ 
+```c++
 enum PagerDisplayMode
 {
     Auto,
@@ -252,6 +252,18 @@ runtimeclass PagerControlSelectedIndexChangedEventArgs
     Integer PreviousPageIndex{get; };
 };
 
+unsealed runtimeclass PagerControlTemplateSettings : Windows.UI.Xaml.DependencyObject
+{
+        PagerControlTemplateSettings(); 
+
+        Windows.UI.Xaml.Controls.ObservableCollection Pages; 
+        Windows.UI.Xaml.Controls.ObservableCollection NumberPanelItems;
+
+        static Windows.UI.Xaml.DependencyProperty PagesProperty { get; };
+        static Windows.UI.Xaml.DependencyProperty NumberPanelItemsProperty { get; };
+
+}
+
 runtimeclass PagerControl
 {
     PagerControl();
@@ -264,12 +276,6 @@ runtimeclass PagerControl
     PagerButtonVisibility PreviousButtonVisibility;
     PagerButtonVisibility NextButtonVisibility;
     PagerButtonVisibility LastButtonVisibility;
-
-    FirstButtonCommand="FirstButtonPressedEvent"
-    PreviousButtonCommand="PreviousButtonPressedEvent"
-    NextButtonCommand="NextButtonPressedEvent"
-    LastButtonCommand="LastButtonPressedEvent"
-    PagerInputCommand="PagerInputEvent"
 
     Windows.UI.Xaml.Input.ICommand FirstButtonCommand;
     Windows.UI.Xaml.Input.ICommand PreviousButtonCommand;
@@ -288,7 +294,9 @@ runtimeclass PagerControl
     String PrefixText;
     String SuffixText;
 
-    event Windows.Foundation.TypedEventHandler<PagerControl, PagerControlPageChangedEventArgs> SelectedIndexChanged;
+    event Windows.Foundation.TypedEventHandler<PagerControl, PagerControlSelectedIndexChangedEventArgs> SelectedIndexChanged;
+
+    PagerControlTemplateSettings TemplateSettings{ get; };
 
     static Windows.UI.Xaml.DependencyProperty DisplayModeProperty{ get; };
     
