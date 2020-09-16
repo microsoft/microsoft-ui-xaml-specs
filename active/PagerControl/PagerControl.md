@@ -265,6 +265,7 @@ unsealed runtimeclass PagerControlTemplateSettings : Windows.UI.Xaml.DependencyO
 }
 
 runtimeclass PagerControl
+unsealed runtimeclass PagerControl : Windows.UI.Xaml.Controls.Control
 {
     PagerControl();
 
@@ -390,4 +391,3 @@ Which display mode is the most commonly used?
 
 How often are developers using this control with an indefinite number of pages?
 * Measurement: Count of how many applications include the pager control type and have the NumberOfPages property empty.
-
