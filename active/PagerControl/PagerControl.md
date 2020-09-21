@@ -205,13 +205,13 @@ public sealed partial class DataGridSamplePage : Page
 # API Notes
 | Name | Description| Default | 
 |:---:|:---|:---|
-| PagerDisplayMode | Enum that contains 4 values (Auto, ComboBox, NumberBox, ButtonPanel) to represent the look of the pager control. When Auto is selected, the display mode will be ComboBox if the NumberOfPages property is less than 11 otherwise it will be NumberBox. | Auto |
-| PagerButtonVisibilityBehavior | Enum that contains 4 values (Visible, HiddenOnEdge, Hidden) that allows the app developer to hide or show the four edge buttons. HiddenOnEdge will remove the appropriate buttons if the selected page is the last or first page. When the last page is selected, the next and last buttons will be disabled and same when the first page is selected for the first and previous page. When Auto is selected, the visibility mode will be AlwaysVisible. | Visible |
+| PagerControlDisplayMode | Enum that contains 4 values (Auto, ComboBox, NumberBox, ButtonPanel) to represent the look of the pager control. When Auto is selected, the display mode will be ComboBox if the NumberOfPages property is less than 11 otherwise it will be NumberBox. | Auto |
+| PagerControlButtonVisibilityBehavior | Enum that contains 3 values (Visible, HiddenOnEdge, Hidden) that allows the app developer to hide or show the four edge buttons. HiddenOnEdge will remove the appropriate buttons if the selected page is the last or first page. When the last page is selected, the next and last buttons will be disabled and same when the first page is selected for the first and previous page. When Auto is selected, the visibility mode will be AlwaysVisible. | Visible |
 | NumberOfPages | Sets the max number of pages the index control will iterate through. The default will represent an infinite page range. | -1 |
 | First, Previous, Next, and Last ButtonCommand | Specially handle the button pressed event for when the end user selects the buttons. | N/A |
 | First, Previous, Next, and Last Style | Give the developer the option to customize the style by changing the text or glyph for the edge buttons.| N/A |
 | ButtonPanelAlwaysShowFirstAndLastPage | Note: This property only applies to the button panel display mode.Boolean to display the ellipses and the first and last index of the numerical button panel display mode. | True |
-| SelectedIndex | The 0 based index that is currently selected. It will default to the first index. | 0 |
+| SelectedPageIndex | The 0 based index that is currently selected. It will default to the first index. | 0 |
 | PrefixText | Note: This property only applies to the combo box and number box display modes. Developer can change the prefix text for the combobox and number box display mode options. | "Page" |
 | SuffixText | Note: This property only applies to the combo box and number box display modes. Developer can change the suffix text for the combobox and number box display mode options. | "of (NumberofPages)". If NumberOfPages is infinite, display nothing |
 | PagerControlPageChangedEvent | Event that is fired when the end user selects a button from the number panel, any of the 4 directional buttons, or selects an option from the combobox or enters a number in the numberbox. This event will return the index number that the end user selected. If the end user enters a number greter than the number of pages this event will return the last page. If the end user enters a number less than 1 the event will return 1. | N/A |
@@ -230,8 +230,8 @@ public sealed partial class DataGridSamplePage : Page
 
 # API Details
 
-```c++
-enum PagerDisplayMode
+```IDL
+enum PagerControlDisplayMode
 {
     Auto,
     ComboBox,
@@ -239,7 +239,7 @@ enum PagerDisplayMode
     ButtonPanel,
 };
 
-enum PagerButtonVisibility
+enum PagerControlButtonVisibility
 {
     Visible,
     HiddenOnEdge,
@@ -248,8 +248,8 @@ enum PagerButtonVisibility
 
 runtimeclass PagerControlSelectedIndexChangedEventArgs
 {
-    Integer NewPageIndex{get; };
-    Integer PreviousPageIndex{get; };
+    Int32 NewPageIndex{get; };
+    Int32 PreviousPageIndex{get; };
 };
 
 unsealed runtimeclass PagerControlTemplateSettings : Windows.UI.Xaml.DependencyObject
@@ -264,19 +264,18 @@ unsealed runtimeclass PagerControlTemplateSettings : Windows.UI.Xaml.DependencyO
 
 }
 
-runtimeclass PagerControl
 unsealed runtimeclass PagerControl : Windows.UI.Xaml.Controls.Control
 {
     PagerControl();
 
-    PagerDisplayMode DisplayMode;
+    PagerControlDisplayMode DisplayMode;
     
-    Integer NumberOfPages;
+    Int32 NumberOfPages;
     
-    PagerButtonVisibility FirstButtonVisibility;
-    PagerButtonVisibility PreviousButtonVisibility;
-    PagerButtonVisibility NextButtonVisibility;
-    PagerButtonVisibility LastButtonVisibility;
+    PagerControlButtonVisibility FirstButtonVisibility;
+    PagerControlButtonVisibility PreviousButtonVisibility;
+    PagerControlButtonVisibility NextButtonVisibility;
+    PagerControlButtonVisibility LastButtonVisibility;
 
     Windows.UI.Xaml.Input.ICommand FirstButtonCommand;
     Windows.UI.Xaml.Input.ICommand PreviousButtonCommand;
