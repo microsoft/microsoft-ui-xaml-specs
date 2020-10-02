@@ -120,6 +120,10 @@ automatically generated.
 static void Run()
 {
     // Ensure we have a DispatcherQueue on this thread. 
+    // Note - this pattern is only necessary if you need to create a DispatcherQueue on a thread (ex as part
+    // of initialization). For the vast majority of scenarios, a hosting framework has already created one
+    // on your behalf and so you should simply call DispatcherQueue.GetForCurrentThread() to retrieve it.
+
     if(DispatcherQueue.GetForCurrentThread() == null)
     {
         DispatcherQueueController.CreateOnCurrentThread();
