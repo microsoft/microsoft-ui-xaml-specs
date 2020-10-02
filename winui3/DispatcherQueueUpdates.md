@@ -99,7 +99,7 @@ var controller = DispatcherQueueController.CreateOnDedicatedThread();
 
 _ = controller.DispatcherQueue.TryEnqueue(() =>
 {
-    var syncContext = new DispatcherQueueSyncronizationContext();
+    var syncContext = new DispatcherQueueSynchronizationContext();
     SynchronizationContext.SetSynchronizationContext(syncContext);
 
     var window = new Window();
@@ -129,7 +129,7 @@ static void Run()
         DispatcherQueueController.CreateOnCurrentThread();
     }
 
-    var syncContext = new DispatcherQueueSyncronizationContext();
+    var syncContext = new DispatcherQueueSynchronizationContext();
     SynchronizationContext.SetSynchronizationContext(syncContext);
 
     ProcessEvents();
