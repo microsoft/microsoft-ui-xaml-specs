@@ -511,8 +511,14 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
 | InfoBarErrorSeverityBackgroundBrush | Error Severity background color 
 | InfoBarWarningSeverityBackgroundBrush | Warning Severity background color 
 | InfoBarSuccessSeverityBackgroundBrush | Success Severity background color 
-| InfoBarInformationalSeverityBackgroundBrush | Informational Severity background color 
-| InfoBarHyperlinkForeground | Hyperlink button text color
+| InfoBarInformationalSeverityBackgroundBrush | Informational Severity background color
+| InfoBarErrorSeverityIconForeground | Error Severity icon color
+| InfoBarWarningSeverityIconForeground | Warning Severity icon color
+| InfoBarSuccessSeverityIconForeground | Success Severity icon color
+| InfoBarInformationalSeverityIconForeground | Informational Severity icon color
+| InfoBarTitleForeground | Title text color
+| InfoBarMessageForeground | Message text color 
+| InfoBarHyperlinkButtonForeground | Hyperlink button text color
 | InfoBarBorderBrush | Border color
 | InfoBarBorderThickness | Border thickness
 | InfoBarTitleFontSize | Title text font size 
