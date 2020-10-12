@@ -163,7 +163,8 @@ A custom background color can be set via the standard Background property and wi
 Please keep in mind content readability and accessibility when setting your own color.
 
 
-A custom icon can be set via the IconSource property. By default, an icon will be visible. 
+A custom icon can be set via the IconSource property. By default, an icon will be visible
+(assuming the control isn't collapsed).
 This icon can be removed by setting the IsIconVisible property to false. 
 For custom icons, the recommended icon size is 20px.
 
