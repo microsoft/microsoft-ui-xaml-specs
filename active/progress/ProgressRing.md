@@ -60,24 +60,32 @@ Below are properties being added to ProgressRing. The IsIndeterminate property o
 | IndeterminateSource | AnimatedVisualSource | Gets or sets the animation file used for the indeterminate state of the ring. | N/A | 
 
 # API Details
-<!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
+
 ```xaml
-Unsealed runtimeclass ProgressRing : Microsoft.UI.Xaml.Controls.Control.RangeBase
+[webhosthidden]
+unsealed runtimeclass ProgressRing : Windows.UI.Xaml.Controls.Control
 {
     ProgressRing();
- 
-    Boolean IsActive;
-    Boolean IsIndeterminate; 
 
+    Boolean IsActive{ get; set; };
+
+    Boolean IsIndeterminate{ get; set; };
     IAnimatedVisualSource DeterminateSource{ get; set; };
     IAnimatedVisualSource IndeterminateSource{ get; set; };
 
+    Double Value;
+    Double Minimum;
+    Double Maximum;
+
     ProgressRingTemplateSettings TemplateSettings{ get; };
- 
-    static Microsoft.UI.Xaml.DependencyProperty IsActiveProperty{ get; set};
-    static Microsoft.UI.Xaml.DependencyProperty IsIndeterminateProperty{  get; };
-    static Mircorsoft.UI.Xaml.DependencyProperty DeterminateSourceProperty{ get; };
-    static Microsoft.UI.Xaml.IndeterminateSourceProperty{ get; };
+
+    static Windows.UI.Xaml.DependencyProperty IsActiveProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty IsIndeterminateProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty DeterminateSourceProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty IndeterminateSourceProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty ValueProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty MinimumProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty MaximumProperty{ get; };
 }
 ```
 
