@@ -31,14 +31,14 @@ Represents an informational control that is visible but does not interfere with 
 
 
 ## Is this the right control?
-Use an InfoBar control when a user should be informed of, acknowledge, or take action on a message. 
+Use an InfoBar control when a user should be informed of, acknowledge, or take action on a changed application state. 
 By default the notification will remain in the content area until closed by the user 
 but will not necessarily break user flow.
 
 An InfoBar will take up space in your layout and behave like any other child elements. 
 It will not cover up other content or float on top of it.
 
-Do not use an InfoBar control to confirm or respond directly to a user action, for time-sensitive alerts, 
+Do not use an InfoBar control to confirm or respond directly to a user action that doesn't change the state of the app, for time-sensitive alerts, 
 or for non-essential messages.
 
 ## Remarks
