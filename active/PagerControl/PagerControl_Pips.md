@@ -1,8 +1,9 @@
 # Background
 There is a need for WinUI to support vertical pagination UI that resides to the left or right of the layout view with "pip" glyphs and arrow navigation. 
-This pagination experience is independent of the layout UI and is supported via customizations of the existing Numerical ButtonPanel DisplayMode in PagerControl. The two main customizations are below:
+This pagination experience is independent of the layout UI and is supported via customizations of the existing Numerical ButtonPanel DisplayMode in PagerControl. The three main customizations are below:
 - Glyphs (pips) to represent pages
 - Vertical orientation
+- Arrow visiblility dependent on user hover
 
 The below spec identifies the visual and interactive differences between the new VerticalPips DisplayMode and the ButtonPanel DisplayMode along with the available theme resources for further customization.
 # Description
@@ -169,19 +170,19 @@ enum PagerControlButtonVisibility
   - P2: Long press?
 
 # Prioritization
-
+*Feature may move up or down in priority based on need.
 ## P0
 - Glyphs to represent pages (pips)
 - Verticality of keyboard/touch interaction and glyph orientation
 - Functionality to enable the option to vary arrow visibility dependent on user hover
 ## P1
+- A MaxPagesDisplayed property to enable the scrolling UI design when the number of pages is greater than the number of pages shown in the control.*
 - Basic glyph customization:
   - Resources to change default and selected pip glyph (will keep default icon size)
   - Resources to change default and selected pip glyph foreground color (could drop in priority dependent on complexity)
 - Add an 'Auto' property to the PagerControlButtonVisibility enum to set custom button defaults by DisplayMode.
 - Event to fire once the user attempts to navigate past the last page to enable looping behavior in the application
 ## P2
-- A MaxPagesDisplayed property to enable the scrolling UI design when the number of pages is greater than the number of pages shown in the control.
 - Complex glyph customization:
   - Resources to change default and selected pip glyph font size that ties to the hover target.
   - Resources to change margin between pips
