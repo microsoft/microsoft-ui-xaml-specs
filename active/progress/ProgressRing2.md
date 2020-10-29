@@ -64,6 +64,10 @@ while the ring is spinning. An example of this would be when a video is loading 
 while the media is loading. The end user can still interact with other UI elements on the page while they wait 
 for the media to load.
 
+In addition to the updated guidance, the sources for the indeterminate and determinate mode have been exposed so you can 
+choose the animation file that can be played. This will give you the opportunity to customize the look and feel of your
+progress ring and potentially have different animations for determinate vs. indeterminate. 
+
 |Name | Type | Description | Default | 
 |:--|:-:|:-:|:-:|
 | IsIndeterminate | boolean | Gets or sets a value that indicates whether the progress ring reports generic progress with a repeating pattern (indeterminate progress) or reports progress based on the Value property (determinate progress) | True | 
@@ -74,8 +78,6 @@ for the media to load.
 | DeterminateSource | IAnimatedVisualSource | Gets or sets the animation file used for the determinate state of the ring. | N/A | 
 | IndeterminateSource | IAnimatedVisualSource | Gets or sets the animation file used for the indeterminate state of the ring. | N/A | 
 
-
-ets or sets the highest possible Value of the range element.
 
 # API Details
 
