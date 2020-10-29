@@ -141,7 +141,7 @@ unsealed runtimeclass PagerControl : Windows.UI.Xaml.Controls.Control
 };
 ```
 
-There is different UI behavior for each display mode if the MaxDisplayedPages > NumberOfPages:
+If the MaxDisplayedPages <= NumberOfPages the number of displayed pages will be the number of pages. There is different UI behavior for each display mode if the MaxDisplayedPages > NumberOfPages: 
 
 #### VerticalPips display mode
 The user will view a scrolling animation when navigating to the pips to keep them centered.
@@ -251,7 +251,7 @@ TBD for ComboBox and NumberBox display modes in discussion with Marissa.
 
 ## P1
 - Basic glyph customization:
-  - Resources to change default and selected pip glyph via MDL2 library
+  - Resources to change default and selected pip glyph via icon from MDL2 library
   - Resources to change default and selected pip glyph font size and bounding box
   - Resources to change default and selected pip glyph foreground color (could drop in priority dependent on complexity)
 
