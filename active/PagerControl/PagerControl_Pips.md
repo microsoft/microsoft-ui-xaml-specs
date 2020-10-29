@@ -2,9 +2,9 @@
 There is a need for WinUI to support vertical pagination UI that resides to the left or right of the layout view with "pip" glyphs and arrow navigation. 
 This pagination experience is independent of the layout UI and is supported via customizations of the existing Numerical ButtonPanel DisplayMode in PagerControl. The main customizations are below:
 - Glyphs (pips) to represent pages
-- Vertical orientation
-- Arrow visiblility dependent on user hover
-- Display any number of pages, different behavior if less than total number of pages
+- Vertical orientation: VerticalPips display mode
+- Arrow visiblility dependent on user hover: VisibleOnHover button visibility
+- Display any number of pages, different behavior if less than total number of pages: MaxDisplayedPages property
 
 The below spec identifies the visual and interactive differences between the new VerticalPips DisplayMode and the ButtonPanel DisplayMode, associated new functionalities for Pips, and new theme resources for further customization.
 
@@ -53,7 +53,7 @@ XAML
 ```
 
 ## Number of pages displayed less than total
-A PagerControl set to the Vertical Pips display mode where MaxPagesDisplayed is set to ten and the NumberOfPages is greater. This keeps the control height stable to a specific maximum when the number of total pages varies.
+A PagerControl set to the Vertical Pips display mode where MaxDisplayedPages is set to ten and the NumberOfPages is greater. This keeps the control height stable to a specific maximum when the number of total pages varies.
 
 XAML
 ```XAML
@@ -61,7 +61,7 @@ XAML
     <muxc:PagerControl x:Name="pager"
             DisplayMode="VerticalPips"
             NumberOfPages="20"
-            MaxDisplayedPages="10"/>
+            MaxDisplayedPages="12"/>
     </muxc:PagerControl>
 </Grid>
 ```
@@ -80,8 +80,8 @@ The VerticalPips DisplayMode will support the UI behavior of the various configu
 | Name | Description| Recommended for VerticalPips | PagerControl Default |
 |:---:|:---|:---| :--- |
 | FirstButtonVisibility | Visibility of the button displaying text and/or glyph indicating that the user may navigate to the first index. | Hidden | HiddenOnEdge |
-| PreviousButtonVisibility | Visibility of the button displaying text and/or glyph indicating that the user may navigate to the previous index.| VisibleOnHover* | HiddenOnEdge |
-| NextButtonVisibility | Visibility of the button displaying text and/or glyph indicating that the user may navigate to the next index. | **VisibleOnHover** * | HiddenOnEdge |
+| PreviousButtonVisibility | Visibility of the button displaying text and/or glyph indicating that the user may navigate to the previous index.| **VisibleOnHover*** | HiddenOnEdge |
+| NextButtonVisibility | Visibility of the button displaying text and/or glyph indicating that the user may navigate to the next index. | **VisibleOnHover*** | HiddenOnEdge |
 | LastButtonVisibility | Visibility of the button displaying text and/or glyph indicating that the user may navigate to the last index. | Hidden | HiddenOnEdge |
 | ButtonPanelAlwaysShowFirstAndLastPage | Note: This property only applies to the button panel display mode. Boolean to display the ellipses and the first and last index of the numerical button panel display mode. | N/A for VerticalPips | True | 
 | **MaxDisplayedPages** | Note: This property only applies to the ButtonPanel and VerticalPips display modes. Sets the max number of pages that will be _visible_ and displayed to the user at a time in the PagerControl. By default the control will show 5 pages to appear at once. | 5 | 5 |
@@ -161,7 +161,7 @@ Open questions:
 
 ## UI Components
 - Transforms of existing glyphs for First, Previous, Next, and Last button 270 degrees from current orientation.
-- Flexibility in control height to allow number of pips to be defined by user via the MaxPagesDisplayed property
+- Flexibility in control height to allow number of pips to be defined by user via the MaxDisplayedPages property
 
 
 ## Theme Resources
@@ -246,7 +246,7 @@ TBD for ComboBox and NumberBox display modes in discussion with Marissa.
 - Glyphs to represent pages (pips)
 - Verticality of keyboard/touch interaction and glyph orientation
 - Functionality to enable the option to vary arrow visibility dependent on user hover
-- A MaxPagesDisplayed property to enable the scrolling UI design when the number of pages is greater than the number of pages shown in the control.
+- A MaxDisplayedPages property to enable the scrolling UI design when the number of pages is greater than the number of pages shown in the control.
 
 ## P1
 - Basic glyph customization:
