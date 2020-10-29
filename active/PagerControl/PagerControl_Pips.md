@@ -146,7 +146,8 @@ There is different UI behavior for each display mode if the MaxDisplayedPages > 
 #### VerticalPips display mode
 The user will view a scrolling animation when navigating to the pips to keep them centered.
 
-
+In below sketch, the pips have been replaced with their numerical representation for clarity.
+![](images/pager-control-vertical-pips-scroll-ex.jpg)
 #### ButtonPanel display mode
 TBD: Introduces edge cases when the MaxDisplayedPages is very low with the ellipsis behavior. Continued discussion with Marissa here.
 
@@ -190,7 +191,7 @@ The VerticalPips DisplayMode will support the same functionality that the Button
 
 ### Keyboarding
 - The PagerControl is a tab stop which will navigate to the first selectable item -- first button, previous button, or first page. Any visible buttons can be navigated to via tab. This is default behavior in PagerControl.
-- Up and down arrows (instead of left and right) will navigate between the pips.
+- Up and down arrows (instead of left and right) will navigate between the pips. The pips will not be a tab stop.
 
 ### Touch
 For touch screen devices, a vertical swipe directly to the left or right of the pager will navigate to the previous or next page.*
