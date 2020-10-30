@@ -19,6 +19,12 @@ Progress _Bar_ has both a determinate and indeterminate mode.
 In determine mode the rectangle goes from empty to full, in indeterminate mode it shows an animation.
 Progress _Ring_ currently only has an indeterminate mode, but this spec is adding an indeterminate mode.
 
+ProgressBar is also getting a feature to replaces its built-in visualization (a spinning ring)
+with a custom animation defined as an 
+[IAnimatedVisualSource](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.IAnimatedVisualSource),
+which is known as a "Lottie Animation", and already supported (playable by) an
+[AnimatedVisualPlayer](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.AnimatedVisualPlayer).
+
 # ProgressRing Description
 Represents a control that indicates that an operation is ongoing. 
 The typical visual appearance is a ring-shaped "spinner" that animates a filled area as progress continues.
@@ -29,6 +35,9 @@ animates until the control is no longer visible ?? or
 is set to false. You can change the behavior to display
 a determinate ring that fills in based on the value you provide, using the `IsIndeterminate` property.
 
+You can also replace the built-in animation shown by the ProgressRing with a custom one,
+using the `DeterminateSource` and `IndeterminateSource` properties.
+
 # Examples
 
 The following examples show how to use the `IsIndeterminate` property to change the mode of 
@@ -36,20 +45,42 @@ the ProgressRing and the Value property to change the proportionate amount indic
 
 ## Indeterminate ProgressRing
 
+By default ProgressRing is indeterminate (a spinning circle).
+
+> Issue: not the same without an AniGif
+
 ```xml
-<ProgressRing IsActive="True" Height="100" Width="100"/>
+<ProgressRing IsActive="True" />
 ```
 ![](images/ProgressRing-indeterminate.jpg)
 
 ## Determinate ProgressRing
 
-??
+When `IsIndeterminate` is set, the circle will show progress around the ring,
+filling it when Value gets to Maximum.
 
 ```xml
-<ProgressRing IsActive="True"  Value="75" IsIndeterminate="False"/>
+<ProgressRing IsActive="True" IsIndeterminate="False"
+    Minimum="32" Maximum="212" Value="{x:Bind LiquidTemp}" />
 ```
 ![](images/ProgressRing-determinate.PNG)
 
+
+## Custom animation
+
+Show progress ring that visually looks like a thermometer boiling over.
+See [AnimatedVisualPlayer](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.AnimatedVisualPlayer)
+for more information on animated visuals.
+
+> Picture would be nice
+
+```xml
+<ProgressRing IsActive="True" >
+    <ProgressRing.IndeterminateSource>
+        <animatedvisuals:LottieProgress />
+    </ProgressRing.IndeterminateSource>
+</ProgressRing>
+```
 
 # API Notes
 
@@ -85,11 +116,10 @@ progress ring and potentially have different animations for determinate vs. inde
 [webhosthidden]
 unsealed runtimeclass ProgressRing : Windows.UI.Xaml.Controls.Control
 {
-    ProgressRing();
-
-    Boolean IsActive{ get; set; };
+    // ... (existing APIs)
 
     Boolean IsIndeterminate{ get; set; };
+    
     IAnimatedVisualSource DeterminateSource{ get; set; };
     IAnimatedVisualSource IndeterminateSource{ get; set; };
 
@@ -97,9 +127,6 @@ unsealed runtimeclass ProgressRing : Windows.UI.Xaml.Controls.Control
     Double Minimum;
     Double Maximum;
 
-    ProgressRingTemplateSettings TemplateSettings{ get; };
-
-    static Windows.UI.Xaml.DependencyProperty IsActiveProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty IsIndeterminateProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty DeterminateSourceProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty IndeterminateSourceProperty{ get; };
@@ -111,9 +138,6 @@ unsealed runtimeclass ProgressRing : Windows.UI.Xaml.Controls.Control
 
 
 # Appendix
-<!-- Anything else that you want to write down for posterity, but 
-that isn't necessary to understand the purpose and usage of the API.
-For example, implementation details. -->
 
 ## Design Behavior Details
 The determinate progress ring will be an empty ring when the progress is set to a value of 0. 
