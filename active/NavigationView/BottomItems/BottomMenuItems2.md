@@ -22,9 +22,7 @@ area that positions custom content adjacent to the Settings item.
 Although an app developer can place any content into PaneFooter, including other NavigationViewItems, 
 this content will not participate in the selection model and animations of 
 the MenuItems navigation list and Settings item. So if an item in MenuItems is selected, and the user
-clicks on an item in the PaneFooter, it will not de-select the preview item.
-
-_Open question:_ Should PaneFooter be deprecated because this new API is a direct replacement?
+clicks on an item in the PaneFooter, it will not de-select the previous item.
 
 Some apps may wish to visually group navigation items into top-aligned and bottom-aligned lists
 (or left- and right-aligned lists), for example:
@@ -54,11 +52,10 @@ contrasted with the MenuItems property which places items at the start of the pa
 public IList<object> FooterMenuItems { get; }
 ```
 
-The default Settings item will be included as the last item in the FooterMenuItems collection. 
-As a result, adding items into FooterMenuItems will by default display them before the Settings item. 
+The default Settings item will be added to into the FooterMenuItems collection at compile time - therefore, adding items into FooterMenuItems will by default display them before the Settings item. 
 The Settings item can still be toggled using the `IsSettingsVisible` property. 
 Note: this is the recommended way to remove the Settings item, although it's possible 
-to remove it manually by removing it from the FooterMenuItems collection itself. 
+to remove it manually by removing it from the FooterMenuItems collection itself. Adding or moving the Settings item is not a supported scenario.
 
 Below is an example of a NavigationView with a FooterMenu where the Mail item is selected.
 
@@ -161,34 +158,34 @@ Unlike previous behavior, the Settings item will be announced as a part of the F
 
 ### Keyboarding
 Given the following list, keyboarding actions should be as follows:
-- Main 1
-- Main 2
+- Home
+- Mail
 
 <!-- -->
 
-- Bottom 1
-- Bottom 2
+- Account
+- Sync Now
 - Settings
 
 Users should be able to Tab between these two lists.
 
-If keyboard focus is on Main 2:
-- Up arrow moves focus to Main 1
-- Down arrow moves focus to Bottom 1
-- Tab moves focus to bottom1 (unless an item in the bottom list is selected, in which case focus should go to that item).
-- Home moves focus to Main 1
+If keyboard focus is on Mail:
+- Up arrow moves focus to Home
+- Down arrow moves focus to Account
+- Tab moves focus to Account (unless an item in the FooterMenu is selected, in which case focus should go to that item).
+- Home moves focus to Home
 - End does nothing
 
-If keyboard focus is on Bottom 1:
-- Up arrow moves focus to Main 2
-- Down arrow moves focus to Bottom 2
+If keyboard focus is on Account:
+- Up arrow moves focus to Mail
+- Down arrow moves focus to Sync Now
 - Tab moves focus to the first focusable item in NavigationView's Header or Content (same behavior as on Settings item today).
 - Home does nothing
-- End moves focus to settings
+- End moves focus to Settings
 
 If keyboard focus is on Settings:
-- Up arrow moves focus to Bottom 2
+- Up arrow moves focus to Sync Now
 - Down arrow does nothing (same as today)
 - Tab moves focus to a Header or Content item (same as today).
-- Home moves focus to Bottom 1
+- Home moves focus to Account
 - End does nothing
