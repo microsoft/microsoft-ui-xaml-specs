@@ -27,9 +27,9 @@ clicks on an item in the PaneFooter, it will not de-select the previous item.
 Some apps may wish to visually group navigation items into top-aligned and bottom-aligned lists
 (or left- and right-aligned lists), for example:
 
-![NavigationView in Left display mode showing FooterMenuItems](FooterItems_Left.png)
+![NavigationView in Left display mode showing FooterMenuItems](footermenu-leftmode.png)
 
-![NavigationView in Top display mode showing FooterMenuItems](FooterItems_Top.png)
+![NavigationView in Top display mode showing FooterMenuItems](footermenu-top.png)
 
 While this grouping is possible today by putting NavigationViewItems into the PaneFooter, 
 the approach creates a poor selection and interaction experience as described above.
@@ -54,12 +54,11 @@ public IList<object> FooterMenuItems { get; }
 
 The default Settings item will be added to into the FooterMenuItems collection at compile time - therefore, adding items into FooterMenuItems will by default display them before the Settings item. 
 The Settings item can still be toggled using the `IsSettingsVisible` property. 
-Note: this is the recommended way to remove the Settings item, although it's possible 
-to remove it manually by removing it from the FooterMenuItems collection itself. Adding or moving the Settings item is not a supported scenario.
+Note: this is the recommended way to remove the Settings item, although it's possible to remove it manually by removing it from the FooterMenuItems collection itself. Adding or moving the Settings item is not a supported scenario.
 
-Below is an example of a NavigationView with a FooterMenu where the Mail item is selected.
+Below is an example of a NavigationView with a FooterMenu where the Account item is selected, and the Settings item is not visible.
 
-![NavigationView with FooterMenu](footer-menu-mockup.png)
+![NavigationView with FooterMenu](navview-footermenu-sample1.png)
 
 See also the `FooterMenuItemsSource` property.
 
