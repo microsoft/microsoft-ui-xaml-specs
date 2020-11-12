@@ -1,3 +1,4 @@
+> See and note [PipsPager](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/gabilka/PipsPager/active/PipsPager/PipsPager.md) spec for the most recent update about this UI. This VerticalPips to PagerControl spec is now outdated.
 # Background
 There is a need for WinUI to support vertical pagination UI that resides to the left or right of the layout view with "pip" glyphs and arrow navigation. 
 This pagination experience is independent of the layout UI and is supported via customizations of the existing Numerical ButtonPanel DisplayMode in PagerControl. The main customizations are below:
