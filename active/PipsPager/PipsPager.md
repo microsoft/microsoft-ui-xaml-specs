@@ -1,5 +1,5 @@
 # Background
-In many applications, media and data is shown in various layouts like lists, grids, and tables. Instead of scrolling or panning through the content, users are able to page through the content with previous and next buttons or jump to specific pages. This UI pagination behavior is supported in WinUI with a family of pager controls. See PagerControl spec and PagerControl proposal for the latest updates. At this time, we are splitting up the current PagerControl display modes into separate controls with the same core functionality. Previously, there was behavior and associated properties that only applied to specific display modes in the PagerControl. We'd like to simplify how developers interact with the various pager controls and choose which visualization fits their scenario. By splitting up the PagerControl display modes we're also able to add more customizations and behavior specific to a single visualization.
+In many applications, media and data is shown in various layouts like lists, grids, and tables. Instead of scrolling or panning through the content, users are able to page through the content with previous and next buttons or jump to specific pages. This UI pagination behavior is supported in WinUI currently with the PagerControl. See PagerControl [spec](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/savoyschuler/pagercontrol/active/PagerControl/PagerControl.md) and PagerControl [proposal](https://github.com/microsoft/microsoft-ui-xaml/issues/60) for the latest updates.
 
 A common UI pattern not yet supported by the existing PagerControl visualizations appears in media viewer scenarios like photo carousels or app lists. In these scenarios, the pages are commonly indicated with 'dot' glyphs instead of numbers. Conceptually, this is similar to an unordered list represented by bullet points instead of numbers. We would like to introduce a PipsPager to be used when the page content is not explicitly ordered and a symbol or glyph can instead represent the page number. 
 
@@ -191,5 +191,5 @@ The user can also touch to select the individual pip if able.
 - When the pips take focus via the keyboard are they selected?
 - Are there any other specific touch interactions?
 - Is there additional animation or customization associated with the MaxVisualIndicators property? E.g. pip size decreasing when there are more pages to navigate to.
-- Should functionality for wizard-like UX be supported by PipsPager?
+- Should functionality for wizard/step-like UX be supported by PipsPager?
   - The pager is cognizant of the pages it has passed and the pages to come and there is specific styling applied to this.
