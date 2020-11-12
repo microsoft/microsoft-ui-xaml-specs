@@ -3,7 +3,6 @@ In many applications, media and data is shown in various layouts like lists, gri
 
 A common UI pattern not yet supported by the existing PagerControl visualizations appears in media viewer scenarios like photo carousels or app lists. In these scenarios, the pages are commonly indicated with 'dot' glyphs instead of numbers. Conceptually, this is similar to an unordered list represented by bullet points instead of numbers. We would like to introduce a PipsPager to be used when the page content is not explicitly ordered and a symbol or glyph can instead represent the page number. 
 
-
 # Description
 The PipsPager is a UI component that provides a standard interaction for pagination with a layout view (ListView, GridView, ItemsRepeater, DataGrid, etc.) when the page numbers do not need to be visually known. The PipsPager, like the other pager controls, is independent of the layout views and does not control any of the data being displayed in the layout view.
 
@@ -71,8 +70,6 @@ The buttons and pips can be customized via the PreviousButtonStyle, NextButtonSt
 
 XAML and example image to be added.
 
-
-
 # API Notes
 | Name | Description| Default | 
 |:---:|:---|:---|
@@ -84,6 +81,7 @@ XAML and example image to be added.
 | Orientation | The orientation of the control. Can be either Vertical or Horizontal. | Horizontal
 | PipsPagerSelectedIndexChangedEvent | Event that is fired after the user selects a pip or the directional buttons. This event will return the index number of the page that the user selected. | N/A
 *Command for the buttons?
+
 # API Details
 ```IDL
 enum PipsPagerButtonVisibility
@@ -135,10 +133,7 @@ unsealed runtimeclass PipsPager : Windows.UI.Xaml.Controls.Control
 
     event Windows.Foundation.TypedEventHandler<PipsPager, PipsPagerSelectedIndexChangedEventArgs> PipsPagerSelectedIndexChanged;
 
-
-    [MUX_PROPERTY_NEEDS_DP_FIELD]
     PipsPagerTemplateSettings TemplateSettings{ get; };
-
 
     static Windows.UI.Xaml.DependencyProperty NumberOfPagesProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty SelectedPageIndexProperty{ get; };
@@ -153,9 +148,7 @@ unsealed runtimeclass PipsPager : Windows.UI.Xaml.Controls.Control
 
 ```
 
-
 ![](images/pager-control-vertical-pips-scroll-ex.jpg)
-
 
 ## Theme Resources
 | Name | Description | Type
@@ -198,3 +191,5 @@ The user can also touch to select the individual pip if able.
 - When the pips take focus via the keyboard are they selected?
 - Are there any other specific touch interactions?
 - Is there additional animation or customization associated with the MaxVisualIndicators property? E.g. pip size decreasing when there are more pages to navigate to.
+- Should functionality for wizard-like UX be supported by PipsPager?
+  - The pager is cognizant of the pages it has passed and the pages to come and there is specific styling applied to this.
