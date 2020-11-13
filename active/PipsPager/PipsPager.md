@@ -153,18 +153,18 @@ unsealed runtimeclass PipsPager : Windows.UI.Xaml.Controls.Control
 ## Theme Resources
 | Name | Description | Type
 |:-:|:--| :-- |
-| PipPagerDefaultIndicator | Sets the default pip glyph in MDL2 icon set | String |
-| PipPagerSelectedIndicator | Sets the pip glyph when selected in MDL2 icon set | String |
-| PipPagerIndicatorFontSize | Sets the size in pixels of the pip glyph | Double |
-| PipPagerSelectedIndicatorFontSize | Sets the size in pixels of the pip glyph when selected | Double |
-| PipPagerDefaultForegroundBrush | Sets the foreground brush of the default pip glyphs| SolidColorBrush
-| PipPagerSelectedForegroundBrush | Sets the foreground brush of the pip glyph when selected | SolidColorBrush
-| PipPagerPointerOver | Sets the pointer over/hover visual state for the pip display mode | Brush
-| PipPagerPressed | Sets the pressed visual state for the pip display mode | Brush
-| PipPagerSelected | Sets the selected visual state for the pip display mode | Brush
-| PipPagerMargin | Sets the margin, in pixels, between each pip glyph | Thickness
-| PipPagerIndicatorWidth | Sets the bounding box width for each pip glyph | Double
-| PipPagerIndicatorHeight | Sets the bounding box height for each pip glyph | Double
+| PipsPagerDefaultIndicator | Sets the default pip glyph in MDL2 icon set | String |
+| PipsPagerSelectedIndicator | Sets the pip glyph when selected in MDL2 icon set | String |
+| PipsPagerIndicatorFontSize | Sets the size in pixels of the pip glyph | Double |
+| PipsPagerSelectedIndicatorFontSize | Sets the size in pixels of the pip glyph when selected | Double |
+| PipsPagerDefaultForegroundBrush | Sets the foreground brush of the default pip glyphs| SolidColorBrush
+| PipsPagerSelectedForegroundBrush | Sets the foreground brush of the pip glyph when selected | SolidColorBrush
+| PipsPagerPointerOver | Sets the pointer over/hover visual state for the pip display mode | Brush
+| PipsPagerPressed | Sets the pressed visual state for the pip display mode | Brush
+| PipsPagerSelected | Sets the selected visual state for the pip display mode | Brush
+| PipsPagerMargin | Sets the margin, in pixels, between each pip glyph | Thickness
+| PipsPagerIndicatorWidth | Sets the bounding box width for each pip glyph | Double
+| PipsPagerIndicatorHeight | Sets the bounding box height for each pip glyph | Double
 
 
 # Input & Accessibility
