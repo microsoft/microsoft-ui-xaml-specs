@@ -27,9 +27,9 @@ clicks on an item in the PaneFooter, it will not de-select the previous item.
 Some apps may wish to visually group navigation items into top-aligned and bottom-aligned lists
 (or left- and right-aligned lists), for example:
 
-![NavigationView in Left display mode showing FooterMenuItems](footermenu-leftmode.png)
+![NavigationView in Left display mode showing FooterMenuItems](footermenu-leftmode.PNG)
 
-![NavigationView in Top display mode showing FooterMenuItems](footermenu-top.png)
+![NavigationView in Top display mode showing FooterMenuItems](footermenu-top.PNG)
 
 While this grouping is possible today by putting NavigationViewItems into the PaneFooter, 
 the approach creates a poor selection and interaction experience as described above.
