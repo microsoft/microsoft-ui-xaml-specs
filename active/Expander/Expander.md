@@ -150,24 +150,17 @@ For example, implementation details. -->
 Expander will use a ExpandCollapsePattern. Expanding/Collapsing the expander will raise [RaisePropertyChanged](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.automation.peers.automationpeer.raisepropertychangedevent?view=winrt-19041) with the property changed being the [ExpandCollapseProperty](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.automation.expandcollapsepatternidentifiers.expandcollapsestateproperty?view=winrt-19041) property.
 
 ## Keyboard
-TBD
-
-## Narrator
-TBD
+* Only the header takes focus (not the entire Expander, or the chevron)
+*	When focus is on the Header - hit space/enter/right key to expand it, and focus does not move
+* Space and enter should expand and collapse 
+* right arrow will expand, left arrow will collapse
 
 ## GamePad
 TBD
 
-# Open Question
+# Open Questions
 
 ## Input and Accessibility
-* Should the first tab-stop be the entire Expander or just the Header? WCT Expander has the Header as the first tab-stop.
-* Should the second tab-stop be the chevron/expansion icon? WPF has the first tab-stop as the Header, the second as just the chevron. 
-* Proposed: The first tab-stop is the Header, chevron is not a tab-stop(if the only action that users can take on the Header is to expand/collapse). Potentially, instead of being a keyboard stop, users can use Alt+Down to open Expander (a standard shortcut used in DropDownButton). Make sure that Enter and Space keys have the same behavior.
-* Arrowing inside the content/controls of the header/container? Could have issues with ComboBox-like controls. 
-* What should Narrator behavior be wrt to unexpanded/expanded content?
-
+* Is there a RTL consideration for right/left keyboarding behavior?
 ## General
-* Should this be named "Expander" or "ExpanderView"?
-* how should a dev use Expander for 2 layers of expansion?
-
+*
