@@ -53,6 +53,16 @@ example code with each description. The general format is:
 <!-- As an example of this section, see the Examples section for the PasswordBox control 
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 
+## Create an Expander
+XAML
+~~~~
+<controls:Expander AutomationProperties.AutomationId="CollapsedExpander" AutomationProperties.Name="Expander2">
+    <controls:Expander.Header>
+        <TextBlock Style="{StaticResource HeaderTextBlockStyle}" Text="This expander is collapsed by default." />
+    </controls:Expander.Header>
+    <TextBlock AutomationProperties.AutomationId="CollapsedExpanderContent">Content</TextBlock>
+</controls:Expander>
+~~~~
 
 # Remarks
 <!-- Explanation and guidance that doesn't fit into the Examples section. -->
@@ -71,7 +81,17 @@ isn't the type's default (for example an int-typed property that doesn't default
 
 <!-- Option 2: Put these descriptions in the below API Details section,
 with a "///" comment above the member or type. -->
+## Notable Properties
+| Name | Description | Default |
+| :---------- | :------- | :------- |
+| ExpandDirection | Sets the direction of expansion | Down = 0 |
+| IsExpanded | Whether or not control is expanded | False |
 
+## Events
+| Name | Description | 
+| :---------- | :------- | 
+| Expanded | Occurs when expanded |
+| Collapsed| Occurs when collapsed |
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
@@ -108,6 +128,17 @@ public static readonly DependencyProperty ExpandDirectionProperty;
 } 
 ~~~~
 
+## Theme Resources
+
+| Name | Description | 
+| :---------- | :------- | 
+| ExpanderHeaderBackground | Header background color| 
+| ExpanderChevronBackground | Chevron background color| 
+| ExpanderChevronForeground | Chevron foreground color| 
+| ExpanderChevronMargin | Chevron margin thickness| 
+| ExpanderChevronGlyph | Chevron glyph| 
+| ExpanderChevronWidth | Chevron width (should this be renamed to 'weight'?)| 
+| ExpanderPopinVerticalOffset | vertical offset | 
 
 # Appendix
 <!-- Anything else that you want to write down for posterity, but 
@@ -116,16 +147,27 @@ For example, implementation details. -->
 
 # Inputs and Accessibility
 ## UI Automation Patterns
-Expander will use a ExpandCollapsePattern.
+Expander will use a ExpandCollapsePattern. Expanding/Collapsing the expander will raise [RaisePropertyChanged](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.automation.peers.automationpeer.raisepropertychangedevent?view=winrt-19041) with the property changed being the [ExpandCollapseProperty](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.automation.expandcollapsepatternidentifiers.expandcollapsestateproperty?view=winrt-19041) property.
 
-## Keyboard Navigation
+## Keyboard
+TBD
+
+## Narrator
+TBD
+
+## GamePad
 TBD
 
 # Open Question
-## General
-* Should this be named "Expander" or "ExpanderView"?
 
 ## Input and Accessibility
 * Should the first tab-stop be the entire Expander or just the Header? WCT Expander has the Header as the first tab-stop.
 * Should the second tab-stop be the chevron/expansion icon? WPF has the first tab-stop as the Header, the second as just the chevron. 
+* Proposed: The first tab-stop is the Header, chevron is not a tab-stop(if the only action that users can take on the Header is to expand/collapse). Potentially, instead of being a keyboard stop, users can use Alt+Down to open Expander (a standard shortcut used in DropDownButton). Make sure that Enter and Space keys have the same behavior.
+* Arrowing inside the content/controls of the header/container? Could have issues with ComboBox-like controls. 
+* What should Narrator behavior be wrt to unexpanded/expanded content?
+
+## General
+* Should this be named "Expander" or "ExpanderView"?
+* how should a dev use Expander for 2 layers of expansion?
 
