@@ -81,7 +81,7 @@ isn't the type's default (for example an int-typed property that doesn't default
 
 <!-- Option 2: Put these descriptions in the below API Details section,
 with a "///" comment above the member or type. -->
-## Notable Properties
+## Properties
 | Name | Description | Default |
 | :---------- | :------- | :------- |
 | ExpandDirection | Sets the direction of expansion | Down = 0 |
@@ -98,33 +98,33 @@ with a "///" comment above the member or type. -->
 ~~~~
 Public enum ExpandDirection 
 { 
-Down = 0 
-Up = 1 
+ Down = 0 
+ Up = 1 
 } 
  
 public class Expander : ContentControl 
 { 
-Expander(); 
- 
-public object Header {get;set;} 
-public DataTemplate HeaderTemplate { get;set; } 
-public DataTemplate HeaderTemplateSelector {get;set;} 
- 
-public static readonly DependencyProperty HeaderProperty; 
-public static readonly DependencyProperty HeaderTemplateProperty; 
-public static readonly DependencyProperty HeaderTemplateSelectorProperty {get;} 
- 
-public bool IsExpanded { get;set} 
-public ExpandDirection ExpandDirection { get;set;} 
- 
-protected virtual void OnExpanded(); 
-protected virtual void OnCollapsed(); 
- 
-public event Expanded; 
-public event Collapsed; 
- 
-public static readonly DependencyProperty IsExpandedProperty; 
-public static readonly DependencyProperty ExpandDirectionProperty; 
+ Expander(); 
+
+ public object Header {get;set;} 
+ public DataTemplate HeaderTemplate { get;set; } 
+ public DataTemplate HeaderTemplateSelector {get;set;} 
+
+ public static readonly DependencyProperty HeaderProperty; 
+ public static readonly DependencyProperty HeaderTemplateProperty; 
+ public static readonly DependencyProperty HeaderTemplateSelectorProperty {get;} 
+
+ public bool IsExpanded { get;set} 
+ public ExpandDirection ExpandDirection { get;set;} 
+
+ protected virtual void OnExpanded(); 
+ protected virtual void OnCollapsed(); 
+
+ public event Expanded; 
+ public event Collapsed; 
+
+ public static readonly DependencyProperty IsExpandedProperty; 
+ public static readonly DependencyProperty ExpandDirectionProperty; 
 } 
 ~~~~
 
