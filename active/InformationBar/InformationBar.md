@@ -418,6 +418,8 @@ for more information about text localization in your notification.
 
 # API Details
 
+## Microsoft.UI.Xaml.Controls
+
 ```c++
 enum InfoBarCloseReason
 {
@@ -495,6 +497,27 @@ unsealed runtimeclass InfoBar : Windows.UI.Xaml.Controls.ContentControl
     static Windows.UI.Xaml.DependencyProperty ContentTemplateProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty TemplateSettingsProperty{ get; };
 }
+```
+
+## Microsoft.UI.Xaml.Controls.Primitives
+
+```cs
+[webhosthidden]
+unsealed runtimeclass InfoBarPanel : Windows.UI.Xaml.Controls.Panel
+{
+    InfoBarPanel();
+
+    // HorizontalMargin attached property
+    static Windows.UI.Xaml.DependencyProperty HorizontalMarginProperty{ get; };
+    static void SetHorizontalMargin(Windows.UI.Xaml.DependencyObject object, Windows.UI.Xaml.Thickness value);
+    static Windows.UI.Xaml.Thickness GetHorizontalMargin(Windows.UI.Xaml.DependencyObject object);
+
+    // VerticalMargin attached property
+    static Windows.UI.Xaml.DependencyProperty VerticalMarginProperty{ get; };
+    static void SetVerticalMargin(Windows.UI.Xaml.DependencyObject object, Windows.UI.Xaml.Thickness value);
+    static Windows.UI.Xaml.Thickness GetVerticalMargin(Windows.UI.Xaml.DependencyObject object);
+}
+
 ```
 
 ## Theme Resources
