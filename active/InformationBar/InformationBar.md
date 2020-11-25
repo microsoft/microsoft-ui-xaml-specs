@@ -398,6 +398,62 @@ Please view the guidance for
 for more information about text localization in your notification.
 
 
+# InfoBarPanel class
+
+A layout panel that positions its children horizontally if there’s available space,
+otherwise positions them vertically. This panel is intended to only be used as part
+of the ControlTemplate of the InfoBar control.
+
+## InfoBar Padding properties
+
+The `PaddingInHorizontalOrientation` property gets/sets the distance between the edges
+of the panel and its children, when the panel is laying out items horizontally.
+The `PaddingInVerticalOrientation` property does likewise when the panel is layout out
+items vertically.
+
+[API note: these padding properties are analogous to ex the 
+[StackPanel.Padding](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.StackPanel.Padding)
+property.]
+
+## InfoBar Spacing attached properties
+
+The `SpacingInHorizontalOrientation` attached property gets/sets the distance between i tems
+when the panel is laying out items in the horizontal orientation. Similarly 
+`SpacingInVerticalOrientation` for vertical layout. This property is set on the child items,
+so the spacing can be different between different item pairs.
+
+[API note: these spacing properties are analogous to ex the
+[StackLayout.Spacing](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.StackLayout.Spacing)
+property, except they're attached properties so that they can be set on the panel children.]
+
+Note that if adjacent children both have non-zero spacing set, the values will be added
+together. That is if a left child has right spacing, and a right child has left spacing,
+the total spacing will be the sum of the two values.
+
+## InfoBarPanel example
+
+This example shows an InfoBarPanel with 10px of padding above and below
+its children when laying out vertically, no padding otherwise. 
+
+The children have spacing between each other that varies based on the child
+and orientation. 
+
+```xml
+<InfoBarPanel PaddingInVerticalOrientation='0,10,0,10'>
+    <TextBlock x:Name='Title'
+        InfoBarPanel.SpacingInHorizontalOrientation='0,10,0,0'
+        InfoBarPanel.SpacingInVerticalOrientation='0,10,0,0' />
+
+    <TextBlock x:Name='Message'
+        InfoBarPanel.SpacingInHorizontalOrientation='8,10,0,0'
+        InfoBarPanel.SpacingInVerticalOrientation='0,4,0,0' />
+
+    <ContentPresenter x:Name='Action'
+        InfoBarPanel.SpacingInHorizontalOrientation='12,8,0,0'
+        InfoBarPanel.SpacingInVerticalOrientation='0,12,0,0' />
+</InfoBarPanel>
+```
+
 # API Notes
 
 ### Notable Properties  
@@ -507,17 +563,24 @@ unsealed runtimeclass InfoBarPanel : Windows.UI.Xaml.Controls.Panel
 {
     InfoBarPanel();
 
-    // HorizontalMargin attached property
-    static Windows.UI.Xaml.DependencyProperty HorizontalMarginProperty{ get; };
-    static void SetHorizontalMargin(Windows.UI.Xaml.DependencyObject object, Windows.UI.Xaml.Thickness value);
-    static Windows.UI.Xaml.Thickness GetHorizontalMargin(Windows.UI.Xaml.DependencyObject object);
+    // PaddingInHorizontalOrientation property
+    Windows.UI.Xaml.Thickness PaddingInHorizontalOrientation;
+    static Windows.UI.Xaml.DependencyProperty PaddingInHorizontalOrientationProperty{ get; };
 
-    // VerticalMargin attached property
-    static Windows.UI.Xaml.DependencyProperty VerticalMarginProperty{ get; };
-    static void SetVerticalMargin(Windows.UI.Xaml.DependencyObject object, Windows.UI.Xaml.Thickness value);
-    static Windows.UI.Xaml.Thickness GetVerticalMargin(Windows.UI.Xaml.DependencyObject object);
+    // PaddingInVerticalOrientation property
+    Windows.UI.Xaml.Thickness PaddingInVerticalOrientation;
+    static Windows.UI.Xaml.DependencyProperty PaddingInVerticalOrientationProperty{ get; };
+
+    // SpacingInHorizontalOrientation attached property
+    static void SetSpacingInHorizontalOrientation(Windows.UI.Xaml.DependencyObject object, Windows.UI.Xaml.Thickness value);
+    static Windows.UI.Xaml.Thickness GetSpacingInHorizontalOrientation(Windows.UI.Xaml.DependencyObject object);
+    static Windows.UI.Xaml.DependencyProperty SpacingInHorizontalOrientationProperty{ get; };
+
+    // SpacingInVerticalOrientation attached property
+    static void SetSpacingInVerticalOrientation(Windows.UI.Xaml.DependencyObject object, Windows.UI.Xaml.Thickness value);
+    static Windows.UI.Xaml.Thickness GetSpacingInVerticalOrientation(Windows.UI.Xaml.DependencyObject object);
+    static Windows.UI.Xaml.DependencyProperty SpacingInVerticalOrientationProperty{ get; };
 }
-
 ```
 
 ## Theme Resources
