@@ -21,7 +21,7 @@ A PipsPager with five pages that can be selected by the user. By default, the pr
 
 XAML
 ```XAML 
-    <controls:PipsPager NumberOfPages="5"/>
+    <muxc:PipsPager NumberOfPages="5"/>
 ```
 
 ## PipsPager with visible buttons
@@ -36,7 +36,7 @@ The visibility of the previous and next buttons can be set via the PreviousButto
 
 XAML
 ```XAML 
-    <controls:PipsPager NumberOfPages="5"
+    <muxc:PipsPager NumberOfPages="5"
       PreviousButtonVisibility=Visible
       NextButtonVisibility=Visible />
 ```
@@ -48,7 +48,7 @@ The PipsPager can also be oriented vertically which does not change its behavior
 
 XAML
 ```XAML 
-    <IndicatorPager NumberOfPages="5"
+    <muxc:PipsPager NumberOfPages="5"
       Orientation=Vertical 
       PreviousButtonVisibility=VisibleOnHover 
       NextButtonVisibility= VisibleOnHover />
@@ -61,14 +61,14 @@ If the number of pages of content is large and do not need to be navigated to at
 
 XAML
 ```XAML
-<IndicatorPager NumberOfPages="20"
+<muxc:PipsPager NumberOfPages="20"
       MaxVisualIndicators="12" />
 ```
 
 ## Pip and Button customization
 The buttons and pips can be customized via the PreviousButtonStyle, NextButtonStyle, SelectedIndicatorButtonStyle, and DefaultIndicatorButtonStyle. As a note, setting the PreviousButtonStyle and NextButtonStyle can overwrite what is set in PreviousButtonVisibility and NextButtonVisibility. Additionally, the SelectedIndicatorButtonStyle and DefaultIndicatorButtonStyle can overwrite what is set in the theme resources.
 
-XAML and example image to be added.
+> XAML and example image to be added.
 
 # API Notes
 | Name | Description| Default | 
@@ -145,7 +145,7 @@ unsealed runtimeclass PipsPager : Windows.UI.Xaml.Controls.Control
     static Windows.UI.Xaml.DependencyProperty NextButtonStyleProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty SelectedIndicatorButtonStyleProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty DefaultIndicatorButtonStyleProperty{ get; };
-
+}
 ```
 
 ![](images/pager-control-vertical-pips-scroll-ex.jpg)
@@ -155,7 +155,7 @@ unsealed runtimeclass PipsPager : Windows.UI.Xaml.Controls.Control
 |:-:|:--| :-- |
 | PipsPagerDefaultIndicator | Sets the default pip glyph in MDL2 icon set | String |
 | PipsPagerSelectedIndicator | Sets the pip glyph when selected in MDL2 icon set | String |
-| PipsPagerIndicatorFontSize | Sets the size in pixels of the pip glyph | Double |
+| PipsPagerDefaultIndicatorFontSize | Sets the size in pixels of the pip glyph | Double |
 | PipsPagerSelectedIndicatorFontSize | Sets the size in pixels of the pip glyph when selected | Double |
 | PipsPagerDefaultForegroundBrush | Sets the foreground brush of the default pip glyphs| SolidColorBrush
 | PipsPagerSelectedForegroundBrush | Sets the foreground brush of the pip glyph when selected | SolidColorBrush
@@ -173,10 +173,15 @@ unsealed runtimeclass PipsPager : Windows.UI.Xaml.Controls.Control
 - The PipsPager is a tab stop which will navigate to the first selectable item -- first button, previous button, or first pip. Any visible directional buttons can be navigated to via tab.
 - The arrow keys can be used to navigate between the pips and directional buttons. Independent of the orientation set, the left and up arrow keys will change focus to the previous pip or to the previous button and the right and down arrow keys will change focus to the next pip or the next button.
 
+## Gamepad
+- The PipsPager can be navigated to via spatial navigation. The selected pip will automatically take focus and the pips will be selected when navigated to and focused. Independent of the PipsPagerButtonVisibility settings, the navigation buttons will not be visible to the user. 
+  - In horizontal orientation left and right spatial navigation will focus and select the pips. The PipsPager will be navigated out of when the user navigates up or down or when the user attempts to navigate past the first or last page. We recommend that developers do not place UI directly to the left or right of a horizontally oriented PipsPager. 
+  - In vertical orientation up and down spatial navigation will focus and select the pips. The PipsPager will be navigated out of when the user navigates left or right or when the user attempts to navigate past the first or last page. We recommend that developers do not place UI directly above or below a vertically oriented PipsPager. 
+
 ## Touch
 For touch screen devices, a vertical swipe on the pager will navigate to the previous or next page.
- - An "up" swipe will navigate to the previous page.
- - A "down" swipe will navigate to the next page.
+ - An "up" swipe will navigate to the next page.
+ - A "down" swipe will navigate to the previous page.
 
 The user can also touch to select the individual pip if able.
 
@@ -188,8 +193,7 @@ The user can also touch to select the individual pip if able.
 
 
 # Open Questions
-- When the pips take focus via the keyboard are they selected?
-- Are there any other specific touch interactions?
-- Is there additional animation or customization associated with the MaxVisualIndicators property? E.g. pip size decreasing when there are more pages to navigate to.
 - Should functionality for wizard/step-like UX be supported by PipsPager?
   - The pager is cognizant of the pages it has passed and the pages to come and there is specific styling applied to this.
+- Should the on edge navigational buttons appear as disabled or hidden?
+- Do the navigational buttons need a Command property?
