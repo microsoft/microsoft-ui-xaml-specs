@@ -1,10 +1,24 @@
 # Background
-In many applications, media and data is shown in various layouts like lists, grids, and tables. Instead of scrolling or panning through the content, users are able to page through the content with previous and next buttons or jump to specific pages. This UI pagination behavior is supported in WinUI currently with the PagerControl. See PagerControl [spec](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/savoyschuler/pagercontrol/active/PagerControl/PagerControl.md) and PagerControl [proposal](https://github.com/microsoft/microsoft-ui-xaml/issues/60) for the latest updates.
+In many applications, media and data is shown in various layouts like lists, grids, and tables. Instead of scrolling or panning through the content, users are able to page through the content with previous and next buttons or jump to specific pages. 
 
-A common UI pattern not yet supported by the existing PagerControl visualizations appears in media viewer scenarios like photo carousels or app lists. In these scenarios, the pages are commonly indicated with 'dot' glyphs instead of numbers. Conceptually, this is similar to an unordered list represented by bullet points instead of numbers. We would like to introduce a PipsPager to be used when the page content is not explicitly ordered and a symbol or glyph can instead represent the page number. 
+This UI pagination behavior is supported in WinUI currently with the PagerControl. 
+(See PagerControl [spec](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/user/savoyschuler/pagercontrol/active/PagerControl/PagerControl.md) 
+and PagerControl [proposal](https://github.com/microsoft/microsoft-ui-xaml/issues/60) 
+for the latest updates.) The PagerControl works with page numbers in a few different formats:
+
+![PagerControl example](images/PagerControl.jpg)
+
+
+A common UI pattern not yet supported by the existing PagerControl visualizations appears in media viewer scenarios like photo carousels or app lists. In these scenarios, the pages are commonly indicated with 'dot' glyphs instead of numbers. Conceptually, this is similar to an unordered list represented by bullet points instead of numbers. 
+
+![PipsPager, horizontal, visible buttons](images/PipsPager_HorizontalVisible.jpg)
+
+The new PipsPager control can  be used when the page content is not explicitly ordered and a symbol or glyph can instead represent the page number. 
 
 # Description
-The PipsPager is a UI component that provides a standard interaction for pagination with a layout view (ListView, GridView, ItemsRepeater, DataGrid, etc.) when the page numbers do not need to be visually known. The PipsPager, like the other pager controls, is independent of the layout views and does not control any of the data being displayed in the layout view.
+Represents a control that provides a interaction and navigation of a paginated layout view (ListView, GridView, ItemsRepeater, DataGrid, etc.) when the page numbers do not need to be visually known.
+
+The PipsPager, like the other pager controls, is independent of the layout views and does not control any of the data being displayed in the layout view.
 
 ## Is this the right control?
 Use a PipsPager when the content in the layout is not explicitly ordered by relevancy or you desire a glyph-based representation of numbered pages. This UI is commonly used in photo viewers, app lists, and when display space is limited. The PipsPager can be oriented vertically or horizontally.
@@ -15,9 +29,10 @@ Pips represent a unit of numerical value, typically represented as dots, however
 # Examples
 
 ## Create a PipsPager
-A PipsPager with five pages that can be selected by the user. By default, the previous and next buttons are collapsed and the pips are oriented horizontally.
+A PipsPager with five pages that can be selected by the user. 
+By default, the previous and next buttons are collapsed and the pips are oriented horizontally.
 
-<!-- ![A sketch of five horizontal dots with the first selected.](images/PipsPager_HorizontalCollapsed.jpg) -->
+![A sketch of five horizontal dots with the first selected.](images/PipsPager_HorizontalCollapsed.jpg)
 
 XAML
 ```XAML 
@@ -25,14 +40,15 @@ XAML
 ```
 
 ## PipsPager with visible buttons
-The visibility of the previous and next buttons can be set via the PreviousButtonVisibility and NextButtonVisibility properties. These buttons allow the user to select a page
+The visibility of the previous and next buttons can be set via the PreviousButtonVisibility and NextButtonVisibility properties. 
+These buttons allow the user to select a page. The possible values are:
 - Visible: The button is visible and selectable. An exception to this is that if the selected page is on the associated "edge" of the button then the button will be hidden.
   - The edge for the previous button is the first page and the edge for the next button is the last page.
   - Note: Hidden means that the button is invisible but does take up layout space.
 - VisibleOnHover: The behavior is the same as Visible *except* that the button is only Visible when the user is hovering over the paging UI with their cursor.
 - Collapsed: The button is not visible to the user and does **not** take up layout space.
 
-<!-- ![A sketch of five horizontal dots with the first selected and the previous and next buttons are visible](images/PipsPager_HorizontalVisible.jpg) -->
+![A sketch of five horizontal dots with the first selected and the previous and next buttons are visible](images/PipsPager_HorizontalVisible.jpg)
 
 XAML
 ```XAML 
