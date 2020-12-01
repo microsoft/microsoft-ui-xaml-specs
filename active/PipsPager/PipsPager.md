@@ -73,7 +73,6 @@ The buttons and pips can be customized via the PreviousButtonStyle, NextButtonSt
 # API Notes
 | Name | Description| Default | 
 |:---:|:---|:---|
-| PipsPagerButtonVisibility | Enum that contains 3 values (Visible, VisibleOnHover, Collapsed) that allows the developer to show or hide the two navigation buttons. <br> - Visible: The button is visible and selectable. An exception to this is that if the selected page is on the associated "edge" of the button then the button will be hidden.<br> - VisibleOnHover: The behavior is the same as Visible *except* that the button is only Visible when the user is hovering over the paging UI with their cursor. <br> - Collapsed: The button is not visible to the user and does **not** take up layout space. | Collapsed |
 | NumberOfPages | Sets the max number of pages the index control will iterate through. The default will represent an infinite page range. | -1
 | Previous and Next Style | Give the developer the option to customize the style by changing the text or glyph for the edge buttons. | N/A
 | SelectedPageIndex | The 0 based index that is currently selected. It will default to the first index. | 0
@@ -81,6 +80,17 @@ The buttons and pips can be customized via the PreviousButtonStyle, NextButtonSt
 | Orientation | The orientation of the control. Can be either Vertical or Horizontal. | Horizontal
 | PipsPagerSelectedIndexChangedEvent | Event that is fired after the user selects a pip or the directional buttons. This event will return the index number of the page that the user selected. | N/A
 *Command for the buttons?
+
+## PipsPagerButtonVisibility enum
+
+Defines constants that specify how a the buttons of a PipsPager are to be displayed. Defaults to Collapsed.
+
+| Value | Description |
+|:---:|:---|
+| Visible | The button is visible and selectable. An exception to this is that if the selected page is on the associated "edge" of the button then the button will be hidden |
+| VisibleOnHover | The behavior is the same as Visible *except* that the button is only Visible when the user is hovering over the paging UI with their cursor. |
+| COllapsed | The button is not visible to the user and does **not** take up layout space. |
+
 
 # API Details
 ```IDL
