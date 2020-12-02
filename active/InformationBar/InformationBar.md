@@ -404,31 +404,37 @@ A layout panel that positions its children horizontally if there’s available s
 otherwise positions them vertically. This panel is intended to only be used as part
 of the ControlTemplate of the InfoBar control.
 
-## InfoBar Padding properties
+## InfoBar padding properties
 
-The `PaddingInHorizontalOrientation` property gets/sets the distance between the edges
+The `HorizontalOrientationPadding` property gets/sets the distance between the edges
 of the panel and its children, when the panel is laying out items horizontally.
-The `PaddingInVerticalOrientation` property does likewise when the panel is layout out
+The `VerticalOrientationPadding` property does likewise when the panel is laying out
 items vertically.
 
 [API note: these padding properties are analogous to ex the 
 [StackPanel.Padding](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.StackPanel.Padding)
 property.]
 
-## InfoBar Spacing attached properties
+## InfoBar margin attached properties
 
-The `SpacingInHorizontalOrientation` attached property gets/sets the distance between i tems
-when the panel is laying out items in the horizontal orientation. Similarly 
-`SpacingInVerticalOrientation` for vertical layout. This property is set on the child items,
-so the spacing can be different between different item pairs.
+The `HorizontalOrientationMargin` attached property can be set on child elements
+of an InfoBarPanel, and gets/sets an extra margin on the element.
+Similarly 
+`VerticalOrientationMargin` for vertical layout.
 
-[API note: these spacing properties are analogous to ex the
-[StackLayout.Spacing](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.StackLayout.Spacing)
-property, except they're attached properties so that they can be set on the panel children.]
+These attached margin properties are applied on an element in addition to the
+element's [Margin](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.FrameworkElement.Margin)
+property. For example if a child element's Margin is 2 and its
+InfoBarPanel.HorizontalOrientationMargin property is 3, it will have an effective margin
+of 5 (when the panel is in its horizontal layout).
 
-Note that if adjacent children both have non-zero spacing set, the values will be added
-together. That is if a left child has right spacing, and a right child has left spacing,
-the total spacing will be the sum of the two values.
+The leading and trailing margins are ignored  however.
+For example, in horizontal layout, the HorizontalOrientationMargin.Left
+is ignored on the first child, and the 
+HorizontalOrientationMargin.Right is ignored on the last child.
+This applies to the first/last child that are not collapsed (that take up layout space).
+For example, if the first child is collapsed, it's the
+HorizontalOrientationMargin.Left of the _second_ child that is ignored.
 
 ## InfoBarPanel example
 
@@ -439,18 +445,18 @@ The children have spacing between each other that varies based on the child
 and orientation. 
 
 ```xml
-<InfoBarPanel PaddingInVerticalOrientation='0,10,0,10'>
+<InfoBarPanel VerticalOrientationPadding='0,10,0,10'>
     <TextBlock x:Name='Title'
-        InfoBarPanel.SpacingInHorizontalOrientation='0,10,0,0'
-        InfoBarPanel.SpacingInVerticalOrientation='0,10,0,0' />
+        InfoBarPanel.HorizontalOrientationMargin='0,10,0,0'
+        InfoBarPanel.VerticalOrientationMargin='0,10,0,0' />
 
     <TextBlock x:Name='Message'
-        InfoBarPanel.SpacingInHorizontalOrientation='8,10,0,0'
-        InfoBarPanel.SpacingInVerticalOrientation='0,4,0,0' />
+        InfoBarPanel.HorizontalOrientationMargin='8,10,0,0'
+        InfoBarPanel.VerticalOrientationMargin='0,4,0,0' />
 
     <ContentPresenter x:Name='Action'
-        InfoBarPanel.SpacingInHorizontalOrientation='12,8,0,0'
-        InfoBarPanel.SpacingInVerticalOrientation='0,12,0,0' />
+        InfoBarPanel.HorizontalOrientationMargin='12,8,0,0'
+        InfoBarPanel.VerticalOrientationMargin='0,12,0,0' />
 </InfoBarPanel>
 ```
 
@@ -563,23 +569,23 @@ unsealed runtimeclass InfoBarPanel : Windows.UI.Xaml.Controls.Panel
 {
     InfoBarPanel();
 
-    // PaddingInHorizontalOrientation property
-    Windows.UI.Xaml.Thickness PaddingInHorizontalOrientation;
-    static Windows.UI.Xaml.DependencyProperty PaddingInHorizontalOrientationProperty{ get; };
+    // HorizontalOrientationPadding property
+    Windows.UI.Xaml.Thickness HorizontalOrientationPadding;
+    static Windows.UI.Xaml.DependencyProperty HorizontalOrientationPaddingProperty{ get; };
 
-    // PaddingInVerticalOrientation property
-    Windows.UI.Xaml.Thickness PaddingInVerticalOrientation;
-    static Windows.UI.Xaml.DependencyProperty PaddingInVerticalOrientationProperty{ get; };
+    // VerticalOrientationPadding property
+    Windows.UI.Xaml.Thickness VerticalOrientationPadding;
+    static Windows.UI.Xaml.DependencyProperty VerticalOrientationPaddingProperty{ get; };
 
-    // SpacingInHorizontalOrientation attached property
-    static void SetSpacingInHorizontalOrientation(Windows.UI.Xaml.DependencyObject object, Windows.UI.Xaml.Thickness value);
-    static Windows.UI.Xaml.Thickness GetSpacingInHorizontalOrientation(Windows.UI.Xaml.DependencyObject object);
-    static Windows.UI.Xaml.DependencyProperty SpacingInHorizontalOrientationProperty{ get; };
+    // HorizontalOrientationMargin attached property
+    static void SetHorizontalOrientationMargin(Windows.UI.Xaml.DependencyObject object, Windows.UI.Xaml.Thickness value);
+    static Windows.UI.Xaml.Thickness GetHorizontalOrientationMargin(Windows.UI.Xaml.DependencyObject object);
+    static Windows.UI.Xaml.DependencyProperty HorizontalOrientationMarginProperty{ get; };
 
-    // SpacingInVerticalOrientation attached property
-    static void SetSpacingInVerticalOrientation(Windows.UI.Xaml.DependencyObject object, Windows.UI.Xaml.Thickness value);
-    static Windows.UI.Xaml.Thickness GetSpacingInVerticalOrientation(Windows.UI.Xaml.DependencyObject object);
-    static Windows.UI.Xaml.DependencyProperty SpacingInVerticalOrientationProperty{ get; };
+    // VerticalOrientationMargin attached property
+    static void SetVerticalOrientationMargin(Windows.UI.Xaml.DependencyObject object, Windows.UI.Xaml.Thickness value);
+    static Windows.UI.Xaml.Thickness GetVerticalOrientationMargin(Windows.UI.Xaml.DependencyObject object);
+    static Windows.UI.Xaml.DependencyProperty VerticalOrientationMarginProperty{ get; };
 }
 ```
 
