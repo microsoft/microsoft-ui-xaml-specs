@@ -29,16 +29,16 @@ This section will provide mockups and further design details.
 **GridView in single selection mode:**
 
 The first item in the second row under "New" is hovered; the third item is  selected. 
-![visual-updates1.PNG](visual-updates1.PNG)
+![gridview single selection](images/visual-updates1.PNG)
 
 **GridView in multiple selection mode:**
-![visual-updates2.PNG](visual-updates2.PNG)
+![gridview multuple selection](images/visual-updates2.PNG)
 
 **ListView in single selection mode:**
-![visual-updates3.PNG](visual-updates3.PNG)
+![listview single selection](images/visual-updates3.PNG)
 
 **ListView in multiple selection mode:**
-![visual-updates4.PNG](visual-updates4.PNG)
+![listview multiple selection](images/visual-updates4.PNG)
 
 **More ListView examples:**
 
@@ -46,7 +46,7 @@ The first example on the top left shows a rounded focus rect.
 The second example on the top right shows extended selection mode. 
 
 The samples in the bottom row show ListView items with different heights. 
-![visual-updates-5.PNG](visual-updates-5.PNG)
+![more listview examples](images/visual-updates-5.PNG)
 
 ### Selection Indicator specifics
 The selection indicator should be centered with a fixed margin on the top and bottom, and a minimum height of 16px. With this system, items with a line height of one or two will have the same size pill (minimum size pill), but it will grow larger as the line height increases. 
