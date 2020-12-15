@@ -19,7 +19,7 @@ property today returns the Window for the current (calling) thread,
 but in a non-UWP app it will return null. 
 Similarly the Window.CoreWindow property will be null when not running as UWP.
 
-> **Spec note**: Some of the APIs here are new, others have new behavior for WinUI3 
+> Spec note: Some of the APIs here are new, others have new behavior for WinUI3 
 when running in a Desktop app.
 None of the behavior for UWP apps changes.
 
@@ -41,7 +41,7 @@ In a UWP app you must create a new
 which will automatically create a new thread and a Window on it. 
 See the 'Create new Window in UWP application' example.
 
-> **Implementation note:** Attempting to activate a new window in a UWP app will use use 
+> Implementation note: Attempting to activate a new window in a UWP app will use 
 [RoOriginateError](https://docs.microsoft.com/en-us/windows/win32/api/roerrorapi/nf-roerrorapi-rooriginateerror) 
 to show an explanatory message in the debugger.
 
@@ -49,13 +49,7 @@ Creating a new Window in a Desktop app creates a new top level HWND.
 
 ### Example: Set the content of a given window and give it keyboard focus.
 
-In a UWP app the read-only 
-[Window.Current](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Window.Current) 
-property returns the Window for the current thread. 
-(A thread has at most one Window and it's created automatically on each UI thread.) 
-This property returns null on a non UI thread or in a Desktop app.
-
-The following sets the content of the calling thread's Window in a UWP app and gives it keyboard focus.
+The following sets the content of the calling thread's Window and gives it keyboard focus.
 
 ```CS
 void InitializeAndActivateWindow(Window window)
@@ -106,7 +100,7 @@ window.Activate();
 
 ```
 
-> **Spec note**: no <Window.Content> tag is required because Window.Content is updating to become the
+> Spec note: no <Window.Content> tag is required because Window.Content is updating to become the
 [ContentPropertyAttribute](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Markup.ContentPropertyAttribute).
 
 In a UWP app any UI thread already has a Window on it, which you can retrieve using the static 
@@ -149,7 +143,7 @@ thread.SetApartmentState(ApartmentState.STA);
 thread.Start(); 
 ```
 
-> **Spec note:** The DispatcherQueueSyncronizationContext is a new API 
+> Spec note: The DispatcherQueueSyncronizationContext is a new API 
 [described here](https://github.com/microsoft/microsoft-ui-xaml-specs/pull/97)
 
 ## Window.ExtendsContentIntoTitleBar **[New]**
@@ -158,26 +152,26 @@ Gets or sets a value that specifies whether this title bar should replace the de
 
 Setting this property to true causes the built-in title bar to be removed. 
 
-(Spec note: this is analogous to 
-[AppWindowTitleBar.ExtendsContentIntoTitleBar](https://docs.microsoft.com/uwp/api/Windows.UI.WindowManagement.AppWindowTitleBar.ExtendsContentIntoTitleBar))
+> Spec note: this is analogous to 
+[AppWindowTitleBar.ExtendsContentIntoTitleBar](https://docs.microsoft.com/uwp/api/Windows.UI.WindowManagement.AppWindowTitleBar.ExtendsContentIntoTitleBar)
 
 Setting this property only effects rendering, it does not affect pointer (such as mouse) behavior. 
 For example, you can still use the mouse to click down in that area and drag the window around 
 the desktop. To change that behavior use the `SetTitleBar` API.
 
-Extending the content into the title bar do not impact on the Window buttons 
+Extending the content into the title bar does not impact on the Window buttons 
 (Minimize, Maximize, and Close); the buttons will be still there. 
 
-> See the SetTitleBar example below for an example of ExtendsContentIntoTitleBar
+See the SetTitleBar example below for an example of ExtendsContentIntoTitleBar
 
-(Implementation note: This will be a wrap of the CoreApplicationViewTitleBar.ExtendViewIntoTitleBar
-for UWP. In Win32 will remove the Title bar from the Non-Client area when the property is true.)
+> Implementation note: This will be a wrap of the CoreApplicationViewTitleBar.ExtendViewIntoTitleBar
+for UWP. In Win32 will remove the Title bar from the Non-Client area when the property is true.
 
 ## Window.SetTitleBar
 
 Makes a XAML element interact with the system as if it’s the title bar.
 
-(Spec note: this is an existing method with new behavior for Desktop)
+> Spec note: this is an existing method with new behavior for Desktop
 
 For example, a user can move the window by dragging the XAML UIElement, 
 or a user can invoke the window context menu by right-clicking it. As a consequence the app no longer
@@ -259,7 +253,7 @@ internal interface IWindowNative
 
 Get or set a string to display as the window's title.
 
-This title is displayed in the windows title bar (unless ExtendsContentIntoTitleBar is set),
+This title is displayed in the windows title bar (unless `ExtendsContentIntoTitleBar` is set),
 as well as other locations such as when the user presses Alt-Tab to bring up the application switcher.
 
 ### Example
@@ -313,11 +307,14 @@ public CoreWindow CoreWindow { get; }
 Gets the [CoreDispatcher](https://docs.microsoft.com/uwp/api/Windows.UI.Core.CoreDispatcher) 
 object for the Window when called from a UWP app. Returns null when called from a Desktop app.
 
+The preferred alternative to this property is the `Window.DispatcherQueue` property,
+which provides a 
+[DispatcherQueue](https://docs.microsoft.com/uwp/api/Windows.System.DispatcherQueue),
+which similarly allows you to run code on the Window's UI thread.
+
 ```CS
 public CoreDispatcher Dispatcher { get; }
 ```
-
-When running as a Desktop app, this property will be null.
 
 Most members of the Window class can only be accessed when running on the thread the object was
 created on. This property, though, can be called from any thread.
@@ -334,7 +331,7 @@ public DispatcherQueue DispatcherQueue { get; }
 Most members of the Window class can only be accessed when running on the thread the object was
 created on. This property, though, can be called from any thread.
 
-## WindowActivatedEventArgs class
+## WindowActivatedEventArgs class  **[NEW]**
 Namespace: Microsoft.UI.Xaml
 
 > Issue: should rename these to avoid collision.
@@ -363,7 +360,7 @@ the time the event was raised.
     public CoreWindowActivationState WindowActivationState { get; }
     ```
 
-## VisibilityChangedEventArgs class 
+## VisibilityChangedEventArgs class  **[NEW]**
 Namespace: Microsoft.UI.Xaml
 
 > Spec note: this is a new Xaml version of the existing 
@@ -386,7 +383,7 @@ if the event has been handled by the appropriate delegate; **false** if it has n
     public bool Visible { get; } 
     ```
 
-## WindowSizeChangedEventArgs class
+## WindowSizeChangedEventArgs class  **[NEW]**
 Namespace: Microsoft.UI.Xaml
 
 > Spec note: this is a new XAML version of the existing 
@@ -431,7 +428,7 @@ The following events and virtual methods are not invoked when running in a Deskt
 
 ## Application.Start method
 
-Provides the entry point and requests initialization of the application. Use the callback 
+Static method which provides the entry point and requests initialization of the application. Use the callback 
 to instantiate the Application class.
 
 In a Desktop app this will run a message pump internally, and not return until the application 
@@ -455,7 +452,7 @@ protected virtual void OnLaunched(LaunchActivatedEventArgs args)
 In a Desktop app, use OnLaunched to create the main window and pass it the first command line argument.
 
 ```CS
-protected override void OnLaunched(MUX.LaunchActivatedEventArgs e)
+protected override void OnLaunched(LaunchActivatedEventArgs e)
 {
      MainWindow window = new MainWindow();
      
@@ -523,7 +520,7 @@ and once each time CreateNewView is called.
 - **Desktop**: This method is called every time a Window object is created.
 
 
-## XamlLaunchActivatedEventArgs class
+## LaunchActivatedEventArgs class  **[NEW]**
 
 Namespace: Microsoft.UI.Xaml.Application
 
@@ -540,52 +537,55 @@ In a UWP app, this is equivalent to LaunchActivatedEventArgs.Arguments.
     ```CS
     public String Arguments { get; };
     ```
-- LaunchActivatedEventArgs: Gets the LaunchActivatedEventArgs from UWP. This property is null in a Desktop app.
+- UWPLaunchActivatedEventArgs: Gets the LaunchActivatedEventArgs from UWP. This property is null in a Desktop app.
     ```CS
     public Windows.ApplicationModel.Activation.LaunchActivatedEventArgs UWPLaunchActivatedEventArgs { get; };
     ```
 
 # API Details
 
-?? Need to cover resources:
-            <StaticResource x:Key="WindowCaptionBackground" ResourceKey="SystemControlBackgroundBaseLowBrush" />
-            <StaticResource x:Key="WindowCaptionBackgroundDisabled" ResourceKey="SystemControlBackgroundBaseLowBrush" />
-            <StaticResource x:Key="WindowCaptionForeground" ResourceKey="SystemControlForegroundBaseHighBrush" />
-            <StaticResource x:Key="WindowCaptionForegroundDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
-
-            <x:Double x:Key="WindowCaptionButtonStrokeWidth">1.0</x:Double>
-            <StaticResource x:Key="WindowCaptionButtonBackgroundPointerOver" ResourceKey="SystemControlHighlightBaseLowBrush"/>
-            <StaticResource x:Key="WindowCaptionButtonBackgroundPressed" ResourceKey="SystemControlBackgroundBaseMediumLowBrush"/>
-            <StaticResource x:Key="WindowCaptionButtonStroke" ResourceKey="SystemControlForegroundBaseHighBrush"/>
-            <StaticResource x:Key="WindowCaptionButtonStrokePointerOver" ResourceKey="SystemControlForegroundBaseHighBrush"/>
-            <StaticResource x:Key="WindowCaptionButtonStrokePressed" ResourceKey="SystemControlForegroundBaseHighBrush"/>
-            <SolidColorBrush x:Key="WindowCaptionButtonBackground" Color="Transparent" />
-            <SolidColorBrush x:Key="CloseButtonBackgroundPointerOver" Color="#e81123"/>
-            <SolidColorBrush x:Key="CloseButtonStrokePointerOver" Color="White"/>
-            <SolidColorBrush x:Key="CloseButtonBackgroundPressed" Color="#f1707a"/>
-            <SolidColorBrush x:Key="CloseButtonStrokePressed" Color="Black"/>
-
-
-            WindowCaptionButton (Style)
-
-
 ## Window class
 Microsoft.UI.Xaml namespace
 
+> The Window class' APIs in WinUI3 (**Microsoft**.UI.Xaml) match the existing system Window
+API (**Windows**.UI.Xaml), except for the following.
+
 ```cs
-    [contract(Microsoft.UI.Xaml.WinUIContract, 1)]
-    [webhosthidden]
-    [contentproperty("Content")]
-    unsealed runtimeclass Window
-    {
-        ...
+[webhosthidden]
+[contentproperty("Content")]
+unsealed runtimeclass Window
+{
 
-        String Title;
-        ImageSource Icon;
-       	Microsoft.System.DispatcherQueue DispatcherQueue{ get; };
-        Boolean ExtendContentIntoTitleBar { get; set;}	
-    };
+    ...
 
+    // These APIs match the system Xaml versions, except the event args are now from the Xaml namespace
+    event Windows.Foundation.TypedEventHandler<Object,Microsoft.UI.Xaml.WindowActivatedEventArgs> Activated;
+    event Windows.Foundation.TypedEventHandler<Object,Microsoft.UI.Xaml.WindowEventArgs> Closed;
+    event Windows.Foundation.TypedEventHandler<Object,Microsoft.UI.Xaml.WindowSizeChangedEventArgs> SizeChanged;
+    event Windows.Foundation.TypedEventHandler<Object,Microsoft.UI.Xaml.WindowVisibilityChangedEventArgs> VisibilityChanged;
+
+    // New APIs
+    String Title;
+    Boolean ExtendsContentIntoTitleBar;
+    Microsoft.System.DispatcherQueue DispatcherQueue{ get; };
+}
+```
+
+## Application class
+
+**Microsoft.UI.Xaml**
+
+> The Application class' APIs in WinUI3 (**Microsoft**.UI.Xaml) match the existing system Application
+API (**Windows**.UI.Xaml), except the OnLaunched virtual args is
+is now a Xaml type rather than Windows.ApplicationModel.Activation
+
+```cs
+[webhosthidden]
+unsealed runtimeclass Application
+{
+    ...
+    overridable void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args);
+};
 ```
 
 ## IWindowNative (COM) interface
@@ -603,38 +603,66 @@ interface IWindowNative: IUnknown
 };
 ```
 
-## Application class
-Microsoft.UI.Xaml namespace
-
-```cs
-    [webhosthidden]
-    unsealed runtimeclass Application
-    {
-        ...
-
-        // This matches Windows.UI.Xaml.Application except for the new event args type
-        overridable void OnLaunched(XamlLaunchActivatedEventArgs args);
-    };
-```
-
-
 ## Event args
 
 ```cs
 [webhosthidden]
-runtimeclass XamlLaunchActivatedEventArgs
+runtimeclass LaunchActivatedEventArgs
 {
     String Arguments{ get; };
     Windows.ApplicationModel.Activation.LaunchActivatedEventArgs UWPLaunchActivatedEventArgs{ get; };
 };
 ```
 
+```cs
+[webhosthidden]
+runtimeclass WindowActivatedEventArgs
+{
+    Boolean Handled;
+    Microsoft.UI.Xaml.WindowActivationState WindowActivationState{ get; };
+};
+```
+
+
+```cs
+[webhosthidden]
+runtimeclass WindowCreatedEventArgs
+{
+    Microsoft.UI.Xaml.Window Window{ get; };
+};
+```
+
+
+```cs
+[webhosthidden]
+runtimeclass WindowEventArgs
+{
+    Boolean Handled;
+};
+```
+
+
+```cs
+[webhosthidden]
+runtimeclass WindowSizeChangedEventArgs
+{
+    Boolean Handled;
+    Windows.Foundation.Size Size{ get; };
+};
+```
+
+```cs
+[webhosthidden]
+runtimeclass WindowVisibilityChangedEventArgs
+{
+    Boolean Handled;
+    Boolean Visible{ get; };
+};
+```
+
+
+
 # Appendix
-
-## Changes in this spec from WinUI Preview2
-
-* Rename LaunchActivatedEventArgs to XamlLaunchActivatedEventArgs
-* New Icon property
 
 ## Activation state colors
 
@@ -642,13 +670,5 @@ Window title bars should be drawn with different background/foreground colors ba
 whether the window is current foreground (active) or background. Additionally, there's an 
 option in Windows Settings to use the user's accent color as the foreground of the title bar.
 This is not initially be supported.
-
-
-## Main Window
-
-There is essentially no change here to the "main window" behavior of Window. The
-first Window to be created on the Application thread is special, in that closing it
-(from code or the user clicking the Close button) will shut down the app. The only
-difference is that in a Desktop app, there could be multiple windows on that thread.
 
 
