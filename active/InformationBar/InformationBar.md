@@ -1,7 +1,6 @@
 # Background
 > This spec corresponds to [issue 913](https://github.com/microsoft/microsoft-ui-xaml/issues/913) on the WinUI repo.
 
-
 Users should be informed about essential status changes that occur on an app level.
 These status changes affect the app as a whole and can be either critical or informational.
 Critical status changes like lost internet connectivity are directly impactful to app functionality while
@@ -438,27 +437,32 @@ HorizontalOrientationMargin.Left of the _second_ child that is ignored.
 
 ## InfoBarPanel example
 
-This example shows an InfoBarPanel with 10px of padding above and below
-its children when laying out vertically, no padding otherwise. 
+This example shows an InfoBarPanel with 5px of padding above and below
+its children when laying out horizontally, no padding otherwise. 
 
 The children have spacing between each other that varies based on the child
-and orientation. 
+and orientation. The second child (the green rectangle) won't have it its margin
+applied if the first child (the red rectangle) is collapsed.
 
 ```xml
-<InfoBarPanel VerticalOrientationPadding='0,10,0,10'>
-    <TextBlock x:Name='Title'
-        InfoBarPanel.HorizontalOrientationMargin='0,10,0,0'
-        InfoBarPanel.VerticalOrientationMargin='0,10,0,0' />
+<Border BorderBrush="Black" BorderThickness="1" Margin="100" HorizontalAlignment="Left">
+    <primitives:InfoBarPanel HorizontalOrientationPadding='0,5,0,5' >
 
-    <TextBlock x:Name='Message'
-        InfoBarPanel.HorizontalOrientationMargin='8,10,0,0'
-        InfoBarPanel.VerticalOrientationMargin='0,4,0,0' />
+        <Rectangle Width="100" Height="100" Fill="Red" />
 
-    <ContentPresenter x:Name='Action'
-        InfoBarPanel.HorizontalOrientationMargin='12,8,0,0'
-        InfoBarPanel.VerticalOrientationMargin='0,12,0,0' />
-</InfoBarPanel>
+        <Rectangle Width="100" Height="100" Fill="Green"
+            primitives:InfoBarPanel.HorizontalOrientationMargin='16,0,0,0'
+            primitives:InfoBarPanel.VerticalOrientationMargin='0,20,0,0'/>
+
+        <Rectangle Width="100" Height="100" Fill="Blue"
+            primitives:InfoBarPanel.HorizontalOrientationMargin='32,0,0,0'
+            primitives:InfoBarPanel.VerticalOrientationMargin='0,20,0,0' />
+
+    </primitives:InfoBarPanel>
+</Border>
 ```
+
+![InfoBarPanel example](images/InfoBarPanel-example.jpg)
 
 # API Notes
 
