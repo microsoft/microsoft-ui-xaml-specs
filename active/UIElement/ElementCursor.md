@@ -12,9 +12,11 @@ In the future we expect to also have a _public_ Cursor property that the app dev
 
 This isn't a pattern we have today. The proposal here is to name them *Cursor* (future public property) and *ProtectedCursor* (protected property in this spec).
 
-# Description
+A note about WPF compatibility ... WPF has the [Cursor property on FrameworkElement](https://docs.microsoft.com/dotnet/api/System.Windows.FrameworkElement.Cursor) rather than UIElement. We put this new ProtectedCursor property on UIElement (and will put the future Cursor property there) because cursors are "core", which is the intent of the UIElement/FrameworkElement split. And this is a source compatible difference.
 
-**UIElement.ProtectedCursor** (type: [CoreCursor](https://docs.microsoft.com/uwp/api/Windows.UI.Core.CoreCursor))  
+# UIElement.ProtectedCursor
+Type: [CoreCursor](https://docs.microsoft.com/uwp/api/Windows.UI.Core.CoreCursor))  
+
 Gets or sets the cursor that displays when the  pointer is over this element. Defaults to null, indicating no change to the cursor.
 
 If a parent and descendant element both have this property set, and the pointer is over the descendent, the descendant's value is used and the parent's value is ignored.
@@ -24,8 +26,6 @@ A pointer is 'over' an element if it hit-tests to the element or a child element
 An exception to this is if the pointer has been captured using the [UIElement.CapturePointer](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.UIElement.CapturePointer) method, which sends pointer input to the capturing element regardless of where it's located. If pointer input is captured to an element or its tree, the pointer is "over" that element.
 
 Note that even if a child of the element marks a pointer event Handled ([PointerEventArgs.Handled](https://docs.microsoft.com/uwp/api/Windows.UI.Core.PointerEventArgs.Handled)), the ProtectedCursor property will still be used.
-
-# Examples
 
 The following shows a custom Button control that has a Help cursor.
 
@@ -50,6 +50,3 @@ unsealed runtimeclass UIElement : Microsoft.UI.Xaml.DependencyObject
 }
 ```
 
-# Appendix
-
-A note about WPF compatibility ... WPF has the [Cursor property on FrameworkElement](https://docs.microsoft.com/dotnet/api/System.Windows.FrameworkElement.Cursor) rather than UIElement. We put this new ProtectedCursor property on UIElement (and will put the future Cursor property there) because cursors are "core", which is the intent of the UIElement/FrameworkElement split. And this is a source compatible difference.
