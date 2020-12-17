@@ -50,17 +50,16 @@ Note that the underlying [CompositionRadialGradientBrush](https://docs.microsoft
 
 Applying any other interpolation color space will have no effect.
 
-# Description
+# API Pages
+
+## RadialGradientBrush class
 
 RadialGradientBrush paints an area with a radial gradient. A center point defines the origin of the gradient, and an ellipse defines the outer bounds of the gradient.
 
-# Examples
+### Examples
 
 This example creates a radial gradient with six gradient stops and uses it to paint a Rectangle.
 
-![A rectangle filled with a radial gradient.](images/ColorRadialGradientBrush.png)
-
-XAML
 ```XAML
 <Page
   xmlns:media="using:Microsoft.UI.Xaml.Media">
@@ -81,9 +80,9 @@ XAML
 </Page>
 ```
 
-This example creates a radial gradient that uses Absolute mapping mode with custom values for `Center`, `RadiusX`, `RadiusY` and `GradientOrigin`:
+![A rectangle filled with a radial gradient.](images/ColorRadialGradientBrush.png)
 
-![A rectangle filled with an offset radial gradient.](images/OffsetRadialGradientBrush.png)
+This example creates a radial gradient that uses Absolute mapping mode with custom values for `Center`, `RadiusX`, `RadiusY` and `GradientOrigin`:
 
 ```XAML
 <Page
@@ -107,9 +106,11 @@ This example creates a radial gradient that uses Absolute mapping mode with cust
 </Page>
 ```
 
-# Remarks
+![A rectangle filled with an offset radial gradient.](images/OffsetRadialGradientBrush.png)
 
-## Gradient layout
+### Remarks
+
+**Gradient Layout**
 
 The gradient is drawn within an ellipse that is defined by the `Center`, `RadiusX`, and `RadiusY` properties. Colors for the gradient start at the center of the ellipse and end at the radius.
 
@@ -123,19 +124,17 @@ When `MappingMode` is set to `RelativeToBoundingBox`, the X and Y values of the 
 
 When `MappingMode` is set to `Absolute`, the X and Y values of the three properties are treated as absolute coordinates within the element bounds.
 
-## Windows 10 Version Support
+**Windows 10 Version Support**
 
 Gradient rendering is supported on Windows 10 version 1903 (v10.0.18362.0) and higher. On previous OS versions the brush will render a solid color specified by the `FallbackColor` property.
 
-## See Also
+### See Also
 
 * [LinearGradientBrush](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Media.LinearGradientBrush)
 
 * [CompositionRadialGradientBrush](https://docs.microsoft.com/uwp/api/windows.ui.composition.compositionradialgradientbrush)
 
-# API Notes
-
-## Fields
+### Member info
 
 | | |
 | - | - |
