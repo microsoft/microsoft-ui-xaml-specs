@@ -159,9 +159,9 @@ unsealed runtimeclass RadialGradientBrush : Windows.UI.Xaml.Media.XamlCompositio
 
     Windows.Foundation.Point Center { get; set; };
 
-    Windows.Foundation.Point RadiusX { get; set; };
+    double RadiusX { get; set; };
     
-    Windows.Foundation.Point RadiusY { get; set; };
+    double RadiusY { get; set; };
 
     Windows.Foundation.Point GradientOrigin { get; set; };
 
