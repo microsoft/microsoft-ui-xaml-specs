@@ -1,5 +1,10 @@
 > See comments in Markdown for how to use this spec template
 
+To do:
+* PR ProtectedCursor updates
+* PR RGB updates
+
+
 <!-- The purpose of this spec is to describe new APIs, in a way
 that will transfer to docs.microsoft.com.
 
@@ -73,8 +78,9 @@ Notes:
 * The first line of each of these sections should become that first line on the DMC page,
   that then becomes the description you see in Intellisense.
 * Each page can have an Examples section and/or a Remarks section.
-* Add an "Other type members" section to give a for example a table
-  of the other members and their Intellisense description
+  Remarks are where the documentation calls out special considerations that the developer should be aware of.
+* Add an "Other members" section after a type to give a for example a table
+  of the other members and their Intellisense description.
 
 
 Example layout of the API Pages:
@@ -86,50 +92,28 @@ Example layout of the API Pages:
     Examples
   Type1.Member2
   Other Type1 Members
+    (Table)
   ...
   Type2
   ...
 
-
+Example specs:
+* RGB (new class and members, uses Other Members section)
+* ProtectedCursor (add a member to an existing class)
 
 -->
 
-<!-- Use this section to explain the features of the API, showing
-example code with each description. The general format is: 
-  feature explanation,
-  example code
-  feature explanation,
-  example code
-  etc.-->
-  
-<!-- Code samples should be in C# and/or C++/WinRT -->
-
-<!-- As an example of this section, see the Examples section for the PasswordBox control 
-(https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
-
-
-# Remarks
-<!-- Explanation and guidance that doesn't fit into the Examples section. -->
-
-<!-- APIs should only throw exceptions in exceptional conditions; basically,
-only when there's a bug in the caller, such as argument exception.  But if for some
-reason it's necessary for a caller to catch an exception from an API, call that
-out with an explanation either here or in the Examples -->
-
-# API Notes
-<!-- Option 1: Give a one or two line description of each API (type
-and member), or at least the ones that aren't obvious
-from their name.  These descriptions are what show up
-in IntelliSense. For properties, specify the default value of the property if it
-isn't the type's default (for example an int-typed property that doesn't default to zero.) -->
-
-<!-- Option 2: Put these descriptions in the below API Details section,
-with a "///" comment above the member or type. -->
 
 # API Details
-<!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
+<!-- 
+The exact APIs, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/)
+ -->
 
 # Appendix
-<!-- Anything else that you want to write down for posterity, but 
+<!-- 
+Anything else that you want to write down for posterity, but 
 that isn't necessary to understand the purpose and usage of the API.
-For example, implementation details. -->
+
+For example, implementation details. 
+
+-->
