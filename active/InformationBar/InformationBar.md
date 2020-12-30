@@ -633,14 +633,14 @@ unsealed runtimeclass InfoBarPanel : Windows.UI.Xaml.Controls.Panel
 | InfoBarIconMargin | Icon margin thickness
 | InfoBarIconFontSize | Icon font size
 | InfoBarPanelMargin | Panel margin thickness
-| InfoBarPanelHorizontalLayoutMargin | Horizontal, single-line, layout panel margin thickness
-| InfoBarPanelVerticalLayoutMargin | Vertical, multiline, layout panel margin thickness
-| InfoBarTitleHorizontalLayoutMargin | Horizontal, single-line, layout title margin thickness
-| InfoBarTitleVerticalLayoutMargin | Vertical, multiline, layout title margin thickness
-| InfoBarMessageHorizontalLayoutMargin | Horizontal, single-line, layout message margin thickness
-| InfoBarMessageVerticalLayoutMargin | Vertical, multiline, layout message margin thickness
-| InfoBarActionHorizontalLayoutMargin | Horizontal, single-line, layout action button margin thickness
-| InfoBarActionVerticalLayoutMargin | Vertical, multiline, layout action button margin thickness
+| InfoBarPanelHorizontalOrientationPadding | Panel padding in horizontal, single-line layout
+| InfoBarPanelVerticalOrientationPadding | Panel padding in vertical, multiline layout
+| InfoBarTitleHorizontalOrientationMargin | Title margin thickness in the horizontal, single-line layout
+| InfoBarTitleVerticalOrientationMargin | Title margin thickness in the vertical, multiline layout
+| InfoBarMessageHorizontalOrientationMargin | Message margin thickness in the horizontal, single-line layout
+| InfoBarMessageVerticalOrientationMargin | Message margin thickness in the vertical, multiline layout
+| InfoBarActionHorizontalOrientationMargin | Action content margin thickness in the horizontal, single-line layout
+| InfoBarActionVerticalOrientationMargin | Action content margin thickness in the vertical, multiline layout
 | InfoBarActionButtonMinWidth | Action button minimum width
 | InfoBarActionButtonHeight | Action button height
 | InfoBarActionButtonPadding | Action button padding thickness
