@@ -118,7 +118,7 @@ public MainPage()
 }
 ```
 
-![A mockup of an InfoBar in the default state with a close button and a message](images/Default_TitleMessage.png)
+![A mockup of an InfoBar in the default state with a close button and a message](images/infobar-default-title-message.png)
 
 ## Using pre-defined severity levels
 The type of the info bar can be set via the Severity property to automatically set a consistent status color, icon, and assistive technology settings dependent on the criticality of the notification. If no Severity is set, the default informational styling is applied.
@@ -131,7 +131,7 @@ XAML
     Title="Your subscription is expiring in 3 days."
     Message="Renew your subscription to keep all functionality" />
 ```
-![A mockup of an InfoBar in a Warning state with a close button and a message](images/Warning_TitleMessage.png)
+![A mockup of an InfoBar in a Warning state with a close button and a message](images/infobar-warning-title-message.png)
 
 ## Programmatic close in InfoBar
 An InfoBar can be closed by the user via the close button or programmatically. 
@@ -150,7 +150,7 @@ XAML
     Message="Reconnect to continue working."
     IsClosable="False" />
 ```
-![Mockup of an InfoBar in an Error state with no close button](images/Error_NoClose.png)
+![Mockup of an InfoBar in an Error state with no close button](images/infobar-error-no-close.png)
 
 ## Customization: Background color and icon
 Outside of the pre-defined severity levels, the Background and IconSource properties can be set 
@@ -180,7 +180,7 @@ XAML
 </controls:InfoBar>
 ```
 
-![A mockup of an InfoBar in the default state with a custom background color, custom icon, and close button](images/Custom_IconColor.png)
+![A mockup of an InfoBar in the default state with a custom background color, custom icon, and close button](images/infobar-custom-icon-color.png)
 
 ## Add an action button
 
@@ -206,7 +206,7 @@ XAML
 </controls:InfoBar>
 ```
 
-![A mockup of an InfoBar in the Error state with a single line message and an action button](images/Error_ActionButton.png)
+![A mockup of an InfoBar in the Error state with a single line message and an action button](images/infobar-error-action-button.png)
 
 XAML
 ```xml
@@ -220,7 +220,7 @@ XAML
     <controls:InfoBar.ActionButton/>
 </controls:InfoBar>
 ```
-![A mockup of an InfoBar with a message expanding multiple lines and a hyperlink](images/Default_Hyperlink.png)
+![A mockup of an InfoBar with a message expanding multiple lines and a hyperlink](images/infobar-default-hyperlink.png)
 
 ## Content wrapping
 If the InfoBar content, excluding custom content, is unable to fit on a single horizontal line 
@@ -241,7 +241,7 @@ XAML
 </controls:InfoBar>
 ```
 
-![A mockup of an InfoBar in the Success state multiline title and message InfoBar](images/Success_ContentWrapping.png)
+![A mockup of an InfoBar in the Success state multiline title and message InfoBar](images/infobar-success-content-wrapping.png)
 
 
 ## Custom content
@@ -262,22 +262,23 @@ XAML
 </controls:InfoBar>
 ```
 
-![A mockup of an InfoBar in its default state with an indeterminate progress bar](images/Default_CustomContent.gif)
+![A mockup of an InfoBar in its default state with an indeterminate progress bar](images/infobar-default-custom-content.gif)
 
 ## Lightweight styling
 
 You can modify the default Style and ControlTemplate to give the control a unique appearance. 
+See the [Control Style and Template]((https://docs.microsoft.com/windows/winui/api/microsoft.ui.xaml.controls.infobar#control-style-and-template)) section of the InfoBar API docs for a list of the available theme resources.
 For more info, see the 
-[Light-weight styling section](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/xaml-styles#lightweight-styling)
+[Light-weight styling section](https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/xaml-styles#lightweight-styling)
 of the 
-[Styling controls](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/xaml-styles)
-article.
+[Styling controls](https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/xaml-styles)
+article. 
 
-For example, the following causes the title bar font size to be 22pt on a Page's InfoBars:
+For example, the following causes the background color for all informational InfoBars on a page to be blue:
 
-```xml
+```xaml
 <Page.Resources>
-    <x:Double x:Key="InfoBarTitleFontSize">22</x:Double>
+    <x:SolidColorBrush x:Key="InfoBarInformationalSeverityBackgroundBrush" Color="LightBlue"></x:SolidColorBrush>
 </Page.Resources>
 ```
 
