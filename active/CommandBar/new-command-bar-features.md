@@ -33,10 +33,10 @@ This spec will address three main shortcomings in the [CommandBar (CB)](https://
 A CommandBar provides access to app-level or page-specific commands. A CommandBarFlyout is a CommandBar that appears in a Flyout menu, and must be invoked.
 
 *CommandBar:*
-![CommandBar example](images/commandbar-example.PNG)
+![CommandBar example](images/commandbar-example.png)
 
 *CommandBarFlyout:*
-![CommandBarFlyout example](images/commandbarflyout-example.PNG)
+![CommandBarFlyout example](images/commandbarflyout-example.png)
 
 ### Issue #1: You can only use a select few object types inside of a CommandBar/CommandBarFlyout. 
 
@@ -63,7 +63,7 @@ You also have the option of using [RadioMenuFlyoutItem](https://docs.microsoft.c
 
 The issue arises when you want to combine these two concepts. It would be useful to have RadioMenuFlyoutItems have their own child items that participate in the same Group as their parent. This would allow for cleaner UIs by decreasing the size of MenuFlyouts that have a long list of RadioMenuFlyoutItems. See an example below:
 
-![Nested radio menu flyout example](images/commandbar2.PNG)
+![Nested radio menu flyout example](images/commandbar2.png)
 
 ### Issue #3: CommandBarFlyout does not have an "always expanded" state.
 Currently, a CBF with secondary commands always shows a […] button that allows the user to collapse the CBF into just the top bar (primary commands). There's currently no way to have a CBF with secondary commands that is always expanded when invoked. 
@@ -94,11 +94,11 @@ These are the three main visual states for this new API, using the same Xaml Con
 
 *Child item selected, flyout open*
 
-![Child item selected, flyout open](images/commandbar2.PNG)
+![Child item selected, flyout open](images/commandbar2.png)
 
 *Child item selected, flyout closed*
 
-![Child item selected, flyout closed](images/commandbar3.PNG)
+![Child item selected, flyout closed](images/commandbar3.png)
 
 *Other top-level item selected*
 
