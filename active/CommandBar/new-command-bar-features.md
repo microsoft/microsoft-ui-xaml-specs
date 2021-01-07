@@ -30,23 +30,40 @@ the reader "go read 100 pages of background information posted at ...". -->
 
 This spec will address three main shortcomings in the [CommandBar (CB)](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.commandbar?view=winrt-19041) and [CommandBarFlyout (CBF)](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.commandbarflyout?view=winrt-19041) space, and propose solutions to these shortcomings. All of these solutions will lead to a more customizable, flexible commanding experience. 
 
-### Issue #1: You can only use AppBarButton inside a CommandBar/CommandBarFlyout. 
-When using the CB or CBF controls today, the only supported type for items is [AppBarButton](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.appbarbutton?view=winrt-19041). When you use an AppBarButton in a CB or CBF, all of the interactions and styles needed to conform with the parent control are included - height, width, the background color when hovered/pressed, the font size, etc. 
+A CommandBar provides access to app-level or page-specific commands. A CommandBarFlyout is a CommandBar that appears in a Flyout menu, and must be invoked.
+
+*CommandBar:*
+![CommandBar example](images/commandbar-example.PNG)
+
+*CommandBarFlyout:*
+![CommandBarFlyout example](images/commandbarflyout-example.PNG)
+
+### Issue #1: You can only use a select few object types inside of a CommandBar/CommandBarFlyout. 
+
+When using the CB or CBF controls today, the only supported types for items are [AppBarButton](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.appbarbutton?view=winrt-19041), [AppBarToggleButton](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.appbartogglebutton?view=winrt-19041), and [AppBarSeparator](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.appbarseparator?view=winrt-19041). When you use an AppBarButton in a CB or CBF, all of the interactions and styles needed to conform with the parent control are included - height, width, the background color when hovered/pressed, the font size, etc. 
 
 It is possible to add other types of objects into your CB or CBF, using the wrapper class [AppBarElementContainer](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.appbarelementcontainer?view=winrt-19041). This allows for objects of different types (such as SplitButton or DropdownButton) to be placed in a CB or CBF, but it does not provide the proper styling to make these objects conform. Visually, they won't blend in with the AppBarButton objects being displayed in the CB/CBF without serious styling work. 
 
 ### Issue #2: RadioMenuFlyoutItems don't provide nested functionality.
-CommandBar and CommandBarFlyout items often have their own MenuFlyouts. The items in a [MenuFlyout](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.menuflyout?view=winrt-19041) are either sub-options of the parent item, or hold more options that aren't displayed in the main CB/CBF menu (i.e. "Other" or "See more"). Items within a MenuFlyout can also have their own MenuFlyouts, creating a sort of cascading menu effect. 
+CommandBar and CommandBarFlyout items often have their own attached [MenuFlyout](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.menuflyout?view=winrt-19041), via the AppBarButton.Flyout property. See a simple example of this below:
 
-In order to create this cascading/nested menu, you'd use a class called [MenuFlyoutSubItem](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.menuflyoutsubitem?view=winrt-19041). This class represents a "parent" MenuFlyout item. It has an [Items](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.menuflyout.items?view=winrt-19041) property, where you can assign all of its child items. In the below example from the XAML Controls Gallery, "Send to" is a MenuFlyoutSubItem. "Bluetooth" and "Desktop (shortcut)" are MenuFlyoutItems. "Compressed file" is a MenuFlyoutSubItem, as it has children of its own (not shown/expanded). 
+![Simple MenuFlyout within a CommandBar](images/simple-menuflyout.PNG)
+ Items within a MenuFlyout (such as "Sort by artist name") can also have their own MenuFlyouts, creating a  cascading or nested MenuFlyout. See an example of this below. 
+ 
+![Image of a cascading menu](images/nested-menuflyout.PNG)
+In order to create this cascading/nested menu today, you can use a class called [MenuFlyoutSubItem](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.menuflyoutsubitem?view=winrt-19041) as an item in the menu. 
+This class represents a "parent" MenuFlyout item. It has an
+[Items](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.menuflyout.items?view=winrt-19041) property, where you can assign all of its child items.  Here's the above example with labels showing which item is which type:
 
-![Image of a cascading menu](images/cascading-menu.PNG)
+![Anatomy of a MenuFlyout](images/anatomy-diagram.PNG)
 
 You also have the option of using [RadioMenuFlyoutItem](https://docs.microsoft.com/en-us/windows/winui/api/microsoft.ui.xaml.controls.radiomenuflyoutitem?view=winui-2.5), which has a [GroupName](https://docs.microsoft.com/en-us/windows/winui/api/microsoft.ui.xaml.controls.radiomenuflyoutitem.groupname?view=winui-2.5#Microsoft_UI_Xaml_Controls_RadioMenuFlyoutItem_GroupName) property. Items with the same GroupName will be a part of the same selection model - only one of the items in a Group can be "selected" and display the selection indicator at a time:
 
 ![Image of a menu flyout with radio items](images/radiomenuflyoutitems.png)
 
-The issue arises when you want to combine these two concepts. It would be useful to have RadioMenuFlyoutItems have their own child items that participate in the same Group as their parent. This would allow for cleaner UIs by decreasing the size of MenuFlyouts that have a long list of RadioMenuFlyoutItems.
+The issue arises when you want to combine these two concepts. It would be useful to have RadioMenuFlyoutItems have their own child items that participate in the same Group as their parent. This would allow for cleaner UIs by decreasing the size of MenuFlyouts that have a long list of RadioMenuFlyoutItems. See an example below:
+
+![Nested radio menu flyout example](images/commandbar2.PNG)
 
 ### Issue #3: CommandBarFlyout does not have an "always expanded" state.
 Currently, a CBF with secondary commands always shows a […] button that allows the user to collapse the CBF into just the top bar (primary commands). There's currently no way to have a CBF with secondary commands that is always expanded when invoked. 
@@ -81,7 +98,7 @@ These are the three main visual states for this new API, using the same Xaml Con
 
 *Child item selected, flyout closed*
 
-![Child item selected, flyout open](images/commandbar3.PNG)
+![Child item selected, flyout closed](images/commandbar3.PNG)
 
 *Other top-level item selected*
 
