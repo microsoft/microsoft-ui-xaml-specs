@@ -1,5 +1,5 @@
 
-# Image Icon
+# Animated Icon
 
 ## Background
 Today, developers do not have a straightforward way to add an animate icon in controls where they can use a static icon. Some examples of where a developer may want to add an animated icon are in a NavigationViewItem or in a Button. There is also a desire to have an animated icon respond to user interactivity via state changes to either draw attention to an action a user can take or to add user delight. 
