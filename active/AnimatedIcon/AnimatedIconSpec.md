@@ -115,8 +115,8 @@ XAML
 |:--- | :---| :---| :---|
 | TryCreateAnimatedVisualSource | Method | Method to get an IAnimatedVisualSource from an IRichAnimatedVisualSource | null |
 | Markers |	IMapView | Returns a dictionary of all marker strings and their associated values found in the icon’s JSON file. The strings and values are based on what the designer names the markers in the Lottie After Effects file.|	null |
-| SetForegroundColorProperty |	Method	| Takes a string to set the color of a named theme property in the Lottie file. For our internal use, we will use this to set the Foreground property. | null |
-| SetAccentColorProperty |	Method | Takes a string to set the color of a named theme property in the Lottie file. For our internal use, we will use this to set the Accent color property. | null |
+| SetForegroundColorProperty |	Method	| Takes a string to set the color of a named theme property in the Lottie file.| null |
+| SetAccentColorProperty |	Method | Takes a string to set the color of a named theme property in the Lottie file. | null |
 | StateProperty	| Dependency Property |Attached property that gets the current visual state the icon is animating from. | "Normal" |
 | Source | IAnimatedIconSource |Gets or sets the icon visual produced from LottieGen. |	null |
 | FallbackIcon | FontIconSource | Gets or sets the font icon that will be used as a fallback when the OS is older than RS5. | null |
