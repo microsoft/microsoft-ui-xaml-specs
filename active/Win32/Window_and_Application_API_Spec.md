@@ -214,7 +214,7 @@ protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs ar
 }
 ```
 
-Title bars should be drawn with different background/foreground colors based on
+Title bars should be have background and foreground colors based on
 whether the window is current foreground (active) or background. Additionally, there's an 
 option in Windows Settings to use the user's accent color as the foreground of the title bar.
 See [link TBD] for a sample application that implements this.
