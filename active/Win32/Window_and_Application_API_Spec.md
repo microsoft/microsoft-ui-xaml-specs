@@ -203,7 +203,7 @@ it designates a TextBlock as the title bar.
 ```CS
 private Window m_window;
 
-protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+protected override void OnLaunched(Microsoft.UI.Xaml.XamlLaunchActivatedEventArgs args)
 {
     m_window = new MainWindow();
 
@@ -307,7 +307,7 @@ This interface is implemented by `Window`, and in a Desktop app can be used to g
 the Window's underlying HWND.
 
 ```CS
-protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs e)
+protected override void OnLaunched(Microsoft.UI.Xaml.XamlLaunchActivatedEventArgs e)
 {
    m_window = new MainWindow();
    m_window.Activate();
@@ -367,7 +367,7 @@ Invoked when the application is launched. Override this method to perform applic
 and to display initial content in the associated Window (UWP apps) or create a new Window (Desktop apps).
 
 ```CS
-protected virtual void OnLaunched(LaunchActivatedEventArgs args)
+protected virtual void OnLaunched(XamlLaunchActivatedEventArgs args)
 ```
 
 > This method is typically created automatically when a project is created. 
@@ -378,7 +378,7 @@ You can then modify it or remove it.
 In a Desktop app, use OnLaunched to create the main window and pass it the first command line argument.
 
 ```CS
-protected override void OnLaunched(LaunchActivatedEventArgs e)
+protected override void OnLaunched(XamlLaunchActivatedEventArgs e)
 {
      MainWindow mainWindow = new MainWindow();
      
@@ -396,7 +396,7 @@ protected override void OnLaunched(LaunchActivatedEventArgs e)
 In a UWP app,
 
 ```CS
-protected override void OnLaunched(LaunchActivatedEventArgs e)
+protected override void OnLaunched(XamlLaunchActivatedEventArgs e)
 {
      MainPage page = new MainPage();
      
@@ -496,7 +496,7 @@ Windows.UI.Core.[WindowSizeChangedEventArgs](https://docs.microsoft.com/uwp/api/
 
 Contains the argument returned by a window size change event.
 
-### XamlWindowSizeChangedEventArgs
+### XamlWindowSizeChangedEventArgs Properties
 
 **Handled**
 
@@ -527,11 +527,13 @@ In a UWP app, this is equivalent to LaunchActivatedEventArgs.Arguments.
 public String Arguments { get; };
 ```
 
-**UWPLaunchActivatedEventArgs**
-Gets the LaunchActivatedEventArgs from UWP. This property is null in a Desktop app.
+**LaunchActivatedEventArgs**
+Gets the 
+[LaunchActivatedEventArgs](https://docs.microsoft.com/uwp/api/Windows.ApplicationModel.Activation.LaunchActivatedEventArgs) 
+in a UWP app. This property is null in a Desktop app.
 
 ```CS
-public Windows.ApplicationModel.Activation.LaunchActivatedEventArgs UWPLaunchActivatedEventArgs { get; };
+public Windows.ApplicationModel.Activation.LaunchActivatedEventArgs LaunchActivatedEventArgs { get; };
 ```
 
 # API Details
@@ -552,7 +554,7 @@ unsealed runtimeclass Window
 
     // These APIs match the system Xaml versions, except the event args are now from the Xaml namespace
     event Windows.Foundation.TypedEventHandler<Object,Microsoft.UI.Xaml.XamlWindowActivatedEventArgs> Activated;
-    event Windows.Foundation.TypedEventHandler<Object,Microsoft.UI.Xaml.XamlWindowEventArgs> Closed;
+    event Windows.Foundation.TypedEventHandler<Object,Microsoft.UI.Xaml.XamlWindowClosedEventArgs> Closed;
     event Windows.Foundation.TypedEventHandler<Object,Microsoft.UI.Xaml.XamlWindowSizeChangedEventArgs> SizeChanged;
     event Windows.Foundation.TypedEventHandler<Object,Microsoft.UI.Xaml.XamlWindowVisibilityChangedEventArgs> VisibilityChanged;
 
@@ -643,4 +645,11 @@ runtimeclass XamlWindowVisibilityChangedEventArgs
 };
 ```
 
+```cs
+[webhosthidden]
+runtimeclass XamlWindowClosedEventArgs
+{
+    Boolean Handled;
+};
+```
 
