@@ -8,7 +8,7 @@ XAML has a [Window](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Window)
 class which in UWP wraps a [CoreWindow](https://docs.microsoft.com/uwp/api/Windows.UI.Core.CoreWindow), 
 and an [Application](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Application) 
 class which in UWP wraps a [CoreApplication](https://docs.microsoft.com/uwp/api/Windows.ApplicationModel.Core.CoreApplication). 
-For WinUI 3 this is being expanded to not require a CoreWindow or CoreApplication; 
+For WinUI 3 Xaml Window and Application are being expanded to not require a CoreWindow or CoreApplication; 
 Window can use an HWND, and Application can run a message pump, running as a Desktop app.
 This spec has the API additions to Application and Window to support this.
 
@@ -16,8 +16,11 @@ Note that some existing APIs will also behave differently when running as a Desk
 For example, the static 
 [Window.Current](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Window.Current) 
 property today returns the Window for the current (calling) thread, 
-but in a non-UWP app it will return null. 
+but in a Desktop app it will return null. 
 Similarly the Window.CoreWindow property will be null when not running as UWP.
+
+Aside from Desktop support, the new feature here is custom title bar support, in the
+form of a `Window.ExtendsContentIntoTitleBar` API.
 
 # API Pages
 
@@ -39,7 +42,7 @@ void InitializeAndActivateWindow(Window window)
 }
 ```
 
-### Example: Create a new window
+### Example: Create a new window in a Desktop app
 
 In a Desktop app you create each Window, and you can create more than one Window on a thread.
 
@@ -81,7 +84,7 @@ window.Activate();
 ```
 
 > Spec note  
-No <Window.Content> tag is required because Window.Content is updating in this spec to become the
+No <Window.Content> tag is required because the Window.Content property is updating in this spec to become the
 [ContentPropertyAttribute](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Markup.ContentPropertyAttribute).
 
 In a UWP app any UI thread already has a Window on it, which you can retrieve using the static 
@@ -91,9 +94,11 @@ property. You can create additional windows by creating additional
 which are always created on a new thread, and which automatically create the following for the new thread: 
 [ApplicationView](https://docs.microsoft.com/uwp/api/Windows.UI.ViewManagement.ApplicationView), 
 [CoreWindow](https://docs.microsoft.com/uwp/api/Windows.UI.Core.CoreWindow), 
-and [Window](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Window).
+and the Xaml [Window](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Window).
 
-Create a new Window in a UWP app (on a new thread):
+# Create a new Window on a new thread
+
+This creates a new Xaml Window on a new thread in a UWP app:
 
 ```CS
 _ = CoreApplication.CreateNewView().DispatcherQueue.TryEnqueue(() =>
@@ -145,21 +150,22 @@ Creating a new Window in a Desktop app creates a new top level HWND.
 
 ## Window.ExtendsContentIntoTitleBar
 
-Gets or sets a value that specifies whether the default title bar should be removed, creating more space for content.
+Gets or sets a value that specifies whether the default window title bar should be removed, creating more space for content.
 
 Setting this property to true causes the built-in title bar to be removed. 
 
 > Spec note: this is analogous to 
-[AppWindowTitleBar.ExtendsContentIntoTitleBar](https://docs.microsoft.com/uwp/api/Windows.UI.WindowManagement.AppWindowTitleBar.ExtendsContentIntoTitleBar), and the implementation uses that property in UWP.
+[AppWindowTitleBar.ExtendsContentIntoTitleBar](https://docs.microsoft.com/uwp/api/Windows.UI.WindowManagement.AppWindowTitleBar.ExtendsContentIntoTitleBar),
+and the implementation uses that property in UWP.
 
 Setting this property only effects rendering, it does not affect pointer (such as mouse) behavior. 
 For example, you can still use the mouse to click down in the area at the top of the window and 
 drag the window around the desktop. To change that behavior use the `SetTitleBar` API.
 
-Extending the content into the title bar does not impact  the Window buttons 
-(Minimize, Maximize, and Close); the buttons will be still there. 
+Extending the content into the title bar does not impact the Window buttons 
+(Minimize, Maximize, and Close).
 
-See the SetTitleBar example below for an example of ExtendsContentIntoTitleBar
+See the `SetTitleBar` example below for an example of ExtendsContentIntoTitleBar
 
 ## Window.SetTitleBar 
 _Behavior update to existing API when running as Desktop app_
@@ -297,7 +303,7 @@ public DispatcherQueue DispatcherQueue { get; }
 Most members of the Window class can only be accessed when running on the thread the object was
 created on. This property, though, can be called from any thread.
 
-> Spec note: This Window.DispatcherQueue property matches the DependencyObject.DispatcherQueue property
+> Spec note: This Window.DispatcherQueue property matches the new DependencyObject.DispatcherQueue property
 [described here](https://github.com/microsoft/microsoft-ui-xaml-specs/blob/master/winui3/DispatcherQueueUpdates.md)
 
 
@@ -344,6 +350,7 @@ The following events and virtual methods are not invoked when running in a Deskt
 * void overridable OnFileSavePickerActivated (FileSavePickerActivatedEventArgs)
 * void overridable OnSearchActivated (SearchActivatedEventArgs)
 * void overridable OnShareTargetActivated (ShareTargetActivatedEventArgs)
+* void overridable OnWindowCreated (WindowCreatedEventArgs)
 * EnteredBackgroundEventHandler EnteredBackground;
 * LeavingBackgroundEventHandler LeavingBackground;
 * SuspendingEventHandler Suspending;
@@ -414,7 +421,7 @@ protected override void OnLaunched(XamlLaunchActivatedEventArgs e)
 ```
 
 
-## Application.RequiresPointerMode
+## Application.RequiresPointerMode property
 _Behavior update to existing API when running as Desktop app_
 
 Gets or sets whether a UWP app supports mouse mode, which emulates pointer interaction experiences 
@@ -542,7 +549,7 @@ public Windows.ApplicationModel.Activation.LaunchActivatedEventArgs LaunchActiva
 Microsoft.UI.Xaml namespace
 
 > The Window class' APIs in WinUI3 (**Microsoft**.UI.Xaml) match the existing system Window
-API (**Windows**.UI.Xaml), except for the following.
+API (**Windows**.UI.Xaml), except for the following differences.
 
 ```cs
 [webhosthidden]
