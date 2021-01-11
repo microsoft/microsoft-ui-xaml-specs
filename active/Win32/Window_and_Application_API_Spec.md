@@ -321,16 +321,8 @@ protected override void OnLaunched(Microsoft.UI.Xaml.XamlLaunchActivatedEventArg
    // AS is an extension method in the WinRT.CastExtensions class. 
    // The WinRT namespace is needed to use the extension method.
    var windowNative = m_window.As<IWindowNative>();
-   IntPtr HWND = windowNative.WindowHandle;
+   HWND hwnd = windowNative.WindowHandle;
    ...
-}
-
-[ComImport]
-[InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-[Guid("EECDBF0E-BAE9-4CB6-A68E-9598E1CB57BB")]
-internal interface IWindowNative
-{
-   IntPtr WindowHandle { get; }
 }
 ```
 
@@ -443,6 +435,7 @@ protected virtual void OnWindowCreated(XamlWindowCreatedEventArgs args)
 - In a UWP app, this method is called once for the creation of the main window, once for each hosted window, 
 and once each time CreateNewView is called. 
 - In a Desktop app, this method is called every time a Window object is created.
+
 ## XamlWindowActivatedEventArgs class
 
 Contains the windows activation state information returned by the Window.Activated event.
