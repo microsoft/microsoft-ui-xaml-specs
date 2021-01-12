@@ -113,10 +113,11 @@ XAML
 ### Notable Properties  
 | Name | Type |	Description | Default |
 |:--- | :---| :---| :---|
+| IAnimatedIconVisualSource | Inerface | Interface that LottieGen generates when the developer inputs a Lottie file to be used in their application.  | null |
 | TryCreateAnimatedVisualSource | Method | Method to get an IAnimatedVisualSource from an IRichAnimatedVisualSource | null |
 | Markers |	IMapView | Returns a dictionary of all marker strings and their associated values found in the icon’s JSON file. The strings and values are based on what the designer names the markers in the Lottie After Effects file.|	null |
-| SetForegroundColorProperty |	Method	| Takes a string to set the color of a named theme property in the Lottie file.| null |
-| SetAccentColorProperty |	Method | Takes a string to set the color of a named theme property in the Lottie file. | null |
+| SetForegroundColor |	Method	| Takes a string to set the color of a named theme property in the Lottie file.| null |
+| SetAccentColor |	Method | Takes a string to set the color of a named theme property in the Lottie file. | null |
 | StateProperty	| Dependency Property |Attached property that gets the current visual state the icon is animating from. | "Normal" |
 | Source | IAnimatedIconSource |Gets or sets the icon visual produced from LottieGen. |	null |
 | FallbackIcon | FontIconSource | Gets or sets the font icon that will be used as a fallback when the OS is older than RS5. | null |
@@ -173,5 +174,5 @@ Markers will need to be named a specific way so AnimatedIcon can map the correct
 
 
 
-## Inputs and Accessibility
+## Accessibility
 This control is going to be part of the Icon family of controls so the accessibility requirements will reflect what the other icon controls have. AnimatedIcon will need to ensure that the high contrast brushes propagate correctly if the user changes their settings to a high contrast theme. The control will also need to ensure that when the user changes the theme to light or dark, the icon changes its theme as well. 
