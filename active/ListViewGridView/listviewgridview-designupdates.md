@@ -16,7 +16,7 @@ modifying an existing API. -->
 <!-- For example, this is a place to provide a brief explanation of some dependent
 area, just explanation enough to understand this new API, rather than telling
 the reader "go read 100 pages of background information posted at ...". -->
-In WinUI 2.2, controls began to be re-designed to have rounded corners, marking a shift in our overall design language. There's more information on rounded corners in WinUI [here](https://docs.microsoft.com/en-us/windows/uwp/design/style/rounded-corner), but the general purpose of the rounded corners and design shift is to evoke warmth and trust, and make the UI easier for users to visually process. Since this shift, certain controls have adopted the new styling and recieved rounded corners, but some have not. This creates a strong visual inconsistency in WinUI apps, where certain pieces of an app may look modern and others may look dated. A common example of this is ListView and GridView. These are two very heavily used controls, but they still have squared corners and look dated when placed alongside controls that are more modernly designed, such as [NavigationView](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/navigationview) or even [Button](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/buttons).  
+In WinUI 2.2, controls began to be re-designed to have rounded corners, marking a shift in our overall design language. There's more information on rounded corners in WinUI [here](https://docs.microsoft.com/en-us/windows/uwp/design/style/rounded-corner), but the general purpose of the rounded corners and design shift is to evoke warmth and trust, and make the UI easier for users to visually process. Since this shift, certain controls have adopted the new styling and recieved rounded corners, but some have not. This creates a strong visual inconsistency in WinUI apps, where certain pieces of an app may look modern and others may look dated. A common example of this is ListView and GridView items. These are two very heavily used controls, but their items still have squared corners and look dated when placed alongside controls that are more modernly designed, such as [NavigationView](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/navigationview) or even [Button](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/buttons).  
 
 This spec will detail a number of changes to update the designs of ListView and GridView so that they are more visually aligned with modern WinUI controls. At a high level, some key parts of these updated styles are: rounded corners, a new selection indicator, rounded checkboxes and new checkbox design for multiple selection, and an improved border design for GridView. The spec will also go over the API changes necessary to support these new designs.
 
@@ -45,7 +45,7 @@ ListView items are still customizable via the ListView's [ItemTemplate](https://
 # Examples
 **GridView in single selection mode:**
 
-The first item in the second row of both columns is hovered; the third item is  selected. 
+In the photo-based examples below, the first item is selected in both old and new versions. In the text-based examples, the first item is hovered and the third item is selected in both old and new versions.
 ![gridview single selection](images/visual-updates1.PNG)
 
 **GridView in multiple selection mode:**
@@ -78,17 +78,9 @@ with a "///" comment above the member or type. -->
 
 ## New APIs:
 
-`public boolean ListViewItemPresenter.SelectionIndicatorVisualEnabled { get; set; }`
-
-Gets or sets a value that indicates whether the selection indicator should appear when ListView items are selected.
-
-`public Windows.UI.Xaml.CornerRadius ListViewItemPresenter.SelectionIndicatorCornerRadius { get; set; }`
-
-Gets or sets the corner radius value for the selection indicator.
-
 `public Windows.UI.Xaml.CornerRadius ListViewItemPresenter.CheckBoxCornerRadius { get; set; }`
 
-Gets or sets the corner radius value for the checkbox shown in multiple selection mode.
+Gets or sets the corner radius value for the checkbox shown in multiple selection mode, if [ListView.IsMultiSelectCheckBoxEnabled](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ListViewBase.IsMultiSelectCheckBoxEnabled) is set.
 
 `public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.CheckBoxDisabledBrush { get; set; }`
 
@@ -129,6 +121,14 @@ Gets or sets the brush used to render the check box border of disabled ListView 
 `public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.SelectedDisabledBackground { get; set; }`
 
 Gets or sets the brush used to render the background of selected disabled ListView items.
+
+`public boolean ListViewItemPresenter.SelectionIndicatorVisualEnabled { get; set; }`
+
+Gets or sets a value that indicates whether the selection indicator should appear when ListView items are selected.
+
+`public Windows.UI.Xaml.CornerRadius ListViewItemPresenter.SelectionIndicatorCornerRadius { get; set; }`
+
+Gets or sets the corner radius value for the selection indicator.
 
 `public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.SelectionIndicatorBrush { get; set; }`
 
@@ -175,8 +175,6 @@ Fields:
 |   0 - Inline    |  Indicator visual appears inline with the ListViewItem content, aligned left by default.     | 
 |   1 - Overlay  |   Indicator visual shows over the ListViewItem content, aligned left by default.    |
 
-
-<br/>
 
 `public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.PointerOverBorderBrush { get; set; }`
 
@@ -254,38 +252,6 @@ Gets or sets the brush used to render the disabled selection checkmark.
 
 `static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.CheckBoxCornerRadiusProperty{ get; };`
 
-
-## New Visual State Group and States:
-
-### For reference, existing visual group and states for the SelectionMode==Multiple option: 
-
-**VisualStateGroup MultiSelectStates**
-
-VisualState MultiSelectDisabled  for selectionMode != Multiple
-
-VisualState MultiSelectEnabled   for selectionMode == Multiple
-
-
-### New visual group and states for the Selection==Single or Extended options: 
-
-**VisualStateGroup SelectionIndicatorStates**
-
-VisualState SelectionIndicatorDisabled  for selectionMode == None or Multiple
-
-VisualState SelectionIndicatorEnabled   for selectionMode == Single or Extended
-
-## Changes to existing APIs:
-All of the following APIs will affect the rounded backplate of the item, rather than the overall footprint as they did prior. 
-
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.PointerOverBackground { get; set; }`
-
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.SelectedBackground { get; set; }`
-
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.SelectedPointerOverBackground { get; set; }`
-
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.PressedBackground { get; set; }`
-
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.SelectedPressedBackground { get; set; }`
 
 ## New ThemeResources
 
@@ -567,6 +533,39 @@ namespace Windows.UI.Xaml.Controls.Primitives
 ```
 
 # Appendix
+## Miscellaneous Implementation Details
+
+### New Visual State Group and States:
+
+#### For reference, existing visual group and states for the SelectionMode==Multiple option: 
+
+**VisualStateGroup MultiSelectStates**
+
+VisualState MultiSelectDisabled  for selectionMode != Multiple
+
+VisualState MultiSelectEnabled   for selectionMode == Multiple
+
+
+#### New visual group and states for the Selection==Single or Extended options: 
+
+**VisualStateGroup SelectionIndicatorStates**
+
+VisualState SelectionIndicatorDisabled  for selectionMode == None or Multiple
+
+VisualState SelectionIndicatorEnabled   for selectionMode == Single or Extended
+
+### Changes to existing APIs:
+All of the following APIs will affect the rounded backplate of the item, rather than the overall footprint as they did prior. 
+
+`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.PointerOverBackground { get; set; }`
+
+`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.SelectedBackground { get; set; }`
+
+`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.SelectedPointerOverBackground { get; set; }`
+
+`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.PressedBackground { get; set; }`
+
+`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.SelectedPressedBackground { get; set; }`
 
 ## Detailed Task Breakdown for styling implementation
 
@@ -619,4 +618,4 @@ namespace Windows.UI.Xaml.Controls.Primitives
     b. If the developer chooses to un-round corners, borders on selected GridView items should be un-rounded as well. Checkboxes within GridViewItems in multiple selection mode should be inset 1px from their original location in this scenario. Focus rects for ListView and GridView  should be un-rounded.
 
 ### Selection Indicator specifics
-The selection indicator should be centered with a fixed margin on the top and bottom, and a minimum height of 16px. With this system, items with a line height of one or two will have the same size pill (minimum size pill), but it will grow larger as the line height increases. 
+The selection indicator should be centered with a fixed margin on the top and bottom, and a minimum height of 16px. With this system, items with a line height of one or two will have the same size indicator (minimum size indicator), but it will grow larger as the line height increases. 
