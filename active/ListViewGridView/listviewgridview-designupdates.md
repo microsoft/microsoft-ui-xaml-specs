@@ -175,6 +175,12 @@ Fields:
 |   0 - Inline    |  Indicator visual appears inline with the ListViewItem content, aligned left by default.     | 
 |   1 - Overlay  |   Indicator visual shows over the ListViewItem content, aligned left by default.    |
 
+Example of a ListView with an inline selection indicator:
+![ListView with an inline selection indicator](images/indicator-aligned.PNG)
+
+Example of a ListView with an overlayed selection indicator:
+![ListView with an overlayed selection indicator](images/indicator-overlay.PNG)
+
 
 `public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.PointerOverBorderBrush { get; set; }`
 
