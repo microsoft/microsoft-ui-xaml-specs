@@ -1,267 +1,202 @@
 
 
 # Background
-<!-- Use this section to provide background context for the new API(s) 
-in this spec. -->
 
-<!-- This section and the appendix are the only sections that likely
-do not get copied to docs.microsoft.com; they're just an aid to reading this spec. -->
+In WinUI 2.2, controls began to be re-designed to have rounded corners, marking a shift in our overall design language. 
+There's more information on rounded corners in WinUI [here](https://docs.microsoft.com/en-us/windows/uwp/design/style/rounded-corner), 
+but the general purpose of the rounded corners design shift is to evoke warmth and trust, 
+and make the UI easier for users to visually process. 
+Since this shift, certain controls have adopted the new styling and recieved rounded corners, but some have not. 
+This creates a strong visual inconsistency in WinUI apps, where certain pieces of an app may look modern and others may look dated. 
+A common example of this is ListView and GridView items. 
+These are two very heavily used controls, but their items still have squared corners and look dated when placed alongside 
+controls that are more modernly designed, such as 
+[NavigationView](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/navigationview) 
+or even [Button](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/buttons).  
 
-<!-- If you're modifying an existing API, included a link here to the
-existing page(s) -->
+This spec will detail a number of changes to update the designs of ListView and GridView so that they are more 
+visually aligned with modern WinUI controls. At a high level, some key parts of these updated styles are: 
+rounded corners, a new selection indicator, rounded checkboxes and new checkbox design for multiple selection, 
+and an improved border design for GridView.
 
-<!-- For example, this section is a place to explain why you're adding this API rather than
-modifying an existing API. -->
+The new APIs for these features are on
+[ListViewItemPresenter](https://docs.microsoft.com/uwp/api/Controls.Primitives.ListViewItemPresenter),
+which is the low level Xaml element that draws items for both ListView and GridView
+(there's no GridViewItempresenter).
+An app can use these APIs directly, but most apps work just with ListView/GridView, which internally uses those elements.
 
-<!-- For example, this is a place to provide a brief explanation of some dependent
-area, just explanation enough to understand this new API, rather than telling
-the reader "go read 100 pages of background information posted at ...". -->
-In WinUI 2.2, controls began to be re-designed to have rounded corners, marking a shift in our overall design language. There's more information on rounded corners in WinUI [here](https://docs.microsoft.com/en-us/windows/uwp/design/style/rounded-corner), but the general purpose of the rounded corners and design shift is to evoke warmth and trust, and make the UI easier for users to visually process. Since this shift, certain controls have adopted the new styling and recieved rounded corners, but some have not. This creates a strong visual inconsistency in WinUI apps, where certain pieces of an app may look modern and others may look dated. A common example of this is ListView and GridView items. These are two very heavily used controls, but their items still have squared corners and look dated when placed alongside controls that are more modernly designed, such as [NavigationView](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/navigationview) or even [Button](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/buttons).  
+The other way to configure these features is with new Xaml theme resource keys.
+Theme resources aren't literally an API (no IDL), but an API-like pattern that should be 
+documented in class pages on docs.microsoft.com.
 
-This spec will detail a number of changes to update the designs of ListView and GridView so that they are more visually aligned with modern WinUI controls. At a high level, some key parts of these updated styles are: rounded corners, a new selection indicator, rounded checkboxes and new checkbox design for multiple selection, and an improved border design for GridView. The spec will also go over the API changes necessary to support these new designs.
+# API Pages
 
-# Description
-<!-- Use this section to provide a brief description of the feature.
-For an example, see the introduction to the PasswordBox control 
-(http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
+## ListView/GridView class
 
-ListView and GridView now have updated designs. Some of the key parts of this updated design include rounded corners, new rounded checkboxes in multi-select mode, new borders for GridView items in non-rest states, and a selection indicator for ListView items. 
+> Spec note: Following is updates to existing class description
 
-The design update to ListView and GridView ensures that they conform to the modern design language introduced in WinUI 2, and help provide visual consistency across your WinUI app. However, if you have a specific item template or would prefer to revert back to previous styles, there are a few options.
+You can modify the look of a ListView/GridView by specifying Xaml resources in your app.
+For more info, see the
+[lightweight styling guide](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/xaml-styles#lightweight-styling).
 
-### Toggling rounded corners
+| Resource key | Description |
+| - | - |
+| ListViewItemCornerRadius | Corner radius for corner rounding in a ListViewItem |
+| GridViewItemCornerRadius | Corner radius for corner rounding in a GridViewItem |
 
-If needed, you can easily toggle the rounded corners of ListView and GridView items on and off. Toggle rounded corners of ListView and GridView items by setting the `ListViewItemCornerRadius` and `GridViewItemCornerRadius` ThemeResources to your desired value. 
+By default, these theme resources use the `ControlCornerRadius` resource value -
+so if you decide to modify corners for your whole app by defining that resource,
+your ListView and GridView will apply those changes to their items as well.  
 
-Unless edited, these ThemeResources point to the `ControlCornerRadius` ThemeResource - so if you decide to toggle rounded corners on/off for your whole app, your ListView and GridView will apply those changes to their items as well.  
+### Examples
 
-### Overhauling the built-in template with an existing style
-ListView items are still customizable via the ListView's [ItemTemplate](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.itemscontrol.itemtemplate?view=winrt-19041#Windows_UI_Xaml_Controls_ItemsControl_ItemTemplate) property, but the default built-in styles (rounded corners, selection indicator) will be combined with the style that you provide. To change these new default style components, you have a few options:
+Round the corners of items in a ListView to a radius of 5px, for the whole app.
 
-1. [Edit the control template](https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/control-templates) of ListView or GridView.
+```xaml
+<Application.Resources>
+    <CornerRadius x:Key="ListViewItemCornerRadius">5</CornerRadius>
+</Application.Resources>
+```
 
-2. Use an [ItemsRepeater](https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/items-repeater), which allows for full customization and doesn't come with any pre-built selection model or selection visuals. 
+## ListViewItemPresenter properties
 
-# Examples
-**GridView in single selection mode:**
+> New properties for 
+[ListViewItemPresenter](https://docs.microsoft.com/uwp/api/Controls.Primitives.ListViewItemPresenter).
 
-In the photo-based examples below, the first item is selected in both old and new versions. In the text-based examples, the first item is hovered and the third item is selected in both old and new versions.
-![gridview single selection](images/visual-updates1.PNG)
+`public CornerRadius CheckBoxCornerRadius { get; set; }`
 
-**GridView in multiple selection mode:**
-![gridview multuple selection](images/visual-updates2.PNG)
+Gets or sets the corner radius value for the checkbox shown in multiple selection mode, if [ListView.IsMultiSelectCheckBoxEnabled](https://docs.microsoft.com/uwp/api/Controls.ListViewBase.IsMultiSelectCheckBoxEnabled) is set.
 
-**ListView in single selection mode:**
-![listview single selection](images/visual-updates3.PNG)
-
-**ListView in multiple selection mode:**
-![listview multiple selection](images/visual-updates4.PNG)
-
-**More ListView examples:**
-
-The first example on the top left shows a rounded focus rect.
-The second example on the top right shows extended selection mode. 
-
-The samples in the bottom row show ListView items with different heights. 
-![more listview examples](images/visual-updates5.png)
-
-# API Notes
-
-<!-- Option 1: Give a one or two line description of each API (type
-and member), or at least the ones that aren't obvious
-from their name.  These descriptions are what show up
-in IntelliSense. For properties, specify the default value of the property if it
-isn't the type's default (for example an int-typed property that doesn't default to zero.) -->
-
-<!-- Option 2: Put these descriptions in the below API Details section,
-with a "///" comment above the member or type. -->
-
-## New APIs:
-
-`public Windows.UI.Xaml.CornerRadius ListViewItemPresenter.CheckBoxCornerRadius { get; set; }`
-
-Gets or sets the corner radius value for the checkbox shown in multiple selection mode, if [ListView.IsMultiSelectCheckBoxEnabled](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ListViewBase.IsMultiSelectCheckBoxEnabled) is set.
-
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.CheckBoxDisabledBrush { get; set; }`
+`public Brush CheckBoxDisabledBrush { get; set; }`
 
 Gets or sets the brush used to render the check box background of disabled items.
 
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.CheckBoxSelectedBrush { get; set; }`
+`public Brush CheckBoxSelectedBrush { get; set; }`
 
 Gets or sets the brush used to render the check box background of selected items. 
 
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.CheckBoxSelectedPointerOverBrush { get; set; }`
+`public Brush CheckBoxSelectedPointerOverBrush { get; set; }`
 
 Gets or sets the brush used to render the check box background of selected pointer-over items. 
 
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.CheckBoxSelectedPressedBrush { get; set; }`
+`public Brush CheckBoxSelectedPressedBrush { get; set; }`
 
 Gets or sets the brush used to render the check box background of selected pressed items. 
 
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.CheckBoxSelectedDisabledBrush { get; set; }`
+`public Brush CheckBoxSelectedDisabledBrush { get; set; }`
 
 Gets or sets the brush used to render the check box background of selected disabled items. 
 
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.CheckBoxBorderBrush { get; set; }`
+`public Brush CheckBoxBorderBrush { get; set; }`
 
 Gets or sets the brush used to render the check box border of ListView items. 
 
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.CheckBoxPointerOverBorderBrush { get; set; }`
+`public Brush CheckBoxPointerOverBorderBrush { get; set; }`
 
 Gets or sets the brush used to render the check box border of pointer-over ListView items. 
 
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.CheckBoxPressedBorderBrush { get; set; }`
+`public Brush CheckBoxPressedBorderBrush { get; set; }`
 
 Gets or sets the brush used to render the check box border of pressed ListView items. 
 
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.CheckBoxDisabledBorderBrush { get; set; }`
+`public Brush CheckBoxDisabledBorderBrush { get; set; }`
 
 Gets or sets the brush used to render the check box border of disabled ListView items. 
 
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.SelectedDisabledBackground { get; set; }`
+`public Brush SelectedDisabledBackground { get; set; }`
 
 Gets or sets the brush used to render the background of selected disabled ListView items.
 
-`public boolean ListViewItemPresenter.SelectionIndicatorVisualEnabled { get; set; }`
+`public boolean SelectionIndicatorVisualEnabled { get; set; }`
 
 Gets or sets a value that indicates whether the selection indicator should appear when ListView items are selected.
 
-`public Windows.UI.Xaml.CornerRadius ListViewItemPresenter.SelectionIndicatorCornerRadius { get; set; }`
+`public CornerRadius SelectionIndicatorCornerRadius { get; set; }`
 
 Gets or sets the corner radius value for the selection indicator.
 
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.SelectionIndicatorBrush { get; set; }`
+`public Brush SelectionIndicatorBrush { get; set; }`
 
 Gets or sets the brush used to render the selection indicator shown on selected ListView items. 
 
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.SelectionIndicatorPointerOverBrush { get; set; }`
+`public Brush SelectionIndicatorPointerOverBrush { get; set; }`
 
 Gets or sets the brush used to render the selection indicator shown on a selected ListViewItem that has the pointer over it. 
 
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.SelectionIndicatorPressedBrush { get; set; }`
+`public Brush SelectionIndicatorPressedBrush { get; set; }`
 
 Gets or sets the brush used to render the selection indicator shown on a selected ListViewItem that is being pressed. 
 
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.SelectionIndicatorDisabledBrush { get; set; }`
+`public Brush SelectionIndicatorDisabledBrush { get; set; }`
 
 Gets or sets the brush used to render the selection indicator shown on a selected disabled ListViewItem. 
 
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.SelectionIndicatorVisualEnabledProperty{ get; };`
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.SelectedDisabledBackgroundProperty{ get; };`
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.SelectionIndicatorBrushProperty{ get; };`
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.SelectionIndicatorPointerOverBrushProperty{ get; };`
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.SelectionIndicatorPressedBrushProperty{ get; };`
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.SelectionIndicatorDisabledBrushProperty{ get; };`
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.SelectionIndicatorModeProperty{ get; };`
-
-`public ListViewItemPresenterSelectionIndicatorMode ListViewItemPresenter.SelectionIndicatorMode { get; set; }`
+`public ListViewItemPresenterSelectionIndicatorMode SelectionIndicatorMode { get; set; }`
 
 Specifies the alignment/style of the selection indicator that appears when ListView items are selected.
 
-`public enum ListViewItemPresenterSelectionIndicatorMode`
+`public Brush PointerOverBorderBrush { get; set; }`
+
+Gets or sets the brush used to render the outer border shown on a GridViewItem that has the pointer over it. 
+
+`public Brush SelectedBorderBrush { get; set; }`
+
+Gets or sets the brush used to render the outer selection border shown on selected GridView items. The existing SelectedPointerOverBorderBrush brush is used when the pointer is over the item. The thickness is driven by SelectedBorderThickness.
+
+`public Brush SelectedPressedBorderBrush { get; set; }`
+
+Gets or sets the brush used to render the outer selection border shown on selected & pressed GridView items.
+
+`public Brush SelectedDisabledBorderBrush { get; set; }`
+
+Gets or sets the brush used to render the outer selection border shown on selected & disabled GridView items.
+
+`public Brush SelectedInnerBorderBrush { get; set; }`
+
+Gets or sets the brush used to render the inner selection border shown on selected GridView items. The thickness is hard-coded to 1px.
+
+`public Brush CheckBoxPointerOverBrush { get; set; }`
+
+Gets or sets the brush used to render the pointer-over selection check box.
+
+`public Brush CheckBoxPressedBrush { get; set; }`
+
+Gets or sets the brush used to render the pressed selection check box.
+
+`public Brush CheckPressedBrush { get; set; }`
+
+Gets or sets the brush used to render the pressed selection checkmark.
+
+`public Brush CheckDisabledBrush { get; set; }`
+
+Gets or sets the brush used to render the disabled selection checkmark.
+
+
+## ListViewItemPresenterSelectionIndicatorMode enum
 
 Defines constants that specify the alignment/style of the selection indicator that appears when ListView items are selected.
 
 Fields:
 
-| Field  | Value | 
+| Field  | Value |
 |--------|:-----:|
-|   0 - Inline    |  Indicator visual appears inline with the ListViewItem content, aligned left by default.     | 
+|   0 - Inline    |  Indicator visual appears inline with the ListViewItem content, aligned left by default.     |
 |   1 - Overlay  |   Indicator visual shows over the ListViewItem content, aligned left by default.    |
 
 Example of a ListView with an inline selection indicator:
+
 ![ListView with an inline selection indicator](images/indicator-aligned.PNG)
 
 Example of a ListView with an overlayed selection indicator:
+
 ![ListView with an overlayed selection indicator](images/indicator-overlay.PNG)
-
-
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.PointerOverBorderBrush { get; set; }`
-
-Gets or sets the brush used to render the outer border shown on a GridViewItem that has the pointer over it. 
-
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.SelectedBorderBrush { get; set; }`
-
-Gets or sets the brush used to render the outer selection border shown on selected GridView items. The existing SelectedPointerOverBorderBrush brush is used when the pointer is over the item. The thickness is driven by SelectedBorderThickness.
-
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.SelectedPressedBorderBrush { get; set; }`
-
-Gets or sets the brush used to render the outer selection border shown on selected & pressed GridView items.
-
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.SelectedDisabledBorderBrush { get; set; }`
-
-Gets or sets the brush used to render the outer selection border shown on selected & disabled GridView items.
-
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.SelectedInnerBorderBrush { get; set; }`
-
-Gets or sets the brush used to render the inner selection border shown on selected GridView items. The thickness is hard-coded to 1px.
-
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.CheckBoxPointerOverBrush { get; set; }`
-
-Gets or sets the brush used to render the pointer-over selection check box.
-
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.CheckBoxPressedBrush { get; set; }`
-
-Gets or sets the brush used to render the pressed selection check box.
-
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.CheckPressedBrush { get; set; }`
-
-Gets or sets the brush used to render the pressed selection checkmark.
-
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.CheckDisabledBrush { get; set; }`
-
-Gets or sets the brush used to render the disabled selection checkmark.
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.PointerOverBorderBrushProperty{ get; };`
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.SelectedBorderBrushProperty{ get; };`
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.SelectedPressedBorderBrushProperty{ get; };`
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.SelectedDisabledBorderBrushProperty{ get; };`
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.CheckBoxPointerOverBrushProperty{ get; };`
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.CheckBoxPressedBrushProperty{ get; };` 
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.CheckBoxDisabledBrushProperty{ get; };` 
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.CheckBoxSelectedBrushProperty{ get; };` 
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.CheckBoxSelectedPointerOverBrushProperty{ get; };` 
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.CheckBoxSelectedPressedBrushProperty{ get; };` 
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.CheckBoxSelectedDisabledBrushProperty{ get; };` 
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.CheckBoxBorderBrushProperty{ get; };`
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.CheckBoxPointerOverBorderBrushProperty{ get; };` 
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.CheckBoxPressedBorderBrushProperty{ get; };` 
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.CheckBoxDisabledBorderBrushProperty{ get; };` 
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.CheckPressedBrushProperty{ get; };` 
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.CheckDisabledBrushProperty{ get; };` 
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.SelectedInnerBorderBrushProperty{ get; };`
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.SelectionIndicatorCornerRadiusProperty { get; };`
-
-`static Windows.UI.Xaml.DependencyProperty ListViewItemPresenter.CheckBoxCornerRadiusProperty{ get; };`
-
 
 ## New ThemeResources
 
-### ListView:
+> Xaml controls can be configured in part by setting theme resources. Below are all of the new
+theme resource keys, along with their default values.
+
+### ListView
 
 ```xml
 <ListViewItemPresenterSelectionIndicatorMode x:Key="ListViewItemSelectionIndicatorMode">Inline</ListViewItemPresenterSelectionIndicatorMode>
@@ -342,189 +277,87 @@ Gets or sets the brush used to render the disabled selection checkmark.
 ```
 
 # API Details
+
 ```cs
 
 unsealed runtimeclass ListViewItemPresenter
-    : Windows.UI.Xaml.Controls.ContentPresenter
+    : Controls.ContentPresenter
 {
-    [method_name("CreateInstance")] ListViewItemPresenter();
-    Boolean SelectionCheckMarkVisualEnabled;
-    Windows.UI.Xaml.Media.Brush CheckHintBrush;
-    Windows.UI.Xaml.Media.Brush CheckSelectingBrush;
-    Windows.UI.Xaml.Media.Brush CheckBrush;
-    Windows.UI.Xaml.Media.Brush DragBackground;
-    Windows.UI.Xaml.Media.Brush DragForeground;
-    Windows.UI.Xaml.Media.Brush FocusBorderBrush;
-    Windows.UI.Xaml.Media.Brush PlaceholderBackground;
-    // ===============================================================
-    //                      vv  CHANGED  vv
-    // ===============================================================
-    Windows.UI.Xaml.Media.Brush PointerOverBackground;
-    Windows.UI.Xaml.Media.Brush SelectedBackground;
-    Windows.UI.Xaml.Media.Brush SelectedPointerOverBackground;
-    // ===============================================================
-    //                       ^^ CHANGED ^^ 
-    // ===============================================================
-    Windows.UI.Xaml.Media.Brush SelectedForeground;
-    Windows.UI.Xaml.Media.Brush SelectedPointerOverBorderBrush;
-    Windows.UI.Xaml.Thickness SelectedBorderThickness;
-    Double DisabledOpacity;
-    Double DragOpacity;
-    Double ReorderHintOffset;
-    [deprecated("Use ContentPresenter.HorizontalContentAlignment instead of ListViewItemPresenterHorizontalContentAlignment. For more info, see MSDN.", deprecate, Windows.Foundation.UniversalApiContract, 1)]
-    Windows.UI.Xaml.HorizontalAlignment ListViewItemPresenterHorizontalContentAlignment;
-    [deprecated("Use ContentPresenter.VerticalContentAlignment instead of ListViewItemPresenterVerticalContentAlignment. For more info, see MSDN.", deprecate, Windows.Foundation.UniversalApiContract, 1)]
-    Windows.UI.Xaml.VerticalAlignment ListViewItemPresenterVerticalContentAlignment;
-    [deprecated("Use ContentPresenter.Padding instead of GridViewItemPresenterPadding. For more info, see MSDN.", deprecate, Windows.Foundation.UniversalApiContract, 1)]
-    Windows.UI.Xaml.Thickness ListViewItemPresenterPadding;
-    Windows.UI.Xaml.Thickness PointerOverBackgroundMargin;
-    Windows.UI.Xaml.Thickness ContentMargin;
-    static Windows.UI.Xaml.DependencyProperty SelectionCheckMarkVisualEnabledProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty CheckHintBrushProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty CheckSelectingBrushProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty CheckBrushProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty DragBackgroundProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty DragForegroundProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty FocusBorderBrushProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty PlaceholderBackgroundProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty PointerOverBackgroundProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty SelectedBackgroundProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty SelectedForegroundProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty SelectedPointerOverBackgroundProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty SelectedPointerOverBorderBrushProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty SelectedBorderThicknessProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty DisabledOpacityProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty DragOpacityProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty ReorderHintOffsetProperty{ get; };
-    [deprecated("Use ContentPresenter.HorizontalContentAlignment instead of ListViewItemPresenterHorizontalContentAlignment. For more info, see MSDN.", deprecate, Windows.Foundation.UniversalApiContract, 1)]
-    static Windows.UI.Xaml.DependencyProperty ListViewItemPresenterHorizontalContentAlignmentProperty{ get; };
-    [deprecated("Use ContentPresenter.VerticalContentAlignment instead of ListViewItemPresenterVerticalContentAlignment. For more info, see MSDN.", deprecate, Windows.Foundation.UniversalApiContract, 1)]
-    static Windows.UI.Xaml.DependencyProperty ListViewItemPresenterVerticalContentAlignmentProperty{ get; };
-    [deprecated("Use ContentPresenter.Padding instead of GridViewItemPresenterPadding. For more info, see MSDN.", deprecate, Windows.Foundation.UniversalApiContract, 1)]
-    static Windows.UI.Xaml.DependencyProperty ListViewItemPresenterPaddingProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty PointerOverBackgroundMarginProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty ContentMarginProperty{ get; };
+    // ... 
+    // existing 
+    // ...
 
-    [contract(Windows.Foundation.UniversalApiContract, 1)]
-    [static_name("Windows.UI.Xaml.Controls.Primitives.IListViewItemPresenterStatics2", 4cb3b945-d24d-42a3-9e83-a86d0618bf1b)]
-    [interface_name("Windows.UI.Xaml.Controls.Primitives.IListViewItemPresenter2", f5dc5496-e122-4c57-a625-ac4b08fb2d4c)]
-    {
-        // ===============================================================
-        //                       vv CHANGED vv 
-        // ===============================================================
-        Windows.UI.Xaml.Media.Brush SelectedPressedBackground;
-        Windows.UI.Xaml.Media.Brush PressedBackground;
-        // ===============================================================
-        //                       ^^ CHANGED ^^ 
-        // ===============================================================
-        Windows.UI.Xaml.Media.Brush CheckBoxBrush;
-        Windows.UI.Xaml.Media.Brush FocusSecondaryBorderBrush;
-        Windows.UI.Xaml.Controls.Primitives.ListViewItemPresenterCheckMode CheckMode;
-        Windows.UI.Xaml.Media.Brush PointerOverForeground;
-        static Windows.UI.Xaml.DependencyProperty SelectedPressedBackgroundProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty PressedBackgroundProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty CheckBoxBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty FocusSecondaryBorderBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty CheckModeProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty PointerOverForegroundProperty{ get; };
-    }
-
-    [contract(Windows.Foundation.UniversalApiContract, 5)]
-    [static_name("Windows.UI.Xaml.Controls.Primitives.IListViewItemPresenterStatics3", c3d3d11e-fa26-4ce7-a4ed-ff948f01b7c0)]
-    [interface_name("Windows.UI.Xaml.Controls.Primitives.IListViewItemPresenter3", 36620013-0390-4e30-ad97-8744404f7010)]
-    {
-        Windows.UI.Xaml.Media.Brush RevealBackground;
-        Windows.UI.Xaml.Media.Brush RevealBorderBrush;
-        Windows.UI.Xaml.Thickness RevealBorderThickness;
-        Boolean RevealBackgroundShowsAboveContent;
-        static Windows.UI.Xaml.DependencyProperty RevealBackgroundProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty RevealBorderBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty RevealBorderThicknessProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty RevealBackgroundShowsAboveContentProperty{ get; };
-    }
-
-    // ===============================================================
-    //                         vv  NEW vv
-    // ===============================================================
     [contract(Windows.Foundation.UniversalApiContract, 13)]
     {
-        Windows.UI.Xaml.Media.Brush SelectedDisabledBackground;
-        Windows.UI.Xaml.Media.Brush CheckPressedBrush;
-        Windows.UI.Xaml.Media.Brush CheckDisabledBrush;
-        Windows.UI.Xaml.Media.Brush CheckBoxPointerOverBrush;
-        Windows.UI.Xaml.Media.Brush CheckBoxPressedBrush;
-        Windows.UI.Xaml.Media.Brush CheckBoxDisabledBrush;
-        Windows.UI.Xaml.Media.Brush CheckBoxSelectedBrush;
-        Windows.UI.Xaml.Media.Brush CheckBoxSelectedPointerOverBrush;
-        Windows.UI.Xaml.Media.Brush CheckBoxSelectedPressedBrush;
-        Windows.UI.Xaml.Media.Brush CheckBoxSelectedDisabledBrush;
-        Windows.UI.Xaml.Media.Brush CheckBoxBorderBrush;
-        Windows.UI.Xaml.Media.Brush CheckBoxPointerOverBorderBrush;
-        Windows.UI.Xaml.Media.Brush CheckBoxPressedBorderBrush;
-        Windows.UI.Xaml.Media.Brush CheckBoxDisabledBorderBrush;
-        Windows.UI.Xaml.CornerRadius CheckBoxCornerRadius;
-        Windows.UI.Xaml.CornerRadius SelectionIndicatorCornerRadius;
+        Brush PointerOverBackground;
+        Brush SelectedBackground;
+        Brush SelectedPointerOverBackground;
+        Brush SelectedPressedBackground;
+        Brush PressedBackground;
+        Brush SelectedDisabledBackground;
+        Brush CheckPressedBrush;
+        Brush CheckDisabledBrush;
+        Brush CheckBoxPointerOverBrush;
+        Brush CheckBoxPressedBrush;
+        Brush CheckBoxDisabledBrush;
+        Brush CheckBoxSelectedBrush;
+        Brush CheckBoxSelectedPointerOverBrush;
+        Brush CheckBoxSelectedPressedBrush;
+        Brush CheckBoxSelectedDisabledBrush;
+        Brush CheckBoxBorderBrush;
+        Brush CheckBoxPointerOverBorderBrush;
+        Brush CheckBoxPressedBorderBrush;
+        Brush CheckBoxDisabledBorderBrush;
+        CornerRadius CheckBoxCornerRadius;
+        CornerRadius SelectionIndicatorCornerRadius;
         Boolean SelectionIndicatorVisualEnabled;
-        Windows.UI.Xaml.Controls.Primitives.ListViewItemPresenterSelectionIndicatorMode SelectionIndicatorMode;
-        Windows.UI.Xaml.Media.Brush SelectionIndicatorBrush;
-        Windows.UI.Xaml.Media.Brush SelectionIndicatorPointerOverBrush;
-        Windows.UI.Xaml.Media.Brush SelectionIndicatorPressedBrush;
-        Windows.UI.Xaml.Media.Brush SelectionIndicatorDisabledBrush;
-        Windows.UI.Xaml.Media.Brush SelectedBorderBrush;
-        Windows.UI.Xaml.Media.Brush SelectedPressedBorderBrush;
-        Windows.UI.Xaml.Media.Brush SelectedDisabledBorderBrush;
-        Windows.UI.Xaml.Media.Brush SelectedInnerBorderBrush;
-        Windows.UI.Xaml.Media.Brush PointerOverBorderBrush;
-        static Windows.UI.Xaml.DependencyProperty SelectedDisabledBackgroundProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty CheckPressedBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty CheckDisabledBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty CheckBoxPointerOverBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty CheckBoxPressedBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty CheckBoxDisabledBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty CheckBoxSelectedBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty CheckBoxSelectedPointerOverBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty CheckBoxSelectedPressedBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty CheckBoxSelectedDisabledBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty CheckBoxBorderBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty CheckBoxPointerOverBorderBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty CheckBoxPressedBorderBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty CheckBoxDisabledBorderBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty CheckBoxCornerRadiusProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty SelectionIndicatorCornerRadiusProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty SelectionIndicatorVisualEnabledProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty SelectionIndicatorModeProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty SelectionIndicatorBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty SelectionIndicatorPointerOverBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty SelectionIndicatorPressedBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty SelectionIndicatorDisabledBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty SelectedBorderBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty SelectedPressedBorderBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty SelectedDisabledBorderBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty SelectedInnerBorderBrushProperty{ get; };
-        static Windows.UI.Xaml.DependencyProperty PointerOverBorderBrushProperty{ get; };
+        Controls.Primitives.ListViewItemPresenterSelectionIndicatorMode SelectionIndicatorMode;
+        Brush SelectionIndicatorBrush;
+        Brush SelectionIndicatorPointerOverBrush;
+        Brush SelectionIndicatorPressedBrush;
+        Brush SelectionIndicatorDisabledBrush;
+        Brush SelectedBorderBrush;
+        Brush SelectedPressedBorderBrush;
+        Brush SelectedDisabledBorderBrush;
+        Brush SelectedInnerBorderBrush;
+        Brush PointerOverBorderBrush;
+
+        static DependencyProperty SelectedDisabledBackgroundProperty{ get; };
+        static DependencyProperty CheckPressedBrushProperty{ get; };
+        static DependencyProperty CheckDisabledBrushProperty{ get; };
+        static DependencyProperty CheckBoxPointerOverBrushProperty{ get; };
+        static DependencyProperty CheckBoxPressedBrushProperty{ get; };
+        static DependencyProperty CheckBoxDisabledBrushProperty{ get; };
+        static DependencyProperty CheckBoxSelectedBrushProperty{ get; };
+        static DependencyProperty CheckBoxSelectedPointerOverBrushProperty{ get; };
+        static DependencyProperty CheckBoxSelectedPressedBrushProperty{ get; };
+        static DependencyProperty CheckBoxSelectedDisabledBrushProperty{ get; };
+        static DependencyProperty CheckBoxBorderBrushProperty{ get; };
+        static DependencyProperty CheckBoxPointerOverBorderBrushProperty{ get; };
+        static DependencyProperty CheckBoxPressedBorderBrushProperty{ get; };
+        static DependencyProperty CheckBoxDisabledBorderBrushProperty{ get; };
+        static DependencyProperty CheckBoxCornerRadiusProperty{ get; };
+        static DependencyProperty SelectionIndicatorCornerRadiusProperty{ get; };
+        static DependencyProperty SelectionIndicatorVisualEnabledProperty{ get; };
+        static DependencyProperty SelectionIndicatorModeProperty{ get; };
+        static DependencyProperty SelectionIndicatorBrushProperty{ get; };
+        static DependencyProperty SelectionIndicatorPointerOverBrushProperty{ get; };
+        static DependencyProperty SelectionIndicatorPressedBrushProperty{ get; };
+        static DependencyProperty SelectionIndicatorDisabledBrushProperty{ get; };
+        static DependencyProperty SelectedBorderBrushProperty{ get; };
+        static DependencyProperty SelectedPressedBorderBrushProperty{ get; };
+        static DependencyProperty SelectedDisabledBorderBrushProperty{ get; };
+        static DependencyProperty SelectedInnerBorderBrushProperty{ get; };
+        static DependencyProperty PointerOverBorderBrushProperty{ get; };
     }  
-    // ===============================================================
-    //                         ^^ NEW ^^
-    // ===============================================================
 };
 ```
 
 ```cs
 
-namespace Windows.UI.Xaml.Controls.Primitives
+namespace Controls.Primitives
 {
 
-    [contract(Windows.Foundation.UniversalApiContract, 1)]
-    [webhosthidden]
-    enum ListViewItemPresenterCheckMode
-    {
-        Inline,
-        Overlay,
-    };
-
-    // ===============================================================
-    //                         vv NEW vv
-    // ===============================================================
     [contract(Windows.Foundation.UniversalApiContract, 13)]
     [webhosthidden]
     enum ListViewItemPresenterSelectionIndicatorMode
@@ -532,13 +365,48 @@ namespace Windows.UI.Xaml.Controls.Primitives
         Inline,
         Overlay,
     };
-    // ===============================================================
-    //                         ^^ NEW ^^
-    // ===============================================================
 }
 ```
 
 # Appendix
+
+## Visual Examples
+
+**GridView in single selection mode:**
+
+In the photo-based examples below, the first item is selected in both old and new versions. In the text-based examples, the first item is hovered and the third item is selected in both old and new versions.
+![gridview single selection](images/visual-updates1.PNG)
+
+**GridView in multiple selection mode:**
+![gridview multuple selection](images/visual-updates2.PNG)
+
+**ListView in single selection mode:**
+![listview single selection](images/visual-updates3.PNG)
+
+**ListView in multiple selection mode:**
+![listview multiple selection](images/visual-updates4.PNG)
+
+**More ListView examples:**
+
+The first example on the top left shows a rounded focus rect.
+The second example on the top right shows extended selection mode. 
+
+The samples in the bottom row show ListView items with different heights. 
+![more listview examples](images/visual-updates5.png)
+
+
+## Overhauling the built-in template with an existing style
+
+ListView items are still customizable via the ListView's 
+[ItemTemplate](https://docs.microsoft.com/en-us/uwp/api/controls.itemscontrol.itemtemplate?view=winrt-19041#Windows_UI_Xaml_Controls_ItemsControl_ItemTemplate)
+property, but the default built-in styles (rounded corners, selection indicator) will
+be combined with the style that you provide. To change these new default style components, you have a few options:
+
+1. [Edit the control template](https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/control-templates) of ListView or GridView.
+
+2. Use an [ItemsRepeater](https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/items-repeater), which allows for full customization and doesn't come with any pre-built selection model or selection visuals. 
+
+
 ## Miscellaneous Implementation Details
 
 ### New Visual State Group and States:
@@ -563,15 +431,15 @@ VisualState SelectionIndicatorEnabled   for selectionMode == Single or Extended
 ### Changes to existing APIs:
 All of the following APIs will affect the rounded backplate of the item, rather than the overall footprint as they did prior. 
 
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.PointerOverBackground { get; set; }`
+`public Brush PointerOverBackground { get; set; }`
 
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.SelectedBackground { get; set; }`
+`public Brush SelectedBackground { get; set; }`
 
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.SelectedPointerOverBackground { get; set; }`
+`public Brush SelectedPointerOverBackground { get; set; }`
 
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.PressedBackground { get; set; }`
+`public Brush PressedBackground { get; set; }`
 
-`public Windows.UI.Xaml.Media.Brush ListViewItemPresenter.SelectedPressedBackground { get; set; }`
+`public Brush SelectedPressedBackground { get; set; }`
 
 ## Detailed Task Breakdown for styling implementation
 
