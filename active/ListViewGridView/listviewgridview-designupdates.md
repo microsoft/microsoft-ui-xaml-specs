@@ -20,7 +20,7 @@ rounded corners, a new selection indicator, rounded checkboxes and new checkbox 
 and an improved border design for GridView.
 
 The new APIs for these features are on
-[ListViewItemPresenter](https://docs.microsoft.com/uwp/api/Controls.Primitives.ListViewItemPresenter),
+[ListViewItemPresenter](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Primitives.ListViewItemPresenter),
 which is the low level Xaml element that draws items for both ListView and GridView
 (there's no GridViewItempresenter).
 An app can use these APIs directly, but most apps work just with ListView/GridView, which internally uses those elements.
@@ -29,11 +29,47 @@ The other way to configure these features is with new Xaml theme resource keys.
 Theme resources aren't literally an API (no IDL), but an API-like pattern that should be 
 documented in class pages on docs.microsoft.com.
 
+## Visual Examples
+
+**GridView in single selection mode:**
+
+In the photo-based examples below, the first item is selected in both old and new versions. In the text-based examples, the first item is hovered and the third item is selected in both old and new versions.
+
+![gridview single selection](images/visual-updates1.PNG)
+
+**Multiple selection mode:**
+
+When a GridView or ListView is using checkboxes for multiple selection, the checkboxs are now rounded.
+In these examples
+[ListViewBase.IsMultiSelectCheckBoxEnabled](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ListViewBase.IsMultiSelectCheckBoxEnabled)
+is true, and [ListViewBase.SelectionMode](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ListViewBase.SelectionMode)
+is set to to either Multiple or Extended.
+
+![gridview multuple selection](images/visual-updates2.PNG)
+![listview multiple selection](images/visual-updates4.PNG)
+
+**ListView in single selection mode:**
+
+Single selection now uses a "pill" selection visualization (selection indicator):
+
+![listview single selection](images/visual-updates3.PNG)
+
+**More ListView examples:**
+
+The first example on the top left shows a rounded focus rect.
+The second example on the top right shows extended selection mode. 
+The samples in the bottom row show ListView items with different heights.
+
+[ListViewBase.IsMultiSelectCheckBoxEnabled](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ListViewBase.IsMultiSelectCheckBoxEnabled)
+is false, so the selection indicator is not shown as checkboxes.
+
+![more listview examples](images/visual-updates5.png)
+
 # API Pages
 
 ## ListView/GridView class
 
-> Spec note: Following is updates to existing class description
+> Spec note: Following text is updates to existing class description
 
 You can modify the look of a ListView/GridView by specifying Xaml resources in your app.
 For more info, see the
@@ -52,7 +88,7 @@ your ListView and GridView will apply those changes to their items as well.
 
 Round the corners of items in a ListView to a radius of 5px, for the whole app.
 
-```xaml
+```xml
 <Application.Resources>
     <CornerRadius x:Key="ListViewItemCornerRadius">5</CornerRadius>
 </Application.Resources>
@@ -61,11 +97,11 @@ Round the corners of items in a ListView to a radius of 5px, for the whole app.
 ## ListViewItemPresenter properties
 
 > New properties for 
-[ListViewItemPresenter](https://docs.microsoft.com/uwp/api/Controls.Primitives.ListViewItemPresenter).
+[ListViewItemPresenter](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Primitives.ListViewItemPresenter).
 
 `public CornerRadius CheckBoxCornerRadius { get; set; }`
 
-Gets or sets the corner radius value for the checkbox shown in multiple selection mode, if [ListView.IsMultiSelectCheckBoxEnabled](https://docs.microsoft.com/uwp/api/Controls.ListViewBase.IsMultiSelectCheckBoxEnabled) is set.
+Gets or sets the corner radius value for the checkbox shown in multiple selection mode, if [ListView.IsMultiSelectCheckBoxEnabled](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ListViewBase.IsMultiSelectCheckBoxEnabled) is set.
 
 `public Brush CheckBoxDisabledBrush { get; set; }`
 
@@ -311,7 +347,7 @@ unsealed runtimeclass ListViewItemPresenter
         CornerRadius CheckBoxCornerRadius;
         CornerRadius SelectionIndicatorCornerRadius;
         Boolean SelectionIndicatorVisualEnabled;
-        Controls.Primitives.ListViewItemPresenterSelectionIndicatorMode SelectionIndicatorMode;
+        Windows.UI.Xaml.Controls.Primitives.ListViewItemPresenterSelectionIndicatorMode SelectionIndicatorMode;
         Brush SelectionIndicatorBrush;
         Brush SelectionIndicatorPointerOverBrush;
         Brush SelectionIndicatorPressedBrush;
@@ -355,7 +391,7 @@ unsealed runtimeclass ListViewItemPresenter
 
 ```cs
 
-namespace Controls.Primitives
+namespace Windows.UI.Xaml.Controls.Primitives
 {
 
     [contract(Windows.Foundation.UniversalApiContract, 13)]
@@ -370,35 +406,10 @@ namespace Controls.Primitives
 
 # Appendix
 
-## Visual Examples
-
-**GridView in single selection mode:**
-
-In the photo-based examples below, the first item is selected in both old and new versions. In the text-based examples, the first item is hovered and the third item is selected in both old and new versions.
-![gridview single selection](images/visual-updates1.PNG)
-
-**GridView in multiple selection mode:**
-![gridview multuple selection](images/visual-updates2.PNG)
-
-**ListView in single selection mode:**
-![listview single selection](images/visual-updates3.PNG)
-
-**ListView in multiple selection mode:**
-![listview multiple selection](images/visual-updates4.PNG)
-
-**More ListView examples:**
-
-The first example on the top left shows a rounded focus rect.
-The second example on the top right shows extended selection mode. 
-
-The samples in the bottom row show ListView items with different heights. 
-![more listview examples](images/visual-updates5.png)
-
-
 ## Overhauling the built-in template with an existing style
 
 ListView items are still customizable via the ListView's 
-[ItemTemplate](https://docs.microsoft.com/en-us/uwp/api/controls.itemscontrol.itemtemplate?view=winrt-19041#Windows_UI_Xaml_Controls_ItemsControl_ItemTemplate)
+[ItemTemplate](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.itemscontrol.itemtemplate?view=winrt-19041#Windows_UI_Xaml_Controls_ItemsControl_ItemTemplate)
 property, but the default built-in styles (rounded corners, selection indicator) will
 be combined with the style that you provide. To change these new default style components, you have a few options:
 
