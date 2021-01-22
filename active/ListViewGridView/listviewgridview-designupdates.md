@@ -210,7 +210,7 @@ Gets or sets the brush used to render the disabled selection checkmark.
 
 ## ListViewItemPresenterSelectionIndicatorMode enum
 
-Defines constants that specify the alignment/style of the selection indicator that appears when ListView items are selected.
+Defines constants that specify the alignment/style of the selection indicator that appears when ListView items are selected. These field names align with existing ListViewItemPresenterCheckMode.
 
 Fields:
 
@@ -325,11 +325,6 @@ unsealed runtimeclass ListViewItemPresenter
 
     [contract(Windows.Foundation.UniversalApiContract, 13)]
     {
-        Brush PointerOverBackground;
-        Brush SelectedBackground;
-        Brush SelectedPointerOverBackground;
-        Brush SelectedPressedBackground;
-        Brush PressedBackground;
         Brush SelectedDisabledBackground;
         Brush CheckPressedBrush;
         Brush CheckDisabledBrush;
@@ -407,6 +402,8 @@ namespace Windows.UI.Xaml.Controls.Primitives
 # Appendix
 
 ## Overhauling the built-in template with an existing style
+
+These new styles are "opt-in" - you'll need the latest version of WinUI to recieve them, and WinUI2 will have a style that sets these properties. However, if you're using the newest version of WinUI and still want to change your styles back, read below. 
 
 ListView items are still customizable via the ListView's 
 [ItemTemplate](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.itemscontrol.itemtemplate?view=winrt-19041#Windows_UI_Xaml_Controls_ItemsControl_ItemTemplate)
