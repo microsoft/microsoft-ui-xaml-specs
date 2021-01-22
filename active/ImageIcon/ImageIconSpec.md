@@ -1,9 +1,9 @@
 # Image Icon
 
 ## Background
-Today, WinUI has a way to add icons in different image formats from the controls that inherit from IconElement. This includes BitmapIcon, FontIcon, SymbolIcon, PathIcon, and IconSourceElement. If a developer wanted to add an icon that is of type PNG, JPEG, or SVG, WinUI does not have a straight forward way of adding it. The developer could use BitmapIcon but the issue is that BitmapIcon and BitmapIconSource only accept URIs and the regular BitmapImage you would use with an image control only accepts a stream. This will prevent apps from being able to use icons from streams in their menu flyous and other controls that only accept images of ype IconElement.
+Today, WinUI has a way to add icons in different image formats from the controls that inherit from IconElement. This includes BitmapIcon, FontIcon, SymbolIcon, PathIcon, and IconSourceElement. If a developer wanted to add an icon that is of type PNG, JPEG, or SVG, WinUI does not have a straight forward way of adding it. The developer could use BitmapIcon but the issue is that BitmapIcon and BitmapIconSource only accept URIs and the regular BitmapImage you would use with an image control only accepts a stream. This will prevent apps from being able to use icons from streams in their menu flyous and other controls that only accept images of type IconElement.
 
-To solve this issue, we will create a control that will be a superset of BitmapIcon and potentially PathIcon and will accept an ImageSource icon. The ShowAsMonochrome property in BitmapIcon will not be part of ImageIcon as it is not a requirement from design to have all icons be monochrome. This will give the developer the flexibility to add an icon of any image type that ImageSource accepts.  The image types are: 
+To solve this issue, we will create a control that could replace BitmapIcon in the future and will accept an icon of type ImageSource. This will give the developer the flexibility to add an icon of any image type that ImageSource accepts.  The image types are: 
 - PNG
 - JPEG
 - BMP
@@ -11,15 +11,11 @@ To solve this issue, we will create a control that will be a superset of BitmapI
 - TIFF
 - SVG
 
-This will also be a good steppingstone for cleaning up our Icon controls and consolidating them to a smaller set. With this new control, we can deprecate BitmapIcon and we will only have the following icon controls in WinUI: 
-- FontIcon
-- SymbolIcon
-- ImageIcon
-- PathIcon
+The ShowAsMonochrome property in BitmapIcon will not be part of V1 of ImageIcon as it is not a requirement from design to have all icons be monochrome. Since ShowAsMonochrome will not be part of ImageIcon, the foreground color property inherited from IconElement will not be suported in this control. It will be up to the application to update the icon to match the user's theme. 
 
 
 ## Description
-ImageIcon is a UI component that accepts icons of any image type that ImageElement supports today. An ImageIcon will inherit from IconElement so it can be used anywhere an icon control that inherits from IconElement can be used today. ICO image types are not supported by this control.
+ImageIcon is a UI component that accepts icons of any image type that ImageElement supports today. An ImageIcon will inherit from IconElement so it can be used anywhere an icon control that inherits from IconElement can be used today. ICO image types are not supported by this control. The foreground color property inherited from IconElement is not supported by this control. It will be up to the application to update the icon to match the theme the user has selected. 
 
 **Important APIs:** [ImageIcon class](https://docs.microsoft.com/uwp/api/microsoft.ui.xaml.controls.ImageIcon)
 
@@ -66,15 +62,13 @@ namespace Microsoft.UI.Xaml.Controls
 |Capability	| Priority |
 | Icon can be used anywhere a BitmapIcon is accepted today | Must|
 | PNG, JPEG, and SVG images are types the control will accept | Must|
-| Icon must respond to user theming changes (Light, Dark, and High Contrast) | Must |
+| Icon must respond to user theming changes (Light, Dark, and High Contrast) | Could |
 | ICO icons will be accepted by the control | Could |
-| SVG image support will be improved | Not Priority |
+| SVG image support will be improved | Won't |
 
 
 ## Accessibility
-This control will follow the same accessibility requirements as the other icon controls under IconElement. That includes the following: 
-- When the user switches their theme to light or dark mode, the icon will adapt to the new theme. 
-- When the user switches to high contrast mode, the icon will support the correct high contrast ratio. 
+Since ImageIcon does not respond to the foreground property inherited from IconElement, it is up to the application to handle the icon color changes when the user’s theme is changed.  
 
 ## Open Questions
 - Should ICOs be supported in the future? 
