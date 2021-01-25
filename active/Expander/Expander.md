@@ -28,7 +28,7 @@ area, just explanation enough to understand this new API, rather than telling
 the reader "go read 100 pages of background information posted at ...". -->
  > This spec corresponds to [this issue](https://github.com/microsoft/microsoft-ui-xaml/issues/3279) on the WinUI repo. 
 
-Throughout Windows, different expander controls are used by various apps and surfaces. There’s currently no consistent way to address this common UX pattern. This control is needed for situations where expanding (instead of overlaying) content is needed.  An Expander control is motivated by its use in many app scenarios and supporting developers in migrating from WPF and WCT.  
+Throughout Windows, different expander controls are used by various apps and surfaces. There’s currently no consistent way to address this common UX pattern. This control is needed for situations where expanding (instead of overlaying) content is needed.  An Expander control is motivated by its use in many app scenarios and supporting developers in migrating from [WPF](https://docs.microsoft.com/en-us/dotnet/desktop/wpf/controls/expander-overview?view=netframeworkdesktop-4.8) and [WCT](https://docs.microsoft.com/en-us/windows/communitytoolkit/controls/expander).  
 
 # Description
 <!-- Use this section to provide a brief description of the feature.
@@ -54,38 +54,26 @@ example code with each description. The general format is:
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 
 ## Create an Expander
-XAML
-~~~~
-<controls:Expander>
-    <controls:Expander.Header>
-        <TextBlock Text="This expander is collapsed by default."/>
-    </controls:Expander.Header>
-    <TextBlock>This content is shown when Expander is expanded</TextBlock>
-</controls:Expander>
-~~~~
-
-## Expander with control inside it
+[PICTURE OF EXPANDER collapsed and expanded states]
 
 XAML
 ~~~~
-<controls:Expander>
-    <controls:Expander.Header IsExpanded="True">
-        <TextBlock Text="This expander is expanded by default."/>
-    </controls:Expander.Header>
-    <StackPanel HorizontalAlignment="Left">
-        <Button>Button</Button>
-        <TextBlock>This content is shown when Expander is expanded</TextBlock>
-    </StackPanel>
-</controls:Expander>
+<muxc:Expander x:Name="SimpleExpander" />
 ~~~~
 
-# Remarks
-<!-- Explanation and guidance that doesn't fit into the Examples section. -->
+[PICTURE OF EXPANDER with controls inside it from XCG]
 
-<!-- APIs should only throw exceptions in exceptional conditions; basically,
-only when there's a bug in the caller, such as argument exception.  But if for some
-reason it's necessary for a caller to catch an exception from an API, call that
-out with an explanation either here or in the Examples -->
+XAML
+~~~~
+<muxc:Expander x:Name="Expander2" IsExpanded="False" ExpandDirection ="Down">
+    <muxc:Expander.Header>
+        <ToggleButton>This is a ToggleButton in the header</ToggleButton>
+    </muxc:Expander.Header>
+    <muxc:Expander.Content>
+        <Button>This is a Button in the content</Button>
+    </muxc:Expander.Content>
+</muxc:Expander>
+~~~~
 
 # API Notes
 <!-- Option 1: Give a one or two line description of each API (type
@@ -96,7 +84,7 @@ isn't the type's default (for example an int-typed property that doesn't default
 
 <!-- Option 2: Put these descriptions in the below API Details section,
 with a "///" comment above the member or type. -->
-## Properties
+## Notable Properties
 | Name | Description | Default |
 | :---------- | :------- | :------- |
 | ExpandDirection | Sets the direction of expansion | Down = 0 |
@@ -105,54 +93,63 @@ with a "///" comment above the member or type. -->
 ## Events
 | Name | Description | 
 | :---------- | :------- | 
-| Expanded | Occurs when expanded |
+| Expanding | Occurs when expanded |
 | Collapsed| Occurs when collapsed |
 
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 ~~~~
-Public enum ExpandDirection 
-{ 
- Down = 0 
- Up = 1 
-} 
+enum ExpandDirection
+{
+    Down = 0,
+    Up = 1
+};
+
+runtimeclass ExpanderExpandingEventArgs
+{
+}
+
+runtimeclass ExpanderCollapsedEventArgs
+{
+}
  
-public class Expander : ContentControl 
-{ 
- Expander(); 
+unsealed runtimeclass Expander : Windows.UI.Xaml.Controls.ContentControl
+{
+    Expander();
 
- public object Header {get;set;} 
- public DataTemplate HeaderTemplate { get;set; } 
- public DataTemplate HeaderTemplateSelector {get;set;} 
+    Object Header{ get; set; };
+    Windows.UI.Xaml.DataTemplate HeaderTemplate{ get; set; };
+    Windows.UI.Xaml.Controls.DataTemplateSelector HeaderTemplateSelector{ get; set; };
 
- public static readonly DependencyProperty HeaderProperty; 
- public static readonly DependencyProperty HeaderTemplateProperty; 
- public static readonly DependencyProperty HeaderTemplateSelectorProperty {get;} 
+    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
+    Boolean IsExpanded{ get; set; };
 
- public bool IsExpanded { get;set} 
- public ExpandDirection ExpandDirection { get;set;} 
+    [MUX_DEFAULT_VALUE("winrt::ExpandDirection::Down")]
+    [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
+    ExpandDirection ExpandDirection{ get; set; };
 
- protected virtual void OnExpanded(); 
- protected virtual void OnCollapsed(); 
+    event Windows.Foundation.TypedEventHandler<Expander, ExpanderExpandingEventArgs> Expanding;
+    event Windows.Foundation.TypedEventHandler<Expander, ExpanderCollapsedEventArgs> Collapsed;
 
- public event Expanded; 
- public event Collapsed; 
+    static Windows.UI.Xaml.DependencyProperty HeaderProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty HeaderTemplateProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty HeaderTemplateSelectorProperty{ get; };
 
- public static readonly DependencyProperty IsExpandedProperty; 
- public static readonly DependencyProperty ExpandDirectionProperty; 
-} 
+    static Windows.UI.Xaml.DependencyProperty IsExpandedProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty ExpandDirectionProperty{ get; };
+}
 ~~~~
 
 ## Theme Resources
 
-| Name | Description | 
+| Name| Description | 
 | :---------- | :------- | 
 | ExpanderHeaderBackground | Header background color| 
 | ExpanderChevronBackground | Chevron background color| 
 | ExpanderChevronForeground | Chevron foreground color| 
 | ExpanderChevronMargin | Chevron margin thickness| 
 | ExpanderChevronGlyph | Chevron glyph| 
-| ExpanderChevronWidth | Chevron width (should this be renamed to 'weight'?)| 
+| ExpanderChevronWidth | Chevron width|
 | ExpanderPopinVerticalOffset | vertical offset | 
 
 # Appendix
@@ -165,17 +162,9 @@ For example, implementation details. -->
 Expander will use a ExpandCollapsePattern. Expanding/Collapsing the expander will raise [RaisePropertyChanged](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.automation.peers.automationpeer.raisepropertychangedevent?view=winrt-19041) with the property changed being the [ExpandCollapseProperty](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.automation.expandcollapsepatternidentifiers.expandcollapsestateproperty?view=winrt-19041) property.
 
 ## Keyboard
-* Only the header takes focus (not the entire Expander, or the chevron)
-*	When focus is on the Header - hit space/enter/right key to expand it, and focus does not move
-* Space and enter should expand and collapse 
-* right arrow will expand, left arrow will collapse
+* The Header takes focus (not the entire Expander, or the chevron).
+*	When focus is on the Header, space key expands and collapse and focus does not move
+* Keyboard navigation inside the Expander's Header/Content is based on the content inside them
 
 ## GamePad
-TBD
-
-# Open Questions
-
-## Input and Accessibility
-* Is there a RTL consideration for right/left keyboarding behavior?
-## General
-*
+The Expander can be expanded and collapsed with A. Spatial navigation will navigate between the content of the Expander. 
