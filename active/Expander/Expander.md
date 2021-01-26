@@ -75,6 +75,8 @@ XAML
 </muxc:Expander>
 ~~~~
 
+Updated pictures with final visuals to come. 
+
 # API Notes
 <!-- Option 1: Give a one or two line description of each API (type
 and member), or at least the ones that aren't obvious
@@ -163,7 +165,7 @@ Expander will use a ExpandCollapsePattern. Expanding/Collapsing the expander wil
 
 ## Keyboard
 * The Header takes focus (not the entire Expander, or the chevron).
-*	When focus is on the Header, space key expands and collapse and focus does not move
+* When focus is on the Header, space key expands and collapse and focus does not move
 * Keyboard navigation inside the Expander's Header/Content is based on the content inside them
 
 ## GamePad
