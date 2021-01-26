@@ -34,10 +34,7 @@ Throughout Windows, different expander controls are used by various apps and sur
 <!-- Use this section to provide a brief description of the feature.
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
-An Expander control is a UI component that provides a standard interaction for pushing adjacent content while expanding and collapsing. An Expander is independent of the contents inside it, including controls. 
-
-## Is this the right control?
-An Expander is not intended for flyout-type behaviors where a UI component overlays on top of adjacent content. In other words, Expander will 'push' and not overlay or fly out.
+An Expander control is a UI component that provides a standard interaction for showing more content in a container that pushes adjacent content while expanding and collapsing. An Expander cannot be light dismissed and is independent of the contents inside it, including controls. 
 
 # Examples
 <!-- Use this section to explain the features of the API, showing
@@ -152,12 +149,7 @@ unsealed runtimeclass Expander : Windows.UI.Xaml.Controls.ContentControl
 | ExpanderChevronMargin | Chevron margin thickness| 
 | ExpanderChevronGlyph | Chevron glyph| 
 | ExpanderChevronWidth | Chevron width|
-| ExpanderPopinVerticalOffset | vertical offset | 
-
-# Appendix
-<!-- Anything else that you want to write down for posterity, but 
-that isn't necessary to understand the purpose and usage of the API.
-For example, implementation details. -->
+| ExpanderPopinVerticalOffset | vertical offset for animation| 
 
 # Inputs and Accessibility
 ## UI Automation Patterns
@@ -170,3 +162,11 @@ Expander will use a ExpandCollapsePattern. Expanding/Collapsing the expander wil
 
 ## GamePad
 The Expander can be expanded and collapsed with A. Spatial navigation will navigate between the content of the Expander. 
+
+## Narrator
+When focus is on the Header of an Expander, Narrator will announce "Expander collapsed" or "Expander expanded". With focus staying on the header, Narrator will then anounce "expanded" or "collapsed" accordingly. 
+
+# Appendix
+<!-- Anything else that you want to write down for posterity, but 
+that isn't necessary to understand the purpose and usage of the API.
+For example, implementation details. -->
