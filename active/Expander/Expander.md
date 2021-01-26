@@ -164,7 +164,7 @@ For example, implementation details. -->
 Expander will use a ExpandCollapsePattern. Expanding/Collapsing the expander will raise [RaisePropertyChanged](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.automation.peers.automationpeer.raisepropertychangedevent?view=winrt-19041) with the property changed being the [ExpandCollapseProperty](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.automation.expandcollapsepatternidentifiers.expandcollapsestateproperty?view=winrt-19041) property.
 
 ## Keyboard
-* The Header takes focus (not the entire Expander, or the chevron).
+* Tabbing brings focus to the Header, neither the entire Expander nor the chevron is a tab-stop
 * When focus is on the Header, space key expands and collapse and focus does not move
 * Keyboard navigation inside the Expander's Header/Content is based on the content inside them
 
