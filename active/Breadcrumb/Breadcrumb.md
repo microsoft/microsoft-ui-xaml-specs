@@ -82,7 +82,7 @@ isn't the type's default (for example an int-typed property that doesn't default
 | ItemsSource | provides the content of the Breadcrumb | Null |
 | ItemClicked | Raised when a user interaction causes a jump to the CurrentItem.  | N/A |
 
-Note that V2 of Breadcrumb will add the flyouts from chevrons to view children of a node. Additional properties will be added to the API to enable this functionality. 
+Note that V2 of Breadcrumb will add flyouts from chevrons to view children of a node. Additional properties will be added to the API to enable this functionality. 
 
 <!-- Option 2: Put these descriptions in the below API Details section,
 with a "///" comment above the member or type. -->
