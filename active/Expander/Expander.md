@@ -34,8 +34,10 @@ Throughout Windows, different expander controls are used by various apps and sur
 <!-- Use this section to provide a brief description of the feature.
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
-An Expander control is a UI component that provides a standard interaction for showing more content in a container that pushes adjacent content while expanding and collapsing. An Expander cannot be light dismissed and is independent of the contents inside it, including controls. 
+An Expander control is a UI component that provides a standard interaction for showing more content in a container that pushes adjacent content while expanding and collapsing. An Expander cannot be light dismissed and is independent of the contents inside it, including controls. Expander should be used when some content is only relevant some of the time (for example to read more information or access additional options for an item). 
 
+![A collapsed Expander](images/expander_collapsed.PNG)
+![An expanded Expander](images/expander_expanded.PNG)
 # Examples
 <!-- Use this section to explain the features of the API, showing
 example code with each description. The general format is: 
@@ -52,13 +54,13 @@ example code with each description. The general format is:
 
 ## Create an Expander
 
-
+![A collapsed Expander](images/expander_collapsed.PNG)
 XAML
 ~~~~
 <muxc:Expander x:Name="SimpleExpander" />
 ~~~~
-
-
+## Put controls inside an Expander
+![An expanded Expander with a ToggleButton in the Header and a Button in the Content](images/expander_example_buttons.PNG)
 XAML
 ~~~~
 <muxc:Expander x:Name="Expander2" IsExpanded="False" ExpandDirection ="Down">
