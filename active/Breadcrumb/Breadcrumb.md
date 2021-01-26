@@ -1,5 +1,3 @@
-> See comments in Markdown for how to use this spec template
-
 <!-- The purpose of this spec is to describe a new feature and
 its APIs that make up a new feature in WinUI. -->
 
@@ -79,16 +77,12 @@ from their name.  These descriptions are what show up
 in IntelliSense. For properties, specify the default value of the property if it
 isn't the type's default (for example an int-typed property that doesn't default to zero.) -->
 
-## Notable Properties
 | Name | Description | Default |
 | :---------- | :------- | :------- |
-| ItemsSource | The items in Breadcrumb | Null |
-| ItemTemplate | to customize item visualization in the Breadcrumb | Null |
+| ItemsSource | provides the content of the Breadcrumb | Null |
+| ItemClicked | Raised when a user interaction causes a jump to the CurrentItem.  | N/A |
 
-## Events
-| Name | Description | 
-| :---------- | :------- | 
-| ItemClicked | Raised when a user interaction causes a jump to the CurrentItem.  |
+Note that V2 of Breadcrumb will add the flyouts from chevrons to view children of a node. Additional properties will be added to the API to enable this functionality. 
 
 <!-- Option 2: Put these descriptions in the below API Details section,
 with a "///" comment above the member or type. -->
@@ -96,52 +90,42 @@ with a "///" comment above the member or type. -->
 # API Details
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 
-## V1 API
+## API
 ~~~~
-    public class Node 
-    { 
-        public string Label; 
-    } 
-App’s ViewModel: 
 
-    public IEnumerable<Node> Nodes { get; } 
-    
-public class Breadcrumb : Control 
-    { 
-        public Breadcrumb(); 
+runtimeclass BreadcrumbItemClickedEventArgs
+{
+    Object Item { get; };
+}
 
-        // Default: Null 
-        // Flat list of objects representing the nodes in current path. 
-        public Object ItemsSource { get; set; } 
+unsealed runtimeclass BreadcrumbItem : Windows.UI.Xaml.Controls.ContentControl
+{
+    BreadcrumbItem();
+}
 
-        // Default: Null 
-        // Allows to customize item visualization in the Breadcrumb. 
-        public Object ItemTemplate { get; set; } 
+unsealed runtimeclass BreadcrumbLayout : NonVirtualizingLayout
+{
+    BreadcrumbLayout();
+}
 
-        // Raised when a user interaction causes a jump to the CurrentItem. 
-        public event TypedEventHandler<Breadcrumb, BreadcrumbItemClickedEventArgs> ItemClicked; 
+[MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
+[MUX_PROPERTY_CHANGED_CALLBACK_METHODNAME("OnPropertyChanged")]
+unsealed runtimeclass Breadcrumb : Windows.UI.Xaml.Controls.Control
+{
+    Breadcrumb();
 
-        public static readonly DependencyProperty ItemsSourceProperty; 
-        public static readonly DependencyProperty ItemTemplateProperty; 
-    } 
+    Object DropdownItemTemplate{ get; set; };
+    Object ItemsSource{ get; set; };
+    Object ItemTemplate{ get; set; };
 
-    public class BreadcrumbItem : ContentControl 
-    { 
-        public BreadcrumbItem(); 
-    } 
+    event Windows.Foundation.TypedEventHandler<Breadcrumb, BreadcrumbItemClickedEventArgs> ItemClicked;
 
-    // Argument for the ItemClicked event. 
-    public sealed class BreadcrumbItemClickedEventArgs 
-    { 
-    // Returns the clicked item. It is either sender.CurrentItem  
-    // or an item in the Children list accessed for the dropdown of sender.CurrentItem. 
-        public object Item { get; } 
-
-    } 
+    static Windows.UI.Xaml.DependencyProperty DropdownItemTemplateProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty ItemsSourceProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty ItemTemplateProperty{ get; };
+}
 
  ~~~~
-## V2 API
-V2 Breadcrumb will add the flyouts from chevrons to view children of a node. Additional properties will be added to the API to enable this functionality. 
 
 # Appendix
 <!-- Anything else that you want to write down for posterity, but 
