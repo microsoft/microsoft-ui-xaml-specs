@@ -36,7 +36,7 @@ A Breadcrumb control provides a persisting 'trail' that shows the user's navigat
 
 ## V1/V2 Breadcrumb
 
-The work for Breadcrumb has been scoped to V1 and V2 stages of the API. In V1 Breadcrumb no chevrons are interactable to show children. V2 Breadcrumb will add functionality to have flyouts from chevrons for every node, to view children of that node. This spec focuses on V1 Breadcrumb, but keeping in mind that V1 should be positioned in a way to have V2 features smoothly added later. 
+The work for Breadcrumb has been scoped to V1 and V2 stages of the API. In V1 Breadcrumb no chevrons are interactable to show children. V2 Breadcrumb will add functionality to have flyouts from chevrons for every node, to view children of that node. This spec focuses on V1 Breadcrumb, but keeping in mind that V1 is positioned in a way to have V2 features smoothly added later. 
 
 # Examples
 <!-- Use this section to explain the features of the API, showing
@@ -127,7 +127,7 @@ unsealed runtimeclass Breadcrumb : Windows.UI.Xaml.Controls.Control
 
  ~~~~
 
-# Appendix
+<!-- # Appendix -->
 <!-- Anything else that you want to write down for posterity, but 
 that isn't necessary to understand the purpose and usage of the API.
 For example, implementation details. -->
@@ -137,32 +137,12 @@ For example, implementation details. -->
 Breadcrumb will use the [InvokePattern](!https://docs.microsoft.com/en-us/dotnet/framework/ui-automation/implementing-the-ui-automation-invoke-control-pattern).
 
 ## Keyboard
-* The user can tab into the Breadcrumb and tab out. The first tab in gives focus to the first (leftmost) node. 
-Once the Breadcrumb has focus, the user can use: 
-* the left/right arrows to navigate from node to node 
+* The user can tab into the Breadcrumb and tab out. The first tab in gives focus to the first (highest-level) node. 
+Once the Breadcrumb has focus, the user can use the left/right arrows to navigate from node to node. 
+* If the Breadcrumb is crumbled, down/up will open the flyout from the ellipsis and down/up will navigate between the flyout items
+
+## Gamepad
+* Spatial navigation to focus and select the nodes.
 
 ## Narrator
-When the focus is on a node, Narrator will announce the name of the node as well as "n of m" to convey which node in the path it is. 
-
-# Open Questions
-
-## General
-* Should developers be able to customize the crumbling behavior (ex: to crumble starting at the 2nd node onward?) Or even use an icon instead of ellipses? 
-* Should developers be able to customize and address resizing situations where wrapping text in the leaf node does not answer their app scenario? Should the leaf node be able to crumble partially? 
-
-## Design
-* In V2 Breadcrumb, should the chevrons' interactability be indicated through design? Would the node-chevron spacing be the same or different for enabled vs disabled chevrons? 
-
-## Input and Accessibility
-* How should Breadcrumb's spacing/touch targets change for keyboard/mouse versus a touchscreen? 
-
-### Keyboard
-* the enter/space keys to jump to the current node?
-* Should the down arrow (or alt-down) drop down the children of the current node? Potentially also space and enter to drop down the children? the escape key to close the drop down?
-* the up/down arrows to navigate from child to child in the drop down?
-* File Exploreer exhibits wrapping arrowing behavior - pressing right arrow on the rightmost node brings you back to the root. Is this a behavior WinUI Breadcrumb should enable?
-
-### Narrator
-* How should Narrator behavior in a scenario with crumbled nodes?
-
-
+When the focus is on a node, Narrator will announce the node as well as "n of m" to convey which node in the path it is. If the Breadcrumb has been crumbled due to resizing, Narrator will announce 'collapsed' and 'expanded' for the flyout of crumbled nodes. 
