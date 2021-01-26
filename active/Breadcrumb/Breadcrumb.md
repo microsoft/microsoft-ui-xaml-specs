@@ -32,8 +32,13 @@ the reader "go read 100 pages of background information posted at ...". -->
 <!-- Use this section to provide a brief description of the feature.
 For an example, see the introduction to the PasswordBox control 
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
-A Breadcrumb control provides a persisting 'trail' that shows the user's navigation path. This is not the 'history' of the user's navigation, but the direct path of pages or folders from the root node to their current position. For situations where resizing means the full path can't be shown, the Breadcrumb will 'crumble' starting at the root node. In addition, the leaf node can be displayed as multiple lines of text if crumbling all the way rfom the root node to the leaf node's parent is not enough for a resizing scenario. 
+A Breadcrumb control provides a persisting 'trail' that shows the user's navigation path. This is not the 'history' of the user's navigation, but the direct path of pages or folders from the root node to their current position. For situations where resizing means the full path can't be shown, the Breadcrumb will 'crumble' starting at the root node. In addition, the leaf node can truncated if crumbling from the root node to the leaf node's parent is not enough for a resizing scenario. 
 
+![Breadcrumb default with 3 nodes](images/Breadcrumb_default.PNG)
+
+![Breadcrumb crumbling with 3 visible nodes](images/Breadcrumb_crumbling.PNG)
+
+![Breadcrumb_crumbled with last node truncated](images/Breadcrumb_truncation.PNG)
 ## V1/V2 Breadcrumb
 
 The work for Breadcrumb has been scoped to V1 and V2 stages of the API. In V1 Breadcrumb no chevrons are interactable to show children. V2 Breadcrumb will add functionality to have flyouts from chevrons for every node, to view children of that node. This spec focuses on V1 Breadcrumb, but keeping in mind that V1 is positioned in a way to have V2 features smoothly added later. 
@@ -52,15 +57,12 @@ example code with each description. The general format is:
 <!-- As an example of this section, see the Examples section for the PasswordBox control 
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 ## Create a Breadcrumb
+
+![Breadcrumb default with 3 nodes](images/Breadcrumb_default.PNG)
  ~~~~ 
-     <local:Breadcrumb ItemsSource="{x:Bind Nodes}"> 
-        <local:Breadcrumb.ItemTemplate> 
-            <DataTemplate x:DataType="local:Node"> 
-                <local:BreadcrumbItem Content="{x:Bind Label}"/> 
-            </DataTemplate> 
-        </local:Breadcrumb.ItemTemplate> 
-    </local:Breadcrumb> 
+     <muxc: Breadcrumb ItemsSource = {"Node", "Node", "Node"} /> 
 ~~~~
+More examples to be added
 
 # Remarks
 <!-- Explanation and guidance that doesn't fit into the Examples section. -->
