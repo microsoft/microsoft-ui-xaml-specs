@@ -51,14 +51,13 @@ example code with each description. The general format is:
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 
 ## Create an Expander
-[PICTURE OF EXPANDER collapsed and expanded states]
+
 
 XAML
 ~~~~
 <muxc:Expander x:Name="SimpleExpander" />
 ~~~~
 
-[PICTURE OF EXPANDER with controls inside it from XCG]
 
 XAML
 ~~~~
