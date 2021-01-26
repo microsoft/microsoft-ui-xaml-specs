@@ -1,62 +1,45 @@
-<!-- The purpose of this spec is to describe a new feature and
-its APIs that make up a new feature in WinUI. -->
-
-<!-- There are two audiences for the spec. The first are people
-that want to evaluate and give feedback on the API, as part of
-the submission process.  When it's complete
-it will be incorporated into the public documentation at
-docs.microsoft.com (http://docs.microsoft.com/uwp/toolkits/winui/).
-Hopefully we'll be able to copy it mostly verbatim.
-So the second audience is everyone that reads there to learn how
-and why to use this API. -->
 
 # Background
-<!-- Use this section to provide background context for the new API(s) 
-in this spec. -->
-There’s currently no consistent and Fluent way to address the common UX pattern of a breadcrumb. This control is needed for situations where the user's navigation trail (in a file system or menu system) needs to be persistently visible. A Breadcrumb control is movitated by its use in many app scenarios and supporting developers in migrating from WPF.
-<!-- This section and the appendix are the only sections that likely
-do not get copied to docs.microsoft.com; they're just an aid to reading this spec. -->
 
-<!-- If you're modifying an existing API, included a link here to the
-existing page(s) -->
+There’s currently no consistent and Fluent way to address the common UX pattern of a breadcrumb.
+This control is needed for situations where the user's navigation trail (in a file system or menu system) needs
+to be persistently visible.
+A Breadcrumb control is movitated by its use in many app scenarios and supporting developers in migrating from WPF.
 
-<!-- For example, this section is a place to explain why you're adding this API rather than
-modifying an existing API. -->
+This control is similar to an ItemsControl (has an ItemsSource property), but does not derive from it.
 
-<!-- For example, this is a place to provide a brief explanation of some dependent
-area, just explanation enough to understand this new API, rather than telling
-the reader "go read 100 pages of background information posted at ...". -->
+## V1/V2 Breadcrumb
 
+The work for Breadcrumb has been scoped to V1 and V2 stages of the API.
+In V1 Breadcrumb no chevrons are interactable to show children.
+V2 Breadcrumb will add functionality to have flyouts from chevrons for every node,
+to view children of that node. This spec focuses on V1 Breadcrumb,
+but keeping in mind that V1 is positioned in a way to have V2 features smoothly added later. 
 
-# Description
-<!-- Use this section to provide a brief description of the feature.
-For an example, see the introduction to the PasswordBox control 
-(http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
-A Breadcrumb control provides a persisting 'trail' that shows the user's navigation path. This is not the 'history' of the user's navigation, but the direct path of pages or folders from the root node to their current position. For situations where resizing means the full path can't be shown, the Breadcrumb will 'crumble' starting at the root node. In addition, the leaf node can truncated if crumbling from the root node to the leaf node's parent is not enough for a resizing scenario. 
+# API Pages
+
+## Breadcrumb class
+
+Use the Breadcrumb control to private persisting 'trail' that shows the user's navigation path.
+
+This is not the 'history' of the user's navigation, but the direct path of pages or folders from
+the root node to their current position. For situations where resizing means the full path can't be shown,
+the Breadcrumb will 'crumble' starting at the root node. In addition,
+the leaf node can truncated if crumbling from the root node to the leaf node's parent is not enough for a resizing scenario. 
+
+A Breadcrumb control with 3 nodes:
 
 ![Breadcrumb default with 3 nodes](images/Breadcrumb_default.PNG)
 
+A Breadcrumb "crumbling" with 3 visible nodes:
+
 ![Breadcrumb crumbling with 3 visible nodes](images/Breadcrumb_crumbling.PNG)
 
+A Breadcrumb control with the last node truncated:
+
 ![Breadcrumb_crumbled with last node truncated](images/Breadcrumb_truncation.PNG)
-## V1/V2 Breadcrumb
 
-The work for Breadcrumb has been scoped to V1 and V2 stages of the API. In V1 Breadcrumb no chevrons are interactable to show children. V2 Breadcrumb will add functionality to have flyouts from chevrons for every node, to view children of that node. This spec focuses on V1 Breadcrumb, but keeping in mind that V1 is positioned in a way to have V2 features smoothly added later. 
-
-# Examples
-<!-- Use this section to explain the features of the API, showing
-example code with each description. The general format is: 
-  feature explanation,
-  example code
-  feature explanation,
-  example code
-  etc.-->
-  
-<!-- Code samples should be in C# and/or C++/WinRT -->
-
-<!-- As an example of this section, see the Examples section for the PasswordBox control 
-(https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
-## Create a Breadcrumb
+The following Xaml markup  creates a simple Breadcrumbe control with three nodes:
 
 ![Breadcrumb default with 3 nodes](images/Breadcrumb_default.PNG)
  ~~~~ 
@@ -64,37 +47,19 @@ example code with each description. The general format is:
 ~~~~
 More examples to be added
 
-# Remarks
-<!-- Explanation and guidance that doesn't fit into the Examples section. -->
-
-<!-- APIs should only throw exceptions in exceptional conditions; basically,
-only when there's a bug in the caller, such as argument exception.  But if for some
-reason it's necessary for a caller to catch an exception from an API, call that
-out with an explanation either here or in the Examples -->
-
-# API Notes
-<!-- Option 1: Give a one or two line description of each API (type
-and member), or at least the ones that aren't obvious
-from their name.  These descriptions are what show up
-in IntelliSense. For properties, specify the default value of the property if it
-isn't the type's default (for example an int-typed property that doesn't default to zero.) -->
+## Breadcrumb member notes
 
 | Name | Description | Default |
 | :---------- | :------- | :------- |
 | ItemsSource | provides the content of the Breadcrumb | Null |
 | ItemClicked | Raised when a user interaction causes a jump to the CurrentItem.  | N/A |
 
-Note that V2 of Breadcrumb will add flyouts from chevrons to view children of a node. Additional properties will be added to the API to enable this functionality. 
-
-<!-- Option 2: Put these descriptions in the below API Details section,
-with a "///" comment above the member or type. -->
+Spec note: the V2 of Breadcrumb will add flyouts from chevrons to view children of a node.
+Additional properties will be added to the API to enable this functionality. 
 
 # API Details
-<!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 
-## API
-~~~~
-
+```cs
 runtimeclass BreadcrumbItemClickedEventArgs
 {
     Object Item { get; };
@@ -126,25 +91,30 @@ unsealed runtimeclass Breadcrumb : Windows.UI.Xaml.Controls.Control
     static Windows.UI.Xaml.DependencyProperty ItemsSourceProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty ItemTemplateProperty{ get; };
 }
+```
 
- ~~~~
+# Appendix
 
-<!-- # Appendix -->
-<!-- Anything else that you want to write down for posterity, but 
-that isn't necessary to understand the purpose and usage of the API.
-For example, implementation details. -->
-
-# Inputs and Accessibility
 ## UI Automation Pattern
-Breadcrumb will use the [InvokePattern](!https://docs.microsoft.com/en-us/dotnet/framework/ui-automation/implementing-the-ui-automation-invoke-control-pattern).
+
+Breadcrumb will use the
+[InvokePattern](!https://docs.microsoft.com/en-us/dotnet/framework/ui-automation/implementing-the-ui-automation-invoke-control-pattern).
 
 ## Keyboard
-* The user can tab into the Breadcrumb and tab out. The first tab in gives focus to the first (highest-level) node. 
-Once the Breadcrumb has focus, the user can use the left/right arrows to navigate from node to node. 
-* If the Breadcrumb is crumbled, down/up will open the flyout from the ellipsis and down/up will navigate between the flyout items
+
+* The user can tab into the Breadcrumb and tab out.
+The first tab in gives focus to the first (highest-level) node.
+Once the Breadcrumb has focus, the user can use the left/right arrows to navigate from node to node.
+* If the Breadcrumb is crumbled, down/up will open the flyout from
+the ellipsis and down/up will navigate between the flyout items
 
 ## Gamepad
+
 * Spatial navigation to focus and select the nodes.
 
 ## Narrator
-When the focus is on a node, Narrator will announce the node as well as "n of m" to convey which node in the path it is. If the Breadcrumb has been crumbled due to resizing, Narrator will announce 'collapsed' and 'expanded' for the flyout of crumbled nodes. 
+
+When the focus is on a node, Narrator will announce the node
+as well as "n of m" to convey which node in the path it is.
+If the Breadcrumb has been crumbled due to resizing,
+Narrator will announce 'collapsed' and 'expanded' for the flyout of crumbled nodes. 
