@@ -140,6 +140,7 @@ XAML
       </FlipView.ItemTemplate>
   </FlipView>
 
+  <!-- The SelectedPageIndex is bound to the FlipView to keep the two in sync -->
   <muxc:PipsPager x:Name="FlipViewPipsPager"
       HorizontalAlignment="Center"
       Margin="0, 10, 0, 0"
