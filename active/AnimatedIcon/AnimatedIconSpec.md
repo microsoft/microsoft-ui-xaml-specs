@@ -29,6 +29,11 @@ or in a button.
 This spec introduces an AnimatedIcon IconElement which reduces, or ideally eliminates, the amount of code-behind needed to
 implement most scenarios, and it can be used in WinUI controls that support an IconElement.
 
+Along with the various IconElement types, which are elements, there are IconSource types.
+For example BitmapIcon and
+[BitmapIconSource](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.BitmapIconSource).
+Similarly in this spec, along with `AnimatedIcon` is an `AnimatedIconSource`.
+
 # How to design animations for AnimatedIcon
 
 ## Creating animated content with Lottie 
@@ -266,6 +271,18 @@ unsealed runtimeclass AnimatedIcon : Windows.UI.Xaml.Controls.IconElement
     static String GetState(Windows.UI.Xaml.DependencyObject object); 
     static Windows.UI.Xaml.DependencyProperty SourceProperty{ get; };
 }
+
+unsealed runtimeclass AnimatedIconSource : IconSource
+{
+    AnimatedIconSource();
+
+    IAnimatedVisualSource2 Source{ get; set; };
+    IconSource FallbackIconSource{ get; set; };
+
+    static Windows.UI.Xaml.DependencyProperty SourceProperty { get; };
+    static Windows.UI.Xaml.DependencyProperty FallbackIconSourceProperty { get; };
+}
+
 ```
 
 # Appendix
