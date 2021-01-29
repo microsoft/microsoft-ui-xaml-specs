@@ -18,10 +18,6 @@ The solution in this spec is a new `ImageIcon` type, which like the other icons 
 [NavigationViewItem.Icon](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.NavigationViewItem.Icon)).
 Other than the base class, ImageIcon is equivalent to Image.
 
-And ImageIcon has a superset of the functionality in BitmapIcon, except for the
-[BitmapIcon.ShowAsMonochrome](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.BitmapIcon.ShowAsMonochrome)
-property, which could be added at a later time.
-
 ImageIcon is a superset of the existing BitmapIcon minus the
 [BitmapIcon.ShowAsMonochrome](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.BitmapIcon.ShowAsMonochrome)
 property, as it is not a requirement from design to have all icons be monochrome.
@@ -29,6 +25,11 @@ Since ShowAsMonochrome will not be part of ImageIcon, the
 [IconElement.Foreground](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.IconElement.Foreground)
 inherited from IconElement will not be suported in this control.
 It will be up to the application to update the icon to match the user's theme. 
+
+Along with the various IconElement types, which are elements, there are IconSource types.
+For example BitmapIcon and
+[BitmapIconSource](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.BitmapIconSource).
+Similarly in this spec, along with `ImageIcon` is an `ImageIconSource`.
 
 # API Pages
 
@@ -71,9 +72,10 @@ XAML
 
 # API Details
 
-```c++
+```cs
 namespace Microsoft.UI.Xaml.Controls
 {
+    [webhosthidden]
     unsealed runtimeclass ImageIcon : Windows.UI.Xaml.Controls.IconElement
     {
         ImageIcon();
@@ -82,12 +84,23 @@ namespace Microsoft.UI.Xaml.Controls
 
         static Windows.UI.Xaml.DependencyProperty SourceProperty{ get; };
     }
+
+    [webhosthidden]
+    unsealed runtimeclass ImageIconSource : IconSource
+    {
+        ImageIconSource();
+
+        Windows.UI.Xaml.Media.ImageSource ImageSource{ get; set; };
+
+        static Windows.UI.Xaml.DependencyProperty ImageSourceProperty{ get; };
+    }
 }
 ```
 
 # Appendix
 
 ## Scope
+
 |Capability	| Priority |
 | Icon can be used anywhere a BitmapIcon is accepted today | Must|
 | PNG, JPEG, and SVG images are types the control will accept | Must|
