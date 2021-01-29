@@ -60,6 +60,7 @@ namespace Microsoft.UI.Xaml.Controls
 # Appendix
 ## Scope
 |Capability	| Priority |
+|:--- | :--- |
 | Icon can be used anywhere a BitmapIcon is accepted today | Must|
 | PNG, JPEG, and SVG images are types the control will accept | Must|
 | Icon must respond to user theming changes (Light, Dark, and High Contrast) | Could |
