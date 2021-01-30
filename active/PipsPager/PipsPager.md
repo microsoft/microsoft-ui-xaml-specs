@@ -223,6 +223,8 @@ Defines constants that specify how a the buttons of a PipsPager are to be displa
 
 ## PipsPagerTemplateSettings
 
+Defines properties that you can establish template bindings to if defining a new template for the PipsPager.
+
 | Value | Description |
 |:---:|:---|
 | PipsPagerItems | The collection of items to represent the pips in the PipsPager. |
