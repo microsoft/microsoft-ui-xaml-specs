@@ -182,23 +182,19 @@ XAML
 ```
 ## PipsPager Theme Resources
 
-> Note: Some are TBD.
-
 | Name | Description | Type
 |:-:|:--| :-- |
-| PipsPagerDefaultIndicator | Sets the default pip glyph in MDL2 icon set | String |
-| PipsPagerSelectedIndicator | Sets the pip glyph when selected in MDL2 icon set | String |
-| PipsPagerDefaultIndicatorFontSize | Sets the size in pixels of the pip glyph | Double |
-| PipsPagerSelectedIndicatorFontSize | Sets the size in pixels of the pip glyph when selected | Double |
-| PipsPagerDefaultForegroundBrush | Sets the foreground brush of the default pip glyphs| SolidColorBrush
-| PipsPagerSelectedForegroundBrush | Sets the foreground brush of the pip glyph when selected | SolidColorBrush
-| PipsPagerPointerOver | Sets the pointer over/hover visual state for the pip display mode | Brush
-| PipsPagerPressed | Sets the pressed visual state for the pip display mode | Brush
-| PipsPagerSelected | Sets the selected visual state for the pip display mode | Brush
-| PipsPagerMargin | Sets the margin, in pixels, between each pip glyph | Thickness
-| PipsPagerIndicatorWidth | Sets the bounding box width for each pip glyph | Double
-| PipsPagerIndicatorHeight | Sets the bounding box height for each pip glyph | Double
-
+| PipsPagerButtonWidth | Sets the bounding box width for each pip | Double |
+| PipsPagerButtonHeight | Sets the bounding box height for each pip | Double |
+| PipsPagerButtonBorderThickness | Sets the border thickness for each pip | Thickness |
+| PipsPagerNavigationButtonBorderThickness | Sets the border thickness for each navigational button | Thickness |
+| PipsPagerSelectedGlyph | Sets the pip glyph when selected in MDL2 icon set | String |
+| PipsPagerDefaultGlyph | Sets the default pip glyph in MDL2 icon set | String |
+| PipsPagerNavigationButtonHeight | Sets the height for each navigational button | Double |
+| PipsPagerNavigationWidth | Sets the width for each navigational button | Double |
+| PipsPagerNavigationButtonFontSize | Sets the font size for each navigational button | Double |
+| PipsPagerSelectedGlyphFontSize | Sets the size in pixels of the pip glyph when selected | Double |
+| PipsPagerDefaultGlyphFontSize | Sets the size in pixels of the pip glyph at rest| Double |
 
 ## PipsPager member notes
 
@@ -228,6 +224,7 @@ Defines properties that you can establish template bindings to if defining a new
 | Value | Description |
 |:---:|:---|
 | PipsPagerItems | The collection of items to represent the pips in the PipsPager. |
+
 
 # API Details
 
