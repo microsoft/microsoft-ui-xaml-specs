@@ -24,7 +24,7 @@ developers may need to write a lot of custom code.
 Also, AnimatedVisualPlayer does not inherit from IconElement so it cannot be used in places that
 need one, like 
 [NavigationViewItem.Icon](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.NavigationViewItem.Icon)
-or in a button.
+or in a DropDownButton.
 
 This spec introduces an AnimatedIcon IconElement which reduces, or ideally eliminates, the amount of code-behind needed to
 implement most scenarios, and it can be used in WinUI controls that support an IconElement.
@@ -38,15 +38,14 @@ Similarly in this spec, along with `AnimatedIcon` is an `AnimatedIconSource`.
 
 ## Creating animated content with Lottie 
 
-1. Download the Lottie file for the icon you are looking to add to your application.
-2. Run the Lottie file through LottieGen. The LottieGen will output the file that you will add to your project that will include the markers needed for animated icon to map the correct state transitions to the correct animation segments. It will also contain the themable color properties you can set in code. 
-3. Take the output file from LottieGen and place it in your project.
+You will need to download the Lottie file for the icon you are looking to add and follow the steps in [this]((https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen)) tutorial to run that file through LottieGen. The output of LottieGen will produce the file needed for AnimatedIcon. This output will include the markers needed for animated icon to map the correct state transitions to the correct animation segments. It will also contain the themable color properties you can set in code. 
 
 ## Design Requirements  
 
-Designers will need to add markers named like the following to all Lottie files that will be used with AnimatedIcon.
+Designers will need to add markers named like the following to all Lottie files that will be used with controls that support AnimatedIcon. The controls that currently support AnimatedIcon are listed below. 
+
 The marker names should reflect the visual state the animation is going from to the visual state the animation is
-going to. For example, the bare minimum of the markers that are needed for icons being used in a Button are:  
+going to. For example, the bare minimum of the markers that are needed for icons being used in a NavigationViewItem are:  
 
 * NormalToPointerOver 
 * NormalToPressed 
@@ -55,9 +54,9 @@ going to. For example, the bare minimum of the markers that are needed for icons
 * PressedToNormal 
 * PressedToPointerOver  
 
-“Normal” is the state where the user is not interacting with the button. 
+“Normal” is the state where the user is not interacting with the NavigationViewIten. 
 
-Markers will need to be named this specific way so AnimatedIcon can map the correct animation segment with the correct visual state transition. This solution is conforming to a standard set of strings that are already defined in the visual state manager for each state. Here is an example of how the markers would look in a Lottie JSON file for a button.  
+Markers will need to be named this specific way so AnimatedIcon can map the correct animation segment with the correct visual state transition. This solution is conforming to a standard set of strings that are already defined in the visual state manager for each state. Here is an example of how the markers would look in a Lottie JSON file for the NavigationViewItem.  
 
 "markers":[{"tm":0,"cm":"NormalToPointerOver_Start","dr":0},{"tm":9,"cm":"NormalToPointerOver_End","dr":0}, 
 
@@ -75,17 +74,64 @@ Markers will need to be named this specific way so AnimatedIcon can map the corr
 
 {"tm":100,"cm":"PressedToPointerOver_Start","dr":0},{"tm":101,"cm":"PressedToPointerOver_End","dr":0}] 
 
+# Controls that currently support AnimatedIcon
+
+We updated the default templates for the following controls with the support for the default markers needed in a Lottie file to have an animation work in that particular control. This will give you the ability to add an animated icon with the correct markers in the file, to one of the controls without needing to do any more work. That is because the template for the control is where we determine which animation segment to play based on the visual state that the control is transitioning to. 
+
+The list of controls are: 
+
+* AutoSuggestBox
+* CheckBox
+* DropDownButton
+* Expander
+* SplitButton
+
+Here are the default states for each of the controls:
+
+* AutoSuggestBox 
+    * Normal
+    * PointerOver
+    * Pressed
+    * Disabled
+* CheckBox 
+    * UncheckedNormal
+    * UncheckedPointerOver
+    * UncheckedPressed
+    * UncheckedDisabled
+    * CheckedNormal
+    * CheckedPointerOver
+    * CheckedPressed
+    * CheckedDisabled 
+    * IndeterminateNormal
+    * IndeterminatePointerOver
+    * IndeterminatePressed
+    * IndeterminateDisabled
+* Expander 
+    * Normal
+    * PointerOver
+    * Pressed
+    * Disabled
+* DropDownButton 
+    * Normal
+    * PointerOver
+    * Pressed
+    * Disabled
+* SplitButton 
+    * Normal
+    * PointerOver
+    * Pressed
+    * Disabled
 
 
 # API Pages
 
 ## AnimatedIcon class
 
-An AnimatedIcon is a UI component which plays animated images in response to user interaction and visual state changes.
+An AnimatedIcon is a UI component that has APIs that enables the playing of animated images in response to user interaction and visual state changes. Some WinUI controls will call these APIs in response to visual state changes made by the user interacting with the control. 
 
 On Windows, the VisualStateManager is used to manage the logic for transitioning between states for controls.
 Each control has a specified VisualStateGroup, which contains mutually exclusive VisualState objects.
-For example, a Button may have a VisualStateGroup called “CommonStates”, which specifies a VisualState object for
+For example, a DropDownButton may have a VisualStateGroup called “CommonStates”, which specifies a VisualState object for
 “Normal” “Pressed”, “PointerOver”, and “Disabled”.
 
 A control will use the VisualStateManager to determine what state the animated icon is transitioning to and
@@ -118,8 +164,7 @@ AVP allows developers to control animations using the following methods: Pause, 
 
 ## Swap out a static icon with an animated icon in a Navigation View Item using the standard markers
 
-An icon animation will be activated by changes of state in XAML input controls (e.g. Button, and ToggleSwitch).
-For example, NavigationViewItem has states for rest/pointer over/press and AnimatedIcon will
+NavigationViewItem has states for rest/pointer over/press and AnimatedIcon will
 animate the state transitions by having named markers in the Lottie file such as:  
 
 - NormalToPointerOver
