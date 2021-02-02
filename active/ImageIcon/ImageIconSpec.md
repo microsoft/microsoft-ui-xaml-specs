@@ -13,7 +13,7 @@ The general [Image](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.
 element on the other hand supports these and more types, plus supports loading types from
 a stream rather than just URI.
 
-The solution in this spec is a new `ImageIcon` type, which like the other icons is an IconElement
+The new API in this spec is aan `ImageIcon` type, which like the other icons is an IconElement
 (so can be used where IconElement is required, such as 
 [NavigationViewItem.Icon](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.NavigationViewItem.Icon)).
 Other than the base class, ImageIcon is equivalent to Image.
@@ -30,6 +30,21 @@ Along with the various IconElement types, which are elements, there are IconSour
 For example BitmapIcon and
 [BitmapIconSource](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.BitmapIconSource).
 Similarly in this spec, along with `ImageIcon` is an `ImageIconSource`.
+
+In summary:
+
+```
+IconElement
+    BitmapIcon
+    ImageIcon **new
+
+IconSource
+    BitmapIconSource
+    ImageIconSource **new
+
+FrameworkElement
+    Image
+```
 
 # API Pages
 
@@ -69,6 +84,10 @@ XAML
 | Name	| Type | Description | Default |
 |:--- | :--- | :--- | :--- |
 |Source | ImageSource | Gets and sets the icon source file that will be used in the application. | Null |
+
+## ImageIconSource class
+
+_Same as above but with IconSource as the base type_
 
 # API Details
 
