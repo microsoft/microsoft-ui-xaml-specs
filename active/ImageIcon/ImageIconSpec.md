@@ -13,7 +13,7 @@ The general [Image](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.
 element on the other hand supports these and more types, plus supports loading types from
 a stream rather than just URI.
 
-The new API in this spec is aan `ImageIcon` type, which like the other icons is an IconElement
+The new API in this spec is an `ImageIcon` type, which like the other icons is an IconElement
 (so can be used where IconElement is required, such as 
 [NavigationViewItem.Icon](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.NavigationViewItem.Icon)).
 Other than the base class, ImageIcon is equivalent to Image.
