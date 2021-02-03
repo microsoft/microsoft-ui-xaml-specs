@@ -180,9 +180,24 @@ XAML
   PreviousButtonStyle="{StaticResource PreviousButtonStyle}"
   NextButtonStyle="{StaticResource NextButtonStyle}" />
 ```
+## PipsPager member notes
+
+| Name | Description| Default | 
+|:---:|:---|:---|
+| NumberOfPages | Sets the max number of pages the index control will iterate through. The default will represent an infinite page range. | -1
+| Previous and Next Style | Give the developer the option to customize the style by changing the text or glyph for the edge buttons. | N/A
+| SelectedPageIndex | The 0 based index that is currently selected. It will default to the first index. | 0
+| MaxVisiblePips | The maximum number of pips that will appear in the control at once. If the NumberOfPages is greater than this value, the UI will scroll so that the selected pip is centered. | 5
+| Orientation | The orientation of the control. Can be either Vertical or Horizontal. | Horizontal
+| PipsPagerSelectedIndexChangedEvent | Event that is fired after the user selects a pip or the directional buttons. This event will return the index number of the page that the user selected. | N/A
+
 ## PipsPager Theme Resources
 
-| Name | Description | Type
+You can modify the look of a PipsPager by specifying Xaml resources in your app.
+For more info, see the
+[lightweight styling guide](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/xaml-styles#lightweight-styling).
+
+| Resource key | Description | Type
 |:-:|:--| :-- |
 | PipsPagerButtonWidth | Sets the bounding box width for each pip | Double |
 | PipsPagerButtonHeight | Sets the bounding box height for each pip | Double |
@@ -195,17 +210,6 @@ XAML
 | PipsPagerNavigationButtonFontSize | Sets the font size for each navigational button | Double |
 | PipsPagerSelectedGlyphFontSize | Sets the size in pixels of the pip glyph when selected | Double |
 | PipsPagerDefaultGlyphFontSize | Sets the size in pixels of the pip glyph at rest| Double |
-
-## PipsPager member notes
-
-| Name | Description| Default | 
-|:---:|:---|:---|
-| NumberOfPages | Sets the max number of pages the index control will iterate through. The default will represent an infinite page range. | -1
-| Previous and Next Style | Give the developer the option to customize the style by changing the text or glyph for the edge buttons. | N/A
-| SelectedPageIndex | The 0 based index that is currently selected. It will default to the first index. | 0
-| MaxVisiblePips | The maximum number of pips that will appear in the control at once. If the NumberOfPages is greater than this value, the UI will scroll so that the selected pip is centered. | 5
-| Orientation | The orientation of the control. Can be either Vertical or Horizontal. | Horizontal
-| PipsPagerSelectedIndexChangedEvent | Event that is fired after the user selects a pip or the directional buttons. This event will return the index number of the page that the user selected. | N/A
 
 ## PipsPagerButtonVisibility enum
 
