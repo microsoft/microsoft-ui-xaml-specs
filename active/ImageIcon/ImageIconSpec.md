@@ -23,7 +23,7 @@ ImageIcon is a superset of the existing BitmapIcon minus the
 property, as it is not a requirement from design to have all icons be monochrome.
 Since ShowAsMonochrome will not be part of ImageIcon, the 
 [IconElement.Foreground](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.IconElement.Foreground)
-inherited from IconElement will not be suported in this control.
+inherited from IconElement will be ignored by this control.
 It will be up to the application to update the icon to match the user's theme. 
 
 Along with the various IconElement types, which are elements, there are IconSource types.
@@ -63,7 +63,7 @@ and can therefore be used anywhere an IconElement is required, such as
 
 ## Is this the right control? 
 
-Use an ImageIcon control when you want to display an image as your icon. Do not use an ImageIcon if you want to display an icon from a font. 
+Use an ImageIcon control when you want to display an image as your icon. Do not use an ImageIcon if you want to display an icon from a font or if you want the image to be displayed as monochrome. 
 
 ## Examples
 Below is an example of how you can use ImageIcon in an App Bar Button Item.
@@ -137,6 +137,6 @@ it is up to the application to handle the icon color changes when the user’s t
 ## Open Questions
 
 - Should ICOs be supported in the future? 
-- Should he ShowAsMonochrome property be added in the future? 
+- Should the ShowAsMonochrome property be added in the future? 
 This is somehing that was added because of a design requirement back when BitmapIcon was first designed but it is no longer a hard design requirement. 
 
