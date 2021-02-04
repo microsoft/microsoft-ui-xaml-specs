@@ -74,7 +74,7 @@ XAML
 ```xml
 <AppBarButton Label="ImageIcon" Click="AppBarButton_Click">
     <AppBarButton.Icon>
-        <ImageIcon Source="Wheel.png"/>
+        <ImageIcon Source="Wheel.svg"/>
     </AppBarButton.Icon>
 </AppBarButton>
 ```
@@ -139,5 +139,4 @@ it is up to the application to handle the icon color changes when the user’s t
 - Should ICOs be supported in the future? 
 - Should he ShowAsMonochrome property be added in the future? 
 This is somehing that was added because of a design requirement back when BitmapIcon was first designed but it is no longer a hard design requirement. 
-
 
