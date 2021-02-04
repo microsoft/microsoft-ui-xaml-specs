@@ -168,7 +168,7 @@ When focus is on the Header of an Expander, the screen reader will announce "Exp
 <!-- # Appendix
 <!-- Anything else that you want to write down for posterity, but 
 that isn't necessary to understand the purpose and usage of the API.
-For example, implementation details. --> -->
+For example, implementation details. --> 
 
 # Open Questions
 * How should properties from ContentControl (ex: Background, Foreground, FontSize) propagate?
