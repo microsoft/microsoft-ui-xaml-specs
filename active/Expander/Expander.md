@@ -36,8 +36,7 @@ For an example, see the introduction to the PasswordBox control
 (http://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box). -->
 An Expander control is a UI component that provides a standard interaction for showing more content in a container that pushes adjacent content while expanding and collapsing. An Expander cannot be light dismissed and is independent of the contents inside it, including controls. Expander should be used when some content is only relevant some of the time (for example to read more information or access additional options for an item). 
 
-![A collapsed Expander](images/expander_collapsed.PNG)
-![An expanded Expander](images/expander_expanded.PNG)
+![A collapsed Expander that is expanded (pushing downwards) and then collapsed. The Header has the text "This is in the header" and the Content has the text "This is in the content". There is a TextBlock saying "This TextBlock is Below the Expander" that is pushed away](images/Expander_with_textblock.gif)
 # Examples
 <!-- Use this section to explain the features of the API, showing
 example code with each description. The general format is: 
@@ -54,22 +53,21 @@ example code with each description. The general format is:
 
 ## Create an Expander
 
-![A collapsed Expander](images/expander_collapsed.PNG)
+![A collapsed Expander that is expanded and then collapsed. The Header has the text "This is in the header" and the Content has the text "This is in the content".](images/Expander.gif)
+
 XAML
 ~~~~
-<muxc:Expander x:Name="SimpleExpander" />
+<muxc:Expander x:Name="DefaultExpander" 
+    Header="This text is in the header" 
+    Content="This is in the content"/>
 ~~~~
 ## Put controls inside an Expander
-![An expanded Expander with a ToggleButton in the Header and a Button in the Content](images/expander_example_buttons.PNG)
+![A collapsed Expander. The Header has the text "This is in the header" and the Content has a button with the text "This ToggleButton is in the Content". The Expander is expanded, the button is toggled on and off, and the Expander is collapsed. ](images/expander_togglebutton.gif)
+
 XAML
 ~~~~
-<muxc:Expander x:Name="Expander2" IsExpanded="False" ExpandDirection ="Down">
-    <muxc:Expander.Header>
-        <ToggleButton>This is a ToggleButton in the header</ToggleButton>
-    </muxc:Expander.Header>
-    <muxc:Expander.Content>
-        <Button>This is a Button in the content</Button>
-    </muxc:Expander.Content>
+<muxc:Expander x:Name="Expander2" Header="This is in the header"> 
+    <ToggleButton>This ToggleButton is in the Content</ToggleButton>
 </muxc:Expander>
 ~~~~
 
@@ -141,16 +139,16 @@ unsealed runtimeclass Expander : Windows.UI.Xaml.Controls.ContentControl
 ~~~~
 
 ## Theme Resources
+You can modify the look of an Expander by specifying Xaml resources in your app. For more info, see the [lightweight styling guide](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/xaml-styles#lightweight-styling).
 
 | Name| Description | 
 | :---------- | :------- | 
-| ExpanderHeaderBackground | Header background color| 
-| ExpanderChevronBackground | Chevron background color| 
-| ExpanderChevronForeground | Chevron foreground color| 
 | ExpanderChevronMargin | Chevron margin thickness| 
 | ExpanderChevronGlyph | Chevron glyph| 
-| ExpanderChevronWidth | Chevron width|
+| ExpanderChevronSize | Chevron size|
 | ExpanderPopinVerticalOffset | vertical offset for animation| 
+
+Some theme resources
 
 # Inputs and Accessibility
 ## UI Automation Patterns
@@ -164,10 +162,13 @@ Expander will use a ExpandCollapsePattern. Expanding/Collapsing the expander wil
 ## GamePad
 The Expander can be expanded and collapsed with A. Spatial navigation will navigate between the content of the Expander. 
 
-## Narrator
-When focus is on the Header of an Expander, Narrator will announce "Expander collapsed" or "Expander expanded". With focus staying on the header, Narrator will then anounce "expanded" or "collapsed" accordingly. 
+## Screen reader
+When focus is on the Header of an Expander, the screen reader will announce "Expander collapsed" or "Expander expanded". With focus staying on the header, the screen reader will then anounce "expanded" or "collapsed" accordingly. Expander should not have [focus engagement](https://docs.microsoft.com/en-us/windows/uwp/design/input/gamepad-and-remote-interactions#focus-engagement) enabled. 
 
-# Appendix
+<!-- # Appendix
 <!-- Anything else that you want to write down for posterity, but 
 that isn't necessary to understand the purpose and usage of the API.
-For example, implementation details. -->
+For example, implementation details. --> -->
+
+# Open Questions
+* How should properties from ContentControl (ex: Background, Foreground, FontSize) propagate?
