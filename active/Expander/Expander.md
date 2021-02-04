@@ -148,7 +148,7 @@ You can modify the look of an Expander by specifying Xaml resources in your app.
 | ExpanderChevronSize | Chevron size|
 | ExpanderPopinVerticalOffset | vertical offset for animation| 
 
-Some theme resources
+Some theme resources TBD.
 
 # Inputs and Accessibility
 ## UI Automation Patterns
