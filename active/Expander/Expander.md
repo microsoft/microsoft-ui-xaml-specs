@@ -62,7 +62,7 @@ XAML
     Content="This is in the content"/>
 ~~~~
 ## Put controls inside an Expander
-![A collapsed Expander. The Header has the text "This is in the header" and the Content has a button with the text "This ToggleButton is in the Content". The Expander is expanded, the button is toggled on and off, and the Expander is collapsed. ](images/expander_togglebutton.gif)
+![A collapsed Expander. The Header has the text "This is in the header" and the Content has a button with the text "This ToggleButton is in the Content". The Expander is expanded, the button is toggled on and off, and the Expander is collapsed. ](images/Expander_togglebutton.gif)
 
 XAML
 ~~~~
