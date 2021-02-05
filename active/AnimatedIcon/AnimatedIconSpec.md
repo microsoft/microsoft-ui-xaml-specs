@@ -284,7 +284,9 @@ XAML
 
 If you would like to add an animated icon to a control that does not have the default template updated, you will need to update the template to include the state changes needed to play the animation segments. 
 
-Here is the XAML for the template changes you would need to make to add the state transitions for Normal, PointerOver, Pressed, and Disabled. This will update the button template to add the state transitons needed for AnimatedIcon to map the animation segment in the PlayIcon file to the correct visual state.
+Here is the XAML for the changes you would need to make to add an AnimatedIcon to a button. This includes the changes you will need to make to the state transitions for Normal, PointerOver, Pressed, and Disabled. This will update the button template to add the state transitons needed for AnimatedIcon to map the animation segment in the PlayIcon file to the correct visual state.
+
+This example also shows how to add the fallback static icon that will be used if the animated icon cannot be played. In this example we are using a SymbolIcon glyph. 
 
 XAML
 ```xml
@@ -410,6 +412,6 @@ AnimatedIcon will provide an API for a developer to add a static icon of type Ic
 
 ## Accessibility
 
-This control is going to be part of the Icon family of controls so the accessibility requirements will reflect what the other icon controls have. AnimatedIcon will need to ensure that the high contrast brushes propagate correctly if the user changes their settings to a high contrast theme. The control will also need to ensure that when the user changes the theme to light or dark, the icon changes its theme as well. 
+This control is going to be part of the Icon family of controls so the accessibility requirements will reflect what the other icon controls have. AnimatedIcon will need to ensure that the high contrast brushes propagate correctly if the user changes their settings to a high contrast theme.  
 
 If the user turns off animations in theri system settings, the AnimatedIcons will not animate. 
