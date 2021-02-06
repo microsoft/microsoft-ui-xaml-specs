@@ -17,11 +17,10 @@ There is also a desire to have an animated icon respond to user interactivity vi
 attention to an action a user can take or to add user delight.
 
 The [AnimatedVisualPlayer](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.AnimatedVisualPlayer)
-element can be used to create animated (Lottie-based) icons,
-but to have the animation be driven by the states of and interactions with a control,
+element can be used to create animated (Lottie-based) that are small like an icon, but:
+* to have the animation be driven by the states of and interactions with a control,
 developers may need to write a lot of custom code.
-
-Also, AnimatedVisualPlayer does not inherit from IconElement so it cannot be used in places that
+* AnimatedVisualPlayer does not inherit from IconElement, so it cannot be used in places that
 need one, like 
 [NavigationViewItem.Icon](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.NavigationViewItem.Icon)
 or in a DropDownButton.
@@ -29,16 +28,28 @@ or in a DropDownButton.
 This spec introduces an AnimatedIcon IconElement which reduces, or ideally eliminates, the amount of code-behind needed to
 implement most scenarios, and it can be used in WinUI controls that support an IconElement.
 
-Along with the various IconElement types, which are elements, there are IconSource types.
-For example BitmapIcon and
-[BitmapIconSource](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.BitmapIconSource).
+Along with the various IconElement-based there are equivalent IconSource-source types.
+For example BitmapIcon (IconElement) and
+[BitmapIconSource](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.BitmapIconSource)
+(IconSource).
 Similarly in this spec, along with `AnimatedIcon` is an `AnimatedIconSource`.
 
 # How to design animations for AnimatedIcon
 
 ## Creating animated content with Lottie 
 
-You will need to download the Lottie file for the icon you are looking to add and follow the steps in [this]((https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen)) tutorial to run that file through LottieGen. The output of LottieGen will produce the file needed for AnimatedIcon. This output will include the markers needed for animated icon to map the correct state transitions to the correct animation segments. It will also contain the themable color properties you can set in code. 
+Defining an animation for an AnimatedIcon[Source] is the same as the process for an
+[AnimatedVisualPlayer](http://msdn.microsoft.com/library/Microsoft.UI.Xaml.Controls.AnimatedVisualPlayer).
+You will need to download the Lottie file for the icon you are looking to add and follow the steps in
+[this]((https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen))
+tutorial to run that file through LottieGen.
+The output of LottieGen will produce the file needed for AnimatedIcon.
+
+The additional step for AnimatedIcon is to define markers in the animation definition.
+These can be used by controls to transition the animation in the different control states.
+So the output from the LottieGen tool will also include the markers needed for animated icon to
+map the correct state transitions tothe correct animation segments.
+It will also contain the themable color properties you can set in code. 
 
 ## Design Requirements  
 
@@ -54,9 +65,12 @@ going to. For example, the bare minimum of the markers that are needed for icons
 * PressedToNormal 
 * PressedToPointerOver  
 
-“Normal” is the state where the user is not interacting with the NavigationViewIten. 
+“Normal" is the state where the user is not interacting with the NavigationViewIten. 
 
-Markers will need to be named this specific way so AnimatedIcon can map the correct animation segment with the correct visual state transition. This solution is conforming to a standard set of strings that are already defined in the visual state manager for each state. Here is an example of how the markers would look in a Lottie JSON file for the NavigationViewItem.  
+Markers will need to be named this specific way so AnimatedIcon can map the correct animation segment with
+the correct visual state transition.
+This solution is conforming to a standard set of strings that are already defined for many Xaml controls.
+Here is an example of how the markers would look in a Lottie JSON file for the NavigationViewItem.  
 
 "markers":[{"tm":0,"cm":"NormalToPointerOver_Start","dr":0},{"tm":9,"cm":"NormalToPointerOver_End","dr":0}, 
 
@@ -76,9 +90,11 @@ Markers will need to be named this specific way so AnimatedIcon can map the corr
 
 # Controls that currently support AnimatedIcon
 
-We updated the default templates for the following controls with the support for the default markers needed in a Lottie file to have an animation work in that particular control. This will give you the ability to add an animated icon with the correct markers in the file, to one of the controls without needing to do any more work. That is because the template for the control is where we determine which animation segment to play based on the visual state that the control is transitioning to. 
+Many built-in Xaml controls support AnimatedIcon[Source] by animating to markers when the state of the control changes.
+This gives you the ability to add an animated icon with the correct markers in the file,
+to one of the controls without needing to do any more work. 
 
-The list of controls are: 
+The list of controls are:
 
 * AutoSuggestBox
 * CheckBox
@@ -131,8 +147,8 @@ An AnimatedIcon is a UI component that has APIs that enables the playing o
 
 On Windows, the VisualStateManager is used to manage the logic for transitioning between states for controls.
 Each control has a specified VisualStateGroup, which contains mutually exclusive VisualState objects.
-For example, a DropDownButton may have a VisualStateGroup called “CommonStates”, which specifies a VisualState object for
-“Normal” “Pressed”, “PointerOver”, and “Disabled”.
+For example, a DropDownButton may have a VisualStateGroup called “CommonStates", which specifies a VisualState object for
+“Normal" “Pressed", “PointerOver", and “Disabled".
 
 A control will use the VisualStateManager to determine what state the animated icon is transitioning to and
 play the corresponding animation segment of the icon.
@@ -160,9 +176,9 @@ AnimatedVisualPlayer is a more  general animation player that can be used anywhe
 
 AVP allows developers to control animations using the following methods: Pause, PlayAsync, Resume, SetProgress, and Stop. When using AVP, developers may need to write a lot of code when getting their generated animation to properly respond to user interaction and state changes. This is the main distinction between the workflows for AVP and AnimatedIcon. An AnimatedIcon will be used when animations need to be driven by state changes and user interaction in a markup friendly way. It would reduce, or ideally eliminate the amount of code-behind needed to implement such scenarios.
 
-# Examples
+## Examples
 
-## Swap out a static icon with an animated icon in a Navigation View Item using the standard markers
+### Swap out a static icon with an animated icon in a Navigation View Item
 
 NavigationViewItem has states for rest/pointer over/press and AnimatedIcon will
 animate the state transitions by having named markers in the Lottie file such as:  
@@ -188,9 +204,9 @@ Before:
 XAML
 
 ```xml
-< muxc:NavigationView.MenuItems >
-    < muxc:NavigationViewItem Content = "Menu Item1" Icon =”Play” Tag="SamplePage" x:Name = "SamplePageItem" >
-</ muxc:NavigationView.MenuItems >
+<muxc:NavigationView.MenuItems>
+    <muxc:NavigationViewItem Content = "Menu Item1" Icon ="Play" Tag="SamplePage" x:Name = "SamplePageItem">
+</muxc:NavigationView.MenuItems>
 ```
 
 After: 
@@ -216,7 +232,7 @@ If you would like to add an animated icon to a control that does not have the de
 
 Here is the XAML for the changes you would need to make to add an AnimatedIcon to a button (button does not have the default template updated). This includes the changes you will need to make to the state transitions for Normal, PointerOver, Pressed, and Disabled. 
 
-This example also shows you how to add the fallback static icon that will be used if the animated icon cannot be played. In this example we are using a SymbolIcon glyph. 
+This example also shows how to add the fallback static icon that will be used if the animated icon cannot be played. In this example we are using a SymbolIcon glyph.
 
 XAML
 ```xml
@@ -310,15 +326,13 @@ public void OnDownloadButtonClick()
 
 ## AnimatedIcon class member notes
 
-| Name | Type |	Description | Default |
-|:--- | :---| :---| :---|
-| IAnimatedVisualSource2 | Inerface | Interface that LottieGen generates when the developer inputs a Lottie file to be used in their application.  | null |
-| TryCreateAnimatedVisualSource | Method | Method to get an IAnimatedVisual from an IAnimatedVisualSource2 | null |
-| Markers |	IMapView | Returns a dictionary (<string, double>) of all marker strings and their associated values found in the icon’s JSON file. The strings and values are based on what the designer names the markers in the Lottie After Effects file.  |	null |
-| SetColorProperty |	Method	| Takes a string and Windows.UI.Color value to set the color of a themed color property in the Lottie file.  | null |
-| StateProperty	| Dependency Property |Attached property that gets the current visual state the icon is animating from. | "Normal" |
-| Source | IAnimatedIconSource |Gets or sets the icon visual produced from LottieGen. |	null |
-| FallbackSource | IconSource | Gets or sets the static icon that will be used as a fallback when the OS cannot run the animated icon file.   | null |
+| Name | Description | Default |
+| :---| :---| :---|
+| Source | Animation data, for example generated by the LottieGen tool. | null |
+| Markers |	A dictionary (<string, double>) of all marker strings and their associated values found in the icon’s JSON file. The strings and values are based on what the designer names the markers in the Lottie After Effects file.  |	null |
+| FallbackSource | Gets or sets the static icon that will be used as a fallback when the OS cannot run the animated icon file.   | null |
+| SetColorProperty | Takes a string and Windows.UI.Color value to set the color of a themed color property in the Lottie file.  |
+| TryCreateAnimatedVisualSource | Method to get an IAnimatedVisual from an IAnimatedVisualSource2
 
 # API Details
 
@@ -342,6 +356,7 @@ unsealed runtimeclass AnimatedIcon : Windows.UI.Xaml.Controls.IconElement
     static Windows.UI.Xaml.DependencyProperty StateProperty{ get; };
     static void SetState(Windows.UI.Xaml.DependencyObject object, String value); 
     static String GetState(Windows.UI.Xaml.DependencyObject object); 
+
     static Windows.UI.Xaml.DependencyProperty SourceProperty{ get; };
 }
 
