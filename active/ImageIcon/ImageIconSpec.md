@@ -16,7 +16,7 @@ a stream rather than just URI.
 The new API in this spec is an `ImageIcon` type, which like the other icons is an IconElement
 (so can be used where IconElement is required, such as 
 [NavigationViewItem.Icon](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.NavigationViewItem.Icon)).
-Other than the base class, ImageIcon is equivalent to Image.
+ImageIcon supports all of the image formats that ImageSource supports. 
 
 ImageIcon is a superset of the existing BitmapIcon minus the
 [BitmapIcon.ShowAsMonochrome](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.BitmapIcon.ShowAsMonochrome)
@@ -66,6 +66,8 @@ and can therefore be used anywhere an IconElement is required, such as
 Use an ImageIcon control when you want to display an image as your icon. Do not use an ImageIcon if you want to display an icon from a font or if you want the image to be displayed as monochrome. 
 
 ## Examples
+
+### Adding an ImageIcon to an AppBarButton
 Below is an example of how you can use ImageIcon in an App Bar Button Item.
 
 > Spec note: This example will also be added to the App Bar Button Item page with the rest of the icon controls. 
@@ -77,6 +79,45 @@ XAML
         <ImageIcon Source="Wheel.svg"/>
     </AppBarButton.Icon>
 </AppBarButton>
+```
+
+Similar to ImageIcon, ImageIconSource can also be used in an AppBarButton. Below is an example of how to use the ImageIconSource control. 
+
+XAML
+```xml
+<AppBarButton >
+    <AppBarButton.Icon>
+        <IconSourceElement>
+            <ImageIconSource ImageSource="ms-appx:///Assets/globe.png"/>
+        </IconSourceElement>
+    </AppBarButton.Icon>
+</AppBarButton>
+```
+
+### Adding an ImageIcon from a strem
+
+This example shows how to load an ImageIcon from a stream for either a bitmap stream or an svg stream. You can then add your icon to the markup like in the previous example. 
+
+CSharp
+```cs
+// using a stream to a bitmap (png, jpg)
+var source = new BitmapSource();
+await source.SetSourceAsync(bitmapStream);
+var icon = new ImageIcon() { Source = source };
+
+// using a stream to an svg
+var source = new SvgImageSource();
+await source.SetSourceAsync(svgStream);
+var icon = new ImageIcon() { Source = source };
+```
+
+If you choose to use the ImageIconSource, here is how you can load an image from a stream. 
+
+CSharp
+```cs
+var source = new SvgImageSource();
+await source.SetSourceAsync(svgStream);
+new ImageIconSource() { Source = svgSource };
 ```
 
 ## ImageIcon member notes
