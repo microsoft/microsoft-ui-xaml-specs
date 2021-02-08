@@ -257,28 +257,22 @@ XAML
                                     <VisualStateGroupx:Name="CommonStates">
                                         <VisualStatex:Name="Normal">
                                             <VisualState.Setters>
-                                                <SetterTarget="Icon.(AnimatedIcon.StateProperty)"Value="Normal"/>
+                                                <Setter Target="Icon.(AnimatedIcon.StateProperty)"Value="Normal"/>
                                             </VisualSTate.Setters>
                                         </VisualState>
                                         <VisualState x:Name="PointerOver">
                                             <VisualState.Setters>
-                                                <SetterTarget="Icon.(AnimatedIcon.StateProperty)"Value="PointerOver"/>
+                                                <Setter Target="Icon.(AnimatedIcon.StateProperty)"Value="PointerOver"/>
                                             </VisualSTate.Setters>
                                         </VisualState>
                                         <VisualStatex:Name="Pressed">
                                             <VisualState.Setters>
-                                                <SetterTarget="Icon.(AnimatedIcon.StateProperty)"Value="Pressed"/>
-                                            </VisualSTate.Setters>
-                                        </VisualState>
-                                    <VisualStateGroupx:Name="DisabledState"/>
-                                        <VisualStatex:Name="Enabled">
-                                            <VisualState.Setters>
-                                                <SetterTarget="Icon.(AnimatedIcon.StateProperty)"Value="Enabled"/>
+                                                <Setter Target="Icon.(AnimatedIcon.StateProperty)"Value="Pressed"/>
                                             </VisualSTate.Setters>
                                         </VisualState>
                                         <VisualStatex:Name="Disabled">
                                             <VisualState.Setters>
-                                                <SetterTarget="Icon(AnimatedIcon.StateProperty)"Value="Disabled"/>
+                                                <Setter Target="Icon(AnimatedIcon.StateProperty)"Value="Disabled"/>
                                             </VisualSTate.Setters>
                                         </VisualState>
                                     </VisualStateGroup>
@@ -304,24 +298,6 @@ XAML
         </Button.Style>
 </Button>
     
-```
-
-# Manually update the visual state of the animated icon
-
-You can also manually update the visual state of AnimatedIcon if you would like a certain animation segment to play based off of another user interaction in your UI. In this snippet, the visual state of the animatied icon above is being updated based on a download button being clicked in the UI.
-
-C#
-```C#
-
-public void OnDownloadButtonClick()
-{
-    string newState = "PointerOver";
-    if (PlayIcon.GetState(PlayIcon) != newState)
-    {
-        PlayIcon.SetState(newState);
-    }
-}
-
 ```
 
 ## AnimatedIcon class member notes
