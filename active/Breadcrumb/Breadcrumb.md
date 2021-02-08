@@ -1,6 +1,5 @@
 
 # Background
-
 There’s currently no consistent and Fluent way to address the common UX pattern of a breadcrumb.
 This control is needed for situations where the user's navigation trail (in a file system or menu system) needs
 to be persistently visible.
