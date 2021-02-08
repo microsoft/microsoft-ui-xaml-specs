@@ -98,7 +98,7 @@ XAML
 
 This example shows how to load an ImageIcon from a stream for either a bitmap stream or an svg stream. You can then add your icon to the markup like in the previous example. 
 
-CSharp
+C#
 ```cs
 // using a stream to a bitmap (png, jpg)
 var source = new BitmapSource();
@@ -113,7 +113,7 @@ var icon = new ImageIcon() { Source = source };
 
 If you choose to use the ImageIconSource, here is how you can load an image from a stream. 
 
-CSharp
+C#
 ```cs
 var source = new SvgImageSource();
 await source.SetSourceAsync(svgStream);
