@@ -193,8 +193,11 @@ animate the state transitions by having named markers in the Lottie file such as
 Below is an example of how to add an animated play icon with the standard state transitions mentioned above to
 a Hierarchical NavigationView item.
 
-Follow the pre-requisite steps to create your icon file and add it to your project.
-Then, add the icon to your navigation view item like you would any other icon type that inherits from IconElement. 
+AnimatedIcon requires you to run the Lottie JSON file through the Windows [CodeGen](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen) tool to generate the animation code as a C# class. This process is similar to the process needed for AnimatedVisualPlayer. AnimatedIcon needs the JSON file to run through CodeGen so the markers and color properties are translated in the format needed for the control to map the values correctly. 
+
+Once you run your Lottifile through codegen you can add the output class to your project. Follow the steps in the [CodeGen](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen) tutorial for more instructions. 
+
+Once the icon file is added to your project you can then add the icon to your navigation view item like you would any other icon type that inherits from IconElement. 
 
 Before: 
 
@@ -211,103 +214,25 @@ After:
 XAML
 
 ```xml
-<muxc:NavigationView.MenuItems>
-    <muxc:NavigationViewItem Content = "Menu Item1" Tag="SamplePage" x:Name = "SamplePageItem">
-        <muxc:NavigationViewItem.Icon>
-            <controls:AnimatedIcon>
-                <controls:AnimatedIcon.Source>
-                    <local:PlayIcon />
-                </controls:AnimatedIcon.Source>
-            </controls:AnimatedIcon>
-    </muxc:NavigationViewItem.Icon>
-</muxc:NavigationView.MenuItems>
+< muxc:NavigationView.MenuItems >
+    < muxc:NavigationViewItem Content = "Menu Item1" Tag="SamplePage" x:Name = "SamplePageItem" >
+        < muxc:NavigationViewItem.Icon >
+            < muxc:AnimatedIcon x:Name = "PlayAnimatedIcon" >
+                < muxc:AnimatedIcon.Source >
+                    < animatedvisuals:PlayIcon />
+                </ muxc:AnimatedIcon.Source>
+            </ muxc:AnimatedIcon >
+    </ muxc:NavigationViewItem.Icon >
+</ muxc:NavigationView.MenuItems >
 ```
 
-#### Swap out a static icon with an animated icon in a Navigation View Item using marker names that are not standard
 
-If you have marker names that are not the standard names above,
-you must go in to the template of the NavigationView and provide the values of the markers you are
-transitioning to when you enter a visual state.
-For example, say that these are the markers in my JSON file and the designer named PointerOver state Hover:
-
-"markers":[{"tm":0,"cm":"NormalToHover_Start","dr":0},{"tm":9,"cm":"NormalToHover_End","dr":0}, 
-
-{"tm":10,"cm":"NormalToPressed_Start","dr":0},{"tm":19,"cm":"NormalToPressed_End","dr":0}, 
-
-{"tm":20,"cm":"HoverToNormal_Start","dr":0},{"tm":29,"cm":"HoverToNormal_End","dr":0}, 
-
-{"tm":30,"cm":"HoverToPressed_Start","dr":0},{"tm":39,"cm":"HoverToPressed_End","dr":0}, 
-
-{"tm":40,"cm":"PressedToNormal_Start","dr":0},{"tm":49,"cm":"PressedToNormal_End","dr":0}, 
-
-{"tm":50,"cm":"PressedToHover_Start","dr":0},{"tm":69,"cm":"PressedToHover_End","dr":0}, 
-
-{"tm":90,"cm":"PressedToNormal_Start","dr":0},{"tm":99,"cm":"PressedToNormal_End","dr":0}, 
-
-{"tm":100,"cm":"PressedToHover_Start","dr":0},{"tm":101,"cm":"PressedToHover_End","dr":0}] 
-
-You would then update the template for the NavigationView to set the state property to
-look for the "Hover" marker names when the visual state is PointerOver:
-
-XAML
-
-```xml
-<VisualStateManager.VisualStateGroups>
-<VisualStateGroup x:Name ="CommonStates">
-    <VisualState x:Name ="Normal"> 
-    </VisualState>       
-    <VisualState x:Name ="PointerOver">           
-        <VisualState.Setters>            
-            <Setter Target = "Icon.(AnimatedIcon.State)" Value = "Hover" />               
-        </VisualState.Setters>               
-    </VisualState>              
-    <VisualState x:Name ="Pressed">                                   
-    </VisualState>                    
-    </VisualStateGroup>                    
-</VisualStateManager.VisualStateGroups>
-
-<ContentPresenter
-    x:Name = "ContentPresenter"
-    Background = "{TemplateBinding Background}"
-    BorderBrush = "{TemplateBinding BorderBrush}"
-    BorderThickness = "{TemplateBinding BorderThickness}"
-    Content = "{TemplateBinding Content}"
-    ContentTemplate = "{TemplateBinding ContentTemplate}"
-    ContentTransitions = "{TemplateBinding ContentTransitions}"
-    Padding = "{TemplateBinding Padding}"
-    HorizontalContentAlignment = "{TemplateBinding HorizontalContentAlignment}"
-    VerticalContentAlignment = "{TemplateBinding VerticalContentAlignment}"
-    AutomationProperties.AccessibilityView = "Raw" />
-    
-<Grid x:Name = "Icon" HorizontalAlignment = "Right" Content = "{TemplateBinding Icon}/>
-```
-
-After the template is updated, you can add your animated icon just like any other icon to your NavigationViewItem:
-
-XAML
-
-```xml
-<muxc:NavigationView.MenuItems>
-    <muxc:NavigationViewItem Content = "Menu Item1" Tag="SamplePage" x:Name = "SamplePageItem">
-        <muxc:NavigationViewItem.Icon>
-            <controls:AnimatedIcon x:Name = "PlayAnimatedIcon">
-                <controls:AnimatedIcon.Source>
-                    <local:PlayIcon />
-                </controls:AnimatedIcon.Source>
-            </controls:AnimatedIcon>
-    </muxc:NavigationViewItem.Icon>
-</muxc:NavigationView.MenuItems>
-```
-
-#### Add an animated icon to a button
+# Add an animated icon to a control that has not been updated for AnimatedIcon 
 
 If you would like to add an animated icon to a control that does not have the default template updated,
 you will need to update the template to include the state changes needed to play the animation segments. 
 
-Here is the XAML for the changes you would need to make to add an AnimatedIcon to a button.
-This includes the changes you will need to make to the state transitions for Normal, PointerOver, Pressed, and Disabled.
-This will update the button template to add the state transitons needed for AnimatedIcon to map the
-animation segment in the PlayIcon file to the correct visual state.
+Here is the XAML for the changes you would need to make to add an AnimatedIcon to a button (button does not have the default template updated). This includes the changes you will need to make to the state transitions for Normal, PointerOver, Pressed, and Disabled. 
 
 This example also shows how to add the fallback static icon that will be used if
 the animated icon cannot be played. In this example we are using a SymbolIcon glyph.
@@ -318,56 +243,57 @@ XAML
 <Button Click="Button_Click"
         Background="LightGray"
         Height="100" Widht="80">
-        <AnimatedIcon Source="PlayIcon" FallBackSource="{SymbolIconSource Symbol="Play"}"/>
+        <AnimatedIcon x:Name ="PlayIcon" >
+            <AnimatedIcon.Source >
+                <animatedvisuals:PlayIcon />
+            </AnimatedIcon.Source>
+            <AnimatedIcon.FallbackIconSource>
+                <SymbolIconSource Symbol="Play"/>  
+            </AnimatedIcon.FallbackIconSource>
+        </AnimatedIcon >
         <Button.Style>
-            <Style TargetType="Button">
-                <Setter Property="Template">
+            <StyleTargetType="Button">
+                <SetterProperty="Template">
                     <Setter.Value>
-                        <ControlTemplate TargetType="Button">
+                        <ControlTemplateTargetType="Button">
                             <Grid>
                                 <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup x:Name="CommonStates">
-                                        <VisualState x:Name="Normal">
+                                    <VisualStateGroupx:Name="CommonStates">
+                                        <VisualStatex:Name="Normal">
                                             <VisualState.Setters>
-                                                <Setter Target="Icon.(AnimatedIcon.State)" Value="Normal"/>
+                                                <Setter Target="Icon.(AnimatedIcon.StateProperty)"Value="Normal"/>
                                             </VisualSTate.Setters>
                                         </VisualState>
                                         <VisualState x:Name="PointerOver">
                                             <VisualState.Setters>
-                                                <Setter Target="Icon.(AnimatedIcon.State)" Value="PointerOver"/>
+                                                <Setter Target="Icon.(AnimatedIcon.StateProperty)"Value="PointerOver"/>
                                             </VisualSTate.Setters>
                                         </VisualState>
-                                        <VisualState x:Name="Pressed">
+                                        <VisualStatex:Name="Pressed">
                                             <VisualState.Setters>
-                                                <Setter Target="Icon.(AnimatedIcon.State)" Value="Pressed"/>
+                                                <Setter Target="Icon.(AnimatedIcon.StateProperty)"Value="Pressed"/>
                                             </VisualSTate.Setters>
                                         </VisualState>
-                                    <VisualStateGroup x:Name="DisabledState"/>
-                                        <VisualState x:Name="Enabled">
+                                        <VisualStatex:Name="Disabled">
                                             <VisualState.Setters>
-                                                <Setter Target="Icon.(AnimatedIcon.State)" Value="Enabled"/>
-                                            </VisualSTate.Setters>
-                                        </VisualState>
-                                        <VisualState x:Name="Disabled">
-                                            <VisualState.Setters>
-                                                <Setter Target="Icon.(AnimatedIcon.State)" Value="Disabled"/>
+                                                <Setter Target="Icon(AnimatedIcon.StateProperty)"Value="Disabled"/>
                                             </VisualSTate.Setters>
                                         </VisualState>
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
                                 <ContentPresenter
                                     x:Name="ContentPresenter"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    Content="{TemplateBinding Content}"
-                                    ContentTemplate="{TemplateBinding ContentTemplate}"
-                                    ContentTransitions="{TemplateBinding ContentTransitions}"
-                                    Padding="{TemplateBinding Padding}"
-                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Background="{​​​​​​​​​TemplateBinding Background}​​​​​​​​​"
+                                    BorderBrush="{​​​​​​​​​TemplateBinding BorderBrush}​​​​​​​​​"
+                                    BorderThickness="{​​​​​​​​​TemplateBinding BorderThickness}​​​​​​​​​"
+                                    Content="{​​​​​​​​​TemplateBinding Content}​​​​​​​​​"
+                                    ContentTemplate="{​​​​​​​​​TemplateBinding ContentTemplate}​​​​​​​​​"
+                                    ContentTransitions="{​​​​​​​​​TemplateBinding ContentTransitions}​​​​​​​​​"
+                                    Padding="{​​​​​​​​​TemplateBinding Padding}​​​​​​​​​"
+                                    HorizontalContentAlignment="{​​​​​​​​​TemplateBinding HorizontalContentAlignment}​​​​​​​​​"
+                                    VerticalContentAlignment="{​​​​​​​​​TemplateBinding VerticalContentAlignment}​​​​​​​​​"
                                     AutomationProperties.AccessibilityView="Raw" />
-                                <Grid x:Name="Icon" HorizontalAlignment="Right" Content="{TemplateBinding Icon}/>
+                                <Grid x:Name="Icon" HorizontalAlignment="Right" Content="{​​​​​​​​​TemplateBinding Icon}​​​​​​​​​/>
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>
