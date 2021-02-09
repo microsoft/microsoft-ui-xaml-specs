@@ -40,7 +40,6 @@ example code with each description. The general format is:
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 
 ## Create an Expander
-![A collapsed Expander that is expanded (pushing downwards) and then collapsed. The Header has the text "This is in the header" and the Content has the text "This is in the content". There is a TextBlock saying "This TextBlock is Below the Expander" that is pushed away](images/Expander_with_textblock.gif)
 
 ### Examples
 
