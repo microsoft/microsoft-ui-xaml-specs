@@ -272,10 +272,7 @@ XAML
         </contract7Present:ContentPresenter.BackgroundTransition>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="CommonStates">
-                <VisualState x:Name="Normal">
-                    <VisualState.Setters>
-                        <Setter Target="AnimatedPlayIcon.(AnimatedIcon.State)" Value="Normal"/>
-                    </VisualState.Setters>
+                <VisualState x:Name="Normal"/>
                     <VisualState x:Name="PointerOver">
                         <Storyboard>
                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
@@ -342,7 +339,8 @@ XAML
                 Padding="{TemplateBinding Padding}"
                 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                AutomationProperties.AccessibilityView="Raw"/>
+                AutomationProperties.AccessibilityView="Raw"
+                local:AnimatedIcon.State="Normal"/>
                 <muxc:AnimatedIcon x:Name="AnimatedPlayIcon" Foreground="{TemplateBinding Foreground}" Grid.Column="1">
                     <muxc:AnimatedIcon.Source>
                         <AnimatedVisuals:PlayIconAnimation/>
@@ -536,11 +534,7 @@ XAML
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal">
-                                    <VisualState.Setters>
-                                        <Setter Target="AnimatedChevronIcon.(AnimatedIcon.State)" Value="Normal"/>
-                                    </VisualState.Setters>
-                                </VisualState>
+                                <VisualState x:Name="Normal"/>
                                 <VisualState x:Name="PointerOver">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
@@ -614,7 +608,7 @@ XAML
                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                             AutomationProperties.AccessibilityView="Raw" />
 
-                        <local:AnimatedIcon x:Name="AnimatedChevronIcon" Grid.Column="1" Margin="10,4,2,0" AutomationProperties.AccessibilityView="Raw">
+                        <local:AnimatedIcon x:Name="AnimatedChevronIcon" Grid.Column="1" Margin="10,4,2,0" AutomationProperties.AccessibilityView="Raw"  local:AnimatedIcon.State="Normal">
                             <local:AnimatedIcon.Source>
                                 <AnimatedVisuals:Controls_02_UpDown_Dropdown/>
                             </local:AnimatedIcon.Source>
