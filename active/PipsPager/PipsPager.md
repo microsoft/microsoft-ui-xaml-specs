@@ -51,7 +51,8 @@ They can be selected by the user to navigate to a specific page.
 #### Create a PipsPager
 
 A PipsPager with five visible pips that can be selected by the user to jump to that specific page.
-Additionally, the user can use navigational buttons; previous and next, to change the selected page incrementally.
+Additionally, the user can use navigational buttons; previous and next, to change the selected page incrementally. 
+Navigating beyond the first or last item does not wrap around.
 By default, the navigational buttons are collapsed, the pips are oriented horizontally,
 and the total number of pages is infinite.
 
@@ -80,8 +81,8 @@ XAML
 ```XAML 
 <muxc:PipsPager x:Name="VisibleButtonPipsPager"
   NumberOfPages="5"
-  PreviousButtonVisibility=Visible
-  NextButtonVisibility=Visible />
+  PreviousButtonVisibility="Visible"
+  NextButtonVisibility="Visible" />
 ```
 
 #### Vertical PipsPager with VisibleOnPointerOver button visibility
@@ -96,9 +97,9 @@ XAML
 ```XAML 
 <muxc:PipsPager x:Name="VerticalPipsPager"
   NumberOfPages="5"
-  Orientation=Vertical 
-  PreviousButtonVisibility=VisibleOnPointerOver 
-  NextButtonVisibility= VisibleOnPointerOver />
+  Orientation="Vertical" 
+  PreviousButtonVisibility="VisibleOnPointerOver" 
+  NextButtonVisibility="VisibleOnPointerOver" />
 ```
 
 #### Number of pages displayed less than total
@@ -152,9 +153,11 @@ XAML
 ```
 #### Pip and Button customization
 
-The navigational buttons and pips can be customized via the PreviousButtonStyle, NextButtonStyle, SelectedPipStyle, and DefaultPipStyle.
-As a note, setting the PreviousButtonStyle and NextButtonStyle can overwrite what is set in PreviousButtonVisibility and NextButtonVisibility.
-Additionally, the SelectedPipStyle and DefaultPipStyle can overwrite what is set in the theme resources.
+The navigational buttons and pips are able to be customized via the PreviousButtonStyle, NextButtonStyle, SelectedPipStyle, and DefaultPipStyle.
+
+If the PreviousButtonStyle or NextButtonStyle sets the Visibility, Opacity, or IsEnabled properties on the navigational button, it will take precedence over PreviousButtonVisibility or NextButtonVisibility respectively.
+
+Similarly, the SelectedPipStyle and DefaultPipStyle will take precedence over the values in the theme resources.
 
 ![A prototype of five dots, the PipsPager, laid out horizontally with caret-style navigational arrows](images/PipsPager_CustomNavButtons.png)
 
@@ -185,7 +188,10 @@ XAML
 | Name | Description| Default | 
 |:---:|:---|:---|
 | NumberOfPages | Sets the max number of pages the index control will iterate through. The default will represent an infinite page range. | -1
-| Previous and Next Style | Give the developer the option to customize the style by changing the text or glyph for the edge buttons. | N/A
+| PreviousButtonStyle and NextButtonStyle | Gives the developer the option to customize the style by changing the text or glyph for the edge buttons. | The Previous/Next page button glyph, "Content", and PipsPagerNavigationButtonBaseStyle defined in theme resources.
+| DefaultPipStyle and SelectedPipStyle | Gives the developer the option to customize the style by changing the appearance of the pips. | Based on default and selected pip theme resources and the PipsPagerButtonBaseStyle defined in theme resources.
+| NextButtonVisibility | Sets the visibility of the button that navigates to the next item. | Collapsed |
+| PreviousButtonVisibility | Sets the visibility of the button that navigates to the previous item. | Collapsed |
 | SelectedPageIndex | The 0 based index that is currently selected. It will default to the first index. | 0
 | MaxVisiblePips | The maximum number of pips that will appear in the control at once. If the NumberOfPages is greater than this value, the UI will scroll so that the selected pip is centered. | 5
 | Orientation | The orientation of the control. Can be either Vertical or Horizontal. | Horizontal
@@ -213,13 +219,13 @@ For more info, see the
 
 ## PipsPagerButtonVisibility enum
 
-Defines constants that specify how a the buttons of a PipsPager are to be displayed. Defaults to Collapsed.
+Defines constants that specify how a the buttons of a PipsPager are to be displayed.
 
 | Value | Description |
 |:---:|:---|
 | Visible | The button is visible and enabled, except it is hidden at the extents. For example, when the current page is the first page, the previous button is hidden. |
 | VisibleOnPointerOver | The behavior is the same as Visible *except* that the button is only Visible when the user is hovering over the paging UI with their cursor. |
-| Collapsed | The button is not visible to the user and does **not** take up layout space. |
+| Collapsed | The button is not visible to the user and does **not** take up layout space. (Default for ) |
 
 ## PipsPagerTemplateSettings
 
@@ -269,9 +275,9 @@ unsealed runtimeclass PipsPager : Windows.UI.Xaml.Controls.Control
     Windows.UI.Xaml.Controls.Orientation Orientation;
 
     [MUX_DEFAULT_VALUE("Collapsed")]
-    PagerControlButtonVisibility PreviousButtonVisibility;    
+    PipsPagerButtonVisibility PreviousButtonVisibility;    
     [MUX_DEFAULT_VALUE("Collapsed")]
-    PagerControlButtonVisibility NextButtonVisibility;
+    PipsPagerButtonVisibility NextButtonVisibility;
 
     Windows.UI.Xaml.Style PreviousButtonStyle;
     Windows.UI.Xaml.Style NextButtonStyle; 
@@ -304,8 +310,9 @@ unsealed runtimeclass PipsPager : Windows.UI.Xaml.Controls.Control
 
 ## Keyboard
 
-- Tab navigation into the PipsPager proceeds through the first actionable item. This would be the previous button (if not Collapsed) or the first pip. Any directional buttons can be navigated to via tab if they are not Collapsed and will be visible on focus.
+- Tab navigation into the PipsPager proceeds through the first actionable item. This would be the previous button (if not Collapsed) or the currently selected pip. Any directional buttons can be navigated to via tab if they are not Collapsed and will be visible on focus.
 - The arrow keys can be used to navigate between the pips and directional buttons. Independent of the orientation set, the left and up arrow keys will change focus to the previous pip or to the previous button and the right and down arrow keys will change focus to the next pip or the next button.
+- The actionable items can be selected with the space bar.
 
 ## Gamepad
 
@@ -322,9 +329,10 @@ The user can also touch to select the individual pip if able.
 ## Screen readers
 
 - When the focus is on the control, the screen reader will announce "pager".
-- When the focus is on the previous or next button the screen reader will announce "first page", "last page", "next page", or "previous page". 
+- When the focus is on the previous or next button the screen reader will announce "previous page" or "next page". 
   - If the buttons have text properties set by the developer, the screen reader will announce that text instead of the default announcement.
 - When the focus is on a pip, the screen reader will announce "page x of y".
+  - When the number of pages is infinite, the screen reader will announce "page x".
 - When the pip is selected, the screen reader will announce "page x of y selected".
 
 
