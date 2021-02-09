@@ -214,91 +214,426 @@ After:
 XAML
 
 ```xml
-< muxc:NavigationView.MenuItems >
-    < muxc:NavigationViewItem Content = "Menu Item1" Tag="SamplePage" x:Name = "SamplePageItem" >
-        < muxc:NavigationViewItem.Icon >
-            < muxc:AnimatedIcon x:Name = "PlayAnimatedIcon" >
-                < muxc:AnimatedIcon.Source >
+<muxc:NavigationView.MenuItems >
+    <muxc:NavigationViewItem Content = "Menu Item1" Tag="SamplePage" x:Name = "SamplePageItem" >
+        <muxc:NavigationViewItem.Icon >
+            <muxc:AnimatedIcon x:Name = "PlayAnimatedIcon" >
+                <muxc:AnimatedIcon.Source >
                     < animatedvisuals:PlayIcon />
-                </ muxc:AnimatedIcon.Source>
-            </ muxc:AnimatedIcon >
-    </ muxc:NavigationViewItem.Icon >
-</ muxc:NavigationView.MenuItems >
+                </muxc:AnimatedIcon.Source>
+            </muxc:AnimatedIcon >
+    </muxc:NavigationViewItem.Icon >
+</muxc:NavigationView.MenuItems >
 ```
 
-# Add an animated icon to a control that has not been updated for AnimatedIcon 
+# Add an animated icon to a control that does not have an updated template for the AnimatedIcon control
 
 If you would like to add an animated icon to a control that does not have the default template updated, you will need to update the template to include the state changes needed to play the animation segments. 
 
-Here is the XAML for the changes you would need to make to add an AnimatedIcon to a button (button does not have the default template updated). This includes the changes you will need to make to the state transitions for Normal, PointerOver, Pressed, and Disabled. 
-
-This example also shows how to add the fallback static icon that will be used if the animated icon cannot be played. In this example we are using a SymbolIcon glyph.
+Here is the XAML for the changes you would need to make to add an AnimatedIcon to a button (button does not have the default template updated to support AnimatedIcon like the example above). Button has a content property which derives from UIElement so you can add an AnimatedIcon to a button but you would need tp update the template first. This example shows how to add the setters for the Normal, PointerOver, Pressed and Disabled states. The following code is added for each of the four visual states: 
 
 XAML
 ```xml
-<Button Click="Button_Click"
-        Background="LightGray"
-        Height="100" Widht="80">
-        <AnimatedIcon x:Name ="PlayIcon" >
-            <AnimatedIcon.Source >
-                <animatedvisuals:PlayIcon />
-            </AnimatedIcon.Source>
-            <AnimatedIcon.FallbackIconSource>
-                <SymbolIconSource Symbol="Play"/>  
-            </AnimatedIcon.FallbackIconSource>
-        </AnimatedIcon >
-        <Button.Style>
-            <StyleTargetType="Button">
-                <SetterProperty="Template">
-                    <Setter.Value>
-                        <ControlTemplateTargetType="Button">
-                            <Grid>
-                                <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroupx:Name="CommonStates">
-                                        <VisualStatex:Name="Normal">
-                                            <VisualState.Setters>
-                                                <Setter Target="Icon.(AnimatedIcon.StateProperty)"Value="Normal"/>
-                                            </VisualSTate.Setters>
-                                        </VisualState>
-                                        <VisualState x:Name="PointerOver">
-                                            <VisualState.Setters>
-                                                <Setter Target="Icon.(AnimatedIcon.StateProperty)"Value="PointerOver"/>
-                                            </VisualSTate.Setters>
-                                        </VisualState>
-                                        <VisualStatex:Name="Pressed">
-                                            <VisualState.Setters>
-                                                <Setter Target="Icon.(AnimatedIcon.StateProperty)"Value="Pressed"/>
-                                            </VisualSTate.Setters>
-                                        </VisualState>
-                                        <VisualStatex:Name="Disabled">
-                                            <VisualState.Setters>
-                                                <Setter Target="Icon(AnimatedIcon.StateProperty)"Value="Disabled"/>
-                                            </VisualSTate.Setters>
-                                        </VisualState>
-                                    </VisualStateGroup>
-                                </VisualStateManager.VisualStateGroups>
-                                <ContentPresenter
-                                    x:Name="ContentPresenter"
-                                    Background="{​​​​​​​​​TemplateBinding Background}​​​​​​​​​"
-                                    BorderBrush="{​​​​​​​​​TemplateBinding BorderBrush}​​​​​​​​​"
-                                    BorderThickness="{​​​​​​​​​TemplateBinding BorderThickness}​​​​​​​​​"
-                                    Content="{​​​​​​​​​TemplateBinding Content}​​​​​​​​​"
-                                    ContentTemplate="{​​​​​​​​​TemplateBinding ContentTemplate}​​​​​​​​​"
-                                    ContentTransitions="{​​​​​​​​​TemplateBinding ContentTransitions}​​​​​​​​​"
-                                    Padding="{​​​​​​​​​TemplateBinding Padding}​​​​​​​​​"
-                                    HorizontalContentAlignment="{​​​​​​​​​TemplateBinding HorizontalContentAlignment}​​​​​​​​​"
-                                    VerticalContentAlignment="{​​​​​​​​​TemplateBinding VerticalContentAlignment}​​​​​​​​​"
-                                    AutomationProperties.AccessibilityView="Raw" />
-                                <Grid x:Name="Icon" HorizontalAlignment="Right" Content="{​​​​​​​​​TemplateBinding Icon}​​​​​​​​​/>
-                            </Grid>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-        </Button.Style>
-</Button>
-    
+<VisualState.Setters>
+    <Setter Target="ContentPresenter.(AnimatedIcon.State)" Value="Normal"/>
+</VisualState.Setters>
 ```
+
+You will then add the markup to a content presenter in the template for the AnimatedIcon control to present the animated visual glyph. 
+XAML 
+```xml
+<muxc:AnimatedIcon x:Name="AnimatedPlayIcon" Foreground="{TemplateBinding Foreground}" Grid.Column="1">
+    <muxc:AnimatedIcon.Source>
+        <AnimatedVisuals:PlayIconAnimation/>
+    </muxc:AnimatedIcon.Source>
+    <muxc:AnimatedIcon.FallbackIconSource>
+        <muxc:FontIconSource
+            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+            Glyph="{StaticResource PlayIconGlyph}"
+            FontSize="{StaticResource PlayIconGlyphSize}"
+            Foreground="{ThemeResource PlayIconGlyphForegroundUnchecked}"/>
+    </muxc:AnimatedIcon.FallbackIconSource>
+</muxc:AnimatedIcon>
+```
+
+Here is the full template update for the default button style. 
+
+XAML
+```xml
+ <ControlTemplate TargetType="Button">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Height="*"/>
+            <ColumnDefinition Height="*"/>
+        </Grid.ColumnDefinitions>
+        <contract7Present:ContentPresenter.BackgroundTransition>
+            <contract7Present:BrushTransition Duration="0:0:0.083" />
+        </contract7Present:ContentPresenter.BackgroundTransition>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal">
+                    <VisualState.Setters>
+                        <Setter Target="AnimatedPlayIcon.(AnimatedIcon.State)" Value="Normal"/>
+                    </VisualState.Setters>
+                    <VisualState x:Name="PointerOver">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentButtonBackgroundPointerOver}" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentButtonBorderBrushPointerOver}" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentButtonForegroundPointerOver}" />
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                        <VisualState.Setters>
+                            <Setter Target="AnimatedPlayIcon.(AnimatedIcon.State)" Value="PointerOver"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Pressed">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentButtonBackgroundPressed}" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentButtonBorderBrushPressed}" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentButtonForegroundPressed}" />
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                        <VisualState.Setters>
+                            <Setter Target="AnimatedPlayIcon.(AnimatedIcon.State)" Value="Pressed"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentButtonBackgroundDisabled}" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentButtonBorderBrushDisabled}" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentButtonForegroundDisabled}" />
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                        <VisualState.Setters>
+                            <!-- DisabledVisual Should be handled by the control, not the animated icon. -->
+                            <Setter Target="AnimatedPlayIcon.(AnimatedIcon.State)" Value="Normal"/>
+                        </VisualState.Setters>
+                    </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <ContentPresenter
+                x:Name="ContentPresenter"
+                Background="{TemplateBinding Background}"
+                contract7Present:BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                Foreground="{TemplateBinding Foreground}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                Content="{TemplateBinding Content}"
+                ContentTemplate="{TemplateBinding ContentTemplate}"
+                ContentTransitions="{TemplateBinding ContentTransitions}"
+                contract7Present:CornerRadius="{TemplateBinding CornerRadius}"
+                contract7NotPresent:CornerRadius="{ThemeResource ControlCornerRadius}"
+                Padding="{TemplateBinding Padding}"
+                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                AutomationProperties.AccessibilityView="Raw"/>
+                <muxc:AnimatedIcon x:Name="AnimatedPlayIcon" Foreground="{TemplateBinding Foreground}" Grid.Column="1">
+                    <muxc:AnimatedIcon.Source>
+                        <AnimatedVisuals:PlayIconAnimation/>
+                    </muxc:AnimatedIcon.Source>
+                    <muxc:AnimatedIcon.FallbackIconSource>
+                        <muxc:FontIconSource
+                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                            Glyph="{StaticResource PlayIconGlyph}"
+                            FontSize="{StaticResource PlayIconGlyphSize}"
+                            Foreground="{ThemeResource PlayIconGlyphForegroundUnchecked}"/>
+                    </muxc:AnimatedIcon.FallbackIconSource>
+                </muxc:AnimatedIcon>
+        </Grid>
+    </ControlTemplate>  
+```
+
+# Add an animated icon to a control that has an icon by default 
+
+You might want to update a control that already has a static icon in it's default template to an animated icon. This example will show how to update the DropDownButton to use an animated glyph instead of the static chevron icon. 
+
+In this scenario you would need to update the template to add the setters for the visual states defined above in this document for DropDownButton.
+
+XAML
+```xml
+<VisualStateManager.VisualStateGroups>
+    <VisualStateGroup x:Name="CommonStates">
+        <VisualState x:Name="Normal">
+            <VisualState.Setters>
+                <Setter Target="AnimatedChevronIcon.(AnimatedIcon.State)" Value="Normal"/>
+            </VisualState.Setters>
+        </VisualState>
+        <VisualState x:Name="PointerOver">
+            <Storyboard>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
+                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPointerOver}" />
+                </ObjectAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="BorderBrush">
+                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPointerOver}" />
+                </ObjectAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPointerOver}" />
+                </ObjectAnimationUsingKeyFrames>
+            </Storyboard>
+            <VisualState.Setters>
+                <Setter Target="AnimatedChevronIcon.(AnimatedIcon.State)" Value="PointerOver"/>
+            </VisualState.Setters>
+        </VisualState>
+
+        <VisualState x:Name="Pressed">
+            <Storyboard>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
+                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPressed}" />
+                </ObjectAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="BorderBrush">
+                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPressed}" />
+                </ObjectAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPressed}" />
+                </ObjectAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ChevronIcon" Storyboard.TargetProperty="Foreground">
+                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource DropDownButtonForegroundSecondaryPressed}" />
+                </ObjectAnimationUsingKeyFrames>
+            </Storyboard>
+            <VisualState.Setters>
+                <Setter Target="AnimatedChevronIcon.(AnimatedIcon.State)" Value="Pressed"/>
+            </VisualState.Setters>
+        </VisualState>
+
+        <VisualState x:Name="Disabled">
+            <Storyboard>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
+                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundDisabled}" />
+                </ObjectAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="BorderBrush">
+                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushDisabled}" />
+                </ObjectAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundDisabled}" />
+                </ObjectAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ChevronIcon" Storyboard.TargetProperty="Foreground">
+                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundDisabled}" />
+                </ObjectAnimationUsingKeyFrames>
+            </Storyboard>
+            <VisualState.Setters>
+                <!-- DisabledVisual Should be handled by the control, not the animated icon. -->
+                <Setter Target="AnimatedChevronIcon.(AnimatedIcon.State)" Value="Normal"/>
+            </VisualState.Setters>
+        </VisualState>
+    </VisualStateGroup>
+</VisualStateManager.VisualStateGroups>
+```
+
+You will then need to replace the TextBlock control with the AnimatedIcon control. 
+
+Before: 
+
+XAML
+```xml
+<Grid.ColumnDefinitions>
+    <ColumnDefinition Width="*"/>
+    <ColumnDefinition Width="80"/>
+</Grid.ColumnDefinitions>
+
+<ContentPresenter x:Name="ContentPresenter"
+    Content="{TemplateBinding Content}"
+    ContentTransitions="{TemplateBinding ContentTransitions}"
+    ContentTemplate="{TemplateBinding ContentTemplate}"
+    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+    AutomationProperties.AccessibilityView="Raw" />
+
+<TextBlock
+    x:Name="ChevronTextBlock"
+    Grid.Column="1"
+    FontFamily="{ThemeResource SymbolThemeFontFamily}"
+    FontSize="8"
+    Foreground="{ThemeResource ButtonForegroundPressed}"
+    Text="&#xE96E;"
+    VerticalAlignment="Center"
+    Padding="2,4,2,0"
+    Margin="8,0,0,0"
+    IsTextScaleFactorEnabled="False"
+    AutomationProperties.AccessibilityView="Raw"/>
+</Grid>
+```
+
+After:
+
+XAML
+```xml
+<Grid.ColumnDefinitions>
+    <ColumnDefinition Width="*"/>
+    <ColumnDefinition Width="80"/>
+</Grid.ColumnDefinitions>
+
+<ContentPresenter x:Name="ContentPresenter"
+    Content="{TemplateBinding Content}"
+    ContentTransitions="{TemplateBinding ContentTransitions}"
+    ContentTemplate="{TemplateBinding ContentTemplate}"
+    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+    AutomationProperties.AccessibilityView="Raw" />
+
+<local:AnimatedIcon x:Name="AnimatedChevronIcon" Grid.Column="1" Margin="10,4,2,0" AutomationProperties.AccessibilityView="Raw">
+    <local:AnimatedIcon.Source>
+        <AnimatedVisuals:AnimatedChevron/>
+    </local:AnimatedIcon.Source>
+    <local:AnimatedIcon.FallbackIconSource>
+        <local:FontIconSource
+            FontSize="8"
+            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+            Foreground="{ThemeResource ButtonForegroundPressed}"
+            Glyph="&#xE96E;"
+            IsTextScaleFactorEnabled="False"/>
+    </local:AnimatedIcon.FallbackIconSource>
+</local:AnimatedIcon>
+</Grid>
+```
+
+Here is the full file update for DropDownButton. 
+
+XAML
+```xml
+<Style x:Key="DefaultDropDownButtonStyle" TargetType="local:DropDownButton">
+        <Setter Property="Background" Value="{ThemeResource ButtonBackground}" />
+        <Setter Property="Foreground" Value="{ThemeResource ButtonForeground}" />
+        <Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderBrush}" />
+        <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}" />
+        <Setter Property="Padding" Value="{StaticResource ButtonPadding}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+        <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
+        <Setter Property="FocusVisualMargin" Value="-3" />
+        <contract7Present:Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
+        <contract7Present:Setter Property="BackgroundSizing" Value="InnerBorderEdge" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid x:Name="RootGrid"
+                        Background="{TemplateBinding Background}"
+                        Padding="{TemplateBinding Padding}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        contract7Present:CornerRadius="{TemplateBinding CornerRadius}"
+                        contract7NotPresent:CornerRadius="{ThemeResource ControlCornerRadius}"
+                        contract7Present:BackgroundSizing="{TemplateBinding BackgroundSizing}">
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Target="AnimatedChevronIcon.(AnimatedIcon.State)" Value="Normal"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="PointerOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPointerOver}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="BorderBrush">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPointerOver}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPointerOver}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                    <VisualState.Setters>
+                                        <Setter Target="AnimatedChevronIcon.(AnimatedIcon.State)" Value="PointerOver"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPressed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="BorderBrush">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPressed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPressed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ChevronIcon" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource DropDownButtonForegroundSecondaryPressed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                    <VisualState.Setters>
+                                        <Setter Target="AnimatedChevronIcon.(AnimatedIcon.State)" Value="Pressed"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundDisabled}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="BorderBrush">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushDisabled}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundDisabled}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ChevronIcon" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundDisabled}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                    <VisualState.Setters>
+                                        <!-- DisabledVisual Should be handled by the control, not the animated icon. -->
+                                        <Setter Target="AnimatedChevronIcon.(AnimatedIcon.State)" Value="Normal"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="80"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentPresenter x:Name="ContentPresenter"
+                            Content="{TemplateBinding Content}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            AutomationProperties.AccessibilityView="Raw" />
+
+                        <local:AnimatedIcon x:Name="AnimatedChevronIcon" Grid.Column="1" Margin="10,4,2,0" AutomationProperties.AccessibilityView="Raw">
+                            <local:AnimatedIcon.Source>
+                                <AnimatedVisuals:Controls_02_UpDown_Dropdown/>
+                            </local:AnimatedIcon.Source>
+                            <local:AnimatedIcon.FallbackIconSource>
+                                <local:FontIconSource
+                                    FontSize="8"
+                                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                    Foreground="{ThemeResource ButtonForegroundPressed}"
+                                    Glyph="&#xE96E;"
+                                    IsTextScaleFactorEnabled="False"/>
+                            </local:AnimatedIcon.FallbackIconSource>
+                        </local:AnimatedIcon>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="local:DropDownButton" BasedOn="{StaticResource DefaultDropDownButtonStyle}" />
+```
+
 
 ## AnimatedIcon class member notes
 
