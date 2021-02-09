@@ -24,7 +24,6 @@ An Expander cannot be light dismissed and is independent of the contents inside 
 Expander should be used when some content is only relevant some of the time (for example to
 read more information or access additional options for an item). 
 
-<<<<<<< HEAD
 ![A collapsed Expander that is expanded (pushing downwards) and then collapsed. The Header has the text "This is in the header" and the Content has the text "This is in the content". There is a TextBlock saying "This TextBlock is Below the Expander" that is pushed away](images/Expander_w_textblock.gif)
 # Examples
 <!-- Use this section to explain the features of the API, showing
@@ -41,14 +40,11 @@ example code with each description. The general format is:
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 
 ## Create an Expander
-=======
 ![A collapsed Expander that is expanded (pushing downwards) and then collapsed. The Header has the text "This is in the header" and the Content has the text "This is in the content". There is a TextBlock saying "This TextBlock is Below the Expander" that is pushed away](images/Expander_with_textblock.gif)
 
 ### Examples
 
 #### Create an Expander
->>>>>>> 0e9eaf59f43384133c6e3909a237566cf853bde6
-
 ![A collapsed Expander that is expanded and then collapsed. The Header has the text "This is in the header" and the Content has the text "This is in the content".](images/DefaultExpander.gif)
 
 XAML
@@ -57,7 +53,7 @@ XAML
     Header="Header area"  
     Content="Content area"/>
 ~~~~
-<<<<<<< HEAD
+
 ## Put controls inside an Expander
 ![A collapsed Expander. The Header has a button with the text "This ToggleButton is in the Header" and the Content has a button with the text "This ToggleButton is in the Content". The button in the Header is toggled on and off, the Expander is expanded, the button in the Content is toggled on and off, and the Expander is collapsed.](images/Expander_w_togglebuttons.gif)
 =======
@@ -65,7 +61,6 @@ XAML
 #### Put controls inside an Expander
 
 ![A collapsed Expander. The Header has the text "This is in the header" and the Content has a button with the text "This ToggleButton is in the Content". The Expander is expanded, the button is toggled on and off, and the Expander is collapsed. ](images/Expander_togglebutton.gif)
->>>>>>> 0e9eaf59f43384133c6e3909a237566cf853bde6
 
 XAML
 ~~~~
