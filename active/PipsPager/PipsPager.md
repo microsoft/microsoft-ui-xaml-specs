@@ -112,7 +112,7 @@ no scrolling will occur and the number of pips shown will be the same as the Num
 
 By default, the number of visible pips is 5.
 
-![A prototype of twelve horizontal dots with the first initially selected and the dots scrolling when the subsequent pages are selected](images/PipsPager_MaxVisiblePips.gif)
+![A prototype of ten horizontal dots with the fifth initially selected and the dots scrolling when the subsequent pages are selected](images/PipsPager_MaxVisiblePips.gif)
 
 XAML
 ```XAML
@@ -151,11 +151,13 @@ XAML
       SelectedPageIndex="{x:Bind Path=Gallery.SelectedIndex, Mode=TwoWay}" />
 </StackPanel>
 ```
+
 #### Pip and Button customization
 
 The navigational buttons and pips are able to be customized via the PreviousButtonStyle, NextButtonStyle, SelectedPipStyle, and DefaultPipStyle.
 
-If the PreviousButtonStyle or NextButtonStyle sets the Visibility, Opacity, or IsEnabled properties on the navigational button, it will take precedence over PreviousButtonVisibility or NextButtonVisibility respectively.
+If the PreviousButtonStyle or NextButtonStyle sets the Visibility property on the navigational button, it will take precedence over PreviousButtonVisibility or NextButtonVisibility respectively unless they are set to the PipsPagerButtonVisibility value, "Collapsed". 
+If the PreviousButtonVisibility or NextButtonVisibility is set to "Collapsed", the styles set will not overwrite the Visibility of the button itself.
 
 Similarly, the SelectedPipStyle and DefaultPipStyle will take precedence over the values in the theme resources.
 
@@ -164,7 +166,7 @@ Similarly, the SelectedPipStyle and DefaultPipStyle will take precedence over th
 XAML
 ``` XAML
 <Page.Resources>
-    <Style x:Key="NavButtonBaseStyle" TargetType="Button" BasedOn="{StaticResource NavigatonButtonBaseStyle}">
+    <Style x:Key="NavButtonBaseStyle" TargetType="Button" BasedOn="{StaticResource PipsPagerNavigatonButtonBaseStyle}">
         <Setter Property="Width" Value="30" />
         <Setter Property="Height" Value="30" />
         <Setter Property="FontSize" Value="12" />
@@ -181,7 +183,9 @@ XAML
 
 <muxc:PipsPager x:Name="CustomNavButtonPipsPager"
   PreviousButtonStyle="{StaticResource PreviousButtonStyle}"
-  NextButtonStyle="{StaticResource NextButtonStyle}" />
+  NextButtonStyle="{StaticResource NextButtonStyle}"
+  PreviousButtonVisibility="VisibleOnPointerOver" 
+  NextButtonVisibility="VisibleOnPointerOver" />
 ```
 ## PipsPager member notes
 
@@ -309,6 +313,8 @@ unsealed runtimeclass PipsPager : Windows.UI.Xaml.Controls.Control
 # Input & Accessibility
 
 ## Keyboard
+
+![A prototype of five dots, the PipsPager, laid out horizontally with caret-style navigational arrows. The items are being selected with keyboard focus.](images/PipsPager_Keyboarding.gif)
 
 - Tab navigation into the PipsPager proceeds through the first actionable item. This would be the previous button (if not Collapsed) or the currently selected pip. Any directional buttons can be navigated to via tab if they are not Collapsed and will be visible on focus.
 - The arrow keys can be used to navigate between the pips and directional buttons. Independent of the orientation set, the left and up arrow keys will change focus to the previous pip or to the previous button and the right and down arrow keys will change focus to the next pip or the next button.
