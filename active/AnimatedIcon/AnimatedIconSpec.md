@@ -53,7 +53,8 @@ It will also contain the themable color properties you can set in code.
 
 ## Design Requirements  
 
-Designers will need to add markers named like the following to all Lottie files that will be used with controls that support AnimatedIcon. The controls that currently support AnimatedIcon are listed below. 
+Designers will need to add markers named like the following to all Lottie files that will be used with controls that support AnimatedIcon. 
+The controls that currently support AnimatedIcon are listed in the next section. 
 
 The marker names should reflect the visual state the animation is going from to the visual state the animation is
 going to. For example, the bare minimum of the markers that are needed for icons being used in a NavigationViewItem are:  
@@ -92,51 +93,127 @@ Here is an example of how the markers would look in a Lottie JSON file for the N
 
 Many built-in Xaml controls support AnimatedIcon[Source] by animating to markers when the state of the control changes.
 This gives you the ability to add an animated icon with the correct markers in the file,
-to one of the controls without needing to do any more work. 
+to one of the controls without needing to do any more work. The types of controls that are supported for V1 are defined below. 
 
-The list of controls are:
+### Supported controls that take an IconElement or IconSource
+
+Some controls take an IconElement or IconSource in the control so the developer can add a custom icon to the control. 
+We updated the default templates for two of these controls to support an AnimatedIcon so the developer would only need to add 
+the animated icon code to the content of the control. The control that supports this for V1 is NavigationViewItem. 
+
+We plan to update more controls for V2+ once we see how the community is using this control and we learn about more use cases. 
+
+* NavigationViewItem
+
+See the example titled "Swap out a static icon with an animated icon in a Navigation View Item" below for more information. 
+
+### Controls whose templates have been updated 
+
+We have also updated the default templates for a handful of controls that currently show a static icon so a developer can update the template 
+and use an animated icon instead. For V1, here are the control templates we are going to update:
 
 * AutoSuggestBox
 * CheckBox
 * DropDownButton
 * Expander
 * SplitButton
+* Button
+
+See the examples titled "Add an animated icon to a control that has an icon by default" to see where to update the template with the AnimatedIcon code. 
+
+### Default markers for animations in supported controls
+
+AnimatedIcon requires the icon JSON files to include markers named in a standard way so the control can successfully map the visual state transition to the 
+correct animation segment. You can see the design requirements section for more specifics on the structure of the markers and the naming. The list below shows the marker names that 
+should be in the animation file in order for the supported controls to play the animation correctly. 
 
 Here are the default states for each of the controls:
 
 * AutoSuggestBox 
-    * Normal
-    * PointerOver
-    * Pressed
-    * Disabled
+    * NormalToPointerOver 
+    * NormalToPressed 
+    * PointerOverToNormal 
+    * PointerOverToPressed 
+    * PressedToNormal 
+    * PressedToPointerOver 
+* Button
+    * NormalToPointerOver 
+    * NormalToPressed 
+    * PointerOverToNormal 
+    * PointerOverToPressed 
+    * PressedToNormal 
+    * PressedToPointerOver  
 * CheckBox 
-    * UncheckedNormal
-    * UncheckedPointerOver
-    * UncheckedPressed
-    * UncheckedDisabled
-    * CheckedNormal
-    * CheckedPointerOver
-    * CheckedPressed
-    * CheckedDisabled 
-    * IndeterminateNormal
-    * IndeterminatePointerOver
-    * IndeterminatePressed
-    * IndeterminateDisabled
+    * NormalOnToPointerOverOn
+    * NormalOnToPressedOn
+    * NormalOffToNormalOn
+    * NormalOffToPointerOverOff
+    * NormalOffToPressedOff
+    * PointerOverOnToPointerOverOff
+    * PointerOverOnToNormalOn
+    * PointerOverOnToPressedOn
+    * PointerOverOffToPointerOverOn
+    * PointerOverOffToNormalOff
+    * PointerOverOffToPressedOff
+    * PressedOnToPressedOff
+    * PressedOnToPointerOverOff
+    * PressedOnToNormalOff_Start
+    * PressedOffToPressedOn
+    * PressedOffToPointerOver
+    * PressedOffToNormalOn
 * Expander 
-    * Normal
-    * PointerOver
-    * Pressed
-    * Disabled
+    * NormalToPointerOver 
+    * NormalToPressed 
+    * PointerOverToNormal 
+    * PointerOverToPressed 
+    * PressedToNormal 
+    * PressedToPointerOver  
 * DropDownButton 
-    * Normal
-    * PointerOver
-    * Pressed
-    * Disabled
+    * NormalToPointerOver 
+    * NormalToPressed 
+    * PointerOverToNormal 
+    * PointerOverToPressed 
+    * PressedToNormal 
+    * PressedToPointerOver  
+* NavigationViewItem
+    * NormalToPointerOver 
+    * NormalToPressed 
+    * NormalToSelected
+    * NormalToPointerOverSelected
+    * NormalToPressedSelected
+    * PointerOverToNormal 
+    * PointerOverToPressed 
+    * PointerOverToSelected
+    * PointerOverToPointerOverSelected
+    * PointerOverToPressedSelected
+    * PressedToNormal 
+    * PressedToPointerOver 
+    * PressedToSelected
+    * PressedToPointerOverSelected
+    * PressedToPressedSelected
+    * SelectedToPointerOverSelected
+    * SelectedToPressedSelected
+    * SelectedToNormal
+    * SelectedToPointerOver
+    * SelectedToPressed
+    * PointerOverSelectedToPressedSelected
+    * PointerOverSelectedToSelected
+    * PointerOverSelectedToNormal
+    * PointerOverSelectedToPointerOver
+    * PointerOverSelectedToPressed
+    * PressedSelectedToPointerOverSelected
+    * PressedSelectedToSelected
+    * PressedSelectedToNormal
+    * PressedSelectedToPointerOver
+    * PressedSelectedToPressed
 * SplitButton 
-    * Normal
-    * PointerOver
-    * Pressed
-    * Disabled
+    * NormalToPointerOver 
+    * NormalToPressed 
+    * PointerOverToNormal 
+    * PointerOverToPressed 
+    * PressedToNormal 
+    * PressedToPointerOver  
+
 
 
 # API Pages
@@ -635,10 +712,16 @@ XAML
 | Name | Description | Default |
 | :---| :---| :---|
 | Source | Animation data, for example generated by the LottieGen tool. | null |
-| Markers |	A dictionary (<string, double>) of all marker strings and their associated values found in the icon’s JSON file. The strings and values are based on what the designer names the markers in the Lottie After Effects file.  |	null |
 | FallbackSource | Gets or sets the static icon that will be used as a fallback when the OS cannot run the animated icon file.   | null |
+| State | Attached property that the developer sets on AnimatedIcon. See below for more details. | null |
+| Markers |	A dictionary (<string, double>) of all marker strings and their associated values found in the icon’s JSON file. The strings and values are based on what the designer names the markers in the Lottie After Effects file.  |	null |
 | SetColorProperty | Takes a string and Windows.UI.Color value to set the color of a themed color property in the Lottie file.  |
 | TryCreateAnimatedVisualSource | Method to get an IAnimatedVisual from an IAnimatedVisualSource2
+
+When the developer sets the AnimatedIcon.State property on an element this is what happens: 
+* The setter looks to see if the element that the property was just set on is an AnimatedIcon, if it is we finish. 
+* If it is not, the setter checks to see if the first child of that element is an AnimatedIcon, if it is not, we finish. 
+* If it is, the setter also sets the AnimatedIcon.State property on that child AnimatedIcon. 
 
 ## IAnimatedVisualSource2 interface
 
@@ -656,6 +739,8 @@ which can be added to a Xaml element tree using the methods of
 `IAnimatedVisualSource2` also has a `SetColorProperty` method that can be used to set a color
 of the animated visual, and a `Markers` property that can be used to find named positions
 in the animation timeline.
+
+`IAnimatedVisualSource2` does not derive from `IAnimatedVisualSource` because it does not have the diagnostics item. The developer does not need to have `IAnmiatedVisualSource` to use AnimatedIcon. 
 
 ```cpp
 void AddVisualAndShowStartAnimation(
@@ -710,7 +795,7 @@ unsealed runtimeclass AnimatedIcon : Windows.UI.Xaml.Controls.IconElement
     IAnimatedVisualSource2 Source{ get; set; };
     IconSource FallbackSource {get; set; };
 
-    static Windows.UI.Xaml.DependencyProperty StateProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty State{ get; };
     static void SetState(Windows.UI.Xaml.DependencyObject object, String value); 
     static String GetState(Windows.UI.Xaml.DependencyObject object); 
 
