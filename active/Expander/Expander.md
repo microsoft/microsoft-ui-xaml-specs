@@ -182,7 +182,7 @@ The below properties are under discussion for how properties should propagate to
 | FontFamily | (currently) Sets the font family for the Content | Double |
 
 #### Example showing these properties:
-![An Expander where the entire header area (including 'under' the chevron) is Cyan, with default text styling, but the content area has default background color with text that is pink and size 25 Times New Roman font.](images\Expander_property_inheritance.png)
+![An Expander where the entire header area (including 'under' the chevron) is Cyan, with default text styling, but the content area has default background color with text that is pink and size 25 Times New Roman font.](images/Expander_property_inheritance.png)
 
 XAML
 ~~~~
