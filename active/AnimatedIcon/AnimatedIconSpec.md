@@ -818,3 +818,7 @@ AnimatedIcon will provide an API for a developer to add a static icon of type Ic
 This control is going to be part of the Icon family of controls so the accessibility requirements will reflect what the other icon controls have. AnimatedIcon will need to ensure that the high contrast brushes propagate correctly if the user changes their settings to a high contrast theme.  
 
 If the user turns off animations in theri system settings, the AnimatedIcons will not animate. 
+
+## Open Question
+* Should the interface be named IAnimatedVisualSource2 if it is not derived from IAnimatedVisualSource?
+    * I am stuck on a better name for it. 
