@@ -63,7 +63,7 @@ XAML
 
 C#
 ~~~~ 
-     DefaultBreadcrumb.ItemsSource = new List<string>() { "Node", "Node" , "Node"}
+     DefaultBreadcrumb.ItemsSource = new string[]{ "Node", "Node" , "Node"}
 ~~~~
 
 More examples with a GIF of crumbling behavior to be added.
