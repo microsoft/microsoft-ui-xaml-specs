@@ -52,13 +52,21 @@ A Breadcrumb control with the last node truncated:
 
 ![Breadcrumb_crumbled with last node truncated](images/Breadcrumb_truncation.PNG)
 
-The following Xaml markup creates a simple Breadcrumb control with three nodes:
+The following example creates a simple Breadcrumb control with three nodes:
 
 ![Breadcrumb default with 3 nodes](images/Breadcrumb_default.PNG)
- ~~~~ 
-     <muxc: Breadcrumb ItemsSource = {"Node", "Node", "Node"} /> 
+
+XAML
+~~~~ 
+     <muxc: Breadcrumb x:Name="DefaultBreadcrumb"/> 
 ~~~~
-More examples to be added
+
+C#
+~~~~ 
+     DefaultBreadcrumb.ItemsSource = new List<string>() { "Node", "Node" , "Node"}
+~~~~
+
+More examples with a GIF of crumbling behavior to be added.
 
 ## Breadcrumb member notes
 
