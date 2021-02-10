@@ -57,7 +57,7 @@ Designers will need to add markers named like the following to all Lottie files 
 The controls that currently support AnimatedIcon are listed in the next section. 
 
 The marker names should reflect the visual state the animation is going from to the visual state the animation is
-going to. For example, the bare minimum of the markers that are needed for icons being used in a NavigationViewItem are:  
+going to. For example, the bare minimum of the markers that are needed for icons being used in a Button are:  
 
 * NormalToPointerOver 
 * NormalToPressed 
@@ -66,12 +66,12 @@ going to. For example, the bare minimum of the markers that are needed for icons
 * PressedToNormal 
 * PressedToPointerOver  
 
-“Normal" is the state where the user is not interacting with the NavigationViewIten. 
+“Normal" is the state where the user is not interacting with the Button. 
 
 Markers will need to be named this specific way so AnimatedIcon can map the correct animation segment with
 the correct visual state transition.
 This solution is conforming to a standard set of strings that are already defined for many Xaml controls.
-Here is an example of how the markers would look in a Lottie JSON file for the NavigationViewItem.  
+Here is an example of how the markers would look in a Lottie JSON file for the Button.  
 
 "markers":[{"tm":0,"cm":"NormalToPointerOver_Start","dr":0},{"tm":9,"cm":"NormalToPointerOver_End","dr":0}, 
 
@@ -87,47 +87,9 @@ Here is an example of how the markers would look in a Lottie JSON file for the N
 
 {"tm":90,"cm":"PressedToNormal_Start","dr":0},{"tm":99,"cm":"PressedToNormal_End","dr":0}, 
 
-{"tm":100,"cm":"PressedToPointerOver_Start","dr":0},{"tm":101,"cm":"PressedToPointerOver_End","dr":0}] 
+{"tm":100,"cm":"PressedToPointerOver_Start","dr":0},{"tm":101,"cm":"PressedToPointerOver_End","dr":0}]
 
-## Controls that support AnimatedIcon
-
-Many built-in Xaml controls support AnimatedIcon[Source] by animating to markers when the state of the control changes.
-This gives you the ability to add an animated icon with the correct markers in the file,
-to one of the controls without needing to do any more work. The types of controls that are supported for V1 are defined below. 
-
-### Supported controls that take an IconElement or IconSource
-
-Some controls take an IconElement or IconSource in the control so the developer can add a custom icon to the control. 
-We updated the default templates for two of these controls to support an AnimatedIcon so the developer would only need to add 
-the animated icon code to the content of the control. The control that supports this for V1 is NavigationViewItem. 
-
-We plan to update more controls for V2+ once we see how the community is using this control and we learn about more use cases. 
-
-* NavigationViewItem
-
-See the example titled "Swap out a static icon with an animated icon in a Navigation View Item" below for more information. 
-
-### Controls whose templates have been updated 
-
-We have also updated the default templates for a handful of controls that currently show a static icon so a developer can update the template 
-and use an animated icon instead. For V1, here are the control templates we are going to update:
-
-* AutoSuggestBox
-* CheckBox
-* DropDownButton
-* Expander
-* SplitButton
-* Button
-
-See the examples titled "Add an animated icon to a control that has an icon by default" to see where to update the template with the AnimatedIcon code. 
-
-### Default markers for animations in supported controls
-
-AnimatedIcon requires the icon JSON files to include markers named in a standard way so the control can successfully map the visual state transition to the 
-correct animation segment. You can see the design requirements section for more specifics on the structure of the markers and the naming. The list below shows the marker names that 
-should be in the animation file in order for the supported controls to play the animation correctly. 
-
-Here are the default states for each of the controls:
+The supported controls for V1 will have their templates update to support the standard marker states. The markers needed for each control are: 
 
 * AutoSuggestBox 
     * NormalToPointerOver 
@@ -214,6 +176,73 @@ Here are the default states for each of the controls:
     * PressedToNormal 
     * PressedToPointerOver  
 
+## Controls that support AnimatedIcon
+
+Many built-in Xaml controls support AnimatedIcon[Source] by animating to markers when the state of the control changes.
+This gives you the ability to add an animated icon with the correct markers in the file,
+to one of the controls without needing to do any more work. The types of controls that are supported for V1 are defined below. 
+
+### Supported controls that take an IconElement or IconSource
+
+Some controls take an IconElement or IconSource in the control so the developer can add a custom icon to the control. 
+We updated the default templates for two of these controls to support an AnimatedIcon so the developer would only need to add 
+the animated icon code to the content of the control. The control that supports this for V1 is NavigationViewItem. 
+
+We plan to update more controls for V2+ once we see how the community is using this control and we learn about more use cases. 
+
+* NavigationViewItem
+
+See the example titled "Swap out a static icon with an animated icon in a Navigation View Item" below for more information. 
+
+### Controls whose templates have been updated 
+
+We have also updated the default templates for a handful of controls that currently show a static icon so a developer can update the template 
+and use an animated icon instead. For V1, here are the control templates we are going to update:
+
+* AutoSuggestBox
+* CheckBox
+* DropDownButton
+* Expander
+* SplitButton
+* Button
+
+See the examples titled "Add an animated icon to a control that has an icon by default" to see where to update the template with the AnimatedIcon code. 
+
+### Default markers for animations in supported controls
+
+AnimatedIcon requires the icon JSON files to include markers named in a standard way so the control can successfully map the visual state transition to the 
+correct animation segment. You can see the design requirements section for more specifics on the structure of the markers and the naming. The list below shows the marker names that 
+should be in the animation file in order for the supported controls to play the animation correctly. 
+
+Here are the default states for each of the controls:
+
+* AutoSuggestBox 
+    * Normal
+    * Pressed 
+    * PointerOver
+* Button
+    * Normal
+    * Pressed 
+    * PointerOver
+* CheckBox 
+    * NormalOn
+    * NormalOff
+    * PointerOverOn
+    * PointerOverOff
+    * PressedOn
+    * PressedOff
+* Expander 
+    * Normal
+    * Pressed 
+    * PointerOver  
+* DropDownButton 
+    * Normal
+    * Pressed 
+    * PointerOver 
+* SplitButton 
+    * Normal
+    * Pressed 
+    * PointerOver
 
 
 # API Pages
