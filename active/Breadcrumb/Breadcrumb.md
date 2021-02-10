@@ -4,8 +4,30 @@ There’s currently no consistent and Fluent way to address the common UX patter
 This control is needed for situations where the user's navigation trail (in a file system or menu system) needs
 to be persistently visible.
 A Breadcrumb control is movitated by its use in many app scenarios and supporting developers in migrating from WPF.
+This is not the 'history' of the user's navigation, but the direct path of pages or folders from
+the root node to their current position. 
+
+A Breadcrumb control with 3 nodes:
+
+![Breadcrumb default with 3 nodes](images/Breadcrumb_default.PNG)
+
+A Breadcrumb "crumbling" with 3 visible nodes:
+
+![Breadcrumb crumbling with 3 visible nodes](images/Breadcrumb_crumbling.PNG)
+
+For situations where resizing of the Breadcrumb means the full path can't be shown,
+the nodes will 'crumble' starting at the root node. This crumbling behavior hides nodes (starting with the root node) within a flyout in order to prioritize displaying the current node. 
+
+A Breadcrumb control with the last node truncated:
+
+![Breadcrumb_crumbled with last node truncated](images/Breadcrumb_truncation.PNG)
+In addition,the leaf node can truncated if crumbling from the root node to the leaf node's parent is not enough for a resizing scenario. 
 
 This control is similar to an ItemsControl (has an ItemsSource property), but does not derive from it.
+
+# Is this the right control?
+Use the Breadcrumb control for a persisting 'trail' that shows the user's navigation path. This is useful for scenarios where the user may navigate many layers deep, or need to return easily to pages at any level. This is also commonly seen in apps that explore a file system with a heirarchical folder structure. 
+
 
 ## V1/V2 Breadcrumb
 
@@ -17,15 +39,7 @@ but keeping in mind that V1 is positioned in a way to have V2 features smoothly 
 
 # API Pages
 
-## Breadcrumb class
-
-Use the Breadcrumb control to private persisting 'trail' that shows the user's navigation path.
-
-This is not the 'history' of the user's navigation, but the direct path of pages or folders from
-the root node to their current position. For situations where resizing means the full path can't be shown,
-the Breadcrumb will 'crumble' starting at the root node. In addition,
-the leaf node can truncated if crumbling from the root node to the leaf node's parent is not enough for a resizing scenario. 
-
+## Examples
 A Breadcrumb control with 3 nodes:
 
 ![Breadcrumb default with 3 nodes](images/Breadcrumb_default.PNG)
@@ -38,7 +52,7 @@ A Breadcrumb control with the last node truncated:
 
 ![Breadcrumb_crumbled with last node truncated](images/Breadcrumb_truncation.PNG)
 
-The following Xaml markup  creates a simple Breadcrumbe control with three nodes:
+The following Xaml markup creates a simple Breadcrumb control with three nodes:
 
 ![Breadcrumb default with 3 nodes](images/Breadcrumb_default.PNG)
  ~~~~ 
@@ -50,7 +64,9 @@ More examples to be added
 
 | Name | Description | Default |
 | :---------- | :------- | :------- |
-| ItemsSource | provides the content of the Breadcrumb | Null |
+| DropDownItemTemplate | Gets or sets the template to display the drop-down of nodes | 
+| ItemsSource | Gets or sets the content of the Breadcrumb | null |
+| ItemTemplate | Gets or sets the template to display an item|  | 
 | ItemClicked | Raised when a user interaction causes a jump to the CurrentItem.  | N/A |
 
 Spec note: the V2 of Breadcrumb will add flyouts from chevrons to view children of a node.
@@ -97,7 +113,7 @@ unsealed runtimeclass Breadcrumb : Windows.UI.Xaml.Controls.Control
 ## UI Automation Pattern
 
 Breadcrumb will use the
-[InvokePattern](!https://docs.microsoft.com/en-us/dotnet/framework/ui-automation/implementing-the-ui-automation-invoke-control-pattern).
+[InvokePattern](!https://docs.microsoft.com/dotnet/framework/ui-automation/implementing-the-ui-automation-invoke-control-pattern). The flyouts use the [ExpandCollapsePattern](https://docs.microsoft.com/dotnet/api/system.windows.automation.expandcollapsepattern).
 
 ## Keyboard
 
@@ -109,11 +125,11 @@ the ellipsis and down/up will navigate between the flyout items
 
 ## Gamepad
 
-* Spatial navigation to focus and select the nodes.
+* Spatial navigation to focus and select the nodes. A flyout can be opened using the A button. 
 
-## Narrator
+## Screen reader
 
-When the focus is on a node, Narrator will announce the node
+When the focus is on a node, the screen reader will announce the node
 as well as "n of m" to convey which node in the path it is.
 If the Breadcrumb has been crumbled due to resizing,
-Narrator will announce 'collapsed' and 'expanded' for the flyout of crumbled nodes. 
+the screen reader will announce 'collapsed' and 'expanded' for the flyout of crumbled nodes. 
