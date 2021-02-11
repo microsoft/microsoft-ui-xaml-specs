@@ -1,33 +1,15 @@
+Breadcrumb control
+===
 
 # Background
+
 There’s currently no consistent and Fluent way to address the common UX pattern of a breadcrumb.
 This control is needed for situations where the user's navigation trail (in a file system or menu system) needs
 to be persistently visible.
+
 A Breadcrumb control is movitated by its use in many app scenarios and supporting developers in migrating from WPF.
 This is not the 'history' of the user's navigation, but the direct path of pages or folders from
 the root node to their current position. 
-
-A Breadcrumb control with 3 nodes:
-
-![Breadcrumb default with 3 nodes](images/Breadcrumb_default.PNG)
-
-A Breadcrumb "crumbling" with 3 visible nodes:
-
-![Breadcrumb crumbling with 3 visible nodes](images/Breadcrumb_crumbling.PNG)
-
-For situations where resizing of the Breadcrumb means the full path can't be shown,
-the nodes will 'crumble' starting at the root node. This crumbling behavior hides nodes (starting with the root node) within a flyout in order to prioritize displaying the current node. 
-
-A Breadcrumb control with the last node truncated:
-
-![Breadcrumb_crumbled with last node truncated](images/Breadcrumb_truncation.PNG)
-In addition,the leaf node can truncated if crumbling from the root node to the leaf node's parent is not enough for a resizing scenario. 
-
-This control is similar to an ItemsControl (has an ItemsSource property), but does not derive from it.
-
-# Is this the right control?
-Use the Breadcrumb control for a persisting 'trail' that shows the user's navigation path. This is useful for scenarios where the user may navigate many layers deep, or need to return easily to pages at any level. This is also commonly seen in apps that explore a file system with a heirarchical folder structure. 
-
 
 ## V1/V2 Breadcrumb
 
@@ -39,7 +21,13 @@ but keeping in mind that V1 is positioned in a way to have V2 features smoothly 
 
 # API Pages
 
-## Examples
+## Breadcrumb
+
+Represents a control that shows a list of items, typically a navigation history.
+
+
+### Examples
+
 A Breadcrumb control with 3 nodes:
 
 ![Breadcrumb default with 3 nodes](images/Breadcrumb_default.PNG)
@@ -58,12 +46,12 @@ The following example creates a simple Breadcrumb control with three nodes:
 
 XAML
 ~~~~ 
-     <muxc: Breadcrumb x:Name="DefaultBreadcrumb"/> 
+<muxc: Breadcrumb x:Name="DefaultBreadcrumb"/> 
 ~~~~
 
 C#
 ~~~~ 
-     DefaultBreadcrumb.ItemsSource = new string[]{ "Node", "Node" , "Node"}
+DefaultBreadcrumb.ItemsSource = new string[]{ "Node", "Node" , "Node"}
 ~~~~
 
 More examples with a GIF of crumbling behavior to be added.
