@@ -618,11 +618,56 @@ The animation file being used in the AnimatedIcon already has the correct marker
 
 XAML
 ```xml
+<Grid>
+    <Button x:Name="DownloadButton" Content="Download" OnClick="OnButtonClick"/>
+    <muxc:AnimatedIcon x:Name="AnimatedSpinningWheel" AutomationProperties.AccessibilityView="Raw"  muxc:AnimatedIcon.State="Normal">
+        <muxc:AnimatedIcon.Source>
+            <AnimatedVisuals:DownloadAnimation/>
+        </muxc:AnimatedIcon.Source>
+        <muxc:AnimatedIcon.FallbackIconSource>
+            <muxc:FontIconSource
+                FontSize="8"
+                FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                Foreground="{ThemeResource ButtonForegroundPressed}"
+                Glyph="&#xE96E;"
+                IsTextScaleFactorEnabled="False"/>
+        </muxc:AnimatedIcon.FallbackIconSource>
+    </muxc:AnimatedIcon>
+</Grid>
 
 ```
 
 C# 
 ```csharp
+```
+
+#### Creating an AnimatedIcon from an AnimatedIconSource
+
+Simlar to the other icon controls that derive from IconElement, there is also an equivalent AnimatedIcon control that derives from IconSource called AnimatedIconSource. This works the same way as the other IconSource controls where AnimatedIconSource is used in controls that take an IconSource as it's icon type. 
+
+Here is an example of using an AnimatedIconSource in a TabView
+
+XAML
+```xml
+<muxc:TabView>
+    <muxc:TabView.TabItems>
+        <muxc:TabViewItem Header="Play Game">
+            <muxc:TabViewItem.IconSource>
+                <muxc:AnimatedIconSource x:Name="PlayAnimatedIcon"/>
+                    <AnimatedIconSource.Source>
+                        <AnimatedVisuals:PlayAnimation/>
+                    </AinmatedIconSource.Source>
+                </muxc:AnimatedIconSource>
+            </muxc:TabViewItem.IconSource>
+        </muxc:TabViewItem>
+        <muxc:TabViewItem Header="Home">
+            <muxc:TabViewItem.IconSource>
+                <muxc:BitmapIconSource UriSource="/Assets/TabViewIcons/home.png" ShowAsMonochrome="False" />
+            </muxc:TabViewItem.IconSource>
+        </muxc:TabViewItem>
+    </muxc:TabView.TabItems>
+</muxc:TabView>
+
 ```
 
 ### AnimatedIcon class member notes
