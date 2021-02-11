@@ -56,8 +56,7 @@ It will also contain the themable color properties you can set in code.
 Designers will need to add markers named like the following to all Lottie files that will be used with controls that support AnimatedIcon. 
 The controls that currently support AnimatedIcon are listed in the next section. 
 
-The marker names should reflect the visual state the animation is going from to the visual state the animation is
-going to. For example, the bare minimum of the markers that are needed for icons being used in a Button are:  
+The marker names should reflect the visual state the animation is going from to the visual state the animation is going to. For example, the bare minimum of the markers that are needed for icons being used in a DropDownButton are:  
 
 * NormalToPointerOver 
 * NormalToPressed 
@@ -66,12 +65,12 @@ going to. For example, the bare minimum of the markers that are needed for icons
 * PressedToNormal 
 * PressedToPointerOver  
 
-“Normal" is the state where the user is not interacting with the Button. 
+“Normal" is the state where the user is not interacting with the DropDownButton. 
 
 Markers will need to be named this specific way so AnimatedIcon can map the correct animation segment with
 the correct visual state transition.
 This solution is conforming to a standard set of strings that are already defined for many Xaml controls.
-Here is an example of how the markers would look in a Lottie JSON file for the Button.  
+Here is an example of how the markers would look in a Lottie JSON file for the DropDownButton.  
 
 "markers":[{"tm":0,"cm":"NormalToPointerOver_Start","dr":0},{"tm":9,"cm":"NormalToPointerOver_End","dr":0}, 
 
@@ -98,13 +97,6 @@ The supported controls for V1 will have their templates update to support the st
     * PointerOverToPressed 
     * PressedToNormal 
     * PressedToPointerOver 
-* Button
-    * NormalToPointerOver 
-    * NormalToPressed 
-    * PointerOverToNormal 
-    * PointerOverToPressed 
-    * PressedToNormal 
-    * PressedToPointerOver  
 * CheckBox 
     * NormalOnToPointerOverOn
     * NormalOnToPressedOn
@@ -176,6 +168,19 @@ The supported controls for V1 will have their templates update to support the st
     * PressedToNormal 
     * PressedToPointerOver  
 
+### What happens if my animation file is missing a marker in the JSON file?
+
+AnimatedIcon uses the following algorithm to determine which state to set from the parent control if a marker is missing from the file or the animated icon is transitoning from a null state to a set state: 
+
+1) Check the provided IAnimatedVisualSource2's markers for the markers "[PreviousState]To[NewState]_Start" and "[PreviousState]To[NewState]_End". If both are found play the animation from "[PreviousState]To[NewState]_Start" to "[PreviousState]To[NewState]_End".
+2) If "[PreviousState]To[NewState]_Start" is not found but "[PreviousState]To[NewState]_End" is found, then we will hard cut to the "[PreviousState]To[NewState]_End" position.
+3) If "[PreviousState]To[NewState]_End" is not found but "[PreviousState]To[NewState]_Start" is found, then we will hard cut to the "[PreviousState]To[NewState]_Start" position.
+4) Check if the provided IAnimatedVisualSource2's markers for the marker "[PreviousState]To[NewState]". If it is found then we will hard cut to the "[PreviousState]To[NewState]" position.
+5) Check if the provided IAnimatedVisualSource2's markers for the marker "[NewState]". If it is found, then we will hard cut to the "[NewState]" position.
+6) Check if the provided IAnimatedVisualSource2's markers has any marker which ends with "To[NewState]_End". If any marker is found which has that ending, we will hard cut to the first marker found with the appropriate ending's position.
+7) Check if "[NewState]" parses to a float. If it does, animated from the current position to the parsed float. **
+Hard cut to position 0.0.
+
 ## Controls that support AnimatedIcon
 
 Many built-in Xaml controls support AnimatedIcon[Source] by animating to markers when the state of the control changes.
@@ -204,7 +209,6 @@ and use an animated icon instead. For V1, here are the control templates we are 
 * DropDownButton
 * Expander
 * SplitButton
-* Button
 
 See the examples titled "Add an animated icon to a control that has an icon by default" to see where to update the template with the AnimatedIcon code. 
 
@@ -217,10 +221,6 @@ should be in the animation file in order for the supported controls to play the 
 Here are the default states for each of the controls:
 
 * AutoSuggestBox 
-    * Normal
-    * Pressed 
-    * PointerOver
-* Button
     * Normal
     * Pressed 
     * PointerOver
@@ -244,6 +244,8 @@ Here are the default states for each of the controls:
     * Pressed 
     * PointerOver
 
+### What happens when AnimatedIcon is added to the visual tree?
+When AnimatedIcon is added to a tree, it copies the state property of its new parent into it's AnimatedIcon.State property. This will trigger the algorithm mentioned above in the "What happens if my animation file is missing a marker in the JSON file?" section. 
 
 # API Pages
 
@@ -273,12 +275,19 @@ and so can be used anywhere an element or IconElement is required, such as
 [NavigationViewItem.Icon](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.NavigationViewItem.Icon).
 `AnimatedVisualPlayer` is a more  general animation player that can be used anywhere in an application where AnimatedIcon is intended to only be used where icons are used in WinUI. 
 
+
 ### Examples
+There are a few ways you can use AnimatedIcon with WinUI controls depending on which control you are planning to add an AnimatedIcon to. The three examples below are: 
 
-#### Swap out a static icon with an animated icon in a Navigation View Item
+* Adding an AnimatedIcon to a control that already has an icon property
+* Update my control template to support AnimatedIcon 
+* Adding an AnimatedIcon to my XAML page 
 
-NavigationViewItem has states for rest/pointer over/press and AnimatedIcon will
-animate the state transitions by having named markers in the Lottie file such as:  
+#### Adding an AnimatedIcon to a control that already has an icon property 
+
+For V1, the template for NavigationViewItem will be updated so you can add your AnimatedIcon to the NavigationViewItem icon property without needing to make any other changes.
+(There will be more controls added in later iterations of the control)
+NavigationViewItem has states for rest/pointer over/press and AnimatedIcon will animate the state transitions by having named markers in the Lottie file such as:  
 
 - NormalToPointerOver
 - NormalToPressed
@@ -288,11 +297,14 @@ animate the state transitions by having named markers in the Lottie file such as
 - PressedToPointerOver
 
 Below is an example of how to add an animated play icon with the standard state transitions mentioned above to
-a Hierarchical NavigationView item.
+a Hierarchical NavigationViewItem.
 
-AnimatedIcon requires you to run the Lottie JSON file through the Windows [CodeGen](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen) tool to generate the animation code as a C# class. This process is similar to the process needed for AnimatedVisualPlayer. AnimatedIcon needs the JSON file to run through CodeGen so the markers and color properties are translated in the format needed for the control to map the values correctly. 
+AnimatedIcon requires you to run the Lottie JSON file through the Windows [CodeGen](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen) 
+tool to generate the animation code as a C# class. This process is similar to the process needed for AnimatedVisualPlayer.
+AnimatedIcon needs the JSON file to run through CodeGen so the markers and color properties are translated in the format needed for the control to map the values correctly. 
 
-Once you run your Lottifile through codegen you can add the output class to your project. Follow the steps in the [CodeGen](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen) tutorial for more instructions. 
+Once you run your Lottifile through codegen you can add the output class to your project. 
+Follow the steps in the [CodeGen](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen) tutorial for more instructions. 
 
 Once the icon file is added to your project you can then add the icon to your navigation view item like you would any other icon type that inherits from IconElement. 
 
@@ -323,140 +335,10 @@ XAML
 </muxc:NavigationView.MenuItems>
 ```
 
-#### Add an animated icon to a control that does not have an updated template for the AnimatedIcon control
+#### Update my control template to support AnimatedIcon
 
-If you would like to add an animated icon to a control that does not have the default template updated,
-you will need to update the template to include the state changes needed to play the animation segments. 
-
-Here is the XAML for the changes you would need to make to add an AnimatedIcon to a button (button does not have the default template updated to support AnimatedIcon like the example above). Button has a content property which derives from UIElement so you can add an AnimatedIcon to a button but you would need tp update the template first. This example shows how to add the setters for the Normal, PointerOver, Pressed and Disabled states. The following code is added for each of the four visual states: 
-
-XAML
-```xml
-<VisualState.Setters>
-    <Setter Target="ContentPresenter.(AnimatedIcon.State)" Value="Normal"/>
-</VisualState.Setters>
-```
-
-You will then add the markup to a content presenter in the template for the AnimatedIcon control to present the animated visual glyph. 
-XAML 
-```xml
-<muxc:AnimatedIcon x:Name="AnimatedPlayIcon" Foreground="{TemplateBinding Foreground}" Grid.Column="1">
-    <muxc:AnimatedIcon.Source>
-        <AnimatedVisuals:PlayIconAnimation/>
-    </muxc:AnimatedIcon.Source>
-    <muxc:AnimatedIcon.FallbackIconSource>
-        <muxc:FontIconSource
-            FontFamily="{ThemeResource SymbolThemeFontFamily}"
-            Glyph="{StaticResource PlayIconGlyph}"
-            FontSize="{StaticResource PlayIconGlyphSize}"
-            Foreground="{ThemeResource PlayIconGlyphForegroundUnchecked}"/>
-    </muxc:AnimatedIcon.FallbackIconSource>
-</muxc:AnimatedIcon>
-```
-
-Here is the full template update for the default button style. 
-
-XAML
-```xml
- <ControlTemplate TargetType="Button">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Height="*"/>
-            <ColumnDefinition Height="*"/>
-        </Grid.ColumnDefinitions>
-        <contract7Present:ContentPresenter.BackgroundTransition>
-            <contract7Present:BrushTransition Duration="0:0:0.083" />
-        </contract7Present:ContentPresenter.BackgroundTransition>
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="CommonStates">
-                <VisualState x:Name="Normal"/>
-                    <VisualState x:Name="PointerOver">
-                        <Storyboard>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentButtonBackgroundPointerOver}" />
-                            </ObjectAnimationUsingKeyFrames>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentButtonBorderBrushPointerOver}" />
-                            </ObjectAnimationUsingKeyFrames>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentButtonForegroundPointerOver}" />
-                            </ObjectAnimationUsingKeyFrames>
-                        </Storyboard>
-                        <VisualState.Setters>
-                            <Setter Target="AnimatedPlayIcon.(AnimatedIcon.State)" Value="PointerOver"/>
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="Pressed">
-                        <Storyboard>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentButtonBackgroundPressed}" />
-                            </ObjectAnimationUsingKeyFrames>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentButtonBorderBrushPressed}" />
-                            </ObjectAnimationUsingKeyFrames>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentButtonForegroundPressed}" />
-                            </ObjectAnimationUsingKeyFrames>
-                        </Storyboard>
-                        <VisualState.Setters>
-                            <Setter Target="AnimatedPlayIcon.(AnimatedIcon.State)" Value="Pressed"/>
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="Disabled">
-                        <Storyboard>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentButtonBackgroundDisabled}" />
-                            </ObjectAnimationUsingKeyFrames>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentButtonBorderBrushDisabled}" />
-                            </ObjectAnimationUsingKeyFrames>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource AccentButtonForegroundDisabled}" />
-                            </ObjectAnimationUsingKeyFrames>
-                        </Storyboard>
-                        <VisualState.Setters>
-                            <!-- DisabledVisual Should be handled by the control, not the animated icon. -->
-                            <Setter Target="AnimatedPlayIcon.(AnimatedIcon.State)" Value="Normal"/>
-                        </VisualState.Setters>
-                    </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-        <ContentPresenter
-                x:Name="ContentPresenter"
-                Background="{TemplateBinding Background}"
-                contract7Present:BackgroundSizing="{TemplateBinding BackgroundSizing}"
-                Foreground="{TemplateBinding Foreground}"
-                BorderBrush="{TemplateBinding BorderBrush}"
-                BorderThickness="{TemplateBinding BorderThickness}"
-                Content="{TemplateBinding Content}"
-                ContentTemplate="{TemplateBinding ContentTemplate}"
-                ContentTransitions="{TemplateBinding ContentTransitions}"
-                contract7Present:CornerRadius="{TemplateBinding CornerRadius}"
-                contract7NotPresent:CornerRadius="{ThemeResource ControlCornerRadius}"
-                Padding="{TemplateBinding Padding}"
-                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                AutomationProperties.AccessibilityView="Raw"
-                local:AnimatedIcon.State="Normal"/>
-                <muxc:AnimatedIcon x:Name="AnimatedPlayIcon" Foreground="{TemplateBinding Foreground}" Grid.Column="1">
-                    <muxc:AnimatedIcon.Source>
-                        <AnimatedVisuals:PlayIconAnimation/>
-                    </muxc:AnimatedIcon.Source>
-                    <muxc:AnimatedIcon.FallbackIconSource>
-                        <muxc:FontIconSource
-                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                            Glyph="{StaticResource PlayIconGlyph}"
-                            FontSize="{StaticResource PlayIconGlyphSize}"
-                            Foreground="{ThemeResource PlayIconGlyphForegroundUnchecked}"/>
-                    </muxc:AnimatedIcon.FallbackIconSource>
-                </muxc:AnimatedIcon>
-        </Grid>
-    </ControlTemplate>  
-```
-
-#### Add an animated icon to a control that has an icon by default 
-
-You might want to update a control that already has a static icon in it's default template to an animated icon. This example will show how to update the DropDownButton to use an animated glyph instead of the static chevron icon. 
+You might want to update a control that already has a static icon in it's default template to an animated icon. 
+This example will show how to update the DropDownButton (which uses a static chevron glyph today) to use an animated chevron glyph instead. 
 
 In this scenario you would need to update the template to add the setters for the visual states defined above in this document for DropDownButton.
 
@@ -727,13 +609,29 @@ XAML
     <Style TargetType="local:DropDownButton" BasedOn="{StaticResource DefaultDropDownButtonStyle}" />
 ```
 
+#### Adding an AnimatedIcon to my XAML page 
+
+There might be a scenario where you would want to add an AnimatedIcon to your XAML page without it being in a WinUI control. 
+In this example, we will add an AnimatedIcon to a UI page where the icon will respond to a download button being pressed. 
+The button control has the Normal, PointerOver, and Pressed states in it's default template.
+The animation file being used in the AnimatedIcon already has the correct markers for the Button control based off of the states previously mentioned. 
+
+XAML
+```xml
+
+```
+
+C# 
+```csharp
+```
+
 ### AnimatedIcon class member notes
 
 | Name | Description | Default |
 | :---| :---| :---|
 | Source | Animation data, for example generated by the LottieGen tool. | null |
 | FallbackSource | Gets or sets the static icon that will be used as a fallback when the OS cannot run the animated icon file.   | null |
-| State | Attached property that the developer sets on AnimatedIcon. See below for more details. | null |
+| State | Property that the developer sets on AnimatedIcon. See below for more details. | null |
 | Markers |	A dictionary (<string, double>) of all marker strings and their associated values found in the icon’s JSON file. The strings and values are based on what the designer names the markers in the Lottie After Effects file.  |	null |
 | SetColorProperty | Takes a string and Windows.UI.Color value to set the color of a themed color property in the Lottie file.  |
 | TryCreateAnimatedVisualSource | Method to get an IAnimatedVisual from an IAnimatedVisualSource2
@@ -814,6 +712,7 @@ unsealed runtimeclass AnimatedIcon : Windows.UI.Xaml.Controls.IconElement
 
     IAnimatedVisualSource2 Source{ get; set; };
     IconSource FallbackSource {get; set; };
+    String State {get; set};
 
     static Windows.UI.Xaml.DependencyProperty State{ get; };
     static void SetState(Windows.UI.Xaml.DependencyObject object, String value); 
