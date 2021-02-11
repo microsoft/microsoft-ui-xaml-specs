@@ -111,7 +111,7 @@ unsealed runtimeclass Breadcrumb : Windows.UI.Xaml.Controls.Control
 
     event Windows.Foundation.TypedEventHandler<Breadcrumb, BreadcrumbItemClickedEventArgs> ItemClicked;
 
-    static Windows.UI.Xaml.DependencyProperty DropdownItemTemplateProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty DropDownItemTemplateProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty ItemsSourceProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty ItemTemplateProperty{ get; };
 }
