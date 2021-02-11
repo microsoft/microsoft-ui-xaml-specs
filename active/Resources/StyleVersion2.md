@@ -1,6 +1,4 @@
- 
-
-StyleVersion API
+ThemeVersion API
 =
 
 # Background
