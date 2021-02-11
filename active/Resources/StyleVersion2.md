@@ -66,7 +66,7 @@ runtimeclass XamlControlsResources : Windows.UI.Xaml.ResourceDictionary
 
     {
         [MUX_DEFAULT_VALUE("winrt::ThemeVersion::Version2")]
-        ThemeVersion Version{ get; set; };
+        ThemeVersion ThemeVersion{ get; set; };
 
         static Windows.UI.Xaml.DependencyProperty ThemeVersionProperty{ get; };
     }
