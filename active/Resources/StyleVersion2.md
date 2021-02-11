@@ -49,6 +49,7 @@ Configure an application so that it uses an older version of the control styling
 
 **Namespace Microsoft.UI.Xaml.Controls**
 
+```cs
 [webhosthidden]
 enum ThemeVersion
 {
@@ -70,7 +71,7 @@ runtimeclass XamlControlsResources : Windows.UI.Xaml.ResourceDictionary
         static Windows.UI.Xaml.DependencyProperty ThemeVersionProperty{ get; };
     }
 }
-
+```
 
 
 # Appendix
