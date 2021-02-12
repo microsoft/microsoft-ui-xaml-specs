@@ -114,6 +114,12 @@ Windows.UI.Xaml.Automation.Provider.IInvokeProvider
 ```
 
 ## Theme Resources
+
+You can modify the look of a Breadcrumb by specifying Xaml resources in your app.
+For more info, see the
+[lightweight styling guide](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/xaml-styles#lightweight-styling).
+
+
 | Name | Description | Default |
 | :---------- | :------- | :------- |
 
