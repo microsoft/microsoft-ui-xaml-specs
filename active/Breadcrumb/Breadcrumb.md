@@ -114,6 +114,7 @@ Windows.UI.Xaml.Automation.Provider.IInvokeProvider
     BreadcrumbDropDownItemAutomationPeer(MU_XC_NAMESPACE.BreadcrumbDropDownItem owner);
 }
 ```
+
 ## Theme Resources
 | Name | Description | Default |
 | :---------- | :------- | :------- |
