@@ -766,9 +766,8 @@ unsealed runtimeclass AnimatedIcon : Windows.UI.Xaml.Controls.IconElement
 
     IAnimatedVisualSource2 Source{ get; set; };
     IconSource FallbackSource {get; set; };
-    String State {get; set};
 
-    static Windows.UI.Xaml.DependencyProperty AttachedState{ get; };
+    static Windows.UI.Xaml.DependencyProperty State{ get; };
     static void SetState(Windows.UI.Xaml.DependencyObject object, String value); 
     static String GetState(Windows.UI.Xaml.DependencyObject object); 
 
@@ -800,6 +799,10 @@ AnimatedIcon will provide an API for a developer to add a static icon of type Ic
 This control is going to be part of the Icon family of controls so the accessibility requirements will reflect what the other icon controls have. AnimatedIcon will need to ensure that the high contrast brushes propagate correctly if the user changes their settings to a high contrast theme.  
 
 If the user turns off animations in theri system settings, the AnimatedIcons will not animate. 
+
+## Adding an instance state property 
+
+In a future version of this control, we would like to add an instanced state property to the control so Intellisense can inform the developer of the State property. Today, the parser cannot recognize a dependency property and does not have the ability to tell the difference between a dependency property and an instance property of the same name. There would need to be a fix to the parser in order for this to work. 
 
 ## Open Question
 * Should the interface be named IAnimatedVisualSource2 if it is not derived from IAnimatedVisualSource?
