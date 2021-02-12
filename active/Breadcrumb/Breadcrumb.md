@@ -28,33 +28,31 @@ Represents a control that shows a list of items, typically the navigation trail 
 
 ### Examples
 
-A Breadcrumb control with 3 nodes:
-
-![Breadcrumb default with 3 nodes](images/Breadcrumb_default.PNG)
-
-A Breadcrumb "crumbling" with 3 visible nodes:
-
-![Breadcrumb crumbling with 3 visible nodes](images/Breadcrumb_crumbling.PNG)
-
-A Breadcrumb control with the last node truncated:
-
-![Breadcrumb_crumbled with last node truncated](images/Breadcrumb_truncation.PNG)
-
 The following example code creates a simple Breadcrumb control with three nodes:
 
 ![Breadcrumb default with 3 nodes](images/Breadcrumb_default.PNG)
 
 XAML
 ```XAML
-<muxc:Breadcrumb x:Name="DefaultBreadcrumb" /> 
+<Breadcrumb x:Name="Breadcrumb1" /> 
 ```
 
 C#
 ```cs
-DefaultBreadcrumb.ItemsSource = new string[]{ "Node", "Node" , "Node"}
+Breadcrumb1.ItemsSource = new string[]{ "Node", "Node" , "Node"}
 ```
+
+When there are too many items to display, a Breadcrumb "crumbles" and shows only the 
+last items.
+
+![Breadcrumb crumbling with 3 visible nodes](images/Breadcrumb_crumbling.PNG)
+
+
+If the last item in a Breadcrumb is too long to fit it will be truncated.
+
+![Breadcrumb_crumbled with last node truncated](images/Breadcrumb_truncation.PNG)
  
-## Breadcrumb member notes
+## Other Breadcrumb members
 
 | Name | Description | Default |
 | :---------- | :------- | :------- |
