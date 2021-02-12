@@ -73,6 +73,7 @@ Additional properties will be added to the API to enable this functionality.
 ```cs
 runtimeclass BreadcrumbItemClickedEventArgs
 {
+    Int32 Index { get; };
     Object Item { get; };
 }
 
@@ -81,9 +82,9 @@ unsealed runtimeclass BreadcrumbItem : Windows.UI.Xaml.Controls.ContentControl
     BreadcrumbItem();
 }
 
-unsealed runtimeclass BreadcrumbLayout : NonVirtualizingLayout
+unsealed runtimeclass BreadcrumbDropDownItem : Windows.UI.Xaml.Controls.ContentControl
 {
-    BreadcrumbLayout();
+    BreadcrumbDropDownItem();
 }
 
 [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
@@ -92,15 +93,27 @@ unsealed runtimeclass Breadcrumb : Windows.UI.Xaml.Controls.Control
 {
     Breadcrumb();
 
-    Object DropdownItemTemplate{ get; set; };
+    Object DropDownItemTemplate{ get; set; };
     Object ItemsSource{ get; set; };
     Object ItemTemplate{ get; set; };
 
     event Windows.Foundation.TypedEventHandler<Breadcrumb, BreadcrumbItemClickedEventArgs> ItemClicked;
 
-    static Windows.UI.Xaml.DependencyProperty DropdownItemTemplateProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty DropDownItemTemplateProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty ItemsSourceProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty ItemTemplateProperty{ get; };
+}
+
+unsealed runtimeclass BreadcrumbItemAutomationPeer : Windows.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer,
+Windows.UI.Xaml.Automation.Provider.IInvokeProvider
+{
+    BreadcrumbItemAutomationPeer(MU_XC_NAMESPACE.BreadcrumbItem owner);
+}
+
+unsealed runtimeclass BreadcrumbDropDownItemAutomationPeer : Windows.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer,
+Windows.UI.Xaml.Automation.Provider.IInvokeProvider
+{
+    BreadcrumbDropDownItemAutomationPeer(MU_XC_NAMESPACE.BreadcrumbDropDownItem owner);
 }
 ```
 
