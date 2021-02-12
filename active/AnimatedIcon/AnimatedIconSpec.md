@@ -639,13 +639,22 @@ XAML
 
 C# 
 ```csharp
+
+void CurrentStateChanged(object sender, RoutedEventArgs e)
+{
+    if (sender.Control = UIButton)
+    {
+        AnimatedSpinningWheel.State = sender.NewState.Name;
+    }
+    
+}
 ```
 
 #### Creating an AnimatedIcon from an AnimatedIconSource
 
-Simlar to the other icon controls that derive from IconElement, there is also an equivalent AnimatedIcon control that derives from IconSource called AnimatedIconSource. This works the same way as the other IconSource controls where AnimatedIconSource is used in controls that take an IconSource as it's icon type. 
+Simlar to the other icon controls that derive from IconElement, there is an equivalent AnimatedIcon control that derives from IconSource called AnimatedIconSource. This works the same way as the other IconSource controls where AnimatedIconSource is used in controls that take an IconSource as it's icon type. 
 
-Here is an example of using an AnimatedIconSource in a TabView
+Here is an example of using an AnimatedIconSource in a TabView. Tabview will not have it's default template updated for V1 but this will be supported in the future. You will also need to update the template to include the setters for TabView in the same way you would in the example titled "Update my control template to support AnimatedIcon". 
 
 XAML
 ```xml
@@ -759,7 +768,7 @@ unsealed runtimeclass AnimatedIcon : Windows.UI.Xaml.Controls.IconElement
     IconSource FallbackSource {get; set; };
     String State {get; set};
 
-    static Windows.UI.Xaml.DependencyProperty State{ get; };
+    static Windows.UI.Xaml.DependencyProperty AttachedState{ get; };
     static void SetState(Windows.UI.Xaml.DependencyObject object, String value); 
     static String GetState(Windows.UI.Xaml.DependencyObject object); 
 
