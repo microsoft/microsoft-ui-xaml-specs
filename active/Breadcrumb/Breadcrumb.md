@@ -145,3 +145,4 @@ as well as "n of m" to convey which node in the path it is.
 * If the Breadcrumb has been crumbled due to resizing
   * the ellipsis is read as 'more' and is not counted for m (the total number of nodes)
   * the screen reader will announce 'collapsed' and 'expanded' for the flyout of crumbled nodes
+  * within the flyout, announce 'x of y' 
