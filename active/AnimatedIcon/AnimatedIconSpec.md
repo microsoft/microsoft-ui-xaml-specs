@@ -3,36 +3,24 @@
 
 # Background
 
-Xaml has an
-[IconElement](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.IconElement)
-base type today with derived types like
+XAML has a couple of base types for showing an icon, aside from simplying showing a small image:
+* [IconElement](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.IconElement)
+* [IconSource](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.IconSource)
+
+The duplication is cause for confusion but trying to solve that is outside the scope of this spec.
+The ultimate difference between the two is that some controls require an IconElement and some
+require an IconSource.
+The new animated icon APIs here are continuing to use the existing pattern.
+
+IconElement & IconSource have the same subclasses for different kinds of icons, for example
 [BitmapIcon](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.BitmapIcon)
-and [SymbolIcon](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.SymbolIcon).
-Since it's an element it can be used in the UI tree, such as in a 
-[StackPanel](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.StackPanel).
+and [BitmapIconSource](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.BitmapIconSource).
+This spec as adding an `AnimatedIcon` and `AnimatedIconSource`.
 
-All of these icons are static though, and developers do not have a straightforward way to
-add an animated icon in controls where they can use a static icon.
-There is also a desire to have an animated icon respond to user interactivity via state changes to either draw
-attention to an action a user can take or to add user delight.
-
-The [AnimatedVisualPlayer](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.AnimatedVisualPlayer)
-element can be used to create animated (Lottie-based) that are small like an icon, but:
-* to have the animation be driven by the states of and interactions with a control,
-developers may need to write a lot of custom code.
-* AnimatedVisualPlayer does not inherit from IconElement, so it cannot be used in places that
-need one, such as
-[NavigationViewItem.Icon](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.NavigationViewItem.Icon)
-or in a DropDownButton.
-
-This spec introduces an AnimatedIcon IconElement which reduces, or ideally eliminates, the amount of code-behind needed to
-implement most scenarios, and it can be used in WinUI controls that support an IconElement.
-
-Along with the various IconElement-based there are equivalent IconSource-source types.
-For example BitmapIcon (IconElement) and
-[BitmapIconSource](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.BitmapIconSource)
-(IconSource).
-Similarly in this spec, along with `AnimatedIcon` is an `AnimatedIconSource`.
+AnimatedIcon (and AnimatedIconSource) displays an animation define by a Lottie animation,
+similar to the existing
+[AnimatedVisualPlayer](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.AnimatedVisualPlayer)
+element.
 
 # AnimatedIcon How-To
 
@@ -45,11 +33,10 @@ You will need to download the Lottie file for the icon you are looking to add an
 tutorial to run that file through LottieGen.
 The output of LottieGen will produce the file needed for AnimatedIcon.
 
-The additional step for AnimatedIcon is to define markers in the animation definition.
-These can be used by controls to transition the animation in the different control states.
-So the output from the LottieGen tool will also include the markers needed for animated icon to
-map the correct state transitions tothe correct animation segments.
-It will also contain the themable color properties you can set in code. 
+The additional step for AnimatedIcon is to define markers in the animation definition, which mark positions within the animation.
+You can then set the `State` of the AnimatedIcon to these markers.
+For example, if you have a position in the Lottie file named "PointerOver", you can set the state the AnimatedIcon State to
+"PointerOver" to move the animation to that position.
 
 ## Design Requirements  
 
@@ -170,14 +157,21 @@ The supported controls for V1 will have their templates update to support the st
 
 ### What happens if my animation file is missing a marker in the JSON file?
 
-AnimatedIcon uses the following algorithm to determine which state to set from the parent control if a marker is missing from the file or the animated icon is transitoning from a null state to a set state: 
+AnimatedIcon uses the following algorithm to determine which state to set from the parent control if a marker is missing from the file or
+the animated icon is transitoning from a null state to a set state: 
 
-1) Check the provided IAnimatedVisualSource2's markers for the markers "[PreviousState]To[NewState]_Start" and "[PreviousState]To[NewState]_End". If both are found play the animation from "[PreviousState]To[NewState]_Start" to "[PreviousState]To[NewState]_End".
-2) If "[PreviousState]To[NewState]_Start" is not found but "[PreviousState]To[NewState]_End" is found, then we will hard cut to the "[PreviousState]To[NewState]_End" position.
-3) If "[PreviousState]To[NewState]_End" is not found but "[PreviousState]To[NewState]_Start" is found, then we will hard cut to the "[PreviousState]To[NewState]_Start" position.
-4) Check if the provided IAnimatedVisualSource2's markers for the marker "[PreviousState]To[NewState]". If it is found then we will hard cut to the "[PreviousState]To[NewState]" position.
-5) Check if the provided IAnimatedVisualSource2's markers for the marker "[NewState]". If it is found, then we will hard cut to the "[NewState]" position.
-6) Check if the provided IAnimatedVisualSource2's markers has any marker which ends with "To[NewState]_End". If any marker is found which has that ending, we will hard cut to the first marker found with the appropriate ending's position.
+1) Check the provided IAnimatedVisualSource2's markers for the markers "[PreviousState]To[NewState]_Start" and "[PreviousState]To[NewState]_End".
+If both are found play the animation from "[PreviousState]To[NewState]_Start" to "[PreviousState]To[NewState]_End".
+2) If "[PreviousState]To[NewState]_Start" is not found but "[PreviousState]To[NewState]_End" is found,
+then we will hard cut to the "[PreviousState]To[NewState]_End" position.
+3) If "[PreviousState]To[NewState]_End" is not found but "[PreviousState]To[NewState]_Start" is found,
+then we will hard cut to the "[PreviousState]To[NewState]_Start" position.
+4) Check if the provided IAnimatedVisualSource2's markers for the marker "[PreviousState]To[NewState]".
+If it is found then we will hard cut to the "[PreviousState]To[NewState]" position.
+5) Check if the provided IAnimatedVisualSource2's markers for the marker "[NewState]".
+If it is found, then we will hard cut to the "[NewState]" position.
+6) Check if the provided IAnimatedVisualSource2's markers has any marker which ends with "To[NewState]_End".
+If any marker is found which has that ending, we will hard cut to the first marker found with the appropriate ending's position.
 7) Check if "[NewState]" parses to a float. If it does, animated from the current position to the parsed float. **
 Hard cut to position 0.0.
 
@@ -193,15 +187,15 @@ Some controls take an IconElement or IconSource in the control so the developer 
 We updated the default templates for two of these controls to support an AnimatedIcon so the developer would only need to add 
 the animated icon code to the content of the control. The control that supports this for V1 is NavigationViewItem. 
 
-We plan to update more controls for V2+ once we see how the community is using this control and we learn about more use cases. 
-
 * NavigationViewItem
+
+Spec note: We plan to update more controls as we learn about more use cases. 
 
 See the example titled "Swap out a static icon with an animated icon in a Navigation View Item" below for more information. 
 
 ### Controls whose templates have been updated 
 
-We have also updated the default templates for a handful of controls that currently show a static icon so a developer can update the template 
+We have also updated the default templates for a handful of controls that currently show a static icon so a developer can update the template
 and use an animated icon instead. For V1, here are the control templates we are going to update:
 
 * AutoSuggestBox
@@ -210,13 +204,13 @@ and use an animated icon instead. For V1, here are the control templates we are 
 * Expander
 * SplitButton
 
-See the examples titled "Add an animated icon to a control that has an icon by default" to see where to update the template with the AnimatedIcon code. 
+See the examples titled "Add an animated icon to a control that has an icon by default" to see where to update the template with the AnimatedIcon code.
 
 ### Default markers for animations in supported controls
 
-AnimatedIcon requires the icon JSON files to include markers named in a standard way so the control can successfully map the visual state transition to the 
-correct animation segment. You can see the design requirements section for more specifics on the structure of the markers and the naming. The list below shows the marker names that 
-should be in the animation file in order for the supported controls to play the animation correctly. 
+AnimatedIcon requires the icon JSON files to include markers named in a standard way so the control can successfully map the visual state transition to the
+correct animation segment. You can see the design requirements section for more specifics on the structure of the markers and the naming.
+The list below shows the marker names that should be in the animation file in order for the supported controls to play the animation correctly.
 
 Here are the default states for each of the controls:
 
@@ -244,9 +238,6 @@ Here are the default states for each of the controls:
     * Pressed 
     * PointerOver
 
-### What happens when AnimatedIcon is added to the visual tree?
-When AnimatedIcon is added to a tree, it copies the state property of its new parent into it's AnimatedIcon.State property. This will trigger the algorithm mentioned above in the "What happens if my animation file is missing a marker in the JSON file?" section. 
-
 # API Pages
 
 ## AnimatedIcon class
@@ -254,7 +245,10 @@ When AnimatedIcon is added to a tree, it copies the state property of its new pa
 An icon that displays and controls an IAnimatedVisual. One way to define an IAnimatedVisual
 is using the [Lottie-Windows](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie) library.
 
-You change the position of the animation displayed by an AnimatedIcon by setting its `State` attached property.
+You change the position of the animation displayed by an AnimatedIcon by setting its `State` attached property,
+on the AnimatedIcon or on its parent in the XAML tree. (If you add an AnimatedIcon to the tree and the
+property is already set on the new parent, the icon will move to that state.)
+
 Using this mechanism you can add an AnimatedIcon to a XAML control's ControlTemplate, and several
 XAML controls have this support already built in.
 
@@ -273,10 +267,12 @@ AnimatedIcon is an
 [IconElement](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.IconElement),
 and so can be used anywhere an element or IconElement is required, such as
 [NavigationViewItem.Icon](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.NavigationViewItem.Icon).
-`AnimatedVisualPlayer` is a more  general animation player that can be used anywhere in an application where AnimatedIcon is intended to only be used where icons are used in WinUI. 
+`AnimatedVisualPlayer` is a more  general animation player that can be used anywhere in an application where AnimatedIcon is intended to
+only be used where icons are used in WinUI. 
 
 
 ### Examples
+
 There are a few ways you can use AnimatedIcon with WinUI controls depending on which control you are planning to add an AnimatedIcon to. The three examples below are: 
 
 * Adding an AnimatedIcon to a control that already has an icon property
@@ -289,22 +285,25 @@ For V1, the template for NavigationViewItem will be updated so you can add your 
 (There will be more controls added in later iterations of the control)
 NavigationViewItem has states for rest/pointer over/press and AnimatedIcon will animate the state transitions by having named markers in the Lottie file such as:  
 
-- NormalToPointerOver
-- NormalToPressed
-- PointerOverToNormal
-- PointerOverToPressed
-- PressedToNormal
-- PressedToPointerOver
+* NormalToPointerOver
+* NormalToPressed
+* PointerOverToNormal
+* PointerOverToPressed
+* PressedToNormal
+* PressedToPointerOver
 
 Below is an example of how to add an animated play icon with the standard state transitions mentioned above to
 a Hierarchical NavigationViewItem.
 
-AnimatedIcon requires you to run the Lottie JSON file through the Windows [CodeGen](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen) 
+AnimatedIcon requires you to run the Lottie JSON file through the Windows
+[CodeGen](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen)
 tool to generate the animation code as a C# class. This process is similar to the process needed for AnimatedVisualPlayer.
 AnimatedIcon needs the JSON file to run through CodeGen so the markers and color properties are translated in the format needed for the control to map the values correctly. 
 
 Once you run your Lottifile through codegen you can add the output class to your project. 
-Follow the steps in the [CodeGen](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen) tutorial for more instructions. 
+Follow the steps in the
+[CodeGen](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen)
+tutorial for more instructions. 
 
 Once the icon file is added to your project you can then add the icon to your navigation view item like you would any other icon type that inherits from IconElement. 
 
