@@ -30,7 +30,7 @@ Represents a control that shows a list of items, typically the navigation trail 
 
 The following example code creates a simple Breadcrumb control with three nodes:
 
-![Breadcrumb default with 3 nodes](images/Breadcrumb_default.PNG)
+![Breadcrumb with nodes: Home, Documents, Design, Northwind, Images. The app is resized so that the Breadcrumb crumbles - then, clicking the ellipsis reveals the crumbled Home and Documents nodes](images/Breadcrumb_crumbling_flyout.gif)
 
 XAML
 ```XAML
@@ -39,16 +39,16 @@ XAML
 
 C#
 ```cs
-Breadcrumb1.ItemsSource = new string[]{ "Node", "Node" , "Node"}
+Breadcrumb1.ItemsSource = new string[]{ "Home", "Documents", "Design", "Northwind", "Images"}
 ```
 
 When there are too many items to display, a Breadcrumb "crumbles" and shows only the 
 last items.
 
-![Breadcrumb crumbling with 3 visible nodes](images/Breadcrumb_crumbling.PNG)
+![Breadcrumb crumbling with 2 visible nodes](images/Breadcrumb_crumbling.PNG)
 
 
-If the last item in a Breadcrumb is too long to fit it will be truncated.
+If the last item in a Breadcrumb is text and is too long to fit it will be truncated. If not text this item will be clipped. 
 
 ![Breadcrumb_crumbled with last node truncated](images/Breadcrumb_truncation.PNG)
  
@@ -120,8 +120,21 @@ For more info, see the
 [lightweight styling guide](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/xaml-styles#lightweight-styling).
 
 
-| Name | Description | Default |
-| :---------- | :------- | :------- |
+| Name | Description | 
+| :---------- | :------- | 
+| BreadcrumbNormalForegroundBrush | Sets the foreground color | 
+| BreadcrumbHoverForegroundBrush | Sets the hover foreground color |
+| BreadcrumbPressedForegroundBrush | Sets the pressed foreground color |
+| BreadcrumbDisabledForegroundBrush | Sets the disabled foreground color |
+| BreadcrumbFocusForegroundBrush | Sets the focus foreground color |
+| BreadcrumbCurrentNormalForegroundBrush | Sets the foreground color for the current item |
+| BreadcrumbCurrentHoverForegroundBrush | Sets the hover foreground color for the current item |
+| BreadcrumbCurrentPressedForegroundBrush | Sets the pressed foreground color for the current item |
+| BreadcrumbCurrentDisabledForegroundBrush | Sets the disabled foreground color for the current item |
+| BreadcrumbCurrentFocusForegroundBrush | Sets the focus foreground color for the current item |
+| BreadcrumbBackgroundBrush | Sets the background color |
+| BreadcrumbBorderBrush | Sets the border color |
+| BreadcrumbItemThemeFontSize | Sets the item font size | 
 
 # Inputs and Accessibility 
 
