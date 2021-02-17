@@ -58,7 +58,20 @@ If the last item in a Breadcrumb is text and is too long to fit it will be clipp
 
 Gets or sets the template to display the drop-down of nodes
 
-The following configures a Breadcrumb so that it's drop down displays bold text.
+_Spec note: The casing should probably be "Dropdown" rather than "DropDown",
+but this is following existing precedent in Xaml, such as
+[ComboBox.IsDropDownOpen](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ComboBox.IsDropDownOpen)_.
+
+The Breadcrumb ItemTemplate is used to override the default display of the
+individual items in the Breadcrumb control.
+
+The DropDownItemTemplate can be used to override the default template used for
+the dropdown that is necessary when the control can't be wide enough and removes
+items from the front.
+
+![Diagram of the two Breadcrumb template properties](images/item-templates.jpg)
+
+The following configures a Breadcrumb so that it's dropdown displays bold text.
 
 ```xaml
 <Breadcrumb>
@@ -74,9 +87,9 @@ The following configures a Breadcrumb so that it's drop down displays bold text.
 
 | Name | Description | Default |
 | :---------- | :------- | :------- |
-| ItemsSource | Gets or sets the content of the Breadcrumb | null |
-| ItemTemplate | Gets or sets the template to display an item|  | 
-| ItemClicked | Raised when a user interaction causes a jump to the CurrentItem.  | N/A |
+| ItemsSource | Gets or sets the content of the Breadcrumb |
+| ItemTemplate | Gets or sets the template to display an item (see example in DropDownItemTemplate property) |
+| ItemClicked | Raised when a user interaction causes a jump to the CurrentItem.  |
 
 Spec note: the V2 of Breadcrumb will add flyouts from chevrons to view children of a node.
 Additional properties will be added to the API to enable this functionality. 
