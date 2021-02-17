@@ -49,7 +49,8 @@ C#
 Breadcrumb1.ItemsSource = new string[]{ "Home", "Documents", "Design", "Northwind", "Images"}
 ```
 
-If the last item in a Breadcrumb is text and is too long to fit it will be truncated. If not text this item will be clipped. 
+If the last item in a Breadcrumb is text and is too long to fit it will be clipped
+(if the item type is a string it will be trimmed, meaning shortened and replaced with an ellipsis).
 
 ![Breadcrumb_crumbled with last node truncated](images/Breadcrumb_truncation.PNG)
 
