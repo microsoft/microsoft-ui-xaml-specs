@@ -3,6 +3,12 @@ Breadcrumb control
 
 # Background
 
+A "Breadcrumb" UX pattern provides an way to show a current position in context.
+For example in Windows File Explorer the current directory is shown with a breadcrumb,
+where clicking on any node takes you to that ancestor directory:
+
+![File Explorer breadcrumb example](images/file-explorer-breadcrumb.jpg)
+
 There’s currently no consistent and Fluent way to address the common UX pattern of a breadcrumb.
 This control is needed for situations where the user's navigation trail (in a file system or menu system) needs
 to be persistently visible.
@@ -14,21 +20,22 @@ the root node to their current position.
 ## V1/V2 Breadcrumb
 
 The work for Breadcrumb has been scoped to V1 and V2 stages of the API.
-In V1 Breadcrumb no chevrons are interactable to show children.
-V2 Breadcrumb will add functionality to have flyouts from chevrons for every node,
-to view children of that node. This spec focuses on V1 Breadcrumb,
+In V1 the nodes have no option to open a drop-down menu, typically used to show the node's siblings.
+V2 will add this. This spec focuses on V1 Breadcrumb,
 but keeping in mind that V1 is positioned in a way to have V2 features smoothly added later. 
 
 # API Pages
 
-## Breadcrumb
+## Breadcrumb class
 
 Represents a control that shows a list of items, typically the navigation trail to the current location.
 
-
 ### Examples
 
-The following example code creates a simple Breadcrumb control with three nodes:
+The following example code creates a simple Breadcrumb control with three nodes.
+When there is not enough width to display the whole control,
+the leading nodes are replaced with a node that the user can click on,
+opening the missing nodes in a flyout menu.
 
 ![Breadcrumb with nodes: Home, Documents, Design, Northwind, Images. The app is resized so that the Breadcrumb crumbles - then, clicking the ellipsis reveals the crumbled Home and Documents nodes](images/Breadcrumb_crumbling_flyout.gif)
 
@@ -42,21 +49,30 @@ C#
 Breadcrumb1.ItemsSource = new string[]{ "Home", "Documents", "Design", "Northwind", "Images"}
 ```
 
-When there are too many items to display, a Breadcrumb "crumbles" and shows only the 
-last items.
-
-![Breadcrumb crumbling with 2 visible nodes](images/Breadcrumb_crumbling.PNG)
-
-
 If the last item in a Breadcrumb is text and is too long to fit it will be truncated. If not text this item will be clipped. 
 
 ![Breadcrumb_crumbled with last node truncated](images/Breadcrumb_truncation.PNG)
- 
+
+## Breadcrumb.DropDownItemTemplate
+
+Gets or sets the template to display the drop-down of nodes
+
+The following configures a Breadcrumb so that it's drop down displays bold text.
+
+```xaml
+<Breadcrumb>
+    <Breadcrumb.DropDownItemTemplate>
+        <DataTemplate x:DataType='BreadcrumbDropDownItem`>
+            <TextBlock Text='{x:Bind Content} FontWeight="Bold" />
+        </DataTemplate>
+    </Breadcrumb.DropDownItemTemplate>
+</Breadcrumb>
+```
+
 ## Other Breadcrumb members
 
 | Name | Description | Default |
 | :---------- | :------- | :------- |
-| DropDownItemTemplate | Gets or sets the template to display the drop-down of nodes | 
 | ItemsSource | Gets or sets the content of the Breadcrumb | null |
 | ItemTemplate | Gets or sets the template to display an item|  | 
 | ItemClicked | Raised when a user interaction causes a jump to the CurrentItem.  | N/A |
