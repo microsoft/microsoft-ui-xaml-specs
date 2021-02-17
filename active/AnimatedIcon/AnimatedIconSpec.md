@@ -184,14 +184,22 @@ to one of the controls without needing to do any more work. The types of control
 ### Supported controls that take an IconElement or IconSource
 
 Some controls take an IconElement or IconSource in the control so the developer can add a custom icon to the control. 
-We updated the default templates for two of these controls to support an AnimatedIcon so the developer would only need to add 
+We updated the default templates for one of these controls for V1 to support an AnimatedIcon so the developer would only need to add 
 the animated icon code to the content of the control. The control that supports this for V1 is NavigationViewItem. 
 
 * NavigationViewItem
 
-Spec note: We plan to update more controls as we learn about more use cases. 
+Spec note: We plan to update more controls as we learn about more use cases. For V2, we can include TabViewItem and other controls based on the what controls the community wants to add an AnimatedIcon to. 
 
 See the example titled "Swap out a static icon with an animated icon in a Navigation View Item" below for more information. 
+
+### Updates to IconSource to support AnimatedIcon
+
+Since some controls take an IconElement and others take an IconSource, we are going to add two methods (public CreateIconElement and 
+protected CreateIconElementCore) to IconSource. When a developer creates a new icon from a control that takes an IconSource, they can call the CreateIconElement 
+method to directly add AnimatedIcon instead of having to know the helper code needed to convert an IconSource to a IconElement. 
+
+### Using AnimatedIcon
 
 ### Controls whose templates have been updated 
 
@@ -806,3 +814,9 @@ In a future version of this control, we would like to add an instanced state pro
 ## Open Question
 * Should the interface be named IAnimatedVisualSource2 if it is not derived from IAnimatedVisualSource?
     * I am stuck on a better name for it. 
+
+## Features for V2
+* Adding support for Light/Dark/High Contrast theming. Today developers can add color properties to the Lottie file and update the theming maually but maybe there is something we can add to the control to make this easier? 
+* Updating the deafult templates of more controls. One of the controls we could update is TabViewItem. 
+* Add support for looping the animations. Possibly add an indeterminate and determinate amount of loops. 
+* Exploring progress scenarios and if that is something that should be built off of this control or if this should be a separate control so it can have all of the accesibility benefits of the other progress controls. 
