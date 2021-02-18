@@ -43,14 +43,25 @@ For example, if you have a position in the Lottie file named "PointerOver", you 
 Designers will need to add markers named like the following to all Lottie files that will be used with controls that support AnimatedIcon. 
 The controls that currently support AnimatedIcon are listed in the next section. 
 
-The marker names should reflect the visual state the animation is going from to the visual state the animation is going to. For example, the bare minimum of the markers that are needed for icons being used in a DropDownButton are:  
+The marker names should reflect the visual state the animation is going from to the visual state the animation is going to. Each marker name should also have a _Start or _End appended to the name to define the start of the animation segment and the end of the animation segment. This is a standard example: 
 
-* NormalToPointerOver 
-* NormalToPressed 
-* PointerOverToNormal 
-* PointerOverToPressed 
-* PressedToNormal 
-* PressedToPointerOver  
+* [PreviousState]To[NewState]_Start" and "[PreviousState]To[NewState]_End"
+
+For example, the bare minimum of the markers that are needed for icons being used in a DropDownButton are:  
+
+* NormalToPointerOver_Start
+* NormalToPointerOver_End
+* NormalToPressed_Start
+* NormalToPressed_End
+* PointerOverToNormal_Start
+* PointerOverToNormal_End
+* PointerOverToPressed_Start
+* PointerOverToPressed_End
+* PressedToNormal_Start
+* PressedToNormal_End
+* PressedToPointerOver_Start
+* PressedToPointerOver_End
+ 
 
 “Normal" is the state where the user is not interacting with the DropDownButton. 
 
@@ -75,7 +86,7 @@ Here is an example of how the markers would look in a Lottie JSON file for the D
 
 {"tm":100,"cm":"PressedToPointerOver_Start","dr":0},{"tm":101,"cm":"PressedToPointerOver_End","dr":0}]
 
-The supported controls for V1 will have their templates update to support the standard marker states. The markers needed for each control are: 
+The supported controls for V1 will have their templates update to support the standard marker states. The markers needed for each control that will need the _Start and _End appended to each are: 
 
 * AutoSuggestBox 
     * NormalToPointerOver 
