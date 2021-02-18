@@ -193,12 +193,6 @@ Spec note: We plan to update more controls as we learn about more use cases. For
 
 See the example titled "Swap out a static icon with an animated icon in a Navigation View Item" below for more information. 
 
-### Updates to IconSource to support AnimatedIcon
-
-Since some controls take an IconElement and others take an IconSource, we are going to add two methods (public CreateIconElement and 
-protected CreateIconElementCore) to IconSource. When a developer creates a new icon from a control that takes an IconSource, they can call the CreateIconElement 
-method to directly add AnimatedIcon instead of having to know the helper code needed to convert an IconSource to a IconElement. 
-
 ### Using AnimatedIcon
 
 ### Controls whose templates have been updated 
@@ -810,6 +804,15 @@ If the user turns off animations in theri system settings, the AnimatedIcons wil
 ## Adding an instance state property 
 
 In a future version of this control, we would like to add an instanced state property to the control so Intellisense can inform the developer of the State property. Today, the parser cannot recognize a dependency property and does not have the ability to tell the difference between a dependency property and an instance property of the same name. There would need to be a fix to the parser in order for this to work. 
+
+### Updates to IconSource to support AnimatedIconSource
+
+Since some controls take an IconElement and others take an IconSource, we are going to add two methods (public CreateIconElement and 
+protected CreateIconElementCore) to IconSource. This will help cover the two sccenarios below: 
+
+1.	I’m a developer creating a new control and I want to expose an IconSource property where consumers of my control can set ‘any’ iconsource. This control developer should not have to worry about each type of IconSource like FontIconSource, BitmapIconSource, AnimatedIconSource etc. In this case the developer can just use IconSource and call IconSource.CreateIconElement to get the corresponding IconElement without knowing what specific IconSource/Element it is. 
+2.	I’m a developer creating a new type of IconSource, say Animated2IconSource. I would have to override Animated2IconSource.CreateElementCore and return an Animated2IconElement so that my new IconSource will work anywhere an IconSource can be used.
+
 
 ## Open Question
 * Should the interface be named IAnimatedVisualSource2 if it is not derived from IAnimatedVisualSource?
