@@ -63,7 +63,7 @@ For example, the bare minimum of the markers that are needed for icons being use
 Markers will need to be named this specific way so AnimatedIcon can map the correct animation segment with
 the correct visual state transition.
 This solution is conforming to a standard set of strings that are already defined for many Xaml controls.
-Here is an example of how the markers would look in a Lottie JSON file for the DropDownButton.  
+Here is an example of how the markers would look in a Lottie JSON file that was exported from Adobe After Effect for the DropDownButton.  
 
 "markers":[{"tm":0,"cm":"NormalToPointerOver_Start","dr":0},{"tm":9,"cm":"NormalToPointerOver_End","dr":0}, 
 
