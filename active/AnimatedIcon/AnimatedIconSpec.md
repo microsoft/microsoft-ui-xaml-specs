@@ -43,26 +43,21 @@ For example, if you have a position in the Lottie file named "PointerOver", you 
 Designers will need to add markers named like the following to all Lottie files that will be used with controls that support AnimatedIcon. 
 The controls that currently support AnimatedIcon are listed in the next section. 
 
-The marker names should reflect the visual state the animation is going from to the visual state the animation is going to. Each marker name should also have a _Start or _End appended to the name to define the start of the animation segment and the end of the animation segment. This is a standard example: 
+The marker names should reflect the visual state the animation is going from to the visual state the animation is going to. Each marker name can also have a _Start or _End appended to the name to define the start of the animation segment and the end of the animation segment. This is a standard example: 
 
 * [PreviousState]To[NewState]_Start" and "[PreviousState]To[NewState]_End"
 
+If you do not provide the "_Start" or "_End" marker for a state transition, AnimatedIcon will follow the algorithm defined in the next section to play the correct frame or segment based on what is missing. 
+
 For example, the bare minimum of the markers that are needed for icons being used in a DropDownButton are:  
 
-* NormalToPointerOver_Start
-* NormalToPointerOver_End
-* NormalToPressed_Start
-* NormalToPressed_End
-* PointerOverToNormal_Start
-* PointerOverToNormal_End
-* PointerOverToPressed_Start
-* PointerOverToPressed_End
-* PressedToNormal_Start
-* PressedToNormal_End
-* PressedToPointerOver_Start
-* PressedToPointerOver_End
+* NormalToPointerOver
+* NormalToPressed
+* PointerOverToNormal
+* PointerOverToPressed
+* PressedToNormal
+* PressedToPointerOver
  
-
 “Normal" is the state where the user is not interacting with the DropDownButton. 
 
 Markers will need to be named this specific way so AnimatedIcon can map the correct animation segment with
@@ -85,6 +80,28 @@ Here is an example of how the markers would look in a Lottie JSON file for the D
 {"tm":90,"cm":"PressedToNormal_Start","dr":0},{"tm":99,"cm":"PressedToNormal_End","dr":0}, 
 
 {"tm":100,"cm":"PressedToPointerOver_Start","dr":0},{"tm":101,"cm":"PressedToPointerOver_End","dr":0}]
+
+### What happens if the markers are missing a _Start or _End or marker in the file? 
+AnimatedIcon uses the following algorithm to determine which state to set from the parent control if a marker is missing from the file or
+the animated icon is transitoning from a null state to a set state: 
+
+1) Check the provided file's markers for the markers "[PreviousState]To[NewState]_Start" and "[PreviousState]To[NewState]_End".
+If both are found play the animation from "[PreviousState]To[NewState]_Start" to "[PreviousState]To[NewState]_End".
+2) If "[PreviousState]To[NewState]_Start" is not found but "[PreviousState]To[NewState]_End" is found,
+then we will hard cut to the "[PreviousState]To[NewState]_End" position.
+3) If "[PreviousState]To[NewState]_End" is not found but "[PreviousState]To[NewState]_Start" is found,
+then we will hard cut to the "[PreviousState]To[NewState]_Start" position.
+4) Check if the provided IAnimatedVisualSource2's markers for the marker "[PreviousState]To[NewState]".
+If it is found then we will hard cut to the "[PreviousState]To[NewState]" position.
+5) Check if the provided IAnimatedVisualSource2's markers for the marker "[NewState]".
+If it is found, then we will hard cut to the "[NewState]" position.
+6) Check if the provided IAnimatedVisualSource2's markers has any marker which ends with "To[NewState]_End".
+If any marker is found which has that ending, we will hard cut to the first marker found with the appropriate ending's position.
+7) Check if "[NewState]" parses to a float. If it does, animated from the current position to the parsed float. **
+Hard cut to position 0.0.
+
+
+### Supported Controls Marker Names 
 
 The supported controls for V1 will have their templates update to support the standard marker states. The markers needed for each control that will need the _Start and _End appended to each are: 
 
@@ -166,25 +183,6 @@ The supported controls for V1 will have their templates update to support the st
     * PressedToNormal 
     * PressedToPointerOver  
 
-### What happens if my animation file is missing a marker in the JSON file?
-
-AnimatedIcon uses the following algorithm to determine which state to set from the parent control if a marker is missing from the file or
-the animated icon is transitoning from a null state to a set state: 
-
-1) Check the provided IAnimatedVisualSource2's markers for the markers "[PreviousState]To[NewState]_Start" and "[PreviousState]To[NewState]_End".
-If both are found play the animation from "[PreviousState]To[NewState]_Start" to "[PreviousState]To[NewState]_End".
-2) If "[PreviousState]To[NewState]_Start" is not found but "[PreviousState]To[NewState]_End" is found,
-then we will hard cut to the "[PreviousState]To[NewState]_End" position.
-3) If "[PreviousState]To[NewState]_End" is not found but "[PreviousState]To[NewState]_Start" is found,
-then we will hard cut to the "[PreviousState]To[NewState]_Start" position.
-4) Check if the provided IAnimatedVisualSource2's markers for the marker "[PreviousState]To[NewState]".
-If it is found then we will hard cut to the "[PreviousState]To[NewState]" position.
-5) Check if the provided IAnimatedVisualSource2's markers for the marker "[NewState]".
-If it is found, then we will hard cut to the "[NewState]" position.
-6) Check if the provided IAnimatedVisualSource2's markers has any marker which ends with "To[NewState]_End".
-If any marker is found which has that ending, we will hard cut to the first marker found with the appropriate ending's position.
-7) Check if "[NewState]" parses to a float. If it does, animated from the current position to the parsed float. **
-Hard cut to position 0.0.
 
 ## Controls that support AnimatedIcon
 
@@ -223,7 +221,7 @@ See the examples titled "Add an animated icon to a control that has an icon by d
 
 AnimatedIcon requires the icon JSON files to include markers named in a standard way so the control can successfully map the visual state transition to the
 correct animation segment. You can see the design requirements section for more specifics on the structure of the markers and the naming.
-The list below shows the marker names that should be in the animation file in order for the supported controls to play the animation correctly.
+The list below shows the states that the marker names should be structures in the animation file in order for the supported controls to play the animation correctly.
 
 Here are the default states for each of the controls:
 
