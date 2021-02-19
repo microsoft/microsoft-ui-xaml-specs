@@ -24,67 +24,48 @@ element.
 
 # AnimatedIcon How-To
 
-## Creating animated content with Lottie
+## Creating animated content for an AnimatedIcon with Lottie
 
-Defining an animation for an AnimatedIcon[Source] is the same as the process for an
+Defining an animation for an AnimatedIcon[Source] begins the same as the process to define an animation for an
 [AnimatedVisualPlayer](http://msdn.microsoft.com/library/Microsoft.UI.Xaml.Controls.AnimatedVisualPlayer).
 You will need to download the Lottie file for the icon you are looking to add and follow the steps in
 [this]((https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen))
 tutorial to run that file through LottieGen.
-The output of LottieGen will produce the file needed for AnimatedIcon.
+LottieGen generates code for a (WinRT) class that you can then instantiate and use with an AnimatedIcon.
+
+For example, the XAML
+[AutoSuggestBox](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.AutoSuggestBox)
+control uses the ?? class, which was generated using the LottieGen tool.
 
 The additional step for AnimatedIcon is to define markers in the animation definition, which mark positions within the animation.
 You can then set the `State` of the AnimatedIcon to these markers.
-For example, if you have a position in the Lottie file named "PointerOver", you can set the state the AnimatedIcon State to
+For example, if you have a position in the Lottie file marked "PointerOver", you can set AnimatedIcon State to
 "PointerOver" to move the animation to that position.
 
-## Design Requirements  
+## Naming AnimatedIcon markers
 
-Designers will need to add markers named like the following to all Lottie files that will be used with controls that support AnimatedIcon. 
-The controls that currently support AnimatedIcon are listed in the next section. 
+If you set the State of an AnimatedIcon to a new value, you can have a position in the Lottie
+animation for that state, or specificially for the transition from the old state to the new state.
+The positions are identified with markers in the Lottie file.
+You can also define specific markers for the start of the transition or the end of the transition.
 
-The marker names should reflect the visual state the animation is going from to the visual state the animation is going to. Each marker name can also have a _Start or _End appended to the name to define the start of the animation segment and the end of the animation segment. This is a standard example: 
+For example, XAML's AutoSuggestBox control uses an AnimatedIcon that animates with the following states:
+* Normal
+* PointerOver
+* Pressed
 
-* [PreviousState]To[NewState]_Start" and "[PreviousState]To[NewState]_End"
+?? Show snippet from control template
 
-If you do not provide the "_Start" or "_End" marker for a state transition, AnimatedIcon will follow the algorithm defined in the next section to play the correct frame or segment based on what is missing. 
+You can define markers in the Lottie file with the State names.
+You can also define markers as follows:
+* Combine state names with a "To". For example, in the AutoSuggestBox case, "NormalToPointerOver".
+Changing the AnimatedIcon's state from "Normal" to "PointerOver" will cause it to move to this marker's position.
+* Append "_Start" and/or "_End" to a marker name.
+For example defining markers "NormalToPointerOver_Start" and "NormalToPointerOver_End" will and changing
+the AnimatedIcon's State from "Normal" to "PointerOver" will cause it to animate from the _Start
+marker's position to the _End position.
 
-For example, the bare minimum of the markers that are needed for icons being used in a DropDownButton are:  
-
-* NormalToPointerOver
-* NormalToPressed
-* PointerOverToNormal
-* PointerOverToPressed
-* PressedToNormal
-* PressedToPointerOver
- 
-“Normal" is the state where the user is not interacting with the DropDownButton. 
-
-Markers will need to be named this specific way so AnimatedIcon can map the correct animation segment with
-the correct visual state transition.
-This solution is conforming to a standard set of strings that are already defined for many Xaml controls.
-Here is an example of how the markers would look in a Lottie JSON file that was exported from Adobe After Effect for the DropDownButton.  
-
-"markers":[{"tm":0,"cm":"NormalToPointerOver_Start","dr":0},{"tm":9,"cm":"NormalToPointerOver_End","dr":0}, 
-
-{"tm":10,"cm":"NormalToPressed_Start","dr":0},{"tm":19,"cm":"NormalToPressed_End","dr":0}, 
-
-{"tm":20,"cm":"PointerOverToNormal_Start","dr":0},{"tm":29,"cm":"PointerOverToNormal_End","dr":0}, 
-
-{"tm":30,"cm":"PointerOverToPressed_Start","dr":0},{"tm":39,"cm":"PointerOverToPressed_End","dr":0}, 
-
-{"tm":40,"cm":"PressedToNormal_Start","dr":0},{"tm":49,"cm":"PressedToNormal_End","dr":0}, 
-
-{"tm":50,"cm":"PressedToPointerOver_Start","dr":0},{"tm":69,"cm":"PressedToPointerOver_End","dr":0}, 
-
-{"tm":90,"cm":"PressedToNormal_Start","dr":0},{"tm":99,"cm":"PressedToNormal_End","dr":0}, 
-
-{"tm":100,"cm":"PressedToPointerOver_Start","dr":0},{"tm":101,"cm":"PressedToPointerOver_End","dr":0}]
-
-### What happens if the markers are missing a _Start or _End or marker in the file? 
-AnimatedIcon uses the following algorithm to determine which state to set from the parent control if a marker is missing from the file or
-the animated icon is transitoning from a null state to a set state: 
-
+The exact algorithm used to map AnimatedIcon State changes to marker positions:
 1) Check the provided file's markers for the markers "[PreviousState]To[NewState]_Start" and "[PreviousState]To[NewState]_End".
 If both are found play the animation from "[PreviousState]To[NewState]_Start" to "[PreviousState]To[NewState]_End".
 2) If "[PreviousState]To[NewState]_Start" is not found but "[PreviousState]To[NewState]_End" is found,
@@ -101,159 +82,77 @@ If any marker is found which has that ending, we will hard cut to the first mark
 Hard cut to position 0.0.
 
 
-### Supported Controls Marker Names 
+Details of the marker format in Lottie JSON files are describe in detail [??](??).
+The following is an example:
 
-The supported controls for V1 will have their templates update to support the standard marker states. The markers needed for each control that will need the _Start and _End appended to each are: 
+```json
+"markers":[{"tm":0,"cm":"NormalToPointerOver_Start","dr":0},{"tm":9,"cm":"NormalToPointerOver_End","dr":0}, 
 
-* AutoSuggestBox 
-    * NormalToPointerOver 
-    * NormalToPressed 
-    * PointerOverToNormal 
-    * PointerOverToPressed 
-    * PressedToNormal 
-    * PressedToPointerOver 
-* CheckBox 
-    * NormalOnToPointerOverOn
-    * NormalOnToPressedOn
-    * NormalOffToNormalOn
-    * NormalOffToPointerOverOff
-    * NormalOffToPressedOff
-    * PointerOverOnToPointerOverOff
-    * PointerOverOnToNormalOn
-    * PointerOverOnToPressedOn
-    * PointerOverOffToPointerOverOn
-    * PointerOverOffToNormalOff
-    * PointerOverOffToPressedOff
-    * PressedOnToPressedOff
-    * PressedOnToPointerOverOff
-    * PressedOnToNormalOff_Start
-    * PressedOffToPressedOn
-    * PressedOffToPointerOver
-    * PressedOffToNormalOn
-* Expander 
-    * NormalToPointerOver 
-    * NormalToPressed 
-    * PointerOverToNormal 
-    * PointerOverToPressed 
-    * PressedToNormal 
-    * PressedToPointerOver  
-* DropDownButton 
-    * NormalToPointerOver 
-    * NormalToPressed 
-    * PointerOverToNormal 
-    * PointerOverToPressed 
-    * PressedToNormal 
-    * PressedToPointerOver  
-* NavigationViewItem
-    * NormalToPointerOver 
-    * NormalToPressed 
-    * NormalToSelected
-    * NormalToPointerOverSelected
-    * NormalToPressedSelected
-    * PointerOverToNormal 
-    * PointerOverToPressed 
-    * PointerOverToSelected
-    * PointerOverToPointerOverSelected
-    * PointerOverToPressedSelected
-    * PressedToNormal 
-    * PressedToPointerOver 
-    * PressedToSelected
-    * PressedToPointerOverSelected
-    * PressedToPressedSelected
-    * SelectedToPointerOverSelected
-    * SelectedToPressedSelected
-    * SelectedToNormal
-    * SelectedToPointerOver
-    * SelectedToPressed
-    * PointerOverSelectedToPressedSelected
-    * PointerOverSelectedToSelected
-    * PointerOverSelectedToNormal
-    * PointerOverSelectedToPointerOver
-    * PointerOverSelectedToPressed
-    * PressedSelectedToPointerOverSelected
-    * PressedSelectedToSelected
-    * PressedSelectedToNormal
-    * PressedSelectedToPointerOver
-    * PressedSelectedToPressed
-* SplitButton 
-    * NormalToPointerOver 
-    * NormalToPressed 
-    * PointerOverToNormal 
-    * PointerOverToPressed 
-    * PressedToNormal 
-    * PressedToPointerOver  
+{"tm":10,"cm":"NormalToPressed_Start","dr":0},{"tm":19,"cm":"NormalToPressed_End","dr":0}, 
+
+{"tm":20,"cm":"PointerOverToNormal_Start","dr":0},{"tm":29,"cm":"PointerOverToNormal_End","dr":0}, 
+
+{"tm":30,"cm":"PointerOverToPressed_Start","dr":0},{"tm":39,"cm":"PointerOverToPressed_End","dr":0}, 
+
+{"tm":40,"cm":"PressedToNormal_Start","dr":0},{"tm":49,"cm":"PressedToNormal_End","dr":0}, 
+
+{"tm":50,"cm":"PressedToPointerOver_Start","dr":0},{"tm":69,"cm":"PressedToPointerOver_End","dr":0}, 
+
+{"tm":90,"cm":"PressedToNormal_Start","dr":0},{"tm":99,"cm":"PressedToNormal_End","dr":0}, 
+
+{"tm":100,"cm":"PressedToPointerOver_Start","dr":0},{"tm":101,"cm":"PressedToPointerOver_End","dr":0}]
+```
+
+## Using an AnimatedIcon with a XAML control
+
+Some XAML controls have Icon[Source] properties that you can set with an AnimatedIcon[Source],
+and then you can set the State to cause it to move to the positions of different markers.
+
+In particular, if you set an AnimatedIcon on
+[NavigationViewItem.Icon](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.NavigationViewItem.Icon)
+the NavigationViewItem will set the states of the AnimatedIcon for you, according to the states of the control.
 
 
-## Controls that support AnimatedIcon
+For example, this sets a custom animation `PlayIcon` that was generated by the LottieGen tool:
 
-Many built-in Xaml controls support AnimatedIcon[Source] by animating to markers when the state of the control changes.
-This gives you the ability to add an animated icon with the correct markers in the file,
-to one of the controls without needing to do any more work. The types of controls that are supported for V1 are defined below. 
+```xml
+<muxc:NavigationView.MenuItems>
+    <muxc:NavigationViewItem Content = "Play">
+        <muxc:NavigationViewItem.Icon>
+            <muxc:AnimatedIcon >
+                <muxc:AnimatedIcon.Source>
+                    <local:PlayIcon />
+                </muxc:AnimatedIcon.Source>
+            </muxc:AnimatedIcon>
+    </muxc:NavigationViewItem.Icon>
+</muxc:NavigationView.MenuItems>
+```
 
-### Supported controls that take an IconElement or IconSource
+The NavigationViewItem will automatically set the following states on the AnimatedIcon:
+* Normal
+* PointerOver
+* Pressed
+* Selected
+* PressedSelected
+* PointerOverSelected
 
-Some controls take an IconElement or IconSource in the control so the developer can add a custom icon to the control. 
-We updated the default templates for one of these controls for V1 to support an AnimatedIcon so the developer would only need to add 
-the animated icon code to the content of the control. The control that supports this for V1 is NavigationViewItem. 
+If the PlayIcon has a marker for "NormalToPointerOver", it will be animated
+to when the mouse moves to over the NavigationViewItem.
 
-* NavigationViewItem
+To create this custom PlayIcon class, you run a Lottie JSON file (with markers) through the Windows
+[CodeGen](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen)
+tool to generate the animation code as a C# class.
 
-Spec note: We plan to update more controls as we learn about more use cases. For V2, we can include TabViewItem and other controls based on the what controls the community wants to add an AnimatedIcon to. 
-
-See the example titled "Swap out a static icon with an animated icon in a Navigation View Item" below for more information. 
-
-### Using AnimatedIcon
-
-### Controls whose templates have been updated 
-
-We have also updated the default templates for a handful of controls that currently show a static icon so a developer can update the template
-and use an animated icon instead. For V1, here are the control templates we are going to update:
-
-* AutoSuggestBox
-* CheckBox
-* DropDownButton
-* Expander
-* SplitButton
-
-See the examples titled "Add an animated icon to a control that has an icon by default" to see where to update the template with the AnimatedIcon code.
-
-### Default markers for animations in supported controls
-
-AnimatedIcon requires the icon JSON files to include markers named in a standard way so the control can successfully map the visual state transition to the
-correct animation segment. You can see the design requirements section for more specifics on the structure of the markers and the naming.
-The list below shows the states that the marker names should be structures in the animation file in order for the supported controls to play the animation correctly.
-
-Here are the default states for each of the controls:
-
-* AutoSuggestBox 
-    * Normal
-    * Pressed 
-    * PointerOver
-* CheckBox 
-    * NormalOn
-    * NormalOff
-    * PointerOverOn
-    * PointerOverOff
-    * PressedOn
-    * PressedOff
-* Expander 
-    * Normal
-    * Pressed 
-    * PointerOver  
-* DropDownButton 
-    * Normal
-    * Pressed 
-    * PointerOver 
-* SplitButton 
-    * Normal
-    * Pressed 
-    * PointerOver
+Once you run your Lottifile through codegen you can add the output class to your project. 
+Follow the steps in the
+[CodeGen](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen)
+tutorial for more instructions. 
 
 # API Pages
 
 ## AnimatedIcon class
 
-An icon that displays and controls an IAnimatedVisual. One way to define an IAnimatedVisual
+An icon that displays and controls an IAnimatedVisual2. One way to define an IAnimatedVisual2
 is using the [Lottie-Windows](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie) library.
 
 You change the position of the animation displayed by an AnimatedIcon by setting its `State` attached property,
@@ -262,6 +161,33 @@ property is already set on the new parent, the icon will move to that state.)
 
 Using this mechanism you can add an AnimatedIcon to a XAML control's ControlTemplate, and several
 XAML controls have this support already built in.
+
+### Remarks
+
+Note that if you add an AnimatedIcon to a XAML control, the icon's parent in the tree might not be 
+obvious, for example the parent of the following AnimatedIcon is not the Button, because the Button
+is inserting it into a tree defined by the Button's control template:
+
+```xaml
+<Button>
+    <AnimatedIcon ... />
+</Button>
+```
+
+But non-control types are more evident, for example a panel:
+
+```xaml
+<Button>
+    <StackPanel Orientation='Horizontal' x:Name='StackPanel1'>
+        <AnimatedIcon ... />
+        <TextBlock Text='Click' />
+    </StackPanel>
+</Button>
+```
+
+```cs
+AnimatedIcon.SetState(this.StackPanel1, "PointerOver");
+```
 
 ### Is this the right control? 
 
@@ -281,10 +207,10 @@ and so can be used anywhere an element or IconElement is required, such as
 `AnimatedVisualPlayer` is a more  general animation player that can be used anywhere in an application where AnimatedIcon is intended to
 only be used where icons are used in WinUI. 
 
-
 ### Examples
 
-There are a few ways you can use AnimatedIcon with WinUI controls depending on which control you are planning to add an AnimatedIcon to. The three examples below are: 
+There are a few ways you can use AnimatedIcon with WinUI controls depending on which control you are planning to add an AnimatedIcon to.
+The three examples below are: 
 
 * Adding an AnimatedIcon to a control that already has an icon property
 * Update my control template to support AnimatedIcon 
