@@ -1,5 +1,6 @@
 
-# AnimatedIcon
+AnimatedIcon
+===
 
 # Background
 
@@ -103,15 +104,184 @@ The following is an example:
 {"tm":100,"cm":"PressedToPointerOver_Start","dr":0},{"tm":101,"cm":"PressedToPointerOver_End","dr":0}]
 ```
 
-## Using an AnimatedIcon with a XAML control
 
-Some XAML controls have Icon[Source] properties that you can set with an AnimatedIcon[Source],
-and then you can set the State to cause it to move to the positions of different markers.
+# API Pages
 
-In particular, if you set an AnimatedIcon on
-[NavigationViewItem.Icon](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.NavigationViewItem.Icon)
+_Each of the following L2 sections correspond to a page that will be on docs.microsoft.com_
+
+## AnimatedIcon class
+
+An icon that displays and controls an IAnimatedVisual2. One way to define an IAnimatedVisual2
+is using the [Lottie-Windows](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie) library.
+
+You change the position of the animation displayed by an AnimatedIcon by setting its `State` attached property,
+on the AnimatedIcon or on its parent in the XAML tree. (If you add an AnimatedIcon to the tree and the
+property is already set on the new parent, the icon will move to that state.)
+
+Using this mechanism you can add an AnimatedIcon to a XAML control's ControlTemplate, and several
+XAML controls have this support already built in.
+
+### Is this the right control? 
+
+Use an AnimatedIcon control when you want to tie an animated icon to a user interaction in your UI.
+Do not use an AnimatedIcon control if you want to just play an animation once or control the playback of the animation.
+Do not use an AnimatedIcon control if you want to play your animation in a control that does not support IconElement.
+Instead, use the `AnimatedVisualPlayer` control. 
+
+An `AnimatedIcon` control can be used anywhere an IconElement can be used in WinUI. 
+
+### How is AnimatedIcon different than [AnimatedVisualPlayer](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.AnimatedVisualPlayer)?
+
+AnimatedIcon is an
+[IconElement](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.IconElement),
+and so can be used anywhere an element or IconElement is required, such as
+[NavigationViewItem.Icon](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.NavigationViewItem.Icon).
+`AnimatedVisualPlayer` is a more  general animation player that can be used anywhere in an application where AnimatedIcon is intended to
+only be used where icons are used in WinUI.
+
+### Example
+
+In this example, we will add an AnimatedIcon to a UI page where the icon will respond to a download button being pressed.
+The button control has the Normal, PointerOver, and Pressed states in it's default template.
+The animation file being used in the AnimatedIcon already has the correct markers for the Button control based off of the states previously mentioned. 
+
+XAML
+```xml
+<Grid>
+    <Button x:Name="DownloadButton" Content="Download" OnClick="OnButtonClick"/>
+    <muxc:AnimatedIcon x:Name="AnimatedSpinningWheel" AutomationProperties.AccessibilityView="Raw"  muxc:AnimatedIcon.State="Normal">
+        <muxc:AnimatedIcon.Source>
+            <AnimatedVisuals:DownloadAnimation/>
+        </muxc:AnimatedIcon.Source>
+        <muxc:AnimatedIcon.FallbackIconSource>
+            <muxc:FontIconSource
+                FontSize="8"
+                FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                Foreground="{ThemeResource ButtonForegroundPressed}"
+                Glyph="&#xE96E;"
+                IsTextScaleFactorEnabled="False"/>
+        </muxc:AnimatedIcon.FallbackIconSource>
+    </muxc:AnimatedIcon>
+</Grid>
+
+```
+
+C# 
+```csharp
+
+void CurrentStateChanged(object sender, RoutedEventArgs e)
+{
+    if (sender.Control = UIButton)
+    {
+        AnimatedSpinningWheel.State = sender.NewState.Name;
+    }
+    
+}
+```
+
+## AnimatedIcon.State attached property
+
+```c#
+static public void SetState(UIElement element, string value);
+static public string GetState(UIElement element);
+```
+
+Use the State attached property to change the state of an AnimatedIcon.
+This property can be set on the parent of an AnimatedIcon, or on the
+AniumatedIcon itself.
+
+This example changes the State of the AnimatedIcon based on the pointer being over it.
+
+```xaml
+<AnimatedIcon PointerEntered="HandlePointerEntered" PointerExited="HandlePointerEited"
+        State="Normal" />
+```
+
+```cs
+private void Button_PointerEntered(object sender, PointerRoutedEventArgs e)
+{
+    AnimatedIcon.SetState(this.StackPanel1, "PointerOver");
+}
+
+private void Button_PointerExited(object sender, PointerRoutedEventArgs e)
+{
+    AnimatedIcon.SetState(this.StackPanel1, "Normal");
+}
+
+```
+
+### Remarks
+
+When you set the AnimatedIcon.State property on an element this is what happens: 
+* The setter looks to see if the element that the property was just set on is an AnimatedIcon, if it is we finish. 
+* If it is not, the setter checks to see if the first child of that element is an AnimatedIcon, if it is not, we finish. 
+* If it is, the setter also sets the AnimatedIcon.State property on that child AnimatedIcon. 
+
+If you add an AnimatedIcon to a XAML control, the icon's parent in the tree might not be 
+obvious, for example the parent of the following AnimatedIcon is not the Button, because the Button
+is inserting it into a tree defined by the Button's control template:
+
+```xaml
+<Button>
+    <AnimatedIcon ... />
+</Button>
+```
+
+But non-control types are more evident, for example a panel:
+
+```xaml
+<Button>
+    <StackPanel Orientation='Horizontal' x:Name='StackPanel1'>
+        <AnimatedIcon ... />
+        <TextBlock Text='Click' />
+    </StackPanel>
+</Button>
+```
+
+## Other AnimatedIcon class members
+
+| Name | Description | Default |
+| :---| :---| :---|
+| Source | Animation data, for example generated by the LottieGen tool. | null |
+| FallbackSource | Gets or sets the static icon that will be used as a fallback when the OS cannot run the animated icon file.   | null |
+| State | Property that the developer sets on AnimatedIcon. See below for more details. | null |
+| Markers |	A dictionary (<string, double>) of all marker strings and their associated values found in the icon’s JSON file. The strings and values are based on what the designer names the markers in the Lottie After Effects file.  |	null |
+| SetColorProperty | Takes a string and Windows.UI.Color value to set the color of a themed color property in the Lottie file.  |
+| TryCreateAnimatedVisualSource | Method to get an IAnimatedVisual from an IAnimatedVisualSource2
+
+
+## IconSource.CreateIconElement
+
+```cs
+public IconElement CreateIconElement();
+```
+
+Call the IconSource.CreateIconElement method to get an IconElement from and IconSource.
+An IconElement can be used by controls that have an IconElement property,
+or since it's an element it can be used anywhere in the XAML element tree.
+
+This example creates a BitmapIcon from a BitmapIconSource:
+
+```cs
+IconSource iconSource = new BitmapIconSource();
+BitmapIcon = iconSource.CreateIconElement as BitmapIcon();
+```
+
+## IconSource.CreateIconElementCore
+
+```cs
+protected virtual IconElement CreateIconElementCore();
+```
+
+Override this method in a subclass of IconSource to produce an IconElement
+that corresponds to your IconSource.
+
+## NavigationViewItem.Icon
+
+_Spec note: this isn't a new property, but has new behavior_
+
+If you set an AnimatedIcon as the value of the Icon property, 
 the NavigationViewItem will set the states of the AnimatedIcon for you, according to the states of the control.
-
 
 For example, this sets a custom animation `PlayIcon` that was generated by the LottieGen tool:
 
@@ -148,130 +318,280 @@ Follow the steps in the
 [CodeGen](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen)
 tutorial for more instructions. 
 
-# API Pages
+## IAnimatedVisualSource2 interface
 
-## AnimatedIcon class
+Provides a Composition `Visual` that can be animated.
 
-An icon that displays and controls an IAnimatedVisual2. One way to define an IAnimatedVisual2
-is using the [Lottie-Windows](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie) library.
+`IAnimatedVisualSource2` is an `IAnimatedVisualSource`, so has the
+[TryCreateAnimatedVisual](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.IAnimatedVisualSource.TryCreateAnimatedVisual),
+which can be called to retrieve an
+[IAnimatedVisual](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.IAnimatedVisual).
+`IAnimatedVisual` can then be used to get a Composition
+[Visual](https://docs.microsoft.com/uwp/api/Windows.UI.Composition.Visual),
+which can be added to a Xaml element tree using the methods of
+[ElementCompositionPreview](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Hosting.ElementCompositionPreview).
 
-You change the position of the animation displayed by an AnimatedIcon by setting its `State` attached property,
-on the AnimatedIcon or on its parent in the XAML tree. (If you add an AnimatedIcon to the tree and the
-property is already set on the new parent, the icon will move to that state.)
+`IAnimatedVisualSource2` also has a `SetColorProperty` method that can be used to set a color
+of the animated visual, and a `Markers` property that can be used to find named positions
+in the animation timeline.
 
-Using this mechanism you can add an AnimatedIcon to a XAML control's ControlTemplate, and several
-XAML controls have this support already built in.
+`IAnimatedVisualSource2` does not derive from `IAnimatedVisualSource` because it does not have the diagnostics item. The developer does not need to have `IAnmiatedVisualSource` to use AnimatedIcon. 
 
-### Remarks
+```cpp
+void AddVisualAndShowStartAnimation(
+    const winrt::Border& element,
+    const winrt::IAnimatedVisualSource2 source,
+    const winrt::hstring& initialState,
+    const winrt::hstring& steadyState,
+    const winrt::Color& themeColor )
+{
+    winrt::IAnimatedVisual animatedVisual = source.TryCreateAnimatedIconVisual();
 
-Note that if you add an AnimatedIcon to a XAML control, the icon's parent in the tree might not be 
-obvious, for example the parent of the following AnimatedIcon is not the Button, because the Button
-is inserting it into a tree defined by the Button's control template:
+    // Find the positions in the animation of the two states
+    auto const markers = source.Markers())
+    auto const fromProgress = static_cast<float>(markers.Lookup(initialState));
+    auto const toProgress = static_cast<float>(markers.Lookup(steadyState));
 
-```xaml
-<Button>
-    <AnimatedIcon ... />
-</Button>
+    // Set the theme color as the animated visual's foreground.
+    source.SetColorProperty("Foreground", themeColor);
+
+    // Helper that uses TryCreateAnimatedVisual to add the source to the XAML element tree.
+    // See IAnimatedVisualSource.TryCreateAnimatedVisual for more information.
+    AddVisualToElement(element, animatedVisual);
+
+    // Helper to play an animation.
+    // See IAnimatedVisual for more information.
+    PlaySegment(animatedVisual.RootVisual(), fromProgress, toProgress);
+}
 ```
 
-But non-control types are more evident, for example a panel:
+## Other IAnimatedVisualSource2 interface members
 
-```xaml
-<Button>
-    <StackPanel Orientation='Horizontal' x:Name='StackPanel1'>
-        <AnimatedIcon ... />
-        <TextBlock Text='Click' />
-    </StackPanel>
-</Button>
+| Name | Description |
+| :-| :-|
+| Markers | Provides a mapping from marker names to positions in the animation. The names are defined by the animation. |
+| SetColorProperty | Sets a color for the animated visual. The property names are defined by the animation. |
+
+## AnimatedAcceptVisualSource class
+
+This class can be used to show an animation for an Accept operation.
+This can be used as the Source of an AnimatedIcon, and is used by the XAML CheckBox control.
+
+This class supports markers that can be driven by an AnimatedIcon.State:
+* NormalOnToPointerOverOn
+* NormalOnToPressedOn
+* NormalOffToNormalOn
+* NormalOffToPointerOverOff
+* NormalOffToPressedOff
+* PointerOverOnToPointerOverOff
+* PointerOverOnToNormalOn
+* PointerOverOnToPressedOn
+* PointerOverOffToPointerOverOn
+* PointerOverOffToNormalOff
+* PointerOverOffToPressedOff
+* PressedOnToPressedOff
+* PressedOnToPointerOverOff
+* PressedOnToNormalOff_Start
+* PressedOffToPressedOn
+* PressedOffToPointerOver
+* PressedOffToNormalOn
+
+## AnimatedGlobalNavigationButtonVisualSource class
+
+This class can be used to show an animation for a Navigation operation.
+This can be used as the Source of an AnimatedIcon, and is used by the XAML NavigationView control.
+
+This class supports markers that can be driven by an AnimatedIcon.State:
+* ??
+
+## AnimatedBackVisualSource class
+
+This class can be used to show an animation for a Navigate-Back operation.
+This can be used as the Source of an AnimatedIcon, and is used by the XAML NavigationView control.
+
+This class supports markers that can be driven by an AnimatedIcon.State:
+* ??
+
+
+## AnimatedSettingsVisualSource class
+
+This class can be used to show an animation for a Settings icon.
+This can be used as the Source of an AnimatedIcon, and is used by the XAML NavigationView control.
+
+This class supports markers that can be driven by an AnimatedIcon.State:
+* ??
+
+## AnimatedFindVisualSource class
+
+This class can be used to show an animation for a Find icon.
+This can be used as the Source of an AnimatedIcon, and is used by the XAML AutoSuggestBox control.
+
+## AnimatedChevronDownSmallVisualSource class
+
+This class can be used to show an animation for button that opens a flyout on another button.
+This can be used as the Source of an AnimatedIcon, and is used by the XAML DropDownButton and Expander controls.
+
+This class supports markers that can be driven by an AnimatedIcon.State:
+* ??
+
+# AnimatedChevronUpDownSmallVisualSource
+
+This class can be used to show an animation for button that opens a flyout on another button.
+This can be used as the Source of an AnimatedIcon, and is used by the XAML NavigationView control.
+
+This class supports markers that can be driven by an AnimatedIcon.State:
+* ??
+
+# AnimatedChevronRightDownSmallVisualSource class
+
+This class can be used to show an animation for a button that opens a flyout to the right of another button.
+This can be used as the Source of an AnimatedIcon, and is used by the XAML TreeView control.
+
+This class supports markers that can be driven by an AnimatedIcon.State:
+* ??
+
+
+# API Details
+
+## Microsoft.UI.Xaml.Controls
+
+```c++
+[webhosthidden]
+interface IAnimatedVisualSource2
+{
+    IAnimatedVisual TryCreateAnimatedVisual(Windows.UI.Composition.Compositor compositor);
+
+    Windows.Foundation.Collections.IMapView<String, Double> Markers { get; };
+    void SetColorProperty(String propertyName, Windows.UI.Color value);
+};
+
+[webhosthidden]
+unsealed runtimeclass AnimatedIcon : Windows.UI.Xaml.Controls.IconElement
+{
+    AnimatedIcon();
+
+    IAnimatedVisualSource2 Source{ get; set; };
+    IconSource FallbackSource {get; set; };
+
+    static Windows.UI.Xaml.DependencyProperty State{ get; };
+    static void SetState(Windows.UI.Xaml.DependencyObject object, String value); 
+    static String GetState(Windows.UI.Xaml.DependencyObject object); 
+
+    static Windows.UI.Xaml.DependencyProperty SourceProperty{ get; };
+}
+
+[webhosthidden]
+unsealed runtimeclass AnimatedIconSource : IconSource
+{
+    AnimatedIconSource();
+
+    IAnimatedVisualSource2 Source{ get; set; };
+    IconSource FallbackIconSource{ get; set; };
+
+    static Windows.UI.Xaml.DependencyProperty SourceProperty { get; };
+    static Windows.UI.Xaml.DependencyProperty FallbackIconSourceProperty { get; };
+}
 ```
+
+## Microsoft.UI.Xaml.Controls.AnimatedVisuals
 
 ```cs
-AnimatedIcon.SetState(this.StackPanel1, "PointerOver");
+[webhosthidden]
+runtimeclass AnimatedAcceptVisualSource
+    : [default] Microsoft.UI.Xaml.Controls.IAnimatedVisualSource, Microsoft.UI.Xaml.Controls.IAnimatedVisualSource2
+{
+    AnimatedAcceptVisualSource();
+};
+
+[webhosthidden]
+runtimeclass AnimatedGlobalNavigationButtonVisualSource
+    : [default] Microsoft.UI.Xaml.Controls.IAnimatedVisualSource, Microsoft.UI.Xaml.Controls.IAnimatedVisualSource2
+{
+    AnimatedGlobalNavigationButtonVisualSource();
+};
+
+[webhosthidden]
+runtimeclass AnimatedBackVisualSource
+    : [default] Microsoft.UI.Xaml.Controls.IAnimatedVisualSource, Microsoft.UI.Xaml.Controls.IAnimatedVisualSource2
+{
+    AnimatedBackVisualSource();
+};
+
+[webhosthidden]
+runtimeclass AnimatedSettingsVisualSource
+    : [default] Microsoft.UI.Xaml.Controls.IAnimatedVisualSource, Microsoft.UI.Xaml.Controls.IAnimatedVisualSource2
+{
+    AnimatedSettingsVisualSource();
+};
+
+[webhosthidden]
+runtimeclass AnimatedFindVisualSource
+    : [default] Microsoft.UI.Xaml.Controls.IAnimatedVisualSource, Microsoft.UI.Xaml.Controls.IAnimatedVisualSource2
+{
+    AnimatedFindVisualSource();
+};
+
+[webhosthidden]
+runtimeclass AnimatedChevronDownSmallVisualSource
+    : [default] Microsoft.UI.Xaml.Controls.IAnimatedVisualSource, Microsoft.UI.Xaml.Controls.IAnimatedVisualSource2
+{
+    AnimatedChevronDownSmallVisualSource();
+};
+
+[webhosthidden]
+runtimeclass AnimatedChevronUpDownSmallVisualSource
+    : [default] Microsoft.UI.Xaml.Controls.IAnimatedVisualSource, Microsoft.UI.Xaml.Controls.IAnimatedVisualSource2
+{
+    AnimatedChevronUpDownSmallVisualSource();
+};
+
+[webhosthidden]
+runtimeclass AnimatedChevronRightDownSmallVisualSource
+    : [default] Microsoft.UI.Xaml.Controls.IAnimatedVisualSource, Microsoft.UI.Xaml.Controls.IAnimatedVisualSource2
+{
+    AnimatedChevronRightDownSmallVisualSource();
+};
+
 ```
 
-### Is this the right control? 
+# Appendix
 
-Use an AnimatedIcon control when you want to tie an animated icon to a user interaction in your UI.
-Do not use an AnimatedIcon control if you want to just play an animation once or control the playback of the animation.
-Do not use an AnimatedIcon control if you want to play your animation in a control that does not support IconElement.
-Instead, use the `AnimatedVisualPlayer` control. 
+## Fallback for older operating systems
 
-An `AnimatedIcon` control can be used anywhere an IconElement can be used in WinUI. 
+AnimatedIcon will provide an API for a developer to add a static icon of type IconSource. This will be used when the operating system cannot play the animation from the LottieGen output. Lottie animations are not supported on operating systems older than RS5.
 
-### How is AnimatedIcon different than [AnimatedVisualPlayer](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.AnimatedVisualPlayer)?
 
-AnimatedIcon is an
-[IconElement](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.IconElement),
-and so can be used anywhere an element or IconElement is required, such as
-[NavigationViewItem.Icon](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.NavigationViewItem.Icon).
-`AnimatedVisualPlayer` is a more  general animation player that can be used anywhere in an application where AnimatedIcon is intended to
-only be used where icons are used in WinUI. 
+## Accessibility
 
-### Examples
+This control is going to be part of the Icon family of controls so the accessibility requirements will reflect what the other icon controls have. AnimatedIcon will need to ensure that the high contrast brushes propagate correctly if the user changes their settings to a high contrast theme.  
 
-There are a few ways you can use AnimatedIcon with WinUI controls depending on which control you are planning to add an AnimatedIcon to.
-The three examples below are: 
+If the user turns off animations in theri system settings, the AnimatedIcons will not animate. 
 
-* Adding an AnimatedIcon to a control that already has an icon property
-* Update my control template to support AnimatedIcon 
-* Adding an AnimatedIcon to my XAML page 
+## Adding an instance state property 
 
-#### Adding an AnimatedIcon to a control that already has an icon property 
+In a future version of this control, we would like to add an instanced state property to the control so Intellisense can inform the developer of the State property. Today, the parser cannot recognize a dependency property and does not have the ability to tell the difference between a dependency property and an instance property of the same name. There would need to be a fix to the parser in order for this to work. 
 
-For V1, the template for NavigationViewItem will be updated so you can add your AnimatedIcon to the NavigationViewItem icon property without needing to make any other changes.
-(There will be more controls added in later iterations of the control)
-NavigationViewItem has states for rest/pointer over/press and AnimatedIcon will animate the state transitions by having named markers in the Lottie file such as:  
+### Updates to IconSource to support AnimatedIconSource
 
-* NormalToPointerOver
-* NormalToPressed
-* PointerOverToNormal
-* PointerOverToPressed
-* PressedToNormal
-* PressedToPointerOver
+Since some controls take an IconElement and others take an IconSource, we are going to add two methods (public CreateIconElement and 
+protected CreateIconElementCore) to IconSource. This will help cover the two sccenarios below: 
 
-Below is an example of how to add an animated play icon with the standard state transitions mentioned above to
-a Hierarchical NavigationViewItem.
+1.	I’m a developer creating a new control and I want to expose an IconSource property where consumers of my control can set ‘any’ iconsource. This control developer should not have to worry about each type of IconSource like FontIconSource, BitmapIconSource, AnimatedIconSource etc. In this case the developer can just use IconSource and call IconSource.CreateIconElement to get the corresponding IconElement without knowing what specific IconSource/Element it is. 
+2.	I’m a developer creating a new type of IconSource, say Animated2IconSource. I would have to override Animated2IconSource.CreateElementCore and return an Animated2IconElement so that my new IconSource will work anywhere an IconSource can be used.
 
-AnimatedIcon requires you to run the Lottie JSON file through the Windows
-[CodeGen](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen)
-tool to generate the animation code as a C# class. This process is similar to the process needed for AnimatedVisualPlayer.
-AnimatedIcon needs the JSON file to run through CodeGen so the markers and color properties are translated in the format needed for the control to map the values correctly. 
 
-Once you run your Lottifile through codegen you can add the output class to your project. 
-Follow the steps in the
-[CodeGen](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen)
-tutorial for more instructions. 
+## Open Question
+* Should the interface be named IAnimatedVisualSource2 if it is not derived from IAnimatedVisualSource?
+    * I am stuck on a better name for it. 
 
-Once the icon file is added to your project you can then add the icon to your navigation view item like you would any other icon type that inherits from IconElement. 
+## Features for V2
+* Adding support for Light/Dark/High Contrast theming. Today developers can add color properties to the Lottie file and update the theming maually but maybe there is something we can add to the control to make this easier? 
+* Updating the deafult templates of more controls. One of the controls we could update is TabViewItem. 
+* Add support for looping the animations. Possibly add an indeterminate and determinate amount of loops. 
+* Exploring progress scenarios and if that is something that should be built off of this control or if this should be a separate control so it can have all of the accesibility benefits of the other progress controls. 
 
-Before:
 
-XAML
-
-```xml
-<muxc:NavigationView.MenuItems>
-    <muxc:NavigationViewItem Content = "Menu Item1" Icon ="Play" Tag="SamplePage" x:Name = "SamplePageItem">
-</muxc:NavigationView.MenuItems>
-```
-
-After: 
-
-XAML
-
-```xml
-<muxc:NavigationView.MenuItems>
-    <muxc:NavigationViewItem Content = "Menu Item1" Tag="SamplePage" x:Name = "SamplePageItem">
-        <muxc:NavigationViewItem.Icon>
-            <muxc:AnimatedIcon x:Name = "PlayAnimatedIcon">
-                <muxc:AnimatedIcon.Source>
-                    <animatedvisuals:PlayIcon />
-                </muxc:AnimatedIcon.Source>
-            </muxc:AnimatedIcon>
-    </muxc:NavigationViewItem.Icon>
-</muxc:NavigationView.MenuItems>
-```
-
-#### Update my control template to support AnimatedIcon
+## Update my control template to support AnimatedIcon
 
 You might want to update a control that already has a static icon in it's default template to an animated icon. 
 This example will show how to update the DropDownButton (which uses a static chevron glyph today) to use an animated chevron glyph instead. 
@@ -544,217 +864,3 @@ XAML
 
     <Style TargetType="local:DropDownButton" BasedOn="{StaticResource DefaultDropDownButtonStyle}" />
 ```
-
-#### Adding an AnimatedIcon to my XAML page 
-
-There might be a scenario where you would want to add an AnimatedIcon to your XAML page without it being in a WinUI control. 
-In this example, we will add an AnimatedIcon to a UI page where the icon will respond to a download button being pressed. 
-The button control has the Normal, PointerOver, and Pressed states in it's default template.
-The animation file being used in the AnimatedIcon already has the correct markers for the Button control based off of the states previously mentioned. 
-
-XAML
-```xml
-<Grid>
-    <Button x:Name="DownloadButton" Content="Download" OnClick="OnButtonClick"/>
-    <muxc:AnimatedIcon x:Name="AnimatedSpinningWheel" AutomationProperties.AccessibilityView="Raw"  muxc:AnimatedIcon.State="Normal">
-        <muxc:AnimatedIcon.Source>
-            <AnimatedVisuals:DownloadAnimation/>
-        </muxc:AnimatedIcon.Source>
-        <muxc:AnimatedIcon.FallbackIconSource>
-            <muxc:FontIconSource
-                FontSize="8"
-                FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                Foreground="{ThemeResource ButtonForegroundPressed}"
-                Glyph="&#xE96E;"
-                IsTextScaleFactorEnabled="False"/>
-        </muxc:AnimatedIcon.FallbackIconSource>
-    </muxc:AnimatedIcon>
-</Grid>
-
-```
-
-C# 
-```csharp
-
-void CurrentStateChanged(object sender, RoutedEventArgs e)
-{
-    if (sender.Control = UIButton)
-    {
-        AnimatedSpinningWheel.State = sender.NewState.Name;
-    }
-    
-}
-```
-
-#### Creating an AnimatedIcon from an AnimatedIconSource
-
-Simlar to the other icon controls that derive from IconElement, there is an equivalent AnimatedIcon control that derives from IconSource called AnimatedIconSource. This works the same way as the other IconSource controls where AnimatedIconSource is used in controls that take an IconSource as it's icon type. 
-
-Here is an example of using an AnimatedIconSource in a TabView. Tabview will not have it's default template updated for V1 but this will be supported in the future. You will also need to update the template to include the setters for TabView in the same way you would in the example titled "Update my control template to support AnimatedIcon". 
-
-XAML
-```xml
-<muxc:TabView>
-    <muxc:TabView.TabItems>
-        <muxc:TabViewItem Header="Play Game">
-            <muxc:TabViewItem.IconSource>
-                <muxc:AnimatedIconSource x:Name="PlayAnimatedIcon"/>
-                    <AnimatedIconSource.Source>
-                        <AnimatedVisuals:PlayAnimation/>
-                    </AinmatedIconSource.Source>
-                </muxc:AnimatedIconSource>
-            </muxc:TabViewItem.IconSource>
-        </muxc:TabViewItem>
-        <muxc:TabViewItem Header="Home">
-            <muxc:TabViewItem.IconSource>
-                <muxc:BitmapIconSource UriSource="/Assets/TabViewIcons/home.png" ShowAsMonochrome="False" />
-            </muxc:TabViewItem.IconSource>
-        </muxc:TabViewItem>
-    </muxc:TabView.TabItems>
-</muxc:TabView>
-
-```
-
-### AnimatedIcon class member notes
-
-| Name | Description | Default |
-| :---| :---| :---|
-| Source | Animation data, for example generated by the LottieGen tool. | null |
-| FallbackSource | Gets or sets the static icon that will be used as a fallback when the OS cannot run the animated icon file.   | null |
-| State | Property that the developer sets on AnimatedIcon. See below for more details. | null |
-| Markers |	A dictionary (<string, double>) of all marker strings and their associated values found in the icon’s JSON file. The strings and values are based on what the designer names the markers in the Lottie After Effects file.  |	null |
-| SetColorProperty | Takes a string and Windows.UI.Color value to set the color of a themed color property in the Lottie file.  |
-| TryCreateAnimatedVisualSource | Method to get an IAnimatedVisual from an IAnimatedVisualSource2
-
-When the developer sets the AnimatedIcon.State property on an element this is what happens: 
-* The setter looks to see if the element that the property was just set on is an AnimatedIcon, if it is we finish. 
-* If it is not, the setter checks to see if the first child of that element is an AnimatedIcon, if it is not, we finish. 
-* If it is, the setter also sets the AnimatedIcon.State property on that child AnimatedIcon. 
-
-## IAnimatedVisualSource2 interface
-
-Provides a Composition `Visual` that can be animated.
-
-`IAnimatedVisualSource2` is an `IAnimatedVisualSource`, so has the
-[TryCreateAnimatedVisual](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.IAnimatedVisualSource.TryCreateAnimatedVisual),
-which can be called to retrieve an
-[IAnimatedVisual](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.IAnimatedVisual).
-`IAnimatedVisual` can then be used to get a Composition
-[Visual](https://docs.microsoft.com/uwp/api/Windows.UI.Composition.Visual),
-which can be added to a Xaml element tree using the methods of
-[ElementCompositionPreview](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Hosting.ElementCompositionPreview).
-
-`IAnimatedVisualSource2` also has a `SetColorProperty` method that can be used to set a color
-of the animated visual, and a `Markers` property that can be used to find named positions
-in the animation timeline.
-
-`IAnimatedVisualSource2` does not derive from `IAnimatedVisualSource` because it does not have the diagnostics item. The developer does not need to have `IAnmiatedVisualSource` to use AnimatedIcon. 
-
-```cpp
-void AddVisualAndShowStartAnimation(
-    const winrt::Border& element,
-    const winrt::IAnimatedVisualSource2 source,
-    const winrt::hstring& initialState,
-    const winrt::hstring& steadyState,
-    const winrt::Color& themeColor )
-{
-    winrt::IAnimatedVisual animatedVisual = source.TryCreateAnimatedIconVisual();
-
-    // Find the positions in the animation of the two states
-    auto const markers = source.Markers())
-    auto const fromProgress = static_cast<float>(markers.Lookup(initialState));
-    auto const toProgress = static_cast<float>(markers.Lookup(steadyState));
-
-    // Set the theme color as the animated visual's foreground.
-    source.SetColorProperty("Foreground", themeColor);
-
-    // Helper that uses TryCreateAnimatedVisual to add the source to the XAML element tree.
-    // See IAnimatedVisualSource.TryCreateAnimatedVisual for more information.
-    AddVisualToElement(element, animatedVisual);
-
-    // Helper to play an animation.
-    // See IAnimatedVisual for more information.
-    PlaySegment(animatedVisual.RootVisual(), fromProgress, toProgress);
-}
-```
-
-## IAnimatedVisualSource2 interface member notes
-
-| Name | Description |
-| :-| :-|
-| Markers | Provides a mapping from marker names to positions in the animation. The names are defined by the animation. |
-| SetColorProperty | Sets a color for the animated visual. The property names are defined by the animation. |
-
-# API Details
-
-```c++
-interface IAnimatedVisualSource2
-{
-    IAnimatedVisual TryCreateAnimatedVisual(Windows.UI.Composition.Compositor compositor);
-
-    Windows.Foundation.Collections.IMapView<String, Double> Markers { get; };
-    void SetColorProperty(String propertyName, Windows.UI.Color value);
-};
-
-unsealed runtimeclass AnimatedIcon : Windows.UI.Xaml.Controls.IconElement
- {
-    AnimatedIcon();
-
-    IAnimatedVisualSource2 Source{ get; set; };
-    IconSource FallbackSource {get; set; };
-
-    static Windows.UI.Xaml.DependencyProperty State{ get; };
-    static void SetState(Windows.UI.Xaml.DependencyObject object, String value); 
-    static String GetState(Windows.UI.Xaml.DependencyObject object); 
-
-    static Windows.UI.Xaml.DependencyProperty SourceProperty{ get; };
-}
-
-unsealed runtimeclass AnimatedIconSource : IconSource
-{
-    AnimatedIconSource();
-
-    IAnimatedVisualSource2 Source{ get; set; };
-    IconSource FallbackIconSource{ get; set; };
-
-    static Windows.UI.Xaml.DependencyProperty SourceProperty { get; };
-    static Windows.UI.Xaml.DependencyProperty FallbackIconSourceProperty { get; };
-}
-
-```
-
-# Appendix
-
-## Fallback for older operating systems
-
-AnimatedIcon will provide an API for a developer to add a static icon of type IconSource. This will be used when the operating system cannot play the animation from the LottieGen output. Lottie animations are not supported on operating systems older than RS5.
-
-
-## Accessibility
-
-This control is going to be part of the Icon family of controls so the accessibility requirements will reflect what the other icon controls have. AnimatedIcon will need to ensure that the high contrast brushes propagate correctly if the user changes their settings to a high contrast theme.  
-
-If the user turns off animations in theri system settings, the AnimatedIcons will not animate. 
-
-## Adding an instance state property 
-
-In a future version of this control, we would like to add an instanced state property to the control so Intellisense can inform the developer of the State property. Today, the parser cannot recognize a dependency property and does not have the ability to tell the difference between a dependency property and an instance property of the same name. There would need to be a fix to the parser in order for this to work. 
-
-### Updates to IconSource to support AnimatedIconSource
-
-Since some controls take an IconElement and others take an IconSource, we are going to add two methods (public CreateIconElement and 
-protected CreateIconElementCore) to IconSource. This will help cover the two sccenarios below: 
-
-1.	I’m a developer creating a new control and I want to expose an IconSource property where consumers of my control can set ‘any’ iconsource. This control developer should not have to worry about each type of IconSource like FontIconSource, BitmapIconSource, AnimatedIconSource etc. In this case the developer can just use IconSource and call IconSource.CreateIconElement to get the corresponding IconElement without knowing what specific IconSource/Element it is. 
-2.	I’m a developer creating a new type of IconSource, say Animated2IconSource. I would have to override Animated2IconSource.CreateElementCore and return an Animated2IconElement so that my new IconSource will work anywhere an IconSource can be used.
-
-
-## Open Question
-* Should the interface be named IAnimatedVisualSource2 if it is not derived from IAnimatedVisualSource?
-    * I am stuck on a better name for it. 
-
-## Features for V2
-* Adding support for Light/Dark/High Contrast theming. Today developers can add color properties to the Lottie file and update the theming maually but maybe there is something we can add to the control to make this easier? 
-* Updating the deafult templates of more controls. One of the controls we could update is TabViewItem. 
-* Add support for looping the animations. Possibly add an indeterminate and determinate amount of loops. 
-* Exploring progress scenarios and if that is something that should be built off of this control or if this should be a separate control so it can have all of the accesibility benefits of the other progress controls. 
