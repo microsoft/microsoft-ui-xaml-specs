@@ -491,6 +491,9 @@ unsealed runtimeclass AnimatedIconSource : IconSource
     static Windows.UI.Xaml.DependencyProperty SourceProperty { get; };
     static Windows.UI.Xaml.DependencyProperty FallbackIconSourceProperty { get; };
 }
+
+
+TBD: CreateIconSource/CreateIconSourceCore
 ```
 
 ## Microsoft.UI.Xaml.Controls.AnimatedVisuals
