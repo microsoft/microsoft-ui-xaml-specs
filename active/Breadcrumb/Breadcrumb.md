@@ -28,7 +28,7 @@ but keeping in mind that V1 is positioned in a way to have V2 features smoothly 
 
 ## Breadcrumb class
 
-Represents a control that shows a list of items, typically the navigation trail to the current location.
+Represents a control that shows a list of items, for example the navigation trail to the current location.
 
 ### Examples
 
@@ -54,93 +54,120 @@ If the last item in a Breadcrumb is text and is too long to fit it will be clipp
 
 ![Breadcrumb_crumbled with last node truncated](images/Breadcrumb_truncation.PNG)
 
-## Breadcrumb.DropDownItemTemplate
+#### Responding to clicks
 
-Gets or sets the template to display the drop-down of nodes
+This example shows an app with a Breadcrumb across the top, and a content area on the rest of the Window.
+The Breadcrumb shows a list of items. Clicking on an item navigates the content back, and updates
+the Breadcrumb.
 
-_Spec note: The casing should probably be "Dropdown" rather than "DropDown",
-but this is following existing precedent in Xaml, such as
-[ComboBox.IsDropDownOpen](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.ComboBox.IsDropDownOpen)_.
+```xaml
+<Grid RowDefinitions="Auto,*">
+    <Breadcrumb ItemClicked="CrumbClicked" ItemsSource="{x:Bind Items, Mode=OneWay}" />
+    
+    <ContentControl Grid.Row="1" Content="{x:Bind CurrentItem, Mode=OneWay}">
+        ...
+    </ContentControl>
+</Grid>
+```
+
+```csharp
+public sealed partial class MainPage : Page
+{
+    public ObservableCollection<Items> Items { get; }
+
+    public ItemClickEventArgs Current Item { get; set;}
+
+    void CrumbClicked(Breadcrumb sender, BreadcrumbItemClickedEventArgs e)
+    {
+        for(int i = Items.Count-1; i > e.Index; i++)
+        {
+            Items.RemoveAt(i);
+        }
+
+        CurrentItem = Items[i - 1];
+    }
+
+    void NavigateToItem(Item item)
+    {
+        Items.Add(item);
+        CurrentItem = item;
+    }
+}
+```
+
+#### Breadcrumb.ItemTemplate property
+
+Gets or sets the template to display an item
 
 The Breadcrumb ItemTemplate is used to override the default display of the
 individual items in the Breadcrumb control.
 
-The DropDownItemTemplate can be used to override the default template used for
-the dropdown that is necessary when the control can't be wide enough and removes
-items from the front.
-
-![Diagram of the two Breadcrumb template properties](images/item-templates.jpg)
-
-The following configures a Breadcrumb so that it's dropdown displays bold text.
+The following uses the ItemTemplate so that the Breadcrumb items show the Name property of the items:
 
 ```xaml
-<Breadcrumb>
-    <Breadcrumb.DropDownItemTemplate>
-        <DataTemplate x:DataType='BreadcrumbDropDownItem`>
-            <TextBlock Text='{x:Bind Content} FontWeight="Bold" />
+<Breadcrumb ItemsSource='{x:Bind Items}'>
+    <Breadcrumb.ItemTemplate>
+        <DataTemplate x:DataType='BreadcrumbItem`>
+            <TextBlock Text='{x:Bind Name}/>
         </DataTemplate>
-    </Breadcrumb.DropDownItemTemplate>
+    </Breadcrumb.ItemTemplate>
 </Breadcrumb>
 ```
+
+Notes:
+* You can use a BreadcrumbItem as the root of the DataTemplate
+* If no ItemTemplate is supplied, the Breadcrumb control will convert to a string.
 
 ## Other Breadcrumb members
 
 | Name | Description | Default |
 | :---------- | :------- | :------- |
 | ItemsSource | Gets or sets the content of the Breadcrumb |
-| ItemTemplate | Gets or sets the template to display an item (see example in DropDownItemTemplate property) |
 | ItemClicked | Raised when a user interaction causes a jump to the CurrentItem.  |
 
-Spec note: the V2 of Breadcrumb will add flyouts from chevrons to view children of a node.
-Additional properties will be added to the API to enable this functionality. 
+_Spec note: the V2 of Breadcrumb will add flyouts from chevrons to view children of a node.
+Additional properties will be added to the API to enable this functionality._
 
 # API Details
 
+**Windows.UI.Xaml.Controls namespace**
+
 ```cs
+[webhosthidden]
 runtimeclass BreadcrumbItemClickedEventArgs
 {
     Int32 Index { get; };
     Object Item { get; };
 }
 
+[webhosthidden]
 unsealed runtimeclass BreadcrumbItem : Windows.UI.Xaml.Controls.ContentControl
 {
     BreadcrumbItem();
 }
 
-unsealed runtimeclass BreadcrumbDropDownItem : Windows.UI.Xaml.Controls.ContentControl
-{
-    BreadcrumbDropDownItem();
-}
-
-[MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
-[MUX_PROPERTY_CHANGED_CALLBACK_METHODNAME("OnPropertyChanged")]
+[webhosthidden]
 unsealed runtimeclass Breadcrumb : Windows.UI.Xaml.Controls.Control
 {
     Breadcrumb();
 
-    Object DropDownItemTemplate{ get; set; };
     Object ItemsSource{ get; set; };
     Object ItemTemplate{ get; set; };
 
     event Windows.Foundation.TypedEventHandler<Breadcrumb, BreadcrumbItemClickedEventArgs> ItemClicked;
 
-    static Windows.UI.Xaml.DependencyProperty DropDownItemTemplateProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty ItemsSourceProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty ItemTemplateProperty{ get; };
 }
 
-unsealed runtimeclass BreadcrumbItemAutomationPeer : Windows.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer,
-Windows.UI.Xaml.Automation.Provider.IInvokeProvider
+[webhosthidden]
+unsealed runtimeclass BreadcrumbItemAutomationPeer 
+   : Windows.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer,
+     Windows.UI.Xaml.Automation.Provider.IInvokeProvider
 {
     BreadcrumbItemAutomationPeer(MU_XC_NAMESPACE.BreadcrumbItem owner);
 }
 
-unsealed runtimeclass BreadcrumbDropDownItemAutomationPeer : Windows.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer,
-Windows.UI.Xaml.Automation.Provider.IInvokeProvider
-{
-    BreadcrumbDropDownItemAutomationPeer(MU_XC_NAMESPACE.BreadcrumbDropDownItem owner);
-}
 ```
 
 ## Theme Resources
@@ -166,7 +193,10 @@ For more info, see the
 | BreadcrumbBorderBrush | Sets the border color |
 | BreadcrumbItemThemeFontSize | Sets the item font size | 
 
-# Inputs and Accessibility 
+
+# Appendix
+
+## Inputs and Accessibility 
 
 ## UI Automation
 Breadcrumb is identified as a [UIA Navigation Landmark](https://docs.microsoft.com/windows/win32/winauto/landmark-type-identifiers). Each BreadcrumbItem will use a [InvokePattern](!https://docs.microsoft.com/dotnet/framework/ui-automation/implementing-the-ui-automation-invoke-control-pattern) with control type [Button](https://docs.microsoft.com/windows/win32/winauto/uiauto-supportbuttoncontroltype). 
