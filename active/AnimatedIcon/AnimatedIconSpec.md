@@ -367,7 +367,7 @@ void AddVisualAndShowStartAnimation(
 ## AnimatedAcceptVisualSource class
 
 This class can be used to show an animation for an Accept operation.
-This can be used as the Source of an AnimatedIcon, and is used by the XAML CheckBox control.
+This can be used as the Source of an AnimatedIcon and is used by the XAML CheckBox control.
 
 This class supports markers that can be driven by an AnimatedIcon.State:
 * NormalOnToPointerOverOn
@@ -391,7 +391,7 @@ This class supports markers that can be driven by an AnimatedIcon.State:
 ## AnimatedGlobalNavigationButtonVisualSource class
 
 This class can be used to show an animation for a Navigation operation.
-This can be used as the Source of an AnimatedIcon, and is used by the XAML NavigationView control.
+This can be used as the Source of an AnimatedIcon and is used by the XAML NavigationView control.
 
 This class supports markers that can be driven by an AnimatedIcon.State:
 * TBD
@@ -399,7 +399,7 @@ This class supports markers that can be driven by an AnimatedIcon.State:
 ## AnimatedBackVisualSource class
 
 This class can be used to show an animation for a Navigate-Back operation.
-This can be used as the Source of an AnimatedIcon, and is used by the XAML NavigationView control.
+This can be used as the Source of an AnimatedIcon and is used by the XAML NavigationView control.
 
 This class supports markers that can be driven by an AnimatedIcon.State:
 * TBD
@@ -407,7 +407,7 @@ This class supports markers that can be driven by an AnimatedIcon.State:
 ## AnimatedSettingsVisualSource class
 
 This class can be used to show an animation for a Settings icon.
-This can be used as the Source of an AnimatedIcon, and is used by the XAML NavigationView control.
+This can be used as the Source of an AnimatedIcon and is used by the XAML NavigationView control.
 
 This class supports markers that can be driven by an AnimatedIcon.State:
 * TBD
@@ -415,12 +415,12 @@ This class supports markers that can be driven by an AnimatedIcon.State:
 ## AnimatedFindVisualSource class
 
 This class can be used to show an animation for a Find icon.
-This can be used as the Source of an AnimatedIcon, and is used by the XAML AutoSuggestBox control.
+This can be used as the Source of an AnimatedIcon and is used by the XAML AutoSuggestBox control.
 
 ## AnimatedChevronDownSmallVisualSource class
 
 This class can be used to show an animation for button that opens a flyout on another button.
-This can be used as the Source of an AnimatedIcon, and is used by the XAML DropDownButton and Expander controls.
+This can be used as the Source of an AnimatedIcon and is used by the XAML DropDownButton and Expander controls.
 
 This class supports markers that can be driven by an AnimatedIcon.State:
 * TBD
@@ -428,7 +428,7 @@ This class supports markers that can be driven by an AnimatedIcon.State:
 # AnimatedChevronUpDownSmallVisualSource
 
 This class can be used to show an animation for button that opens a flyout on another button.
-This can be used as the Source of an AnimatedIcon, and is used by the XAML NavigationView control.
+This can be used as the Source of an AnimatedIcon and is used by the XAML NavigationView control.
 
 This class supports markers that can be driven by an AnimatedIcon.State:
 * TBD
@@ -436,7 +436,7 @@ This class supports markers that can be driven by an AnimatedIcon.State:
 # AnimatedChevronRightDownSmallVisualSource class
 
 This class can be used to show an animation for a button that opens a flyout to the right of another button.
-This can be used as the Source of an AnimatedIcon, and is used by the XAML TreeView control.
+This can be used as the Source of an AnimatedIcon and is used by the XAML TreeView control.
 
 This class supports markers that can be driven by an AnimatedIcon.State:
 * TBD
@@ -560,11 +560,6 @@ runtimeclass AnimatedChevronRightDownSmallVisualSource
 ```
 
 # Appendix
-
-## Fallback for older operating systems
-
-AnimatedIcon will provide an API for a developer to add a static icon of type IconSource. This will be used when the operating system cannot play the animation from the LottieGen output. Lottie animations are not supported on operating systems older than RS5.
-
 
 ## Accessibility
 
