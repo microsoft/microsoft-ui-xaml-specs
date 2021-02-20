@@ -4,18 +4,19 @@ AnimatedIcon
 
 # Background
 
-XAML has a couple of base types for showing an icon, aside from simplying showing a small image:
+XAML has a couple of base types for showing an icon, aside from simply showing a small image:
 * [IconElement](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.IconElement)
 * [IconSource](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.IconSource)
-
-The duplication is cause for confusion, but trying to solve that base issue is outside the scope of this spec.
-The ultimate difference between the two is that some controls require an IconElement and some
-require an IconSource. The new animated icon APIs here are continuing to use the existing pattern.
 
 IconElement & IconSource have the same subclasses for different kinds of icons, for example
 [BitmapIcon](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.BitmapIcon)
 and [BitmapIconSource](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.BitmapIconSource).
 This spec as adding an `AnimatedIcon` and `AnimatedIconSource`.
+
+The duplication of two icon types is cause for confusion,
+but trying to solve that underlying issue is outside the scope of this spec.
+The ultimate difference between the two is that some controls require an IconElement and some
+require an IconSource. The new animated icon APIs here are continuing to use the existing pattern.
 
 AnimatedIcon (and AnimatedIconSource) displays an animation defined by a Lottie animation,
 similar to the existing
@@ -27,7 +28,29 @@ The new APIs in this spec include classes created by LottieGen.
 
 # AnimatedIcon How-To
 
-_(This is conceptual documentation that will go to docs.microsoft.com "how to" pages)_
+_(This is conceptual documentation that will go to a docs.microsoft.com "how to" page)_
+
+An AnimatedIcon can be used to display an animation that's defined in Adobe After Effects,
+such as the PlayAnimation in this example:
+
+```xml
+<AnimatedIcon>
+    <local:PlayAnimation />
+</AnimatedIcon>
+```
+
+This PlayAnimation can similarly be used in an 
+[AnimatedVisualPlayer](http://msdn.microsoft.com/library/Microsoft.UI.Xaml.Controls.AnimatedVisualPlayer):
+
+```xml
+<AnimatedVisualPlayer>
+    <local:PlayAnimation />
+</AnimatedVisualPlayer>
+```
+
+The difference is that AnimatedVisualPlayer has methods such as Play and Pause.
+AnimatedIcon controls the animation with a State property, and can color the animation using the Foreground property.
+AnimatedIcon can also be used where specfically an Icon-typed value is required.
 
 ## Creating animated content for an AnimatedIcon with Lottie
 
@@ -40,14 +63,15 @@ LottieGen generates code for a c++/winrt class that you can then instantiate and
 
 For example, the XAML
 [AutoSuggestBox](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.AutoSuggestBox)
-control uses the 
-`Microsoft.UI.Xaml.Controls.AnimatedVisuals.AnimatedFindVisualSource`
-class, which was generated using the LottieGen tool.
+control uses the `AnimatedFindVisualSource` class, which was generated using the LottieGen tool.
 
-The additional step for AnimatedIcon is to define markers in the animation definition, which mark time positions.
+An additional step for AnimatedIcon is to define markers in the animation definition, which mark time positions.
 You can then set the `State` of the AnimatedIcon to these markers.
 For example, if you have a position in the Lottie file marked "PointerOver", you can set AnimatedIcon State to
 "PointerOver" to move the animation to that position.
+
+Finally, if you define a color in your Lottie animation named "Foreground", and use the animation with
+an AnimatedIcon, setting the AnimatedIcon.Foreground property will set that color.
 
 ## Naming AnimatedIcon markers
 
@@ -61,9 +85,7 @@ For example, XAML's AutoSuggestBox control uses an AnimatedIcon that animates wi
 * PointerOver
 * Pressed
 
-?? Show snippet from control template
-
-You can define markers in the Lottie file with the State names.
+You can define markers in the Lottie file with those State names.
 You can also define markers as follows:
 * Combine state names with a "To".
 For example, in the AutoSuggestBox case, "NormalToPointerOver";
@@ -89,8 +111,7 @@ If any marker is found which has that ending, we will hard cut to the first mark
 7) Check if "[NewState]" parses to a float. If it does, animated from the current position to the parsed float. **
 Hard cut to position 0.0.
 
-
-Details of the marker format in Lottie JSON files are describe in detail [??](??).
+Details of the marker format in Lottie JSON files are describe in detail [TBD]().
 The following is an example:
 
 ```json
@@ -111,7 +132,6 @@ The following is an example:
 {"tm":100,"cm":"PressedToPointerOver_Start","dr":0},{"tm":101,"cm":"PressedToPointerOver_End","dr":0}]
 ```
 
-
 # API Pages
 
 _(Each of the following L2 sections correspond to a page that will be on docs.microsoft.com)_
@@ -119,15 +139,17 @@ _(Each of the following L2 sections correspond to a page that will be on docs.mi
 ## AnimatedIcon class
 
 An icon that displays and controls an IAnimatedVisual2, which is set as the value of the Source property.
-You can define an IAnimatedVisual2 is using the
+
+You can define an IAnimatedVisual2 using the
 [Lottie-Windows](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie) library.
 
-You change the position of the animation displayed by an AnimatedIcon by setting its `State` attached property,
+You change the position of the animation displayed by an AnimatedIcon by setting its `State` attached property
 on the AnimatedIcon or on its parent in the XAML tree.
 (If you add an AnimatedIcon to the tree and the property is already set on the new parent, the icon will move to that state.)
 
-Using this mechanism you can easily add an AnimatedIcon to a XAML control's ControlTemplate, and several
-XAML controls have this support already built in.
+Using this mechanism you can easily add an AnimatedIcon to a XAML control's ControlTemplate and set its state using
+[VisualStateManager](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.VisualStateManager).
+Several XAML controls have this support already built in.
 
 ### How is AnimatedIcon different than [AnimatedVisualPlayer](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.AnimatedVisualPlayer)?
 
@@ -141,7 +163,7 @@ only be used where icons are used in WinUI.
 ### Example
 
 The following example is a button that the user clicks to Accept a prompt.
-the MyAcceptAnimation is a class created using the LottieGen tool.
+The MyAcceptAnimation is a class created using the LottieGen tool.
 The FallbackIconSource will be used rather than the animation when animations can't be played,
 such as on older versions of Windows that don't support Lottie animations.
 
@@ -149,10 +171,8 @@ such as on older versions of Windows that don't support Lottie animations.
 <Button PointerEntered="HandlePointerEntered" PointerExited="HandlePointerExited">
     <StackPanel Orientation='Horizontal' AnimatedIcon.State='Normal'>
 
-        <AnimatedIcon>
-            <AnimatedIcon.Source>
-                <local:MyAcceptAnimation/>
-            </AnimatedIcon.Source>
+        <AnimatedIcon x:Name='AnimatedIcon1'>
+            <local:MyAcceptAnimation/>
             <AnimatedIcon.FallbackIconSource>
                 <SymbolIconSource Symbol='Accept'/>
             </AnimatedIcon.FallbackIconSource>
@@ -166,12 +186,12 @@ such as on older versions of Windows that don't support Lottie animations.
 ```cs
 private void Button_PointerEntered(object sender, PointerRoutedEventArgs e)
 {
-    AnimatedIcon.SetState(this.StackPanel1, "PointerOver");
+    AnimatedIcon.SetState(this.AnimatedIcon1, "PointerOver");
 }
 
 private void Button_PointerExited(object sender, PointerRoutedEventArgs e)
 {
-    AnimatedIcon.SetState(this.StackPanel1, "Normal");
+    AnimatedIcon.SetState(this.StackPaAnimatedIcon1nel1, "Normal");
 }
 ```
 
@@ -197,8 +217,8 @@ _Spec note: this is a markup limitation that could be address in the future._
 
 ### Remarks
 
-If you set an AnimatedIcon to a property of a XAML control, the icon's parent in the tree might not be obvious,
-for example the parent of the following AnimatedIcon is not the Button,
+If you set an AnimatedIcon to a property of a XAML control, the icon's parent in the tree might not be obvious.
+For example the parent of the following AnimatedIcon is not the Button,
 because the Button is inserting it into a tree defined by the Button's control template:
 
 ```xaml
@@ -228,7 +248,6 @@ see NavigationViewItem.Icon.
 | Source | Animation data, for example generated by the LottieGen tool. | null |
 | FallbackSource | Gets or sets the static icon that will be used as a fallback when the OS cannot run the animated icon file.   | null |
 | State | Property that the developer sets on AnimatedIcon. See below for more details. | null |
-| SetColorProperty | Takes a string and Windows.UI.Color value to set the color of a themed color property in the Lottie file.  |
 
 ## IconSource.CreateIconElement method
 
@@ -238,7 +257,8 @@ _Spec note: This is being added to make it easier to create an AnimatedIcon from
 public IconElement CreateIconElement();
 ```
 
-Call this method to get an IconElement from and IconSource.
+Call this method to get an IconElement from an IconSource.
+
 An IconElement can be used by controls that have an IconElement property,
 or since it's an element it can be used anywhere in the XAML element tree.
 
@@ -246,7 +266,7 @@ This example creates a BitmapIcon from a BitmapIconSource:
 
 ```cs
 IconSource iconSource = new BitmapIconSource();
-BitmapIcon = iconSource.CreateIconElement as BitmapIcon();
+BitmapIcon = iconSource.CreateIconElement as BitmapIcon;
 ```
 
 ## IconSource.CreateIconElementCore
@@ -278,11 +298,11 @@ For example, this sets a custom animation `PlayIcon` that was generated by the L
 <NavigationView.MenuItems>
     <NavigationViewItem Content = "Play">
         <NavigationViewItem.Icon>
+
             <AnimatedIcon >
-                <AnimatedIcon.Source>
-                    <local:PlayIcon />
-                </AnimatedIcon.Source>
+                <local:PlayIcon />
             </AnimatedIcon>
+
     </NavigationViewItem.Icon>
 </NavigationView.MenuItems>
 ```
@@ -297,6 +317,7 @@ The NavigationViewItem will automatically set the following states on the Animat
 
 If the PlayIcon has a marker for "NormalToPointerOver", it will be animated
 to when the mouse moves to over the NavigationViewItem.
+See [link] for more information on combining marker names.
 
 To create this custom PlayIcon class, you run a Lottie JSON file (with markers) through the Windows
 [CodeGen](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen)
@@ -312,12 +333,11 @@ tutorial for more instructions.
 Provides a Composition `Visual` that can be animated.
 An object that implements this interface can be used as the Source property of an AnimatedIcon.
 
-Call the [TryCreateAnimatedVisual](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.IAnimatedVisualSource.TryCreateAnimatedVisual)
-method to retrieve an
+Call the TryCreateAnimatedVisual method to retrieve an
 [IAnimatedVisual](https://docs.microsoft.com/uwp/api/Microsoft.UI.Xaml.Controls.IAnimatedVisual).
 `IAnimatedVisual` can then be used to get a
 Composition [Visual](https://docs.microsoft.com/uwp/api/Windows.UI.Composition.Visual),
-which can be added to a Xaml element tree using the methods of
+which can be added to a XAML element tree using the methods of
 [ElementCompositionPreview](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Hosting.ElementCompositionPreview).
 
 Use the `SetColorProperty` method to set a color of the animated visual,
@@ -441,6 +461,8 @@ This can be used as the Source of an AnimatedIcon and is used by the XAML TreeVi
 This class supports markers that can be driven by an AnimatedIcon.State:
 * TBD
 
+
+
 # API Details
 
 ## Microsoft.UI.Xaml.Controls
@@ -456,6 +478,7 @@ interface IAnimatedVisualSource2
 };
 
 [webhosthidden]
+[contentproperty("Source")]
 unsealed runtimeclass AnimatedIcon : Windows.UI.Xaml.Controls.IconElement
 {
     AnimatedIcon();
@@ -471,6 +494,7 @@ unsealed runtimeclass AnimatedIcon : Windows.UI.Xaml.Controls.IconElement
 }
 
 [webhosthidden]
+[contentproperty("Source")]
 unsealed runtimeclass AnimatedIconSource : IconSource
 {
     AnimatedIconSource();
