@@ -26,6 +26,10 @@ A Lottie animation is typically defined in Adobe After Effects and exported to J
 is converted to a WinRT class using the LottieGen tool.
 The new APIs in this spec include classes created by LottieGen.
 
+_Spec note: Rather than using LottieGen to create new public APIs, we could ship JSON files
+and then parse those, and there is a toolkit control that does that. But the perf
+is better to code gen, and the toolkit control requires C#._
+
 # AnimatedIcon How-To
 
 _(This is conceptual documentation that will go to a docs.microsoft.com "how to" page)_
