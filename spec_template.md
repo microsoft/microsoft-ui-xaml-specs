@@ -1,30 +1,40 @@
 > See comments in Markdown for how to use this spec template
 
 To do:
-* PR ProtectedCursor updates
-* PR RGB updates
+* Links to sample specs
 
 <!-- The purpose of this spec is to describe new APIs, in a way
 that will transfer to docs.microsoft.com (DMC).
 
-There are two audiences for the spec. The first are people
-that want to evaluate and give feedback on the API, as part of
-the submission process.  When it's complete
-it will be incorporated into the public documentation at
-docs.microsoft.com (http://docs.microsoft.com/uwp/toolkits/winui/).
-Hopefully we'll be able to copy it mostly verbatim.
-So the second audience is everyone that reads there to learn how
-and why to use this API. Some of this text also shows up in
-Visual Studio Intellisense.
+There are two audiences for the spec. The first are people that want to evaluate and give feedback on the API, as part of
+the submission process.  When it's complete it will be incorporated into the public documentation at
+http://docs.microsoft.com (DMC).
+Hopefully we'll be able to copy it mostly verbatim. So the second audience is everyone that reads there to learn how
+and why to use this API. Some of this text also shows up in Visual Studio Intellisense.
 
 For example, much of the examples and descriptions in the RadialGradientBrush API spec
 (https://github.com/microsoft/microsoft-ui-xaml-specs/blob/master/active/RadialGradientBrush/RadialGradientBrush.md)
 were carried over to the public API page on DMC
 (https://docs.microsoft.com/en-us/windows/winui/api/microsoft.ui.xaml.media.radialgradientbrush?view=winui-2.5)
 
-Once the API is on DMC, that becomes the official copy, and this
-spec becomes an archive. For example if the description is updated,
+Once the API is on DMC, that becomes the official copy, and this spec becomes an archive. For example if the description is updated,
 that only needs to happen on DMC and needn't be duplicated here.
+
+Style guide:
+* Speak to the developer who will be learning/using this API.
+("You use this to..." rather than "the developer uses this to...")
+* Use hard returns to keep the page width within ~100 columns.
+(Otherwise it's more difficult to leave comments in a GitHub PR.)
+* Talk about an API's behavior, not its implementation
+(Speak to the developer using this API, not to the team implementing this API)
+* A picture says a thousand words.
+* An example says a million words.
+* Keep examples realistic but simple; don't add unrelated complications
+(An example that passes a stream needn't show the process of launching the File-Open dialog.)
+
+Examples:
+* TBD
+
 -->
 
 Title
@@ -40,21 +50,23 @@ the rest of the document.
 This section and the appendix are the only sections that likely
 do not get copied to DMC; they're just an aid to reading this spec.
 
-For example, this is a place to provide a brief explanation of some dependent
+For example this is a place to provide a brief explanation of some dependent
 area, just explanation enough to understand this new API, rather than telling
 the reader "go read 100 pages of background information posted at ...".
 
-For example, this section is a place to explain why you're adding this API rather than
-modifying an existing API.
+For example this section is a place to explain why you're adding this new API rather than
+usiung an existing related API.
 
-For example see the spec for the UIElement.ProtectedCursor property
-(https://github.com/microsoft/microsoft-ui-xaml-specs/blob/master/active/RadialGradientBrush/RadialGradientBrush.md)
+For a simple example see the spec for the UIElement.ProtectedCursor property
+(TBD)
 which has some of the thinking about how this Xaml API relates to existing
 Composition and WPF APIs. This is interesting background but not the kind of information
 that would land on DMC.
 -->
 
 # Conceptual pages (How To)
+
+_(This is conceptual documentation that will go to docs.microsoft.com "how to" page)_
 
 <!-- 
 All APIs have a page on DMC, some APIs or groups of APIs have an additional high level,
@@ -65,55 +77,71 @@ and then there's also a conceptual pages that discusses them collectively
 (https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/text-controls)
 
 Another way to use this section is as a draft of a blog post that introduces the new feature.
+
+Sometimes it's difficult to decide if text belons on a how-to page or an API page.
+It's not important to decide on that here, we can always adjust it when copying to DMC.
 -->
 
 # API Pages
 
-<!--
-Each level-2 section within this section is a type or member description. Since DMC has
-a page for each type and member, each one of these sections will become a page.
+_(Each of the following L2 sections correspond to a page that will be on docs.microsoft.com)_
 
+<!--
 Notes:
 * The first line of each of these sections should become that first line on the DMC page,
-  that then becomes the description you see in Intellisense.
+  which then becomes the description you see in Intellisense.
 * Each page can have description, examples, and remarks.
   Remarks are where the documentation calls out special considerations that the developer should be aware of.
-* Add an "Other members" section after a type to give a for example a table
-  of the other members and their Intellisense description.
-
-Example specs:
-* RGB (new class and members, uses Other Members section)
-* ProtectedCursor (add a member to an existing class)
-
-Tips:
 * It can be helpful at the top of an API page (or after the Intellisense text) to add the API signature in C#
-* It's not necessary to have a section for every member. Many members are obvious from their name and IDL.
+* Add a "_Spec note: ..._" to add a note that's useful in this spec but shouldn't go to DMC.
+* Show _examples_, not _samples_; an example is a snippet, a sample is a full working app.
+
+It's not necessary to have a section for every class member:
+* If its purpose and usage is obvious from it's name/type, it's not necessary to include it.
+* If its purpose and usage is obvious other than a brief description, put it in a table in the "Other [class] Members" section.
 -->
 
-## MySample class
+## MyExample class
 
-_One or two line description (text that should show up as Intellisense for the class). Include default value for properties_
+Brief description of this class.
 
-_Fuller description, and/or remarks_
+Introduction to one or more example usages of a MyExample class:
 
-## MySample.PropertyOne property
+```c#
+...
 
-_One or two line description (text that should show up as Intellisense for the member)_
+```
 
-## Other MySample members
+Remarks about the MyExample class
 
-_Members that don't need more than Intellisense text, so don't need the overhead of their own section. Include default value for properties._
+
+## MyExample.PropertyOne property
+
+Brief description about the MyExample.PropertyOne property.
+
+_Spec note: internal comment about this property that won't go into the public docs._
+
+Introduction to one or more usages of the MyExample.PropertyOne property.
+
+
+## Other MyExample members
+
 
 | Name | Description
 |-|-|
-| PropertyTwo | The second property (defaults to -1) |
-| MethodOne | The first method |
+| PropertyTwo | Brief description of the PropertyTwo property (defaults to ...) |
+| MethodOne | Brief description of the MethodOne method |
 
 # API Details
 
-<!-- 
-The exact APIs, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/)
- -->
+```c#
+runtimeclass MyExample
+{
+    int PropertyOne;
+    string PropertyTwo
+    void MethodOne();
+}
+```
 
 # Appendix
 
