@@ -112,8 +112,8 @@ If it is found then we will hard cut to the "[PreviousState]To[NewState]" positi
 If it is found, then we will hard cut to the "[NewState]" position.
 6) Check if the provided IAnimatedVisualSource2's markers has any marker which ends with "To[NewState]_End".
 If any marker is found which has that ending, we will hard cut to the first marker found with the appropriate ending's position.
-7) Check if "[NewState]" parses to a float. If it does, animated from the current position to the parsed float. **
-Hard cut to position 0.0.
+7) Check if "[NewState]" parses to a float. If it does, animated from the current position to the parsed float.
+8) Hard cut to position 0.0.
 
 Details of the marker format in Lottie JSON files are describe in detail [TBD]().
 The following is an example:
