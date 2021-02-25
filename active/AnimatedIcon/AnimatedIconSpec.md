@@ -325,7 +325,7 @@ See [link] for more information on combining marker names.
 
 To create this custom PlayIcon class, you run a Lottie JSON file (with markers) through the Windows
 [CodeGen](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen)
-tool to generate the animation code as a C# class.
+tool to generate the animation code as a C# or C++/WinRT class.
 
 Once you run your Lottifile through codegen you can add the output class to your project. 
 Follow the steps in the
@@ -409,7 +409,7 @@ This class supports markers that can be driven by an AnimatedIcon.State:
 * PressedOnToPointerOverOff
 * PressedOnToNormalOff_Start
 * PressedOffToPressedOn
-* PressedOffToPointerOver
+* PressedOffToPointerOverOn
 * PressedOffToNormalOn
 
 ## AnimatedGlobalNavigationButtonVisualSource class
@@ -490,7 +490,7 @@ unsealed runtimeclass AnimatedIcon : Windows.UI.Xaml.Controls.IconElement
     IAnimatedVisualSource2 Source{ get; set; };
     IconSource FallbackSource {get; set; };
 
-    static Windows.UI.Xaml.DependencyProperty State{ get; };
+    static Windows.UI.Xaml.DependencyProperty StateProperty{ get; };
     static void SetState(Windows.UI.Xaml.DependencyObject object, String value); 
     static String GetState(Windows.UI.Xaml.DependencyObject object); 
 
@@ -593,7 +593,7 @@ runtimeclass AnimatedChevronRightDownSmallVisualSource
 
 This control is going to be part of the Icon family of controls so the accessibility requirements will reflect what the other icon controls have. AnimatedIcon will need to ensure that the high contrast brushes propagate correctly if the user changes their settings to a high contrast theme.  
 
-If the user turns off animations in theri system settings, the AnimatedIcons will not animate. 
+If the user turns off animations in their system settings, the AnimatedIcons will not animate. 
 
 ## Adding an instance state property 
 
