@@ -270,7 +270,7 @@ This example creates a BitmapIcon from a BitmapIconSource:
 
 ```cs
 IconSource iconSource = new BitmapIconSource();
-BitmapIcon = iconSource.CreateIconElement as BitmapIcon;
+BitmapIcon = iconSource.CreateIconElement() as BitmapIcon;
 ```
 
 ## IconSource.CreateIconElementCore
