@@ -55,6 +55,7 @@ This PlayAnimation can similarly be used in an
 The difference is that AnimatedVisualPlayer has methods such as Play and Pause.
 AnimatedIcon controls the animation with a State property, and can color the animation using the Foreground property.
 AnimatedIcon can also be used where specfically an Icon-typed value is required.
+Another difference is that they consume different IAnimatedVisualSource interfaces. 
 
 ## Creating animated content for an AnimatedIcon with Lottie
 
@@ -69,19 +70,19 @@ For example, the XAML
 [AutoSuggestBox](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.AutoSuggestBox)
 control uses the `AnimatedFindVisualSource` class, which was generated using the LottieGen tool.
 
-An additional step for AnimatedIcon is to define markers in the animation definition, which mark time positions.
+An additional step for AnimatedIcon is to define markers in the animation definition, which mark time playback positions.
 You can then set the `State` of the AnimatedIcon to these markers.
-For example, if you have a position in the Lottie file marked "PointerOver", you can set AnimatedIcon State to
-"PointerOver" to move the animation to that position.
+For example, if you have a playback position in the Lottie file marked "PointerOver", you can set AnimatedIcon State to
+"PointerOver" to move the animation to that playback position.
 
 Finally, if you define a color in your Lottie animation named "Foreground", and use the animation with
 an AnimatedIcon, setting the AnimatedIcon.Foreground property will set that color.
 
 ## Naming AnimatedIcon markers
 
-If you set the State of an AnimatedIcon to a new value, you can have a position in the Lottie
+If you set the State of an AnimatedIcon to a new value, you can have a playback position in the Lottie
 animation for that state, or specificially for the transition from the old state to the new state.
-The positions are identified with markers in the Lottie file.
+The playback positions are identified with markers in the Lottie file.
 You can also define specific markers for the start of the transition or the end of the transition.
 
 For example, XAML's AutoSuggestBox control uses an AnimatedIcon that animates with the following states:
@@ -93,27 +94,27 @@ You can define markers in the Lottie file with those State names.
 You can also define markers as follows:
 * Combine state names with a "To".
 For example, in the AutoSuggestBox case, "NormalToPointerOver";
-changing the AnimatedIcon's state from "Normal" to "PointerOver" will cause it to move to this marker's position.
+changing the AnimatedIcon's state from "Normal" to "PointerOver" will cause it to move to this marker's playback position.
 * Append "_Start" and/or "_End" to a marker name.
 For example defining markers "NormalToPointerOver_Start" and "NormalToPointerOver_End" and changing
 the AnimatedIcon's State from "Normal" to "PointerOver" will cause it to jump to the _Start
-marker's position and then animate to the _End position.
+marker's playback position and then animate to the _End playback position.
 
-The exact algorithm used to map AnimatedIcon State changes to marker positions:
+The exact algorithm used to map AnimatedIcon State changes to marker playback positions:
 1) Check the provided file's markers for the markers "[PreviousState]To[NewState]_Start" and "[PreviousState]To[NewState]_End".
 If both are found play the animation from "[PreviousState]To[NewState]_Start" to "[PreviousState]To[NewState]_End".
 2) If "[PreviousState]To[NewState]_Start" is not found but "[PreviousState]To[NewState]_End" is found,
-then we will hard cut to the "[PreviousState]To[NewState]_End" position.
+then we will hard cut to the "[PreviousState]To[NewState]_End" playback position.
 3) If "[PreviousState]To[NewState]_End" is not found but "[PreviousState]To[NewState]_Start" is found,
-then we will hard cut to the "[PreviousState]To[NewState]_Start" position.
+then we will hard cut to the "[PreviousState]To[NewState]_Start" playback position.
 4) Check if the provided IAnimatedVisualSource2's markers for the marker "[PreviousState]To[NewState]".
-If it is found then we will hard cut to the "[PreviousState]To[NewState]" position.
+If it is found then we will hard cut to the "[PreviousState]To[NewState]" playback position.
 5) Check if the provided IAnimatedVisualSource2's markers for the marker "[NewState]".
-If it is found, then we will hard cut to the "[NewState]" position.
+If it is found, then we will hard cut to the "[NewState]" playback position.
 6) Check if the provided IAnimatedVisualSource2's markers has any marker which ends with "To[NewState]_End".
-If any marker is found which has that ending, we will hard cut to the first marker found with the appropriate ending's position.
-7) Check if "[NewState]" parses to a float. If it does, animated from the current position to the parsed float. **
-Hard cut to position 0.0.
+If any marker is found which has that ending, we will hard cut to the first marker found with the appropriate ending's playback position.
+7) Check if "[NewState]" parses to a float. If it does, animated from the current playback position to the parsed float. **
+Hard cut to playback position 0.0.
 
 Details of the marker format in Lottie JSON files are describe in detail [TBD]().
 The following is an example:
@@ -147,7 +148,7 @@ An icon that displays and controls an IAnimatedVisual2, which is set as the valu
 You can define an IAnimatedVisual2 using the
 [Lottie-Windows](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie) library.
 
-You change the position of the animation displayed by an AnimatedIcon by setting its `State` attached property
+You change the playback position of the animation displayed by an AnimatedIcon by setting its `State` attached property
 on the AnimatedIcon or on its parent in the XAML tree.
 (If you add an AnimatedIcon to the tree and the property is already set on the new parent, the icon will move to that state.)
 
@@ -169,7 +170,10 @@ only be used where icons are used in WinUI.
 The following example is a button that the user clicks to Accept a prompt.
 The MyAcceptAnimation is a class created using the LottieGen tool.
 The FallbackIconSource will be used rather than the animation when animations can't be played,
-such as on older versions of Windows that don't support Lottie animations.
+such as on older versions of Windows that don't support Lottie animations. 
+
+If the end user turns off animations in their system settings, AnimatedIcon will display 
+the final frame of the state transition the controls was in. 
 
 ```xml
 <Button PointerEntered="HandlePointerEntered" PointerExited="HandlePointerExited">
@@ -244,6 +248,8 @@ But non-control types are more evident, for example a panel:
 
 Some controls will automatically set the State on an AnimatedIcon, for example
 see NavigationViewItem.Icon.
+
+_Spec note: The documentation for muxc:NavigationViewItem.Icon is also being updated to reflect this new behavior. See below.
 
 ## Other AnimatedIcon class members
 
@@ -324,12 +330,12 @@ to when the mouse moves to over the NavigationViewItem.
 See [link] for more information on combining marker names.
 
 To create this custom PlayIcon class, you run a Lottie JSON file (with markers) through the Windows
-[CodeGen](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen)
+[LottieGen](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen)
 tool to generate the animation code as a C# class.
 
-Once you run your Lottifile through codegen you can add the output class to your project. 
+Once you run your Lottifile through LottieGen you can add the CodeGen output class to your project. 
 Follow the steps in the
-[CodeGen](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen)
+[LottieGen](https://docs.microsoft.com/en-us/windows/communitytoolkit/animations/lottie-scenarios/getting_started_codegen)
 tutorial for more instructions. 
 
 ## IAnimatedVisualSource2 interface
@@ -345,7 +351,7 @@ which can be added to a XAML element tree using the methods of
 [ElementCompositionPreview](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Hosting.ElementCompositionPreview).
 
 Use the `SetColorProperty` method to set a color of the animated visual,
-and the `Markers` property to find named positions in the animation timeline.
+and the `Markers` property to find named playback positions in the animation timeline.
 
 _Spec note: `IAnimatedVisualSource2` is like `IAnimatedVisualSource` in purpose and use,
 but there is no derivation because the '2' interface does not derive from
@@ -356,15 +362,15 @@ This example displays and animates an object implementing IAnimatedVisualSource2
 ```cpp
 void AddVisualAndShowStartAnimation(
     const winrt::Border& element,
-    const winrt::IAnimatedVisualSource2 source,
+    const& winrt::IAnimatedVisualSource2 source,
     const winrt::hstring& initialState,
     const winrt::hstring& steadyState,
     const winrt::Color& themeColor )
 {
     winrt::IAnimatedVisual animatedVisual = source.TryCreateAnimatedIconVisual();
 
-    // Find the positions in the animation of the two states
-    auto const markers = source.Markers())
+    // Find the playback positions in the animation of the two states
+    auto const markers = source.Markers();
     auto const fromProgress = static_cast<float>(markers.Lookup(initialState));
     auto const toProgress = static_cast<float>(markers.Lookup(steadyState));
 
@@ -385,7 +391,7 @@ void AddVisualAndShowStartAnimation(
 
 | Name | Description |
 | :-| :-|
-| Markers | Provides a mapping from marker names to positions in the animation. The names are defined by the animation. |
+| Markers | Provides a mapping from marker names to playback positions in the animation. The names are defined by the animation. |
 | SetColorProperty | Sets a color for the animated visual. The property names are defined by the animation. |
 
 ## AnimatedAcceptVisualSource class
@@ -407,7 +413,7 @@ This class supports markers that can be driven by an AnimatedIcon.State:
 * PointerOverOffToPressedOff
 * PressedOnToPressedOff
 * PressedOnToPointerOverOff
-* PressedOnToNormalOff_Start
+* PressedOnToNormalOff
 * PressedOffToPressedOn
 * PressedOffToPointerOver
 * PressedOffToNormalOn
@@ -471,7 +477,7 @@ This class supports markers that can be driven by an AnimatedIcon.State:
 
 ## Microsoft.UI.Xaml.Controls
 
-```c++
+```csharp
 [webhosthidden]
 interface IAnimatedVisualSource2
 {
@@ -487,14 +493,15 @@ unsealed runtimeclass AnimatedIcon : Windows.UI.Xaml.Controls.IconElement
 {
     AnimatedIcon();
 
-    IAnimatedVisualSource2 Source{ get; set; };
+    IAnimatedVisualSource2 Source { get; set; };
     IconSource FallbackSource {get; set; };
 
-    static Windows.UI.Xaml.DependencyProperty State{ get; };
+    static Windows.UI.Xaml.DependencyProperty StateProperty { get; };
     static void SetState(Windows.UI.Xaml.DependencyObject object, String value); 
     static String GetState(Windows.UI.Xaml.DependencyObject object); 
 
-    static Windows.UI.Xaml.DependencyProperty SourceProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty SourceProperty { get; };
+    static Windows.UI.Xaml.DependenceyProperty FallbackSourceProeprty (get; };)
 }
 
 [webhosthidden]
@@ -593,7 +600,7 @@ runtimeclass AnimatedChevronRightDownSmallVisualSource
 
 This control is going to be part of the Icon family of controls so the accessibility requirements will reflect what the other icon controls have. AnimatedIcon will need to ensure that the high contrast brushes propagate correctly if the user changes their settings to a high contrast theme.  
 
-If the user turns off animations in theri system settings, the AnimatedIcons will not animate. 
+If the user turns off animations in theri system settings, the AnimatedIcons will hard-cut to the final position. 
 
 ## Adding an instance state property 
 
