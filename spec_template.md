@@ -1,8 +1,5 @@
 > See comments in Markdown for how to use this spec template
 
-To do:
-* Links to sample specs
-
 <!-- The purpose of this spec is to describe new APIs, in a way
 that will transfer to docs.microsoft.com (DMC).
 
@@ -19,6 +16,12 @@ were carried over to the public API page on DMC
 
 Once the API is on DMC, that becomes the official copy, and this spec becomes an archive. For example if the description is updated,
 that only needs to happen on DMC and needn't be duplicated here.
+
+Samples:
+* New class (RadialGradientBrush):
+  https://github.com/microsoft/microsoft-ui-xaml-specs/blob/master/active/RadialGradientBrush/RadialGradientBrush.md
+* New member on an existing class (UIElement.ProtectedCursor):
+  https://github.com/microsoft/microsoft-ui-xaml-specs/blob/master/active/UIElement/ElementCursor.md
 
 Style guide:
 * Speak to the developer who will be learning/using this API.
