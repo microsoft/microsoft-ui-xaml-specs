@@ -113,8 +113,8 @@ If it is found then we will hard cut to the "[PreviousState]To[NewState]" playba
 If it is found, then we will hard cut to the "[NewState]" playback position.
 6) Check if the provided IAnimatedVisualSource2's markers has any marker which ends with "To[NewState]_End".
 If any marker is found which has that ending, we will hard cut to the first marker found with the appropriate ending's playback position.
-7) Check if "[NewState]" parses to a float. If it does, animated from the current playback position to the parsed float. **
-Hard cut to playback position 0.0.
+7) Check if "[NewState]" parses to a float. If it does, animated from the current position to the parsed float.
+8) Hard cut to playback position 0.0.
 
 Details of the marker format in Lottie JSON files are describe in detail [TBD]().
 The following is an example:
@@ -276,7 +276,7 @@ This example creates a BitmapIcon from a BitmapIconSource:
 
 ```cs
 IconSource iconSource = new BitmapIconSource();
-BitmapIcon = iconSource.CreateIconElement as BitmapIcon;
+BitmapIcon = iconSource.CreateIconElement() as BitmapIcon;
 ```
 
 ## IconSource.CreateIconElementCore
@@ -415,7 +415,7 @@ This class supports markers that can be driven by an AnimatedIcon.State:
 * PressedOnToPointerOverOff
 * PressedOnToNormalOff
 * PressedOffToPressedOn
-* PressedOffToPointerOver
+* PressedOffToPointerOverOn
 * PressedOffToNormalOn
 
 ## AnimatedGlobalNavigationButtonVisualSource class
@@ -496,7 +496,7 @@ unsealed runtimeclass AnimatedIcon : Windows.UI.Xaml.Controls.IconElement
     IAnimatedVisualSource2 Source { get; set; };
     IconSource FallbackSource {get; set; };
 
-    static Windows.UI.Xaml.DependencyProperty StateProperty { get; };
+    static Windows.UI.Xaml.DependencyProperty StateProperty{ get; };
     static void SetState(Windows.UI.Xaml.DependencyObject object, String value); 
     static String GetState(Windows.UI.Xaml.DependencyObject object); 
 
