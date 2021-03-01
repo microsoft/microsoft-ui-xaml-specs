@@ -35,7 +35,8 @@ A CommandBar provides access to app-level or page-specific commands. A CommandBa
 *CommandBar:*
 ![CommandBar example](images/commandbar-example.png)
 
-*CommandBarFlyout:*
+*CommandBarFlyout* (invoked for example with a mouse right click):
+
 ![CommandBarFlyout example](images/commandbarflyout-example.png)
 
 ### Issue #1: You can only use a select few object types inside of a CommandBar/CommandBarFlyout. 
