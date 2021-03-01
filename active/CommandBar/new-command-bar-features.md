@@ -33,6 +33,7 @@ This spec will address three main shortcomings in the [CommandBar (CB)](https://
 A CommandBar provides access to app-level or page-specific commands. A CommandBarFlyout is a CommandBar that appears in a Flyout menu, and must be invoked.
 
 *CommandBar:*
+
 ![CommandBar example](images/commandbar-example.png)
 
 *CommandBarFlyout* (invoked for example with a mouse right click):
