@@ -81,7 +81,7 @@ with a "///" comment above the member or type. -->
 
 `public Class ColorFilterOverlayControl`
 
-Represents a class that takes a rectangle and transforms into the coordinate space of a TargetElement, and then runs a ColorMatrixEffect on that region to select the alpha channel and replace with a ReplacementColor.
+Represents a class that assists in applying a specialized color filter onto a TargetElement. The region of the TargetElement that has overlap with the ColorFilterOverlayControl is rendered to an offscreen image that's passed through a ColorMatrixEffect, which takes the Alpha channel of each pixel in the region. RGB channels are then replaced with the RGB of a ReplacementColor.
 
 `public UIElement TargetElement { get; set; }`
 
