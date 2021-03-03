@@ -85,11 +85,11 @@ Represents a class that takes a rectangle and transforms into the coordinate spa
 
 `public UIElement TargetElement { get; set; }`
 
-This is a property of `ColorFilterOverlayControl`. Gets or sets the UIElement to apply the color effect to. 
+Gets or sets the UIElement to apply the color effect to. 
 
 `public Color ReplacementColor { get; set; }`
 
-This is a property of `ColorFilterOverlayControl`. Gets or sets the Color to use instead of the RGB channels of the TargetElement.
+Gets or sets the Color to use instead of the RGB channels of the TargetElement.
 
 ## New ThemeResources
 
@@ -118,6 +118,26 @@ unsealed runtimeclass ColorFilterOverlayControl : Windows.UI.Xaml.Controls.Grid
 }
 
 }
+```
+
+# Examples
+The example below shows how the new `ColorFilterOverlayControl` API can be used to partially highlight a TextBlock.
+
+```xml
+ <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel x:Name="Panel" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid Margin="2,10,0,0">
+                <TextBlock x:Name="Target" Text="This string will be partially highlighted"/>
+                <ColorFilterOverlayControl
+                    ReplacementColor="Black"
+                    TargetElement="{Binding ElementName=Target}"
+                    Width="50"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Center"
+                    Background="LightBlue"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
 ```
 
 # Appendix
