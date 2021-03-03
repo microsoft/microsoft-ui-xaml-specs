@@ -42,7 +42,7 @@ Recently, [ListView was given design updates](https://github.com/microsoft/micro
 This spec will detail a number of changes to update the designs of DatePicker and TimePicker so that they are more 
 visually aligned with modern WinUI controls. At a high level, some key parts of these updated styles are: a rounded selection rectangle; rounded backplates on items, buttons, and scroll buttons on  hover; and new animations that are aligned with other controls. 
 
-There is only one major API change that will come with these styling updates, which is adding a new class called `ColorFilterOverlayControl`. This class provides the logic behind displaying the selection rectangle that spans across all three rows in DatePicker and TimePicker, and giving it the correct background color. 
+There is only one major API change that will come with these styling updates, which is adding a new class called `ColorFilterOverlayControl`. This class provides the logic behind displaying the 'inverted' selection rectangle that spans across all three columns in DatePicker and TimePicker, and giving it the correct foreground color to have appropriate contrast over the accent colored background.
 
 # Visual Examples
 <!-- Use this section to provide a brief description of the feature.
