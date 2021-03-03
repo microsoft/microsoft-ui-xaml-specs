@@ -85,11 +85,11 @@ Represents a class that takes a rectangle and transforms into the coordinate spa
 
 `public UIElement TargetElement { get; set; }`
 
-This is a property of `ColorFilterOverlayControl`. Gets or sets the UIElement whose coordinate space should be replaced with a color. 
+This is a property of `ColorFilterOverlayControl`. Gets or sets the UIElement to apply the color effect to. 
 
 `public Color ReplacementColor { get; set; }`
 
-This is a property of `ColorFilterOverlayControl`. Gets or sets the Color that should fill the target element. 
+This is a property of `ColorFilterOverlayControl`. Gets or sets the Color to use instead of the RGB channels of the TargetElement.
 
 ## New ThemeResources
 
@@ -101,7 +101,7 @@ This is a property of `ColorFilterOverlayControl`. Gets or sets the Color that s
 <!-- The exact API, in MIDL3 format (https://docs.microsoft.com/en-us/uwp/midl-3/) -->
 
 ```csharp
-namespace MU_XCP_NAMESPACE
+namespace Microsoft.UI.Xaml.Controls
 {
 
 [MUX_PROPERTY_CHANGED_CALLBACK(TRUE)]
