@@ -3,9 +3,10 @@
 CommandBar/CommandBarFlyout updates
 ===
 
-# Background
-
 This spec will address three main shortcomings in the [CommandBar](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.commandbar?view=winrt-19041) and [CommandBarFlyout](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.commandbarflyout?view=winrt-19041) space, and propose solutions to these shortcomings. All of these solutions will lead to a more customizable, flexible commanding experience. 
+
+
+# Background
 
 A `CommandBar` provides access to app-level or page-specific commands. A `CommandBarFlyout` is a `CommandBar` that appears in a `Flyout` menu, and must be invoked.
 
@@ -107,10 +108,23 @@ The issue arises when you want to combine these two concepts. It would be useful
 
 ### Issue #3: CommandBarFlyout does not have an "always expanded" state.
 
-Currently, a `CommandBarFlyout` with secondary commands always shows a […] button that allows the user to collapse the `CommandBarFlyout` into just the top bar (primary commands). There's currently no way to have a `CommandBarFlyout` with secondary commands that is always expanded when invoked. 
+Currently, a `CommandBarFlyout` with secondary commands always shows a […] "more" button that allows the user to collapse the `CommandBarFlyout` into just the top bar (primary commands). There's currently no way to have a `CommandBarFlyout` with secondary commands that is always expanded when invoked. 
+
+```xaml
+<CommandBarFlyout >
+    <AppBarButton Label="People" Icon="People"/>
+    <AppBarButton Label="Account" Icon="Account"/>
+
+    <CommandBarFlyout.SecondaryCommands>
+        <AppBarButton Label="Accept" Icon="Accept"/>
+        <AppBarButton Label="Camera" Icon="Camera"/>
+    </CommandBarFlyout.SecondaryCommands>
+</CommandBarFlyout>
+```
+
+![Command bar with more button](images/more-button.jpg)
 
 When the `CommandBarFlyout` is invoked via touch, only the primary commands are shown (with the option for the user to expand the list of secondary commands). The developer is currently not able to control how the `CommandBarFlyout` appears when invoked, and cannot control whether it can be collapsed or not. 
-
 
 # Description
 
@@ -129,7 +143,7 @@ For example:
     <CommandBarFlyout.SecondaryCommands>
         <AppBarElementContainer>
             <SplitButton ToolTipService.ToolTip="Insert"
-                         Style="{ThemeResource SplitButtonCommandBarFlyoutStyle}">
+                         Style="{ThemeResource SplitButtonCommandBarFlyoutStyle}"> <!-- New Style -->
                 <SplitButton.Content>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock>Insert</TextBlock>
@@ -240,15 +254,20 @@ For example:
 
 ## New ThemeResources
 
+Use the following styles to put a `SplitButton` into a `CommandBar` or `CommandBarFlyout`:
+
 ```xml
 <Style x:Key="SplitButtonCommandBarFlyoutStyle" TargetType="SplitButton"></Style>`
-
 <Style x:Key="SplitButtonCommandBarStyle" TargetType="SplitButton"></Style>
 ```
 
-The following properties are copied over from `MenuFlyoutSubItem`. These should be implemented for `RadioMenuFlyoutSubItem` as well, using the existing `MenuFlyoutSubItem` theme resources as values.
+You can modify the look of a `RadioMenuFlyoutSubItem` by specifying Xaml resources in your app.
+For more info, see the
+[lightweight styling guide](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/xaml-styles#lightweight-styling).
 
-| Property            | Value | 
+_Spec note: The following resources match `MenuFlyoutSubItem`._
+
+| Resource            | Value | 
 |---------------------------------------------|---------------------------------------------------|
 | RadioMenuFlyoutSubItemBackground | Background color of entire control bounds at rest                         |
 | RadioMenuFlyoutSubItemBackgroundPointerOver | Background color on hover                         |
