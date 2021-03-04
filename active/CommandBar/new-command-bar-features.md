@@ -248,9 +248,16 @@ For example:
 
 ## Notable New APIs
 
+_Spec note: the members of `RadioMenuFlyoutSubItem` match those of the existing
+[MenuFlyoutSubItem](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.MenuFlyoutSubItem)._
+
 | Name | Description |
 |:--|:--|
 | `CommandBarFlyout.AlwaysExpanded` Property | Gets or sets a value that indicates whether or not the CommandBarFlyout should always stay in its Expanded state and block the user from entering the Collapsed state. Defaults to false. |
+| `RadioMenuFlyoutSubItem` Class  | Represents a radio menu item that displays a sub-menu of other radio menu items in a MenuFlyout control.   |
+| `RadioMenuFlyoutSubItem.Items` Property | Gets the collection used to generate the content of the sub-menu.  |
+| `RadioMenuFlyoutSubItem.Icon` Property | Gets or sets the graphic content of the radio menu flyout subitem (parent item). |
+| `RadioMenuFlyoutSubItem.Text` Property | Gets or sets the text content of a RadioMenuFlyoutSubItem.  |
 
 ## New ThemeResources
 
@@ -265,7 +272,7 @@ You can modify the look of a `RadioMenuFlyoutSubItem` by specifying Xaml resourc
 For more info, see the
 [lightweight styling guide](https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/xaml-styles#lightweight-styling).
 
-_Spec note: The following resources match `MenuFlyoutSubItem`._
+_Spec note: The following resources match the existing `MenuFlyoutSubItem`._
 
 | Resource            | Value | 
 |---------------------------------------------|---------------------------------------------------|
@@ -299,8 +306,6 @@ unsealed runtimeclass CommandBarFlyout : Windows.UI.Xaml.Controls.Primitives.Fly
 ```
 
 ```csharp
-/// Spec note: the members of this class match those of
-/// [MenuFlyoutSubItem](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.MenuFlyoutSubItem)
 unsealed runtimeclass RadioMenuFlyoutSubItem : Microsoft.UI.Xaml.Controls.MenuFlyoutItemBase
 {
     RadioMenuFlyoutSubItem();
