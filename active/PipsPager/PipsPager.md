@@ -19,8 +19,7 @@ Conceptually, this is similar to an unordered list represented by bullet points 
 
 ![A sketch of five horizontal dots with the first selected and the previous and next buttons are visible](images/PipsPager_Visible.gif)
 
-The new PipsPager control can  be used when the page content is not explicitly ordered and
-a symbol or glyph can instead represent the page number.
+The new PipsPager control can  be used when the page content is not explicitly numbered or you desire a glyph-based representation.
 
 # API Pages
 
@@ -73,7 +72,7 @@ These buttons allow the user to incrementally select a page. The possible values
   - Note: Hidden means that the button is invisible but does take up layout space.
 - VisibleOnPointerOver: The behavior is the same as Visible *except* that the button is only Visible when
 the user is hovering over the paging UI with their cursor.
-- Collapsed: The button is not visible to the user and does **not** take up layout space.
+- Collapsed: The button is not visible to the user and does **not** take up layout space. (Default)
 
 ![A sketch of five horizontal dots with the first selected and the previous and next buttons are visible](images/PipsPager_Visible.gif)
 
@@ -105,12 +104,15 @@ XAML
 #### Number of pages displayed less than total
 
 If the number of pages of content is large and do not need to be navigated to at once,
-the MaxVisiblePips property can be set to limit the number of visible, interactable, pips.
+the MaxVisiblePips property can be set to limit the number of visible, interactive, pips.
 If the NumberOfPages is greater than the MaxVisiblePips then the pips will scroll so that the selected page is
 centered in the control. If the NumberOfPages is equal to or less than the MaxVisiblePips,
 no scrolling will occur and the number of pips shown will be the same as the NumberOfPages.
 
-By default, the number of visible pips is 5.
+Additionally, if there is not enough layout space for the MaxVisiblePips number of pages, the pips will be clipped. 
+The layout space is the minimum between the MaxVisiblePips and the total number of pips.
+
+By default, the maximum number of visible pips is 5.
 
 ![A prototype of ten horizontal dots with the fifth initially selected and the dots scrolling when the subsequent pages are selected](images/PipsPager_MaxVisiblePips.gif)
 
@@ -156,17 +158,14 @@ XAML
 
 The navigational buttons and pips are able to be customized via the PreviousButtonStyle, NextButtonStyle, SelectedPipStyle, and DefaultPipStyle.
 
-If the PreviousButtonStyle or NextButtonStyle sets the Visibility property on the navigational button, it will take precedence over PreviousButtonVisibility or NextButtonVisibility respectively unless they are set to the PipsPagerButtonVisibility value, "Collapsed". 
-If the PreviousButtonVisibility or NextButtonVisibility is set to "Collapsed", the styles set will not overwrite the Visibility of the button itself.
-
-Similarly, the SelectedPipStyle and DefaultPipStyle will take precedence over the values in the theme resources.
+If the PreviousButtonStyle or NextButtonStyle sets the Visibility property on the navigational button, it will take precedence over PreviousButtonVisibility or NextButtonVisibility respectively unless they are set to the PipsPagerButtonVisibility value, "Collapsed".
 
 ![A prototype of five dots, the PipsPager, laid out horizontally with caret-style navigational arrows](images/PipsPager_CustomNavButtons.png)
 
 XAML
 ``` XAML
 <Page.Resources>
-    <Style x:Key="NavButtonBaseStyle" TargetType="Button" BasedOn="{StaticResource PipsPagerNavigatonButtonBaseStyle}">
+    <Style x:Key="NavButtonBaseStyle" TargetType="Button" BasedOn="{StaticResource PipsPagerNavigationButtonBaseStyle}">
         <Setter Property="Width" Value="30" />
         <Setter Property="Height" Value="30" />
         <Setter Property="FontSize" Value="12" />
@@ -191,13 +190,13 @@ XAML
 
 | Name | Description| Default | 
 |:---:|:---|:---|
-| NumberOfPages | Sets the max number of pages the index control will iterate through. The default will represent an infinite page range. | -1
-| PreviousButtonStyle and NextButtonStyle | Gives the developer the option to customize the style by changing the text or glyph for the edge buttons. | The Previous/Next page button glyph, "Content", and PipsPagerNavigationButtonBaseStyle defined in theme resources.
-| DefaultPipStyle and SelectedPipStyle | Gives the developer the option to customize the style by changing the appearance of the pips. | Based on default and selected pip theme resources and the PipsPagerButtonBaseStyle defined in theme resources.
+| NumberOfPages | Sets the max number of pages the index control will iterate through. The default will represent an infinite page range. When the number of pages is infinite, the user can scroll and select pips infinitely. | -1
+| PreviousButtonStyle and NextButtonStyle | Customizes the text or glyph for the navigational buttons. | The Previous/Next page button glyph, "Content", and PipsPagerNavigationButtonBaseStyle defined in theme resources.
+| DefaultPipStyle and SelectedPipStyle | Customizes the appearance of the pips. | Based on default and selected pip theme resources and the PipsPagerButtonBaseStyle defined in theme resources.
 | NextButtonVisibility | Sets the visibility of the button that navigates to the next item. | Collapsed |
 | PreviousButtonVisibility | Sets the visibility of the button that navigates to the previous item. | Collapsed |
 | SelectedPageIndex | The 0 based index that is currently selected. It will default to the first index. | 0
-| MaxVisiblePips | The maximum number of pips that will appear in the control at once. If the NumberOfPages is greater than this value, the UI will scroll so that the selected pip is centered. | 5
+| MaxVisiblePips | The maximum number of pips that will appear in the control at once. If possible, the UI will scroll so that the selected pip to the center. The valid range for MaxVisiblePips is 0+, if 0 is set, no pages will be visible to the user. | 5
 | Orientation | The orientation of the control. Can be either Vertical or Horizontal. | Horizontal
 | PipsPagerSelectedIndexChangedEvent | Event that is fired after the user selects a pip or the directional buttons. This event will return the index number of the page that the user selected. | N/A
 
@@ -209,17 +208,50 @@ For more info, see the
 
 | Resource key | Description | Type
 |:-:|:--| :-- |
-| PipsPagerButtonWidth | Sets the bounding box width for each pip | Double |
-| PipsPagerButtonHeight | Sets the bounding box height for each pip | Double |
+| PipsPagerVerticalButtonWidth  | Sets the bounding box width for each pip when in vertical orientation | Double |
+| PipsPagerVerticalButtonHeight  | Sets the bounding box height for each pip when in vertical orientation | Double |
+| PipsPagerHorizontalButtonWidth  | Sets the bounding box width for each pip when in horizontal orientation | Double |
+| PipsPagerHorizontalButtonHeight  | Sets the bounding box height for each pip when in horizontal orientation | Double |
 | PipsPagerButtonBorderThickness | Sets the border thickness for each pip | Thickness |
 | PipsPagerNavigationButtonBorderThickness | Sets the border thickness for each navigational button | Thickness |
 | PipsPagerSelectedGlyph | Sets the pip glyph when selected in MDL2 icon set | String |
-| PipsPagerDefaultGlyph | Sets the default pip glyph in MDL2 icon set | String |
+| PipsPagerNormalGlyph | Sets the default pip glyph in MDL2 icon set | String |
 | PipsPagerNavigationButtonHeight | Sets the height for each navigational button | Double |
 | PipsPagerNavigationWidth | Sets the width for each navigational button | Double |
 | PipsPagerNavigationButtonFontSize | Sets the font size for each navigational button | Double |
 | PipsPagerSelectedGlyphFontSize | Sets the size in pixels of the pip glyph when selected | Double |
-| PipsPagerDefaultGlyphFontSize | Sets the size in pixels of the pip glyph at rest| Double |
+| PipsPagerNormalGlyphFontSize | Sets the size in pixels of the pip glyph at rest| Double |
+
+### Static Resources
+| Resource key | Description | Type
+|:-:|:--| :-- |
+| PipsPagerSelectionIndicatorBackground | Sets the pip background | StaticResource |
+| PipsPagerSelectionIndicatorBackgroundPointerOver | Sets the pip background on pointer over | StaticResource |
+| PipsPagerSelectionIndicatorBackgroundPressed | Sets the pip background when pressed| StaticResource |
+| PipsPagerSelectionIndicatorBackgroundSelected | Sets the pip background when selected | StaticResource |
+| PipsPagerSelectionIndicatorBackgroundDisabled | Sets the pip background when disabled | StaticResource |
+| PipsPagerSelectionIndicatorBorderBrush | Sets the pip border | StaticResource |
+| PipsPagerSelectionIndicatorBorderBrushPointerOver | Sets the pip border on pointer over | StaticResource |
+| PipsPagerSelectionIndicatorBorderBrushPressed | Sets the pip border when pressed | StaticResource |
+| PipsPagerSelectionIndicatorBorderBrushSelected | Sets the pip border when selected | StaticResource |
+| PipsPagerSelectionIndicatorBorderBrushDisabled | Sets the pip border when disabled | StaticResource |
+| PipsPagerSelectionIndicatorForeground | Sets the pip foreground | StaticResource |
+| PipsPagerSelectionIndicatorForegroundPointerOver | Sets the pip foreground on pointer over | StaticResource |
+| PipsPagerSelectionIndicatorForegroundPressed | Sets the pip foreground when pressed | StaticResource |
+| PipsPagerSelectionIndicatorForegroundSelected | Sets the pip foreground when selected | StaticResource |
+| PipsPagerSelectionIndicatorForegroundDisabled | Sets the pip foreground when disabled | StaticResource |
+| PipsPagerNavigationButtonBackground | Sets the navigation button background | StaticResource |
+| PipsPagerNavigationButtonBackgroundPointerOver | Sets the navigation button background on pointer over | StaticResource |
+| PipsPagerNavigationButtonBackgroundPressed | Sets the navigation button background when pressed | StaticResource |
+| PipsPagerNavigationButtonBackgroundDisabled | Sets the navigation button background when disabled | StaticResource |
+| PipsPagerNavigationButtonBorderBrush | Sets the navigation button border | StaticResource |
+| PipsPagerNavigationButtonBorderBrushPointerOver | Sets the navigation button border on pointer over | StaticResource |
+| PipsPagerNavigationButtonBorderBrushPressed | Sets the navigation button border when pressed | StaticResource |
+| PipsPagerNavigationButtonBorderBrushDisabled | Sets the navigation button border when disabled | StaticResource |
+| PipsPagerNavigationButtonForeground | Sets the navigation button foreground | StaticResource |
+| PipsPagerNavigationButtonForegroundPointerOver | Sets the navigation button foreground on pointer over | StaticResource |
+| PipsPagerNavigationButtonForegroundPressed | Sets the navigation button foreground when pressed | StaticResource |
+| PipsPagerNavigationButtonForegroundDisabled | Sets the navigation button foreground when disabled | StaticResource |
 
 ## PipsPagerButtonVisibility enum
 
@@ -228,7 +260,7 @@ Defines constants that specify how a the buttons of a PipsPager are to be displa
 | Value | Description |
 |:---:|:---|
 | Visible | The button is visible and enabled, except it is hidden at the extents. For example, when the current page is the first page, the previous button is hidden. |
-| VisibleOnPointerOver | The behavior is the same as Visible *except* that the button is only Visible when the user is hovering over the paging UI with their cursor. |
+| VisibleOnPointerOver | The behavior is the same as Visible *except* that the button is only Visible when the user is hovering over the paging UI with their cursor. The button is also visible when keyboard focus is inside of the pager or a navigational button.|
 | Collapsed | The button is not visible to the user and does **not** take up layout space. (Default for ) |
 
 ## PipsPagerTemplateSettings
@@ -252,13 +284,11 @@ enum PipsPagerButtonVisibility
 
 runtimeclass PipsPagerSelectedIndexChangedEventArgs
 {
-    Int32 NewPageIndex{get; };
-    Int32 PreviousPageIndex{get; };
 };
 
 unsealed runtimeclass PipsPagerTemplateSettings : Windows.UI.Xaml.DependencyObject
 {
-    Windows.Foundation.Collections.IVector<Object> PipsPagerItems { get; }; 
+    Windows.Foundation.Collections.IVector<Int32> PipsPagerItems { get; }; 
 }
 
 
@@ -287,7 +317,7 @@ unsealed runtimeclass PipsPager : Windows.UI.Xaml.Controls.Control
     Windows.UI.Xaml.Style NextButtonStyle; 
 
     Windows.UI.Xaml.Style SelectedPipStyle;
-    Windows.UI.Xaml.Style DefaultPipStyle;
+    Windows.UI.Xaml.Style NormalPipStyle;
 
 
     event Windows.Foundation.TypedEventHandler<PipsPager, PipsPagerSelectedIndexChangedEventArgs> SelectedIndexChanged;
@@ -303,7 +333,7 @@ unsealed runtimeclass PipsPager : Windows.UI.Xaml.Controls.Control
     static Windows.UI.Xaml.DependencyProperty PreviousButtonStyleProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty NextButtonStyleProperty{ get; };
     static Windows.UI.Xaml.DependencyProperty SelectedPipStyleProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty DefaultPipStyleProperty{ get; };
+    static Windows.UI.Xaml.DependencyProperty NormalPipStyleProperty{ get; };
 }
 ```
 
