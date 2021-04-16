@@ -53,27 +53,44 @@ example code with each description. The general format is:
 <!-- As an example of this section, see the Examples section for the PasswordBox control 
 (https://docs.microsoft.com/windows/uwp/design/controls-and-patterns/password-box#examples). -->
 ## Today styling
-The following properties of type Windows.UI.Xaml.Media.Brush are used to customize the current day's rendering in the Month DisplayMode when CalendarView.IsTodayHighlighted is True:
+The following properties of type Windows.UI.Xaml.Media.Brush are used to customize the current day's rendering when CalendarView.IsTodayHighlighted is True:
 TodayBackground, TodayBlackoutBackground, TodayBlackoutForeground, TodayHoverBackground, TodayPressedBackground, TodaySelectedInnerBorderBrush.
 
+### Showcasing the TodayBackground property
 ![Default Today Background.](images/DefaultTodayBackground.png)
+![Default Today Month Background.](images/TodayMonthBackground.png)
+![Default Today Year Background.](images/TodayYearBackground.png)
+
+### Showcasing the TodayHoverBackground property
 ![Hover Today Background.](images/HoverTodayBackground.png)
+
+### Showcasing the TodayPressedBackground property
 ![Pressed Today Background.](images/PressedTodayBackground.png)
+
+### Showcasing the TodayBlackoutBackground and TodayBlackoutForeground properties
 ![Blacked Out Today Background And Foreground.](images/BlackoutTodayBackgroundAndForeground.png)
+
+### Showcasing the TodaySelectedInnerBorderBrush property
 ![Selected Today Border.](images/SelectedTodayBorder.png)
 
 ## Out Of Scope styling
 The following properties of type Windows.UI.Xaml.Media.Brush are used to customize the calendar items that are outside the current scope (month, year, or decade):
 OutOfScopeHoverForeground, OutOfScopePressedForeground.
 
+### Showcasing the OutOfScopeHoverForeground property
 ![Hover Out Of Scope Foreground.](images/HoverOutOfScopeForeground.png)
+
+### Showcasing the OutOfScopePressedForeground property
 ![Pressed Out Of Scope Foreground.](images/PressedOutOfScopeForeground.png)
 
 ## Item background styling
 The following properties of type Windows.UI.Xaml.Media.Brush are used to customize the background rendering of items in any DisplayMode:
 CalendarItemHoverBackground, CalendarItemPressedBackground.
 
+### Showcasing the CalendarItemHoverBackground property
 ![Hover Item Background.](images/HoverItemBackground.png)
+
+### Showcasing the CalendarItemPressedBackground property
 ![Pressed Item Background.](images/PressedItemBackground.png)
 
 ## Disabled styling
@@ -84,14 +101,16 @@ DisabledForeground, SelectedDisabledBorderBrush, CalendarItemDisabledBackground,
 
 ## Day item positioning
 The CalendarView's DayItemMargin, MonthYearMargin, FirstOfMonthLabelMargin, FirstOfYearDecadeLabelMargin properties of type Windows.UI.Xaml.Thickness 
-allow positioning the day, month, year, first-of-month and first-of-year labels. 
+allow positioning the day, month, year, first-of-month and first-of-year labels within a calendar item. 
 
+### Showcasing the DayItemMargin and FirstOfMonthLabelMargin properties
 ![A month view with visible group labels.](images/MonthViewWithVisibleGroupLabels.png)
-Here the Month view has CalendarView.IsGroupLabelVisible set to True and the group and main labels do not overlap because CalendarView.DayItemMargin.Top is set to 6 pixels by default.
+Here the Month view has CalendarView.IsGroupLabelVisible set to True and the group and main labels do not overlap because CalendarView.DayItemMargin.Top is set to 6 pixels.
 April 1st is selected and May 1st is hovered.
 
+### Showcasing the MonthYearMargin and FirstOfYearDecadeLabelMargin properties
 ![A year view with visible group labels.](images/YearViewWithVisibleGroupLabels.png)
-A Year view has CalendarView.IsGroupLabelVisible set to True with CalendarView.MonthYearItemMargin.Top and CalendarView.FirstOfYearDecadeLabelMargin.Top set to the default 2 and 3 pixels respectively.
+A Year view has CalendarView.IsGroupLabelVisible set to True with CalendarView.MonthYearItemMargin.Top and CalendarView.FirstOfYearDecadeLabelMargin.Top set to 2 and 3 pixels respectively.
 January 2021 is hovered.
 
 ## Markup example
@@ -228,6 +247,9 @@ This shows a typical use of the new CalendarView properties set in markup. The H
 </ResourceDictionary>
 ```
 
+The new properties appear in bold above.
+
+
 # Remarks
 <!-- Explanation and guidance that doesn't fit into the Examples section. -->
 
@@ -269,13 +291,19 @@ Gets or sets the margin used to display the first-of-month banner in the calenda
 
 Gets or sets the margin used to display the first-of-year banner in the calendar.
 
-`public Windows.UI.Xaml.CornerRadius CalendarItemInnerCornerRadius { get; set; }`
+`public Windows.UI.Xaml.CornerRadius CalendarItemCornerRadius { get; set; }`
 
-Gets or sets the corner radius for the background of the calendar item for the current date, as well as for the border around selected items.
+Gets or sets the corner radius for a calendar item's visuals.
 
-`public Windows.UI.Xaml.CornerRadius CalendarItemOuterCornerRadius { get; set; }`
+The visuals affected are the background of the current date, the border around selected items, the density bars as well as the focus cue.
 
-Gets or sets the corner radius for the calendar items density bars and focus visual.
+When this property is left unset, the CalendarView automatically uses a corner radius that is half the item size so that the various visuals appear circular.
+
+![Unset CalendarItemCornerRadius property resulting in circular visuals.](images/DefaultCalendarItemCornerRadius.png)
+
+When set, the CalendarView instead adopts the property value for the various visuals.
+
+![CalendarItemCornerRadius property set to 4 resulting in rounded square visuals.](images/CalendarItemCornerRadiusSetToFour.png)
 
 `public Windows.UI.Xaml.Media.Brush DisabledForeground { get; set; }`
 
@@ -357,8 +385,7 @@ Gets or sets a brush that provides the border of the calendar item for the curre
             Windows.UI.Xaml.Thickness FirstOfMonthLabelMargin;
             Windows.UI.Xaml.Thickness FirstOfYearDecadeLabelMargin;
 
-            Windows.UI.Xaml.CornerRadius CalendarItemInnerCornerRadius;
-            Windows.UI.Xaml.CornerRadius CalendarItemOuterCornerRadius;
+            Windows.UI.Xaml.CornerRadius CalendarItemCornerRadius;
 
             Windows.UI.Xaml.Media.Brush DisabledForeground;
             Windows.UI.Xaml.Media.Brush SelectedDisabledBorderBrush;
@@ -381,8 +408,7 @@ Gets or sets a brush that provides the border of the calendar item for the curre
             static Windows.UI.Xaml.DependencyProperty FirstOfMonthLabelMargin{ get; };
             static Windows.UI.Xaml.DependencyProperty FirstOfYearDecadeLabelMargin{ get; };
 
-            static Windows.UI.Xaml.DependencyProperty CalendarItemInnerCornerRadiusProperty{ get; };
-            static Windows.UI.Xaml.DependencyProperty CalendarItemOuterCornerRadiusProperty{ get; };
+            static Windows.UI.Xaml.DependencyProperty CalendarItemCornerRadiusProperty{ get; };
 
             static Windows.UI.Xaml.DependencyProperty DisabledForegroundProperty{ get; };
             static Windows.UI.Xaml.DependencyProperty SelectedDisabledBorderBrushProperty{ get; };
@@ -416,3 +442,92 @@ The new CalendarViewBaseItemRoundedChromeEnabled boolean resource is similar to 
     <x:Boolean x:Key="ListViewBaseItemRoundedChromeEnabled">False</x:Boolean>
     <x:Boolean x:Key="ThemeShadowIsUsingDropShadows">False</x:Boolean>
 ```
+
+## Fitting the new property names among the old ones
+The new properties were named to fit well with the CalendarView existing properties:
+
+  New: DayItemMargin
+  Old: DayItemFontFamily
+  Old: DayItemFontSize
+  Old: DayItemFontStyle
+
+  New: MonthYearItemMargin
+  Old: MonthYearItemFontFamily
+  Old: MonthYearItemFontSize
+  Old: MonthYearItemFontStyle
+
+  New: FirstOfMonthLabelMargin
+  Old: FirstOfMonthLabelFontFamily
+  Old: FirstOfMonthLabelFontSize
+  Old: FirstOfMonthLabelFontStyle
+
+  New: FirstOfYearDecadeLabelMargin
+  Old: FirstOfYearDecadeLabelFontFamily
+  Old: FirstOfYearDecadeLabelFontSize
+  Old: FirstOfYearDecadeLabelFontStyle
+
+  New: CalendarItemCornerRadius
+  Old: CalendarItemBorderThickness
+  Old: CalendarItemBorderBrush
+  Old: CalendarItemForeground
+
+  New: DisabledForeground
+  Old: PressedForeground
+  Old: SelectedForeground
+  Old: BlackoutForeground
+
+  New: SelectedDisabledBorderBrush
+  Old: SelectedHoverBorderBrush
+  Old: SelectedPressedBorderBrush
+
+  New: CalendarItemHoverBackground
+  Old: CalendarItemBackground
+  Old: CalendarItemForeground
+
+  New: CalendarItemPressedBackground
+  Old: CalendarItemBackground
+  Old: CalendarItemForeground
+
+  New: CalendarItemDisabledBackground
+  Old: CalendarItemBackground
+  Old: CalendarItemForeground
+
+  New: OutOfScopeHoverForeground
+  Old: OutOfScopeForeground
+  Old: OutOfScopeBackground
+
+  New: OutOfScopePressedForeground
+  Old: OutOfScopeForeground
+  Old: OutOfScopeBackground
+
+  New: TodayBackground
+  Old: TodayForeground
+  Old: OutOfScopeBackground
+
+  New: TodayBlackoutBackground
+  Old: TodayForeground
+  Old: OutOfScopeBackground
+
+  New: TodayBlackoutForeground
+  Old: TodayForeground
+  Old: OutOfScopeForeground
+
+  New: TodayHoverBackground
+  Old: TodayHoverBorderBrush
+  Old: TodayForeground
+
+  New: TodayPressedBackground
+  Old: OutOfScopeBackground
+  Old: TodayForeground
+
+  New: TodayDisabledBackground
+  Old: OutOfScopeBackground
+  Old: TodayForeground
+
+  New: TodayDisabledForeground
+  Old: TodayForeground
+  Old: OutOfScopeForeground
+
+  New: TodaySelectedInnerBorderBrush
+  Old: TodayHoverBorderBrush
+  Old: TodayPressedBorderBrush
