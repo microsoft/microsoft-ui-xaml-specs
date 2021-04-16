@@ -1,5 +1,3 @@
-> See comments in Markdown for how to use this spec template
-
 <!-- The purpose of this spec is to describe a new feature and
 its APIs that make up a new feature in WinUI. -->
 
@@ -56,47 +54,50 @@ example code with each description. The general format is:
 The following properties of type Windows.UI.Xaml.Media.Brush are used to customize the current day's rendering when CalendarView.IsTodayHighlighted is True:
 TodayBackground, TodayBlackoutBackground, TodayBlackoutForeground, TodayHoverBackground, TodayPressedBackground, TodaySelectedInnerBorderBrush.
 
-### Showcasing the TodayBackground property
+### Showcasing the TodayBackground property in the month, year and decade views
 ![Default Today Background.](images/DefaultTodayBackground.png)
 ![Default Today Month Background.](images/TodayMonthBackground.png)
 ![Default Today Year Background.](images/TodayYearBackground.png)
 
-### Showcasing the TodayHoverBackground property
+### Showcasing the TodayHoverBackground property - current date is hovered
 ![Hover Today Background.](images/HoverTodayBackground.png)
 
-### Showcasing the TodayPressedBackground property
+### Showcasing the TodayPressedBackground property - current date is pressed
 ![Pressed Today Background.](images/PressedTodayBackground.png)
 
-### Showcasing the TodayBlackoutBackground and TodayBlackoutForeground properties
+### Showcasing the TodayBlackoutBackground and TodayBlackoutForeground properties - the old property CalendarView.IsTodayBlackedOut is True
+Note: the blue background and white foreground colors are not final here.
+
 ![Blacked Out Today Background And Foreground.](images/BlackoutTodayBackgroundAndForeground.png)
 
-### Showcasing the TodaySelectedInnerBorderBrush property
+### Showcasing the TodaySelectedInnerBorderBrush property - current date is selected
 ![Selected Today Border.](images/SelectedTodayBorder.png)
 
 ## Out Of Scope styling
 The following properties of type Windows.UI.Xaml.Media.Brush are used to customize the calendar items that are outside the current scope (month, year, or decade):
 OutOfScopeHoverForeground, OutOfScopePressedForeground.
 
-### Showcasing the OutOfScopeHoverForeground property
+### Showcasing the OutOfScopeHoverForeground property - 4th of May is hovered
 ![Hover Out Of Scope Foreground.](images/HoverOutOfScopeForeground.png)
 
-### Showcasing the OutOfScopePressedForeground property
+### Showcasing the OutOfScopePressedForeground property - 4th of May is pressed
 ![Pressed Out Of Scope Foreground.](images/PressedOutOfScopeForeground.png)
 
 ## Item background styling
 The following properties of type Windows.UI.Xaml.Media.Brush are used to customize the background rendering of items in any DisplayMode:
 CalendarItemHoverBackground, CalendarItemPressedBackground.
 
-### Showcasing the CalendarItemHoverBackground property
+### Showcasing the CalendarItemHoverBackground property - February is hovered
 ![Hover Item Background.](images/HoverItemBackground.png)
 
-### Showcasing the CalendarItemPressedBackground property
+### Showcasing the CalendarItemPressedBackground property - 2034 is pressed
 ![Pressed Item Background.](images/PressedItemBackground.png)
 
 ## Disabled styling
 The following properties of type Windows.UI.Xaml.Media.Brush are used to customize the rendering of a disabled CalendarView (when CalendarView.IsEnabled is False):
 DisabledForeground, SelectedDisabledBorderBrush, CalendarItemDisabledBackground, TodayDisabledBackground, TodayDisabledForeground.
 
+### Showcasing a disabled month view - the 12th and 20th of April are selected
 ![A disabled CalendarView.](images/DisabledCalendarView.png)
 
 ## Day item positioning
@@ -104,14 +105,16 @@ The CalendarView's DayItemMargin, MonthYearMargin, FirstOfMonthLabelMargin, Firs
 allow positioning the day, month, year, first-of-month and first-of-year labels within a calendar item. 
 
 ### Showcasing the DayItemMargin and FirstOfMonthLabelMargin properties
-![A month view with visible group labels.](images/MonthViewWithVisibleGroupLabels.png)
 Here the Month view has CalendarView.IsGroupLabelVisible set to True and the group and main labels do not overlap because CalendarView.DayItemMargin.Top is set to 6 pixels.
 April 1st is selected and May 1st is hovered.
 
+![A month view with visible group labels.](images/MonthViewWithVisibleGroupLabels.png)
+
 ### Showcasing the MonthYearMargin and FirstOfYearDecadeLabelMargin properties
-![A year view with visible group labels.](images/YearViewWithVisibleGroupLabels.png)
 A Year view has CalendarView.IsGroupLabelVisible set to True with CalendarView.MonthYearItemMargin.Top and CalendarView.FirstOfYearDecadeLabelMargin.Top set to 2 and 3 pixels respectively.
 January 2021 is hovered.
+
+![A year view with visible group labels.](images/YearViewWithVisibleGroupLabels.png)
 
 ## Markup example
 
@@ -120,8 +123,7 @@ This shows a typical use of the new CalendarView properties set in markup. The H
 ```
 <ResourceDictionary 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:contract7Present="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract,7)">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Default">
             <StaticResource x:Key="CalendarViewFocusVisualPrimaryBrush" ResourceKey="FocusStrokeColorOuterBrush" />
@@ -189,48 +191,48 @@ This shows a typical use of the new CalendarView properties set in markup. The H
     <Style x:Key="CalendarViewDefaultStyle" TargetType="CalendarView">
         <Setter Property="SelectedHoverBorderBrush" Value="{ThemeResource CalendarViewSelectedHoverBorderBrush}" />
         <Setter Property="SelectedPressedBorderBrush" Value="{ThemeResource CalendarViewSelectedPressedBorderBrush}" />
-        **<Setter Property="SelectedDisabledBorderBrush" Value="{ThemeResource CalendarViewSelectedDisabledBorderBrush}" />**
+        <Setter Property="SelectedDisabledBorderBrush" Value="{ThemeResource CalendarViewSelectedDisabledBorderBrush}" /> *
         <Setter Property="SelectedBorderBrush" Value="{ThemeResource CalendarViewSelectedBorderBrush}" />
         <Setter Property="HoverBorderBrush" Value="{ThemeResource CalendarViewHoverBorderBrush}" />
         <Setter Property="PressedBorderBrush" Value="{ThemeResource CalendarViewPressedBorderBrush}" />
         <Setter Property="CalendarItemBorderBrush" Value="{ThemeResource  CalendarViewCalendarItemBorderBrush}" />
-        **<Setter Property="TodaySelectedInnerBorderBrush" Value="{ThemeResource  CalendarViewTodaySelectedInnerBorderBrush}" />**
+        <Setter Property="TodaySelectedInnerBorderBrush" Value="{ThemeResource  CalendarViewTodaySelectedInnerBorderBrush}" /> *
         <Setter Property="TodayForeground" Value="{ThemeResource CalendarViewTodayForeground}" />
-        **<Setter Property="TodayDisabledForeground" Value="{ThemeResource CalendarViewTodayDisabledForeground}" />**
-        **<Setter Property="DisabledForeground" Value="{ThemeResource CalendarViewDisabledForeground}" />**
+        <Setter Property="TodayDisabledForeground" Value="{ThemeResource CalendarViewTodayDisabledForeground}" /> *
+        <Setter Property="DisabledForeground" Value="{ThemeResource CalendarViewDisabledForeground}" /> *
         <Setter Property="BlackoutForeground" Value="{ThemeResource CalendarViewBlackoutForeground}" />
         <Setter Property="SelectedForeground" Value="{ThemeResource CalendarViewSelectedForeground}" />
         <Setter Property="PressedForeground" Value="{ThemeResource CalendarViewPressedForeground}" />
         <Setter Property="OutOfScopeForeground" Value="{ThemeResource CalendarViewOutOfScopeForeground}" />
-        **<Setter Property="OutOfScopeHoverForeground" Value="{ThemeResource CalendarViewOutOfScopeHoverForeground}" />**
-        **<Setter Property="OutOfScopePressedForeground" Value="{ThemeResource CalendarViewOutOfScopePressedForeground}" />**
+        <Setter Property="OutOfScopeHoverForeground" Value="{ThemeResource CalendarViewOutOfScopeHoverForeground}" /> *
+        <Setter Property="OutOfScopePressedForeground" Value="{ThemeResource CalendarViewOutOfScopePressedForeground}" /> *
         <Setter Property="CalendarItemForeground" Value="{ThemeResource CalendarViewCalendarItemForeground}" />
-        **<Setter Property="TodayBackground" Value="{ThemeResource CalendarViewTodayBackground}" />**
-        **<Setter Property="TodayBlackoutBackground" Value="{ThemeResource CalendarViewTodayBlackoutBackground}" />**
-        **<Setter Property="TodayBlackoutForeground" Value="{ThemeResource CalendarViewTodayBlackoutForeground}" />**
-        **<Setter Property="TodayHoverBackground" Value="{ThemeResource CalendarViewTodayHoverBackground}" />**
-        **<Setter Property="TodayPressedBackground" Value="{ThemeResource CalendarViewTodayPressedBackground}" />**
-        **<Setter Property="TodayDisabledBackground" Value="{ThemeResource CalendarViewTodayDisabledBackground}" />**
+        <Setter Property="TodayBackground" Value="{ThemeResource CalendarViewTodayBackground}" /> *
+        <Setter Property="TodayBlackoutBackground" Value="{ThemeResource CalendarViewTodayBlackoutBackground}" /> *
+        <Setter Property="TodayBlackoutForeground" Value="{ThemeResource CalendarViewTodayBlackoutForeground}" /> *
+        <Setter Property="TodayHoverBackground" Value="{ThemeResource CalendarViewTodayHoverBackground}" /> *
+        <Setter Property="TodayPressedBackground" Value="{ThemeResource CalendarViewTodayPressedBackground}" /> *
+        <Setter Property="TodayDisabledBackground" Value="{ThemeResource CalendarViewTodayDisabledBackground}" /> *
         <Setter Property="OutOfScopeBackground" Value="{ThemeResource CalendarViewOutOfScopeBackground}" />
         <Setter Property="CalendarItemBackground" Value="{ThemeResource CalendarViewCalendarItemBackground}" />
-        **<Setter Property="CalendarItemHoverBackground" Value="{ThemeResource CalendarViewCalendarItemHoverBackground}" />**
-        **<Setter Property="CalendarItemPressedBackground" Value="{ThemeResource CalendarViewCalendarItemPressedBackground}" />**
-        **<Setter Property="CalendarItemDisabledBackground" Value="{ThemeResource CalendarViewCalendarItemDisabledBackground}" />**
+        <Setter Property="CalendarItemHoverBackground" Value="{ThemeResource CalendarViewCalendarItemHoverBackground}" /> *
+        <Setter Property="CalendarItemPressedBackground" Value="{ThemeResource CalendarViewCalendarItemPressedBackground}" /> *
+        <Setter Property="CalendarItemDisabledBackground" Value="{ThemeResource CalendarViewCalendarItemDisabledBackground}" /> *
         <Setter Property="Foreground" Value="{ThemeResource CalendarViewForeground}" />
         <Setter Property="Background" Value="{ThemeResource CalendarViewBackground}" />
         <Setter Property="BorderBrush" Value="{ThemeResource CalendarViewBorderBrush}" />
         <Setter Property="DayItemFontFamily" Value="XamlAutoFontFamily" />
         <Setter Property="DayItemFontSize" Value="{ThemeResource CalendarViewDayItemFontSize}" />
-        **<Setter Property="DayItemMargin" Value="{ThemeResource CalendarViewDayItemMargin}" />**
+        <Setter Property="DayItemMargin" Value="{ThemeResource CalendarViewDayItemMargin}" /> *
         <Setter Property="FirstOfMonthLabelFontFamily" Value="XamlAutoFontFamily" />
         <Setter Property="FirstOfMonthLabelFontSize" Value="{ThemeResource CalendarViewFirstOfMonthLabelFontSize}" />
-        **<Setter Property="FirstOfMonthLabelMargin" Value="{ThemeResource CalendarViewFirstOfMonthLabelMargin}" />**
+        <Setter Property="FirstOfMonthLabelMargin" Value="{ThemeResource CalendarViewFirstOfMonthLabelMargin}" /> *
         <Setter Property="MonthYearItemFontFamily" Value="XamlAutoFontFamily" />
         <Setter Property="MonthYearItemFontSize" Value="{ThemeResource CalendarViewMonthYearItemFontSize}" />
-        **<Setter Property="MonthYearItemMargin" Value="{ThemeResource CalendarViewMonthYearItemMargin}" />**
+        <Setter Property="MonthYearItemMargin" Value="{ThemeResource CalendarViewMonthYearItemMargin}" /> *
         <Setter Property="FirstOfYearDecadeLabelFontFamily" Value="XamlAutoFontFamily" />
         <Setter Property="FirstOfYearDecadeLabelFontSize" Value="{ThemeResource CalendarViewFirstOfYearDecadeLabelFontSize}" />
-        **<Setter Property="FirstOfYearDecadeLabelMargin" Value="{ThemeResource CalendarViewFirstOfYearDecadeLabelMargin}" />**
+        <Setter Property="FirstOfYearDecadeLabelMargin" Value="{ThemeResource CalendarViewFirstOfYearDecadeLabelMargin}" /> *
         <Setter Property="CalendarItemBorderThickness" Value="1" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="HorizontalAlignment" Value="Left" />
@@ -239,7 +241,7 @@ This shows a typical use of the new CalendarView properties set in markup. The H
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
-        <contract7Present:Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
+        <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
         <Setter Property="Template">
           ...
         </Setter>
@@ -247,7 +249,7 @@ This shows a typical use of the new CalendarView properties set in markup. The H
 </ResourceDictionary>
 ```
 
-The new properties appear in bold above.
+The new properties appear with a * on their right.
 
 
 # Remarks
@@ -273,7 +275,7 @@ isn't the type's default (for example an int-typed property that doesn't default
 
 <!-- Option 2: Put these descriptions in the below API Details section,
 with a "///" comment above the member or type. -->
-These properties belong to the CalendarView control:
+These properties are added to the CalendarView control:
 
 `public Windows.UI.Xaml.Thickness DayItemMargin { get; set; }`
 
@@ -299,9 +301,13 @@ The visuals affected are the background of the current date, the border around s
 
 When this property is left unset, the CalendarView automatically uses a corner radius that is half the item size so that the various visuals appear circular.
 
+In this example, because the items size is 40x40px, the automatic corner radius is 20px:
+
 ![Unset CalendarItemCornerRadius property resulting in circular visuals.](images/DefaultCalendarItemCornerRadius.png)
 
 When set, the CalendarView instead adopts the property value for the various visuals.
+
+In this example, the CalendarItemCornerRadius property is set to 4px:
 
 ![CalendarItemCornerRadius property set to 4 resulting in rounded square visuals.](images/CalendarItemCornerRadiusSetToFour.png)
 
@@ -446,88 +452,25 @@ The new CalendarViewBaseItemRoundedChromeEnabled boolean resource is similar to 
 ## Fitting the new property names among the old ones
 The new properties were named to fit well with the CalendarView existing properties:
 
-  New: DayItemMargin
-  Old: DayItemFontFamily
-  Old: DayItemFontSize
-  Old: DayItemFontStyle
-
-  New: MonthYearItemMargin
-  Old: MonthYearItemFontFamily
-  Old: MonthYearItemFontSize
-  Old: MonthYearItemFontStyle
-
-  New: FirstOfMonthLabelMargin
-  Old: FirstOfMonthLabelFontFamily
-  Old: FirstOfMonthLabelFontSize
-  Old: FirstOfMonthLabelFontStyle
-
-  New: FirstOfYearDecadeLabelMargin
-  Old: FirstOfYearDecadeLabelFontFamily
-  Old: FirstOfYearDecadeLabelFontSize
-  Old: FirstOfYearDecadeLabelFontStyle
-
-  New: CalendarItemCornerRadius
-  Old: CalendarItemBorderThickness
-  Old: CalendarItemBorderBrush
-  Old: CalendarItemForeground
-
-  New: DisabledForeground
-  Old: PressedForeground
-  Old: SelectedForeground
-  Old: BlackoutForeground
-
-  New: SelectedDisabledBorderBrush
-  Old: SelectedHoverBorderBrush
-  Old: SelectedPressedBorderBrush
-
-  New: CalendarItemHoverBackground
-  Old: CalendarItemBackground
-  Old: CalendarItemForeground
-
-  New: CalendarItemPressedBackground
-  Old: CalendarItemBackground
-  Old: CalendarItemForeground
-
-  New: CalendarItemDisabledBackground
-  Old: CalendarItemBackground
-  Old: CalendarItemForeground
-
-  New: OutOfScopeHoverForeground
-  Old: OutOfScopeForeground
-  Old: OutOfScopeBackground
-
-  New: OutOfScopePressedForeground
-  Old: OutOfScopeForeground
-  Old: OutOfScopeBackground
-
-  New: TodayBackground
-  Old: TodayForeground
-  Old: OutOfScopeBackground
-
-  New: TodayBlackoutBackground
-  Old: TodayForeground
-  Old: OutOfScopeBackground
-
-  New: TodayBlackoutForeground
-  Old: TodayForeground
-  Old: OutOfScopeForeground
-
-  New: TodayHoverBackground
-  Old: TodayHoverBorderBrush
-  Old: TodayForeground
-
-  New: TodayPressedBackground
-  Old: OutOfScopeBackground
-  Old: TodayForeground
-
-  New: TodayDisabledBackground
-  Old: OutOfScopeBackground
-  Old: TodayForeground
-
-  New: TodayDisabledForeground
-  Old: TodayForeground
-  Old: OutOfScopeForeground
-
-  New: TodaySelectedInnerBorderBrush
-  Old: TodayHoverBorderBrush
-  Old: TodayPressedBorderBrush
+New property name | Similar old property names
+------ | ------
+DayItemMargin | DayItemFontFamily, DayItemFontSize, DayItemFontStyle
+MonthYearItemMargin | MonthYearItemFontFamily, MonthYearItemFontSize, MonthYearItemFontStyle
+FirstOfMonthLabelMargin | FirstOfMonthLabelFontFamily, FirstOfMonthLabelFontSize, FirstOfMonthLabelFontStyle
+FirstOfYearDecadeLabelMargin | FirstOfYearDecadeLabelFontFamily, FirstOfYearDecadeLabelFontSize, FirstOfYearDecadeLabelFontStyle
+CalendarItemCornerRadius | CalendarItemBorderThickness, CalendarItemBorderBrush, CalendarItemForeground
+DisabledForeground | PressedForeground, SelectedForeground, BlackoutForeground
+SelectedDisabledBorderBrush | SelectedHoverBorderBrush, SelectedPressedBorderBrush
+CalendarItemHoverBackground | CalendarItemBackground, CalendarItemForeground
+CalendarItemPressedBackground | CalendarItemBackground, CalendarItemForeground
+CalendarItemDisabledBackground | CalendarItemBackground, CalendarItemForeground
+OutOfScopeHoverForeground | OutOfScopeForeground, OutOfScopeBackground
+OutOfScopePressedForeground | OutOfScopeForeground, OutOfScopeBackground
+TodayBackground | TodayForeground, OutOfScopeBackground
+TodayBlackoutBackground | TodayForeground, OutOfScopeBackground
+TodayBlackoutForeground | TodayForeground, OutOfScopeForeground
+TodayHoverBackground | TodayHoverBorderBrush, TodayForeground
+TodayPressedBackground | OutOfScopeBackground, TodayForeground
+TodayDisabledBackground | OutOfScopeBackground, TodayForeground
+TodayDisabledForeground | TodayForeground, OutOfScopeForeground
+TodaySelectedInnerBorderBrush | TodayHoverBorderBrush, TodayPressedBorderBrush
