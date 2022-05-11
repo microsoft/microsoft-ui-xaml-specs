@@ -37,7 +37,7 @@ The above example becomes (simply renaming the control):
 
 A few key points:
   - `ScrollView` performs scrolling, panning, and zooming. There's no good word that covers that, and given the existing ScrollViewer naming, this is being called just *Scrolling*View. And the word "scroll" implies "pan" throughout.
-  - The public API will largely mirror the existing control to minimize barriers to adoption.
+  - This new API will largely mirror the existing control to minimize barriers to adoption.
   - The API will differ in key areas that we believe will address top points of developer confusion with the existing control and/or provide meaningful improvements. For each scenario in this spec the code for both the new `ScrollView` (new control) and the existing ScrollViewer (existing control) are provided if different.
 
 # Table of Contents
@@ -52,7 +52,7 @@ A few key points:
 
 `ScrollView` is a container control that lets the user scroll (and pan), and zoom its content.
 
-A `ScrollView` enables content to be displayed in a smaller area than its actual size. When the content of the `ScrollView` is not entirely visible, it displays scrollbars that the user can use to move the content area that is visible. The user by default can use touch to pan the content, keyboard and mouse to scroll the content (scroll bars or mouse wheel), and mouse wheel and keyboard to zoom the content.
+A `ScrollView` enables content to be displayed in a smaller area than its actual size. When the content of the `ScrollView` is not entirely visible, it displays scrollbars that the user can use to move the content area that is visible. The user can use touch to pan and zoom the content, keyboard and mouse to scroll the content (scroll bars or mouse wheel), and mouse wheel and keyboard to zoom the content.
 
 The area that includes all of the content of the `ScrollView` is the *extent*. The visible area of the content is the *viewport*.
 
@@ -62,7 +62,7 @@ A second kind of scrolling element, the `ScrollPresenter`, is more primitive, pr
 
 The `ScrollView` adds the default user interaction widgets (scrollbars, scroll indicator, etc.) and policy. As a Control it can be templated and can receive keyboard focus. It has the built-in logic to decide whether to scroll the viewport or move focus in response to a key event. It sets the properties on its `ScrollPresenter` to values chosen to match common usage, for example the basic `<ScrollView/>` is configured for vertical scrolling. 
 
-Most of the time you simply wrap content with a `ScrollView` to enable a default vertical scrolling experience when the content is too large to fit in the user visible area.
+Most of the time you simply wrap content with a `ScrollView` to enable a default scrolling experience when the content is too large to fit in the user visible area.
 
 ```xml
 <mux:ScrollView>
@@ -191,30 +191,28 @@ Since ZoomMode is enabled, the user can zoom in and then scroll.
 </mux:ScrollView>
 ```
 
-This is a similar example but using a Viewbox control rather than an Image.
+The following example is similar but uses a Viewbox control rather than an Image.
 
 Or more generally for any XAML content a [Viewbox](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Viewbox) could  be used. The content will be scaled to fit into the viewport, but the user can then zoom in and scroll through it.
 
 ```xml
 <mux:ScrollView ContentOrientation="None" ZoomMode="Enabled">
     <Viewbox>
-        <Grid>
-            <!-- ... -->
-        </Grid>
+        <!-- ... -->
     </Viewbox>
 </mux:ScrollView>
 ```
 
 *ScrollViewer (existing)*
 
-In the past this required inserting a Viewbox and binding its MaxHeight/MaxWidth to the ViewportHeight/ViewportWidth of the ScrollViewer which is literally just trying to constrain 
-the layout of Viewbox to the size of the viewport. Having a "None" option on the ContentOrientation enables the same thing in a more performant way with less markup/code.
+In the past this required inserting a Viewbox and binding its MaxHeight/MaxWidth to the ViewportHeight/ViewportWidth of the ScrollViewer which is just trying to constrain 
+the layout of Viewbox to the size of the viewport. Having a "None" option on the `ScrollView`'s 'ContentOrientation enables the same thing in a more performant way with less markup/code.
 
 ```xml
 <ScrollViewer x:Name="outputScrollViewer" HorizontalScrollBarVisibility="Auto">
     <Viewbox MaxWidth="{x:Bind outputScrollViewer.ViewportWidth, Mode=OneWay}"  
              MaxHeight="{x:Bind outputScrollViewer.ViewportHeight, Mode=OneWay}">
-        <Image Width="X" Height="Y"/>
+        <Image Source="Assets/LargeEiffelTower.png"/>
     </Viewbox>
 </ScrollViewer>
 ```
@@ -404,7 +402,7 @@ This behavior is achieved by disabling horizontal scroll chaining on the page's 
 
 ```xml
 <mux:ScrollView HorizontalScrollChainMode="Never">
-    <mux:ItemsRepeater ItemsSource="{x:Bind Items}" MinWidth="800">
+    <mux:ItemsRepeater ItemsSource="{x:Bind Items}">
         <mux:ItemsRepeater.Layout>
             <mux:StackLayout Orientation="Horizontal"/>
         </mux:ItemsRepeater.Layout>
@@ -439,11 +437,10 @@ In the following example zoom chaining is disabled.
 *`ScrollView` (new)*
 
 ```xml
-<mux:ScrollView ZoomMode="Enabled" ZoomChainMode="Never"
-    ContentOrientation="Horizontal">
+<mux:ScrollView ZoomMode="Enabled" ZoomChainMode="Never">
     <mux:ItemsRepeater ItemsSource="{x:Bind Items}">
         <mux:ItemsRepeater.Layout>
-            <mux:StackLayout Orientation="Horizontal"/>
+            <mux:StackLayout/>
         </mux:ItemsRepeater.Layout>
         <DataTemplate x:DataType="x:String">
             <Button Content="{x:Bind}"/>
@@ -455,11 +452,10 @@ In the following example zoom chaining is disabled.
 *ScrollViewer (existing)*
 
 ```xml
-<ScrollViewer ZoomMode="Enabled" IsZoomChainingEnabled="False"
-              HorizontalScrollBarVisibility="Auto">
+<ScrollViewer ZoomMode="Enabled" IsZoomChainingEnabled="False">
     <mux:ItemsRepeater ItemsSource="{x:Bind Items}">
         <mux:ItemsRepeater.Layout>
-            <mux:StackLayout Orientation="Horizontal"/>
+            <mux:StackLayout/>
         </mux:ItemsRepeater.Layout>
         <DataTemplate x:DataType="x:String">
             <Button Content="{x:Bind}"/>
@@ -1437,7 +1433,7 @@ Any number in between is valid. For instance, if it's 0.5, the element closest t
 
 ### ScrollView.AddScrollVelocity method
 
-Asynchronously adds scrolling inertia.
+Asynchronously adds scrolling velocity.
 
 When an inertiaDecayRate is provided to AddScrollVelocity, it is applied during the duration of the scroll and then reverts back to the default (0.95, 0.95).
 
@@ -1448,7 +1444,7 @@ Gets the horizontal length of the content that can be scrolled. Defaults to 0.
 
 The ScrollableWidth property returns the value Max(0, ZoomFactor x ExtentWidth - ViewportWidth).
 
-The HorizontalOffset, VerticalOffset and ZoomFactor trio constitute the <span class="underline">view</span>.
+The HorizontalOffset, VerticalOffset and ZoomFactor trio constitute the _view_.
 
 The ScrollableHeight property returns the value Max(0, ZoomFactor x ExtentHeight - ViewportHeight).
 
@@ -1461,7 +1457,7 @@ The same comments apply to the vertical dimension.
 
 ### ScrollView.AddZoomVelocity method
 
-Asynchronously adds zooming inertia
+Asynchronously adds zooming velocity.
 
 When the centerPoint parameter is null, the methods use the center of the viewport as the zoom center point.
 
@@ -1954,21 +1950,11 @@ unsealed runtimeclass Microsoft.UI.Xaml.Controls.ScrollView :
 | Functional Specification |     |
 | Dev Design Specification |     |
 
-# Resources
-
-| Resource                                                                                                                                                                                                                                                                                                                                                   | Description                                                                                   |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| [API Design Process](https://microsoft.sharepoint.com/teams/OSG_DevX/SitePages/API%20Design.aspx)                                                                                                                                                                                                                                                          | API design process overview with FAQs and links to useful resources.                          |
-| [API Design Representatives](https://microsoft.sharepoint.com/teams/osg_core_dep/devtools/Shared%20Documents/API%20Design/API%20Design%20Representatives.docx)                                                                                                                                                                                             | API design representatives and their areas of expertise.                                      |
-| [API Design Guidelines](https://microsoft.sharepoint.com/teams/osg_core_dep/devtools/Shared%20Documents/Forms/AllItems.aspx?RootFolder=%2Fteams%2Fosg%5Fcore%5Fdep%2Fdevtools%2FShared%20Documents%2FAPI%20Design%2FAPI%20Design%20Guidelines&FolderCTID=0x0120001F5669CC6CADF646AD418CC70DE12818&View=%7BF67857D3%2D82A2%2D485B%2DBB73%2D33035083F09F%7D) | API design guidelines for various frameworks.                                                 |
-| [Sample Requirements](https://microsoft.sharepoint.com/teams/osg_core_dep/devtools/Shared%20Documents/API%20Design/Educational%20Content/Sample%20Requirements.docx)                                                                                                                                                                                       | Requirements for the samples above including when samples in specific languages are required. |
-| [Interface Definition Guidelines](https://microsoft.sharepoint.com/teams/osg_core_dep/devtools/Shared%20Documents/API%20Design/Educational%20Content/Interface%20Definition%20Guidelines.docx)                                                                                                                                                             | Guidelines for providing interface definitions.                                               |
-| [Code Analysis Guidelines](https://microsoft.sharepoint.com/teams/osg_core_dep/devtools/Shared%20Documents/API%20Design/Educational%20Content/Code%20Analysis%20Guidelines.docx)                                                                                                                                                                           | Guidelines for running code analysis tools.                                                   |
-| [RtCop Bug Template](http://aka.ms/rtcopbug)                                                                                                                                                                                                                                                                                                               | The bug template to use when filing RtCop bugs.                                               |
+                                                                                                                                                                                                                                                                                                        | The bug template to use when filing RtCop bugs.                                               |
 
 # Appendix
 
-## Benefits of  InteractionTracker
+## Benefits of InteractionTracker
 
 Most ScrollViewer usage is indirect.  It happens simply because ScrollViewer is within another control's template. The old ScrollViewer works well enough for those scenarios.  However, when an app needs to directly use a ScrollViewer it can encounter the limitations that relate to what DManip supports.  A new InteractionTracker-based `ScrollView` could unlock a number of new capabilities that are otherwise not possible.
 These are benefits for an InteractionTracker-based scrolling/zooming control compared to the DirectManipulation-based WUX ScrollViewer.
@@ -2035,9 +2021,9 @@ These are benefits for an InteractionTracker-based scrolling/zooming control com
 
 ### P1 Goals
 
-1.  MUX includes controls to support independent scrolling and zooming like the ScrollViewer/ScrollContentPresenter do in WUX.
+1.  Microsoft.UI.Xaml includes controls to support independent scrolling and zooming like the ScrollViewer/ScrollContentPresenter do in Windows.UI.Xaml.
 
-2.  These MUX scrolling/zooming controls can be used to achieve the 'lift and shift' initiative for some WUX controls.
+2.  In the long term, these Microsoft.UI.Xaml scrolling/zooming controls can replace the ScrollViewer/ScrollContentPresenter used by some existing controls like the TextBox.
 
 3.  App-developer-facing object models are similar to old ones to minimize adoption barrier.
 
@@ -2053,7 +2039,7 @@ These are benefits for an InteractionTracker-based scrolling/zooming control com
 
 2.  100% behavior compatibility with WUX controls.
 
-3.  Ability to lift and shift all existing WUX controls. For instance, not moving the Hub, Pivot, SemanticZoom controls is acceptable.
+3.  Ability to transition to using a ScrollView for all existing controls that currently consume a ScrollViewer. For instance, not moving the Hub, Pivot, SemanticZoom controls is acceptable.
 
 4.  Preserve object models rarely exercised by app developers (i.e. object models rarely used by app developers, like ScrollContentPresenter, do not need to adhere as closely to the old object models).
 
