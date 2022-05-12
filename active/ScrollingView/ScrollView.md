@@ -76,19 +76,23 @@ This section focuses on properties that let you define the visual layout of the 
 
 ## Setting the scrollable content
 
-This example sets an image that will be displayed at its natural size, but only up to a 500x400 viewport will be displayed at a time. The user can scroll to see the rest of the image.
+This example sets a `Rectangle` as the content of the `ScrollView` control. The user only sees a 500x400 portion of that rectangle and can scroll to see the rest of it.
 
 *`ScrollView` (new control)*
 
 ```xml
 <mux:ScrollView Width="500" Height="400">
-    <Image Source="Assets/LargeEiffelTower.png"/>
+    <Rectangle Fill="Red" Width="1000" Height="800"/>
 </mux:ScrollView>
 ```
 
 *ScrollViewer (existing control)*
 
-Identical to above.
+```xml
+<ScrollViewer Width="500" Height="400" HorizontalScrollBarVisibility="Auto">
+    <Rectangle Fill="Red" Width="1000" Height="800"/>
+</ScrollViewer>
+```
 
 
 ## Vertical layout
@@ -117,13 +121,12 @@ Identical to above.
 
 ## Horizontal layout
 
-In this example the content is a StackPanel that's laying out its items horizontally. The `ScrollView`'s ContentOrientation property is set to Horizontal to allow the user to scroll left and right to see all of the content.
+In this example the content is a StackPanel that is laying out its items horizontally. The `ScrollView`'s ContentOrientation property is set to Horizontal to allow the content to grow horizontally as much as needed.
 
 *`ScrollView` (new)*
 
 ```xml
-<mux:ScrollView Width="500" Height="400"
-                  ContentOrientation="Horizontal">
+<mux:ScrollView Width="500" Height="400" ContentOrientation="Horizontal">
     <StackPanel Orientation="Horizontal">
         <Button Width="300" Content="Button1"/>
         <Button Width="300" Content="Button2"/>
@@ -219,7 +222,7 @@ the layout of Viewbox to the size of the viewport. Having a "None" option on the
 
 ## Controlling the presence of scroll bars
 
-By default, a `ScrollView` has [ScrollBar](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Primitives.ScrollBar) controls that allow the user to move the content within the `ScrollView` using the mouse or pen.
+By default, a `ScrollView` has [ScrollBar](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.Primitives.ScrollBar) controls that allow the user to move the content within the `ScrollView` using the mouse or pen. A `ScrollBar` does not support touch-based user interactions though.
 
 ### Using the default Auto settings
 
@@ -620,49 +623,40 @@ private void ScrollViewer_DirectManipulationCompleted(object sender, object args
 
 ### Immediately Jumping to an Offset 
 
-After navigating back to a page, the `ScrollView`'s offsets are changed to their previous values.
+In this example the `ScrollView` control is used in a word processor which allows the user to search for a term in the text document. The application can jump to scrolling offsets in order to bring the searched term into view using the `ScrollTo` method.
 
 *`ScrollView` (new)*
 
 ```csharp
-private Dictionary<string, double> _pageRestorationCache = new Dictionary<string, double>();
 
-public MainPage()
+// Jump to scrolling offsets to bring first occurrence of search term into view.
+private void JumpToFirstSearchTermOccurrence(string searchTerm)
 {
-    _pageRestorationCache.Add("scrollViewHorizontalOffset", 0.0);
-    _pageRestorationCache.Add("scrollViewVerticalOffset", 0.0);
-}
+    double horizontalOffset, verticalOffset;
+    
+    ComputeOffsetsForSearchTerm(searchTerm, ref horizontalOffset, ref verticalOffset);
 
-// Leaving the page. Cache the current `ScrollView` offsets
-protected override void OnNavigatedFrom(NavigationEventArgs e)
-{
-    base.OnNavigatedFrom(e);
-    _pageRestorationCache["scrollViewHorizontalOffset"] = _scrollView.HorizontalOffset;
-    _pageRestorationCache["scrollViewVerticalOffset"] = _scrollView.VerticalOffset;
-}
-
-// Restore offsets cached while leaving the page in OnNavigatedFrom
-protected override void OnNavigatedTo(NavigationEventArgs e)
-{
-    base.OnNavigatedTo(e);
     _scrollView.ScrollTo(
-        _pageRestorationCache["scrollViewHorizontalOffset"],
-        _pageRestorationCache["scrollViewVerticalOffset"],
-        new ScrollingScrollOptions(ScrollingAnimationMode.Disabled));
+        horizontalOffset: horizontalOffset,
+        verticalOffset: verticalOffset,
+        options: new ScrollingScrollOptions(ScrollingAnimationMode.Disabled));
 }
 ```
 
 *ScrollViewer (existing)*
 
 ```csharp
-protected override void OnNavigatedTo(NavigationEventArgs e)
+private void JumpToFirstSearchTermOccurrence(string searchTerm)
 {
-    base.OnNavigatedTo(e);
+    double horizontalOffset, verticalOffset;
+    
+    ComputeOffsetsForSearchTerm(searchTerm, ref horizontalOffset, ref verticalOffset);
+
     _scrollViewer.ChangeView(
-        horizontalOffset: _pageRestorationCache["scrollViewerHorizontalOffset"],
-        verticalOffset: _pageRestorationCache["scrollViewerVerticalOffset"],
-    zoomFactor: null,
-    disableAnimation: true);
+        horizontalOffset: horizontalOffset,
+        verticalOffset: verticalOffset,
+        zoomFactor: null,
+        disableAnimation: true);
 }
 ```
 
@@ -722,7 +716,7 @@ protected override void OnKeyUp(KeyRoutedEventArgs e)
 
 A custom horizontal list control with a `ScrollView` in its control template jumps the horizontal offset by special values when processing the Left and Right Arrow keystrokes, for a FlipView-like experience.
 
-The ScrollBy method call has no visual effect when attempting to jump beyond the list control's extent.
+Both provided offsets are clamped by the ScrollBy method according to the content's extent. Thus the `ScrollView` will not jump to offsets beyond the boundaries of its content - instead it will jump to the clamped offsets.
 
 *`ScrollView` (new)*
 
@@ -733,15 +727,15 @@ protected override void OnKeyUp(KeyRoutedEventArgs e)
     if (e.Key == VirtualKey.Left)
     {
         _scrollView.ScrollBy(
-            horizontalOffset: -_previousGroup.Width,
-            verticalOffset: 0.0,
+            horizontalOffsetDelta: -_previousGroup.Width,
+            verticalOffsetDelta: 0.0,
             new ScrollingScrollOptions(ScrollingAnimationMode.Disabled));
     }
     else if (e.Key == VirtualKey.Right)
     {
         _scrollView.ScrollBy(
-            horizontalOffset: _currentGroup.Width,
-            verticalOffset: 0.0,
+            horizontalOffsetDelta: _currentGroup.Width,
+            verticalOffsetDelta: 0.0,
             new ScrollingScrollOptions(ScrollingAnimationMode.Disabled));
     }
 }
@@ -774,7 +768,14 @@ protected override void OnKeyUp(KeyRoutedEventArgs e)
 
 ### Animating with a custom curve to a new offset by some delta of the current
 
-A Slider's Value changes animate the `ScrollView`'s VerticalOffset with custom animation durations.
+The changes to the Value of a Slider trigger the animation of the `ScrollView`'s VerticalOffset, using custom animation durations.
+
+When animating, rather than jumping like in the prior example, the provided offsets are not clamped according to the current content extent. The content may first animate to an out-of-bounds target and then animate back to the closest in-bounds offsets.
+
+When ScrollBy or ScrollTo triggers an animation (as opposed to a jump), the ScrollAnimationStarting event is raised asynchronously just before the animation starts. In that event handler, the animation curve can be customized.
+
+The ScrollingScrollAnimationStartingEventArgs.Animation provided in the ScrollAnimationStarting event is always of type Vector3KeyFrameAnimation, but it can be overwritten in that event handler to any type of CompositionAnimation. Or it can be customized as is done in this example.
+The `ScrollView`'s HorizontalOffset and VerticalOffset properties will land on values according to that custom animation, whether they are the original target values or not.
 
 *`ScrollView` (new)*
 
@@ -786,7 +787,7 @@ private HashSet<int> _scrollsWithCustomDuration = new HashSet<int>();
 
 private void VerticalOffsetSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
 {
-    double verticalOffsetDelta = GetOffsetDelta();
+    double verticalOffsetDelta = GetOffsetDelta(e.NewValue);
     int correlationId = _scrollView.ScrollBy(0.0, verticalOffsetDelta);
     _scrollsWithCustomDuration.Add(correlationId);
 }
@@ -852,38 +853,20 @@ private void AdjustScrollViewVelocity()
 
 Not supported
 
- 
-
 
 ## Changing the zoom factor
 
 ###  Jumping to zoom factor
 
-After navigating back to a page, change the `ScrollView`'s zoom factor to its previous value.
+The changes to the Value of a Slider trigger zoom factor changes without animations.
 
 *`ScrollView` (new)*
 
 ```csharp
-private Dictionary<string, double> _pageRestorationCache = null;
-public MainPage()
+private void ZoomFactorSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
 {
-    _pageRestorationCache = new Dictionary<string, double>();
-    _pageRestorationCache.Add("scrollViewZoomFactor", 1.0);
-}
-
-// Leaving the page. Cache the current `ScrollView` zoom factor
-protected override void OnNavigatedFrom(NavigationEventArgs e)
-{
-    base.OnNavigatedFrom(e);
-    _pageRestorationCache["scrollViewZoomFactor"] = _scrollView.ZoomFactor;
-}
-
-// Restore zoom factor cached while leaving the page in OnNavigatedFrom
-protected override void OnNavigatedTo(NavigationEventArgs e)
-{
-    base.OnNavigatedTo(e);
     _scrollView.ZoomTo(
-        zoomFactor: _pageRestorationCache["scrollViewZoomFactor"],
+        zoomFactor: e.NewValue,
         centerPoint: null, // Use the viewport center as the zoom center point.
         options: new ScrollingZoomOptions(ScrollingAnimationMode.Disabled));
 }
@@ -892,16 +875,14 @@ protected override void OnNavigatedTo(NavigationEventArgs e)
 *ScrollViewer (existing)*
 
 ```csharp
-protected override void OnNavigatedTo(NavigationEventArgs e)
+private void ZoomFactorSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
 {
-    base.OnNavigatedFrom(e);
-    float newZoomFactor = _pageRestorationCache["scrollViewerZoomFactor"];
     _scrollViewer.ChangeView(
         horizontalOffset: (_scrollViewer.HorizontalOffset + _scrollViewer.ViewportWidth / 2) *
-            newZoomFactor / _scrollViewer.ZoomFactor - _scrollViewer.ViewportWidth / 2,
+            e.NewValue / _scrollViewer.ZoomFactor - _scrollViewer.ViewportWidth / 2,
         verticalOffset: (_scrollViewer.VerticalOffset + _scrollViewer.ViewportHeight / 2) *
-            newZoomFactor / _scrollViewer.ZoomFactor - _scrollViewer.ViewportHeight / 2,
-        zoomFactor: newZoomFactor,
+            e.NewValue / _scrollViewer.ZoomFactor - _scrollViewer.ViewportHeight / 2,
+        zoomFactor: e.NewValue,
         disableAnimation: true);
 }
 ```
@@ -916,11 +897,12 @@ A custom map control with a `ScrollView` in its control template animates the zo
 protected override void OnKeyUp(KeyRoutedEventArgs e)
 {
     base.OnKeyUp(e);
-    CoreWindow coreWindow = Window.Current.CoreWindow;
-    if (!coreWindow.GetAsyncKeyState(VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down))
+
+    if (!CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down))
     {
         return;
     }
+
     if (e.Key == VirtualKey.Home)
     {
         _scrollView.ZoomTo(
@@ -942,7 +924,8 @@ protected override void OnKeyUp(KeyRoutedEventArgs e)
 protected override void OnKeyUp(KeyRoutedEventArgs e)
 {
     base.OnKeyUp(e);
-    if (!CoreWindow.GetAsyncKeyState(VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down))
+
+    if (!CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down))
     {
         return;
     }
@@ -974,10 +957,12 @@ A custom map control with a `ScrollView` in its control template jumps immediate
 protected override void OnKeyUp(KeyRoutedEventArgs e)
 {
     base.OnKeyUp(e);
-    if (!CoreWindow.GetAsyncKeyState(VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down))
+
+    if (!CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down))
     {
         return;
     }
+
     if (e.Key == VirtualKey.Subtract || e.Key == VirtualKey.Add)
     {
         float zoomFactorDelta = GetKeyboardZoomDelta(e);
@@ -996,7 +981,8 @@ protected override void OnKeyUp(KeyRoutedEventArgs e)
 protected override void OnKeyUp(KeyRoutedEventArgs e)
 {
     base.OnKeyUp(e);
-    if (!CoreWindow.GetAsyncKeyState(VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down))
+
+    if (!CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down))
     {
         return;
     }
@@ -1024,15 +1010,17 @@ protected override void OnKeyUp(KeyRoutedEventArgs e)
 
 ### Animate by zoom factor delta with custom animation
 
-A Slider's Value changes are used to animate the `ScrollView`'s ZoomFactor with custom animations.
+A Slider's Value changes are used to animate the `ScrollView`'s ZoomFactor, using custom animations.
+
+The ScrollingZoomAnimationStartingEventArgs.Animation provided in the ZoomAnimationStarting event is always of type ScalarKeyFrameAnimation. It can be customized or completely overwritten (to any type of CompositionAnimation) as it is done in this example.
+The `ScrollView`'s ZoomFactor property will land on a value according to that custom animation, whether it is the original target value or not.
 
 *`ScrollView` (new)*
 
 ```csharp
-private void ZoomFactorSlider_ValueChanged(
-object sender, RangeBaseValueChangedEventArgs e)
+private void ZoomFactorSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
 {
-    float zoomFactorDelta = GetZoomFactorDelta();
+    float zoomFactorDelta = GetZoomFactorDelta(e.NewValue);
     _scrollView.ZoomBy(
         zoomFactorDelta,
         centerPoint: null);
@@ -1106,15 +1094,15 @@ When the framework raises a FrameworkElement.RequestBringIntoView event, `Scroll
 
 ###  Adjust target offset for sticky headers
 
-This example shows a list control that supports sticky headers. It listens to the `ScrollView`'s BringingIntoView event to adjust the target vertical offset to account for the sticky header's presence which the `ScrollView` is unaware of.
+This example shows a list control that supports sticky headers. Vertically sticky headers are group headers that stick at the top of the scrolling surface as long as items of that group are displayed. 
+The `ScrollView`'s BringingIntoView event is handled to adjust the target vertical offset to account for the sticky header's presence which the `ScrollView` is unaware of.
 
 *`ScrollView` (new)*
 
 ```csharp
 private void ScrollView_BringingIntoView(ScrollView scrollView, ScrollingBringingIntoViewEventArgs e)
 {
-    // Adjust the BringIntoViewRequestedEventArgs, e.RequestEventArgs, based on provided target vertical
-    // offset and the sticky header curves.
+    // Adjust the BringIntoViewRequestedEventArgs instance stored in e.RequestEventArgs based on the provided target vertical offset.
     AdjustOffsetForStickyHeader(e.RequestEventArgs, e.TargetVerticalOffset);
 }
 ```
@@ -1126,6 +1114,13 @@ Not supported
 ### Detect end of bring-into-view contribution
 
 This example shows how you can know when a bring-into-view contribution starts and ends in order to temporarily turn off user interactions during the contribution.
+
+A bring-into-view animation, if allowed to proceed in the BringingIntoView event handler, will cancel any scroll or zoom animation that might be in progress.
+
+The BringingIntoView event is raised even when the default `ScrollView` contribution is nil because the targeted area is already in view.
+
+The ScrollingBringingIntoViewEventArgs instance provided to the event handler exposes a correlation ID. This is the beginning of that correlation ID's lifetime.
+It ends in the subsequent ScrollCompleted event where it is exposed for a last time in the provided ScrollingScrollCompletedEventArgs instance.
 
 *`ScrollView` (new)*
 
@@ -1512,8 +1507,8 @@ The snapping location is moved to the center of the viewport when the Center ali
 
 | **Member** | **Description**                                                            | **Default**|
 |------------|----------------------------------------------------------------------------|------------|
-|HorizontalScrollBarVisibility|Gets or sets a value that indicates whether a scroll controller should be displayed for the horizontal scrolling direction.|Auto|
-|VerticalScrollBarVisibility|Gets or sets a value that indicates whether a scroll controller should be displayed for the vertical  scrolling direction.|Auto|
+| HorizontalScrollBarVisibility|Gets or sets a value that indicates whether a scroll controller should be displayed for the horizontal scrolling direction.|Auto|
+| VerticalScrollBarVisibility|Gets or sets a value that indicates whether a scroll controller should be displayed for the vertical  scrolling direction.|Auto|
 | ZoomMode     | Gets or sets the ability to zoom in and out through user input. | Disabled          
 | MinZoomFactor | Gets or sets the minimum value for the read-only ZoomFactor property. | 0.1 |
 | MaxZoomFactor | Gets or sets the minimum value for the read-only ZoomFactor property.| 10.0 |
@@ -1539,7 +1534,7 @@ The snapping location is moved to the center of the viewport when the Center ali
 | ScrollCompleted | Raised at the end of a ScrollTo, ScrollBy, or AddScrollVelocity asynchronous operation. Provides the original correlation ID. |
 | ZoomAnimationStarting | Raised when a ZoomTo or ZoomBy call triggers an animation. Allows customization of that animation. |
 | ZoomCompleted | Raised at the end of a ZoomTo, ZoomBy, or AddZoomVelocity asynchronous operation. Provides the original correlation ID. |
-| BringingIntoView | Raised at the beginning of a bring-into-view-request participation. Allows customization of that participation.
+| BringingIntoView | Raised at the beginning of a bring-into-view request participation. Allows customization of that participation.
 
 
 ### ScrollView, additional methods
@@ -1574,11 +1569,6 @@ The snapping location is moved to the center of the viewport when the Center ali
 | CenterPoint | Gets the center point for the zoom factor change.
 | CorrelationId | Gets the correlation ID associated with the animated zoom factor change, previously returned by ZoomTo or ZoomBy.<br/>Used by the ZoomAnimationStarting event which is raised when a ZoomTo or ZoomBy call triggers an animation. Allows customization of that animation.
 
-## Correlation ID
-
-Each programmatic zoom change is associated with a particular correlation ID number. That number is provided when requesting a view change with ZoomTo, ZoomBy and AddZoomVelocity, as a return value.
-
-That same number is then exposed in subsequent events like ZoomAnimationStarting and ZoomCompleted. This allows to match events with their triggering method call.
 
 
 ## ScrollingZoomCompletedEventArgs class
@@ -1648,12 +1638,6 @@ Used by the ScrollAnimationStarting event which is raised when a ScrollTo or Scr
 | CorrelationId | Gets the correlation ID associated with the animated offsets change, previously returned by ScrollTo or ScrollBy.
 
 
-## Correlation ID
-
-Each programmatic scroll change is associated with a particular correlation ID number. That number is provided when requesting a view change with ScrollTo, ScrollBy, AddScrollVelocity, as a return value.
-
-That same number is then exposed in subsequent events like ScrollAnimationStarting and ScrollCompleted. This allows to match events with their triggering method call.
-
 
 ## ScrollingScrollCompletedEventArgs class
 
@@ -1666,7 +1650,17 @@ Used by the ScrollCompleted event which is raised when the offset changes caused
 
 
 
+## Correlation ID
 
+Each programmatic scroll or zoom change is associated with a particular correlation ID number. That number is provided when requesting a view change with ScrollTo, ScrollBy, AddScrollVelocity, ZoomTo, ZoomBy or AddZoomVelocity as a return value.
+A correlation ID is also provided in the BringingIntoView event raised at the beginning of a bring-into-view request participation. This marks the beginning of a correlation ID's lifetime.
+
+That same number is then exposed in subsequent events like ScrollAnimationStarting and ScrollCompleted, or ZoomAnimationStarting and ZoomCompleted. This allows to match events with their triggering method call or request.
+
+The lifetime of a correlation ID always ends in a completion event: ScrollCompleted or ZoomCompleted.
+
+Note that lifetimes of correlation IDs can overlap. For example, two back-to-back ScrollTo calls will generate two correlation IDs with overlapping lifetimes.
+When a new view change is requested while an old one is still in progress, the old one is cancelled. That cancellation triggers a ScrollCompleted or ZoomCompleted event with the old CorrelationId.
 
 # API Details
 
