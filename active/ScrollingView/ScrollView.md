@@ -28,7 +28,7 @@ The above example becomes (simply renaming the control):
 
 ```xml
 <Page xmlns=<http://schemas.microsoft.com/winfx/2006/xaml/presentation>
-      xmlns:mux="using:Microsoft.UI.Xaml.Controls" >
+      xmlns:mux="using:Microsoft.UI.Xaml.Controls">
     <mux:ScrollView>
         <TextBlock Text="{x:Bind AllTheText}" TextWrapping="Wrap" />
     </mux:ScrollView>
@@ -163,7 +163,7 @@ The Image's natural size may be 2880 x 1800 and would be rendered using that siz
 
 ```xml
 <mux:ScrollView Width="500" Height="400" 
-                   ContentOrientation="Both">
+    ContentOrientation="Both">
     <Image Source="Assets/LargeEiffelTower.png"/>
 </mux:ScrollView>
 ```
@@ -201,7 +201,7 @@ Or more generally for any XAML content a [Viewbox](https://docs.microsoft.com/uw
 ```xml
 <mux:ScrollView ContentOrientation="None" ZoomMode="Enabled">
     <Viewbox>
-        <!-- ... -->
+        ...
     </Viewbox>
 </mux:ScrollView>
 ```
@@ -245,9 +245,9 @@ In this example the scroll bars are hidden, meaning that it won't be possible to
 
 ```xml
 <mux:ScrollView Width="500" Height="400"
-                  ContentOrientation="Both"
-                  HorizontalScrollBarVisibility="Hidden"
-                  VerticalScrollBarVisibility="Hidden">
+    ContentOrientation="Both"
+    HorizontalScrollBarVisibility="Hidden"
+    VerticalScrollBarVisibility="Hidden">
     <Image Source="Assets/LargeParisMap.png"/>
 </mux:ScrollView>
 ```
@@ -256,8 +256,8 @@ In this example the scroll bars are hidden, meaning that it won't be possible to
 
 ```xml
 <ScrollViewer Width="500" Height="400"
-              HorizontalScrollBarVisibility="Hidden"
-              VerticalScrollBarVisibility="Hidden">
+    HorizontalScrollBarVisibility="Hidden"
+    VerticalScrollBarVisibility="Hidden">
     <Image Source="Assets/LargeParisMap.png"/>
 </ScrollViewer>
 ```
@@ -293,8 +293,8 @@ Use the `MinZoomFactor` and `MaxZoomFactor` properties to control the amount the
 
 ```xml
 <mux:ScrollView Width="500" Height="400" ContentOrientation="Both"
-                   ZoomMode="Enabled" 
-                   MinZoomFactor="1.0" MaxZoomFactor="2.0">
+    ZoomMode="Enabled" 
+    MinZoomFactor="1.0" MaxZoomFactor="2.0">
     <Image Source="Assets/LargeParisMap.png"/>
 </mux:ScrollView>
 ```
@@ -303,7 +303,7 @@ Use the `MinZoomFactor` and `MaxZoomFactor` properties to control the amount the
 
 ```xml
 <ScrollViewer Width="500" Height="400" HorizontalScrollBarVisibility="Auto"
-              ZoomMode="Enabled" MinZoomFactor="1.0" MaxZoomFactor="2.0">
+    ZoomMode="Enabled" MinZoomFactor="1.0" MaxZoomFactor="2.0">
     <Image Source="Assets/LargeParisMap.png"/>
 </ScrollViewer>
 ```
@@ -326,9 +326,10 @@ This example shows vertical-only scrolling. Even though the content is wider tha
 
 ```xml
 <mux:ScrollView x:Name="ScrollView"
-                  HorizontalScrollMode="Disabled" VerticalScrollMode="Enabled"
-                  ContentOrientation="Both">
+    HorizontalScrollMode="Disabled" VerticalScrollMode="Enabled"
+    ContentOrientation="Both">
     <Grid ...>
+        ...
     </Grid>
 </mux:ScrollView>
 ```
@@ -339,9 +340,10 @@ This example shows horizontal-only scrolling. Even if the content is taller than
 
 ```xml
 <mux:ScrollView x:Name="ScrollView"
-                  HorizontalScrollMode="Enabled" VerticalScrollMode="Disabled"
-                  ContentOrientation="Both">
+    HorizontalScrollMode="Enabled" VerticalScrollMode="Disabled"
+    ContentOrientation="Both">
     <Grid ...>
+        ...
     </Grid>
 </mux:ScrollView>
 ```
@@ -477,7 +479,7 @@ In this example, all railing is turned off, so the user can always pan in all di
 
 ```xml
 <mux:ScrollView HorizontalScrollRailMode="Disabled" VerticalScrollRailMode="Disabled"
-                  ContentOrientation="Both">
+    ContentOrientation="Both">
     <SwapChainPanel x:Name="swapChainPanelMap" Width="40000" Height="40000">
         ...
     </SwapChainPanel>
@@ -488,7 +490,7 @@ In this example, all railing is turned off, so the user can always pan in all di
 
 ```xml
 <ScrollViewer IsHorizontalRailEnabled="False" IsVerticalRailEnabled="False"
-                  HorizontalScrollBarVisibility="Auto">
+    HorizontalScrollBarVisibility="Auto">
     <SwapChainPanel x:Name="swapChainPanelMap" Width="40000" Height="40000">
         ...
     </SwapChainPanel>
@@ -561,7 +563,8 @@ private void DecreaseZoomFactor(float percent)
 
 ## Incrementally load more data
 
-In this example more data is loaded when the user has scrolled off 90% of the content.
+In this example more data is loaded when the user has scrolled off 90% of the content. It uses the `ScrollView`'s ViewChanged event which gets raised whenever the _view_ changed. 
+The HorizontalOffset, VerticalOffset and ZoomFactor trio constitute the view.
 
 *`ScrollView` (new)*
 
@@ -1147,9 +1150,10 @@ Not supported
 
 ## Customize the anchor selection
 
-The anchor element in a `ScrollView` is used to maintain the content of the view port when the scrolling content changes. For example in a list, the center item's position on screen can be maintained when items earlier in the list are removed.
+The anchor element in a `ScrollView` is used to maintain the content of the viewport when the scrolling content changes. For example in a list, the center item's position on screen can be maintained when items earlier in the list are removed.
 
-The `ScrollView` raises its AnchorRequested event to allow handlers to influence the anchor selection.
+The `ScrollView` raises its AnchorRequested event to allow handlers to influence the anchor selection. 
+AnchorRequested is raised within the `ScrollView`'s arrange pass, before its content is arranged and its properties are updated.
 
 ### Set an explicit anchor element
 
@@ -1172,6 +1176,12 @@ Same as above
 
 This example shows an application with a vertical StackPanel in a `ScrollView`. The AnchorCandidates collection is populated with all the children in the StackPanel and the `ScrollView` picks an anchor based on the VerticalAnchorRatio property.
 
+Note that you can instead set the UIElement.CanBeScrollAnchor boolean property to True for all StackPanel children.
+Indeed, the `ScrollPresenter` inner component of the `ScrollView` implements the IScrollAnchorProvider interface and thus the XAML framework automatically calls its IScrollAnchorProvider.RegisterAnchorCandidate method for all UIElement children, direct or not, that have their CanBeScrollAnchor property set to True.
+The `ScrollPresenter` and `ScrollViewer` elements are treated and behave the same way in that regard.
+
+`ScrollView` also has public RegisterAnchorCandidate/UnregisterAnchorCandidate methods that delegate to the inner `ScrollPresenter`’s methods.
+
 *`ScrollView` (new)*
 
 ```csharp
@@ -1184,12 +1194,9 @@ private void ScrollView_AnchorRequested(ScrollView scrollView, ScrollingAnchorRe
 }
 ```
 
-> Note that starting with RS5, you can instead set the UIElement.CanBeScrollAnchor boolean property to True for all StackPanel children.
-
 *ScrollViewer (existing)*
 
 Same as above
-
 
 
 ## Consuming the `ScrollView`'s Properties in Animations 
@@ -1246,14 +1253,13 @@ private void ScrollViewer_SizeChanged(object sender, SizeChangedEventArgs e)
 ```
 
 
-
-# Example: Default `ScrollView` control template
+# Default `ScrollView` control template
 
 `ScrollView` uses a `ScrollPresenter` ([defined in this spec](.\ScrollPresenter.md)), two ScrollBars, a Border, all inside a Grid.
 
 The horizontal scroll bar must be named PART_HorizontalScrollBar (similar for vertical). That element can either be a ScrollBar control or implement Microsoft.UI.Xaml.Controls.Primitives.IScrollController.
 
-An element that implements Microsoft.UI.Xaml.Controls.Primitives.IScrollController can provide richer user experiences than a ScrollBar. It can include inertia-driven offset changes, UI-thread independent scrolling through touch/pen.
+An element that implements Microsoft.UI.Xaml.Controls.Primitives.IScrollController can provide richer user experiences than a ScrollBar. It can include inertia-driven offset changes and UI-thread independent scrolling through touch/pen.
 
 
 ```xml
@@ -1341,17 +1347,17 @@ Gets or sets the scrollable/zoomable content.
 The `ScrollView.Content` property is the Xaml markup content property, as indicated by `ScrollView` having the `[ContentProperty("Content")]` attribute set. This means that the following shorthand markup is equivalent to the subsequent markup syntax:
 
 ```xml
-<ScrollView>
+<mux:ScrollView>
     <TextBlock Text='{x:Bind AllTheText}'/>
-</ScrollView>
+</mux:ScrollView>
 ```
 
 ```xml
-<ScrollView>
-    <ScrollView.Content>
+<mux:ScrollView>
+    <mux:ScrollView.Content>
         <TextBlock Text='{x:Bind AllTheText}'/>
-    </ScrollView.Content>
-</ScrollView>
+    </mux:ScrollView.Content>
+</mux:ScrollView>
 ```
 
 ### ScrollView.ContentOrientation property
@@ -1384,28 +1390,28 @@ Each input kind affects both scrolling and zooming capabilities. For instance, i
 
 ### ScrollView.HorizontalScrollChainMode (and VerticalScrollChainMode) property
 
-Gets or sets the ability to chain horizontal scrolling to an outer scroller. Defaults to Auto.
+Gets or sets the ability to chain horizontal scrolling to an outer `ScrollViewer` or `ScrollPresenter`. Defaults to Auto.
 
-The outer scroller that picks up the scrolling through chaining can be either DirectManipulation-driven or InteractionTracker-driven.
+The outer component that picks up the scrolling through chaining can be either DirectManipulation-driven (example: `ScrollViewer`) or InteractionTracker-driven (example: `ScrollPresenter`).
 
-When set to Auto, the `ScrollView` chains to the closest scrollable outer scroller if any.
-
-When set to Always, the `ScrollView` pretends there is a scrollable outer scroller and does no overpan.
-
-When set to Never, the `ScrollView` pretends there is no scrollable outer scroller and overpans.
+| **Value** | **Meaning**                                                               |
+|-----------|---------------------------------------------------------------------------|
+| Auto      | The `ScrollView` chains to the closest horizontally scrollable outer component if any. |
+| Always    | Even when no horizontally scrollable outer component is present, the `ScrollView` acts as if chaining occurred. |
+| Never     | Even when a horizontally scrollable outer component is present, it is ignored and no chaining occurs. |
 
 
 ### ScrollView.ZoomChainMode property
 
-Gets or sets the ability to chain zooming to an outer scroller. Defaults to Auto.
+Gets or sets the ability to chain zooming to an outer `ScrollViewer` or `ScrollPresenter`. Defaults to Auto.
 
-The outer scroller that picks up the zooming through chaining can be either DirectManipulation-driven or InteractionTracker-driven.
+The outer component that picks up the zooming through chaining can be either DirectManipulation-driven (example: `ScrollViewer`) or InteractionTracker-driven (example: `ScrollPresenter`).
 
-When set to Auto, the `ScrollView` chains to the closest zoomable outer scroller if any.
-
-When set to Always, the `ScrollView` pretends there is a zoomable outer scroller and does no overzoom.
-
-When set to Never, the `ScrollView` pretends there is no zoomable outer scroller and overzooms.
+| **Value** | **Meaning**                                                               |
+|-----------|---------------------------------------------------------------------------|
+| Auto      | The `ScrollView` chains to the closest zoomable outer component if any. |
+| Always    | Even when no zoomable outer component is present, the `ScrollView` acts as if chaining occurred. |
+| Never     | Even when a zoomable outer component is present, it is ignored and no chaining occurs. |
 
 
 ### ScrollView.CurrentAnchor property
@@ -1417,29 +1423,30 @@ Gets the most recently chosen UIElement for scroll anchoring after a layout pass
 
 Gets or sets ratio within the viewport where the anchor element is selected. Defaults to zero.
 
-When the HorizontalAnchorRatio is NaN, no horizontal anchoring is performed.
+When the HorizontalAnchorRatio is NaN, no horizontal anchoring is performed. Horizontal anchoring is performed when the property value is between 0 and 1.
+When it is 0.5, the middle of the anchor element is anchored to the middle of the viewport. That is the distance between the middle of the anchor and the middle of the viewport is kept constant.
+If the ScrollingAnchorRequestedEventArgs.Anchor property is set in the AnchorRequested event handler, it is picked as the anchor. Otherwise the `ScrollView` selects an anchor from the ScrollingAnchorRequestedEventArgs.AnchorCandidates collection which may have been altered in the event handler.
+For example when HorizontalAnchorRatio is 0.5, the selected anchor is the anchor candidate the closest to the middle of the viewport.
 
-When it is 0.0, the left-most element in the viewport is being anchored horizontally.
-
-When it is 1.0, the right-most element in the viewport is being anchored horizontally.
-
-Any number in between is valid. For instance, if it's 0.5, the element closest to the middle of the viewport is being anchored.
+0 and 1 have special meanings for the HorizontalAnchorRatio property. A value of 0 forces the HorizontalOffset to remain at 0 if it is already 0. Thus the left edge of the `ScrollView` content sticks to the left edge of the viewport.
+A value of 1 forces the HorizontalOffset to match the ScrollableWidth value if it is already equal to ScrollableWidth. Thus the right edge of the `ScrollView` content sticks to the right edge of the viewport.
+When HorizontalAnchorRatio has one of those two special values, the AnchorRequested event is not raised as no anchor is at play.
 
 
 ### ScrollView.AddScrollVelocity method
 
-Asynchronously adds scrolling velocity.
+Asynchronously adds scrolling velocity. The State property transitions to the ScrollingInteractionState.Inertia value during the resulting inertial scroll. Because it does not consume any CompositionAnimation, the ScrollAnimationStarting event is not raised.
 
-When an inertiaDecayRate is provided to AddScrollVelocity, it is applied during the duration of the scroll and then reverts back to the default (0.95, 0.95).
+By default the `ScrollView` control uses an inertia decay rate of (0.95, 0.95) for inertial scrolling operations. That default decay rate can be overwritten by providing a non-null inertiaDecayRate parameter to the AddScrollVelocity method.
+That custom decay rate is then applied during the duration of that scroll operation alone. If the inertial scroll is interrupted with a touch gesture or with a new AddScrollVelocity call, the application of that custom decay rate is cancelled. 
 
+Inertia decay rates affect the inertial velocity decrease (decay). Values must be between 0.0 and 1.0. The closer the value is to 1.0, the faster the deceleration. A value of 0.0 represents no decay and results in a constant velocity scroll.
 
 ### ScrollView.ScrollableWidth (and ScrollableHeight) property
 
 Gets the horizontal length of the content that can be scrolled. Defaults to 0.
 
 The ScrollableWidth property returns the value Max(0, ZoomFactor x ExtentWidth - ViewportWidth).
-
-The HorizontalOffset, VerticalOffset and ZoomFactor trio constitute the _view_.
 
 The ScrollableHeight property returns the value Max(0, ZoomFactor x ExtentHeight - ViewportHeight).
 
@@ -1452,11 +1459,14 @@ The same comments apply to the vertical dimension.
 
 ### ScrollView.AddZoomVelocity method
 
-Asynchronously adds zooming velocity.
+Asynchronously adds zooming velocity. The State property transitions to the ScrollingInteractionState.Inertia value during the resulting inertial zoom. Because it does not consume any CompositionAnimation, the ZoomAnimationStarting event is not raised. 
 
-When the centerPoint parameter is null, the methods use the center of the viewport as the zoom center point.
+When the centerPoint parameter is null, the methods ZoomTo, ZoomBy and AddZoomVelocity use the center of the viewport as the zoom center point.
 
-When an inertiaDecayRate is provided to AddZoomVelocity, it is applied during the duration of the zoom and then reverts back to the default 0.95.
+By default the `ScrollView` control uses an inertia decay rate of 0.95 for inertial zooming operations. That default decay rate can be overwritten by providing a non-null inertiaDecayRate parameter to the AddZoomVelocity method.
+That custom decay rate is then applied during the duration of that zoom operation alone. If the inertial zoom is interrupted with a touch gesture or with a new AddZoomVelocity call, the application of that custom decay rate is cancelled. 
+
+Inertia decay rates affect the inertial velocity decrease (decay). Values must be between 0.0 and 1.0. The closer the value is to 1.0, the faster the deceleration. A value of 0.0 represents no decay and results in a constant velocity zoom.
 
 Changing the ZoomFactor does not affect the `ScrollView`'s ViewportWidth, ViewportHeight, ExtentWidth, ExtentHeight properties. It does potentially affect the HorizontalOffset, VerticalOffset, ScrollableWidth and ScrollableHeight properties.
 
@@ -1471,36 +1481,10 @@ The ScrollableHeight being defined as Max(0, ZoomFactor x ExtentHeight - Viewpor
 
 Raised when the `ScrollView` is about to select an anchor element. 
 
-The AnchorCandidates collection is populated with the elements it will pick from. The event handler can modify the content of this collection to influence the `ScrollView`'s imminent selection, or it can set the Anchor to force the use of an element (the `ScrollView`'s selection process is then skipped entirely).
+It exposes a ScrollingAnchorRequestedEventArgs.AnchorCandidates collection which is initialized with the elements that are registered as anchor candidates. That initial collection of candidates is populated with the `ScrollPresenter` children with the UIElement.CanBeScrollAnchor property set to True, and with elements explicitly registered with the ScrollView.RegisterAnchorCandidate method.
+The event handler can modify that collection to adjust the list of candidates for this anchor request. After it is executed, the `ScrollView` uses its HorizontalAnchorRatio and VerticalAnchorRatio properties to select an anchor among the final AnchorCandidates collection.
 
-The `ScrollView` uses its HorizontalAnchorRatio and VerticalAnchorRatio properties to select an anchor.
-
-
-### ScrollView.HorizontalSnapPointsType (and VerticalSnapPointsType) property
-
-Gets or sets the type of snap points to use on the horizontal scrolling direction. Defaults to None.
-
-By default, because HorizontalSnapPointsType and VerticalSnapPointsType are set to None, no scrolling snap points are applied.
-
-When HorizontalSnapPointsType is set to Mandatory (the only other option available for now), the `ScrollView` checks if its Content element implements the WUX <a href="https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.primitives.iscrollsnappointsinfo">IScrollSnapPointsInfo</a> interface.
-
-If the content does not implement that interface, no horizontal snap points are applied.
-
-If the content does implement that interface, the `ScrollView` forwards the advertised snap points to its inner ScrollPresenter control, using its IVector&lt;Microsoft.UI.Xaml.Controls.ScrollSnapPointBase&gt; HorizontalSnapPoints { get; } property.
-
-The same applies to the vertical direction, using the ScrollPresenter's VerticalSnapPoints property.
-
-The Mandatory type forces any inertial phase to end on a snap-point-driven location.
-
-### ScrollView.HorizontalSnapPointsAlignment (and VerticalSnapPointsAlignment) property
-
-Gets or sets the type of snap points to use on the horizontal scrolling direction. Defaults to Near.
-
-By default, the left and top edges of the `ScrollView` viewport are the snapping locations for snap points, as seen in the HorizontalSnapPointsType/VerticalSnapPointsType section.
-
-This corresponds to the Near alignment.
-
-The snapping location is moved to the center of the viewport when the Center alignment is picked. It is moved to the right and bottom edges when the Far alignment is picked.
+Alternatively the AnchorRequested event handler can set the ScrollingAnchorRequestedEventArgs.Anchor property, initialized to null, to force the use of a particular element as the anchor. In that case the AnchorCandidates collection is ignored and the `ScrollView`'s selection process is skipped entirely. 
 
 
 ### ScrollView, additional properties
@@ -1567,7 +1551,9 @@ The snapping location is moved to the center of the viewport when the Center ali
 | StartZoomFactor | Gets the default content scale at the start of the animation.
 | EndZoomFactor | Gets the default content scale at the end of the animation.
 | CenterPoint | Gets the center point for the zoom factor change.
-| CorrelationId | Gets the correlation ID associated with the animated zoom factor change, previously returned by ZoomTo or ZoomBy.<br/>Used by the ZoomAnimationStarting event which is raised when a ZoomTo or ZoomBy call triggers an animation. Allows customization of that animation.
+| CorrelationId | Gets the correlation ID associated with the animated zoom factor change, previously returned by ZoomTo or ZoomBy.
+
+<br/>Used by the ZoomAnimationStarting event which is raised when a ZoomTo or ZoomBy call triggers an animation. Allows customization of that animation.
 
 
 
@@ -1575,21 +1561,32 @@ The snapping location is moved to the center of the viewport when the Center ali
 
 | **Member** | **Description**                                                            |
 |------------|----------------------------------------------------------------------------|
-| CorrelationId | Gets the correlation ID associated with the zoom factor change, previously returned by ZoomTo, ZoomBy or AddZoomVelocity.<br/><br/>Used by the ZooomCompleted event which is raised when the zoom factor changes caused by a ZoomTo, ZoomBy or AddZoomVelocity method call completed.
+| CorrelationId | Gets the correlation ID associated with the zoom factor change, previously returned by ZoomTo, ZoomBy or AddZoomVelocity.
+
+<br/>Used by the ZooomCompleted event which is raised when the zoom factor changes caused by a ZoomTo, ZoomBy or AddZoomVelocity method call completed.
 
 
 
 ## ScrollingBringingIntoViewEventArgs class
 
+Used by the BringingIntoView event which is raised when the `ScrollView` is about to participate in a bring-into-view request triggered by a FrameworkElement.RequestBringIntoView event. It allows customization of that participation.
+
+Setting the SnapPointsMode property to ScrollngSnapPointsMode.Default causes the participating `ScrollView` to land on a mandatory snap point, if present.
+
+
 ### ScrollingBringingIntoViewEventArgs.Cancel
 
 Gets or sets a value indicating whether the participation must be cancelled or not.
 
-Used by the BringingIntoView event which is raised when the `ScrollView` is about to participate in a bring-into-view request triggered by a FrameworkElement.RequestBringIntoView event.
+The BringingIntoView event handler can set the Cancel property to True to skip the participation of the `ScrollView` that raises the event. The request will still be processed potentially by parent ScrollViewer/ScrollView controls.
+Only the one participation that was about to start is cancelled.
 
-Setting the SnapPointsMode property to ScrollngSnapPointsMode.Default causes the participating `ScrollViewer` to land on a mandatory snap point, if present.
+For example, the Cancel property can be set to True for a nested `ScrollView` that already has the target element partially in view, to prevent it from moving beyond that.
+Any outer `ScrollView` will still attempt to scroll the target element into its own view.
 
-Allows customization of that participation.
+On the other hand, setting BringIntoViewRequestedEventArgs.Handled to True stops the entire chain of participations.
+BringIntoViewRequestedEventArgs.Handled is typically set to True by a `ScrollViewer` or `ScrollView` control when it could not bring the target into its own viewport, not even partially. As a result potential parent participants do not try to bring the target into their view because it would be pointless.
+
 
 ### ScrollingBringingIntoViewEventArgs class, additional details
 
@@ -1605,12 +1602,18 @@ Allows customization of that participation.
 ## ScrollingAnchorRequestedEventArgs class
 
 Used by the AnchorRequested event which is raised when the `ScrollView` is selecting an element to be anchored. Allows customization of that selection.
+If the event handler leaves the Anchor null, then the `ScrollView` selects an anchor from among the AnchorCandidates collection.
 
 
 | **Member** | **Description**                                                            |
 |------------|----------------------------------------------------------------------------|
 | AnchorCandidates | Gets the collection of anchor element candidates to pick from.
 | Anchor | Gets or sets the selected anchor element. Originally set to null.
+
+The AnchorCandidates collection is initialized with the elements that are registered as anchor candidates. That initial collection of candidates is populated with the `ScrollPresenter` children with the UIElement.CanBeScrollAnchor property set to True, and with elements explicitly registered with the ScrollView.RegisterAnchorCandidate method.
+The AnchorRequested event handler can modify that collection to adjust the list of candidates for the anchor request. After it is executed, the `ScrollView` uses its HorizontalAnchorRatio and VerticalAnchorRatio properties to select an anchor among the final AnchorCandidates collection.
+
+Alternatively the AnchorRequested event handler can set the Anchor property, initialized to null, to force the use of a particular element as the anchor. In that case the AnchorCandidates collection is ignored and the `ScrollView`'s selection process is skipped entirely. 
 
 
 ## ScrollingScrollOptions class
@@ -1637,7 +1640,7 @@ Used by the ScrollAnimationStarting event which is raised when a ScrollTo or Scr
 | EndPosition   | Gets the default content position at the end of the animation.
 | CorrelationId | Gets the correlation ID associated with the animated offsets change, previously returned by ScrollTo or ScrollBy.
 
-
+<br/>Used by the ScrollAnimationStarting event which is raised when a ScrollTo or ScrollBy call triggers an animation. Allows customization of that animation.
 
 ## ScrollingScrollCompletedEventArgs class
 
@@ -1648,6 +1651,7 @@ Used by the ScrollCompleted event which is raised when the offset changes caused
 |------------|----------------------------------------------------------------------------|
 | CorrelationId | Gets the correlation ID associated with the offsets change, previously returned by ScrollTo, ScrollBy or AddScrollVelocity.
 
+<br/>Used by the ScrollCompleted event which is raised when the scroll offset changes caused by a ScrollTo, ScrollBy or AddScrollVelocity method call completed.
 
 
 ## Correlation ID
@@ -2070,16 +2074,216 @@ The (MUX) `ScrollView` can be deployed and used down to RS2. Once the framework 
 | Focus rects on elements in the sub-tree are displayed correctly (clipped / not clipped)    | No      | No            | Yes           | Yes                  | UX polish issue                                                                                                                                                                                                                                                                                                                                                                                             |
 
 
-# Future Supported Scenarios
+# Future Supported Features with known scenarios
 
 These features have valid scenarios and should be considered for future releases.
+
+## Markup scenarios
+
+### Clipping suppression
+
+The old ScrollViewer has [this property](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.scrollviewer.cancontentrenderoutsidebounds) already. It would allow the inner ScrollPresenter to stop its clipping.
+
+```csharp
+unsealed runtimeclass ScrollView : ...
+{
+    // Default Value: False
+    Boolean CanContentRenderOutsideBounds { get; set; };
+}
+
+unsealed runtimeclass ScrollPresenter : ...
+{
+    // Default Value: False
+    Boolean CanContentRenderOutsideBounds { get; set; };
+}
+```
+
+### Deferral of visual scrolling when interacting with scroll bar
+
+This property exists as is in old ScrollViewer.
+
+```csharp
+unsealed runtimeclass ScrollView : ...
+{
+    // Default Value: False
+    Boolean IsDeferredScrollingEnabled { get; set; };
+}
+```
+
+### Ability to define quadrants in content with various scrolling/zooming capabilities
+
+The old WUX ScrollViewer exposes UIElement read-write properties called TopLeftHeader, TopHeader and LeftHeader. These add headers around the primary Content to support an Excel-like experience where the TopLeftHeader cannot scroll, the LeftHeader cannot scroll horizontally and the TopHeader cannot scroll vertically.
+
+The v1 MUX release does not support this scenario. The needed APIs have not been defined yet.
+
+
+### Setting the scroll snap points type with the ScrollView.HorizontalSnapPointsType (and VerticalSnapPointsType) property
+
+Gets or sets the type of snap points to use on the horizontal scrolling direction. Defaults to None.
+
+By default, because HorizontalSnapPointsType and VerticalSnapPointsType are set to None, no scrolling snap points are applied.
+
+When HorizontalSnapPointsType is set to Mandatory (the only other option available for now), the `ScrollView` checks if its Content element implements the WUX <a href="https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.primitives.iscrollsnappointsinfo">IScrollSnapPointsInfo</a> interface.
+
+If the content does not implement that interface, no horizontal snap points are applied.
+
+If the content does implement that interface, the `ScrollView` forwards the advertised snap points to its inner ScrollPresenter control, using its IVector&lt;Microsoft.UI.Xaml.Controls.ScrollSnapPointBase&gt; HorizontalSnapPoints { get; } property.
+
+The same applies to the vertical direction, using the ScrollPresenter's VerticalSnapPoints property.
+
+The Mandatory type forces any inertial phase to end on a snap-point-driven location.
+
+ScrollView-specific members to add:
+
+| **Property**                                | **Type**                                                        |
+|---------------------------------------------|-----------------------------------------------------------------|
+| HorizontalSnapPointsType { get; set; }      | Microsoft.UI.Xaml.Controls.SnapPointsType                       |
+| VerticalSnapPointsType { get; set; }        | Microsoft.UI.Xaml.Controls.SnapPointsType                       |
+
+
+####  Example: Using the built-in StackPanel snap locations as mandatory snap points through its IScrollSnapPointsInfo implementation
+
+1.  Vertical StackPanel
+
+![Vertical StackPanel Snap Points](images/VStackPanelSnapPoints.png)
+
+*`ScrollView` (new)*
+
+```xml
+<mux:ScrollView VerticalSnapPointsType="Mandatory" Width="500" Height="400">
+    <StackPanel>
+        <Button Height="300" Content="Button1"/>
+        <Button Height ="300" Content="Button2"/>
+        <Button Height ="300" Content="Button3"/>
+        <Button Height ="300" Content="Button4"/>
+        <Button Height ="300" Content="Button5"/>
+    </StackPanel>
+</mux:ScrollView>
+```
+
+*ScrollViewer (existing)*
+
+Similar to above
+
+2.  Horizontal StackPanel
+
+![Horizontal StackPanel Snap Points ](images/HStackPanelSnapPoints.png)
+
+*`ScrollView` (new)*
+
+```xml
+<mux:ScrollView HorizontalSnapPointsType="Mandatory" ContentOrientation="Horizontal" Width="500" Height="400">
+    <StackPanel Orientation="Horizontal">
+        <Button Width="300" Content="Button1"/>
+        <Button Width="300" Content="Button2"/>
+        <Button Width="300" Content="Button3"/>
+        <Button Width="300" Content="Button4"/>
+        <Button Width="300" Content="Button5"/>
+    </StackPanel>
+</mux:ScrollView>
+```
+
+*ScrollViewer (existing)*
+
+Similar to above (excluding the changes related to ContentOrientation).
+
+
+### Setting the scroll snap points alignment with the ScrollView.HorizontalSnapPointsAlignment (and VerticalSnapPointsAlignment) property
+
+Gets or sets the type of snap points to use on the horizontal scrolling direction. Defaults to Near.
+
+By default, the left and top edges of the `ScrollView` viewport are the snapping locations for snap points, as seen in the HorizontalSnapPointsType/VerticalSnapPointsType section.
+
+This corresponds to the Near alignment.
+
+The snapping location is moved to the center of the viewport when the Center alignment is picked. It is moved to the right and bottom edges when the Far alignment is picked.
+
+ScrollView-specific members to add:
+
+| **Property**                                | **Type**                                                        |
+|---------------------------------------------|-----------------------------------------------------------------|
+| HorizontalSnapPointsAlignment { get; set; } | Microsoft.UI.Xaml.Controls.Primitives.ScrollSnapPointsAlignment |
+| VerticalSnapPointsAlignment { get; set; }   | Microsoft.UI.Xaml.Controls.Primitives.ScrollSnapPointsAlignment |
+
+
+#### Example: Centering the snap points in the viewport in a flip-view control
+
+![Snap points alignment](images/SnapPointsAlignment.png)
+
+*`ScrollView` (new)*
+
+```xml
+<mux:ScrollView HorizontalSnapPointsAlignment="Center"
+    HorizontalSnapPointsType="Mandatory"
+    ContentOrientation="Horizontal"
+    Width="500" Height="400">
+    <StackPanel Orientation="Horizontal">
+        <Button Width="300" Content="Button1"/>
+        <Button Width="300" Content="Button2"/>
+        <Button Width="300" Content="Button3"/>
+        <Button Width="300" Content="Button4"/>
+        <Button Width="300" Content="Button5"/>
+    </StackPanel>
+</mux:ScrollView>
+```
+
+*ScrollViewer (existing)*
+
+Similar to above (excluding the changes related to ContentOrientation).
+
+
+### Support for optional and single snap points
+
+The `ScrollPresenter` only supports one kind of snap points: mandatory. The old ScrollViewer supports 3 additional snap point types: optional, optional-single and madatory-single.
+
+```csharp
+enum Microsoft.UI.Xaml.Controls.SnapPointsType
+{
+    None = 0,
+    Optional = 1,
+    Mandatory = 2,
+    OptionalSingle = 3,
+    MandatorySingle = 4,
+};
+
+enum Microsoft.UI.Xaml.Controls.Primitives.SnapPointApplicableRangeType
+{
+    Optional = 0,
+    Mandatory = 1,
+};
+
+unsealed runtimeclass SnapPointBase : Windows.UI.Xaml.DependencyObject
+{
+    Double ApplicableRange{ get; };
+    SnapPointApplicableRangeType ApplicableRangeType{ get; };
+}
+
+unsealed runtimeclass ZoomSnapPoint: ZoomSnapPointBase
+{
+    ZoomSnapPoint(Double snapPointValue, Double applicableRange);
+}
+
+unsealed runtimeclass RepeatedZoomSnapPoint : ZoomSnapPointBase
+{
+    RepeatedZoomSnapPoint(
+        Double offset,
+        Double interval,
+        Double start,
+        Double end,
+        Double applicableRange);
+}
+```
+
+## Coding scenarios
 
 ### Controlling default inertia decelerations
 
 | **Member** | **Description**                                                            | **Default**  |
 |------------|----------------------------------------------------------------------------|--------------|
 | ScrollInertiaDecayRate | Gets or sets the inertial deceleration of scrolling.           | (0.95, 0.95) |
-| ZoomInertiaDecayRate   | Gets or sets the inertial deceleration of zooming. <br/>Affects the inertial velocity decrease (decay). Values must be between 0.0 and 1.0. Using 0.0 results in a constant velocity scroll or zoom. | 0.95 |
+| ZoomInertiaDecayRate   | Gets or sets the inertial deceleration of zooming.             | 0.95         |
+
+<br/>Affects the inertial velocity decrease (decay). Values must be between 0.0 and 1.0. The closer the value is to 1.0, the faster the deceleration. A value of 0.0 represents no decay and results in a constant velocity scroll or zoom.
 
 #### Customizing the inertial scrolling decay
 
@@ -2127,204 +2331,6 @@ A geographical map browsing application needs the `ScrollView`'s zooming inertia
 
 N/A. Cannot be done.
 
-
-### Example: Setting ScrollPresenter snap points with custom applicable range
-
-This example adds scrolling snap points at offsets 0, 100 and 200 for  content that is 300 pixels large, with custom application ranges:
-
-```csharp
-ScrollSnapPoint snapPoint1 = new ScrollSnapPoint(
-    snapPointValue: 0, applicableRange: 140, alignment: ScrollSnapPointsAlignment.Near);
-
-ScrollSnapPoint snapPoint2 = new ScrollSnapPoint( 
-    snapPointValue: 100, applicableRange: 10, alignment: ScrollSnapPointsAlignment.Near);
-
-ScrollSnapPoint snapPoint3 = new ScrollSnapPoint(
-    snapPointValue: 200, applicableRange: 40, alignment: ScrollSnapPointsAlignment.Near);
-
-_scrollingPresenter.VerticalSnapPoints.Add(snapPoint1);
-
-_scrollingPresenter.VerticalSnapPoints.Add(snapPoint2);
-
-_scrollingPresenter.VerticalSnapPoints.Add(snapPoint3);
-```
-
-![Snap points custom active range](images/SnapPointsCustomActiveRange.png)
-
-snapPoint1's applicable zone: \]-inf, 140\[
-
-snapPoint2's applicable zone: \[140, 160\[
-
-snapPoint3's applicable zone: \[160, +inf\[
-
-## Markup scenarios
-
-### Using scroll snap points
-
-ScrollView-specific members to add:
-
-| **Property**                                | **Type**                                                        |
-|---------------------------------------------|-----------------------------------------------------------------|
-| HorizontalSnapPointsType { get; set; }      | Microsoft.UI.Xaml.Controls.SnapPointsType                       |
-| VerticalSnapPointsType { get; set; }        | Microsoft.UI.Xaml.Controls.SnapPointsType                       |
-| HorizontalSnapPointsAlignment { get; set; } | Microsoft.UI.Xaml.Controls.Primitives.ScrollSnapPointsAlignment |
-| VerticalSnapPointsAlignment { get; set; }   | Microsoft.UI.Xaml.Controls.Primitives.ScrollSnapPointsAlignment |
-
-####  Example: Using the built-in StackPanel snap points
-
-1.  Vertical StackPanel
-
-![Vertical StackPanel Snap Points](images/VStackPanelSnapPoints.png)
-
-*`ScrollView` (new)*
-
-```xml
-<mux:ScrollView VerticalSnapPointsType="Mandatory" Width="500" Height="400">
-    <StackPanel>
-        <Button Height="300" Content="Button1"/>
-        <Button Height ="300" Content="Button2"/>
-        <Button Height ="300" Content="Button3"/>
-        <Button Height ="300" Content="Button4"/>
-        <Button Height ="300" Content="Button5"/>
-    </StackPanel>
-</mux:ScrollView>
-```
-
-*ScrollViewer (existing)*
-
-Similar to above
-
-2.  Horizontal StackPanel
-
-![Horizontal StackPanel Snap Points ](images/HStackPanelSnapPoints.png)
-
-*`ScrollView` (new)*
-
-```xml
-<mux:ScrollView HorizontalSnapPointsType="Mandatory" ContentOrientation="Horizontal" Width="500" Height="400">
-    <StackPanel Orientation="Horizontal">
-        <Button Width="300" Content="Button1"/>
-        <Button Width="300" Content="Button2"/>
-        <Button Width="300" Content="Button3"/>
-        <Button Width="300" Content="Button4"/>
-        <Button Width="300" Content="Button5"/>
-    </StackPanel>
-</mux:ScrollView>
-```
-
-*ScrollViewer (existing)*
-
-Similar to above (excluding the changes related to ContentOrientation).
-
-
-### Setting the scroll snap points alignment
-
-#### Example: Centering the snap points in the viewport in a flip-view control
-
-![Snap points alignment](images/SnapPointsAlignment.png)
-
-*`ScrollView` (new)*
-
-```xml
-<mux:ScrollView HorizontalSnapPointsAlignment="Center"
-                  HorizontalSnapPointsType="Mandatory"
-                  ContentOrientation="Horizontal"
-                  Width="500" Height="400">
-    <StackPanel Orientation="Horizontal">
-        <Button Width="300" Content="Button1"/>
-        <Button Width="300" Content="Button2"/>
-        <Button Width="300" Content="Button3"/>
-        <Button Width="300" Content="Button4"/>
-        <Button Width="300" Content="Button5"/>
-    </StackPanel>
-</mux:ScrollView>
-```
-
-*ScrollViewer (existing)*
-
-Similar to above (excluding the changes related to ContentOrientation).
-
-
-
-#### Support for optional and single snap points
-
-These 3 additional snap point types exist in old ScrollViewer.
-
-```csharp
-enum Microsoft.UI.Xaml.Controls.SnapPointsType
-{
-    None = 0,
-    Optional = 1,
-    Mandatory = 2,
-    OptionalSingle = 3,
-    MandatorySingle = 4,
-};
-
-enum Microsoft.UI.Xaml.Controls.Primitives.SnapPointType
-{
-    Optional = 0,
-    Mandatory = 1,
-};
-
-unsealed runtimeclass SnapPointBase : Windows.UI.Xaml.DependencyObject
-{
-    Double ApplicableRange{ get; };
-    SnapPointType ApplicableRangeType{ get; };
-}
-
-unsealed runtimeclass ZoomSnapPoint: ZoomSnapPointBase
-{
-    ZoomSnapPoint(Double snapPointValue, Double applicableRange);
-}
-
-unsealed runtimeclass RepeatedZoomSnapPoint : ZoomSnapPointBase
-{
-    RepeatedZoomSnapPoint(
-        Double offset,
-        Double interval,
-        Double start,
-        Double end,
-        Double applicableRange);
-}
-```
-
-#### Clipping suppression
-
-The old ScrollViewer has [this property](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.scrollviewer.cancontentrenderoutsidebounds) already. It would allow the inner ScrollPresenter to stop its clipping.
-
-```csharp
-unsealed runtimeclass ScrollView : ...
-{
-    // Default Value: False
-    Boolean CanContentRenderOutsideBounds { get; set; };
-}
-
-unsealed runtimeclass ScrollPresenter : ...
-{
-    // Default Value: False
-    Boolean CanContentRenderOutsideBounds { get; set; };
-}
-```
-
-#### Deferral of visual scrolling when interacting with scroll bar
-
-This property exists as is in old ScrollViewer.
-
-```csharp
-unsealed runtimeclass ScrollView : ...
-{
-    // Default Value: False
-    Boolean IsDeferredScrollingEnabled { get; set; };
-}
-```
-
-#### Ability to define quadrants in content with various scrolling/zooming capabilities
-
-The old WUX ScrollViewer exposes UIElement read-write properties called TopLeftHeader, TopHeader and LeftHeader. These add headers around the primary Content to support an Excel-like experience where the TopLeftHeader cannot scroll, the LeftHeader cannot scroll horizontally and the TopHeader cannot scroll vertically.
-
-The v1 MUX release does not support this scenario. The needed APIs have not been defined yet.
-
-## Coding scenarios
 
 ### Support for zoom snap points types
 
@@ -2404,13 +2410,52 @@ unsealed runtimeclass ScrollPresenter : ...
 }
 ```
 
-## Unsupported features that would need justification
+
+### Setting ScrollPresenter snap points with custom applicable range
+
+This featoure would add a ScrollSnapPoint constructor with an additional _applicableRange_ parameter:
+     ScrollSnapPoint(
+        Double snapPointValue,
+        Double applicableRange,
+        ScrollSnapPointsAlignment alignment);
+
+The concept of custom applicable range allows the implementation of optional snap points.
+
+This example adds scrolling snap points at offsets 0, 100 and 200 for content that is 300 pixels large, with custom application ranges:
+
+```csharp
+ScrollSnapPoint snapPoint1 = new ScrollSnapPoint(
+    snapPointValue: 0, applicableRange: 140, alignment: ScrollSnapPointsAlignment.Near);
+
+ScrollSnapPoint snapPoint2 = new ScrollSnapPoint( 
+    snapPointValue: 100, applicableRange: 10, alignment: ScrollSnapPointsAlignment.Near);
+
+ScrollSnapPoint snapPoint3 = new ScrollSnapPoint(
+    snapPointValue: 200, applicableRange: 40, alignment: ScrollSnapPointsAlignment.Near);
+
+_scrollingPresenter.VerticalSnapPoints.Add(snapPoint1);
+
+_scrollingPresenter.VerticalSnapPoints.Add(snapPoint2);
+
+_scrollingPresenter.VerticalSnapPoints.Add(snapPoint3);
+```
+
+![Snap points custom active range](images/SnapPointsCustomActiveRange.png)
+
+snapPoint1's applicable zone: \]-inf, 140\[
+
+snapPoint2's applicable zone: \[140, 160\[
+
+snapPoint3's applicable zone: \[160, +inf\[
+
+
+# Unsupported features that would need justification
 
 These are things we brainstormed, but weren't aware of specific scenarios.
 
-### Markup scenarios
+## Markup scenarios
 
-#### Ability to turn off inertia.
+### Ability to turn off inertia.
 
 The old ScrollViewer supports turning off inertia with these properties:
 
@@ -2434,7 +2479,7 @@ unsealed runtimeclass ScrollPresenter : ...
 }
 ```
 
-#### Ability to turn off overpanning
+### Ability to turn off overpanning
 
 ```csharp
 enum Microsoft.UI.Xaml.Controls.OverpanMode
@@ -2463,7 +2508,7 @@ unsealed runtimeclass ScrollPresenter : ...
 }
 ```
 
-#### Ability to turn off inertia bouncing
+### Ability to turn off inertia bouncing
 
 ```csharp
 enum Microsoft.UI.Xaml.Controls.BounceMode
@@ -2485,7 +2530,7 @@ unsealed runtimeclass ScrollPresenter : ...
 }
 ```
 
-#### Viewport reduction for core input view occlusion
+### Viewport reduction for core input view occlusion
 
 The old ScrollViewer has [this property](https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.scrollviewer.reduceviewportforcoreinputviewocclusions) already.
 
@@ -2503,9 +2548,9 @@ unsealed runtimeclass ScrollPresenter : ...
 }
 ```
 
-### Coding scenarios
+## Coding scenarios
 
-#### Providing completion reason at the end of a view change
+### Providing completion reason at the end of a view change
 
 ScrollingScrollCompletedEventArgs and ScrollingZoomCompletedEventArgs both get a read-only **Result** property of new type **ViewChangeResult enum**.
 
@@ -2538,7 +2583,7 @@ interface IScrollController
 }
 ```
 
-#### Support for mixed TIE / IT manipulations
+### Support for mixed TIE / IT manipulations
 
 TIE: Touch Interaction Engine
 
