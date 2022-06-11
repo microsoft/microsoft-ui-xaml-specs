@@ -1296,7 +1296,7 @@ An element that implements Microsoft.UI.Xaml.Controls.Primitives.IScrollControll
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <local:ScrollPresenter x:Name="PART_ScrollingPresenter"
+                <local:ScrollPresenter x:Name="PART_ScrollPresenter"
                                 Grid.ColumnSpan="2" Grid.RowSpan="2"
                                 Background="{TemplateBinding Background}"
                                 Margin="{TemplateBinding Padding}"
@@ -1723,7 +1723,7 @@ enum ScrollingInputKinds
     MouseWheel = 0x04,
     Keyboard = 0x08,
     Gamepad = 0x10,
-    All = 0xFF,
+    All = 0xFFFFFFFF,
 };
 
 enum ScrollingAnimationMode
@@ -1918,7 +1918,7 @@ unsealed runtimeclass Microsoft.UI.Xaml.Controls.ScrollView :
     event Windows.Foundation.TypedEventHandler<ScrollView, ScrollingAnchorRequestedEventArgs> AnchorRequested;
 
     static Windows.UI.Xaml.DependencyProperty ContentProperty { get; };
-    static Windows.UI.Xaml.DependencyProperty ScrollingPresenterProperty { get; };
+    static Windows.UI.Xaml.DependencyProperty ScrollPresenterProperty { get; };
     static Windows.UI.Xaml.DependencyProperty HorizontalScrollBarVisibilityProperty { get; };
     static Windows.UI.Xaml.DependencyProperty VerticalScrollBarVisibilityProperty { get; };
     static Windows.UI.Xaml.DependencyProperty ContentOrientationProperty { get; };
@@ -1943,12 +1943,11 @@ unsealed runtimeclass Microsoft.UI.Xaml.Controls.ScrollView :
 
 # Related Documents
 
-| Document                 | URL |
-| ------------------------ | --- |
-| Functional Specification |     |
-| Dev Design Specification |     |
-
-                                                                                                                                                                                                                                                                                                        | The bug template to use when filing RtCop bugs.                                               |
+| Document                            | URL                                            |
+|-------------------------------------|------------------------------------------------|
+| Functional Specification            |                                                |
+| Dev Design Specification            |                                                |
+| `ScrollPresenter` API Specification | [ScrollPresenter API spec](ScrollPresenter.md) |
 
 # Appendix
 
@@ -2433,20 +2432,20 @@ ScrollSnapPoint snapPoint2 = new ScrollSnapPoint(
 ScrollSnapPoint snapPoint3 = new ScrollSnapPoint(
     snapPointValue: 200, applicableRange: 40, alignment: ScrollSnapPointsAlignment.Near);
 
-_scrollingPresenter.VerticalSnapPoints.Add(snapPoint1);
+_scrollPresenter.VerticalSnapPoints.Add(snapPoint1);
 
-_scrollingPresenter.VerticalSnapPoints.Add(snapPoint2);
+_scrollPresenter.VerticalSnapPoints.Add(snapPoint2);
 
-_scrollingPresenter.VerticalSnapPoints.Add(snapPoint3);
+_scrollPresenter.VerticalSnapPoints.Add(snapPoint3);
 ```
 
 ![Snap points custom active range](images/SnapPointsCustomActiveRange.png)
 
-snapPoint1's applicable zone: \]-inf, 140\[
+snapPoint1's applicable range: \]-inf, 140\[
 
-snapPoint2's applicable zone: \[140, 160\[
+snapPoint2's applicable range: \[140, 160\[
 
-snapPoint3's applicable zone: \[160, +inf\[
+snapPoint3's applicable range: \[160, +inf\[
 
 
 # Unsupported features that would need justification
