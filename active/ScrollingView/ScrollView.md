@@ -1201,7 +1201,7 @@ Same as above
 
 ## Consuming the `ScrollView`'s Properties in Animations 
 
-The `ScrollView` exposes a read-only property called ExpressionAnimationSources of type Windows.UI.CompositionPropertySet. It can provide inputs to Composition expressions.
+The `ScrollView` exposes a read-only property called ExpressionAnimationSources of type Microsoft.UI.CompositionPropertySet. It can provide inputs to Composition expressions.
 
 Note that the inner ScrollPresenter class has the same property and the `ScrollView` just returns the ScrollPresenter's value.
 
@@ -1535,13 +1535,13 @@ Alternatively the AnchorRequested event handler can set the ScrollingAnchorReque
 | ZoomBy(float zoomFactorDelta, IReference<Vector2> centerPoint, ScrollingZoomOptions options) | Asynchronously zooms by the provided delta amount with optional animation.
 
 
-
 ## ScrollingZoomOptions class
 
 | **Member** | **Description**                                                            |
 |------------|----------------------------------------------------------------------------|
 | AnimationMode | Gets or sets a value indicating whether an animation is allowed or not for the zoom factor change.<br/>When AnimationMode is Auto, the view change is animated when OS settings enable animations. 
 | SnapPointsMode | Gets or sets a value indicating whether the snap points must be ignored or respected during the zoom factor change. Defaults to Default.<br/>When SnapPointsMode is Default, snap points are applied.
+
 
 ## ScrollingZoomAnimationStartingEventArgs class
 
@@ -1556,7 +1556,6 @@ Alternatively the AnchorRequested event handler can set the ScrollingAnchorReque
 <br/>Used by the ZoomAnimationStarting event which is raised when a ZoomTo or ZoomBy call triggers an animation. Allows customization of that animation.
 
 
-
 ## ScrollingZoomCompletedEventArgs class
 
 | **Member** | **Description**                                                            |
@@ -1564,7 +1563,6 @@ Alternatively the AnchorRequested event handler can set the ScrollingAnchorReque
 | CorrelationId | Gets the correlation ID associated with the zoom factor change, previously returned by ZoomTo, ZoomBy or AddZoomVelocity.
 
 <br/>Used by the ZooomCompleted event which is raised when the zoom factor changes caused by a ZoomTo, ZoomBy or AddZoomVelocity method call completed.
-
 
 
 ## ScrollingBringingIntoViewEventArgs class
@@ -1620,18 +1618,15 @@ Alternatively the AnchorRequested event handler can set the Anchor property, ini
 
 When AnimationMode is Auto, the view change is animated when OS settings enable animations. When SnapPointsMode is Default, snap points are applied.
 
-
 | **Member** | **Description**                                                            |
 |------------|----------------------------------------------------------------------------|
 | AnimationMode  | Gets or sets a value indicating whether an animation is allowed or not for the offsets change.
 | SnapPointsMode | Gets or sets a value indicating whether the snap points must be ignored or respected during the offsets change. Defaults to Default.
 
 
-
 ## ScrollingScrollAnimationStartingEventArgs class
 
 Used by the ScrollAnimationStarting event which is raised when a ScrollTo or ScrollBy call triggers an animation. Allows customization of that animation.
-
 
 | **Member** | **Description**                                                            |
 |------------|----------------------------------------------------------------------------|
@@ -1640,18 +1635,14 @@ Used by the ScrollAnimationStarting event which is raised when a ScrollTo or Scr
 | EndPosition   | Gets the default content position at the end of the animation.
 | CorrelationId | Gets the correlation ID associated with the animated offsets change, previously returned by ScrollTo or ScrollBy.
 
-<br/>Used by the ScrollAnimationStarting event which is raised when a ScrollTo or ScrollBy call triggers an animation. Allows customization of that animation.
 
 ## ScrollingScrollCompletedEventArgs class
 
 Used by the ScrollCompleted event which is raised when the offset changes caused by a ScrollTo, ScrollBy or AddScrollVelocity method call completed.
 
-
 | **Member** | **Description**                                                            |
 |------------|----------------------------------------------------------------------------|
 | CorrelationId | Gets the correlation ID associated with the offsets change, previously returned by ScrollTo, ScrollBy or AddScrollVelocity.
-
-<br/>Used by the ScrollCompleted event which is raised when the scroll offset changes caused by a ScrollTo, ScrollBy or AddScrollVelocity method call completed.
 
 
 ## Correlation ID
@@ -1778,7 +1769,7 @@ unsealed runtimeclass Microsoft.UI.Xaml.Controls.ScrollingZoomOptions
 ```csharp
 runtimeclass Microsoft.UI.Xaml.Controls.ScrollingScrollAnimationStartingEventArgs
 {
-    Windows.UI.Composition.CompositionAnimation Animation { get; set; };
+    Microsoft.UI.Composition.CompositionAnimation Animation { get; set; };
     Windows.Foundation.Numerics.Vector2 StartPosition { get; };
     Windows.Foundation.Numerics.Vector2 EndPosition { get; };
     Int32 CorrelationId { get; };
@@ -1789,7 +1780,7 @@ runtimeclass Microsoft.UI.Xaml.Controls.ScrollingZoomAnimationStartingEventArgs
     Windows.Foundation.Numerics.Vector2 CenterPoint { get; };
     Single StartZoomFactor { get; };
     Single EndZoomFactor { get; };
-    Windows.UI.Composition.CompositionAnimation Animation { get; set; };
+    Microsoft.UI.Composition.CompositionAnimation Animation { get; set; };
     Int32 CorrelationId { get; };
 }
 
@@ -1806,7 +1797,7 @@ runtimeclass Microsoft.UI.Xaml.Controls.ScrollingZoomCompletedEventArgs
 runtimeclass Microsoft.UI.Xaml.Controls.ScrollingBringingIntoViewEventArgs
 {
     ScrollingSnapPointsMode SnapPointsMode { get; set; };
-    Windows.UI.Xaml.BringIntoViewRequestedEventArgs RequestEventArgs { get; };
+    Microsoft.UI.Xaml.BringIntoViewRequestedEventArgs RequestEventArgs { get; };
     Double TargetHorizontalOffset { get; };
     Double TargetVerticalOffset { get; };
     Int32 CorrelationId { get; };
@@ -1815,8 +1806,8 @@ runtimeclass Microsoft.UI.Xaml.Controls.ScrollingBringingIntoViewEventArgs
 
 runtimeclass Microsoft.UI.Xaml.Controls.ScrollingAnchorRequestedEventArgs
 {
-    Windows.Foundation.Collections.IVector<Windows.UI.Xaml.UIElement> AnchorCandidates { get; };
-    Windows.UI.Xaml.UIElement AnchorElement { get; set; };
+    Windows.Foundation.Collections.IVector<Microsoft.UI.Xaml.UIElement> AnchorCandidates { get; };
+    Microsoft.UI.Xaml.UIElement AnchorElement { get; set; };
 }
 ```
 
@@ -1826,13 +1817,13 @@ runtimeclass Microsoft.UI.Xaml.Controls.ScrollingAnchorRequestedEventArgs
 ```csharp
 [contentproperty("Content")]
 unsealed runtimeclass Microsoft.UI.Xaml.Controls.ScrollView :
-    Windows.UI.Xaml.Controls.Control
+    Microsoft.UI.Xaml.Controls.Control
 {
     ScrollView();
 
-    Windows.UI.Xaml.UIElement Content { get; set; };
-    Windows.UI.Xaml.UIElement CurrentAnchor { get; };
-    Windows.UI.Composition.CompositionPropertySet ExpressionAnimationSources { get; };
+    Microsoft.UI.Xaml.UIElement Content { get; set; };
+    Microsoft.UI.Xaml.UIElement CurrentAnchor { get; };
+    Microsoft.UI.Composition.CompositionPropertySet ExpressionAnimationSources { get; };
     Double HorizontalOffset { get; };
     Double VerticalOffset { get; };
     Single ZoomFactor { get; };
@@ -1852,8 +1843,8 @@ unsealed runtimeclass Microsoft.UI.Xaml.Controls.ScrollView :
     ScrollingRailMode VerticalScrollRailMode { get; set; };
     ScrollingScrollMode HorizontalScrollMode { get; set; };
     ScrollingScrollMode VerticalScrollMode { get; set; };
-    Windows.UI.Xaml.Visibility ComputedHorizontalScrollBarVisibility{ get; };
-    Windows.UI.Xaml.Visibility ComputedVerticalScrollBarVisibility{ get; };
+    Microsoft.UI.Xaml.Visibility ComputedHorizontalScrollBarVisibility{ get; };
+    Microsoft.UI.Xaml.Visibility ComputedVerticalScrollBarVisibility{ get; };
     ScrollingChainMode ZoomChainMode { get; set; };
     ScrollingZoomMode ZoomMode { get; set; };
     ScrollingInputKinds IgnoredInputKinds { get; set; };
@@ -1861,8 +1852,8 @@ unsealed runtimeclass Microsoft.UI.Xaml.Controls.ScrollView :
     Double MaxZoomFactor { get; set; };
     Double HorizontalAnchorRatio { get; set; };
     Double VerticalAnchorRatio { get; set; };
-    void RegisterAnchorCandidate(Windows.UI.Xaml.UIElement element);
-    void UnregisterAnchorCandidate(Windows.UI.Xaml.UIElement element);
+    void RegisterAnchorCandidate(Microsoft.UI.Xaml.UIElement element);
+    void UnregisterAnchorCandidate(Microsoft.UI.Xaml.UIElement element);
     [method_name("ScrollTo")]
     Int32 ScrollTo(
         Double horizontalOffset,
@@ -1917,26 +1908,26 @@ unsealed runtimeclass Microsoft.UI.Xaml.Controls.ScrollView :
     event Windows.Foundation.TypedEventHandler<ScrollView, ScrollingBringingIntoViewEventArgs> BringingIntoView;
     event Windows.Foundation.TypedEventHandler<ScrollView, ScrollingAnchorRequestedEventArgs> AnchorRequested;
 
-    static Windows.UI.Xaml.DependencyProperty ContentProperty { get; };
-    static Windows.UI.Xaml.DependencyProperty ScrollPresenterProperty { get; };
-    static Windows.UI.Xaml.DependencyProperty HorizontalScrollBarVisibilityProperty { get; };
-    static Windows.UI.Xaml.DependencyProperty VerticalScrollBarVisibilityProperty { get; };
-    static Windows.UI.Xaml.DependencyProperty ContentOrientationProperty { get; };
-    static Windows.UI.Xaml.DependencyProperty HorizontalScrollChainModeProperty { get; };
-    static Windows.UI.Xaml.DependencyProperty VerticalScrollChainModeProperty { get; };
-    static Windows.UI.Xaml.DependencyProperty HorizontalScrollRailModeProperty { get; };
-    static Windows.UI.Xaml.DependencyProperty VerticalScrollRailModeProperty { get; };
-    static Windows.UI.Xaml.DependencyProperty HorizontalScrollModeProperty { get; };
-    static Windows.UI.Xaml.DependencyProperty VerticalScrollModeProperty { get; };
-    static Windows.UI.Xaml.DependencyProperty ComputedHorizontalScrollBarVisibilityProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty ComputedVerticalScrollBarVisibilityProperty{ get; };
-    static Windows.UI.Xaml.DependencyProperty ZoomChainModeProperty { get; };
-    static Windows.UI.Xaml.DependencyProperty ZoomModeProperty { get; };
-    static Windows.UI.Xaml.DependencyProperty IgnoredInputKindsProperty { get; };
-    static Windows.UI.Xaml.DependencyProperty MinZoomFactorProperty { get; };
-    static Windows.UI.Xaml.DependencyProperty MaxZoomFactorProperty { get; };
-    static Windows.UI.Xaml.DependencyProperty HorizontalAnchorRatioProperty { get; };
-    static Windows.UI.Xaml.DependencyProperty VerticalAnchorRatioProperty { get; };
+    static Microsoft.UI.Xaml.DependencyProperty ContentProperty { get; };
+    static Microsoft.UI.Xaml.DependencyProperty ScrollPresenterProperty { get; };
+    static Microsoft.UI.Xaml.DependencyProperty HorizontalScrollBarVisibilityProperty { get; };
+    static Microsoft.UI.Xaml.DependencyProperty VerticalScrollBarVisibilityProperty { get; };
+    static Microsoft.UI.Xaml.DependencyProperty ContentOrientationProperty { get; };
+    static Microsoft.UI.Xaml.DependencyProperty HorizontalScrollChainModeProperty { get; };
+    static Microsoft.UI.Xaml.DependencyProperty VerticalScrollChainModeProperty { get; };
+    static Microsoft.UI.Xaml.DependencyProperty HorizontalScrollRailModeProperty { get; };
+    static Microsoft.UI.Xaml.DependencyProperty VerticalScrollRailModeProperty { get; };
+    static Microsoft.UI.Xaml.DependencyProperty HorizontalScrollModeProperty { get; };
+    static Microsoft.UI.Xaml.DependencyProperty VerticalScrollModeProperty { get; };
+    static Microsoft.UI.Xaml.DependencyProperty ComputedHorizontalScrollBarVisibilityProperty{ get; };
+    static Microsoft.UI.Xaml.DependencyProperty ComputedVerticalScrollBarVisibilityProperty{ get; };
+    static Microsoft.UI.Xaml.DependencyProperty ZoomChainModeProperty { get; };
+    static Microsoft.UI.Xaml.DependencyProperty ZoomModeProperty { get; };
+    static Microsoft.UI.Xaml.DependencyProperty IgnoredInputKindsProperty { get; };
+    static Microsoft.UI.Xaml.DependencyProperty MinZoomFactorProperty { get; };
+    static Microsoft.UI.Xaml.DependencyProperty MaxZoomFactorProperty { get; };
+    static Microsoft.UI.Xaml.DependencyProperty HorizontalAnchorRatioProperty { get; };
+    static Microsoft.UI.Xaml.DependencyProperty VerticalAnchorRatioProperty { get; };
 }
 ```
 
@@ -2018,7 +2009,7 @@ These are benefits for an InteractionTracker-based scrolling/zooming control com
 
 ### P1 Goals
 
-1.  Microsoft.UI.Xaml includes controls to support independent scrolling and zooming like the ScrollViewer/ScrollContentPresenter do in Windows.UI.Xaml.
+1.  Microsoft.UI.Xaml includes controls to support independent scrolling and zooming like the ScrollViewer/ScrollContentPresenter do in Windows.UI.Xaml and Microsoft.UI.Xaml.
 
 2.  In the long term, these Microsoft.UI.Xaml scrolling/zooming controls can replace the ScrollViewer/ScrollContentPresenter used by some existing controls like the TextBox.
 
@@ -2251,7 +2242,7 @@ enum Microsoft.UI.Xaml.Controls.Primitives.SnapPointApplicableRangeType
     Mandatory = 1,
 };
 
-unsealed runtimeclass SnapPointBase : Windows.UI.Xaml.DependencyObject
+unsealed runtimeclass SnapPointBase : Microsoft.UI.Xaml.DependencyObject
 {
     Double ApplicableRange{ get; };
     SnapPointApplicableRangeType ApplicableRangeType{ get; };
