@@ -530,7 +530,7 @@ Identical to above.
 
 # Using Layout-centric Properties and Events in Code
 
-This samples in this section focus on using properties and events that relate to the layout aspects of the `ScrollView` control.
+The samples in this section focus on using properties and events that relate to the layout aspects of the `ScrollView` control.
 
 ![ScrollView Properties](images/ScrollViewProps.png)
 
