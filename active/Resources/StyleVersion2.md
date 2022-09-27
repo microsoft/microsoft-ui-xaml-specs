@@ -1,4 +1,4 @@
-ThemeVersion API
+ControlsResourcesVersion API
 =
 
 # Background
@@ -9,9 +9,9 @@ is defined in a resource dictionary and referenced by the controls.
 But an application can override these by defining a resource dictionary with one or more matching keys.
 
 XAML ships such an overrides dictionary named
-[XamlControlsResources](http://msdn.microsoft.com/library/Microsoft.UI.Xaml.Controls.XamlControlsResources).
+[XamlControlsResources](https://docs.microsoft.com/windows/windows-app-sdk/api/winrt/Microsoft.UI.Xaml.Controls.XamlControlsResources).
 This dictionary defines all the resources necessary for all of the built-in controls.
-Since the resources in this dictionary can change over time, a new `ThemeVersion` property is being added.
+Since the resources in this dictionary can change over time, a new `ControlsResourcesVersion` property is being added.
 
 > StylesVersion? ResourcesVersion?
 
@@ -20,10 +20,11 @@ previous version.
 
 # API Pages
 
-## XamlControlsResources.ThemeVersion
+## XamlControlsResources.ControlsResourcesVersion
 
-Set this property to specify which version of resources to use for the look and styling
-of XAML controls. Default value is Version2.
+This value defaults to the Framework's preferred version, which at this time is Version2.
+Setting this property overrides the framework's preference,
+allowing your app to specify which theme version should be applied.
 
 Version 1 aligns to WinUI 2.5, Version 2 aligns with WinUI 2.6.
 
@@ -32,7 +33,7 @@ Version 1 aligns to WinUI 2.5, Version 2 aligns with WinUI 2.6.
 
 > Spec note: the alternative is to have an 'Auto' value in the enum,
 and then the default value of the property is always that.
-That would mean, though, that we also need an ActualThemeVersion property for
+That would mean, though, that we also need an ActualControlsResourcesVersion property for
 controls to query
 
 ### Example
@@ -41,7 +42,7 @@ Configure an application so that it uses an older version of the control styling
 
 ```xaml
 <Application.Resources>
-    <XamlControlsResources ThemeVersion="Version1"/>
+    <XamlControlsResources ControlsResourcesVersion="Version1"/>
 </Application.Resources>
 ```
 
@@ -51,7 +52,7 @@ Configure an application so that it uses an older version of the control styling
 
 ```cs
 [webhosthidden]
-enum ThemeVersion
+enum ControlsResourcesVersion
 {
     Version1 = 1,
     Version2 = 2,
@@ -65,10 +66,10 @@ runtimeclass XamlControlsResources : Windows.UI.Xaml.ResourceDictionary
     // ...
 
     {
-        [MUX_DEFAULT_VALUE("winrt::ThemeVersion::Version2")]
-        ThemeVersion ThemeVersion{ get; set; };
+        [MUX_DEFAULT_VALUE("winrt::ControlsResourcesVersion::Version2")]
+        ControlsResourcesVersion ControlsResourcesVersion{ get; set; };
 
-        static Windows.UI.Xaml.DependencyProperty ThemeVersionProperty{ get; };
+        static Windows.UI.Xaml.DependencyProperty ControlsResourcesVersionProperty{ get; };
     }
 }
 ```
@@ -80,7 +81,7 @@ Some explanation of this feature and how it relates to "System XAML" ...
 
 System XAML ships in Windows and defines a resource dictionary with all of the resources
 for the XAML controls. WinUI2 is a control library that ships in NuGet and defines the
-[XamlControlsResources](http://msdn.microsoft.com/library/Microsoft.UI.Xaml.Controls.XamlControlsResources)
+[XamlControlsResources](https://docs.microsoft.com/windows/windows-app-sdk/api/winrt/Microsoft.UI.Xaml.Controls.XamlControlsResources)
 type, which has overrides for all of the built-in resources and more.
 
 The resources in System XAML can change from release to release, and there is no override
