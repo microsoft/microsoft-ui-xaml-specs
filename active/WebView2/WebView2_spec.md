@@ -1,8 +1,8 @@
 # Background
 
-This spec describes the WebView2 Xaml control, which is the [WinUI 3.0](https://github.com/microsoft/microsoft-ui-xaml/issues/1531) version of the existing [WebView](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.WebView) control. It includes usage of the updated Microsoft Edge browser based on the Chromium web engine.
+This spec describes the WebView2 XAML control, which is the [WinUI 3.0](https://github.com/microsoft/microsoft-ui-xaml/issues/1531) version of the existing [WebView](https://docs.microsoft.com/uwp/api/Windows.UI.Xaml.Controls.WebView) control. It includes usage of the updated Microsoft Edge browser based on the Chromium web engine.
 
-The API detailed below refers to the middle box is the diagram below. The 'WebView core API' refers to the API covered by the [core Microsoft Edge WebView2](https://docs.microsoft.com/en-us/microsoft-edge/hosting/webview2)
+The API detailed below refers to the middle box is the diagram below. The 'WebView core API' refers to the API covered by the [core Microsoft Edge WebView2](https://docs.microsoft.com/en-us/microsoft-edge/hosting/webview2).
 
 ```
  _________________________
@@ -29,7 +29,8 @@ The API detailed below refers to the middle box is the diagram below. The 'WebVi
 # Description
 
 The WebView2 is a control that allows for HTML content to be hosted within an application. It renders web content using the Microsoft Edge (Chromium) rendering engine.
-Use a WebView2 control to display richly formatted HTML content from a remote web server, dynamically generated code, or content files in your app. Rich content can also contain script code and communicate between the script and your app’s code.
+
+Use a WebView2 control to display richly formatted HTML content from a remote web server, dynamically generated code, or content files in your app. Rich content can also contain script code and communicate between the script and your app's code.
 
 # Examples
 
@@ -38,13 +39,13 @@ To set the initial content of the WebView2, set the Source property in XAML. The
 
 ```
 <!-- Source file is on the web. -->
-<WebView2 x:Name="MyWebView_1" Source="http://www.contoso.com"/>
+<WebView2 x:Name="MyWebView_1" UriSource="http://www.contoso.com"/>
 
 <!-- Source file is in local storage. -->
-<WebView2 x:Name="MyWebView_2" Source="ms-appdata:///local/intro/welcome.html"/>
+<WebView2 x:Name="MyWebView_2" UriSource="ms-appdata:///local/intro/welcome.html"/>
 
 <!-- Source file is in the app package. -->
-<WebView2 x:Name="MyWebView_3" Source="ms-appx-web:///help/about.html"/>
+<WebView2 x:Name="MyWebView_3" UriSource="ms-appx-web:///help/about.html"/>
 ```
 
 ## Alternative Instantiation Options:
@@ -52,7 +53,7 @@ You can also create a WebView with NavigateToString:
 
 ```
 var myWebView2 = new WebView2();
-myWebView2.NavigateToString("<html><body><h2>This is an HTML fragment</h2></body></html>”);
+myWebView2.NavigateToString("<html><body><h2>This is an HTML fragment</h2></body></html>");
 ```
 
 Or, by providing no URI or content up front:
@@ -164,9 +165,9 @@ void Reload() – Reloads the current content in the WebView2.
 
 void Stop() – Stops the current WebView2 navigation or download.
 
-Void GoBack() - Navigates the webview to the previous page in the navigation history.
+void GoBack() - Navigates the webview to the previous page in the navigation history.
 
-Void GoForward() - Navigates the webview to the next page in the navigation history.
+void GoForward() - Navigates the webview to the next page in the navigation history.
 
 ## Events:
 
