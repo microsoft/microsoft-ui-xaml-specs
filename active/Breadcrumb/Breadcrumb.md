@@ -1,6 +1,11 @@
 Breadcrumb control
 ===
 
+| **Note:** This API has been implemented and documented.
+This spec was completed with open discussion items
+[in the PR](https://github.com/microsoft/microsoft-ui-xaml-specs/pull/102)
+for archive purposes and so might not match the final API.
+
 # Background
 
 A "Breadcrumb" UX pattern provides an way to show a current position in context.
