@@ -3,6 +3,13 @@
 
  > This spec corresponds to [this issue](https://github.com/microsoft/microsoft-ui-xaml/issues/3279) on the WinUI repo. 
 
+> This API has been implemented and documented.
+This spec was completed with open discussion items in the 
+[PR](https://github.com/microsoft/microsoft-ui-xaml-specs/pull/100)
+for archive purposes and so might not match the final API.
+
+
+
 Throughout Windows, different expander controls are used by various apps and surfaces.
 There’s currently no consistent way to address this common UX pattern.
 This control is needed for situations where expanding (instead of overlaying) content is needed.
