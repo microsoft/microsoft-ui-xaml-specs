@@ -33,18 +33,23 @@ For WinUI team members, the workflow to author specs is:
 
 1. Ensure your proposal is approved and in plan.
 
-2. Create a new working branch: ```/user/<username>/<feature>```
+2. Create two working branches: ```user/<username>/<feature>``` and ```user/<username>/<feature>_review```.
+Do your work in the first branch, save the `review` branch for later.
+
+    (Two branches allows us to do a two step PR: one a spec review within the team, local experts, and customers of the feature;
+    and one as a broader API review.)
 
 3. Create a new folder for your spec under the ```active``` folder: ```/active/<feature>```
 
 4. Author your spec using the [spec template](/spec_template.md).  
 Please use relative links for images or other assets in the folder.
 
-5. When your spec is ready for review:
-   * Open a new pull request to merge your spec to the ```master``` branch
+5. When your spec is ready for the team, area experts, and feature customers to review:
+   * Open a new pull request to merge your spec to the ```user/<username>/<feature>_review``` branch
    * Update your proposal issue with a link to the spec PR
 
-6. Review spec in checkpoint meetings to close open issues.
+6. When your spec is complete and merged, and ready for API review,
+open a PR to the ```master``` branch
 
 7. When your spec is complete and signed off, merge the PR.
 
