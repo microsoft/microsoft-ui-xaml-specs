@@ -1,4 +1,10 @@
-# Windows UI Library (WinUI) Specs
+# ⚠️ NOTE: ARCHIVED ⚠️
+
+## This Repository is no longer used, the spec process is handled in the main `microsoft-ui-xaml` repository, and is documented here: https://github.com/microsoft/microsoft-ui-xaml/blob/main/specs/public-api-review-process.md
+
+## Tracking project board: https://github.com/orgs/microsoft/projects/1328?pane=info
+
+### Windows UI Library (WinUI) Specs
 
 This repository contains archived and in-progress spec documents for APIs in the Windows UI Library (WinUI):  
 https://github.com/Microsoft/microsoft-ui-xaml
