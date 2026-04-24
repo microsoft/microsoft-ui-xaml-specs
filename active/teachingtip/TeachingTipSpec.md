@@ -345,7 +345,7 @@ public void OnTipClosing(object sender, TeachingTipClosingEventArgs args)
 
 ### Recommendations
 * Tips are impermanent and should not contain information or options that are critical to the experience of an application. 
-* Try to avoid showing teaching tips too often. Teaching tips are most likely to each recieve individual attention when they are staggered throughout long sessions or across multiple sessions.    
+* Try to avoid showing teaching tips too often. Teaching tips are most likely to each receive individual attention when they are staggered throughout long sessions or across multiple sessions.    
 * Keep tips succinct and their topic clear. Research shows users, on average, only read 3-5 words and only comprehend 2-3 words before deciding whether to interact with a tip.
 * Gamepad accessibility of a teaching tip is not guaranteed. For applications that predict gamepad input, please see [gamepad and remote control interactions]( https://docs.microsoft.com/en-us/windows/uwp/design/input/gamepad-and-remote-interactions#xy-focus-navigation-and-interaction). It is encouraged to test gamepad accessibility of each teaching tip using all possible configurations of an app's UI.
 * When enabling a teaching tip to escape the xaml root, it is encouraged to also enable the IsLightDismissEnabled property and set the PreferredPlacement mode nearest to the center of the xaml root. 
@@ -556,7 +556,7 @@ TeachingTip will implement a custom "tip" Landmark.
 | State | Action |
 |:---|:---|
 | Tip appears | No action is needed invoke the tip. |
-| Tip recieves focus | F6: <br> Tip will be added to F6 region navigation stops so that F6 may be used to focus into and out of the tip. <br><br> Tab: <br> If Narrator is active, TeachingTip will automatically be added to the top of Narrator navigation stops thanks to its UI Automation Pattern(s), similar to popups or ContentDialog, and can be accessed via tabbing. |
+| Tip receives focus | F6: <br> Tip will be added to F6 region navigation stops so that F6 may be used to focus into and out of the tip. <br><br> Tab: <br> If Narrator is active, TeachingTip will automatically be added to the top of Narrator navigation stops thanks to its UI Automation Pattern(s), similar to popups or ContentDialog, and can be accessed via tabbing. |
 | Tip is tabbed through | Tab Button: <br> Will go through all actionable items, regardless of group, in order. When tab is pressed on the last element in the teaching tip, focus will cycle to the first element in the teaching tip.  <br> <br> Left + Right Arrow Keys: <br> Can be used to navigate between the footer Action and Close buttons if both are present. <br><br> Escape: <br> Will result in closing the tip. |
 | Tip is dismissed | 1. X Button is pressed. <br> 2. Close Button is pressed. <br> 3. Action Button is pressed. <br><br> * Tab increments focus to the next element but does not close the tip. |
 
@@ -569,7 +569,7 @@ To provide targeted tip context for Narrator users, a targeted TeachingTip will 
 | State | Action |
 |:---|:---|
 | Tip appears | Narrator will say "Click Up to move to new notifcation from" + App Name + Tip Contents | 
-| Tip recieves focus | Ctrl + Narrator + Up arrow: <br> Will move focus to tip and Narrator will read the element in focus. |
+| Tip receives focus | Ctrl + Narrator + Up arrow: <br> Will move focus to tip and Narrator will read the element in focus. |
 | Tip is tabbed through | Tab Button: <br> Will navigate through all actionable items, regardless of group, in order. When tab is pressed on the last element in the teaching tip, focus will cycle to the first element in the teaching tip.  <br> <br> Swipe (for touch screen devices): <br> Will navigate through all actionable items, regardless of group, in order. When Swiping on the last element in the teaching tip, focus will move to Narrator's fullscreen invisible Close Button and the user may double tap the screen to close the window. Swiping again will move focus out of the tip. <br><br> Left + Right Arrow Keys: <br> Can be used to navigate between the footer Action and Close buttons if both are present. <br><br> Escape: <br> Will result in closing the tip. |
 | Tip is dismissed | 1. Header Close Button is invoked. <br> 2. Footer Close Button is invoked. <br> 3. Action Button is invoked. <br> 4. Swipe (for touch screen devices) moves focus to Narrator's fullscreen invisible Close Button and the user double taps the screen to close the window. * Tab increments focus to the next element but does not close the tip. |
 
@@ -577,7 +577,7 @@ To provide targeted tip context for Narrator users, a targeted TeachingTip will 
 | State | Action |
 |:---|:---|
 | Tip appears | No action is needed invoke the tip. |
-| Tip recieves focus | Spatial navigation: <br> Spatial navigation may be used to access tip. Guidance will be added to advise proper design consideration for tip accessibility and testing for gamepad. |
+| Tip receives focus | Spatial navigation: <br> Spatial navigation may be used to access tip. Guidance will be added to advise proper design consideration for tip accessibility and testing for gamepad. |
 | Tip is navigated | Spatial navigation: <br> Will spatially navigate focus across actionable items (without respect to group).  <br> <br> A Button: <br> Will interact with the item in focus, such as "press" the action or close button. <br><br> B Button: <br> Will result in closing the tip. |
 | Tip is dismissed | 1. Header "X" Close Button is pressed. <br> 2. Footer Close Button is pressed. <br> 3. Action Button is pressed. <br> 4. B Button returns focus to the element previously in focus. |
 

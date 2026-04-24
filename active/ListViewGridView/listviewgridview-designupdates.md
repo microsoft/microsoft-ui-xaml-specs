@@ -6,7 +6,7 @@ In WinUI 2.2, controls began to be re-designed to have rounded corners, marking 
 There's more information on rounded corners in WinUI [here](https://docs.microsoft.com/en-us/windows/uwp/design/style/rounded-corner), 
 but the general purpose of the rounded corners design shift is to evoke warmth and trust, 
 and make the UI easier for users to visually process. 
-Since this shift, certain controls have adopted the new styling and recieved rounded corners, but some have not. 
+Since this shift, certain controls have adopted the new styling and received rounded corners, but some have not. 
 This creates a strong visual inconsistency in WinUI apps, where certain pieces of an app may look modern and others may look dated. 
 A common example of this is ListView and GridView items. 
 These are two very heavily used controls, but their items still have squared corners and look dated when placed alongside 
